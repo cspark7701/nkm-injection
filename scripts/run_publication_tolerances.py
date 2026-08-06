@@ -38,8 +38,8 @@ def main():
     nominal_bts = BTSConfig()
     target_twiss = {"beta": [2.336495, 4.256241], "alpha": [-0.016335, 0.017772]}
 
-    # 1. Fast Monte Carlo Ensemble (N=50 for verification)
-    n_samples = 50
+    # 1. Fast Monte Carlo Ensemble (N=100 for verification)
+    n_samples = 100
     print(f"Sampling Monte Carlo ensemble (N={n_samples})...")
     samples = sample_error_ensemble(config, n_samples=n_samples, seed=42)
 
@@ -50,6 +50,13 @@ def main():
     print(f"Horizontal Mismatch Mx: p50={stats['mismatch_x']['p50_median']:.4f}, p68={stats['mismatch_x']['p68']:.4f}, p95={stats['mismatch_x']['p95']:.4f}, p99={stats['mismatch_x']['p99']:.4f}")
     print(f"Vertical Mismatch My:   p50={stats['mismatch_y']['p50_median']:.4f}, p68={stats['mismatch_y']['p68']:.4f}, p95={stats['mismatch_y']['p95']:.4f}, p99={stats['mismatch_y']['p99']:.4f}")
     print(f"Bootstrap 95% CI for Median Mx: [{stats['mismatch_x']['bootstrap_95ci_median'][0]:.4f}, {stats['mismatch_x']['bootstrap_95ci_median'][1]:.4f}]")
+    print(f"\n--- Failure Modes ---")
+    for fm, count in stats.get("failure_modes", {}).items():
+        print(f"  {fm}: {count}")
+    print(f"\n--- MC Convergence ---")
+    conv = stats.get("convergence_check", {})
+    print(f"  Converged: {conv.get('converged', False)}")
+    print(f"  Diff N=50 to N=100: {conv.get('N_50_to_100_diff', 0.0):.6f}")
 
     # 2. One-At-A-Time Sensitivity Ranking
     print("\n--- One-At-A-Time (OAT) Sensitivity Ranking ---")

@@ -69,8 +69,6 @@ def sample_error_ensemble(config: Optional[ErrorBudgetConfig] = None,
             "dipole_b_err": float(rng.normal(0.0, config.dipole_b_rel_std)),
             # Orbit/Alignment errors
             "booster_x_m": float(rng.normal(0.0, config.booster_x_jitter_std_m)),
-            "booster_x_jitter_m": float(rng.normal(0.0, config.booster_x_jitter_std_m)),
-            "booster_dx_m": float(rng.normal(0.0, config.booster_x_jitter_std_m)),
             "booster_xp_rad": float(rng.normal(0.0, config.booster_xp_jitter_std_rad)),
             "quad_dx_m": rng.normal(0.0, config.quad_dx_std_m, size=9).tolist(),
             "quad_dy_m": rng.normal(0.0, config.quad_dy_std_m, size=9).tolist(),
@@ -83,6 +81,7 @@ def sample_error_ensemble(config: Optional[ErrorBudgetConfig] = None,
             # NKM errors
             "nkm_scale_err": float(rng.normal(0.0, config.nkm_scale_std)),
             "nkm_dx_m": float(rng.normal(0.0, config.nkm_dx_std_m)),
+            "nkm_timing_mrad": float(rng.normal(0.0, config.nkm_timing_std_mrad)),
             # Storage Ring errors
             "ring_co_x_m": float(rng.normal(0.0, config.ring_co_x_std_m)),
             "septum_x_m": float(rng.normal(0.0, config.septum_x_std_m)),
@@ -99,10 +98,11 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
     Centroid jitter is treated strictly as phase-space offset, independent of dispersion.
     """
     k_list = nominal_config.quad_strengths_list
-    perturbed_k = [k * (1.0 + err) for k, err in zip(k_list, sample["quad_k_err"])]
+    dp_p = sample.get("energy_dp_p", 0.0)
+    perturbed_k = [k * (1.0 + err) / (1.0 + dp_p) for k, err in zip(k_list, sample["quad_k_err"])]
 
     # Energy error alters beam rigidity B_rho = E / c
-    energy_perturbed_eV = nominal_config.energy_eV * (1.0 + sample["energy_dp_p"])
+    energy_perturbed_eV = nominal_config.energy_eV * (1.0 + dp_p)
 
     pert_config = BTSConfig(
         k_q11=perturbed_k[0], k_q12=perturbed_k[1], k_q13=perturbed_k[2],
@@ -143,7 +143,17 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
         'beta': [7.560000 * (1.0 + sample.get("beta_mismatch_x", 0.0)),
                  12.269000 * (1.0 + sample.get("beta_mismatch_y", 0.0))],
         'alpha': [1.523100, -1.654700],
-        'dispersion': [0.276200, -0.065700, 0.0, 0.0]
+        'dispersion': [0.276200, -0.065700, 0.0, 0.0],
+        'centroid_offset': [sample.get('booster_x_m', 0.0), sample.get('booster_xp_rad', 0.0), 0.0, 0.0, 0.0, 0.0],
+        'nkm_errors': {
+            'scale_err': sample.get('nkm_scale_err', 0.0),
+            'dx_m': sample.get('nkm_dx_m', 0.0),
+            'timing_mrad': sample.get('nkm_timing_mrad', 0.0)
+        },
+        'ring_errors': {
+            'co_x_m': sample.get('ring_co_x_m', 0.0),
+            'septum_x_m': sample.get('septum_x_m', 0.0)
+        }
     }
 
     return lattice, init_twiss

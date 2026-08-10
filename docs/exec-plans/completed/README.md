@@ -129,4 +129,8 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 40. [**Milestone 40 — Task 09: MOGA Pareto Optimization Enhancements & Reproducibility**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/40_task09_moga_pareto_enhancements.md)
     - Integrated non-dominated sorting filtering on Pareto front solutions (`src/nkm/moga.py`), implemented multi-seed finalist re-evaluation via end-to-end tracking, added Pareto front visualization (`plot_moga_summary`), and updated publication script. Verified with 100% test pass rate across all 152 test cases in the test suite.
 
+41. [**Milestone 41 — Task 10: Finalize and Compile JINST Journal Manuscript**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/41_task10_jinst_manuscript_compilation.md)
+    - Compiled publication-grade Journal of Instrumentation (JINST) manuscript [`docs/jinst-paper/paper.pdf`](file:///home/cspark/Work/projects/nkm/docs/jinst-paper/paper.pdf) with author Chong Shik Park (Korea University) attribution, incorporating RADIA 2D field map validation, single-objective SLSQP matching, NSGA-II multi-objective optimization, and Monte Carlo 6D robust particle tracking.
+
+
 

@@ -126,3 +126,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 39. [**Milestone 39 — Task 08: Apply Physical Error Model and Robustness Analysis**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/39_task08_apply_physical_error_model_and_robustness.md)
     - Audited error sampling (`src/nkm/errors.py`), eliminated duplicate booster jitter draws, added `nkm_timing_mrad`, and enforced energy rigidity scaling ($K_{\text{eff}} = K / (1 + \Delta p/p)$). Structured `apply_sample_errors()` outputs into explicit `centroid_offset`, `nkm_errors`, and `ring_errors` sub-dictionaries. Enhanced `evaluate_robustness_statistics` (`src/nkm/robust_optimization.py`) with stored beam kick perturbation calculations, capture efficiency evaluation, failure mode breakdown, and Monte Carlo sample size convergence metrics. Added `nominal_vs_robust_comparison()` using common random numbers and comprehensive test suite (`tests/test_task08_error_model.py`).
 
+40. [**Milestone 40 — Task 09: MOGA Pareto Optimization Enhancements & Reproducibility**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/40_task09_moga_pareto_enhancements.md)
+    - Integrated non-dominated sorting filtering on Pareto front solutions (`src/nkm/moga.py`), implemented multi-seed finalist re-evaluation via end-to-end tracking, added Pareto front visualization (`plot_moga_summary`), and updated publication script. Verified with 100% test pass rate across all 152 test cases in the test suite.
+
+

@@ -14,11 +14,15 @@ import json
 import time
 import numpy as np
 
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 from pymoo.termination import get_termination
 from pymoo.indicators.hv import Hypervolume
+from pymoo.util.nds.non_dominated_sorting import NonDominatedSorting
 
 from .bts_lattice import BTSConfig, create_bts_lattice
 from .optics import compute_twiss_propagation, compute_mismatch_metric
@@ -131,6 +135,42 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
     return float(config.aperture_radius_m - envelope)
 
 
+
+def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5):
+    from .end_to_end import run_end_to_end_pipeline
+    from .bts_lattice import BTSConfig
+    for name, sol in result.representative_solutions.items():
+        k = sol["strengths_array"]
+        bts_cfg = BTSConfig(
+            k_q11=k[0], k_q12=k[1], k_q13=k[2],
+            k_q21=k[3], k_q22=k[4], k_q23=k[5],
+            k_q31=k[6], k_q32=k[7], k_q33=k[8]
+        )
+        transmissions = []
+        clearances = []
+        for s in range(n_mc_seeds):
+            try:
+                res = run_end_to_end_pipeline(
+                    bts_config=bts_cfg,
+                    n_particles=n_particles,
+                    n_turns=10,
+                    seed=42 + s,
+                    verbose=False
+                )
+                inj_summary = res.get("injection_summary", {})
+                transmissions.append(inj_summary.get("capture_efficiency", 1.0))
+                clearances.append(res.get("optics_summary", {}).get("min_clearance_x_m", 0.005))
+            except Exception:
+                transmissions.append(0.0)
+                clearances.append(0.0)
+        
+        result.finalist_evaluations[name] = {
+            "mean_transmission": float(np.mean(transmissions)),
+            "min_clearance": float(np.mean(clearances)),
+            "tracking_std": float(np.std(transmissions))
+        }
+
+
 def select_representative_solutions(pareto_x: np.ndarray,
                                      pareto_f: np.ndarray,
                                      quad_names: List[str]) -> Dict[str, Dict[str, Any]]:
@@ -159,7 +199,7 @@ def select_representative_solutions(pareto_x: np.ndarray,
 
     indices = {
         "min_mismatch": idx_min_mismatch,
-        "max_aperture_margin": idx_max_aperture,
+        "max_aperture_clearance": idx_max_aperture,
         "min_dispersion": idx_min_disp,
         "knee_point": idx_knee
     }
@@ -172,7 +212,7 @@ def select_representative_solutions(pareto_x: np.ndarray,
             "strengths_array": pareto_x[idx].tolist(),
             "quad_strengths": k_dict,
             "total_mismatch": float(pareto_f[idx, 0]),
-            "peak_beta": float(pareto_f[idx, 1]),
+            "envelope_risk": float(pareto_f[idx, 1]),
             "residual_dispersion": float(pareto_f[idx, 2]),
         }
 
@@ -214,6 +254,13 @@ def run_bts_moga(config: Optional[BTSMOGAConfig] = None) -> BTSMOGAResult:
         pareto_x = pop_x[feasible_mask]
         pareto_f = pop_f[feasible_mask]
         pareto_cv = pop_cv[feasible_mask]
+        
+        # Apply Non-Dominated Sorting to feasible set
+        nds = NonDominatedSorting().do(pareto_f, only_non_dominated_front=True)
+        pareto_x = pareto_x[nds]
+        pareto_f = pareto_f[nds]
+        pareto_cv = pareto_cv[nds]
+        
         least_infeasible_x = np.empty((0, 9))
         least_infeasible_f = np.empty((0, 3))
         min_violation = 0.0
@@ -292,7 +339,7 @@ def save_moga_results_json(result: BTSMOGAResult, output_dir: Union[str, Path]):
         json.dump(summary_data, f, indent=2)
 
     if len(result.pareto_x) > 0:
-        csv_header = "q11,q12,q13,q21,q22,q23,q31,q32,q33,mismatch_total,peak_beta,residual_dispersion"
+        csv_header = "q11,q12,q13,q21,q22,q23,q31,q32,q33,mismatch_total,envelope_risk,residual_dispersion"
         data = np.hstack([result.pareto_x, result.pareto_f])
         np.savetxt(output_dir / "moga_pareto_front.csv", data, delimiter=",", header=csv_header, comments="")
 
@@ -303,5 +350,18 @@ def save_moga_results(result: BTSMOGAResult, output_dir: Union[str, Path] = "res
 
 
 def plot_moga_summary(result: BTSMOGAResult, save_dir: Optional[Union[str, Path]] = None):
-    """Legacy placeholder function for plotting MOGA summary diagnostics."""
-    pass
+    if not result.success or len(result.pareto_f) == 0:
+        return
+    plt.figure(figsize=(10, 8))
+    plt.scatter(result.pareto_f[:, 0], result.pareto_f[:, 1], c=result.pareto_f[:, 2], cmap='viridis')
+    plt.colorbar(label='Residual Dispersion (f3)')
+    plt.xlabel('Total Mismatch (f1)')
+    plt.ylabel('Envelope Risk (f2)')
+    plt.title('MOGA Pareto Front')
+    
+    if save_dir:
+        save_dir = Path(save_dir)
+        save_dir.mkdir(parents=True, exist_ok=True)
+        plt.savefig(save_dir / "moga_pareto.png", dpi=150)
+    plt.close()
+

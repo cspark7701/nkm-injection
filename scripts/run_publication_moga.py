@@ -19,6 +19,7 @@ if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
 from src.nkm.moga import (
+    reevaluate_pareto_finalists,
     BTSMOGAConfig,
     run_bts_moga,
     save_moga_results_json
@@ -43,13 +44,15 @@ def main():
         res = run_bts_moga(cfg)
 
         seed_dir = output_dir / f"seed_{seed}"
+        if res.success:
+            reevaluate_pareto_finalists(res, n_particles=1000, n_mc_seeds=2)
         save_moga_results_json(res, seed_dir)
 
         print(f"Seed {seed}: Success={res.success}, Feasible Fraction={res.feasible_fraction*100:.1f}%, Pareto Count={len(res.pareto_x)}")
         if res.success and "knee_point" in res.representative_solutions:
             knee = res.representative_solutions["knee_point"]
             knee_quad_strengths.append(knee["strengths_array"])
-            print(f"  Knee Point Mismatch={knee['total_mismatch']:.4f}, Peak Beta={knee['peak_beta']:.2f} m")
+            print(f"  Knee Point Mismatch={knee['total_mismatch']:.4f}, Envelope Risk={knee['envelope_risk']:.2f} m")
 
         multi_seed_results[f"seed_{seed}"] = {
             "success": res.success,

@@ -56,7 +56,7 @@ def test_moga_deterministic_reproducibility():
 
 
 def test_representative_solution_selection():
-    """Test selection of min_mismatch, max_aperture_margin, min_dispersion, and knee_point."""
+    """Test selection of min_mismatch, max_aperture_clearance, min_dispersion, and knee_point."""
     quad_names = ['q11', 'q12', 'q13', 'q21', 'q22', 'q23', 'q31', 'q32', 'q33']
     pareto_x = np.random.uniform(-2, 2, (5, 9))
     pareto_f = np.array([
@@ -70,12 +70,12 @@ def test_representative_solution_selection():
     reps = select_representative_solutions(pareto_x, pareto_f, quad_names)
 
     assert "min_mismatch" in reps
-    assert "max_aperture_margin" in reps
+    assert "max_aperture_clearance" in reps
     assert "min_dispersion" in reps
     assert "knee_point" in reps
 
     assert reps["min_mismatch"]["total_mismatch"] == 2.0
-    assert reps["max_aperture_margin"]["peak_beta"] == 15.0
+    assert reps["max_aperture_clearance"]["envelope_risk"] == 15.0
     assert reps["min_dispersion"]["residual_dispersion"] == 0.1
 
 

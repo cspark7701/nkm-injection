@@ -55,7 +55,7 @@ def test_sample_error_ensemble_reproducibility():
 
     assert len(samples1) == 50
     assert samples1[0]["quad_k_err"] == samples2[0]["quad_k_err"]
-    assert samples1[10]["booster_x_jitter_m"] == samples2[10]["booster_x_jitter_m"]
+    assert samples1[10]["booster_x_m"] == samples2[10]["booster_x_m"]
 
 
 def test_apply_sample_errors(nominal_bts_config):

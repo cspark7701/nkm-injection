@@ -21,7 +21,7 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 - **Authoritative Simulation Notebook**: `bts.ipynb`
 - **Optional MOGA Pareto Notebook**: `bts-moga.ipynb`
-- **Single-Command Paper Reproduction**: `python3 scripts/reproduce_paper.py`
+- **Single-Command Manifest-Driven Paper Reproduction**: `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json`
 
 | Workflow Phase | Script Command | Description |
 | :--- | :--- | :--- |
@@ -31,7 +31,7 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 | **Deterministic Opt** | `python3 scripts/optimize_bts_publication.py` | 2-stage SLSQP quad matching & SVD Jacobian analysis. |
 | **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py` | Monte Carlo robustness & OAT sensitivity rankings. |
 | **MOGA Trade-offs** | `python3 scripts/run_publication_moga.py` | Multi-seed NSGA-II Pareto optimization. |
-| **Paper Reproduction** | `python3 scripts/reproduce_paper.py` | Fully data-driven figure and table compilation. |
+| **Paper Reproduction** | `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json` | Fully manifest-driven figure and table compilation. |
 
 ---
 

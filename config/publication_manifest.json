@@ -1,0 +1,10 @@
+{
+  "field_validation_run": "results/field_validation",
+  "tracking_convergence_run": "results/tracking_convergence",
+  "bts_optimization_run": "results/baseline",
+  "injection_run": "results/multiturn_injection",
+  "tolerance_run": "results/baseline",
+  "moga_run": "results/baseline",
+  "input_hash_manifest": "results/baseline/protected_files_manifest.json",
+  "git_commit": ""
+}

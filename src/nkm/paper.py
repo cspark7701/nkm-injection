@@ -199,13 +199,34 @@ def generate_paper_figures(repo_root: Path, output_dir: Path) -> List[Path]:
     return generated_files
 
 
-def run_paper_pipeline(repo_root: Optional[Path] = None, run_id: str = "paper_run") -> Dict[str, Any]:
+def run_paper_pipeline(repo_root: Optional[Path] = None,
+                       run_id: str = "paper_run",
+                       manifest: Optional[Union[str, Path, "PublicationManifest"]] = None) -> Dict[str, Any]:
     """
-    Execute full data-driven paper pipeline.
-    Fails if input files/hashes are invalid.
+    Execute full data-driven paper pipeline consuming a validated PublicationManifest.
+    Fails if manifest validation fails, required files are missing, or input hashes differ.
     """
+    from .results_schema import PublicationManifest, validate_publication_manifest
+
     if repo_root is None:
         repo_root = Path(__file__).resolve().parent.parent.parent
+
+    # Resolve or create default manifest
+    if manifest is None:
+        default_manifest_path = repo_root / "config" / "publication_manifest.json"
+        if default_manifest_path.is_file():
+            pub_manifest = PublicationManifest.load(default_manifest_path)
+        else:
+            pub_manifest = PublicationManifest()
+    elif isinstance(manifest, (str, Path)):
+        pub_manifest = PublicationManifest.load(manifest)
+    else:
+        pub_manifest = manifest
+
+    # Validate manifest & upstream runs
+    val_status = validate_publication_manifest(pub_manifest, repo_root)
+    if not val_status["valid"]:
+        raise ValueError(f"Publication manifest validation failed with errors: {val_status['errors']}")
 
     # Verify input data hashes
     input_hashes = compute_input_data_hashes(repo_root)
@@ -220,14 +241,18 @@ def run_paper_pipeline(repo_root: Optional[Path] = None, run_id: str = "paper_ru
     with open(schema.run_dir / "input_hashes.json", "w") as f:
         json.dump(input_hashes, f, indent=2)
 
+    pub_manifest.save(schema.run_dir / "publication_manifest.json")
+
     tables = generate_paper_tables(repo_root, schema.tables_dir)
     figures = generate_paper_figures(repo_root, schema.figures_dir)
 
     metrics_summary = {
         "run_id": run_id,
+        "manifest_valid": val_status["valid"],
         "input_hashes_verified": True,
         "tables_count": len(tables),
-        "figures_count": len(figures)
+        "figures_count": len(figures),
+        "verified_runs": val_status["verified_runs"]
     }
 
     with open(schema.run_dir / "metrics.json", "w") as f:

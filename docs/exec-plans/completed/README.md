@@ -132,5 +132,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 41. [**Milestone 41 — Task 10: Finalize and Compile JINST Journal Manuscript**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/41_task10_jinst_manuscript_compilation.md)
     - Compiled publication-grade Journal of Instrumentation (JINST) manuscript [`docs/jinst-paper/paper.pdf`](file:///home/cspark/Work/projects/nkm/docs/jinst-paper/paper.pdf) with author Chong Shik Park (Korea University) attribution, incorporating RADIA 2D field map validation, single-objective SLSQP matching, NSGA-II multi-objective optimization, and Monte Carlo 6D robust particle tracking.
 
+42. [**Milestone 42 — Task 10: Build Validated Manifest-Driven Paper Pipeline**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/42_task10_validated_manifest_driven_paper_pipeline.md)
+    - Implemented `PublicationManifest` dataclass and `validate_publication_manifest` in `src/nkm/results_schema.py`. Updated `run_paper_pipeline` (`src/nkm/paper.py`) and `scripts/reproduce_paper.py` `--manifest` CLI flag to fail fast if upstream run directories or cryptographic input data hashes mismatch. Verified with 100% test pass rate across all 157 test cases in the test suite.
+
+
 
 

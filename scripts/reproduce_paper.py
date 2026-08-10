@@ -19,16 +19,23 @@ if str(repo_root) not in sys.path:
 from src.nkm.paper import run_paper_pipeline
 
 
+import argparse
+
 def main():
+    parser = argparse.ArgumentParser(description="Manifest-driven Paper Reproduction Pipeline")
+    parser.add_argument("--manifest", type=str, default=None, help="Path to publication manifest JSON file")
+    args = parser.parse_args()
+
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     run_id = f"paper_run_{timestamp}"
 
-    print("=== Fully Data-Driven Paper Pipeline Reproduction ===")
+    print("=== Fully Manifest-Driven Paper Pipeline Reproduction ===")
     print(f"Run ID: {run_id}")
 
     try:
-        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id)
+        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest)
         print("\n--- Reproduction Pipeline Completed Successfully ---")
+        print(f"Manifest Verified: {summary['manifest_valid']}")
         print(f"Input Hashes Verified: {summary['input_hashes_verified']}")
         print(f"Tables Generated: {summary['tables_count']}")
         print(f"Figures Generated: {summary['figures_count']}")

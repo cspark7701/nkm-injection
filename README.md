@@ -2,7 +2,7 @@
 
 Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ring (BTS) transfer line optics matching, off-axis beam injection, and reproducible publication generation.
 
-> **Comprehensive Guide**: See [docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md](file:///home/cspark/Work/projects/nkm/docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md) for the single-file complete specification of the simulation procedure and paper reproduction pipeline.
+> **Comprehensive Guide**: See [`docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`](docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md) for the single-file complete specification of the simulation procedure and paper reproduction pipeline.
 
 ---
 
@@ -51,7 +51,7 @@ All generated simulation outputs are saved under the `results/` directory.
 
 ## Installation & Setup
 
-> **Detailed Guide**: See [docs/INSTALLATION.md](file:///home/cspark/Work/projects/nkm/docs/INSTALLATION.md) for full step-by-step installation instructions across Conda and venv.
+> **Detailed Guide**: See [`docs/INSTALLATION.md`](docs/INSTALLATION.md) for full step-by-step installation instructions across Conda and venv.
 
 ### Automated Setup (1-Command)
 
@@ -81,5 +81,5 @@ python3 scripts/reproduce_paper.py
 
 ## License & Citation
 
-- **License**: [MIT License](file:///home/cspark/Work/projects/nkm/LICENSE)
-- **Citation**: See [`CITATION.cff`](file:///home/cspark/Work/projects/nkm/CITATION.cff)
+- **License**: [MIT License](LICENSE)
+- **Citation**: See [`CITATION.cff`](CITATION.cff)

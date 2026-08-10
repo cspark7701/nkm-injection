@@ -135,6 +135,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 42. [**Milestone 42 — Task 10: Build Validated Manifest-Driven Paper Pipeline**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/42_task10_validated_manifest_driven_paper_pipeline.md)
     - Implemented `PublicationManifest` dataclass and `validate_publication_manifest` in `src/nkm/results_schema.py`. Updated `run_paper_pipeline` (`src/nkm/paper.py`) and `scripts/reproduce_paper.py` `--manifest` CLI flag to fail fast if upstream run directories or cryptographic input data hashes mismatch. Verified with 100% test pass rate across all 157 test cases in the test suite.
 
+43. [**Milestone 43 — Task 11: Publication Regression Tests & Repository Cleanup**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/43_task11_publication_regression_repository_cleanup.md)
+    - Added physics-level regression tests (`tests/test_paper_regression.py`) covering 2-plane kicks, thin/thick agreement, aperture and septum losses, individual uncertainty responses, and capture metrics. Fixed 6D symplecticity pass logic in `validate_bts_lattice`, sanitized README links, aligned Python versions, and verified 100% test pass rate across 161 test cases.
+
+
 
 
 

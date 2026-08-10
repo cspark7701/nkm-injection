@@ -224,17 +224,30 @@ def validate_bts_lattice(lattice: at.Lattice) -> Dict[str, Any]:
     is_symplectic_44 = symp_error_m44 < 1e-10
     is_symplectic_66 = symp_error_m66 < 1e-10
     
-    # Aperture check
+    # Strengthened Aperture check: shape, finite, positive upper limits, lower < upper
     aperture_valid = True
     for elem in lattice:
         if hasattr(elem, 'Limits') and elem.Limits is not None:
-            if any(lim <= 0 for lim in elem.Limits[1::2]):
+            lims = np.asanyarray(elem.Limits)
+            if not np.all(np.isfinite(lims)):
                 aperture_valid = False
+                break
+            if len(lims) == 4: # [xmin, xmax, ymin, ymax]
+                xmin, xmax, ymin, ymax = lims
+                if xmin >= xmax or ymin >= ymax or xmax <= 0 or ymax <= 0:
+                    aperture_valid = False
+                    break
+            elif len(lims) == 2: # [r_x, r_y]
+                rx, ry = lims
+                if rx <= 0 or ry <= 0:
+                    aperture_valid = False
+                    break
                 
     all_passed = (
         is_m44_finite and
         is_m66_finite and
         is_symplectic_44 and
+        is_symplectic_66 and
         aperture_valid and
         total_length > 0
     )

@@ -138,6 +138,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 43. [**Milestone 43 — Task 11: Publication Regression Tests & Repository Cleanup**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/43_task11_publication_regression_repository_cleanup.md)
     - Added physics-level regression tests (`tests/test_paper_regression.py`) covering 2-plane kicks, thin/thick agreement, aperture and septum losses, individual uncertainty responses, and capture metrics. Fixed 6D symplecticity pass logic in `validate_bts_lattice`, sanitized README links, aligned Python versions, and verified 100% test pass rate across 161 test cases.
 
+44. [**Milestone 44 — Task: Fix GitHub Actions Release Workflow**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/44_task_fix_github_actions_workflow.md)
+    - Corrected the inline Python file-hash verification snippet in `.github/workflows/release-zenodo.yml` to import and call `compute_input_data_hashes(Path('.'))` from `src.nkm.results_schema`. Verified locally that all workflow steps and paper regression tests pass cleanly.
+
+
 
 
 

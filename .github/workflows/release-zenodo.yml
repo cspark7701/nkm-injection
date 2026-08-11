@@ -33,9 +33,9 @@ jobs:
       - name: Verify Protected Input File Hashes
         run: |
           python3 -c "
-          from src.nkm.results_schema import PaperResultSchema
-          schema = PaperResultSchema()
-          hashes = schema.compute_input_hashes()
+          from pathlib import Path
+          from src.nkm.results_schema import compute_input_data_hashes
+          hashes = compute_input_data_hashes(Path('.'))
           print('Input File Cryptographic Hashes:')
           for name, h in hashes.items():
               print(f'  {name}: {h}')

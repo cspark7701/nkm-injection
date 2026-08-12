@@ -141,6 +141,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 44. [**Milestone 44 — Task: Fix GitHub Actions Release Workflow**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/44_task_fix_github_actions_workflow.md)
     - Corrected the inline Python file-hash verification snippet in `.github/workflows/release-zenodo.yml` to import and call `compute_input_data_hashes(Path('.'))` from `src.nkm.results_schema`. Verified locally that all workflow steps and paper regression tests pass cleanly.
 
+45. [**Milestone 45 — Task: Update Jupyter Notebook Kernelspec Metadata**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/45_task_update_notebook_kernelspecs.md)
+    - Updated kernelspec metadata to `pyat-dev` across non-protected Jupyter notebooks in the repository, maintaining protected source notebook integrity per `AGENTS.md` guidelines.
+
+
 
 
 

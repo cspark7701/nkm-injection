@@ -153,6 +153,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 48. [**Milestone 48 — Task: Fix MOGA Pareto Fallback for Remote GitHub Actions**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/48_task_fix_moga_pareto_fallback.md)
     - Updated `run_bts_moga()` in `src/nkm/moga.py` to populate representative solutions from `least_infeasible_x` when `pareto_x` is empty on short test runs. Verified 100% test pass rate across 161 test cases.
 
+49. [**Milestone 49 — Task: Fix plot_moga_summary Fallback for Empty Pareto Fronts**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/49_task_fix_plot_moga_summary_fallback.md)
+    - Updated `plot_moga_summary()` in `src/nkm/moga.py` to fall back to `least_infeasible_f` when `pareto_f` is empty, ensuring figure generation on un-converged short test runs. Verified 100% test pass rate across 161 test cases.
+
+
 
 
 

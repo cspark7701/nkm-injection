@@ -352,14 +352,15 @@ def save_moga_results(result: BTSMOGAResult, output_dir: Union[str, Path] = "res
 
 
 def plot_moga_summary(result: BTSMOGAResult, save_dir: Optional[Union[str, Path]] = None):
-    if not result.success or len(result.pareto_f) == 0:
+    pts = result.pareto_f if len(result.pareto_f) > 0 else result.least_infeasible_f
+    if len(pts) == 0:
         return
     plt.figure(figsize=(10, 8))
-    plt.scatter(result.pareto_f[:, 0], result.pareto_f[:, 1], c=result.pareto_f[:, 2], cmap='viridis')
+    plt.scatter(pts[:, 0], pts[:, 1], c=pts[:, 2], cmap='viridis')
     plt.colorbar(label='Residual Dispersion (f3)')
     plt.xlabel('Total Mismatch (f1)')
     plt.ylabel('Envelope Risk (f2)')
-    plt.title('MOGA Pareto Front')
+    plt.title('MOGA Pareto Front' if len(result.pareto_f) > 0 else 'MOGA Least-Infeasible Population')
     
     if save_dir:
         save_dir = Path(save_dir)

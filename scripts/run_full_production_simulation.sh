@@ -9,7 +9,7 @@
 # Options:
 #   -q, --quiet        Disable verbose screen output (saves log to file).
 #   -v, --verbose      Enable verbose output to screen (default).
-#   -p, --parallel N   Number of parallel CPU workers (default: 90% of cores).
+#   -w, --workers W    Number of parallel CPU worker cores (default: 90% of cores).
 #   -o, --output-dir   Base directory for production outputs.
 #   -h, --help         Show this help message.
 # ==============================================================================
@@ -40,7 +40,7 @@ while [[ $# -gt 0 ]]; do
             VERBOSE=true
             shift
             ;;
-        -p|--parallel)
+        -w|--workers)
             N_WORKERS="$2"
             shift 2
             ;;
@@ -54,7 +54,7 @@ while [[ $# -gt 0 ]]; do
             echo "  -d, --dry-run      Perform a dry run (validates scripts & inputs without running long simulations)."
             echo "  -q, --quiet        Disable verbose output to screen (log saved to file)."
             echo "  -v, --verbose      Enable verbose output to screen (default)."
-            echo "  -p, --parallel N   Number of parallel CPU workers (default: 90% cores = ${DEFAULT_CORES})."
+            echo "  -w, --workers W    Number of parallel CPU worker cores (default: 90% cores = ${DEFAULT_CORES})."
             echo "  -o, --output-dir D Set custom output directory."
             echo "  -h, --help         Show this help message."
             exit 0

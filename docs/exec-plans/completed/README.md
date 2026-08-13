@@ -159,6 +159,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 50. [**Milestone 50 — Task: Fix Paper Regression Workflow Protected Hash Manifest Auto-Generation**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/50_task_fix_paper_regression_workflow.md)
     - Updated `validate_publication_manifest()` in `src/nkm/results_schema.py` to automatically calculate and save `results/baseline/protected_files_manifest.json` on clean checkouts when missing. Verified 100% test pass rate across 161 test cases.
 
+51. [**Milestone 51 — Task: Standardize Worker Option to -w, --workers Across All Scripts**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/51_task_standardize_worker_option_across_scripts.md)
+    - Replaced `--parallel` with `-w, --workers W` ("Number of parallel CPU worker cores") across shell and Python execution scripts (`run_full_production_simulation.sh`, `run_bts_moga.py`, `run_multiturn_injection.py`, `reproduce_paper.py`).
+
+
 
 
 

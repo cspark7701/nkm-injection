@@ -26,6 +26,7 @@ from nkm.moga import (
 
 def main():
     parser = argparse.ArgumentParser(description="BTS Quadrupole MOGA Pareto Optimization (Milestone 7)")
+    parser.add_argument("-w", "--workers", type=int, default=None, help="Number of parallel CPU worker cores")
     parser.add_argument("--pop-size", type=int, default=50, help="Population size for NSGA-II (default: 50)")
     parser.add_argument("--n-gen", type=int, default=40, help="Number of generations (default: 40)")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility (default: 42)")

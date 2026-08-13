@@ -21,10 +21,15 @@ from src.nkm.paper import run_paper_pipeline
 
 import argparse
 
-def main():
+def parse_args():
     parser = argparse.ArgumentParser(description="Manifest-driven Paper Reproduction Pipeline")
+    parser.add_argument("-w", "--workers", type=int, default=None,
+                        help="Number of parallel CPU worker cores.")
     parser.add_argument("--manifest", type=str, default=None, help="Path to publication manifest JSON file")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+def main():
+    args = parse_args()
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     run_id = f"paper_run_{timestamp}"

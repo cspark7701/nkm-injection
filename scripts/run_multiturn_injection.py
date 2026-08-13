@@ -63,6 +63,8 @@ from src.nkm.paper import set_publication_style, PUBLICATION_COLORS
 
 def parse_args():
     parser = argparse.ArgumentParser(description="NKM Multi-Turn Injection Convergence Study")
+    parser.add_argument("-w", "--workers", type=int, default=None,
+                        help="Number of parallel CPU worker cores.")
     parser.add_argument("--tier", choices=["smoke", "pilot", "production"], default="smoke",
                         help="Simulation tier: smoke (CI), pilot (dev), production (pub).")
     parser.add_argument("--output-dir", type=Path, default=None,

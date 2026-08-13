@@ -20,7 +20,7 @@ Every manuscript figure, table, and reported metric can be dynamically reproduce
 Clone the repository and install locked dependencies:
 
 ```bash
-git clone https://github.com/nkm-project/nkm.git
+git clone https://github.com/cspark7701/nkm.git
 cd nkm
 pip install -r requirements-lock.txt
 pip install -e .[dev,moga]
@@ -42,7 +42,7 @@ Outputs are saved under `results/paper/paper_run_<timestamp>/`.
 
 ## 4. Test Suite Execution
 
-Run all unit, integration, and paper regression tests:
+Run all 161 unit, integration, and paper regression tests:
 
 ```bash
 pytest -v
@@ -58,3 +58,11 @@ Authoritative input data files are protected against silent corruption:
 - `kickmap_file.txt`: SHA-256 verified at execution
 - `K4GSR_HBIv4-1.mat`: SHA-256 verified at execution
 - `storage_ring_lattice_nkm.mat`: SHA-256 verified at execution
+- `nkm_field.xlsx`: SHA-256 verified at execution
+- `nkm_field_expanded.xlsx`: SHA-256 verified at execution
+
+---
+
+## 6. Notebook Visualization
+
+Notebooks 01-03 include inline publication-quality visualization cells.

@@ -93,7 +93,7 @@ pytest -v
 
 Expected output:
 ```text
-73 passed in ~3 minutes
+161 passed in ~15 minutes
 ```
 
 > **Note**: Missing simulation output files (such as `storage_ring_lattice_nkm.mat`) are automatically resurrected from the protected source data (`K4GSR_HBIv4-1.mat`) upon running `pytest` or loading the lattice for the first time.
@@ -106,9 +106,10 @@ After a successful installation:
 
 1. **Run Paper Pipeline**:
    ```bash
-   python3 scripts/reproduce_paper.py
+   python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w 4
    ```
 2. **Run Main Simulation Notebook**:
+   Ensure you select the `pyat-dev` Jupyter kernel to run the notebooks. The notebooks (01-03) contain rich inline visualization cells (field maps, phase-space portraits, Pareto fronts, etc.).
    ```bash
    jupyter notebook notebooks/01_bts_main_simulation.ipynb
    ```

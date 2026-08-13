@@ -87,7 +87,7 @@ flowchart TD
 
 ### Step 7: Fully Data-Driven Paper Reproduction Pipeline
 - **Modules**: `src/nkm/results_schema.py`, `src/nkm/paper.py`
-- **Script**: `python3 scripts/reproduce_paper.py`
+- **Script**: `python3 scripts/reproduce_paper.py` (supports `-w, --workers W` and `--manifest` flags)
 - **Procedure**:
   1. Verify cryptographic SHA-256 hashes of scientific input data files (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`, `storage_ring_lattice_nkm.mat`).
   2. Initialize provenance schema layout (`results/paper/paper_run_<timestamp>/`).
@@ -115,7 +115,7 @@ flowchart TD
 | **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py` | Runs Monte Carlo robustness & OAT sensitivity rankings. |
 | **MOGA Trade-offs** | `python3 scripts/run_publication_moga.py` | Runs multi-seed NSGA-II Pareto optimization. |
 | **Paper Reproduction** | `python3 scripts/reproduce_paper.py` | Regenerates all manuscript figures, tables & provenanced metrics. |
-| **Test Suite** | `pytest -v` | Executes all 68 unit, integration, and regression tests. |
+| **Test Suite** | `pytest -v` | Executes all 161 unit, integration, and regression tests. |
 
 ---
 
@@ -134,3 +134,13 @@ Before and after every execution, verify clean git status:
 git status --short
 git diff --name-only
 ```
+
+---
+
+## 6. Notebook Visualization Supplement
+
+Notebooks 01-03 include rich inline publication-quality visualization cells:
+- `notebooks/01_bts_main_simulation.ipynb` (VS-1 through VS-5): NKM longitudinal field profile, 2D kick map colormaps, mid-plane kick vs. position, BTS optics functions (β, D, μ), dynamic aperture footprint
+- `notebooks/02_multiturn_injection_validation.ipynb` (§3.1–3.4): Capture efficiency bar charts, phase-space portraits (x–x', y–y') per kicker model, turn-by-turn survival history, real-space x–y footprint with aperture
+- `notebooks/03_bts_moga_pareto.ipynb` (§4.1–4.4): Pareto front scatter matrix (3 objective pairs), hypervolume convergence history, quadrupole strength profile bar chart, objective radar chart
+

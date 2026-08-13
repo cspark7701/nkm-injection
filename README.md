@@ -17,21 +17,28 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 ---
 
+## Visualization
+
+Notebooks `01-03` include rich inline visualization cells, such as phase-space portraits, field maps, Pareto scatter matrices, hypervolume convergence plots, quad strength bars, and radar charts.
+
+---
+
 ## Primary Workflows & Scripts
 
-- **Authoritative Simulation Notebook**: `bts.ipynb`
-- **Optional MOGA Pareto Notebook**: `bts-moga.ipynb`
-- **Single-Command Manifest-Driven Paper Reproduction**: `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json`
+- **Authoritative Simulation Notebooks**: `notebooks/01_bts_main_simulation.ipynb`, `notebooks/02_multiturn_injection_validation.ipynb`, `notebooks/04_full_production_simulation.ipynb`
+- **Optional MOGA Pareto Notebook**: `notebooks/03_bts_moga_pareto.ipynb`
+- **Single-Command Manifest-Driven Paper Reproduction**: `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W`
 
 | Workflow Phase | Script Command | Description |
 | :--- | :--- | :--- |
 | **Field Validation** | `python3 scripts/validate_nkm_kick.py` | 5-way field/kick cross-validation. |
 | **Tracking Convergence** | `python3 scripts/run_tracking_convergence.py` | $N_{\text{slices}}$ thick symplectic tracking convergence. |
-| **Multi-Turn Injection** | `python3 scripts/run_multiturn_injection.py` | Turn-by-turn capture efficiency & kicker models. |
+| **Multi-Turn Injection Validation** | `notebooks/02_multiturn_injection_validation.ipynb` | Multi-Turn Injection Validation. |
+| **Multi-Turn Injection** | `python3 scripts/run_multiturn_injection.py -w W` | Turn-by-turn capture efficiency & kicker models. |
 | **Deterministic Opt** | `python3 scripts/optimize_bts_publication.py` | 2-stage SLSQP quad matching & SVD Jacobian analysis. |
 | **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py` | Monte Carlo robustness & OAT sensitivity rankings. |
-| **MOGA Trade-offs** | `python3 scripts/run_publication_moga.py` | Multi-seed NSGA-II Pareto optimization. |
-| **Paper Reproduction** | `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json` | Fully manifest-driven figure and table compilation. |
+| **MOGA Trade-offs** | `python3 scripts/run_bts_moga.py -w W` | Multi-seed NSGA-II Pareto optimization. |
+| **Paper Reproduction** | `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W` | Fully manifest-driven figure and table compilation. |
 
 ---
 
@@ -70,11 +77,11 @@ cd nkm
 pip install -r requirements-lock.txt
 pip install -e .[dev,moga]
 
-# Verify installation via pytest suite (73 tests)
+# Verify installation via pytest suite (161 tests)
 pytest -v
 
 # Run single-command paper pipeline
-python3 scripts/reproduce_paper.py
+python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w 4
 ```
 
 ---

@@ -22,9 +22,11 @@ python scripts/inventory_protected_hashes.py
 
 ## 2. Interactive Notebook Workflows
 
-The repository contains two primary Jupyter Notebooks depending on your paper scope:
+The repository contains four primary Jupyter Notebooks depending on your paper scope:
 
-### A. Authoritative Simulation Notebook — [`bts.ipynb`](file:///home/cspark/Work/projects/nkm/bts.ipynb)
+**Note on Visualization**: Notebooks 01-03 include rich inline plots and visualizations.
+
+### A. Authoritative Simulation Notebook — [`notebooks/01_bts_main_simulation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/01_bts_main_simulation.ipynb)
 - **Role**: Primary workflow notebook for the main text of the journal paper.
 - **What it executes**:
   1. **BTS Lattice Construction**: Builds the 36-element transport line in Accelerator Toolbox (pyAT).
@@ -35,13 +37,18 @@ The repository contains two primary Jupyter Notebooks depending on your paper sc
   6. **Error Budget Analysis**: Evaluates sensitivity against quadrupole misalignments ($\pm 100\,\mu\text{m}$), gradient errors ($0.1\%$), and roll tilts ($0.5\text{ mrad}$).
 
 ```bash
-# Launch Jupyter Lab / Notebook to run bts.ipynb interactively:
-jupyter lab bts.ipynb
+# Launch Jupyter Lab / Notebook to run notebooks/01_bts_main_simulation.ipynb interactively:
+jupyter lab notebooks/01_bts_main_simulation.ipynb
 ```
 
 ---
 
-### B. Optional Multi-Objective Notebook — [`bts-moga.ipynb`](file:///home/cspark/Work/projects/nkm/bts-moga.ipynb)
+### B. Dedicated Multi-Turn Injection Validation Notebook — [`notebooks/02_multiturn_injection_validation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/02_multiturn_injection_validation.ipynb)
+- **Role**: Dedicated notebook for multi-turn injection validation.
+- **What it executes**:
+  1. Validates the injection process over multiple turns in the storage ring.
+
+### C. Optional Multi-Objective Notebook — [`notebooks/03_bts_moga_pareto.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/03_bts_moga_pareto.ipynb)
 - **Role**: Optional MOGA Pareto study notebook for trade-off analysis sections.
 - **What it executes**:
   1. Runs NSGA-II multi-objective genetic algorithm over 9 BTS quadrupole strengths.
@@ -50,8 +57,13 @@ jupyter lab bts.ipynb
 
 ```bash
 # Launch optional MOGA notebook:
-jupyter lab bts-moga.ipynb
+jupyter lab notebooks/03_bts_moga_pareto.ipynb
 ```
+
+### D. Full Production Pipeline Notebook — [`notebooks/04_full_production_simulation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/04_full_production_simulation.ipynb)
+- **Role**: The full production simulation pipeline.
+- **What it executes**:
+  1. Executes the complete 8-step production pipeline in a consolidated notebook.
 
 ---
 
@@ -85,7 +97,8 @@ python scripts/run_tolerance_study.py --n-samples 200
 # Output: results/tolerances/monte_carlo_mismatch.png
 
 # Step 3.7: Run NSGA-II MOGA Pareto optimization (pop=40, gen=30)
-python scripts/run_bts_moga.py --pop-size 40 --n-gen 30 --seed 42
+# You can use -w / --workers W to run in parallel
+python scripts/run_bts_moga.py --pop-size 40 --n-gen 30 --seed 42 -w 7
 # Output: results/moga/moga_pareto_front_2d.png
 ```
 
@@ -96,7 +109,7 @@ python scripts/run_bts_moga.py --pop-size 40 --n-gen 30 --seed 42
 For paper writing, you can generate **all LaTeX tables (`.tex`)**, **Markdown tables (`.md`)**, **300 DPI publication figures (`.png` & `.pdf`)**, and **machine-readable JSON metrics** with a single command:
 
 ```bash
-python scripts/reproduce_paper.py
+python scripts/reproduce_paper.py -w 7
 ```
 
 ### Generated Paper Deliverables Summary (`results/paper/`):
@@ -121,7 +134,7 @@ python scripts/reproduce_paper.py
 To ensure all numbers in your manuscript are strictly reproducible and pass physics checks, run the automated test suite:
 
 ```bash
-# Run all 41 unit, integration, and paper regression tests
+# Run all 161 unit, integration, and paper regression tests
 pytest
 
 # Or run paper-specific regression tests specifically

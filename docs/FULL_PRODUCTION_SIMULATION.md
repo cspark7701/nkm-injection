@@ -32,7 +32,7 @@ Both entry points execute the exact same 8 simulation steps in identical sequenc
 ./scripts/run_full_production_simulation.sh --quiet
 
 # Specify custom parallel worker cores and output directory
-./scripts/run_full_production_simulation.sh --parallel 7 --output-dir results/my_custom_run
+./scripts/run_full_production_simulation.sh --workers 7 --output-dir results/my_custom_run
 ```
 
 ### Command Line Options
@@ -42,7 +42,7 @@ Both entry points execute the exact same 8 simulation steps in identical sequenc
 | `-d` | `--dry-run` | Off | Performs a dry run of all 8 simulation steps, verifying input files and Python script syntax without running long simulations. |
 | `-q` | `--quiet` | Off (`--verbose`) | Suppresses screen output and redirects all verbose stdout/stderr to a master log file under `results/production_run_<timestamp>/logs/production_run.log`. Recommended for background runs and AI agent turns. |
 | `-v` | `--verbose` | On | Prints full real-time simulation step logs directly to terminal screen. |
-| `-p` | `--parallel` | 90% Cores | Sets the number of parallel CPU worker processes ($N_{\text{workers}} = \max(1, \lfloor 0.9 \times N_{\text{cpu}} \rfloor)$). |
+| `-w` | `--workers W` | 90% Cores | Number of parallel CPU worker cores ($N_{\text{workers}} = \max(1, \lfloor 0.9 \times N_{\text{cpu}} \rfloor)$). |
 | `-o` | `--output-dir` | `results/production_run_<timestamp>` | Custom target directory for output artifacts. |
 | `-h` | `--help` | — | Displays usage summary. |
 

@@ -150,5 +150,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 47. [**Milestone 47 — Task: Fix Remote GitHub Actions Workflow Failures**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/47_task_fix_remote_github_actions.md)
     - Resolved remote CI failures by enabling `create_if_missing` in `validate_publication_manifest` for clean checkouts and adjusting quick MOGA test constraint limits. Verified 100% test pass rate across 161 test cases.
 
+48. [**Milestone 48 — Task: Fix MOGA Pareto Fallback for Remote GitHub Actions**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/48_task_fix_moga_pareto_fallback.md)
+    - Updated `run_bts_moga()` in `src/nkm/moga.py` to populate representative solutions from `least_infeasible_x` when `pareto_x` is empty on short test runs. Verified 100% test pass rate across 161 test cases.
+
+
 
 

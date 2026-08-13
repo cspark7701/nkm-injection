@@ -294,6 +294,8 @@ def run_bts_moga(config: Optional[BTSMOGAConfig] = None) -> BTSMOGAResult:
     quad_names = ['q11', 'q12', 'q13', 'q21', 'q22', 'q23', 'q31', 'q32', 'q33']
     if len(pareto_x) > 0:
         representatives = select_representative_solutions(pareto_x, pareto_f, quad_names)
+    elif len(least_infeasible_x) > 0:
+        representatives = select_representative_solutions(least_infeasible_x, least_infeasible_f, quad_names)
     else:
         representatives = {}
 

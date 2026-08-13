@@ -74,6 +74,7 @@
             <li><a href="#pipeline-structure">Output Directory Structure</a></li>
           </ul>
         </li>
+        <li><a href="#visualizations">Notebook Visualizations</a></li>
         <li><a href="#metrics">Verification Metrics</a></li>
         <li><a href="#provenance">Data Provenance</a></li>
         <li><a href="#references">Literature & References</a></li>
@@ -253,10 +254,10 @@
         <ul class="section-index">
           <li><strong>Step 1: Field Validation</strong> — 5-way cross-validation between RADIA 3D, RADIA 2D, analytical 4-wire, and polynomial fits.</li>
           <li><strong>Step 2: Tracking Convergence</strong> — Thick slicing study demonstrating $&lt; 10^{-6}\text{ rad}$ convergence for $N_{\text{slices}} \ge 20$.</li>
-          <li><strong>Step 3: Multi-Turn Injection</strong> — Evaluates 4 kicker models across 1,000 turns with physical apertures ($\pm 30\text{ mm} \times \pm 15\text{ mm}$).</li>
+          <li><strong>Step 3: Multi-Turn Injection</strong> — Evaluates 4 kicker models across 1,000 turns with physical apertures ($\pm 30\text{ mm} \times \pm 15\text{ mm}$). Use <code>-w</code> flag for <code>run_multiturn_injection.py</code> to configure parallel worker count.</li>
           <li><strong>Step 4: BTS Quad Matching</strong> — 2-stage SLSQP matching of 8 quad families with SVD Jacobian decomposition.</li>
           <li><strong>Step 5: Tolerance Budget</strong> — 500 Monte Carlo seeds with quad errors ($\sigma_{x,y} = 100\,\mu\text{m}$, $\sigma_\phi = 0.5\text{ mrad}$).</li>
-          <li><strong>Step 6: MOGA Pareto Study</strong> — NSGA-II multi-objective optimization balancing mismatch, beta peak, and stay-clears.</li>
+          <li><strong>Step 6: MOGA Pareto Study</strong> — NSGA-II multi-objective optimization balancing mismatch, beta peak, and stay-clears. Use <code>-w</code> flag for <code>run_bts_moga.py</code> to configure parallel worker count.</li>
         </ul>
       </section>
 
@@ -288,8 +289,8 @@
 # 2. Run full production pipeline in QUIET mode (logs output to file while showing real-time step notifications on screen)
 ./scripts/run_full_production_simulation.sh --quiet
 
-# 3. Specify custom CPU core parallel workers and output directory
-./scripts/run_full_production_simulation.sh --parallel 7 --output-dir results/my_custom_run</code></pre>
+# 3. Specify custom CPU worker cores and output directory
+./scripts/run_full_production_simulation.sh --workers 7 --output-dir results/my_custom_run</code></pre>
 
         <table>
           <thead>
@@ -320,10 +321,10 @@
               <td>Prints full real-time simulation step logs directly to screen stdout.</td>
             </tr>
             <tr>
-              <td><code>-p</code></td>
-              <td><code>--parallel</code></td>
+              <td><code>-w</code></td>
+              <td><code>--workers W</code></td>
               <td>90% CPU Cores</td>
-              <td>Sets parallel worker count ($N_{\text{workers}} = \max(1, \lfloor 0.9 \times N_{\text{cpu}} \rfloor)$).</td>
+              <td>Number of parallel CPU worker cores ($N_{\text{workers}} = \max(1, \lfloor 0.9 \times N_{\text{cpu}} \rfloor)$). Also accepted by <code>run_bts_moga.py</code>, <code>run_multiturn_injection.py</code>, and <code>reproduce_paper.py</code>.</td>
             </tr>
             <tr>
               <td><code>-o</code></td>
@@ -367,13 +368,50 @@
     └── paper_metrics_summary.json           # Consolidated publication summary metrics</code></pre>
       </section>
 
+      <!-- Section: Notebook Visualizations -->
+      <section id="visualizations">
+        <h1>Notebook Visualization Supplement</h1>
+        <p>
+          Notebooks 01–03 include rich inline publication-quality visualization cells that can be executed directly in <code>pyat-dev</code> Jupyter kernels:
+        </p>
+
+        <h2><code>notebooks/01_bts_main_simulation.ipynb</code></h2>
+        <ul class="section-index">
+          <li><strong>VS-1:</strong> NKM longitudinal field profile $B_y(s)$ from <code>By.txt</code> with filled area shading.</li>
+          <li><strong>VS-2:</strong> 2D horizontal and vertical field integral maps ($\int B_y\,ds$, $\int B_x\,ds$) as <code>pcolormesh</code> color maps.</li>
+          <li><strong>VS-3:</strong> Horizontal kick $\Delta x'$ [mrad] vs. transverse position $x$ at mid-plane ($y = 0$).</li>
+          <li><strong>VS-4:</strong> BTS post-optimized lattice optics: $\beta_x$, $\beta_y$, $D_x$, $\mu_x$, $\mu_y$ as a 3-panel sharex figure.</li>
+          <li><strong>VS-5:</strong> Dynamic aperture survival footprint ($x$–$y$ plane) from <code>acceptance.npy</code>; gracefully skips if file absent.</li>
+        </ul>
+
+        <h2><code>notebooks/02_multiturn_injection_validation.ipynb</code></h2>
+        <ul class="section-index">
+          <li><strong>§3.1:</strong> Capture efficiency & stored-beam centroid perturbation bar charts for all 4 kicker models.</li>
+          <li><strong>§3.2:</strong> Phase-space portraits ($x$–$x'$, $y$–$y'$) per kicker model (2×4 panel grid with color-coded scatter).</li>
+          <li><strong>§3.3:</strong> Turn-by-turn survival fraction vs. turn number (or informative message if <code>survival_history</code> is absent).</li>
+          <li><strong>§3.4:</strong> Real-space $x$–$y$ footprint of injected vs. stored beam with aperture rectangle overlaid.</li>
+        </ul>
+
+        <h2><code>notebooks/03_bts_moga_pareto.ipynb</code></h2>
+        <ul class="section-index">
+          <li><strong>§4.1:</strong> Pareto front scatter matrix — all 3 objective pairs ($f_1$–$f_2$, $f_1$–$f_3$, $f_2$–$f_3$) with representative solutions marked as ★.</li>
+          <li><strong>§4.2:</strong> Hypervolume convergence history vs. NSGA-II generation.</li>
+          <li><strong>§4.3:</strong> Quadrupole strength bar chart for representative solutions side-by-side across all 9 quadrupoles.</li>
+          <li><strong>§4.4:</strong> Radar (spider) chart of normalized objectives for representative solutions.</li>
+        </ul>
+      </section>
+
       <!-- Section: Metrics -->
       <section id="metrics">
         <h1>Verification Metrics & Regression Test Suite</h1>
         <p>
-          The automated test suite verifies 73 physics and numerical constraints across the codebase:
+          The automated test suite verifies <strong>161 unit, integration, and paper regression tests</strong> across the codebase:
         </p>
-        <pre><code>pytest tests/test_paper_regression.py</code></pre>
+        <pre><code>pytest -v
+# → 161 passed in ~15 minutes
+
+# Or run paper-specific regression tests:
+pytest tests/test_paper_regression.py</code></pre>
       </section>
 
       <!-- Section: Data Provenance -->
@@ -406,6 +444,16 @@
               <td><code>K4GSR_HBIv4-1.mat</code></td>
               <td>4GSR AT Storage Ring Lattice</td>
               <td><code>MAD-X Export Verified</code></td>
+            </tr>
+            <tr>
+              <td><code>nkm_field.xlsx</code></td>
+              <td>RADIA Field Spreadsheet (primary)</td>
+              <td><code>SHA-256 verified at execution</code></td>
+            </tr>
+            <tr>
+              <td><code>nkm_field_expanded.xlsx</code></td>
+              <td>RADIA Field Spreadsheet (expanded)</td>
+              <td><code>SHA-256 verified at execution</code></td>
             </tr>
           </tbody>
         </table>

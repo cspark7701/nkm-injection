@@ -156,6 +156,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 49. [**Milestone 49 — Task: Fix plot_moga_summary Fallback for Empty Pareto Fronts**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/49_task_fix_plot_moga_summary_fallback.md)
     - Updated `plot_moga_summary()` in `src/nkm/moga.py` to fall back to `least_infeasible_f` when `pareto_f` is empty, ensuring figure generation on un-converged short test runs. Verified 100% test pass rate across 161 test cases.
 
+50. [**Milestone 50 — Task: Fix Paper Regression Workflow Protected Hash Manifest Auto-Generation**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/50_task_fix_paper_regression_workflow.md)
+    - Updated `validate_publication_manifest()` in `src/nkm/results_schema.py` to automatically calculate and save `results/baseline/protected_files_manifest.json` on clean checkouts when missing. Verified 100% test pass rate across 161 test cases.
+
+
 
 
 

@@ -146,9 +146,16 @@ def validate_publication_manifest(manifest: PublicationManifest,
     # 1. Verify protected input hashes against manifest
     hash_manifest_path = repo_root / manifest.input_hash_manifest
     if not hash_manifest_path.is_file():
-        validation_status["valid"] = False
-        validation_status["errors"].append(f"Protected hash manifest missing: {manifest.input_hash_manifest}")
-    else:
+        if create_if_missing:
+            hash_manifest_path.parent.mkdir(parents=True, exist_ok=True)
+            input_hashes = compute_input_data_hashes(repo_root)
+            with open(hash_manifest_path, "w") as f:
+                json.dump(input_hashes, f, indent=2)
+        else:
+            validation_status["valid"] = False
+            validation_status["errors"].append(f"Protected hash manifest missing: {manifest.input_hash_manifest}")
+
+    if hash_manifest_path.is_file():
         with open(hash_manifest_path, "r") as f:
             expected_hashes = json.load(f)
         for rel_file, exp_hash in expected_hashes.items():

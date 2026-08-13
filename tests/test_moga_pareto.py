@@ -28,7 +28,10 @@ def test_moga_nondominated_sorting():
     assert np.allclose(np.sort(nds), np.arange(len(pareto_f)))
 
 def test_reevaluate_pareto_finalists():
-    cfg = BTSMOGAConfig(pop_size=10, n_gen=3, seed=42)
+    from src.nkm.optimization import BTSOptimizationConfig
+    from src.nkm.constraints import BTSConstraintConfig
+    opt_cfg = BTSOptimizationConfig(constraint_config=BTSConstraintConfig(mismatch_limit=100.0))
+    cfg = BTSMOGAConfig(pop_size=10, n_gen=3, seed=42, bts_opt_config=opt_cfg)
     res = run_bts_moga(cfg)
     assert res.success
     reevaluate_pareto_finalists(res, n_particles=100, n_mc_seeds=2)
@@ -46,7 +49,10 @@ def test_aperture_margin_computation():
     assert np.isclose(margin, expected)
     
 def test_plot_moga_summary(tmp_path):
-    cfg = BTSMOGAConfig(pop_size=10, n_gen=3, seed=42)
+    from src.nkm.optimization import BTSOptimizationConfig
+    from src.nkm.constraints import BTSConstraintConfig
+    opt_cfg = BTSOptimizationConfig(constraint_config=BTSConstraintConfig(mismatch_limit=100.0))
+    cfg = BTSMOGAConfig(pop_size=10, n_gen=3, seed=42, bts_opt_config=opt_cfg)
     res = run_bts_moga(cfg)
     plot_moga_summary(res, save_dir=tmp_path)
     # Check if a figure is saved

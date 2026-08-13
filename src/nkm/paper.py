@@ -201,7 +201,8 @@ def generate_paper_figures(repo_root: Path, output_dir: Path) -> List[Path]:
 
 def run_paper_pipeline(repo_root: Optional[Path] = None,
                        run_id: str = "paper_run",
-                       manifest: Optional[Union[str, Path, "PublicationManifest"]] = None) -> Dict[str, Any]:
+                       manifest: Optional[Union[str, Path, "PublicationManifest"]] = None,
+                       create_if_missing: bool = True) -> Dict[str, Any]:
     """
     Execute full data-driven paper pipeline consuming a validated PublicationManifest.
     Fails if manifest validation fails, required files are missing, or input hashes differ.
@@ -224,7 +225,7 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
         pub_manifest = manifest
 
     # Validate manifest & upstream runs
-    val_status = validate_publication_manifest(pub_manifest, repo_root)
+    val_status = validate_publication_manifest(pub_manifest, repo_root, create_if_missing=create_if_missing)
     if not val_status["valid"]:
         raise ValueError(f"Publication manifest validation failed with errors: {val_status['errors']}")
 

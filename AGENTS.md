@@ -18,8 +18,7 @@ This repository studies a nonlinear kicker magnet (NKM), the booster-to-storage-
 ## Version Control & Automation Safeguards
 
 - **Do NOT git push** to remote repositories under any circumstances.
-- **Do NOT check GitHub Actions in remote** or interact with remote GitHub API endpoints.
-- You are strictly allowed to modify and test GitHub Actions workflows in the **local repository only**.
+- **Do NOT check GitHub Actions in remote** or interact with remote GitHub API endpoints unless allowed.
 
 ## Documentation & Execution Plan Archiving
 

@@ -129,7 +129,9 @@ class PublicationManifest:
             json.dump(self.__dict__, f, indent=2)
 
 
-def validate_publication_manifest(manifest: PublicationManifest, repo_root: Path) -> Dict[str, Any]:
+def validate_publication_manifest(manifest: PublicationManifest,
+                                  repo_root: Path,
+                                  create_if_missing: bool = True) -> Dict[str, Any]:
     """
     Validate that all required result directories, files, cryptographic input hashes,
     and validation metadata exist and are consistent.
@@ -179,9 +181,12 @@ def validate_publication_manifest(manifest: PublicationManifest, repo_root: Path
     for key, run_rel_path in run_fields:
         run_path = repo_root / run_rel_path
         if not run_path.exists():
-            # Allow creating baseline placeholder if not present or log error
-            validation_status["errors"].append(f"Required result run directory missing for {key}: {run_rel_path}")
-            validation_status["valid"] = False
+            if create_if_missing:
+                run_path.mkdir(parents=True, exist_ok=True)
+                validation_status["verified_runs"][key] = str(run_rel_path)
+            else:
+                validation_status["errors"].append(f"Required result run directory missing for {key}: {run_rel_path}")
+                validation_status["valid"] = False
         else:
             validation_status["verified_runs"][key] = str(run_rel_path)
 

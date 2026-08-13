@@ -57,7 +57,7 @@ def test_validate_publication_manifest_missing_run():
         field_validation_run="results/non_existent_run_directory_xyz"
     )
 
-    val = validate_publication_manifest(manifest, REPO_ROOT)
+    val = validate_publication_manifest(manifest, REPO_ROOT, create_if_missing=False)
     assert val["valid"] is False
     assert any("non_existent_run_directory_xyz" in err for err in val["errors"])
 
@@ -86,4 +86,4 @@ def test_run_paper_pipeline_fails_on_invalid_manifest():
     )
 
     with pytest.raises(ValueError, match="Publication manifest validation failed"):
-        run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_invalid_run", manifest=manifest)
+        run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_invalid_run", manifest=manifest, create_if_missing=False)

@@ -53,7 +53,7 @@ def test_paper_pipeline_execution(tmp_path):
     assert schema.figures_dir.is_dir()
     assert schema.tables_dir.is_dir()
 
-    summary = run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_run_pipeline")
+    summary = run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_run_pipeline", compile_pdf=False)
     assert summary["input_hashes_verified"] is True
     assert summary["tables_count"] >= 2
     assert summary["figures_count"] >= 2

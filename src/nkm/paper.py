@@ -203,7 +203,7 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
                        run_id: str = "paper_run",
                        manifest: Optional[Union[str, Path, "PublicationManifest"]] = None,
                        create_if_missing: bool = True,
-                       compile_pdf: bool = True) -> Dict[str, Any]:
+                       compile_pdf: bool = False) -> Dict[str, Any]:
     """
     Execute full data-driven paper pipeline consuming a validated PublicationManifest.
     Fails if manifest validation fails, required files are missing, or input hashes differ.

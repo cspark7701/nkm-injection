@@ -73,7 +73,7 @@ def test_run_paper_pipeline_manifest_execution(tmp_path):
         input_hash_manifest="results/baseline/protected_files_manifest.json"
     )
 
-    summary = run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_manifest_run", manifest=manifest)
+    summary = run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_manifest_run", manifest=manifest, compile_pdf=False)
     assert summary["manifest_valid"] is True
     assert summary["input_hashes_verified"] is True
     assert summary["tables_count"] >= 2

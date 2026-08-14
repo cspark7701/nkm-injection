@@ -497,7 +497,7 @@ def track_element_resolved_injection(beam: np.ndarray,
                 )
             else:
                 # Track single element
-                res_elem = elem.track(current_beam)
+                res_elem = elem.track(current_beam, energy=config.energy_eV)
                 if isinstance(res_elem, tuple):
                     current_beam = res_elem[0]
                 elif isinstance(res_elem, np.ndarray) and res_elem.ndim == 4:

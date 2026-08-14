@@ -183,6 +183,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 58. [**Milestone 58 — Task: Clean Unit Naming, Legacy Integrator Wrappers, and Thread Safety**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/58_refactor_clean_unit_naming_and_integrator_wrappers.md)
     - Added canonical SI geometric emittance keys `emittance_x_m_rad` and `emittance_y_m_rad` in `src/nkm/beam.py` and `src/nkm/tracking.py` while preserving backward-compatible aliases. Updated `BoosterExtractionConfig` and `BTSMOGAConfig`. Added `track_nkm_symplectic` alias, clarified `track_nkm_rk4` documentation, and enabled thread-safe lattice copying in `BTSNormalizedObjectives`. Verified 100% test pass rate.
 
+59. [**Milestone 59 — Task: Fix Remote GitHub Actions CI PyAT Element Tracking Energy Bug**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/59_fix_remote_ci_pyat_energy_tracking.md)
+    - Identified and fixed `ValueError: Energy needs to be defined` in PyAT element-resolved tracking on Python 3.11 GitHub Actions runners by passing `energy=config.energy_eV` into `elem.track()` in `src/nkm/storage_ring_injection.py`. Verified 100% test pass rate.
+
 
 
 

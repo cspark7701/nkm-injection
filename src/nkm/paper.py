@@ -95,11 +95,11 @@ def generate_paper_tables(repo_root: Path, output_dir: Path) -> Dict[str, str]:
 | Parameter | Symbol | Value | Unit |
 | :--- | :--- | :--- | :--- |
 | Beam Energy | $E_0$ | {nominal_config.energy_eV * 1e-9:.1f} | GeV |
-| Relativistic Gamma | $\gamma$ | {nominal_config.energy_eV / 0.51099895e6:.2f} | - |
-| Entrance Beta ($\beta_x, \beta_y$) | $(\beta_{{x0}}, \beta_{{y0}})$ | ({twiss_init['beta'][0]:.4f}, {twiss_init['beta'][1]:.4f}) | m |
-| Entrance Alpha ($\alpha_x, \alpha_y$) | $(\alpha_{{x0}}, \alpha_{{y0}})$ | ({twiss_init['alpha'][0]:.4f}, {twiss_init['alpha'][1]:.4f}) | - |
+| Relativistic Gamma | $\\gamma$ | {nominal_config.energy_eV / 0.51099895e6:.2f} | - |
+| Entrance Beta ($\\beta_x, \\beta_y$) | $(\\beta_{{x0}}, \\beta_{{y0}})$ | ({twiss_init['beta'][0]:.4f}, {twiss_init['beta'][1]:.4f}) | m |
+| Entrance Alpha ($\\alpha_x, \\alpha_y$) | $(\\alpha_{{x0}}, \\alpha_{{y0}})$ | ({twiss_init['alpha'][0]:.4f}, {twiss_init['alpha'][1]:.4f}) | - |
 | Entrance Dispersion ($D_x, D_x'$) | $(D_{{x0}}, D_{{x0}}')$ | ({twiss_init['dispersion'][0]:.4f}, {twiss_init['dispersion'][1]:.4f}) | m, rad |
-| Exit Beta ($\beta_x, \beta_y$) | $(\beta_{{xExit}}, \beta_{{yExit}})$ | ({prop['final_beta'][0]:.4f}, {prop['final_beta'][1]:.4f}) | m |
+| Exit Beta ($\\beta_x, \\beta_y$) | $(\\beta_{{xExit}}, \\beta_{{yExit}})$ | ({prop['final_beta'][0]:.4f}, {prop['final_beta'][1]:.4f}) | m |
 | Exit Dispersion ($D_x, D_x'$) | $(D_{{xExit}}, D_{{xExit}}')$ | ({prop['final_dispersion'][0]:.4f}, {prop['final_dispersion'][1]:.4f}) | m, rad |
 """
 
@@ -120,7 +120,7 @@ def generate_paper_tables(repo_root: Path, output_dir: Path) -> Dict[str, str]:
 
     t2_md = f"""# Table 2: Quadrupole Strengths & Hardware Limits
 
-| Quadrupole | Nominal $K$ [$\text{{m}}^{{-2}}$] | Hardware Bounds [$\text{{m}}^{{-2}}$] |
+| Quadrupole | Nominal $K$ [$\\text{{m}}^{{-2}}$] | Hardware Bounds [$\\text{{m}}^{{-2}}$] |
 | :--- | :--- | :--- |
 {t2_body}
 """

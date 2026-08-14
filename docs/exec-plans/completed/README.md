@@ -162,6 +162,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 51. [**Milestone 51 — Task: Standardize Worker Option to -w, --workers Across All Scripts**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/51_task_standardize_worker_option_across_scripts.md)
     - Replaced `--parallel` with `-w, --workers W` ("Number of parallel CPU worker cores") across shell and Python execution scripts (`run_full_production_simulation.sh`, `run_bts_moga.py`, `run_multiturn_injection.py`, `reproduce_paper.py`).
 
+52. [**Milestone 52 — Task: Integrate Full Production Simulation Results & Manuscript Artifacts**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/52_task_integrate_full_production_simulation_results.md)
+    - Integrated production run metrics from `results/production_run_20260814_011634/` across 1,000-turn injection tracking, SLSQP/MOGA optics optimization, tolerance budgets, and manifest paper pipeline `reproduce_paper.py`. Verified 100% test pass rate (161/161 tests).
+
+
 
 
 

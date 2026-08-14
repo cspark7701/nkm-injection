@@ -202,7 +202,8 @@ def generate_paper_figures(repo_root: Path, output_dir: Path) -> List[Path]:
 def run_paper_pipeline(repo_root: Optional[Path] = None,
                        run_id: str = "paper_run",
                        manifest: Optional[Union[str, Path, "PublicationManifest"]] = None,
-                       create_if_missing: bool = True) -> Dict[str, Any]:
+                       create_if_missing: bool = True,
+                       compile_pdf: bool = True) -> Dict[str, Any]:
     """
     Execute full data-driven paper pipeline consuming a validated PublicationManifest.
     Fails if manifest validation fails, required files are missing, or input hashes differ.
@@ -247,12 +248,48 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
     tables = generate_paper_tables(repo_root, schema.tables_dir)
     figures = generate_paper_figures(repo_root, schema.figures_dir)
 
+    pdf_compiled = False
+    pdf_path = None
+    if compile_pdf:
+        jinst_dir = repo_root / "docs" / "jinst-paper"
+        tex_file = jinst_dir / "paper.tex"
+        if tex_file.is_file():
+            import shutil
+            import subprocess
+
+            # Copy generated figures into jinst-paper figures directory if present
+            jinst_fig_dir = jinst_dir / "figures"
+            jinst_fig_dir.mkdir(parents=True, exist_ok=True)
+            for fig_p in figures:
+                shutil.copy(fig_p, jinst_fig_dir / fig_p.name)
+
+            # Check if pdflatex is available
+            if shutil.which("pdflatex"):
+                try:
+                    cmd_pdf = ["pdflatex", "-interaction=nonstopmode", "paper.tex"]
+                    cmd_bib = ["bibtex", "paper"]
+                    subprocess.run(cmd_pdf, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+                    subprocess.run(cmd_bib, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+                    subprocess.run(cmd_pdf, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+                    subprocess.run(cmd_pdf, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+
+                    compiled_file = jinst_dir / "paper.pdf"
+                    if compiled_file.is_file():
+                        pdf_compiled = True
+                        pdf_path = str(compiled_file)
+                        # Copy generated PDF to run_dir for archival
+                        shutil.copy(compiled_file, schema.run_dir / "paper.pdf")
+                except Exception as e:
+                    print(f"Warning: PDF compilation failed: {e}")
+
     metrics_summary = {
         "run_id": run_id,
         "manifest_valid": val_status["valid"],
         "input_hashes_verified": True,
         "tables_count": len(tables),
         "figures_count": len(figures),
+        "pdf_compiled": pdf_compiled,
+        "pdf_path": pdf_path,
         "verified_runs": val_status["verified_runs"]
     }
 

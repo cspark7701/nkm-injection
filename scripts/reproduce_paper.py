@@ -26,6 +26,7 @@ def parse_args():
     parser.add_argument("-w", "--workers", type=int, default=None,
                         help="Number of parallel CPU worker cores.")
     parser.add_argument("--manifest", type=str, default=None, help="Path to publication manifest JSON file")
+    parser.add_argument("--no-pdf", action="store_true", help="Skip LaTeX PDF compilation")
     return parser.parse_args()
 
 def main():
@@ -38,12 +39,15 @@ def main():
     print(f"Run ID: {run_id}")
 
     try:
-        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest)
+        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf)
         print("\n--- Reproduction Pipeline Completed Successfully ---")
         print(f"Manifest Verified: {summary['manifest_valid']}")
         print(f"Input Hashes Verified: {summary['input_hashes_verified']}")
         print(f"Tables Generated: {summary['tables_count']}")
         print(f"Figures Generated: {summary['figures_count']}")
+        print(f"PDF Compiled: {summary.get('pdf_compiled', False)}")
+        if summary.get('pdf_path'):
+            print(f"PDF Path: {summary['pdf_path']}")
         print(f"Output Directory: {repo_root / 'results' / 'paper' / run_id}")
     except Exception as e:
         print(f"\n[ERROR] Paper reproduction pipeline failed: {e}")

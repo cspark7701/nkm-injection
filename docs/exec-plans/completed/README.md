@@ -168,6 +168,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 53. [**Milestone 53 — Task: Fix End-to-End Pipeline and MOGA Exception-Masking Bug**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/53_refactor_fix_end_to_end_and_moga_exceptions.md)
     - Fixed storage ring lattice unpacking bug in `run_end_to_end_pipeline` (`src/nkm/end_to_end.py`), ensuring multi-turn tracking executes through the genuine 4GSR storage ring lattice. Fixed MOGA Pareto finalist re-evaluation signature bug in `src/nkm/moga.py` by constructing proper `BoosterExtractionConfig` instances. Vectorized aperture and septum loss checking in `src/nkm/storage_ring_injection.py` for significant performance gains. Verified 100% test pass rate across all modified test suites.
 
+54. [**Milestone 54 — Task: Unify Analytical Kicker Models Across Tracking Modes**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/54_refactor_unify_kicker_models.md)
+    - Created single-source-of-truth `get_kicker_evaluator()` in `src/nkm/storage_ring_injection.py` for all 4 kicker models (`off`, `ideal`, `linear`, `fieldmap`). Unified kicker evaluation across `track_multiturn_injection`, `track_element_resolved_injection`, and `simulate_nkm_models`, eliminating legacy unphysical `-5.7491 mrad` values. Vectorized aperture loss checks and verified 100% test pass rate across 163 tests.
+
 
 
 

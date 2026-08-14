@@ -8,7 +8,7 @@ and injection performance metrics calculation.
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any, Union
+from typing import Dict, List, Optional, Tuple, Any, Union, Callable, Literal
 import numpy as np
 import at
 
@@ -171,6 +171,81 @@ def load_storage_ring_injection_lattice(config: Optional[StorageRingInjectionCon
     return ring, nkm_idx
 
 
+def get_kicker_evaluator(
+    model: str = "ideal",
+    config: Optional[StorageRingInjectionConfig] = None,
+    kickmap_obj: Optional[NKMKickMap2D] = None
+) -> Tuple[Callable[[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray]], KickMapMetadata]:
+    """
+    Return a standardized kicker evaluation callable (x, y) -> (kx, ky) and its KickMapMetadata.
+
+    Kicker Models
+    -------------
+    - 'off'      : Zero transverse kick (kx=0, ky=0).
+    - 'ideal'    : Courant-Snyder optimal kick minimizing betatron invariant at nominal injection:
+                   kx = -alpha_x * x_inj / beta_x [mrad], ky = 0
+    - 'linear'   : Taylor-expanded RADIA kick centered around x_inj = -16.0 mm:
+                   kx = K0 + K1 * (x_mm - X_REF_MM), with K0 = -2.1046 mrad, K1 = -0.45043 mrad/mm, ky = 0
+    - 'fieldmap' : Exact 2D RADIA kick map evaluated via kickmap_obj.evaluate.
+    """
+    if config is None:
+        config = StorageRingInjectionConfig()
+
+    if model == "off":
+        meta = KickMapMetadata(
+            coordinate_unit="m",
+            value_type="kick_angle",
+            value_unit="mrad",
+            beam_energy_eV=config.energy_eV
+        )
+        def kick_off(x, y):
+            return np.zeros_like(x), np.zeros_like(y)
+        return kick_off, meta
+
+    elif model == "ideal":
+        x_inj = config.septum_x_offset_m
+        ideal_kick_mrad = -config.alpha_x_nkm * x_inj / config.beta_x_nkm_m * 1e3
+        meta = KickMapMetadata(
+            coordinate_unit="m",
+            value_type="kick_angle",
+            value_unit="mrad",
+            beam_energy_eV=config.energy_eV
+        )
+        def kick_ideal(x, y):
+            return np.full_like(x, ideal_kick_mrad), np.zeros_like(y)
+        return kick_ideal, meta
+
+    elif model == "linear":
+        K0_MRAD = -2.1046  # dipole term at x = -16 mm
+        K1_MRAD_PER_MM = -0.45043  # linear gradient dk/dx [mrad/mm]
+        X_REF_MM = config.septum_x_offset_m * 1e3  # nominal injection offset [mm]
+        meta = KickMapMetadata(
+            coordinate_unit="m",
+            value_type="kick_angle",
+            value_unit="mrad",
+            beam_energy_eV=config.energy_eV
+        )
+        def kick_linear(x, y):
+            kx = K0_MRAD + K1_MRAD_PER_MM * (x * 1e3 - X_REF_MM)
+            ky = np.zeros_like(y)
+            return kx, ky
+        return kick_linear, meta
+
+    elif model == "fieldmap":
+        if kickmap_obj is None:
+            raise ValueError("kickmap_obj must be provided for kicker_model='fieldmap'")
+        meta = getattr(kickmap_obj, "metadata", KickMapMetadata(
+            coordinate_unit="m",
+            value_type="kick_angle",
+            value_unit="mrad",
+            beam_energy_eV=config.energy_eV
+        ))
+        return kickmap_obj.evaluate, meta
+
+    else:
+        raise ValueError(f"Unknown kicker model '{model}'. Valid models: 'off', 'ideal', 'linear', 'fieldmap'")
+
+
 def track_multiturn_injection(beam: np.ndarray,
                               ring: at.Lattice,
                               n_turns: int = 10,
@@ -187,7 +262,7 @@ def track_multiturn_injection(beam: np.ndarray,
     Kicker Models
     -------------
     - 'off'       : NKM off (0 kick)
-    - 'ideal'     : Constant -2.1046 mrad kick (RADIA field-map value at x = -16 mm, y = 0)
+    - 'ideal'     : Courant-Snyder optimal kick (-0.127 mrad)
     - 'linear'    : Linearized kick about x_ref = -16 mm with slope dk/dx = -0.450 mrad/mm
     - 'fieldmap'  : Full RADIA 2D kick map (position-dependent, requires kickmap_obj)
 
@@ -213,70 +288,16 @@ def track_multiturn_injection(beam: np.ndarray,
 
     for turn in range(1, n_turns + 1):
         # 1. Apply Kicker on Turn 1 only
-        # The NKM is located at the start of the ring (s≈0). The injected beam
-        # arrives at the NKM first, receives a horizontal kick, and is then
-        # tracked through the full ring. On turns 2..n_turns the kicker is off.
         if turn == 1 and kicker_model != "off":
-            if kicker_model == "ideal":
-                # Ideal kick: Courant-Snyder optimal kick derived from Twiss at
-                # the NKM injection point (betax=16.197 m, alphax=-0.1285 from M66).
-                # At x_inj = -16 mm: x'_opt = -alpha*x_inj/beta = -(-0.1285)*(-0.016)/16.197
-                # = -0.127 mrad. This minimises the injected-beam Courant-Snyder invariant.
-                # The full RADIA fieldmap kick at x=-16 mm is -2.1046 mrad, which is
-                # substantially larger than this; such a large kick is only physically
-                # effective when combined with an orbit bump that collapses after injection.
-                # For this simplified model (no bump), we use the Twiss-optimal kick.
-                x_inj = config.septum_x_offset_m
-                IDEAL_KICK_MRAD = -config.alpha_x_nkm * x_inj / config.beta_x_nkm_m * 1e3
-                meta_ideal = KickMapMetadata(
-                    coordinate_unit="m",
-                    value_type="kick_angle",
-                    value_unit="mrad",
-                    beam_energy_eV=config.energy_eV
-                )
-                def kick_ideal(x, y):
-                    return np.full_like(x, IDEAL_KICK_MRAD), np.zeros_like(y)
-                current_beam = track_nkm_thin_kick(
-                    current_beam, kick_ideal,
-                    scale_factor=scale_factor,
-                    length_m=config.nkm_length_m,
-                    energy_GeV=energy_GeV,
-                    metadata=meta_ideal
-                )
-            elif kicker_model == "linear":
-                # Linearized NKM model: dipole term + linear gradient term.
-                # k0 = kick at x = -16 mm (RADIA value).  k1 = dk/dx slope
-                # estimated from RADIA map as (kx(-10mm) - kx(-20mm)) / 10mm.
-                # kx(-10mm) = -5.4341 mrad,  kx(-20mm) = -0.9298 mrad
-                # dk/dx ≈ (-5.4341 - (-0.9298)) / (-10mm - (-20mm)) = -4.5043/10 = -0.45043 mrad/mm
-                meta_linear = KickMapMetadata(
-                    coordinate_unit="m",
-                    value_type="kick_angle",
-                    value_unit="mrad",
-                    beam_energy_eV=config.energy_eV
-                )
-                K0_MRAD = -2.1046  # dipole term at x = -16 mm
-                K1_MRAD_PER_MM = -0.45043  # linear gradient dk/dx [mrad/mm]
-                X_REF_MM = -16.0   # linearisation point [mm]
-                def kick_linear(x, y):
-                    kx = K0_MRAD + K1_MRAD_PER_MM * (x * 1e3 - X_REF_MM)
-                    ky = np.zeros_like(y)
-                    return kx, ky
-                current_beam = track_nkm_thin_kick(
-                    current_beam, kick_linear,
-                    scale_factor=scale_factor,
-                    length_m=config.nkm_length_m,
-                    energy_GeV=energy_GeV,
-                    metadata=meta_linear
-                )
-            elif kicker_model == "fieldmap" and kickmap_obj is not None:
-                current_beam = track_nkm_thin_kick(
-                    current_beam, kickmap_obj.evaluate,
-                    scale_factor=scale_factor,
-                    length_m=config.nkm_length_m,
-                    energy_GeV=energy_GeV,
-                    metadata=kickmap_obj.metadata
-                )
+            kick_fn, meta = get_kicker_evaluator(kicker_model, config=config, kickmap_obj=kickmap_obj)
+            current_beam = track_nkm_thin_kick(
+                current_beam,
+                kick_fn,
+                scale_factor=scale_factor,
+                length_m=config.nkm_length_m,
+                energy_GeV=energy_GeV,
+                metadata=meta
+            )
 
         # 2. Propagate one turn using the linear one-turn transfer map M66.
         # Using the full one-turn map avoids false losses from narrow-aperture
@@ -303,19 +324,20 @@ def track_multiturn_injection(beam: np.ndarray,
         ap_x = config.injection_aperture_x_m if turn == 1 else config.aperture_x_m
         ap_y = config.aperture_y_m
         valid_mask = ~np.isnan(current_beam[0, :])
-        for p_idx in range(n_particles):
-            if valid_mask[p_idx]:
-                x_p = current_beam[0, p_idx]
-                y_p = current_beam[2, p_idx]
-                if abs(x_p) > ap_x or abs(y_p) > ap_y:
-                    current_beam[:, p_idx] = np.nan
-                    loss_log.append({
-                        "particle_index": p_idx,
-                        "turn": turn,
-                        "cause": "aperture_exceeded",
-                        "x_m": float(x_p),
-                        "y_m": float(y_p)
-                    })
+        loss_x = np.abs(current_beam[0, :]) > ap_x
+        loss_y = np.abs(current_beam[2, :]) > ap_y
+        loss_any = loss_x | loss_y
+        if np.any(loss_any & valid_mask):
+            lost_indices = np.where(loss_any & valid_mask)[0]
+            for p_idx in lost_indices:
+                loss_log.append({
+                    "particle_index": int(p_idx),
+                    "turn": turn,
+                    "cause": "aperture_exceeded",
+                    "x_m": float(current_beam[0, p_idx]),
+                    "y_m": float(current_beam[2, p_idx])
+                })
+                current_beam[:, p_idx] = np.nan
 
         # Record turn statistics
         stats = compute_beam_statistics(current_beam)
@@ -444,16 +466,15 @@ def track_element_resolved_injection(beam: np.ndarray,
 
             # Apply NKM kicker on turn 1
             if turn == 1 and elem_name == "NKM" and kicker_model != "off":
-                if kicker_model == "ideal":
-                    meta_ideal = KickMapMetadata(coordinate_unit="m", value_type="kick_angle", value_unit="mrad", beam_energy_eV=config.energy_eV)
-                    kick_ideal = lambda x, y: (np.full_like(x, -5.7491), np.zeros_like(y))
-                    current_beam = track_nkm_thin_kick(current_beam, kick_ideal, scale_factor=scale_factor, length_m=config.nkm_length_m, energy_GeV=energy_GeV, metadata=meta_ideal)
-                elif kicker_model == "linear":
-                    meta_linear = KickMapMetadata(coordinate_unit="m", value_type="kick_angle", value_unit="mrad", beam_energy_eV=config.energy_eV)
-                    kick_linear = lambda x, y: (-5.7491 + 0.35 * (x * 1e3), -0.35 * (y * 1e3))
-                    current_beam = track_nkm_thin_kick(current_beam, kick_linear, scale_factor=scale_factor, length_m=config.nkm_length_m, energy_GeV=energy_GeV, metadata=meta_linear)
-                elif kicker_model == "fieldmap" and kickmap_obj is not None:
-                    current_beam = track_nkm_thin_kick(current_beam, kickmap_obj.evaluate, scale_factor=scale_factor, length_m=config.nkm_length_m, energy_GeV=energy_GeV, metadata=kickmap_obj.metadata)
+                kick_fn, meta = get_kicker_evaluator(kicker_model, config=config, kickmap_obj=kickmap_obj)
+                current_beam = track_nkm_thin_kick(
+                    current_beam,
+                    kick_fn,
+                    scale_factor=scale_factor,
+                    length_m=config.nkm_length_m,
+                    energy_GeV=energy_GeV,
+                    metadata=meta
+                )
             else:
                 # Track single element
                 res_elem = elem.track(current_beam)

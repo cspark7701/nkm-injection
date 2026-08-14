@@ -136,9 +136,11 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
 
 
 
-def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5):
-    from .end_to_end import run_end_to_end_pipeline
-    from .bts_lattice import BTSConfig
+def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5, n_turns: int = 10):
+    from .end_to_end import run_end_to_end_pipeline, BoosterExtractionConfig
+    from .bts_lattice import BTSConfig, create_bts_lattice
+    from .optics import compute_twiss_propagation
+
     for name, sol in result.representative_solutions.items():
         k = sol["strengths_array"]
         bts_cfg = BTSConfig(
@@ -146,24 +148,27 @@ def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, 
             k_q21=k[3], k_q22=k[4], k_q23=k[5],
             k_q31=k[6], k_q32=k[7], k_q33=k[8]
         )
+        # Compute BTS aperture clearance
+        lat = create_bts_lattice(bts_cfg)
+        twiss_init = {'beta': [7.56, 12.27], 'alpha': [1.52, -1.65], 'dispersion': [0.2762, -0.0657, 0, 0]}
+        prop = compute_twiss_propagation(lat, twiss_init)
+        sigma_x = np.sqrt(prop["max_beta_x"] * 1e-7) + abs(prop["max_dispersion_x"] * 1.1e-3)
+        clearance_m = max(0.01935 - 3.0 * sigma_x, 0.0)
+
         transmissions = []
         clearances = []
         for s in range(n_mc_seeds):
-            try:
-                res = run_end_to_end_pipeline(
-                    bts_config=bts_cfg,
-                    n_particles=n_particles,
-                    n_turns=10,
-                    seed=42 + s,
-                    verbose=False
-                )
-                inj_summary = res.get("injection_summary", {})
-                transmissions.append(inj_summary.get("capture_efficiency", 1.0))
-                clearances.append(res.get("optics_summary", {}).get("min_clearance_x_m", 0.005))
-            except Exception:
-                transmissions.append(0.0)
-                clearances.append(0.0)
-        
+            booster_cfg = BoosterExtractionConfig(n_particles=n_particles, seed=42 + s)
+            res = run_end_to_end_pipeline(
+                booster_config=booster_cfg,
+                bts_config=bts_cfg,
+                n_turns=n_turns,
+                kicker_model="ideal"
+            )
+            eff = float(res.get("overall_end_to_end_efficiency", 0.0))
+            transmissions.append(eff)
+            clearances.append(clearance_m)
+
         result.finalist_evaluations[name] = {
             "mean_transmission": float(np.mean(transmissions)),
             "min_clearance": float(np.mean(clearances)),

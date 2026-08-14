@@ -31,12 +31,15 @@ def test_reevaluate_pareto_finalists():
     cfg = BTSMOGAConfig(pop_size=10, n_gen=3, seed=42)
     res = run_bts_moga(cfg)
     assert len(res.representative_solutions) > 0
-    reevaluate_pareto_finalists(res, n_particles=100, n_mc_seeds=2)
+    reevaluate_pareto_finalists(res, n_particles=50, n_mc_seeds=1, n_turns=2)
     assert len(res.finalist_evaluations) > 0
     for key, eval_data in res.finalist_evaluations.items():
         assert "mean_transmission" in eval_data
         assert "min_clearance" in eval_data
         assert "tracking_std" in eval_data
+        assert isinstance(eval_data["mean_transmission"], float)
+        assert isinstance(eval_data["min_clearance"], float)
+        assert 0.0 <= eval_data["mean_transmission"] <= 1.0
 
 def test_aperture_margin_computation():
     cfg = BTSMOGAConfig(aperture_radius_m=0.01935, emittance_x_mrad=1.0e-7, energy_spread=1.1e-3)

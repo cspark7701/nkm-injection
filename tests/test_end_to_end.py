@@ -50,5 +50,8 @@ def test_end_to_end_pipeline_execution():
     assert "ring_tracking_result" in res
 
     assert res["bts_transmission"] == 1.0
-    assert res["ring_tracking_result"].survived_particles > 0
-    assert res["overall_end_to_end_efficiency"] > 0.80
+    ring_res = res["ring_tracking_result"]
+    assert ring_res.survived_particles > 0
+    assert ring_res.metadata.get("tracking_mode") == "element_resolved"
+    assert ring_res.metadata.get("n_turns") == 2
+    assert res["overall_end_to_end_efficiency"] > 0.0

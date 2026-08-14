@@ -478,28 +478,28 @@ def track_element_resolved_injection(beam: np.ndarray,
             if "SEPTUM" in elem_name.upper() or elem_name == "NKM":
                 septum_hit = septum_model.check_collision(x_pts)
 
-            for p_idx in range(n_particles):
-                if valid_mask[p_idx]:
-                    cause = None
+            loss_any = septum_hit | loss_xmin | loss_xmax | loss_ymin | loss_ymax
+            if np.any(loss_any & valid_mask):
+                lost_indices = np.where(loss_any & valid_mask)[0]
+                for p_idx in lost_indices:
                     if septum_hit[p_idx]:
                         cause = "septum_collision"
                     elif loss_xmin[p_idx] or loss_xmax[p_idx]:
                         cause = "aperture_x_exceeded"
-                    elif loss_ymin[p_idx] or loss_ymax[p_idx]:
+                    else:
                         cause = "aperture_y_exceeded"
 
-                    if cause is not None:
-                        loss_log.append({
-                            "particle_index": p_idx,
-                            "turn": turn,
-                            "element_index": elem_idx,
-                            "element_name": elem_name,
-                            "s_position_m": s_pos,
-                            "cause": cause,
-                            "x_m": float(current_beam[0, p_idx]),
-                            "y_m": float(current_beam[2, p_idx])
-                        })
-                        current_beam[:, p_idx] = np.nan
+                    loss_log.append({
+                        "particle_index": int(p_idx),
+                        "turn": turn,
+                        "element_index": elem_idx,
+                        "element_name": elem_name,
+                        "s_position_m": s_pos,
+                        "cause": cause,
+                        "x_m": float(current_beam[0, p_idx]),
+                        "y_m": float(current_beam[2, p_idx])
+                    })
+                    current_beam[:, p_idx] = np.nan
 
         stats = compute_beam_statistics(current_beam)
         turn_survived.append(stats["survived_particles"])

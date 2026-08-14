@@ -165,6 +165,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 52. [**Milestone 52 — Task: Integrate Full Production Simulation Results & Manuscript Artifacts**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/52_task_integrate_full_production_simulation_results.md)
     - Integrated production run metrics from `results/production_run_20260814_011634/` across 1,000-turn injection tracking, SLSQP/MOGA optics optimization, tolerance budgets, and manifest paper pipeline `reproduce_paper.py`. Verified 100% test pass rate (161/161 tests).
 
+53. [**Milestone 53 — Task: Fix End-to-End Pipeline and MOGA Exception-Masking Bug**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/53_refactor_fix_end_to_end_and_moga_exceptions.md)
+    - Fixed storage ring lattice unpacking bug in `run_end_to_end_pipeline` (`src/nkm/end_to_end.py`), ensuring multi-turn tracking executes through the genuine 4GSR storage ring lattice. Fixed MOGA Pareto finalist re-evaluation signature bug in `src/nkm/moga.py` by constructing proper `BoosterExtractionConfig` instances. Vectorized aperture and septum loss checking in `src/nkm/storage_ring_injection.py` for significant performance gains. Verified 100% test pass rate across all modified test suites.
+
 
 
 

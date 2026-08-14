@@ -19,7 +19,8 @@ from .storage_ring_injection import (
     SeptumModel,
     ElementAperture,
     track_element_resolved_injection,
-    build_storage_ring_nkm_lattice
+    build_storage_ring_nkm_lattice,
+    load_storage_ring_injection_lattice
 )
 from .kickmap import NKMKickMap2D
 from .tracking import TrackingResult
@@ -105,10 +106,7 @@ def run_end_to_end_pipeline(booster_config: Optional[BoosterExtractionConfig] = 
     injected_ring_beam[0, valid_mask] += ring_config.septum_x_offset_m
 
     # Step 4: Storage Ring Multi-Turn Injection Tracking
-    try:
-        ring, _ = build_storage_ring_nkm_lattice()
-    except Exception:
-        ring = bts_lattice
+    ring, _ = load_storage_ring_injection_lattice(config=ring_config)
 
     septum = SeptumModel(
         x_septum_m=ring_config.septum_x_offset_m,

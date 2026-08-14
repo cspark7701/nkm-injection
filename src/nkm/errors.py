@@ -13,7 +13,7 @@ import at
 
 from .units import compute_rigidity, ELECTRON_CHARGE_C
 from .bts_lattice import BTSConfig, create_bts_lattice
-from .optics import compute_twiss_propagation, compute_mismatch_metric
+from .optics import compute_twiss_propagation, compute_mismatch_metric, DEFAULT_BTS_ENTRANCE_TWISS
 
 
 @dataclass
@@ -140,10 +140,10 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
 
     # Initial Twiss with Twiss mismatch errors (dispersion is NOT corrupted by centroid jitter)
     init_twiss = {
-        'beta': [7.560000 * (1.0 + sample.get("beta_mismatch_x", 0.0)),
-                 12.269000 * (1.0 + sample.get("beta_mismatch_y", 0.0))],
-        'alpha': [1.523100, -1.654700],
-        'dispersion': [0.276200, -0.065700, 0.0, 0.0],
+        'beta': [DEFAULT_BTS_ENTRANCE_TWISS.beta_x * (1.0 + sample.get("beta_mismatch_x", 0.0)),
+                 DEFAULT_BTS_ENTRANCE_TWISS.beta_y * (1.0 + sample.get("beta_mismatch_y", 0.0))],
+        'alpha': [DEFAULT_BTS_ENTRANCE_TWISS.alpha_x, DEFAULT_BTS_ENTRANCE_TWISS.alpha_y],
+        'dispersion': [DEFAULT_BTS_ENTRANCE_TWISS.disp_x, DEFAULT_BTS_ENTRANCE_TWISS.disp_px, 0.0, 0.0],
         'centroid_offset': [sample.get('booster_x_m', 0.0), sample.get('booster_xp_rad', 0.0), 0.0, 0.0, 0.0, 0.0],
         'nkm_errors': {
             'scale_err': sample.get('nkm_scale_err', 0.0),

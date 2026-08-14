@@ -177,6 +177,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 56. [**Milestone 56 — Task: Unify Beam Envelope and Septum Clearance Calculations**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/56_refactor_unify_beam_envelope_and_septum_clearance.md)
     - Implemented unified `compute_beam_envelope()` in `src/nkm/optics.py` supporting `rms_quadrature` and `conservative_linear` methods. Standardized envelope evaluations across `results_schema.py`, `constraints.py`, and `moga.py`. Updated `check_septum_clearance()` to evaluate local Twiss at the injection septum instead of global peak beta. Verified 100% test pass rate across all related test suites.
 
+57. [**Milestone 57 — Task: Centralize Canonical Twiss Parameters and Enforce DRY**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/57_refactor_centralize_canonical_twiss.md)
+    - Created frozen `TwissParameters` dataclass and single-source-of-truth constants `DEFAULT_BTS_ENTRANCE_TWISS` and `DEFAULT_BTS_TARGET_TWISS` in `src/nkm/optics.py`. Replaced duplicated literal dictionaries across `objectives.py`, `errors.py`, `robust_optimization.py`, `paper.py`, and `validate_bts_optics.py`. Verified 100% test pass rate.
+
 
 
 

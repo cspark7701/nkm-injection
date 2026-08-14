@@ -13,7 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from .bts_lattice import BTSConfig, create_bts_lattice
-from .optics import compute_twiss_propagation, compute_mismatch_metric
+from .optics import compute_twiss_propagation, compute_mismatch_metric, DEFAULT_BTS_ENTRANCE_TWISS
 from .fieldmap import load_1d_fieldmap, NKMFieldMap1D
 from .kickmap import NKMKickMap2D
 from .optimization import BTSOptimizationConfig, BTSOptimizationEvaluator
@@ -86,7 +86,7 @@ def generate_paper_tables(repo_root: Path, output_dir: Path) -> Dict[str, str]:
 
     nominal_config = BTSConfig()
     lat = create_bts_lattice(nominal_config)
-    twiss_init = {'beta': [7.56, 12.27], 'alpha': [1.52, -1.65], 'dispersion': [0.2762, -0.0657, 0, 0]}
+    twiss_init = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
     prop = compute_twiss_propagation(lat, twiss_init)
 
     # Table 1: BTS Line & Storage Ring Reference Parameters
@@ -146,7 +146,7 @@ def generate_paper_figures(repo_root: Path, output_dir: Path) -> List[Path]:
     # 1. BTS Optics Propagation
     nominal_config = BTSConfig()
     lat = create_bts_lattice(nominal_config)
-    twiss_init = {'beta': [7.56, 12.27], 'alpha': [1.52, -1.65], 'dispersion': [0.2762, -0.0657, 0, 0]}
+    twiss_init = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
     prop = compute_twiss_propagation(lat, twiss_init)
 
     s = prop["s_pos"]

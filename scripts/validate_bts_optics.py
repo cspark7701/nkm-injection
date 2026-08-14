@@ -19,7 +19,9 @@ from src.nkm.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_latt
 from src.nkm.optics import (
     compute_bts_optics_metrics,
     compute_mismatch_metric,
-    plot_bts_optics
+    plot_bts_optics,
+    DEFAULT_BTS_ENTRANCE_TWISS,
+    DEFAULT_BTS_TARGET_TWISS
 )
 
 OUTPUT_DIR = REPO_ROOT / "results" / "optics_validation"
@@ -36,22 +38,8 @@ def run_validation():
     lattice_val = validate_bts_lattice(lattice)
     
     # 2. Optics propagation and mismatch calculation
-    initial_twiss = {
-        'beta': [7.560000, 12.269000],
-        'alpha': [1.5231000, -1.654700],
-        'dispersion': [0.2762000, -0.0657000, 0.0, 0.0]
-    }
-    
-    # Storage ring injection target optics (from storage ring lattice at NKM reference point)
-    # Target values from bts.ipynb cell 35/36:
-    # Scale modified target used in notebook test:
-    # betax_inj = 23.3, betay_inj = 4.25 (approx storage ring values)
-    # mod target: betax = 0.1 * betax_inj = 2.33, alphax = 0.1 * alphax_inj
-    target_twiss = {
-        'beta': [2.336495, 4.256241],
-        'alpha': [-0.016335, 0.017772],
-        'dispersion': [0.080868, 0.047472, 0.0, 0.0]
-    }
+    initial_twiss = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
+    target_twiss = DEFAULT_BTS_TARGET_TWISS.to_dict()
     
     optics_res = compute_bts_optics_metrics(lattice, initial_twiss, target_twiss)
     

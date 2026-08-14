@@ -12,7 +12,7 @@ import numpy as np
 from scipy.optimize import minimize
 
 from .bts_lattice import BTSConfig, create_bts_lattice
-from .optics import compute_twiss_propagation, compute_mismatch_metric
+from .optics import compute_twiss_propagation, compute_mismatch_metric, DEFAULT_BTS_ENTRANCE_TWISS
 from .errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
 from .optimization import BaseOpticsObjective, BTSOptimizationConfig, BTSNormalizedObjectives, BTSHardwareConstraints
 
@@ -227,7 +227,7 @@ def compute_one_at_a_time_sensitivity(nominal_config: BTSConfig,
     base_samples = sample_error_ensemble(n_samples=n_samples, seed=seed)
 
     ref_lattice = create_bts_lattice(nominal_config)
-    ref_twiss = {'beta': [7.56, 12.27], 'alpha': [1.52, -1.65], 'dispersion': [0.276, -0.065, 0, 0]}
+    ref_twiss = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
     ref_prop = compute_twiss_propagation(ref_lattice, ref_twiss)
     ref_mx = compute_mismatch_metric(ref_prop["final_beta"][0], ref_prop["final_alpha"][0], target_twiss["beta"][0], target_twiss["alpha"][0])
     ref_my = compute_mismatch_metric(ref_prop["final_beta"][1], ref_prop["final_alpha"][1], target_twiss["beta"][1], target_twiss["alpha"][1])

@@ -10,19 +10,24 @@ from typing import Dict, List, Optional, Tuple, Any, Union
 import numpy as np
 
 from .bts_lattice import BTSConfig, create_bts_lattice
-from .optics import compute_twiss_propagation, compute_mismatch_metric
+from .optics import (
+    compute_twiss_propagation,
+    compute_mismatch_metric,
+    DEFAULT_BTS_ENTRANCE_TWISS,
+    DEFAULT_BTS_TARGET_TWISS
+)
 
 
 @dataclass
 class OpticsTargetConfig:
     """Target optics parameters and physical normalization tolerances at BTS exit."""
     # Target Twiss values at BTS exit
-    target_beta_x: float = 2.336495
-    target_beta_y: float = 4.256241
-    target_alpha_x: float = -0.016335
-    target_alpha_y: float = 0.017772
-    target_disp_x: float = 0.080868
-    target_disp_px: float = 0.047472
+    target_beta_x: float = DEFAULT_BTS_TARGET_TWISS.beta_x
+    target_beta_y: float = DEFAULT_BTS_TARGET_TWISS.beta_y
+    target_alpha_x: float = DEFAULT_BTS_TARGET_TWISS.alpha_x
+    target_alpha_y: float = DEFAULT_BTS_TARGET_TWISS.alpha_y
+    target_disp_x: float = DEFAULT_BTS_TARGET_TWISS.disp_x
+    target_disp_px: float = DEFAULT_BTS_TARGET_TWISS.disp_px
 
     # Physical normalization scales (sigma_i tolerances)
     sigma_beta_x: float = 0.05
@@ -33,12 +38,13 @@ class OpticsTargetConfig:
     sigma_disp_px: float = 0.001
 
     # Initial Twiss values at BTS entrance
-    init_beta_x: float = 7.560000
-    init_beta_y: float = 12.269000
-    init_alpha_x: float = 1.523100
-    init_alpha_y: float = -1.654700
-    init_disp_x: float = 0.276200
-    init_disp_px: float = -0.065700
+    init_beta_x: float = DEFAULT_BTS_ENTRANCE_TWISS.beta_x
+    init_beta_y: float = DEFAULT_BTS_ENTRANCE_TWISS.beta_y
+    init_alpha_x: float = DEFAULT_BTS_ENTRANCE_TWISS.alpha_x
+    init_alpha_y: float = DEFAULT_BTS_ENTRANCE_TWISS.alpha_y
+    init_disp_x: float = DEFAULT_BTS_ENTRANCE_TWISS.disp_x
+    init_disp_px: float = DEFAULT_BTS_ENTRANCE_TWISS.disp_px
+
 
 
 class BTSNormalizedObjectives:

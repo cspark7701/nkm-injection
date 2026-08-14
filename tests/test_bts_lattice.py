@@ -21,7 +21,10 @@ from src.nkm.optics import (
     compute_mismatch_metric,
     compute_twiss_propagation,
     compute_bts_optics_metrics,
-    beam_sigma_matrix_2d
+    beam_sigma_matrix_2d,
+    TwissParameters,
+    DEFAULT_BTS_ENTRANCE_TWISS,
+    DEFAULT_BTS_TARGET_TWISS
 )
 
 
@@ -97,3 +100,30 @@ def test_zero_strength_quad_limit():
     val = validate_bts_lattice(lat_zero)
     assert val["all_checks_passed"] is True
     assert val["symplecticity_error_m44"] < 1e-12
+
+
+def test_canonical_twiss_parameters_and_dry_structure():
+    """Verify TwissParameters dataclass properties, immutability, and to_dict() conversion."""
+    t_dict = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
+    assert isinstance(t_dict, dict)
+    assert "beta" in t_dict and "alpha" in t_dict and "dispersion" in t_dict
+    assert t_dict["beta"] == [7.56, 12.269]
+    assert t_dict["alpha"] == [1.5231, -1.6547]
+    assert t_dict["dispersion"] == [0.2762, -0.0657, 0.0, 0.0]
+
+    # Immutability
+    with pytest.raises(Exception):
+        DEFAULT_BTS_ENTRANCE_TWISS.beta_x = 10.0  # type: ignore
+
+
+def test_canonical_optics_metrics_with_constants(bts_lat):
+    """Verify compute_bts_optics_metrics using single-source-of-truth Twiss constants."""
+    init_twiss = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
+    target_twiss = DEFAULT_BTS_TARGET_TWISS.to_dict()
+
+    res = compute_bts_optics_metrics(bts_lat, init_twiss, target_twiss)
+    assert "mismatch_x" in res and "mismatch_y" in res
+    assert res["mismatch_x"] >= 0.0
+    assert res["mismatch_y"] >= 0.0
+    assert res["target_beta_x"] == pytest.approx(DEFAULT_BTS_TARGET_TWISS.beta_x)
+

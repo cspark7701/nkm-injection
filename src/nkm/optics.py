@@ -5,11 +5,58 @@ Provides functions for uncoupled Twiss propagation, phase advances, dispersion,
 beam covariance matrix calculations, and plane-by-plane phase-space mismatch metrics.
 """
 
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Any, Union, Literal
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import at
+
+
+@dataclass(frozen=True)
+class TwissParameters:
+    """Immutable Twiss and dispersion parameters at a specific longitudinal position."""
+    beta_x: float
+    beta_y: float
+    alpha_x: float
+    alpha_y: float
+    disp_x: float = 0.0
+    disp_px: float = 0.0
+    disp_y: float = 0.0
+    disp_py: float = 0.0
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to AT-compatible Twiss dictionary representation."""
+        return {
+            'beta': [self.beta_x, self.beta_y],
+            'alpha': [self.alpha_x, self.alpha_y],
+            'dispersion': [self.disp_x, self.disp_px, self.disp_y, self.disp_py]
+        }
+
+
+# Canonical BTS Entrance Optics (extracted beam from Booster)
+DEFAULT_BTS_ENTRANCE_TWISS = TwissParameters(
+    beta_x=7.560000,
+    beta_y=12.269000,
+    alpha_x=1.523100,
+    alpha_y=-1.654700,
+    disp_x=0.276200,
+    disp_px=-0.065700,
+    disp_y=0.0,
+    disp_py=0.0
+)
+
+# Canonical BTS Exit Target Optics (matched to Storage Ring Injection Point)
+DEFAULT_BTS_TARGET_TWISS = TwissParameters(
+    beta_x=2.336495,
+    beta_y=4.256241,
+    alpha_x=-0.016335,
+    alpha_y=0.017772,
+    disp_x=0.080868,
+    disp_px=0.047472,
+    disp_y=0.0,
+    disp_py=0.0
+)
 
 
 def beam_sigma_matrix_2d(beta: float, alpha: float, emit: float = 1.0) -> np.ndarray:

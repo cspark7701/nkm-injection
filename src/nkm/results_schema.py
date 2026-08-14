@@ -211,5 +211,13 @@ def compute_rms_envelope(beta_m: np.ndarray,
         sigma_x(s) = sqrt( emittance * beta_x(s) + [disp_x(s) * sigma_delta]^2 )
         Total_envelope(s) = n_sigma * sigma_x(s)
     """
-    sigma_x_rms = np.sqrt(emit_mrad * beta_m + (disp_m * espread)**2)
-    return n_sigma * sigma_x_rms
+    from .optics import compute_beam_envelope
+    return compute_beam_envelope(
+        beta=beta_m,
+        dispersion=disp_m,
+        emittance_m_rad=emit_mrad,
+        energy_spread=espread,
+        n_sigma=n_sigma,
+        method="rms_quadrature"
+    )
+

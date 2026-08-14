@@ -131,7 +131,15 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
     
         M_ap = r_pipe - (3 * sqrt(emit * beta) + |disp * delta|)
     """
-    envelope = 3.0 * np.sqrt(config.emittance_x_mrad * beta_m) + abs(disp_m * config.energy_spread)
+    from .optics import compute_beam_envelope
+    envelope = compute_beam_envelope(
+        beta=beta_m,
+        dispersion=disp_m,
+        emittance_m_rad=config.emittance_x_mrad,
+        energy_spread=config.energy_spread,
+        n_sigma=3.0,
+        method="conservative_linear"
+    )
     return float(config.aperture_radius_m - envelope)
 
 
@@ -139,7 +147,7 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
 def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5, n_turns: int = 10):
     from .end_to_end import run_end_to_end_pipeline, BoosterExtractionConfig
     from .bts_lattice import BTSConfig, create_bts_lattice
-    from .optics import compute_twiss_propagation
+    from .optics import compute_twiss_propagation, compute_beam_envelope
 
     for name, sol in result.representative_solutions.items():
         k = sol["strengths_array"]
@@ -152,8 +160,15 @@ def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, 
         lat = create_bts_lattice(bts_cfg)
         twiss_init = {'beta': [7.56, 12.27], 'alpha': [1.52, -1.65], 'dispersion': [0.2762, -0.0657, 0, 0]}
         prop = compute_twiss_propagation(lat, twiss_init)
-        sigma_x = np.sqrt(prop["max_beta_x"] * 1e-7) + abs(prop["max_dispersion_x"] * 1.1e-3)
-        clearance_m = max(0.01935 - 3.0 * sigma_x, 0.0)
+        envelope_x = compute_beam_envelope(
+            beta=prop["max_beta_x"],
+            dispersion=prop["max_dispersion_x"],
+            emittance_m_rad=1e-7,
+            energy_spread=1.1e-3,
+            n_sigma=3.0,
+            method="conservative_linear"
+        )
+        clearance_m = max(0.01935 - envelope_x, 0.0)
 
         transmissions = []
         clearances = []

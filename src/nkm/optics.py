@@ -5,7 +5,7 @@ Provides functions for uncoupled Twiss propagation, phase advances, dispersion,
 beam covariance matrix calculations, and plane-by-plane phase-space mismatch metrics.
 """
 
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional, Tuple, Any, Union, Literal
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -161,3 +161,53 @@ def plot_bts_optics(lattice: at.Lattice,
         fig.savefig(output_path, dpi=300)
         
     return fig
+
+
+def compute_beam_envelope(
+    beta: Union[float, np.ndarray],
+    dispersion: Union[float, np.ndarray] = 0.0,
+    emittance_m_rad: float = 1.0e-7,
+    energy_spread: float = 1.1e-3,
+    n_sigma: float = 3.0,
+    method: Literal["rms_quadrature", "conservative_linear"] = "rms_quadrature"
+) -> Union[float, np.ndarray]:
+    """
+    Compute transverse beam envelope in meters.
+
+    Parameters
+    ----------
+    beta : float or np.ndarray
+        Betatron function [m].
+    dispersion : float or np.ndarray, optional
+        Dispersion function [m] (default: 0.0).
+    emittance_m_rad : float, optional
+        Beam emittance [m*rad] (default: 1.0e-7).
+    energy_spread : float, optional
+        Fractional energy spread sigma_delta (default: 1.1e-3).
+    n_sigma : float, optional
+        Envelope scale factor (default: 3.0).
+    method : {"rms_quadrature", "conservative_linear"}, optional
+        - 'rms_quadrature': n_sigma * sqrt(emittance * beta + (dispersion * energy_spread)**2)
+        - 'conservative_linear': n_sigma * sqrt(emittance * beta) + abs(dispersion * energy_spread)
+
+    Returns
+    -------
+    envelope : float or np.ndarray
+        Transverse beam half-envelope [m].
+    """
+    beta_arr = np.asarray(beta)
+    disp_arr = np.asarray(dispersion)
+
+    if method == "rms_quadrature":
+        sigma = np.sqrt(np.maximum(emittance_m_rad * beta_arr, 0.0) + (disp_arr * energy_spread)**2)
+        envelope = n_sigma * sigma
+    elif method == "conservative_linear":
+        sigma_bet = np.sqrt(np.maximum(emittance_m_rad * beta_arr, 0.0))
+        envelope = n_sigma * sigma_bet + np.abs(disp_arr * energy_spread)
+    else:
+        raise ValueError(f"Unknown envelope method '{method}'. Choose 'rms_quadrature' or 'conservative_linear'.")
+
+    if np.ndim(beta) == 0 and np.ndim(dispersion) == 0:
+        return float(envelope.item())
+    return envelope
+

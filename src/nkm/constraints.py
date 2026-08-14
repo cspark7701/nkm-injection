@@ -328,14 +328,21 @@ class BTSHardwareConstraints:
         cfg = self.config
         records: List[ConstraintRecord] = []
 
+        from .optics import compute_beam_envelope
+
         max_beta_x = float(prop_results.get("max_beta_x", 0.0))
         max_beta_y = float(prop_results.get("max_beta_y", 0.0))
         max_disp_x = float(prop_results.get("max_dispersion_x", 0.0))
 
-        # 3σ beam envelope (horizontal, including dispersion contribution)
-        sigma_x = (np.sqrt(max_beta_x * cfg.emit_x_m) +
-                   abs(max_disp_x) * cfg.energy_spread)
-        envelope_x = 3.0 * sigma_x    # 3σ half-width [m]
+        # 3σ beam envelope (horizontal, conservative linear including dispersion contribution)
+        envelope_x = compute_beam_envelope(
+            beta=max_beta_x,
+            dispersion=max_disp_x,
+            emittance_m_rad=cfg.emit_x_m,
+            energy_spread=cfg.energy_spread,
+            n_sigma=3.0,
+            method="conservative_linear"
+        )
         clearance_x = pipe_halfgap_m - envelope_x
         ax_viol = cfg.aperture_margin_m - clearance_x
         records.append(ConstraintRecord(
@@ -353,8 +360,14 @@ class BTSHardwareConstraints:
         ))
 
         # 3σ beam envelope (vertical)
-        sigma_y = np.sqrt(max_beta_y * cfg.emit_y_m)
-        envelope_y = 3.0 * sigma_y
+        envelope_y = compute_beam_envelope(
+            beta=max_beta_y,
+            dispersion=0.0,
+            emittance_m_rad=cfg.emit_y_m,
+            energy_spread=cfg.energy_spread,
+            n_sigma=3.0,
+            method="conservative_linear"
+        )
         clearance_y = pipe_halfgap_m - envelope_y
         ay_viol = cfg.aperture_margin_m - clearance_y
         records.append(ConstraintRecord(
@@ -465,8 +478,8 @@ class BTSHardwareConstraints:
         """
         Check that the beam envelope fits within the septum half-gap at the injection septum.
 
-        Uses max β as an upper bound (conservative check).
-        The beam half-width at the septum location must satisfy:
+        Evaluates local Twiss at the injection septum (sept_ex near BTS exit)
+        rather than global peak beta. The beam half-width at the septum must satisfy:
             3σ_x < (septum_halfgap - septum_clearance_margin)
 
         Args
@@ -476,12 +489,43 @@ class BTSHardwareConstraints:
         cfg = self.config
         records: List[ConstraintRecord] = []
 
-        max_beta_x = float(prop_results.get("max_beta_x", 0.0))
-        max_disp_x = float(prop_results.get("max_dispersion_x", 0.0))
+        from .optics import compute_beam_envelope
 
-        sigma_x = (np.sqrt(max_beta_x * cfg.emit_x_m) +
-                   abs(max_disp_x) * cfg.energy_spread)
-        envelope_x = 3.0 * sigma_x
+        # Retrieve local Twiss at injection septum location (sept_ex near BTS exit)
+        if "beta" in prop_results and "s_pos" in prop_results:
+            s_pos = np.asarray(prop_results["s_pos"])
+            beta_arr = np.asarray(prop_results["beta"])
+            disp_arr = np.asarray(prop_results.get("dispersion", np.zeros((len(s_pos), 4))))
+
+            # Injection septum (sept_ex) is located in the final matching section (s >= 16.0 m)
+            septum_mask = s_pos >= 16.0
+            if np.any(septum_mask):
+                local_beta_x = float(np.max(beta_arr[septum_mask, 0]))
+                local_disp_x = float(np.max(np.abs(disp_arr[septum_mask, 0])))
+            else:
+                local_beta_x = float(beta_arr[-1, 0])
+                local_disp_x = float(abs(disp_arr[-1, 0]))
+        else:
+            final_beta = prop_results.get("final_beta")
+            if final_beta is not None:
+                local_beta_x = float(final_beta[0])
+            else:
+                local_beta_x = float(prop_results.get("max_beta_x", 0.0))
+
+            final_disp = prop_results.get("final_dispersion")
+            if final_disp is not None:
+                local_disp_x = float(final_disp[0])
+            else:
+                local_disp_x = float(prop_results.get("max_dispersion_x", 0.0))
+
+        envelope_x = compute_beam_envelope(
+            beta=local_beta_x,
+            dispersion=local_disp_x,
+            emittance_m_rad=cfg.emit_x_m,
+            energy_spread=cfg.energy_spread,
+            n_sigma=3.0,
+            method="conservative_linear"
+        )
 
         allowed = cfg.septum_halfgap_m - cfg.septum_clearance_margin_m
         viol = envelope_x - allowed
@@ -494,8 +538,8 @@ class BTSHardwareConstraints:
             violated=(viol > 1e-4),
             violation=max(viol, 0.0),
             description=(
-                f"3σ_x beam envelope must fit in septum half-gap "
-                f"({cfg.septum_halfgap_m*1e3:.1f}mm) with "
+                f"3σ_x beam envelope at septum (local β_x={local_beta_x:.2f}m) "
+                f"must fit in septum half-gap ({cfg.septum_halfgap_m*1e3:.1f}mm) with "
                 f"{cfg.septum_clearance_margin_m*1e3:.1f}mm margin"
             ),
         ))
@@ -508,6 +552,8 @@ class BTSHardwareConstraints:
             "records": records,
             "envelope_x_m": float(envelope_x),
             "allowed_halfgap_m": float(allowed),
+            "local_beta_x_m": float(local_beta_x),
+            "local_disp_x_m": float(local_disp_x),
         }
 
     def check_mismatch_surrogate(self,

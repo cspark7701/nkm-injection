@@ -512,3 +512,68 @@ class TestBackwardCompatibility:
         res = optimize_bts_quadrupoles(method="least_squares", config=fast_config, n_starts=1)
         assert isinstance(res, BTSOptimizationResult)
         assert res.final_merit < res.initial_merit
+
+
+# ============================================================
+# 15. Unified Beam Envelope & Septum Clearance (Task 04)
+# ============================================================
+
+class TestUnifiedBeamEnvelopeAndSeptumClearance:
+    def test_compute_beam_envelope_methods(self):
+        """Verify rms_quadrature and conservative_linear envelope formulas."""
+        from src.nkm.optics import compute_beam_envelope
+
+        beta = 10.0
+        disp = 0.5
+        emit = 1e-7
+        espread = 1.1e-3
+
+        env_rms = compute_beam_envelope(beta, disp, emittance_m_rad=emit, energy_spread=espread, n_sigma=3.0, method="rms_quadrature")
+        expected_rms = 3.0 * np.sqrt(emit * beta + (disp * espread)**2)
+        assert pytest.approx(env_rms, abs=1e-9) == expected_rms
+
+        env_lin = compute_beam_envelope(beta, disp, emittance_m_rad=emit, energy_spread=espread, n_sigma=3.0, method="conservative_linear")
+        expected_lin = 3.0 * np.sqrt(emit * beta) + abs(disp * espread)
+        assert pytest.approx(env_lin, abs=1e-9) == expected_lin
+
+        # Conservative linear envelope is >= statistical RMS quadrature envelope
+        assert env_lin >= env_rms
+
+    def test_compute_beam_envelope_array(self):
+        """Verify compute_beam_envelope supports numpy arrays."""
+        from src.nkm.optics import compute_beam_envelope
+
+        beta = np.array([5.0, 10.0, 15.0])
+        disp = np.array([0.1, 0.2, 0.3])
+        env = compute_beam_envelope(beta, disp, method="rms_quadrature")
+        assert isinstance(env, np.ndarray)
+        assert env.shape == (3,)
+
+    def test_compute_beam_envelope_invalid_method(self):
+        """Verify ValueError on unknown method string."""
+        from src.nkm.optics import compute_beam_envelope
+
+        with pytest.raises(ValueError, match="Unknown envelope method"):
+            compute_beam_envelope(10.0, 0.5, method="unknown_method")  # type: ignore
+
+    def test_check_septum_clearance_local_optics(self):
+        """Verify check_septum_clearance evaluates local optics at septum instead of global max."""
+        from src.nkm.bts_lattice import create_bts_lattice
+        from src.nkm.optics import compute_twiss_propagation
+
+        lattice = create_bts_lattice()
+        initial_twiss = {
+            'beta': [7.56, 12.27],
+            'alpha': [1.52, -1.65],
+            'dispersion': [0.2762, -0.0657, 0.0, 0.0]
+        }
+        prop = compute_twiss_propagation(lattice, initial_twiss)
+        hw = BTSHardwareConstraints()
+        res = hw.check_septum_clearance(prop)
+
+        assert res["feasible"] is True
+        assert "local_beta_x_m" in res
+        # Local beta at septum (near exit) is much lower than max_beta_x
+        assert res["local_beta_x_m"] < prop["max_beta_x"]
+        assert res["envelope_x_m"] < res["allowed_halfgap_m"]
+

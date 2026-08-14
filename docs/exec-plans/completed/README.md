@@ -174,6 +174,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 55. [**Milestone 55 — Task: Parameterize Matched Twiss in Convergence Studies**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/55_refactor_parameterize_matched_twiss.md)
     - Parameterized injected beam and circulating stored beam Twiss parameters in `StorageRingInjectionConfig` (`src/nkm/storage_ring_injection.py`). Refactored convergence scanning functions in `src/nkm/convergence_study.py` to pull matched optics directly from configuration, eliminating hardcoded placeholder values. Verified 100% test pass rate across 22 convergence and injection tests.
 
+56. [**Milestone 56 — Task: Unify Beam Envelope and Septum Clearance Calculations**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/56_refactor_unify_beam_envelope_and_septum_clearance.md)
+    - Implemented unified `compute_beam_envelope()` in `src/nkm/optics.py` supporting `rms_quadrature` and `conservative_linear` methods. Standardized envelope evaluations across `results_schema.py`, `constraints.py`, and `moga.py`. Updated `check_septum_clearance()` to evaluate local Twiss at the injection septum instead of global peak beta. Verified 100% test pass rate across all related test suites.
+
 
 
 

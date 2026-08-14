@@ -184,6 +184,7 @@ The quadrupole strengths and resulting linear optics metrics across Baseline, SL
 \centering
 \caption{Comparison of the 9 BTS quadrupole strengths $K$ across baseline, single-objective SLSQP, and MOGA knee-point configurations.}
 \label{tab:quad_strengths}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccc}
 \hline\hline
 Quadrupole & Nominal $K$ [$\mathrm{m}^{-2}$] & SLSQP Optimum [$\mathrm{m}^{-2}$] & MOGA Knee-Point [$\mathrm{m}^{-2}$] & Bounds [$\mathrm{m}^{-2}$] \\
@@ -198,13 +199,15 @@ Quadrupole & Nominal $K$ [$\mathrm{m}^{-2}$] & SLSQP Optimum [$\mathrm{m}^{-2}$]
 \texttt{q32} & $-1.1687$ & $-1.3836$ & $+4.1300$ & $[-3.0, +3.0]$ \\
 \texttt{q33} & $+0.9417$ & $+0.3937$ & $-2.2400$ & $[-3.0, +3.0]$ \\
 \hline\hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 \begin{table}[htbp]
 \centering
 \caption{Linear optics propagation and phase-space mismatch metrics across baseline, SLSQP, and MOGA knee-point optimization.}
 \label{tab:optics_comparison}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccc}
 \hline\hline
 Optics Metric & Baseline & SLSQP Optimum & MOGA Knee-Point & Target & Status \\
@@ -217,7 +220,8 @@ Peak Beta $\beta_{y,\max}$ & $242.61$\,m & $52.54$\,m & \textbf{24.80}\,m & $\le
 Exit Dispersion $D_x$ & $0.2984$\,m & $0.0809$\,m & \textbf{0.0809}\,m & $0.0809$\,m & Matched \\
 Exit Dispersion Angle $D_x'$ & $-0.0710$\,rad & $0.0475$\,rad & \textbf{0.0475}\,rad & $0.0475$\,rad & Matched \\
 \hline\hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 Figure~\ref{fig:bts_optics} displays the Twiss parameter propagation comparison along the longitudinal coordinate $s$.
@@ -258,7 +262,7 @@ Four kicker models were evaluated:
     \item \texttt{fieldmap}: RADIA 2D field map NKM.
 \end{enumerate}
 
-\subsection{Multi-Turn Capture Metrics & Discussion}
+\subsection{Multi-Turn Capture Metrics \& Discussion}
 
 The multi-turn tracking metrics averaged over 5 independent random seeds ($N = 10,000$ particles per seed, 1,000 turns) are summarized in Table~\ref{tab:multiturn_summary}.
 
@@ -266,6 +270,7 @@ The multi-turn tracking metrics averaged over 5 independent random seeds ($N = 1
 \centering
 \caption{Multi-turn storage ring injection metrics (1,000 turns, 10,000 particles, 5 seeds).}
 \label{tab:multiturn_summary}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccc}
 \hline\hline
 Kicker Model & Mean Capture [\%] & 95\% CI & Stored Centroid Osc. [mm] & Mean 1st Loss Turn \\
@@ -275,7 +280,8 @@ Kicker Model & Mean Capture [\%] & 95\% CI & Stored Centroid Osc. [mm] & Mean 1s
 \texttt{linear} & $16.49\%$ & $[16.26\%, 16.70\%]$ & -- & $4.49$ \\
 \texttt{fieldmap} & $11.95\%$ & $[11.62\%, 12.31\%]$ & $0.0149$ & $4.48$ \\
 \hline\hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 Discussion of key multi-turn findings:
@@ -302,7 +308,7 @@ To evaluate performance robustness against real-world machine imperfections, Mon
     \item Septum position error: $\sigma_{\text{sept}} = 100~\mu\mathrm{m}$
 \end{itemize}
 
-\subsection{Sensitivity Ranking & Statistical Percentiles}
+\subsection{Sensitivity Ranking \& Statistical Percentiles}
 
 The 500-seed Monte Carlo statistics and One-At-A-Time (OAT) sensitivity rankings are summarized in Table~\ref{tab:sensitivity_ranking}.
 

@@ -12,7 +12,13 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from src.nkm.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
-from src.nkm.tracking import track_nkm_thick_symplectic, track_nkm_thick_rk4, track_nkm_thin_kick
+from src.nkm.tracking import (
+    track_nkm_thick_symplectic,
+    track_nkm_thick_rk4,
+    track_nkm_thin_kick,
+    track_nkm_symplectic,
+    track_nkm_rk4
+)
 from src.nkm.units import compute_rigidity, ELECTRON_CHARGE_C
 
 
@@ -115,4 +121,26 @@ def test_two_plane_thin_thick_kick_agreement():
 
     assert pytest.approx(beam_rk4[1, 0], rel=1e-4) == exp_dxp
     assert pytest.approx(beam_rk4[3, 0], rel=1e-4) == exp_dyp
+
+
+def test_track_nkm_symplectic_alias_and_legacy_rk4():
+    """Verify track_nkm_symplectic and track_nkm_rk4 tracking wrappers."""
+    beam_in = np.zeros((6, 1))
+    beam_in[0, 0] = -0.016
+
+    def field_2d(x, y, z):
+        return np.full_like(x, 0.146), np.zeros_like(x)
+
+    def field_1d(x):
+        return np.full_like(x, 0.146)
+
+    # 1. track_nkm_symplectic alias
+    out_sym = track_nkm_symplectic(beam_in.copy(), field_2d, length_m=0.525, n_slices=40)
+    out_thick_sym = track_nkm_thick_symplectic(beam_in.copy(), field_2d, length_m=0.525, n_slices=40)
+    np.testing.assert_allclose(out_sym, out_thick_sym)
+
+    # 2. track_nkm_rk4 legacy wrapper
+    out_rk4 = track_nkm_rk4(beam_in.copy(), field_1d, length_m=0.525, n_steps=40)
+    np.testing.assert_allclose(out_rk4, out_thick_sym)
+
 

@@ -45,14 +45,21 @@ class BTSMOGAConfig:
     beta_max_limit: float = 60.0
     mismatch_max_limit: float = 50.0
     aperture_radius_m: float = 0.01935  # Beam pipe bore radius (19.35 mm)
-    emittance_x_mrad: float = 1.0e-7
+    emittance_x_m_rad: float = 1.0e-7
     energy_spread: float = 1.1e-3
+    # Backward compatibility alias
+    emittance_x_mrad: Optional[float] = None
 
     # Base BTS Optimization Config
     bts_opt_config: BTSOptimizationConfig = field(default_factory=BTSOptimizationConfig)
 
     # Re-evaluation parameters
     eval_n_mc_seeds: int = 20
+
+    def __post_init__(self):
+        if self.emittance_x_mrad is not None:
+            self.emittance_x_m_rad = self.emittance_x_mrad
+
 
 
 @dataclass
@@ -135,7 +142,7 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
     envelope = compute_beam_envelope(
         beta=beta_m,
         dispersion=disp_m,
-        emittance_m_rad=config.emittance_x_mrad,
+        emittance_m_rad=config.emittance_x_m_rad,
         energy_spread=config.energy_spread,
         n_sigma=3.0,
         method="conservative_linear"

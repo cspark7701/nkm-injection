@@ -180,6 +180,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 57. [**Milestone 57 — Task: Centralize Canonical Twiss Parameters and Enforce DRY**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/57_refactor_centralize_canonical_twiss.md)
     - Created frozen `TwissParameters` dataclass and single-source-of-truth constants `DEFAULT_BTS_ENTRANCE_TWISS` and `DEFAULT_BTS_TARGET_TWISS` in `src/nkm/optics.py`. Replaced duplicated literal dictionaries across `objectives.py`, `errors.py`, `robust_optimization.py`, `paper.py`, and `validate_bts_optics.py`. Verified 100% test pass rate.
 
+58. [**Milestone 58 — Task: Clean Unit Naming, Legacy Integrator Wrappers, and Thread Safety**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/58_refactor_clean_unit_naming_and_integrator_wrappers.md)
+    - Added canonical SI geometric emittance keys `emittance_x_m_rad` and `emittance_y_m_rad` in `src/nkm/beam.py` and `src/nkm/tracking.py` while preserving backward-compatible aliases. Updated `BoosterExtractionConfig` and `BTSMOGAConfig`. Added `track_nkm_symplectic` alias, clarified `track_nkm_rk4` documentation, and enabled thread-safe lattice copying in `BTSNormalizedObjectives`. Verified 100% test pass rate.
+
 
 
 

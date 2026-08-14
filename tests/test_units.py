@@ -187,3 +187,44 @@ def test_integrated_field_to_transverse_kicks_two_plane():
     assert pytest.approx(rec_by, rel=1e-12) == int_by
 
 
+def test_canonical_emittance_naming_and_compatibility():
+    """Verify compute_beam_statistics returns both SI keys and backward-compatible aliases."""
+    from nkm.beam import generate_6d_beam, compute_beam_statistics
+
+    beam = generate_6d_beam(
+        n_particles=100,
+        beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
+        beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+        seed=42
+    )
+    stats = compute_beam_statistics(beam)
+
+    assert "emittance_x_m_rad" in stats
+    assert "emittance_y_m_rad" in stats
+    assert "emittance_x_mrad" in stats
+    assert "emittance_y_mrad" in stats
+    assert stats["emittance_x_m_rad"] == stats["emittance_x_mrad"]
+    assert stats["emittance_y_m_rad"] == stats["emittance_y_mrad"]
+    assert pytest.approx(stats["emittance_x_m_rad"], rel=0.15) == 1e-7
+
+
+def test_tracking_result_si_emittance():
+    """Verify TrackingResult supports canonical SI emittance properties and dict keys."""
+    from nkm.beam import generate_6d_beam
+    from nkm.tracking import TrackingResult
+
+    beam = generate_6d_beam(
+        n_particles=50,
+        beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
+        beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+        seed=123
+    )
+    res = TrackingResult.from_beam(beam)
+
+    assert hasattr(res, "emittance_x_m_rad")
+    assert hasattr(res, "emittance_y_m_rad")
+    assert res.emittance_x_m_rad == res.emittance_x_mrad
+    assert res["emittance_x_m_rad"] == res["emittance_x_mrad"]
+
+
+

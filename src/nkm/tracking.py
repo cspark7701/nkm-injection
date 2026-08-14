@@ -76,12 +76,24 @@ class TrackingResult:
         return self.survival_fraction
 
     @property
+    def emittance_x_m_rad(self) -> float:
+        """Canonical horizontal geometric emittance in m*rad."""
+        return self.emittance_x_mrad
+
+    @property
+    def emittance_y_m_rad(self) -> float:
+        """Canonical vertical geometric emittance in m*rad."""
+        return self.emittance_y_mrad
+
+    @property
     def final_stats(self) -> Dict[str, Any]:
         return {
             "n_particles": self.n_particles,
             "survived_particles": self.survived_particles,
             "survival_fraction": self.survival_fraction,
             "centroid": self.centroid,
+            "emittance_x_m_rad": self.emittance_x_mrad,
+            "emittance_y_m_rad": self.emittance_y_mrad,
             "emittance_x_mrad": self.emittance_x_mrad,
             "emittance_y_mrad": self.emittance_y_mrad,
         }
@@ -96,6 +108,8 @@ class TrackingResult:
             "survival_fraction": self.survival_fraction,
             "capture_efficiency": self.survival_fraction,
             "centroid": self.centroid,
+            "emittance_x_m_rad": self.emittance_x_mrad,
+            "emittance_y_m_rad": self.emittance_y_mrad,
             "emittance_x_mrad": self.emittance_x_mrad,
             "emittance_y_mrad": self.emittance_y_mrad,
             "final_stats": self.final_stats,
@@ -251,6 +265,28 @@ def track_nkm_thick_rk4(beam: np.ndarray,
     return integrator.track(beam)
 
 
+def track_nkm_symplectic(beam: np.ndarray,
+                         field_fn: Callable[[np.ndarray, np.ndarray, float], Tuple[np.ndarray, np.ndarray]],
+                         length_m: float = 0.525,
+                         n_slices: int = 40,
+                         energy_GeV: float = 4.0,
+                         scale_factor: float = 1.0,
+                         particle_charge_C: float = ELECTRON_CHARGE_C) -> np.ndarray:
+    """
+    Thick-element particle tracking using Symplectic Split-Operator Integration.
+    Alias for track_nkm_thick_symplectic.
+    """
+    return track_nkm_thick_symplectic(
+        beam=beam,
+        field_fn=field_fn,
+        length_m=length_m,
+        n_slices=n_slices,
+        energy_GeV=energy_GeV,
+        scale_factor=scale_factor,
+        particle_charge_C=particle_charge_C
+    )
+
+
 def track_nkm_rk4(beam: np.ndarray,
                   field_fn: Callable[[np.ndarray], np.ndarray],
                   length_m: float = 0.525,
@@ -259,7 +295,12 @@ def track_nkm_rk4(beam: np.ndarray,
                   scale_factor: float = 1.0,
                   particle_charge_C: float = ELECTRON_CHARGE_C) -> np.ndarray:
     """
-    Legacy wrapper for 1D field map tracking. Delegates to SymplecticSplitIntegrator.
+    Legacy 1D field map tracking wrapper.
+    
+    .. note::
+        For backward compatibility with legacy notebook interfaces, this delegates 1D By(x)
+        field maps to the 2nd-order SymplecticSplitIntegrator. For genuine 4th-order Runge-Kutta
+        Lorentz tracking, use :func:`track_nkm_thick_rk4`.
     """
     def field_adapter_2d(x, y, z):
         by = field_fn(x)
@@ -275,3 +316,4 @@ def track_nkm_rk4(beam: np.ndarray,
         scale_factor=scale_factor,
         particle_charge_C=particle_charge_C
     )
+

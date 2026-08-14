@@ -33,12 +33,21 @@ class BoosterExtractionConfig:
     energy_eV: float = 4.0e9
     beta_x_m: float = 2.50
     alpha_x: float = -0.50
-    emit_x_mrad: float = 1e-8
+    emit_x_m_rad: float = 1e-8
     beta_y_m: float = 8.20
     alpha_y: float = 1.10
-    emit_y_mrad: float = 1e-9
+    emit_y_m_rad: float = 1e-9
     energy_spread: float = 1e-3
     seed: int = 42
+    # Backward compatibility aliases
+    emit_x_mrad: Optional[float] = None
+    emit_y_mrad: Optional[float] = None
+
+    def __post_init__(self):
+        if self.emit_x_mrad is not None:
+            self.emit_x_m_rad = self.emit_x_mrad
+        if self.emit_y_mrad is not None:
+            self.emit_y_m_rad = self.emit_y_mrad
 
 
 def generate_booster_extraction_distribution(config: Optional[BoosterExtractionConfig] = None) -> np.ndarray:
@@ -52,10 +61,10 @@ def generate_booster_extraction_distribution(config: Optional[BoosterExtractionC
         n_particles=config.n_particles,
         beta_x=config.beta_x_m,
         alpha_x=config.alpha_x,
-        emit_x=config.emit_x_mrad,
+        emit_x=config.emit_x_m_rad,
         beta_y=config.beta_y_m,
         alpha_y=config.alpha_y,
-        emit_y=config.emit_y_mrad,
+        emit_y=config.emit_y_m_rad,
         espread=config.energy_spread,
         seed=config.seed
     )

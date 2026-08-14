@@ -100,8 +100,10 @@ def compute_beam_statistics(beam: np.ndarray) -> Dict[str, Any]:
             "survival_fraction": 0.0,
             "centroid": None,
             "std": None,
-            "emittance_x_mrad": np.nan,
-            "emittance_y_mrad": np.nan,
+            "emittance_x_m_rad": np.nan,
+            "emittance_y_m_rad": np.nan,
+            "emittance_x_mrad": np.nan,  # Backward compatibility alias
+            "emittance_y_mrad": np.nan,  # Backward compatibility alias
         }
         
     b_valid = beam[:, valid_mask]
@@ -127,6 +129,8 @@ def compute_beam_statistics(beam: np.ndarray) -> Dict[str, Any]:
             "sigma_y_mm": float(std_dev[2] * 1e3),
             "sigma_yp_mrad": float(std_dev[3] * 1e3),
         },
-        "emittance_x_mrad": float(emit_x),
-        "emittance_y_mrad": float(emit_y),
+        "emittance_x_m_rad": float(emit_x),
+        "emittance_y_m_rad": float(emit_y),
+        "emittance_x_mrad": float(emit_x),  # Backward compatibility alias
+        "emittance_y_mrad": float(emit_y),  # Backward compatibility alias
     }

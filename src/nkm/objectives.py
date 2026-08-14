@@ -52,7 +52,9 @@ class BTSNormalizedObjectives:
     Computes normalized objective residuals r_i = (O_i - O_i,target) / sigma_i
     and sum of squared residuals J = sum(r_i^2).
     """
-    def __init__(self, config: Optional[OpticsTargetConfig] = None):
+    def __init__(self, config: Optional[OpticsTargetConfig] = None,
+                 lattice: Optional[Any] = None,
+                 copy_lattice: bool = False):
         self.config = config or OpticsTargetConfig()
 
         self.initial_twiss = {
@@ -63,7 +65,13 @@ class BTSNormalizedObjectives:
 
         self.nominal_bts_config = BTSConfig()
         self.nominal_strengths = np.array(self.nominal_bts_config.quad_strengths_list)
-        self.lattice = create_bts_lattice(self.nominal_bts_config)
+        if lattice is not None:
+            self.lattice = lattice.copy() if copy_lattice else lattice
+        else:
+            self.lattice = create_bts_lattice(self.nominal_bts_config)
+            if copy_lattice:
+                self.lattice = self.lattice.copy()
+
         self.quad_names = ['q11', 'q12', 'q13', 'q21', 'q22', 'q23', 'q31', 'q32', 'q33']
         self._quad_elems = [elem for elem in self.lattice if elem.FamName in self.quad_names]
 

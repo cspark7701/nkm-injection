@@ -172,8 +172,9 @@ def particle_count_convergence_scan(
     for np_val in n_particle_values:
         beam = generate_6d_beam(
             n_particles=np_val,
-            beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
-            beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+            beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
+            beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
+            espread=config.inj_espread, blength=config.inj_blength_m,
             x_offset=config.septum_x_offset_m,
             seed=seed
         )
@@ -206,8 +207,9 @@ def turn_count_convergence_scan(
     results = []
     beam_base = generate_6d_beam(
         n_particles=n_particles,
-        beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
-        beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+        beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
+        beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
+        espread=config.inj_espread, blength=config.inj_blength_m,
         x_offset=config.septum_x_offset_m,
         seed=seed
     )
@@ -326,8 +328,9 @@ def compute_injection_acceptance(
     for x_off in x_offsets_m:
         beam = generate_6d_beam(
             n_particles=n_particles,
-            beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
-            beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+            beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
+            beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
+            espread=config.inj_espread, blength=config.inj_blength_m,
             x_offset=float(x_off),
             seed=seed
         )
@@ -380,15 +383,17 @@ def run_ensemble_study(
     for i, seed in enumerate(tier.seeds):
         beam = generate_6d_beam(
             n_particles=tier.n_particles,
-            beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
-            beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+            beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
+            beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
+            espread=config.inj_espread, blength=config.inj_blength_m,
             x_offset=config.septum_x_offset_m,
             seed=seed
         )
         stored_beam = generate_6d_beam(
             n_particles=stored_beam_n_particles,
-            beta_x=10.0, alpha_x=0.0, emit_x=1e-8,
-            beta_y=5.0, alpha_y=0.0, emit_y=1e-9,
+            beta_x=config.stored_beta_x_m, alpha_x=config.stored_alpha_x, emit_x=config.stored_emit_x_m,
+            beta_y=config.stored_beta_y_m, alpha_y=config.stored_alpha_y, emit_y=config.stored_emit_y_m,
+            espread=config.stored_espread, blength=config.stored_blength_m,
             x_offset=0.0,
             seed=seed
         )

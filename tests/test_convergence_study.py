@@ -229,3 +229,37 @@ class TestEnsembleStudy:
         assert 0.0 <= ci["mean"] <= 1.0
         assert ci["ci_lo"] <= ci["mean"] <= ci["ci_hi"]
         assert len(result["per_seed_results"]) == len(tier.seeds)
+
+
+class TestMatchedTwissParameterization:
+    def test_injected_beam_twiss_propagation(self, ring_and_config):
+        ring, config = ring_and_config
+        assert hasattr(config, "inj_beta_x_m")
+        assert hasattr(config, "inj_alpha_x")
+        assert hasattr(config, "inj_emit_x_m")
+        assert hasattr(config, "stored_beta_x_m")
+        assert hasattr(config, "stored_alpha_x")
+
+        # Verify defaults match BTS exit target Twiss
+        assert pytest.approx(config.inj_beta_x_m, abs=1e-3) == 2.3365
+        assert pytest.approx(config.inj_alpha_x, abs=1e-4) == -0.016335
+        assert pytest.approx(config.stored_beta_x_m, abs=1e-3) == 16.197
+
+    def test_custom_twiss_in_convergence_scan(self, ring_and_config):
+        ring, _ = ring_and_config
+        custom_cfg = StorageRingInjectionConfig(
+            inj_beta_x_m=5.0,
+            inj_alpha_x=0.5,
+            inj_emit_x_m=5e-8
+        )
+        results = particle_count_convergence_scan(
+            n_particle_values=[50],
+            n_turns=2,
+            ring=ring,
+            kicker_model="off",
+            kickmap_obj=None,
+            config=custom_cfg,
+            seed=42
+        )
+        assert len(results) == 1
+        assert "capture_efficiency" in results[0]

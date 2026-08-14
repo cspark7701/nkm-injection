@@ -49,6 +49,26 @@ class StorageRingInjectionConfig:
     beta_x_nkm_m: float = 16.197
     alpha_x_nkm: float = -0.1285
 
+    # Injected beam matched Twiss & distribution parameters (matched to BTS exit)
+    inj_beta_x_m: float = 2.336495
+    inj_alpha_x: float = -0.016335
+    inj_emit_x_m: float = 1.0e-7
+    inj_beta_y_m: float = 4.256241
+    inj_alpha_y: float = 0.017772
+    inj_emit_y_m: float = 1.0e-8
+    inj_espread: float = 1.1e-3
+    inj_blength_m: float = 13.4e-3
+
+    # Stored beam Twiss parameters at injection point (s=0)
+    stored_beta_x_m: float = 16.197
+    stored_alpha_x: float = -0.1285
+    stored_emit_x_m: float = 1.0e-9
+    stored_beta_y_m: float = 5.0
+    stored_alpha_y: float = 0.0
+    stored_emit_y_m: float = 1.0e-11
+    stored_espread: float = 1.0e-3
+    stored_blength_m: float = 5.0e-3
+
 
 @dataclass
 class SeptumModel:

@@ -315,8 +315,9 @@ def main():
         # Re-run seed 0 to get survival_history
         beam_fig = generate_6d_beam(
             n_particles=min(tier.n_particles, 500),
-            beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
-            beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+            beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
+            beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
+            espread=config.inj_espread, blength=config.inj_blength_m,
             x_offset=config.septum_x_offset_m, seed=tier.seeds[0]
         )
         track_res = track_multiturn_injection(

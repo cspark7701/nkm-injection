@@ -171,6 +171,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 54. [**Milestone 54 — Task: Unify Analytical Kicker Models Across Tracking Modes**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/54_refactor_unify_kicker_models.md)
     - Created single-source-of-truth `get_kicker_evaluator()` in `src/nkm/storage_ring_injection.py` for all 4 kicker models (`off`, `ideal`, `linear`, `fieldmap`). Unified kicker evaluation across `track_multiturn_injection`, `track_element_resolved_injection`, and `simulate_nkm_models`, eliminating legacy unphysical `-5.7491 mrad` values. Vectorized aperture loss checks and verified 100% test pass rate across 163 tests.
 
+55. [**Milestone 55 — Task: Parameterize Matched Twiss in Convergence Studies**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/55_refactor_parameterize_matched_twiss.md)
+    - Parameterized injected beam and circulating stored beam Twiss parameters in `StorageRingInjectionConfig` (`src/nkm/storage_ring_injection.py`). Refactored convergence scanning functions in `src/nkm/convergence_study.py` to pull matched optics directly from configuration, eliminating hardcoded placeholder values. Verified 100% test pass rate across 22 convergence and injection tests.
+
 
 
 

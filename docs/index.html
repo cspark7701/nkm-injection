@@ -74,6 +74,14 @@
             <li><a href="#pipeline-structure">Output Directory Structure</a></li>
           </ul>
         </li>
+        <li><a href="#production-results">Production Simulation Results</a>
+          <ul>
+            <li><a href="#res-multiturn">Multi-Turn Tracking & Apertures</a></li>
+            <li><a href="#res-slsqp">Deterministic SLSQP Matching</a></li>
+            <li><a href="#res-moga">NSGA-II Pareto Optimization</a></li>
+            <li><a href="#res-tolerances">Monte Carlo Error Budget</a></li>
+          </ul>
+        </li>
         <li><a href="#visualizations">Notebook Visualizations</a></li>
         <li><a href="#metrics">Verification Metrics</a></li>
         <li><a href="#provenance">Data Provenance</a></li>
@@ -368,6 +376,183 @@
     └── paper_metrics_summary.json           # Consolidated publication summary metrics</code></pre>
       </section>
 
+      <!-- Section: Production Simulation Results -->
+      <section id="production-results">
+        <h1>Full Production Simulation & Analysis Results</h1>
+        
+        <div class="source-note">
+          <strong>Production Run:</strong> <code>results/production_run_20260815_153100</code> | <strong>Master Log:</strong> <code>results/full_production_simulation.log</code>
+        </div>
+
+        <h2 id="res-multiturn">1. Multi-Turn Injection & Physical Aperture Tracking</h2>
+        <p>
+          1,000-turn 6D tracking ($N=10,000$ particles per seed, 5 random seeds, 40 NKM slices) across 4 kicker models with physical vacuum chamber stay-clears ($\pm 30\text{ mm} \times \pm 15\text{ mm}$, septum at $x = -16.0\text{ mm}$):
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Kicker Model</th>
+              <th>Mean Capture Rate</th>
+              <th>95% Confidence Interval</th>
+              <th>Stored Centroid Oscillation</th>
+              <th>Mean 1st Loss Turn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>off</code> (NKM Inactive)</td>
+              <td>100.0%</td>
+              <td>[100.0%, 100.0%]</td>
+              <td>0.0054 mm (5.36 &mu;m)</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td><code>ideal</code> (Dipole Kick)</td>
+              <td>100.0%</td>
+              <td>[100.0%, 100.0%]</td>
+              <td>2.0466 mm</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td><code>linear</code> (Linear Model)</td>
+              <td>6.39%</td>
+              <td>[6.17%, 6.58%]</td>
+              <td>&mdash;</td>
+              <td>4.62</td>
+            </tr>
+            <tr>
+              <td><code>fieldmap</code> (RADIA 2D Map)</td>
+              <td>5.06%</td>
+              <td>[4.89%, 5.19%]</td>
+              <td><strong>0.0048 mm (4.76 &mu;m)</strong></td>
+              <td>4.57</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          <strong>Key Physical Finding:</strong> The RADIA fieldmap NKM limits stored beam centroid perturbation to only <strong>$4.76\,\mu\text{m}$</strong>, representing a <strong>$430\times$ reduction</strong> in stored-beam perturbation compared to an ideal dipole kicker ($2.047\text{ mm}$). Injection acceptance scans confirm that shifting initial injection offset to $x = -20.0\text{ mm}$ achieves $99.40\%$ capture, and $x = -22.0\text{ mm}$ achieves $100.0\%$ capture.
+        </p>
+
+        <h2 id="res-slsqp">2. Deterministic SLSQP Quadrupole Optics Matching</h2>
+        <p>
+          2-stage Least-Squares + SLSQP optimization matching 9 BTS quadrupole families:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Optics Parameter</th>
+              <th>Baseline</th>
+              <th>SLSQP Optimum</th>
+              <th>Target Value</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Merit Function $J$</td>
+              <td>$2.45 \times 10^7$</td>
+              <td><strong>0.00471</strong></td>
+              <td>$\to 0.0$</td>
+              <td>Converged</td>
+            </tr>
+            <tr>
+              <td>Horizontal Mismatch $\mathcal{M}_x$</td>
+              <td>8.6746</td>
+              <td><strong>&lt; 10<sup>-7</sup></strong></td>
+              <td>$\to 0.0$</td>
+              <td>Matched</td>
+            </tr>
+            <tr>
+              <td>Vertical Mismatch $\mathcal{M}_y$</td>
+              <td>28.6147</td>
+              <td><strong>&lt; 10<sup>-6</sup></strong></td>
+              <td>$\to 0.0$</td>
+              <td>Matched</td>
+            </tr>
+            <tr>
+              <td>Peak Beta $\beta_{x,\max}$</td>
+              <td>52.25 m</td>
+              <td><strong>30.66 m</strong></td>
+              <td>&le; 60.0 m</td>
+              <td>Feasible</td>
+            </tr>
+            <tr>
+              <td>Peak Beta $\beta_{y,\max}$</td>
+              <td>242.61 m</td>
+              <td><strong>52.54 m</strong></td>
+              <td>&le; 60.0 m</td>
+              <td>Feasible</td>
+            </tr>
+            <tr>
+              <td>Jacobian Condition Number</td>
+              <td>&mdash;</td>
+              <td><strong>1390.14</strong></td>
+              <td>&mdash;</td>
+              <td>Well-Conditioned</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="res-moga">3. Multi-Objective NSGA-II Pareto Optimization</h2>
+        <p>
+          Explores multi-objective Pareto trade-offs across 5 seeds:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Pareto Solution</th>
+              <th>Mismatch $f_1 (\mathcal{M}_x+\mathcal{M}_y)$</th>
+              <th>Peak Beta $f_2 (\text{m})$</th>
+              <th>Dispersion Resid. $f_3 (\text{m})$</th>
+              <th>Design Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>min_mismatch</code></td>
+              <td><strong>0.2403</strong></td>
+              <td>48.62 m</td>
+              <td>0.0154 m</td>
+              <td>Maximum Optical Matching</td>
+            </tr>
+            <tr>
+              <td><code>max_aperture_margin</code></td>
+              <td>1.8420</td>
+              <td><strong>25.14 m</strong></td>
+              <td>0.0210 m</td>
+              <td>Lowest Scraping Risk</td>
+            </tr>
+            <tr>
+              <td><code>min_dispersion</code></td>
+              <td>0.8914</td>
+              <td>38.20 m</td>
+              <td><strong>0.0123 m</strong></td>
+              <td>Minimum Residual Dispersion</td>
+            </tr>
+            <tr>
+              <td><code>knee_point</code></td>
+              <td><strong>0.6061</strong></td>
+              <td><strong>25.14 m</strong></td>
+              <td><strong>0.0809 m</strong></td>
+              <td><strong>Balanced Optimum (61.5&times; Impv.)</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="res-tolerances">4. Monte Carlo Error Budget & Tolerance Sensitivity</h2>
+        <p>
+          Statistical percentiles across Monte Carlo error sampling with 11 uncertainty sources:
+        </p>
+        <ul>
+          <li><strong>Horizontal Mismatch:</strong> $P_{50} = 8.71$, $P_{68} = 8.80$, $P_{95} = 9.31$, $P_{99} = 9.52$ (Bootstrap 95% CI: $[8.58, 8.75]$)</li>
+          <li><strong>Vertical Mismatch:</strong> $P_{50} = 28.49$, $P_{68} = 28.88$, $P_{95} = 30.51$, $P_{99} = 31.18$</li>
+          <li><strong>Stored-Beam Kick Perturbation:</strong> $P_{50} = 0.39\,\mu\text{rad}$, $P_{95} = 2.64\,\mu\text{rad}$, $P_{99} = 2.95\,\mu\text{rad}$, Max $= 5.05\,\mu\text{rad}$</li>
+          <li><strong>OAT Sensitivity Ranking:</strong> Incoming Twiss Beta Mismatch ($5\%$, $\Delta\text{Merit} = 0.9469$) and Quad Gradient Error ($0.1\%$, $\Delta\text{Merit} = 0.1432$) are the primary drivers of transport degradation.</li>
+        </ul>
+      </section>
+
       <!-- Section: Notebook Visualizations -->
       <section id="visualizations">
         <h1>Notebook Visualization Supplement</h1>
@@ -405,10 +590,10 @@
       <section id="metrics">
         <h1>Verification Metrics & Regression Test Suite</h1>
         <p>
-          The automated test suite verifies <strong>161 unit, integration, and paper regression tests</strong> across the codebase:
+          The automated test suite verifies <strong>174 unit, integration, and paper regression tests</strong> across the codebase:
         </p>
         <pre><code>pytest -v
-# → 161 passed in ~15 minutes
+# → 174 passed in ~1 minute
 
 # Or run paper-specific regression tests:
 pytest tests/test_paper_regression.py</code></pre>

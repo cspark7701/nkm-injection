@@ -16,7 +16,7 @@
 \emailAdd{kuphy@korea.ac.kr}
 
 \abstract{
-We present a comprehensive framework for magnetic field map ingestion, 6D symplectic particle tracking, multi-turn storage ring physical aperture dynamics, and multi-objective Pareto optics optimization for a $4.0~\mathrm{GeV}$ Booster-to-Storage Ring (BTS) beam transport line featuring a Nonlinear Kicker Magnet (NKM). Off-axis top-up injection requires precise optical matching and field map integration to maximize injected beam capture while suppressing stored beam perturbations. Detailed RADIA 3D/2D field calculations are ingested and validated, confirming an integrated injection kick of $\Delta x' = -5.749~\mathrm{mrad}$ at the $-16.0~\mathrm{mm}$ septum offset with negligible residual field ($< 10^{-6}~\mathrm{T}\cdot\mathrm{m}$) along the stored beam axis. The unoptimized baseline lattice severely violates vertical beta limits ($\beta_{y,\max} = 242.61~\mathrm{m}$) with a large mismatch metric ($\mathcal{M}_y = 28.61$). Using single-objective SLSQP optimization, the vertical beta function is constrained below $60.0~\mathrm{m}$ ($\beta_{y,\max} = 59.25~\mathrm{m}$). Furthermore, multi-objective Pareto optimization via NSGA-II reveals explicit trade-offs between optical mismatch, aperture risk, and residual dispersion. A representative knee-point compromise design achieves a total exit mismatch of $\mathcal{M}_x + \mathcal{M}_y = 0.6061$ ($61.5\times$ improvement over baseline) and reduces peak beta to $25.14~\mathrm{m}$. Multi-turn tracking over 1,000 turns with physical apertures ($\pm 30~\mathrm{mm} \times \pm 15~\mathrm{mm}$) demonstrates that RADIA fieldmap NKM limits stored beam centroid oscillations to $0.0149~\mathrm{mm}$ compared to $2.0448~\mathrm{mm}$ for an ideal dipole kicker. Monte Carlo error budget simulations over 500 seeds confirm robust feasibility under realistic magnet, alignment, and field scale uncertainties.
+We present a comprehensive framework for magnetic field map ingestion, 6D symplectic particle tracking, multi-turn storage ring physical aperture dynamics, and multi-objective Pareto optics optimization for a $4.0~\mathrm{GeV}$ Booster-to-Storage Ring (BTS) beam transport line featuring a Nonlinear Kicker Magnet (NKM). Off-axis top-up injection requires precise optical matching and field map integration to maximize injected beam capture while suppressing stored beam perturbations. Detailed RADIA 3D/2D field calculations are ingested and validated, confirming an integrated injection kick of $\Delta x' = -5.749~\mathrm{mrad}$ at the $-16.0~\mathrm{mm}$ septum offset with negligible residual field ($< 10^{-6}~\mathrm{T}\cdot\mathrm{m}$) along the stored beam axis. The unoptimized baseline lattice severely violates vertical beta limits ($\beta_{y,\max} = 242.61~\mathrm{m}$) with a large mismatch metric ($\mathcal{M}_y = 28.61$). Using single-objective SLSQP optimization, the vertical beta function is constrained to $52.54~\mathrm{m}$ ($\beta_{x,\max} = 30.66~\mathrm{m}$) with residual mismatch driven below $1.5 \times 10^{-7}$. Furthermore, multi-objective Pareto optimization via NSGA-II reveals explicit trade-offs between optical mismatch, aperture risk, and residual dispersion. A representative knee-point compromise design achieves a total exit mismatch of $\mathcal{M}_x + \mathcal{M}_y = 0.6061$ ($61.5\times$ improvement over baseline) and reduces peak beta to $25.14~\mathrm{m}$. Multi-turn tracking over 1,000 turns with physical apertures ($\pm 30~\mathrm{mm} \times \pm 15~\mathrm{mm}$) demonstrates that RADIA fieldmap NKM limits stored beam centroid oscillations to $0.0048~\mathrm{mm}$ compared to $2.0466~\mathrm{mm}$ for an ideal dipole kicker ($430\times$ reduction). Monte Carlo error budget simulations over 500 equivalent seeds confirm robust feasibility under realistic magnet, alignment, and field scale uncertainties.
 }
 
 \keywords{Beam dynamics, Transfer lines, Kicker magnets, Particle tracking, Multi-objective optimization, Synchrotron radiation}
@@ -151,7 +151,7 @@ subject to hard hardware and optics constraints:
 \begin{equation}
 \beta_{x,\max}(\mathbf{K}) \le 60.0~\mathrm{m}, \quad \beta_{y,\max}(\mathbf{K}) \le 60.0~\mathrm{m}, \quad |K_i| \le 3.0~\mathrm{m}^{-2}.
 \end{equation}
-Using Sequential Least Squares Programming (SLSQP) with 3 seeded multi-starts, SLSQP successfully lowers the merit function from $2.45 \times 10^7$ down to $0.00471$, constraining $\beta_{y,\max}$ to $59.25~\mathrm{m}$ and reducing vertical mismatch to $\mathcal{M}_y = 4.5790$.
+Using Sequential Least Squares Programming (SLSQP) with 3 seeded multi-starts, SLSQP successfully lowers the merit function from $2.45 \times 10^7$ down to $0.00471$, constraining $\beta_{x,\max}$ to $30.66~\mathrm{m}$, $\beta_{y,\max}$ to $52.54~\mathrm{m}$, and reducing total optical mismatch to $\mathcal{M}_x + \mathcal{M}_y < 2.5 \times 10^{-7}$ with an SVD condition number of $1390.14$.
 
 \subsection{Multi-Objective Genetic Algorithm (NSGA-II MOGA)}
 
@@ -212,9 +212,9 @@ Quadrupole & Nominal $K$ [$\mathrm{m}^{-2}$] & SLSQP Optimum [$\mathrm{m}^{-2}$]
 \hline\hline
 Optics Metric & Baseline & SLSQP Optimum & MOGA Knee-Point & Target & Status \\
 \hline
-Total Mismatch ($\mathcal{M}_x+\mathcal{M}_y$) & $37.2893$ & $14.2402$ & \textbf{0.6061} & $\to 0.0$ & \textbf{61.5$\times$ Impv.} \\
-Horizontal Mismatch ($\mathcal{M}_x$) & $8.6746$ & $9.6612$ & \textbf{0.2850} & $\to 0.0$ & \textbf{30.4$\times$ Impv.} \\
-Vertical Mismatch ($\mathcal{M}_y$) & $28.6147$ & $4.5790$ & \textbf{0.3211} & $\to 0.0$ & \textbf{89.1$\times$ Impv.} \\
+Total Mismatch ($\mathcal{M}_x+\mathcal{M}_y$) & $37.2893$ & $< 10^{-6}$ & \textbf{0.6061} & $\to 0.0$ & \textbf{61.5$\times$ Impv.} \\
+Horizontal Mismatch ($\mathcal{M}_x$) & $8.6746$ & $< 10^{-7}$ & \textbf{0.2850} & $\to 0.0$ & \textbf{30.4$\times$ Impv.} \\
+Vertical Mismatch ($\mathcal{M}_y$) & $28.6147$ & $< 10^{-6}$ & \textbf{0.3211} & $\to 0.0$ & \textbf{89.1$\times$ Impv.} \\
 Peak Beta $\beta_{x,\max}$ & $52.25$\,m & $30.66$\,m & \textbf{25.14}\,m & $\le 60.0$\,m & Passed \\
 Peak Beta $\beta_{y,\max}$ & $242.61$\,m & $52.54$\,m & \textbf{24.80}\,m & $\le 60.0$\,m & Passed \\
 Exit Dispersion $D_x$ & $0.2984$\,m & $0.0809$\,m & \textbf{0.0809}\,m & $0.0809$\,m & Matched \\
@@ -275,10 +275,10 @@ The multi-turn tracking metrics averaged over 5 independent random seeds ($N = 1
 \hline\hline
 Kicker Model & Mean Capture [\%] & 95\% CI & Stored Centroid Osc. [mm] & Mean 1st Loss Turn \\
 \hline
-\texttt{off} & $100.0\%$ & $[100.0\%, 100.0\%]$ & $0.0178$ & -- \\
-\texttt{ideal} & $100.0\%$ & $[100.0\%, 100.0\%]$ & $2.0448$ & -- \\
-\texttt{linear} & $16.49\%$ & $[16.26\%, 16.70\%]$ & -- & $4.49$ \\
-\texttt{fieldmap} & $11.95\%$ & $[11.62\%, 12.31\%]$ & $0.0149$ & $4.48$ \\
+\texttt{off} & $100.0\%$ & $[100.0\%, 100.0\%]$ & $0.0054$ & -- \\
+\texttt{ideal} & $100.0\%$ & $[100.0\%, 100.0\%]$ & $2.0466$ & -- \\
+\texttt{linear} & $6.39\%$ & $[6.17\%, 6.58\%]$ & -- & $4.62$ \\
+\texttt{fieldmap} & $5.06\%$ & $[4.89\%, 5.19\%]$ & $0.0048$ & $4.57$ \\
 \hline\hline
 \end{tabular}%
 }
@@ -286,8 +286,8 @@ Kicker Model & Mean Capture [\%] & 95\% CI & Stored Centroid Osc. [mm] & Mean 1s
 
 Discussion of key multi-turn findings:
 \begin{itemize}
-    \item \textbf{Stored Beam Transparency}: The RADIA fieldmap NKM produces a stored-beam centroid oscillation of only $0.0149~\mathrm{mm}$, which is $137\times$ smaller than the $2.0448~\mathrm{mm}$ perturbation caused by an ideal dipole kicker. This confirms the transparent top-up capability of the NKM design.
-    \item \textbf{Capture Efficiency vs. Apertures}: Under nominal injection offset ($x = -16.0~\mathrm{mm}$), the fieldmap NKM yields an 11.95\% multi-turn capture rate due to physical septum blade collisions ($10.4\%$ lost on Turn 1). Optimization of septum blade thickness and injection angle phase matching can further enhance total capture efficiency.
+    \item \textbf{Stored Beam Transparency}: The RADIA fieldmap NKM produces a stored-beam centroid oscillation of only $0.0048~\mathrm{mm}$ ($4.76~\mu\mathrm{m}$), which is $430\times$ smaller than the $2.0466~\mathrm{mm}$ perturbation caused by an ideal dipole kicker. This confirms the transparent top-up capability of the NKM design.
+    \item \textbf{Capture Efficiency vs. Apertures}: Under nominal injection offset ($x = -16.0~\mathrm{mm}$), the fieldmap NKM yields a $5.06\%$ multi-turn capture rate due to physical septum blade proximity ($1.44\%$ lost on Turn 1, average first loss turn $4.57$). Injection acceptance scans demonstrate that shifting the injection offset to $x = -20.0~\mathrm{mm}$ yields $99.40\%$ capture, while $x = -22.0~\mathrm{mm}$ achieves $100.0\%$ capture.
 \end{itemize}
 
 \section{Monte Carlo Error Budget \& Sensitivity Analysis}
@@ -310,32 +310,31 @@ To evaluate performance robustness against real-world machine imperfections, Mon
 
 \subsection{Sensitivity Ranking \& Statistical Percentiles}
 
-The 500-seed Monte Carlo statistics and One-At-A-Time (OAT) sensitivity rankings are summarized in Table~\ref{tab:sensitivity_ranking}.
-
+The 500-seed Monte Carlo statistics and One-At-A-Time (OAT) sensitivity rankings are summarized in Table~\ref{tab:sensitivity_ranking}
 \begin{table}[htbp]
 \centering
 \caption{One-At-A-Time (OAT) sensitivity ranking of uncertainty sources on optical mismatch.}
 \label{tab:sensitivity_ranking}
 \begin{tabular}{lc}
 \hline\hline
-Uncertainty Parameter & Normalized Sensitivity Index \\
+Uncertainty Parameter & $\Delta \text{Merit}$ Residual \\
 \hline
-Twiss Beta Mismatch ($5\%$) & \textbf{0.9691} \\
-Quad Gradient Error ($0.1\%$) & \textbf{0.1818} \\
-Quad Roll Error ($0.5~\mathrm{mrad}$) & $0.1296$ \\
-Quad Alignment Offset ($100~\mu\mathrm{m}$) & $0.1296$ \\
-Booster Centroid Jitter $X$ ($0.5~\mathrm{mm}$) & $0.1296$ \\
-NKM Field Scale Jitter ($0.5\%$) & $0.1296$ \\
-Energy Error ($0.1\%$) & $0.1180$ \\
+Twiss Beta Mismatch ($5\%$) & \textbf{0.9469} \\
+Quad Gradient Error ($0.1\%$) & \textbf{0.1432} \\
+Energy Error ($0.1\%$) & \textbf{0.0259} \\
+Quad Roll Error ($0.5~\mathrm{mrad}$) & $0.000068$ \\
+Quad Alignment Offset ($100~\mu\mathrm{m}$) & $< 10^{-9}$ \\
+Booster Centroid Jitter $X$ ($0.5~\mathrm{mm}$) & $0.0000$ \\
+NKM Field Scale Jitter ($0.5\%$) & $0.0000$ \\
 \hline\hline
 \end{tabular}
 \end{table}
 
-Key statistical percentiles across 500 seeds:
+Key statistical percentiles across Monte Carlo error sampling:
 \begin{itemize}
-    \item Horizontal mismatch: Median $P_{50}(\mathcal{M}_x) = 8.71$, $P_{95}(\mathcal{M}_x) = 9.31$, $P_{99}(\mathcal{M}_x) = 9.52$.
-    \item Vertical mismatch: Median $P_{50}(\mathcal{M}_y) = 28.49$, $P_{95}(\mathcal{M}_y) = 30.51$, $P_{99}(\mathcal{M}_y) = 31.18$.
-    \item Stored-beam kick perturbation: Median $0.00039~\mathrm{mrad}$, $P_{99} = 0.00295~\mathrm{mrad}$, maximum $0.00505~\mathrm{mrad}$.
+    \item Horizontal mismatch: Median $P_{50}(\mathcal{M}_x) = 8.71$, $P_{68} = 8.80$, $P_{95} = 9.31$, $P_{99} = 9.52$, Bootstrap 95\% CI for median: $[8.58, 8.75]$.
+    \item Vertical mismatch: Median $P_{50}(\mathcal{M}_y) = 28.49$, $P_{68} = 28.88$, $P_{95} = 30.51$, $P_{99} = 31.18$.
+    \item Stored-beam kick perturbation: Median $0.00039~\mathrm{mrad}$ ($0.39~\mu\mathrm{rad}$), $P_{95} = 0.00264~\mathrm{mrad}$, $P_{99} = 0.00295~\mathrm{mrad}$, maximum $0.00505~\mathrm{mrad}$.
 \end{itemize}
 
 The sensitivity ranking confirms that incoming booster Twiss parameter mismatch ($5\%$) and quadrupole gradient errors ($0.1\%$) are the dominant drivers of optical mismatch at the BTS exit.
@@ -349,8 +348,8 @@ The primary conclusions are:
 \begin{enumerate}
     \item \textbf{Field Ingestion \& Validation}: Cryptographically verified RADIA 2D field maps confirm an integrated injection deflection of $-5.749~\mathrm{mrad}$ at $x = -16.0~\mathrm{mm}$ while maintaining zero field and zero gradient on the stored beam axis.
     \item \textbf{Optics Matching}: Multi-objective NSGA-II MOGA optimization identifies a knee-point design that reduces total exit mismatch from $37.29$ to $0.6061$ ($61.5\times$ improvement) and brings peak beta functions down from $242.61~\mathrm{m}$ to $25.14~\mathrm{m}$.
-    \item \textbf{Transparent Injection}: 1,000-turn 6D particle tracking proves that the fieldmap NKM reduces stored-beam centroid perturbation to $0.0149~\mathrm{mm}$, representing a $137\times$ reduction compared to conventional dipole kickers ($2.0448~\mathrm{mm}$).
-    \item \textbf{Error Robustness}: 500-seed Monte Carlo simulations establish that booster Twiss mismatch ($5\%$) and quadrupole gradient errors ($0.1\%$) are the primary drivers of optics degradation, while stored-beam perturbation remains below $0.0051~\mathrm{mrad}$ across all realizations.
+    \item \textbf{Transparent Injection}: 1,000-turn 6D particle tracking proves that the fieldmap NKM reduces stored-beam centroid perturbation to $0.0048~\mathrm{mm}$ ($4.76~\mu\mathrm{m}$), representing a $430\times$ reduction compared to conventional dipole kickers ($2.0466~\mathrm{mm}$).
+    \item \textbf{Error Robustness}: Monte Carlo error simulations establish that booster Twiss mismatch ($5\%$) and quadrupole gradient errors ($0.1\%$) are the primary drivers of optics degradation, while stored-beam perturbation remains below $0.0051~\mathrm{mrad}$ across all realizations.
 \end{enumerate}
 
 This framework provides a reproducible, data-driven methodology for designing transparent top-up injection systems in modern diffraction-limited storage rings.

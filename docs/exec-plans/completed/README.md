@@ -186,6 +186,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 59. [**Milestone 59 — Task: Fix Remote GitHub Actions CI PyAT Element Tracking Energy Bug**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/59_fix_remote_ci_pyat_energy_tracking.md)
     - Identified and fixed `ValueError: Energy needs to be defined` in PyAT element-resolved tracking on Python 3.11 GitHub Actions runners by passing `energy=config.energy_eV` into `elem.track()` in `src/nkm/storage_ring_injection.py`. Verified 100% test pass rate.
 
+60. [**Milestone 60 — Task: Update JINST Paper and Site with Production Simulation Results**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/60_update_jinst_paper_and_site_with_production_results.md)
+    - Synchronized `docs/jinst-paper/paper.tex`, `docs/jinst-paper/paper.pdf`, and `docs/index.html` with full production simulation results (`results/production_run_20260815_153100`). Updated multi-turn metrics ($430\times$ stored beam perturbation reduction to $4.76\,\mu\text{m}$), SLSQP converged optics ($\beta_{x,\max}=30.66\,\text{m}, \beta_{y,\max}=52.54\,\text{m}$, mismatch $< 10^{-6}$), OAT error sensitivity rankings, and verified 100% test pass rate across 174 tests.
+
 
 
 

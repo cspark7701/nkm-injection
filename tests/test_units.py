@@ -227,4 +227,18 @@ def test_tracking_result_si_emittance():
     assert res["emittance_x_m_rad"] == res["emittance_x_mrad"]
 
 
+def test_validate_kicker_model():
+    """Verify validate_kicker_model recognizes canonical models and rejects invalid strings."""
+    from nkm.units import validate_kicker_model, CANONICAL_KICKER_MODELS
+
+    for m in CANONICAL_KICKER_MODELS:
+        assert validate_kicker_model(m) == m
+
+    with pytest.raises(ValueError, match="Invalid kicker model"):
+        validate_kicker_model("unknown_model")
+
+    with pytest.raises(ValueError, match="Invalid kicker model"):
+        validate_kicker_model("idealized")  # typo check
+
+
 

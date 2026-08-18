@@ -24,6 +24,17 @@ SPEED_OF_LIGHT_MS: float = 299792458.0
 ELEMENTARY_CHARGE_C: float = 1.602176634e-19
 ELECTRON_CHARGE_C: float = -1.602176634e-19
 
+# Canonical Kicker Models
+KickerModelType = Literal["off", "ideal", "linear", "fieldmap"]
+CANONICAL_KICKER_MODELS: Tuple[KickerModelType, ...] = ("off", "ideal", "linear", "fieldmap")
+
+
+def validate_kicker_model(model: str) -> KickerModelType:
+    """Validate that model string is one of canonical kicker models."""
+    if model not in CANONICAL_KICKER_MODELS:
+        raise ValueError(f"Invalid kicker model: '{model}'. Must be one of {CANONICAL_KICKER_MODELS}")
+    return model  # type: ignore
+
 
 def validate_positive(val: float, param_name: str) -> float:
     """Validate that a numerical parameter is strictly positive (> 0)."""

@@ -14,6 +14,9 @@ import at
 
 from .units import (
     KickMapMetadata,
+    KickerModelType,
+    CANONICAL_KICKER_MODELS,
+    validate_kicker_model,
     compute_rigidity,
     convert_kick_angle,
     integrated_field_to_kick,
@@ -192,7 +195,7 @@ def load_storage_ring_injection_lattice(config: Optional[StorageRingInjectionCon
 
 
 def get_kicker_evaluator(
-    model: str = "ideal",
+    model: Union[str, KickerModelType],
     config: Optional[StorageRingInjectionConfig] = None,
     kickmap_obj: Optional[NKMKickMap2D] = None
 ) -> Tuple[Callable[[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray]], KickMapMetadata]:
@@ -211,7 +214,9 @@ def get_kicker_evaluator(
     if config is None:
         config = StorageRingInjectionConfig()
 
-    if model == "off":
+    validated_model = validate_kicker_model(model)
+
+    if validated_model == "off":
         meta = KickMapMetadata(
             coordinate_unit="m",
             value_type="kick_angle",
@@ -222,7 +227,7 @@ def get_kicker_evaluator(
             return np.zeros_like(x), np.zeros_like(y)
         return kick_off, meta
 
-    elif model == "ideal":
+    elif validated_model == "ideal":
         x_inj = config.septum_x_offset_m
         ideal_kick_mrad = -config.alpha_x_nkm * x_inj / config.beta_x_nkm_m * 1e3
         meta = KickMapMetadata(
@@ -235,7 +240,7 @@ def get_kicker_evaluator(
             return np.full_like(x, ideal_kick_mrad), np.zeros_like(y)
         return kick_ideal, meta
 
-    elif model == "linear":
+    elif validated_model == "linear":
         K0_MRAD = -2.1046  # dipole term at x = -16 mm
         K1_MRAD_PER_MM = -0.45043  # linear gradient dk/dx [mrad/mm]
         X_REF_MM = config.septum_x_offset_m * 1e3  # nominal injection offset [mm]
@@ -251,7 +256,7 @@ def get_kicker_evaluator(
             return kx, ky
         return kick_linear, meta
 
-    elif model == "fieldmap":
+    elif validated_model == "fieldmap":
         if kickmap_obj is None:
             raise ValueError("kickmap_obj must be provided for kicker_model='fieldmap'")
         meta = getattr(kickmap_obj, "metadata", KickMapMetadata(
@@ -262,14 +267,11 @@ def get_kicker_evaluator(
         ))
         return kickmap_obj.evaluate, meta
 
-    else:
-        raise ValueError(f"Unknown kicker model '{model}'. Valid models: 'off', 'ideal', 'linear', 'fieldmap'")
-
 
 def track_multiturn_injection(beam: np.ndarray,
                               ring: at.Lattice,
                               n_turns: int = 10,
-                              kicker_model: str = "fieldmap",
+                              kicker_model: Union[str, KickerModelType] = "fieldmap",
                               kickmap_obj: Optional[NKMKickMap2D] = None,
                               scale_factor: float = 1.0,
                               config: Optional[StorageRingInjectionConfig] = None) -> Dict[str, Any]:
@@ -292,6 +294,7 @@ def track_multiturn_injection(beam: np.ndarray,
     if config is None:
         config = StorageRingInjectionConfig()
 
+    validated_model = validate_kicker_model(kicker_model)
     energy_GeV = config.energy_eV * 1e-9
     n_particles = beam.shape[1]
     current_beam = beam.copy()
@@ -308,8 +311,8 @@ def track_multiturn_injection(beam: np.ndarray,
 
     for turn in range(1, n_turns + 1):
         # 1. Apply Kicker on Turn 1 only
-        if turn == 1 and kicker_model != "off":
-            kick_fn, meta = get_kicker_evaluator(kicker_model, config=config, kickmap_obj=kickmap_obj)
+        if turn == 1 and validated_model != "off":
+            kick_fn, meta = get_kicker_evaluator(validated_model, config=config, kickmap_obj=kickmap_obj)
             current_beam = track_nkm_thin_kick(
                 current_beam,
                 kick_fn,
@@ -332,11 +335,8 @@ def track_multiturn_injection(beam: np.ndarray,
         M66 = track_multiturn_injection._m66_cache["M66"]
 
         valid_before = ~np.isnan(current_beam[0, :])
-        out_beam = current_beam.copy()
-        out_beam[:, valid_before] = M66 @ current_beam[:, valid_before]
-        # Carry forward NaN status
-        out_beam[:, ~valid_before] = np.nan
-        current_beam = out_beam
+        if np.any(valid_before):
+            current_beam[:, valid_before] = M66 @ current_beam[:, valid_before]
 
         # 3. Check physical aperture limits & loss accounting.
         # Turn 1: use the wider injection aperture (injected beam may temporarily
@@ -437,7 +437,7 @@ def compute_multiturn_injection_metrics(injected_results: Dict[str, Any],
 def track_element_resolved_injection(beam: np.ndarray,
                                       ring: at.Lattice,
                                       n_turns: int = 10,
-                                      kicker_model: str = "fieldmap",
+                                      kicker_model: Union[str, KickerModelType] = "fieldmap",
                                       kickmap_obj: Optional[NKMKickMap2D] = None,
                                       scale_factor: float = 1.0,
                                       config: Optional[StorageRingInjectionConfig] = None,
@@ -449,6 +449,8 @@ def track_element_resolved_injection(beam: np.ndarray,
     """
     if config is None:
         config = StorageRingInjectionConfig()
+
+    validated_model = validate_kicker_model(kicker_model)
 
     if septum_model is None:
         septum_model = SeptumModel(
@@ -485,8 +487,8 @@ def track_element_resolved_injection(beam: np.ndarray,
             elem_name = getattr(elem, "FamName", f"ELEM_{elem_idx}")
 
             # Apply NKM kicker on turn 1
-            if turn == 1 and elem_name == "NKM" and kicker_model != "off":
-                kick_fn, meta = get_kicker_evaluator(kicker_model, config=config, kickmap_obj=kickmap_obj)
+            if turn == 1 and elem_name == "NKM" and validated_model != "off":
+                kick_fn, meta = get_kicker_evaluator(validated_model, config=config, kickmap_obj=kickmap_obj)
                 current_beam = track_nkm_thin_kick(
                     current_beam,
                     kick_fn,

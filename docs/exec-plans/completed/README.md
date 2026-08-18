@@ -204,6 +204,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 65. [**Milestone 65 — Task: Update Documentation, JINST Paper, and Project Site for All Refactors**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/65_update_documentation_paper_and_site_for_all_refactors.md)
     - Updated `README.md` and `docs/index.html` with the 177-test verification suite, updated `docs/jinst-paper/paper.tex` with symplectic roll rotation and isolated RNG notes, and recompiled `docs/jinst-paper/paper.pdf`. Verified 100% test pass rate.
 
+66. [**Milestone 66 — Task: Bump Framework Version to v0.2.0**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/66_bump_version_to_v0_2_0.md)
+    - Incremented repository version from `0.1.0` to `0.2.0` across `pyproject.toml`, `src/nkm/__init__.py`, `CITATION.cff`, and `docs/index.html`. Reinstalled editable package and verified 100% test pass rate.
+
 
 
 

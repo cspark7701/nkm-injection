@@ -132,8 +132,12 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
             r_mat = np.eye(6)
             r_mat[0, 0] = cos_r
             r_mat[0, 2] = sin_r
+            r_mat[1, 1] = cos_r
+            r_mat[1, 3] = sin_r
             r_mat[2, 0] = -sin_r
             r_mat[2, 2] = cos_r
+            r_mat[3, 1] = -sin_r
+            r_mat[3, 3] = cos_r
 
             elem.R1 = r_mat
             elem.R2 = r_mat.T

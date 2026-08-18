@@ -79,6 +79,43 @@ def test_apply_sample_errors(nominal_bts_config):
     assert q11.R1.shape == (6, 6)
 
 
+def test_quadrupole_roll_symplectic_structure():
+    """Verify that quadrupole roll transformation is 6D symplectic."""
+    nominal = BTSConfig()
+    sample = sample_error_ensemble(n_samples=1)[0]
+    roll_angle = 0.05  # 50 mrad
+    sample["quad_roll_rad"] = [roll_angle] * 9
+
+    lattice, _ = apply_sample_errors(nominal, sample)
+    q11 = [e for e in lattice if e.FamName == 'q11'][0]
+
+    cos_r = np.cos(roll_angle)
+    sin_r = np.sin(roll_angle)
+
+    # Check both positions and momenta are rotated
+    assert q11.R1[0, 0] == pytest.approx(cos_r)
+    assert q11.R1[0, 2] == pytest.approx(sin_r)
+    assert q11.R1[1, 1] == pytest.approx(cos_r)
+    assert q11.R1[1, 3] == pytest.approx(sin_r)
+    assert q11.R1[2, 0] == pytest.approx(-sin_r)
+    assert q11.R1[2, 2] == pytest.approx(cos_r)
+    assert q11.R1[3, 1] == pytest.approx(-sin_r)
+    assert q11.R1[3, 3] == pytest.approx(cos_r)
+
+    # Symplectic matrix J in 6D: [ [0, 1], [-1, 0] ] blocks
+    J = np.zeros((6, 6))
+    for i in range(3):
+        J[2*i, 2*i + 1] = 1.0
+        J[2*i + 1, 2*i] = -1.0
+
+    # Symplecticity condition: R * J * R.T == J
+    r1_sym = q11.R1 @ J @ q11.R1.T
+    np.testing.assert_allclose(r1_sym, J, atol=1e-14)
+
+    r2_sym = q11.R2 @ J @ q11.R2.T
+    np.testing.assert_allclose(r2_sym, J, atol=1e-14)
+
+
 def test_monte_carlo_robustness_execution(nominal_bts_config, target_twiss):
     """Test Monte Carlo robustness evaluator on a small ensemble."""
     res = evaluate_monte_carlo_robustness(nominal_bts_config, target_twiss, n_samples=20, seed=42)

@@ -189,6 +189,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 60. [**Milestone 60 — Task: Update JINST Paper and Site with Production Simulation Results**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/60_update_jinst_paper_and_site_with_production_results.md)
     - Synchronized `docs/jinst-paper/paper.tex`, `docs/jinst-paper/paper.pdf`, and `docs/index.html` with full production simulation results (`results/production_run_20260815_153100`). Updated multi-turn metrics ($430\times$ stored beam perturbation reduction to $4.76\,\mu\text{m}$), SLSQP converged optics ($\beta_{x,\max}=30.66\,\text{m}, \beta_{y,\max}=52.54\,\text{m}$, mismatch $< 10^{-6}$), OAT error sensitivity rankings, and verified 100% test pass rate across 174 tests.
 
+61. [**Milestone 61 — Task: Refactor Fix Quadrupole Roll Symplectic Rotation Matrix**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/61_refactor_fix_quadrupole_roll_symplectic_rotation.md)
+    - Fixed a physics defect in quadrupole roll error coordinate transformations in `src/nkm/errors.py` by rotating both transverse spatial coordinates $(x, y)$ and momenta angles $(x', y')$ simultaneously in `R1` and `R2`. Added symplectic condition unit tests in `tests/test_errors.py` and verified 100% pass rate.
+
 
 
 

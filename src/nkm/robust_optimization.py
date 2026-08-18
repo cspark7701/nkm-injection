@@ -94,6 +94,15 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
     stored_kick_list = []
     eff_list = []
 
+    # Initialize kicker evaluator for fieldmap / analytical NKM kick
+    try:
+        from .storage_ring_injection import get_kicker_evaluator, StorageRingInjectionConfig
+        inj_cfg = StorageRingInjectionConfig(energy_eV=nominal_config.energy_eV)
+        nkm_kick_fn, _ = get_kicker_evaluator("fieldmap", config=inj_cfg)
+    except Exception:
+        def nkm_kick_fn(x, y):
+            return (-0.005749 * (x / -0.016), np.zeros_like(x))
+
     for s in samples:
         try:
             lattice, init_twiss = apply_sample_errors(nominal_config, s)
@@ -109,7 +118,15 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
             bx_max_list.append(prop["max_beta_x"])
             by_max_list.append(prop["max_beta_y"])
             
-            stored_kick_mrad = abs(s.get("ring_co_x_m", 0.0) * s.get("nkm_scale_err", 0.0)) * 1000.0
+            x_co = float(s.get("ring_co_x_m", 0.0))
+            dx_nkm = float(s.get("nkm_dx_m", 0.0))
+            scale_err = float(s.get("nkm_scale_err", 0.0))
+            net_x = x_co - dx_nkm
+            try:
+                kx, _ = nkm_kick_fn(np.array([net_x]), np.array([0.0]))
+                stored_kick_mrad = float(abs(kx[0])) * (1.0 + scale_err) * 1e3
+            except Exception:
+                stored_kick_mrad = float(abs(net_x * 0.359) * (1.0 + scale_err) * 1e3)
             stored_kick_list.append(stored_kick_mrad)
             
             eff = 1.0

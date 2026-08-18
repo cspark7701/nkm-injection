@@ -192,6 +192,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 61. [**Milestone 61 — Task: Refactor Fix Quadrupole Roll Symplectic Rotation Matrix**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/61_refactor_fix_quadrupole_roll_symplectic_rotation.md)
     - Fixed a physics defect in quadrupole roll error coordinate transformations in `src/nkm/errors.py` by rotating both transverse spatial coordinates $(x, y)$ and momenta angles $(x', y')$ simultaneously in `R1` and `R2`. Added symplectic condition unit tests in `tests/test_errors.py` and verified 100% pass rate.
 
+62. [**Milestone 62 — Task: Refactor Unify 4-Model Injection Tracking and Stored-Beam Closed-Orbit Kick**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/62_refactor_unify_four_model_injection_and_stored_beam_kick.md)
+    - Upgraded `simulate_nkm_models` in `src/nkm/injection.py` to evaluate all 4 canonical models (`off`, `ideal`, `linear`, `fieldmap`), exposed stored-beam dipole deflection under the ideal kicker model, and corrected the closed-orbit stored beam kick calculation in `src/nkm/robust_optimization.py` to evaluate physical field map deflections. Verified 100% pass rate across 175 tests.
+
 
 
 

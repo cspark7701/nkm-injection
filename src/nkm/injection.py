@@ -46,12 +46,17 @@ def simulate_nkm_models(injected_beam: np.ndarray,
     inj_off = track_nkm_thin_kick(injected_beam, kick_off, scale_factor=0.0, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_off)
     circ_off = track_nkm_thin_kick(circulating_beam, kick_off, scale_factor=0.0, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_off)
     
-    # 2. Model 2: Idealized Kicker
+    # 2. Model 2: Idealized Dipole Kicker
     kick_ideal, meta_ideal = get_kicker_evaluator("ideal", config=config)
     inj_ideal = track_nkm_thin_kick(injected_beam, kick_ideal, scale_factor=scale_factor, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_ideal)
-    circ_ideal = track_nkm_thin_kick(circulating_beam, kick_off, scale_factor=0.0, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_off)
+    circ_ideal = track_nkm_thin_kick(circulating_beam, kick_ideal, scale_factor=scale_factor, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_ideal)
+
+    # 3. Model 3: Linearized NKM
+    kick_linear, meta_linear = get_kicker_evaluator("linear", config=config)
+    inj_linear = track_nkm_thin_kick(injected_beam, kick_linear, scale_factor=scale_factor, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_linear)
+    circ_linear = track_nkm_thin_kick(circulating_beam, kick_linear, scale_factor=scale_factor, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_linear)
     
-    # 3. Model 3: Realistic 2D Kick Map
+    # 4. Model 4: Realistic 2D Kick Map
     kick_map_fn, meta_map = get_kicker_evaluator("fieldmap", config=config, kickmap_obj=kickmap_obj)
     inj_fieldmap = track_nkm_thin_kick(injected_beam, kick_map_fn, scale_factor=scale_factor, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_map)
     circ_fieldmap = track_nkm_thin_kick(circulating_beam, kick_map_fn, scale_factor=scale_factor, length_m=length_m, energy_GeV=energy_GeV, metadata=meta_map)
@@ -78,9 +83,17 @@ def simulate_nkm_models(injected_beam: np.ndarray,
                 "injected_stats": compute_beam_statistics(inj_off),
                 "circulating_stats": compute_beam_statistics(circ_off),
             },
+            "nkm_ideal": {
+                "injected_stats": compute_beam_statistics(inj_ideal),
+                "circulating_stats": compute_beam_statistics(circ_ideal),
+            },
             "nkm_idealized": {
                 "injected_stats": compute_beam_statistics(inj_ideal),
                 "circulating_stats": compute_beam_statistics(circ_ideal),
+            },
+            "nkm_linear": {
+                "injected_stats": compute_beam_statistics(inj_linear),
+                "circulating_stats": compute_beam_statistics(circ_linear),
             },
             "nkm_fieldmap": {
                 "injected_stats": compute_beam_statistics(inj_fieldmap),
@@ -95,6 +108,12 @@ def simulate_nkm_models(injected_beam: np.ndarray,
             "circulating_survival_fraction": compute_beam_statistics(circ_fieldmap)["survival_fraction"],
         },
         "beams": {
+            "inj_off": inj_off,
+            "circ_off": circ_off,
+            "inj_ideal": inj_ideal,
+            "circ_ideal": circ_ideal,
+            "inj_linear": inj_linear,
+            "circ_linear": circ_linear,
             "inj_fieldmap": inj_fieldmap,
             "circ_fieldmap": circ_fieldmap,
         }

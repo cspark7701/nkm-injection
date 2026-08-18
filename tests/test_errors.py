@@ -228,9 +228,18 @@ def test_stored_beam_kick_perturbation():
     nominal = BTSConfig()
     target_twiss = {"beta": [2.336, 4.256], "alpha": [-0.016, 0.017]}
     
-    s1 = sample_error_ensemble(n_samples=1)[0]
-    for k in s1:
-        if isinstance(s1[k], float): s1[k] = 0.0
+    # 1. On-axis stored beam (x_co = 0, dx_nkm = 0) -> zero kick
+    s_zero = sample_error_ensemble(n_samples=1)[0]
+    for k in s_zero:
+        if isinstance(s_zero[k], float): s_zero[k] = 0.0
+    s_zero["ring_co_x_m"] = 0.0
+    s_zero["nkm_dx_m"] = 0.0
+    s_zero["nkm_scale_err"] = 0.0
+    stats_zero = evaluate_robustness_statistics(nominal, target_twiss, [s_zero])
+    assert stats_zero["stored_beam_kick_mrad"]["p50"] == pytest.approx(0.0, abs=1e-6)
+    
+    # 2. Offset stored beam (x_co = 1 mm) -> non-zero deflection scaled by scale_err
+    s1 = s_zero.copy()
     s1["ring_co_x_m"] = 0.001
     s1["nkm_scale_err"] = 0.0
     
@@ -240,8 +249,8 @@ def test_stored_beam_kick_perturbation():
     stats1 = evaluate_robustness_statistics(nominal, target_twiss, [s1])
     stats2 = evaluate_robustness_statistics(nominal, target_twiss, [s2])
     
-    assert stats1["stored_beam_kick_mrad"]["p50"] == 0.0
-    assert stats2["stored_beam_kick_mrad"]["p50"] > 0.0
+    assert stats1["stored_beam_kick_mrad"]["p50"] > 0.0
+    assert stats2["stored_beam_kick_mrad"]["p50"] == pytest.approx(stats1["stored_beam_kick_mrad"]["p50"] * 1.1, rel=1e-3)
 
 
 def test_common_random_numbers():

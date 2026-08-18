@@ -94,8 +94,8 @@ def test_rk4_tracking_consistency():
     assert pytest.approx(actual_kick_rad, abs=1e-4) == expected_kick_rad
 
 
-def test_injection_three_models_comparison(kickmap):
-    """Test 3-model injection tracking pipeline."""
+def test_injection_four_models_comparison(kickmap):
+    """Test 4-model injection tracking pipeline (off, ideal, linear, fieldmap)."""
     circ_beam = generate_6d_beam(
         n_particles=200, beta_x=2.33, alpha_x=0.0, emit_x=10.89e-9,
         beta_y=4.25, alpha_y=0.0, emit_y=10.89e-9, x_offset=0.0, seed=42
@@ -106,9 +106,26 @@ def test_injection_three_models_comparison(kickmap):
     )
     
     sim_res = simulate_nkm_models(inj_beam, circ_beam, kickmap)
+    models = sim_res["models"]
     perf = sim_res["performance_metrics"]
     
+    # 1. Verify all 4 models exist in output
+    assert "nkm_off" in models
+    assert "nkm_ideal" in models
+    assert "nkm_linear" in models
+    assert "nkm_fieldmap" in models
+    
+    # 2. Verify stored beam perturbation:
+    # - Ideal dipole kicker perturbs stored beam (> 0.1 mrad)
+    # - Fieldmap NKM protects stored beam (< 0.01 mrad)
+    ideal_circ_kick = models["nkm_ideal"]["circulating_stats"]["centroid"]["xp_mrad"]
+    fieldmap_circ_kick = models["nkm_fieldmap"]["circulating_stats"]["centroid"]["xp_mrad"]
+    
+    assert abs(ideal_circ_kick) > 0.1
+    assert abs(fieldmap_circ_kick) < 0.01
+    
+    # 3. Verify performance metrics
     assert perf["injected_survival_fraction"] == 1.0
     assert perf["circulating_survival_fraction"] == 1.0
-    assert perf["stored_beam_kick_mrad"] < 0.01  # Minimal perturbation for stored beam at x=0
+    assert perf["stored_beam_kick_mrad"] < 0.01
     assert perf["beam_separation_mm"] > 0.0

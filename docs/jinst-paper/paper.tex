@@ -136,7 +136,7 @@ Particle propagation through the thick $0.31~\mathrm{m}$ active field section of
 \mathbf{r}'_{k+1} = \mathbf{r}'_k + \frac{q}{p_0} \mathbf{B}\left(\mathbf{r}_{k+1/2}\right) \Delta z, \quad
 \mathbf{r}_{k+1} = \mathbf{r}_{k+1/2} + \frac{\Delta z}{2} \mathbf{r}'_{k+1}.
 \end{equation}
-Convergence scans across slice counts $N_{\text{slices}} \in \{5, 10, 20, 50, 100\}$ confirm that $N_{\text{slices}} \ge 40$ achieves angular trajectory convergence to $< 5 \times 10^{-5}~\mathrm{mrad}$.
+Convergence scans across slice counts $N_{\text{slices}} \in \{5, 10, 20, 50, 100\}$ confirm that $N_{\text{slices}} \ge 40$ achieves angular trajectory convergence to $< 5 \times 10^{-5}~\mathrm{mrad}$. Quadrupole roll tilt misalignments are modeled via rigorous 6D symplectic coordinate transformations satisfying $\mathbf{R}_1 \mathbf{J} \mathbf{R}_1^T = \mathbf{J}$, rotating both transverse spatial coordinates and canonical momenta angles simultaneously.
 
 \section{Optics Optimization: SLSQP \& NSGA-II MOGA}
 \label{sec:optimization}
@@ -307,6 +307,7 @@ To evaluate performance robustness against real-world machine imperfections, Mon
     \item Storage ring closed-orbit error: $\sigma_{\text{co}} = 200~\mu\mathrm{m}$
     \item Septum position error: $\sigma_{\text{sept}} = 100~\mu\mathrm{m}$
 \end{itemize}
+All random realizations are generated using isolated NumPy random number generators (\texttt{default\_rng}) to guarantee thread-isolated, deterministic execution across parallel workers.
 
 \subsection{Sensitivity Ranking \& Statistical Percentiles}
 

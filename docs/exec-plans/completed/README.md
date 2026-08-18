@@ -201,6 +201,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 64. [**Milestone 64 — Task: Refactor Isolate RNG Generators for Thread Safety and Reproducibility**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/64_refactor_isolate_rng_generators_for_thread_safety.md)
     - Replaced global `np.random.seed(...)` mutations in `generate_6d_beam` with isolated `np.random.default_rng(seed)` and direct Cholesky factorizations. Added RNG isolation tests in `tests/test_units.py` and verified 100% pass rate across 177 tests.
 
+65. [**Milestone 65 — Task: Update Documentation, JINST Paper, and Project Site for All Refactors**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/65_update_documentation_paper_and_site_for_all_refactors.md)
+    - Updated `README.md` and `docs/index.html` with the 177-test verification suite, updated `docs/jinst-paper/paper.tex` with symplectic roll rotation and isolated RNG notes, and recompiled `docs/jinst-paper/paper.pdf`. Verified 100% test pass rate.
+
 
 
 

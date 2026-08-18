@@ -77,7 +77,7 @@ cd nkm
 pip install -r requirements-lock.txt
 pip install -e .[dev,moga]
 
-# Verify installation via pytest suite (161 tests)
+# Verify installation via pytest suite (177 tests)
 pytest -v
 
 # Run single-command paper pipeline

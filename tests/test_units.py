@@ -192,7 +192,7 @@ def test_canonical_emittance_naming_and_compatibility():
     from nkm.beam import generate_6d_beam, compute_beam_statistics
 
     beam = generate_6d_beam(
-        n_particles=100,
+        n_particles=2000,
         beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
         beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
         seed=42
@@ -239,6 +239,39 @@ def test_validate_kicker_model():
 
     with pytest.raises(ValueError, match="Invalid kicker model"):
         validate_kicker_model("idealized")  # typo check
+
+
+def test_beam_generation_rng_isolation():
+    """Verify generate_6d_beam is deterministic and does not corrupt global numpy random state."""
+    from nkm.beam import generate_6d_beam
+
+    # Save global numpy state before call
+    np.random.seed(999)
+    state_before = np.random.get_state()
+    val_before = np.random.uniform()
+
+    # Reset state to test
+    np.random.set_state(state_before)
+
+    b1 = generate_6d_beam(
+        n_particles=100,
+        beta_x=5.0, alpha_x=0.0, emit_x=1e-7,
+        beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+        seed=42
+    )
+
+    # Check global state was NOT touched by generate_6d_beam
+    val_after = np.random.uniform()
+    assert val_after == val_before
+
+    # Verify deterministic reproducibility
+    b2 = generate_6d_beam(
+        n_particles=100,
+        beta_x=5.0, alpha_x=0.0, emit_x=1e-7,
+        beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
+        seed=42
+    )
+    np.testing.assert_array_equal(b1, b2)
 
 
 

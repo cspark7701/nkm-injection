@@ -198,6 +198,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 63. [**Milestone 63 — Task: Refactor Centralize Kicker Model Types and Optimize Multi-Turn Tracking Memory**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/63_refactor_centralize_kicker_model_types_and_in_place_tracking.md)
     - Centralized canonical `KickerModelType`, `CANONICAL_KICKER_MODELS`, and `validate_kicker_model()` in `src/nkm/units.py`. Enforced validation across `storage_ring_injection.py` functions and optimized multi-turn tracking by eliminating per-turn full-array copies with in-place matrix updates. Verified 100% test pass rate.
 
+64. [**Milestone 64 — Task: Refactor Isolate RNG Generators for Thread Safety and Reproducibility**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/64_refactor_isolate_rng_generators_for_thread_safety.md)
+    - Replaced global `np.random.seed(...)` mutations in `generate_6d_beam` with isolated `np.random.default_rng(seed)` and direct Cholesky factorizations. Added RNG isolation tests in `tests/test_units.py` and verified 100% pass rate across 177 tests.
+
 
 
 

@@ -17,9 +17,9 @@ def generate_6d_beam(n_particles: int,
                      blength: float = 13.4e-3, espread: float = 1.1e-3,
                      x_offset: float = 0.0, xp_offset: float = 0.0,
                      y_offset: float = 0.0, yp_offset: float = 0.0,
-                     seed: int = 42) -> np.ndarray:
+                     seed: Optional[int] = 42) -> np.ndarray:
     """
-    Generate a 6D phase-space particle beam matrix of shape (6, n_particles).
+    Generate a 6D phase-space particle beam matrix of shape (6, n_particles) using isolated RNG.
     
     Coordinates:
         [0]: x [m]
@@ -29,14 +29,25 @@ def generate_6d_beam(n_particles: int,
         [4]: delta (dp/p)
         [5]: s / ct [m]
     """
-    if seed is not None:
-        np.random.seed(seed)
+    rng = np.random.default_rng(seed)
     sigma_mat = at.sigma_matrix(
         betax=beta_x, alphax=alpha_x, emitx=emit_x,
         betay=beta_y, alphay=alpha_y, emity=emit_y,
         blength=blength, espread=espread
     )
-    beam = at.beam(n_particles, sigma_mat)
+    
+    try:
+        lmat = np.linalg.cholesky(sigma_mat)
+    except np.linalg.LinAlgError:
+        lmat = np.zeros((6, 6))
+        for slc in [slice(0, 2), slice(2, 4), slice(4, 6)]:
+            try:
+                lmat[slc, slc] = np.linalg.cholesky(sigma_mat[slc, slc])
+            except np.linalg.LinAlgError:
+                pass
+                
+    v = rng.standard_normal(size=(6, n_particles))
+    beam = np.asfortranarray(lmat @ v)
     
     # Apply centroid offsets
     beam[0, :] += x_offset

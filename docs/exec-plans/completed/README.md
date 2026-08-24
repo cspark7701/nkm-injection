@@ -207,6 +207,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 66. [**Milestone 66 — Task: Bump Framework Version to v0.2.0**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/66_bump_version_to_v0_2_0.md)
     - Incremented repository version from `0.1.0` to `0.2.0` across `pyproject.toml`, `src/nkm/__init__.py`, `CITATION.cff`, and `docs/index.html`. Reinstalled editable package and verified 100% test pass rate.
 
+67. [**Milestone 67 — Task: Isolate Website Files in docs/site/ for GitHub Pages Deployment**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/67_isolate_website_in_docs_site_for_github_pages.md)
+    - Created isolated static website bundle in `docs/site/` (`index.html`, `style.css`, `.nojekyll`, reports, and documentation) and created `scripts/sync_site.sh` for syncing with standalone `nkm.github.io` repository. Verified 100% test pass rate.
+
 
 
 

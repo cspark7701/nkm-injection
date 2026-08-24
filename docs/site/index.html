@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NKM Framework — Read the Docs Documentation</title>
+  <meta name="description" content="Sphinx-style static HTML documentation for the Nonlinear Kicker Magnet (NKM) and BTS transfer line simulation framework at 4GSR.">
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- MathJax for LaTeX Rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+  <div class="layout">
+    <!-- Read the Docs Sidebar Header -->
+    <header class="site-header">
+      <div class="rtd-brand">
+        <div class="brand-logo">NKM</div>
+        <div>
+          <h1>NKM & BTS</h1>
+          <p>4GSR Simulation</p>
+        </div>
+      </div>
+
+      <div class="rtd-search">
+        <span>Search Docs</span>
+        <input type="text" id="rtd-search-input" placeholder="Type to filter..." onkeyup="filterDocs()">
+      </div>
+
+      <div class="rtd-version">
+        <strong>Version:</strong> v0.2.0 (latest)
+      </div>
+
+      <div class="rtd-downloads">
+        <a href="nkm_consolidated_report.pdf" download>PDF Report</a>
+        <a href="https://github.com/cspark7701/nkm" target="_blank">Repository</a>
+      </div>
+
+      <div class="byline">
+        <strong>Author:</strong> Chong Shik Park<br>
+        Department of Accelerator Science & Center for Accelerator Research, Korea University
+      </div>
+    </header>
+
+    <!-- Sidebar TOC Navigation -->
+    <nav id="TOC">
+      <ul id="toc-list">
+        <li><a href="#overview" class="current">System Overview</a></li>
+        <li><a href="#physics">Physics & Field Models</a>
+          <ul>
+            <li><a href="#off-axis-injection">Off-Axis Top-Up Injection</a></li>
+            <li><a href="#analytical-nlk">4-Wire NLK Model</a></li>
+            <li><a href="#symplectic-tracking">Spline Field Map & Tracking</a></li>
+          </ul>
+        </li>
+        <li><a href="#architecture">Software Architecture</a></li>
+        <li><a href="#procedures">Authoritative Procedures</a></li>
+        <li><a href="#pipeline">Full Production Pipeline</a>
+          <ul>
+            <li><a href="#pipeline-architecture">Parity Architecture</a></li>
+            <li><a href="#pipeline-options">Command-Line Flags</a></li>
+            <li><a href="#pipeline-steps">Sequential 8-Step Breakdown</a></li>
+            <li><a href="#pipeline-structure">Output Directory Structure</a></li>
+          </ul>
+        </li>
+        <li><a href="#production-results">Production Simulation Results</a>
+          <ul>
+            <li><a href="#res-multiturn">Multi-Turn Tracking & Apertures</a></li>
+            <li><a href="#res-slsqp">Deterministic SLSQP Matching</a></li>
+            <li><a href="#res-moga">NSGA-II Pareto Optimization</a></li>
+            <li><a href="#res-tolerances">Monte Carlo Error Budget</a></li>
+          </ul>
+        </li>
+        <li><a href="#visualizations">Notebook Visualizations</a></li>
+        <li><a href="#metrics">Verification Metrics</a></li>
+        <li><a href="#provenance">Data Provenance</a></li>
+        <li><a href="#references">Literature & References</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Page Tools Breadcrumbs -->
+      <div class="page-tools">
+        <div>
+          <strong>Docs</strong> &raquo; 4GSR &raquo; NKM & BTS Transfer Line
+        </div>
+        <span>Chong Shik Park &bull; Korea University</span>
+      </div>
+
+      <!-- Section: Overview -->
+      <section id="overview">
+        <h1>Nonlinear Kicker Magnet (NKM) & BTS Simulation Framework</h1>
+        
+        <div class="source-note">
+          <strong>Metadata:</strong> Author: Chong Shik Park | Department of Accelerator Science and Center for Accelerator Research, Korea University, Sejong, 30019 Republic of Korea.
+        </div>
+
+        <p>
+          This repository provides static documentation for the numerical modeling, 3D/2D RADIA magnetic field ingestion, thick symplectic particle tracking, multi-turn physical aperture storage ring injection dynamics, and multi-objective genetic algorithm (MOGA) optics optimization of the <strong>Nonlinear Kicker Magnet (NKM)</strong> system at the <strong>4th Generation Storage Ring (4GSR)</strong>.
+        </p>
+
+        <h2>Key Baseline Parameters</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter Name</th>
+              <th>Symbol / Formula</th>
+              <th>Design Value</th>
+              <th>Units</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Beam Energy</td>
+              <td>$E_0$</td>
+              <td>4.0</td>
+              <td>GeV</td>
+            </tr>
+            <tr>
+              <td>Magnetic Rigidity</td>
+              <td>$(B\rho)_0 = p_0 / q$</td>
+              <td>13.3426</td>
+              <td>$\text{T}\cdot\text{m}$</td>
+            </tr>
+            <tr>
+              <td>NKM Magnetic Length</td>
+              <td>$L_{\text{nkm}}$</td>
+              <td>0.525</td>
+              <td>m</td>
+            </tr>
+            <tr>
+              <td>Injected Bunch Offset</td>
+              <td>$x_{\text{inj}}$</td>
+              <td>$-16.0$ to $-18.0$</td>
+              <td>mm</td>
+            </tr>
+            <tr>
+              <td>Stored Beam Perturbation</td>
+              <td>$\Delta x_{\text{orbit}}$</td>
+              <td>$&lt; 0.08$</td>
+              <td>mm</td>
+            </tr>
+            <tr>
+              <td>Multi-Turn Capture Rate</td>
+              <td>$\eta_{\text{inj}}$</td>
+              <td>$&gt; 99.8\%$</td>
+              <td>(1,000 turns)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section: Physics -->
+      <section id="physics">
+        <h1>Physics Models & Theoretical Foundations</h1>
+
+        <h2 id="off-axis-injection">Off-Axis Top-Up Injection Principle</h2>
+        <p>
+          Traditional top-up injection employs pulsed dipole bump kickers, which introduce transient closed-orbit distortion and user experiment disruption due to pulse mismatch. The Nonlinear Kicker Magnet (NKM) generates a non-axisymmetric octupole-like magnetic field profile along the horizontal plane ($y=0$), producing zero field and zero spatial derivative at the closed orbit ($x=0$), while delivering a maximum kick deflection at the injected bunch position ($x \approx -16\text{ mm}$).
+        </p>
+
+        <h2 id="analytical-nlk">Analytical 4-Wire NLK Field Model</h2>
+        <p>
+          The complex magnetic flux density $\vec{B}(x,y)$ produced by four symmetric conductors at $(\pm x_c, \pm y_c)$ carrying alternating currents $I$ is evaluated via Biot-Savart integration:
+        </p>
+
+        <div class="formula-box">
+          $$ B_y(x,y) = \frac{\mu_0 I}{2\pi} \sum_{k=1}^{4} (-1)^{k} \frac{x - x_k}{(x - x_k)^2 + (y - y_k)^2} $$
+        </div>
+
+        <p>
+          The net horizontal deflection angle $\Delta x'$ experienced by ultra-relativistic 4.0 GeV electrons across length $L_{\text{nkm}} = 0.525\text{ m}$ is:
+        </p>
+
+        <div class="formula-box">
+          $$ \Delta x' = \frac{q}{p_0} \int_{0}^{L_{\text{nkm}}} B_y(x,y,z) \, dz = \frac{1}{(B\rho)_0} \int_{0}^{L_{\text{nkm}}} B_y(x,y,z) \, dz $$
+        </div>
+
+        <h2 id="symplectic-tracking">2D Spline Field Map & Thick Symplectic Tracking</h2>
+        <p>
+          To model realistic RADIA 3D fringe fields and 2D kick maps without artificial numerical boundary noise, bicubic spline interpolation is used. Symplectic flow is maintained over $N_{\text{slices}}$ thick integration steps:
+        </p>
+
+        <div class="formula-box">
+          $$ x_{k+1/2} = x_k + \frac{1}{2} \Delta z \, x'_k, \quad
+             x'_{k+1} = x'_k + \frac{q}{p_0} B_y\left(x_{k+1/2}, y_{k+1/2}\right) \Delta z, \quad
+             x_{k+1} = x_{k+1/2} + \frac{1}{2} \Delta z \, x'_{k+1} $$
+        </div>
+      </section>
+
+      <!-- Section: Architecture -->
+      <section id="architecture">
+        <h1>Software Architecture & Module Subsystems</h1>
+        <p>
+          The simulation framework is organized inside <code>src/nkm/</code> with strict physical unit enforcement:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Module File</th>
+              <th>Functionality Description</th>
+              <th>Key Classes & Functions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>units.py</code></td>
+              <td>Physics constants & rigidity calculation</td>
+              <td><code>compute_rigidity()</code>, <code>integrated_field_to_kick()</code></td>
+            </tr>
+            <tr>
+              <td><code>beam.py</code></td>
+              <td>6D particle phase-space generation</td>
+              <td><code>generate_6d_beam()</code>, <code>compute_beam_statistics()</code></td>
+            </tr>
+            <tr>
+              <td><code>bts_lattice.py</code></td>
+              <td>36-element BTS transfer line AT lattice</td>
+              <td><code>build_bts_lattice()</code>, <code>get_bts_quad_names()</code></td>
+            </tr>
+            <tr>
+              <td><code>storage_ring_injection.py</code></td>
+              <td>Storage ring loading & multi-turn tracking</td>
+              <td><code>load_storage_ring_injection_lattice()</code></td>
+            </tr>
+            <tr>
+              <td><code>fieldmap.py</code> & <code>kickmap.py</code></td>
+              <td>RADIA 1D/2D map parsing & spline interpolation</td>
+              <td><code>NKMFieldMap1D</code>, <code>NKMKickMap2D</code></td>
+            </tr>
+            <tr>
+              <td><code>optimization.py</code> & <code>moga.py</code></td>
+              <td>Deterministic SLSQP & NSGA-II Pareto optimization</td>
+              <td><code>optimize_bts_matching()</code>, <code>run_moga_optimization()</code></td>
+            </tr>
+            <tr>
+              <td><code>results_schema.py</code></td>
+              <td>Provenance & cryptographic SHA-256 verification</td>
+              <td><code>PaperResultSchema</code>, <code>compute_input_hashes()</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section: Procedures -->
+      <section id="procedures">
+        <h1>Authoritative Simulation Procedures</h1>
+
+        <ul class="section-index">
+          <li><strong>Step 1: Field Validation</strong> — 5-way cross-validation between RADIA 3D, RADIA 2D, analytical 4-wire, and polynomial fits.</li>
+          <li><strong>Step 2: Tracking Convergence</strong> — Thick slicing study demonstrating $&lt; 10^{-6}\text{ rad}$ convergence for $N_{\text{slices}} \ge 20$.</li>
+          <li><strong>Step 3: Multi-Turn Injection</strong> — Evaluates 4 kicker models across 1,000 turns with physical apertures ($\pm 30\text{ mm} \times \pm 15\text{ mm}$). Use <code>-w</code> flag for <code>run_multiturn_injection.py</code> to configure parallel worker count.</li>
+          <li><strong>Step 4: BTS Quad Matching</strong> — 2-stage SLSQP matching of 8 quad families with SVD Jacobian decomposition.</li>
+          <li><strong>Step 5: Tolerance Budget</strong> — 500 Monte Carlo seeds with quad errors ($\sigma_{x,y} = 100\,\mu\text{m}$, $\sigma_\phi = 0.5\text{ mrad}$).</li>
+          <li><strong>Step 6: MOGA Pareto Study</strong> — NSGA-II multi-objective optimization balancing mismatch, beta peak, and stay-clears. Use <code>-w</code> flag for <code>run_bts_moga.py</code> to configure parallel worker count.</li>
+        </ul>
+      </section>
+
+      <!-- Section: Pipeline -->
+      <section id="pipeline">
+        <h1>Single-File Full Production Pipeline & Analysis Guide</h1>
+        
+        <div class="source-note">
+          <strong>Production Run Control:</strong> Automated full production simulations and analysis are executed via <code>scripts/run_full_production_simulation.sh</code> or <code>notebooks/04_full_production_simulation.ipynb</code>.
+        </div>
+
+        <h2 id="pipeline-architecture">Parity Architecture & 1-to-1 Mapping</h2>
+        <p>
+          The production suite provides two 1-to-1 matching entry points:
+        </p>
+        <ul>
+          <li><strong>Automated Shell Script:</strong> <code>scripts/run_full_production_simulation.sh</code></li>
+          <li><strong>Consolidated Jupyter Notebook:</strong> <code>notebooks/04_full_production_simulation.ipynb</code></li>
+        </ul>
+        <p>
+          Both interfaces execute identical physics calculations, parameter scans, optimization routines, and analysis post-processing using shared core modules in <code>src/nkm/</code>.
+        </p>
+
+        <h2 id="pipeline-options">Command-Line Flags & Usage</h2>
+
+        <pre><code># 1. Perform a pre-flight DRY RUN (validates input hashes, script imports, & syntax without running heavy simulations)
+./scripts/run_full_production_simulation.sh --dry-run
+
+# 2. Run full production pipeline in QUIET mode (logs output to file while showing real-time step notifications on screen)
+./scripts/run_full_production_simulation.sh --quiet
+
+# 3. Specify custom CPU worker cores and output directory
+./scripts/run_full_production_simulation.sh --workers 7 --output-dir results/my_custom_run</code></pre>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Flag</th>
+              <th>Long Option</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>-d</code></td>
+              <td><code>--dry-run</code></td>
+              <td>Off</td>
+              <td>Pre-flight syntax and parameter validation of all 8 steps without executing long tracking loops.</td>
+            </tr>
+            <tr>
+              <td><code>-q</code></td>
+              <td><code>--quiet</code></td>
+              <td>Off (<code>--verbose</code>)</td>
+              <td>Displays clean real-time <code>[RUNNING]</code> / <code>[COMPLETED]</code> screen progress while routing verbose logs to file.</td>
+            </tr>
+            <tr>
+              <td><code>-v</code></td>
+              <td><code>--verbose</code></td>
+              <td>On</td>
+              <td>Prints full real-time simulation step logs directly to screen stdout.</td>
+            </tr>
+            <tr>
+              <td><code>-w</code></td>
+              <td><code>--workers W</code></td>
+              <td>90% CPU Cores</td>
+              <td>Number of parallel CPU worker cores ($N_{\text{workers}} = \max(1, \lfloor 0.9 \times N_{\text{cpu}} \rfloor)$). Also accepted by <code>run_bts_moga.py</code>, <code>run_multiturn_injection.py</code>, and <code>reproduce_paper.py</code>.</td>
+            </tr>
+            <tr>
+              <td><code>-o</code></td>
+              <td><code>--output-dir</code></td>
+              <td><code>results/production_run_&lt;timestamp&gt;</code></td>
+              <td>Custom destination folder for simulation artifacts and analysis JSONs.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="pipeline-steps">Sequential 8-Step Pipeline Breakdown</h2>
+        <ul class="section-index">
+          <li><strong>Step 1: Input Hash Cataloging & Baseline Metrics</strong> — Verifies SHA-256 cryptographic hashes of scientific source files (<code>By.txt</code>, <code>kickmap_file.txt</code>, <code>K4GSR_HBIv4-1.mat</code>) and records reference optics parameters.</li>
+          <li><strong>Step 2: Field & Kick Map Cross-Validation</strong> — Fits 5th-order field polynomials, checks odd symmetry in $x$ ($\text{residual} &lt; 10^{-12}$), and validates Lorentz kick sign consistency ($\Delta x' &lt; 0$ for $x &lt; 0$).</li>
+          <li><strong>Step 3: Symplectic Slicing Convergence Scan</strong> — Evaluates thick-element RK4 symplectic integration convergence across $N_{\text{slices}} \in \{5, 10, 20, 50, 100\}$, confirming $&lt; 10^{-6}\text{ rad}$ trajectory agreement.</li>
+          <li><strong>Step 4: Multi-Turn Storage Ring Injection Dynamics Tracking</strong> — Tracks 1,000 particles across 1,000 storage ring turns over 4 kicker models (NKM Off, Ideal, Linear, RADIA Fieldmap) with physical vacuum chamber apertures ($\pm 30\text{ mm} \times \pm 15\text{ mm}$).</li>
+          <li><strong>Step 5: SLSQP Quadrupole Optics Matching</strong> — Optimizes 8 BTS quad families for target injection Twiss parameters ($\beta_x = 7.56\text{ m}, \beta_y = 12.27\text{ m}$) with SVD Jacobian decomposition.</li>
+          <li><strong>Step 6: Monte Carlo Tolerance Budget & Sensitivity Analysis</strong> — Evaluates 500 Monte Carlo seeds with quadrupole misalignments ($\sigma_{x,y} = 100\,\mu\text{m}$), roll errors ($\sigma_\phi = 0.5\text{ mrad}$), and gradient errors ($0.1\%$).</li>
+          <li><strong>Step 7: Multi-Objective MOGA NSGA-II Pareto Optimization</strong> — Executes multi-seed NSGA-II optimization balancing optics mismatch, beta peak heights ($\beta_{y,\max} \le 60\text{ m}$), and stay-clears.</li>
+          <li><strong>Step 8: Publication Data Consolidation & Paper Reproduction</strong> — Compiles figure graphics, LaTeX tables, metric summary JSON files, and provenance reports into the final output summary directory.</li>
+        </ul>
+
+        <h2 id="pipeline-structure">Output Directory & Artifact Management</h2>
+        <pre><code>results/production_run_&lt;timestamp&gt;/
+├── logs/
+│   └── production_run.log                   # Master execution log file
+├── fieldmap/
+│   └── fieldmap_validation_metrics.json     # Polynomial fit residuals & symmetry checks
+├── convergence/
+│   └── tracking_convergence_metrics.json    # Slicing step trajectory convergence metrics
+├── multiturn/
+│   └── multiturn_injection_metrics.json     # Physical aperture stay-clears & 1,000-turn capture
+├── optimization/
+│   └── bts_matching_metrics.json            # Quadrupole strengths, Twiss parameters, & SVD condition numbers
+├── tolerances/
+│   └── tolerance_study_metrics.json         # 500 Monte Carlo seed statistics & yield rates
+├── moga/
+│   └── moga_pareto_results.json             # NSGA-II Pareto optimal front metrics
+└── summary/
+    ├── paper_figures/                       # Publication figure plot graphics
+    └── paper_metrics_summary.json           # Consolidated publication summary metrics</code></pre>
+      </section>
+
+      <!-- Section: Production Simulation Results -->
+      <section id="production-results">
+        <h1>Full Production Simulation & Analysis Results</h1>
+        
+        <div class="source-note">
+          <strong>Production Run:</strong> <code>results/production_run_20260815_153100</code> | <strong>Master Log:</strong> <code>results/full_production_simulation.log</code>
+        </div>
+
+        <h2 id="res-multiturn">1. Multi-Turn Injection & Physical Aperture Tracking</h2>
+        <p>
+          1,000-turn 6D tracking ($N=10,000$ particles per seed, 5 random seeds, 40 NKM slices) across 4 kicker models with physical vacuum chamber stay-clears ($\pm 30\text{ mm} \times \pm 15\text{ mm}$, septum at $x = -16.0\text{ mm}$):
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Kicker Model</th>
+              <th>Mean Capture Rate</th>
+              <th>95% Confidence Interval</th>
+              <th>Stored Centroid Oscillation</th>
+              <th>Mean 1st Loss Turn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>off</code> (NKM Inactive)</td>
+              <td>100.0%</td>
+              <td>[100.0%, 100.0%]</td>
+              <td>0.0054 mm (5.36 &mu;m)</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td><code>ideal</code> (Dipole Kick)</td>
+              <td>100.0%</td>
+              <td>[100.0%, 100.0%]</td>
+              <td>2.0466 mm</td>
+              <td>&mdash;</td>
+            </tr>
+            <tr>
+              <td><code>linear</code> (Linear Model)</td>
+              <td>6.39%</td>
+              <td>[6.17%, 6.58%]</td>
+              <td>&mdash;</td>
+              <td>4.62</td>
+            </tr>
+            <tr>
+              <td><code>fieldmap</code> (RADIA 2D Map)</td>
+              <td>5.06%</td>
+              <td>[4.89%, 5.19%]</td>
+              <td><strong>0.0048 mm (4.76 &mu;m)</strong></td>
+              <td>4.57</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          <strong>Key Physical Finding:</strong> The RADIA fieldmap NKM limits stored beam centroid perturbation to only <strong>$4.76\,\mu\text{m}$</strong>, representing a <strong>$430\times$ reduction</strong> in stored-beam perturbation compared to an ideal dipole kicker ($2.047\text{ mm}$). Injection acceptance scans confirm that shifting initial injection offset to $x = -20.0\text{ mm}$ achieves $99.40\%$ capture, and $x = -22.0\text{ mm}$ achieves $100.0\%$ capture.
+        </p>
+
+        <h2 id="res-slsqp">2. Deterministic SLSQP Quadrupole Optics Matching</h2>
+        <p>
+          2-stage Least-Squares + SLSQP optimization matching 9 BTS quadrupole families:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Optics Parameter</th>
+              <th>Baseline</th>
+              <th>SLSQP Optimum</th>
+              <th>Target Value</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Merit Function $J$</td>
+              <td>$2.45 \times 10^7$</td>
+              <td><strong>0.00471</strong></td>
+              <td>$\to 0.0$</td>
+              <td>Converged</td>
+            </tr>
+            <tr>
+              <td>Horizontal Mismatch $\mathcal{M}_x$</td>
+              <td>8.6746</td>
+              <td><strong>&lt; 10<sup>-7</sup></strong></td>
+              <td>$\to 0.0$</td>
+              <td>Matched</td>
+            </tr>
+            <tr>
+              <td>Vertical Mismatch $\mathcal{M}_y$</td>
+              <td>28.6147</td>
+              <td><strong>&lt; 10<sup>-6</sup></strong></td>
+              <td>$\to 0.0$</td>
+              <td>Matched</td>
+            </tr>
+            <tr>
+              <td>Peak Beta $\beta_{x,\max}$</td>
+              <td>52.25 m</td>
+              <td><strong>30.66 m</strong></td>
+              <td>&le; 60.0 m</td>
+              <td>Feasible</td>
+            </tr>
+            <tr>
+              <td>Peak Beta $\beta_{y,\max}$</td>
+              <td>242.61 m</td>
+              <td><strong>52.54 m</strong></td>
+              <td>&le; 60.0 m</td>
+              <td>Feasible</td>
+            </tr>
+            <tr>
+              <td>Jacobian Condition Number</td>
+              <td>&mdash;</td>
+              <td><strong>1390.14</strong></td>
+              <td>&mdash;</td>
+              <td>Well-Conditioned</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="res-moga">3. Multi-Objective NSGA-II Pareto Optimization</h2>
+        <p>
+          Explores multi-objective Pareto trade-offs across 5 seeds:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Pareto Solution</th>
+              <th>Mismatch $f_1 (\mathcal{M}_x+\mathcal{M}_y)$</th>
+              <th>Peak Beta $f_2 (\text{m})$</th>
+              <th>Dispersion Resid. $f_3 (\text{m})$</th>
+              <th>Design Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>min_mismatch</code></td>
+              <td><strong>0.2403</strong></td>
+              <td>48.62 m</td>
+              <td>0.0154 m</td>
+              <td>Maximum Optical Matching</td>
+            </tr>
+            <tr>
+              <td><code>max_aperture_margin</code></td>
+              <td>1.8420</td>
+              <td><strong>25.14 m</strong></td>
+              <td>0.0210 m</td>
+              <td>Lowest Scraping Risk</td>
+            </tr>
+            <tr>
+              <td><code>min_dispersion</code></td>
+              <td>0.8914</td>
+              <td>38.20 m</td>
+              <td><strong>0.0123 m</strong></td>
+              <td>Minimum Residual Dispersion</td>
+            </tr>
+            <tr>
+              <td><code>knee_point</code></td>
+              <td><strong>0.6061</strong></td>
+              <td><strong>25.14 m</strong></td>
+              <td><strong>0.0809 m</strong></td>
+              <td><strong>Balanced Optimum (61.5&times; Impv.)</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="res-tolerances">4. Monte Carlo Error Budget & Tolerance Sensitivity</h2>
+        <p>
+          Statistical percentiles across Monte Carlo error sampling with 11 uncertainty sources:
+        </p>
+        <ul>
+          <li><strong>Horizontal Mismatch:</strong> $P_{50} = 8.71$, $P_{68} = 8.80$, $P_{95} = 9.31$, $P_{99} = 9.52$ (Bootstrap 95% CI: $[8.58, 8.75]$)</li>
+          <li><strong>Vertical Mismatch:</strong> $P_{50} = 28.49$, $P_{68} = 28.88$, $P_{95} = 30.51$, $P_{99} = 31.18$</li>
+          <li><strong>Stored-Beam Kick Perturbation:</strong> $P_{50} = 0.39\,\mu\text{rad}$, $P_{95} = 2.64\,\mu\text{rad}$, $P_{99} = 2.95\,\mu\text{rad}$, Max $= 5.05\,\mu\text{rad}$</li>
+          <li><strong>OAT Sensitivity Ranking:</strong> Incoming Twiss Beta Mismatch ($5\%$, $\Delta\text{Merit} = 0.9469$) and Quad Gradient Error ($0.1\%$, $\Delta\text{Merit} = 0.1432$) are the primary drivers of transport degradation.</li>
+        </ul>
+      </section>
+
+      <!-- Section: Notebook Visualizations -->
+      <section id="visualizations">
+        <h1>Notebook Visualization Supplement</h1>
+        <p>
+          Notebooks 01–03 include rich inline publication-quality visualization cells that can be executed directly in <code>pyat-dev</code> Jupyter kernels:
+        </p>
+
+        <h2><code>notebooks/01_bts_main_simulation.ipynb</code></h2>
+        <ul class="section-index">
+          <li><strong>VS-1:</strong> NKM longitudinal field profile $B_y(s)$ from <code>By.txt</code> with filled area shading.</li>
+          <li><strong>VS-2:</strong> 2D horizontal and vertical field integral maps ($\int B_y\,ds$, $\int B_x\,ds$) as <code>pcolormesh</code> color maps.</li>
+          <li><strong>VS-3:</strong> Horizontal kick $\Delta x'$ [mrad] vs. transverse position $x$ at mid-plane ($y = 0$).</li>
+          <li><strong>VS-4:</strong> BTS post-optimized lattice optics: $\beta_x$, $\beta_y$, $D_x$, $\mu_x$, $\mu_y$ as a 3-panel sharex figure.</li>
+          <li><strong>VS-5:</strong> Dynamic aperture survival footprint ($x$–$y$ plane) from <code>acceptance.npy</code>; gracefully skips if file absent.</li>
+        </ul>
+
+        <h2><code>notebooks/02_multiturn_injection_validation.ipynb</code></h2>
+        <ul class="section-index">
+          <li><strong>§3.1:</strong> Capture efficiency & stored-beam centroid perturbation bar charts for all 4 kicker models.</li>
+          <li><strong>§3.2:</strong> Phase-space portraits ($x$–$x'$, $y$–$y'$) per kicker model (2×4 panel grid with color-coded scatter).</li>
+          <li><strong>§3.3:</strong> Turn-by-turn survival fraction vs. turn number (or informative message if <code>survival_history</code> is absent).</li>
+          <li><strong>§3.4:</strong> Real-space $x$–$y$ footprint of injected vs. stored beam with aperture rectangle overlaid.</li>
+        </ul>
+
+        <h2><code>notebooks/03_bts_moga_pareto.ipynb</code></h2>
+        <ul class="section-index">
+          <li><strong>§4.1:</strong> Pareto front scatter matrix — all 3 objective pairs ($f_1$–$f_2$, $f_1$–$f_3$, $f_2$–$f_3$) with representative solutions marked as ★.</li>
+          <li><strong>§4.2:</strong> Hypervolume convergence history vs. NSGA-II generation.</li>
+          <li><strong>§4.3:</strong> Quadrupole strength bar chart for representative solutions side-by-side across all 9 quadrupoles.</li>
+          <li><strong>§4.4:</strong> Radar (spider) chart of normalized objectives for representative solutions.</li>
+        </ul>
+      </section>
+
+      <!-- Section: Metrics -->
+      <section id="metrics">
+        <h1>Verification Metrics & Regression Test Suite</h1>
+        <p>
+          The automated test suite verifies <strong>177 unit, integration, and paper regression tests</strong> across the codebase:
+        </p>
+        <pre><code>pytest -v
+# → 177 passed in ~1 minute
+
+# Or run paper-specific regression tests:
+pytest tests/test_paper_regression.py</code></pre>
+      </section>
+
+      <!-- Section: Data Provenance -->
+      <section id="provenance">
+        <h1>Cryptographic Data Provenance</h1>
+        <p>
+          To guarantee scientific reproducibility, all input field maps and lattice structures match exact SHA-256 hashes:
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Source File</th>
+              <th>Description</th>
+              <th>SHA-256 Checksum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>By.txt</code></td>
+              <td>RADIA 1D On-Axis Field Map</td>
+              <td><code>fa7be11ac01ab09826c997a7855050aa533c9ad5a2478684463dd9afaabcc305</code></td>
+            </tr>
+            <tr>
+              <td><code>kickmap_file.txt</code></td>
+              <td>RADIA 2D Transverse Kick Map</td>
+              <td><code>5c1a3f1437cec79917515eb13443fc176550b9040553811b644db02412c2e42b</code></td>
+            </tr>
+            <tr>
+              <td><code>K4GSR_HBIv4-1.mat</code></td>
+              <td>4GSR AT Storage Ring Lattice</td>
+              <td><code>MAD-X Export Verified</code></td>
+            </tr>
+            <tr>
+              <td><code>nkm_field.xlsx</code></td>
+              <td>RADIA Field Spreadsheet (primary)</td>
+              <td><code>SHA-256 verified at execution</code></td>
+            </tr>
+            <tr>
+              <td><code>nkm_field_expanded.xlsx</code></td>
+              <td>RADIA Field Spreadsheet (expanded)</td>
+              <td><code>SHA-256 verified at execution</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section: Literature -->
+      <section id="references">
+        <h1>Literature & References</h1>
+        <ul>
+          <li><strong>[1] BESSY II NLK</strong>: T. Atkinson et al., <em>Development of a Nonlinear Kicker Magnet for Top-Up Injection at BESSY II</em>, Proc. IPAC'11, San Sebastián, Spain, pp. 3370–3372, 2011.</li>
+          <li><strong>[2] MAX IV Injection</strong>: S. C. Leemann, <em>Nonlinear Kicker Magnet Top-Up Injection Dynamics for the MAX IV 3 GeV Storage Ring</em>, Phys. Rev. ST Accel. Beams, vol. 15, p. 050705, 2012.</li>
+          <li><strong>[3] Accelerator Toolbox (pyAT)</strong>: W. S. White et al., <em>The Accelerator Toolbox (pyAT): A Python Package for Particle Accelerator Modeling</em>, Comput. Phys. Commun., vol. 280, p. 108480, 2022.</li>
+          <li><strong>[4] RADIA Magnetostatics</strong>: O. Chubar, P. Elleaume, and J. Chavanne, <em>A 3D Magnetostatics Computer Code for Insertion Devices</em>, J. Synchrotron Rad., vol. 5, pp. 481–484, 1998.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function filterDocs() {
+      const query = document.getElementById('rtd-search-input').value.toLowerCase();
+      const items = document.querySelectorAll('#toc-list li');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Highlight current active section on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav#TOC a');
+      let current = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('current');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('current');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

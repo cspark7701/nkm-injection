@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# sync_site.sh — Synchronize docs/site/ bundle to standalone nkm.github.io repo
+# sync_site.sh — Synchronize docs/site/ bundle to standalone nkm-injection.github.io repo
 # ==============================================================================
 set -euo pipefail
 
@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 SOURCE_SITE_DIR="${REPO_ROOT}/docs/site"
 
-TARGET_DIR="${1:-${REPO_ROOT}/../nkm.github.io}"
+TARGET_DIR="${1:-${REPO_ROOT}/../nkm-injection.github.io}"
 
 echo "========================================================================"
 echo " NKM Documentation Website Synchronizer"

@@ -1,6 +1,6 @@
 # NKM GitHub Pages Static Site Bundle (`docs/site/`)
 
-This directory contains the self-contained static website bundle for the **Nonlinear Kicker Magnet (NKM) & BTS Simulation Framework** designed for deployment to GitHub Pages (e.g. `https://cspark7701.github.io/nkm` or a dedicated `nkm.github.io` repository).
+This directory contains the self-contained static website bundle for the **Nonlinear Kicker Magnet (NKM) & BTS Simulation Framework** designed for deployment to GitHub Pages (`https://nkm-injection.github.io` under the `nkm-injection` GitHub organization).
 
 ---
 
@@ -16,21 +16,21 @@ This directory contains the self-contained static website bundle for the **Nonli
 
 ---
 
-## Deployment & Syncing to Standalone `nkm.github.io` Repository
+## Deployment & Syncing to Standalone `nkm-injection.github.io` Repository
 
-When creating the standalone `nkm.github.io` repository on GitHub:
+When creating the standalone `nkm-injection.github.io` repository on GitHub:
 
 ### Option A: Using the Automated Sync Script
 ```bash
 # From the root of the 'nkm' repository:
-./scripts/sync_site.sh /path/to/nkm.github.io
+./scripts/sync_site.sh ../nkm-injection.github.io
 ```
 
-If no target directory is passed, the script automatically checks for a sibling directory `../nkm.github.io`.
+If no target directory is passed, the script automatically defaults to `../nkm-injection.github.io`.
 
 ### Option B: Manual Sync via `rsync`
 ```bash
-rsync -av --delete docs/site/ /path/to/nkm.github.io/
+rsync -av --delete docs/site/ /path/to/nkm-injection.github.io/
 ```
 
 ### Option C: Direct Git Worktree / Branch

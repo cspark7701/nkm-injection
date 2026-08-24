@@ -1,4 +1,4 @@
-# NKM — Nonlinear Kicker Magnet & BTS Optimization
+# NKM-Injection — Nonlinear Kicker Magnet & BTS Optimization
 
 Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ring (BTS) transfer line optics matching, off-axis beam injection, and reproducible publication generation.
 
@@ -70,8 +70,8 @@ All generated simulation outputs are saved under the `results/` directory.
 
 ```bash
 # Clone the repository
-git clone https://github.com/cspark7701/nkm.git
-cd nkm
+git clone https://github.com/nkm-injection/nkm-injection.git
+cd nkm-injection
 
 # Install locked dependencies and package
 pip install -r requirements-lock.txt

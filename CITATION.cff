@@ -3,8 +3,8 @@ message: "If you use this software in your research, please cite it as below."
 authors:
   - name: "Chong Shik Park"
     affiliation: "Department of Accelerator Science and Center for Accelerator Research, Korea University, Sejong, 30019 Republic of Korea"
-title: "NKM: Nonlinear Kicker Magnet and BTS Transfer Line Simulation Framework"
+title: "NKM-Injection: Nonlinear Kicker Magnet and BTS Transfer Line Simulation Framework"
 version: 0.2.0
 date-released: 2026-08-18
-url: "https://github.com/cspark7701/nkm"
+url: "https://github.com/nkm-injection/nkm-injection"
 license: MIT

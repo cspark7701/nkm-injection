@@ -20,8 +20,8 @@ Every manuscript figure, table, and reported metric can be dynamically reproduce
 Clone the repository and install locked dependencies:
 
 ```bash
-git clone https://github.com/cspark7701/nkm.git
-cd nkm
+git clone https://github.com/nkm-injection/nkm-injection.git
+cd nkm-injection
 pip install -r requirements-lock.txt
 pip install -e .[dev,moga]
 ```
@@ -42,7 +42,7 @@ Outputs are saved under `results/paper/paper_run_<timestamp>/`.
 
 ## 4. Test Suite Execution
 
-Run all 161 unit, integration, and paper regression tests:
+Run all 177 unit, integration, and paper regression tests:
 
 ```bash
 pytest -v

@@ -210,6 +210,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 67. [**Milestone 67 — Task: Isolate Website Files in docs/site/ for GitHub Pages Deployment**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/67_isolate_website_in_docs_site_for_github_pages.md)
     - Created isolated static website bundle in `docs/site/` (`index.html`, `style.css`, `.nojekyll`, reports, and documentation) and created `scripts/sync_site.sh` for syncing with standalone `nkm-injection.github.io` repository. Verified 100% test pass rate.
 
+68. [**Milestone 68 — Task: Update Repository Name and URLs to nkm-injection**](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/68_rename_repo_to_nkm_injection.md)
+    - Updated repository and package names across `pyproject.toml` (`nkm-injection`), `CITATION.cff`, `README.md`, `docs/INSTALLATION.md`, `docs/reproducibility.md`, `scripts/setup_environment.sh`, and documentation website links (`https://github.com/nkm-injection/nkm-injection`). Verified 100% test pass rate.
+
 
 
 

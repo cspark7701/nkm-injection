@@ -5,8 +5,8 @@
 # ==============================================================================
 set -e
 
-REPO_URL="https://github.com/cspark7701/nkm.git"
-TARGET_DIR="nkm"
+REPO_URL="https://github.com/nkm-injection/nkm-injection.git"
+TARGET_DIR="nkm-injection"
 
 echo "======================================================================"
 echo "          NKM Simulation Repository — Environment Setup               "

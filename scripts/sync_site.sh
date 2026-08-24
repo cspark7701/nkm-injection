@@ -8,7 +8,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 SOURCE_SITE_DIR="${REPO_ROOT}/docs/site"
 
-TARGET_DIR="${1:-${REPO_ROOT}/../nkm-injection.github.io}"
+DEFAULT_TARGET="/home/cspark/Work/simulation_codes-working/nkm-injection.github.io"
+if [ ! -d "${DEFAULT_TARGET}" ] && [ -d "/home/cspark/Works/simulation_codes-working/nkm-injection.github.io" ]; then
+  DEFAULT_TARGET="/home/cspark/Works/simulation_codes-working/nkm-injection.github.io"
+fi
+
+TARGET_DIR="${1:-${DEFAULT_TARGET}}"
 
 echo "========================================================================"
 echo " NKM Documentation Website Synchronizer"

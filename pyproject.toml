@@ -43,7 +43,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
-addopts = "-ra -q --disable-warnings"
+addopts = "-ra --disable-warnings"
 testpaths = [
     "tests",
 ]

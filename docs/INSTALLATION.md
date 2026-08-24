@@ -18,7 +18,7 @@ This guide provides step-by-step instructions for setting up the **Nonlinear Kic
 To clone, set up the Python environment, install all dependencies, and run verification tests automatically:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/nkm-injection/nkm-injection/main/scripts/setup_environment.sh)
+bash <(curl -s https://raw.githubusercontent.com/cspark7701/nkm-injection/main/scripts/setup_environment.sh)
 ```
 
 Or from an existing clone:
@@ -34,7 +34,7 @@ Or from an existing clone:
 ### Step 1: Git Clone the Repository
 
 ```bash
-git clone https://github.com/nkm-injection/nkm-injection.git
+git clone https://github.com/cspark7701/nkm-injection.git
 cd nkm-injection
 ```
 

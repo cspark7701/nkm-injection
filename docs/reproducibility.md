@@ -20,7 +20,7 @@ Every manuscript figure, table, and reported metric can be dynamically reproduce
 Clone the repository and install locked dependencies:
 
 ```bash
-git clone https://github.com/nkm-injection/nkm-injection.git
+git clone https://github.com/cspark7701/nkm-injection.git
 cd nkm-injection
 pip install -r requirements-lock.txt
 pip install -e .[dev,moga]

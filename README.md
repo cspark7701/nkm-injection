@@ -70,7 +70,7 @@ All generated simulation outputs are saved under the `results/` directory.
 
 ```bash
 # Clone the repository
-git clone https://github.com/nkm-injection/nkm-injection.git
+git clone https://github.com/cspark7701/nkm-injection.git
 cd nkm-injection
 
 # Install locked dependencies and package

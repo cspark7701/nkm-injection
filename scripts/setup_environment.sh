@@ -5,7 +5,7 @@
 # ==============================================================================
 set -e
 
-REPO_URL="https://github.com/nkm-injection/nkm-injection.git"
+REPO_URL="https://github.com/cspark7701/nkm-injection.git"
 TARGET_DIR="nkm-injection"
 
 echo "======================================================================"

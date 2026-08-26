@@ -20,7 +20,7 @@ Prepare, write, refine, compile, and finalize a publication-quality manuscript f
 - [x] Move and expand draft manuscript `docs/jinst-paper/paper.tex`
 - [x] Build BibTeX reference database `docs/jinst-paper/paper.bib`
 - [x] Include high-resolution 300 DPI PNG & vector PDF figures in `docs/jinst-paper/figures/`
-- [x] Clean compile manuscript to PDF: [`docs/jinst-paper/paper.pdf`](file:///home/cspark/Work/projects/nkm/docs/jinst-paper/paper.pdf)
+- [x] Clean compile manuscript to PDF: [`docs/jinst-paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/jinst-paper/paper.pdf)
 - [ ] Author review, co-author feedback, and journal submission submission package packaging
 
 ---

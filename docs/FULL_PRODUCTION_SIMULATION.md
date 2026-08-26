@@ -10,8 +10,8 @@ The pipeline executes full physics simulations, numerical parameter scans, optic
 
 The full production simulation suite consists of two 1-to-1 matching entry points:
 
-1. **Automated Shell Script**: [`scripts/run_full_production_simulation.sh`](file:///home/cspark/Work/projects/nkm/scripts/run_full_production_simulation.sh)
-2. **Consolidated Jupyter Notebook**: [`notebooks/04_full_production_simulation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/04_full_production_simulation.ipynb)
+1. **Automated Shell Script**: [`scripts/run_full_production_simulation.sh`](file:///home/cspark/Work/projects/nkm-injection/scripts/run_full_production_simulation.sh)
+2. **Consolidated Jupyter Notebook**: [`notebooks/04_full_production_simulation.ipynb`](file:///home/cspark/Work/projects/nkm-injection/notebooks/04_full_production_simulation.ipynb)
 
 Both entry points execute the exact same 8 simulation steps in identical sequence using shared underlying Python modules in `src/nkm/`.
 

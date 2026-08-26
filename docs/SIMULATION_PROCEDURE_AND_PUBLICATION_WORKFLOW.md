@@ -121,7 +121,7 @@ flowchart TD
 
 ## 5. Protected Source Data Safeguards
 
-Under project rules ([`AGENTS.md`](file:///home/cspark/Work/projects/nkm/AGENTS.md)), the following scientific source data files are **immutable** and protected against accidental editing, stripping, or reformatting:
+Under project rules ([`AGENTS.md`](file:///home/cspark/Work/projects/nkm-injection/AGENTS.md)), the following scientific source data files are **immutable** and protected against accidental editing, stripping, or reformatting:
 - `NKM_radia.ipynb`, `NKM_radia_y=0.ipynb`
 - `nlk.py`, `storage_ring.ipynb`
 - `*.xls`, `*.xlsx`, `*.xlsm`

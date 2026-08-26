@@ -27,7 +27,7 @@ Exports 300 DPI PNG and vector PDF figures under `results/paper/figures/`:
 
 ### 2.3 Journal Paper Draft (`docs/jinst-paper/paper.tex`)
 - Authored complete manuscript for **Journal of Instrumentation (JINST)** formatted using `jinstpub.sty`.
-- Successfully compiled to [**`docs/jinst-paper/paper.pdf`**](file:///home/cspark/Work/projects/nkm/docs/jinst-paper/paper.pdf) (9 pages, 300 KB).
+- Successfully compiled to [**`docs/jinst-paper/paper.pdf`**](file:///home/cspark/Work/projects/nkm-injection/docs/jinst-paper/paper.pdf) (9 pages, 300 KB).
 
 ---
 

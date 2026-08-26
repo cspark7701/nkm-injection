@@ -17,10 +17,10 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.units import compute_rigidity
-from src.nkm.fieldmap import NKMFieldMap1D, load_1d_fieldmap
-from src.nkm.beam import generate_6d_beam, compute_beam_statistics
-from src.nkm.tracking import track_nkm_thick_symplectic, track_nkm_thick_rk4
+from src.nkm_injection.units import compute_rigidity
+from src.nkm_injection.fieldmap import NKMFieldMap1D, load_1d_fieldmap
+from src.nkm_injection.beam import generate_6d_beam, compute_beam_statistics
+from src.nkm_injection.tracking import track_nkm_thick_symplectic, track_nkm_thick_rk4
 
 
 def main():

@@ -26,7 +26,7 @@ The repository contains four primary Jupyter Notebooks depending on your paper s
 
 **Note on Visualization**: Notebooks 01-03 include rich inline plots and visualizations.
 
-### A. Authoritative Simulation Notebook — [`notebooks/01_bts_main_simulation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/01_bts_main_simulation.ipynb)
+### A. Authoritative Simulation Notebook — [`notebooks/01_bts_main_simulation.ipynb`](file:///home/cspark/Work/projects/nkm-injection/notebooks/01_bts_main_simulation.ipynb)
 - **Role**: Primary workflow notebook for the main text of the journal paper.
 - **What it executes**:
   1. **BTS Lattice Construction**: Builds the 36-element transport line in Accelerator Toolbox (pyAT).
@@ -43,12 +43,12 @@ jupyter lab notebooks/01_bts_main_simulation.ipynb
 
 ---
 
-### B. Dedicated Multi-Turn Injection Validation Notebook — [`notebooks/02_multiturn_injection_validation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/02_multiturn_injection_validation.ipynb)
+### B. Dedicated Multi-Turn Injection Validation Notebook — [`notebooks/02_multiturn_injection_validation.ipynb`](file:///home/cspark/Work/projects/nkm-injection/notebooks/02_multiturn_injection_validation.ipynb)
 - **Role**: Dedicated notebook for multi-turn injection validation.
 - **What it executes**:
   1. Validates the injection process over multiple turns in the storage ring.
 
-### C. Optional Multi-Objective Notebook — [`notebooks/03_bts_moga_pareto.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/03_bts_moga_pareto.ipynb)
+### C. Optional Multi-Objective Notebook — [`notebooks/03_bts_moga_pareto.ipynb`](file:///home/cspark/Work/projects/nkm-injection/notebooks/03_bts_moga_pareto.ipynb)
 - **Role**: Optional MOGA Pareto study notebook for trade-off analysis sections.
 - **What it executes**:
   1. Runs NSGA-II multi-objective genetic algorithm over 9 BTS quadrupole strengths.
@@ -60,7 +60,7 @@ jupyter lab notebooks/01_bts_main_simulation.ipynb
 jupyter lab notebooks/03_bts_moga_pareto.ipynb
 ```
 
-### D. Full Production Pipeline Notebook — [`notebooks/04_full_production_simulation.ipynb`](file:///home/cspark/Work/projects/nkm/notebooks/04_full_production_simulation.ipynb)
+### D. Full Production Pipeline Notebook — [`notebooks/04_full_production_simulation.ipynb`](file:///home/cspark/Work/projects/nkm-injection/notebooks/04_full_production_simulation.ipynb)
 - **Role**: The full production simulation pipeline.
 - **What it executes**:
   1. Executes the complete 8-step production pipeline in a consolidated notebook.
@@ -114,12 +114,12 @@ python scripts/reproduce_paper.py -w 7
 
 ### Generated Paper Deliverables Summary (`results/paper/`):
 
-#### 📄 LaTeX & Markdown Tables ([`results/paper/tables/`](file:///home/cspark/Work/projects/nkm/results/paper/tables/))
+#### 📄 LaTeX & Markdown Tables ([`results/paper/tables/`](file:///home/cspark/Work/projects/nkm-injection/results/paper/tables/))
 - **`table1_bts_parameters.tex` / `.md`**: BTS line parameters, energy, emittances, and target Twiss parameters.
 - **`table2_quad_strengths.tex` / `.md`**: Quadrupole strengths $K_1 \dots K_9$ comparison (Baseline vs SLSQP vs MOGA Knee-Point).
 - **`table3_optics_comparison.tex` / `.md`**: Optics metrics ($\mathcal{M}_x, \mathcal{M}_y$, peak $\beta_x, \beta_y$, exit $D_x, D_x'$).
 
-#### 🖼️ Publication Figures ([`results/paper/figures/`](file:///home/cspark/Work/projects/nkm/results/paper/figures/))
+#### 🖼️ Publication Figures ([`results/paper/figures/`](file:///home/cspark/Work/projects/nkm-injection/results/paper/figures/))
 - **`fig1_bts_optics_comparison.png` / `.pdf`**: $\beta_x(s), \beta_y(s), D_x(s)$ optics functions along the BTS line.
 - **`fig2_beam_envelopes_apertures.png` / `.pdf`**: Transverse $3\sigma$ beam envelopes vs physical vacuum chamber apertures.
 - **`fig3_nkm_fieldmap_kick.png` / `.pdf`**: RADIA 2D integrated deflection profile $\Delta x'(x, y=0)$.
@@ -146,6 +146,6 @@ pytest tests/test_paper_regression.py
 ## 6. Paper Documentation References
 
 You can consult the pre-compiled Markdown reports for direct copy-pasting of text, tables, and references:
-- **Paper Results & LaTeX Snippets**: [`docs/paper_results.md`](file:///home/cspark/Work/projects/nkm/docs/paper_results.md)
-- **Reproducibility Guide**: [`docs/reproducibility.md`](file:///home/cspark/Work/projects/nkm/docs/reproducibility.md)
-- **MOGA Optimization Report**: [`docs/validation/moga_pareto_optimization.md`](file:///home/cspark/Work/projects/nkm/docs/validation/moga_pareto_optimization.md)
+- **Paper Results & LaTeX Snippets**: [`docs/paper_results.md`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_results.md)
+- **Reproducibility Guide**: [`docs/reproducibility.md`](file:///home/cspark/Work/projects/nkm-injection/docs/reproducibility.md)
+- **MOGA Optimization Report**: [`docs/validation/moga_pareto_optimization.md`](file:///home/cspark/Work/projects/nkm-injection/docs/validation/moga_pareto_optimization.md)

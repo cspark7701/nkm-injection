@@ -11,9 +11,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.constraints import BTSHardwareConstraints, BTSConstraintConfig
-from src.nkm.objectives import BTSNormalizedObjectives, OpticsTargetConfig
-from src.nkm.optimization import (
+from src.nkm_injection.constraints import BTSHardwareConstraints, BTSConstraintConfig
+from src.nkm_injection.objectives import BTSNormalizedObjectives, OpticsTargetConfig
+from src.nkm_injection.optimization import (
     BTSOptimizationConfig,
     BTSOptimizationEvaluator,
     optimize_bts_quadrupoles,

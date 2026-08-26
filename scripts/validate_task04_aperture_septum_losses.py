@@ -20,15 +20,15 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.beam import generate_6d_beam
-from src.nkm.storage_ring_injection import (
+from src.nkm_injection.beam import generate_6d_beam
+from src.nkm_injection.storage_ring_injection import (
     SeptumModel,
     ElementAperture,
     track_element_resolved_injection,
     StorageRingInjectionConfig,
     build_storage_ring_nkm_lattice
 )
-from src.nkm.paper import set_publication_style, PUBLICATION_COLORS
+from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 
 
 def run_task04_validation() -> dict:

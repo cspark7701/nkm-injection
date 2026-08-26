@@ -17,14 +17,14 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.units import (
+from src.nkm_injection.units import (
     compute_rigidity,
     integrated_field_to_transverse_kicks,
     transverse_kicks_to_integrated_field,
     ELECTRON_CHARGE_C,
     ELEMENTARY_CHARGE_C
 )
-from src.nkm.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
+from src.nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
 
 
 def run_validation() -> dict:

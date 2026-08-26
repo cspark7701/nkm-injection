@@ -15,8 +15,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_lattice
-from src.nkm.optics import (
+from src.nkm_injection.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_lattice
+from src.nkm_injection.optics import (
     compute_bts_optics_metrics,
     compute_mismatch_metric,
     plot_bts_optics,

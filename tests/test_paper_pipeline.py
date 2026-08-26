@@ -11,13 +11,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.results_schema import (
+from src.nkm_injection.results_schema import (
     PaperResultSchema,
     compute_file_hash,
     compute_input_data_hashes,
     compute_rms_envelope
 )
-from src.nkm.paper import (
+from src.nkm_injection.paper import (
     run_paper_pipeline,
     set_publication_style,
     PUBLICATION_COLORS

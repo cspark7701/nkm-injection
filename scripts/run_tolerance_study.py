@@ -17,8 +17,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.bts_lattice import BTSConfig
-from src.nkm.errors import (
+from src.nkm_injection.bts_lattice import BTSConfig
+from src.nkm_injection.errors import (
     ErrorBudgetConfig,
     evaluate_monte_carlo_robustness,
     compute_error_sensitivity_ranking

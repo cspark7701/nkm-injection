@@ -20,11 +20,11 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.fieldmap import load_1d_fieldmap, NKMFieldMap1D, integrate_longitudinal_field, OutOfDomainError
-from src.nkm.kickmap import NKMKickMap2D
-from src.nkm.units import compute_rigidity, integrated_field_to_transverse_kicks, ELECTRON_CHARGE_C
-from src.nkm.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
-from src.nkm.paper import set_publication_style, PUBLICATION_COLORS
+from src.nkm_injection.fieldmap import load_1d_fieldmap, NKMFieldMap1D, integrate_longitudinal_field, OutOfDomainError
+from src.nkm_injection.kickmap import NKMKickMap2D
+from src.nkm_injection.units import compute_rigidity, integrated_field_to_transverse_kicks, ELECTRON_CHARGE_C
+from src.nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
+from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 import nlk
 
 

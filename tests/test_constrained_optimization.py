@@ -33,14 +33,14 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.constraints import (
+from src.nkm_injection.constraints import (
     BTSConstraintConfig,
     BTSHardwareConstraints,
     ConstraintRecord,
     QuadrupoleHardwareBounds,
 )
-from src.nkm.objectives import BTSNormalizedObjectives, OpticsTargetConfig
-from src.nkm.optimization import (
+from src.nkm_injection.objectives import BTSNormalizedObjectives, OpticsTargetConfig
+from src.nkm_injection.optimization import (
     BTSOptimizationConfig,
     BTSOptimizationResult,
     CandidateRecord,
@@ -156,7 +156,7 @@ class TestApertureMargin:
     def _get_prop(self, k):
         obj = BTSNormalizedObjectives()
         obj.set_quads(k)
-        from src.nkm.optics import compute_twiss_propagation
+        from src.nkm_injection.optics import compute_twiss_propagation
         return compute_twiss_propagation(obj.lattice, obj.initial_twiss)
 
     def test_aperture_margin_keys(self, nominal_k):
@@ -188,7 +188,7 @@ class TestInjectionOrbitCheck:
     def _get_prop(self, k):
         obj = BTSNormalizedObjectives()
         obj.set_quads(k)
-        from src.nkm.optics import compute_twiss_propagation
+        from src.nkm_injection.optics import compute_twiss_propagation
         return compute_twiss_propagation(obj.lattice, obj.initial_twiss)
 
     def test_injection_orbit_records_present(self, nominal_k):
@@ -219,7 +219,7 @@ class TestSeptumClearance:
     def _get_prop(self, k):
         obj = BTSNormalizedObjectives()
         obj.set_quads(k)
-        from src.nkm.optics import compute_twiss_propagation
+        from src.nkm_injection.optics import compute_twiss_propagation
         return compute_twiss_propagation(obj.lattice, obj.initial_twiss)
 
     def test_septum_clearance_keys(self, nominal_k):
@@ -280,8 +280,8 @@ class TestValidateFull:
     def _get_prop_and_mismatch(self, k):
         obj = BTSNormalizedObjectives()
         obj.set_quads(k)
-        from src.nkm.optics import compute_twiss_propagation, compute_mismatch_metric
-        from src.nkm.objectives import OpticsTargetConfig
+        from src.nkm_injection.optics import compute_twiss_propagation, compute_mismatch_metric
+        from src.nkm_injection.objectives import OpticsTargetConfig
         prop = compute_twiss_propagation(obj.lattice, obj.initial_twiss)
         tc = OpticsTargetConfig()
         mx = compute_mismatch_metric(
@@ -504,7 +504,7 @@ class TestBaselineVsOptimum:
 class TestBackwardCompatibility:
     def test_bts_optimization_evaluator_alias(self):
         """BTSOptimizationEvaluator must be an alias for DeterministicObjective."""
-        from src.nkm.optimization import BTSOptimizationEvaluator
+        from src.nkm_injection.optimization import BTSOptimizationEvaluator
         assert BTSOptimizationEvaluator is DeterministicObjective
 
     def test_legacy_optimize_still_works(self, fast_config):
@@ -521,7 +521,7 @@ class TestBackwardCompatibility:
 class TestUnifiedBeamEnvelopeAndSeptumClearance:
     def test_compute_beam_envelope_methods(self):
         """Verify rms_quadrature and conservative_linear envelope formulas."""
-        from src.nkm.optics import compute_beam_envelope
+        from src.nkm_injection.optics import compute_beam_envelope
 
         beta = 10.0
         disp = 0.5
@@ -541,7 +541,7 @@ class TestUnifiedBeamEnvelopeAndSeptumClearance:
 
     def test_compute_beam_envelope_array(self):
         """Verify compute_beam_envelope supports numpy arrays."""
-        from src.nkm.optics import compute_beam_envelope
+        from src.nkm_injection.optics import compute_beam_envelope
 
         beta = np.array([5.0, 10.0, 15.0])
         disp = np.array([0.1, 0.2, 0.3])
@@ -551,15 +551,15 @@ class TestUnifiedBeamEnvelopeAndSeptumClearance:
 
     def test_compute_beam_envelope_invalid_method(self):
         """Verify ValueError on unknown method string."""
-        from src.nkm.optics import compute_beam_envelope
+        from src.nkm_injection.optics import compute_beam_envelope
 
         with pytest.raises(ValueError, match="Unknown envelope method"):
             compute_beam_envelope(10.0, 0.5, method="unknown_method")  # type: ignore
 
     def test_check_septum_clearance_local_optics(self):
         """Verify check_septum_clearance evaluates local optics at septum instead of global max."""
-        from src.nkm.bts_lattice import create_bts_lattice
-        from src.nkm.optics import compute_twiss_propagation
+        from src.nkm_injection.bts_lattice import create_bts_lattice
+        from src.nkm_injection.optics import compute_twiss_propagation
 
         lattice = create_bts_lattice()
         initial_twiss = {

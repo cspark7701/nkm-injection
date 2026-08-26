@@ -26,13 +26,13 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.optimization import (
+from src.nkm_injection.optimization import (
     BTSOptimizationConfig,
     optimize_bts_quadrupoles,
     compute_sensitivity_matrix,
     round_strengths,
 )
-from src.nkm.constraints import BTSConstraintConfig
+from src.nkm_injection.constraints import BTSConstraintConfig
 
 
 def _git_commit() -> str:

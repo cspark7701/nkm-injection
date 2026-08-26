@@ -11,15 +11,15 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
-from src.nkm.tracking import (
+from src.nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
+from src.nkm_injection.tracking import (
     track_nkm_thick_symplectic,
     track_nkm_thick_rk4,
     track_nkm_thin_kick,
     track_nkm_symplectic,
     track_nkm_rk4
 )
-from src.nkm.units import compute_rigidity, ELECTRON_CHARGE_C
+from src.nkm_injection.units import compute_rigidity, ELECTRON_CHARGE_C
 
 
 def test_zero_field_limit():

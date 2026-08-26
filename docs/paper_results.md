@@ -10,7 +10,7 @@ This document collects the complete, publication-ready simulation results, optic
 
 The BTS transport line transfers a $4.0\text{ GeV}$ electron beam from the booster synchrotron to the main storage ring. The injection section utilizes a Nonlinear Kicker Magnet (NKM) to enable off-axis beam injection with minimal perturbation to circulating stored bunches.
 
-![BTS Optics Comparison](file:///home/cspark/Work/projects/nkm/results/paper/figures/fig1_bts_optics_comparison.png)
+![BTS Optics Comparison](file:///home/cspark/Work/projects/nkm-injection/results/paper/figures/fig1_bts_optics_comparison.png)
 
 ---
 
@@ -67,13 +67,13 @@ The BTS transport line transfers a $4.0\text{ GeV}$ electron beam from the boost
 | **Exit Dispersion $D_x$** | $0.2984\text{ m}$ | $0.0815\text{ m}$ | **$0.0809\text{ m}$** | $0.0809\text{ m}$ | **Exact Match** |
 | **Exit Dispersion Angle $D_x'$** | $-0.0710\text{ rad}$ | $0.0470\text{ rad}$ | **$0.0475\text{ rad}$** | $0.0475\text{ rad}$ | **Exact Match** |
 
-![Transverse Beam Envelopes](file:///home/cspark/Work/projects/nkm/results/paper/figures/fig2_beam_envelopes_apertures.png)
+![Transverse Beam Envelopes](file:///home/cspark/Work/projects/nkm-injection/results/paper/figures/fig2_beam_envelopes_apertures.png)
 
 ---
 
 ## 5. NKM Field Map & Injection Dynamics
 
-![NKM Field Map Profile](file:///home/cspark/Work/projects/nkm/results/paper/figures/fig3_nkm_fieldmap_kick.png)
+![NKM Field Map Profile](file:///home/cspark/Work/projects/nkm-injection/results/paper/figures/fig3_nkm_fieldmap_kick.png)
 
 ### Key NKM Parameters:
 - **Physical Magnet Length**: $L_{\text{NKM}} = 0.525\text{ m}$

@@ -11,14 +11,14 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.validation import (
+from src.nkm_injection.validation import (
     get_input_data_hashes,
     compute_cross_validation,
     perform_interpolation_study,
     perform_grid_convergence_study,
     perform_linearity_study
 )
-from src.nkm.kickmap import NKMKickMap2D
+from src.nkm_injection.kickmap import NKMKickMap2D
 
 
 def test_input_data_hashes():

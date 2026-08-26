@@ -12,8 +12,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.beam import generate_6d_beam
-from src.nkm.storage_ring_injection import (
+from src.nkm_injection.beam import generate_6d_beam
+from src.nkm_injection.storage_ring_injection import (
     SeptumModel,
     ElementAperture,
     track_element_resolved_injection,

@@ -2,12 +2,12 @@
 
 ## Summary
 - **Source Data Ingested**:
-  - Full production simulation log: [`results/full_production_simulation.log`](file:///home/cspark/Work/projects/nkm/results/full_production_simulation.log)
-  - Production run directory: [`results/production_run_20260815_153100/`](file:///home/cspark/Work/projects/nkm/results/production_run_20260815_153100/)
-    - Multi-turn metrics: [`results/production_run_20260815_153100/multiturn/injection_metrics_summary.json`](file:///home/cspark/Work/projects/nkm/results/production_run_20260815_153100/multiturn/injection_metrics_summary.json)
-    - BTS matching: [`results/bts_publication_optimization/run_20260815_153144/bts_optimization_summary.json`](file:///home/cspark/Work/projects/nkm/results/bts_publication_optimization/run_20260815_153144/bts_optimization_summary.json)
-    - Tolerance budget: [`results/publication_tolerances/run_20260815_153259/publication_tolerances_summary.json`](file:///home/cspark/Work/projects/nkm/results/publication_tolerances/run_20260815_153259/publication_tolerances_summary.json)
-    - MOGA Pareto study: [`results/publication_moga/run_20260815_153331/multi_seed_moga_summary.json`](file:///home/cspark/Work/projects/nkm/results/publication_moga/run_20260815_153331/multi_seed_moga_summary.json)
+  - Full production simulation log: [`results/full_production_simulation.log`](file:///home/cspark/Work/projects/nkm-injection/results/full_production_simulation.log)
+  - Production run directory: [`results/production_run_20260815_153100/`](file:///home/cspark/Work/projects/nkm-injection/results/production_run_20260815_153100/)
+    - Multi-turn metrics: [`results/production_run_20260815_153100/multiturn/injection_metrics_summary.json`](file:///home/cspark/Work/projects/nkm-injection/results/production_run_20260815_153100/multiturn/injection_metrics_summary.json)
+    - BTS matching: [`results/bts_publication_optimization/run_20260815_153144/bts_optimization_summary.json`](file:///home/cspark/Work/projects/nkm-injection/results/bts_publication_optimization/run_20260815_153144/bts_optimization_summary.json)
+    - Tolerance budget: [`results/publication_tolerances/run_20260815_153259/publication_tolerances_summary.json`](file:///home/cspark/Work/projects/nkm-injection/results/publication_tolerances/run_20260815_153259/publication_tolerances_summary.json)
+    - MOGA Pareto study: [`results/publication_moga/run_20260815_153331/multi_seed_moga_summary.json`](file:///home/cspark/Work/projects/nkm-injection/results/publication_moga/run_20260815_153331/multi_seed_moga_summary.json)
 - **Updates to JINST Paper (`docs/jinst-paper/paper.tex` & `paper.pdf`)**:
   - **Abstract & Multi-Turn Section**:
     - Updated stored beam centroid perturbation for RADIA fieldmap NKM to $0.0048\text{ mm}$ ($4.76\text{ \mu m}$), demonstrating a $430\times$ reduction compared to $2.0466\text{ mm}$ for an ideal dipole kicker.

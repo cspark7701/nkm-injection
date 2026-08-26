@@ -5,7 +5,7 @@ Unit tests for src/nkm/units.py
 import pytest
 import numpy as np
 
-from nkm.units import (
+from nkm_injection.units import (
     KickMapMetadata,
     compute_rigidity,
     convert_coordinate,
@@ -189,7 +189,7 @@ def test_integrated_field_to_transverse_kicks_two_plane():
 
 def test_canonical_emittance_naming_and_compatibility():
     """Verify compute_beam_statistics returns both SI keys and backward-compatible aliases."""
-    from nkm.beam import generate_6d_beam, compute_beam_statistics
+    from nkm_injection.beam import generate_6d_beam, compute_beam_statistics
 
     beam = generate_6d_beam(
         n_particles=2000,
@@ -210,8 +210,8 @@ def test_canonical_emittance_naming_and_compatibility():
 
 def test_tracking_result_si_emittance():
     """Verify TrackingResult supports canonical SI emittance properties and dict keys."""
-    from nkm.beam import generate_6d_beam
-    from nkm.tracking import TrackingResult
+    from nkm_injection.beam import generate_6d_beam
+    from nkm_injection.tracking import TrackingResult
 
     beam = generate_6d_beam(
         n_particles=50,
@@ -229,7 +229,7 @@ def test_tracking_result_si_emittance():
 
 def test_validate_kicker_model():
     """Verify validate_kicker_model recognizes canonical models and rejects invalid strings."""
-    from nkm.units import validate_kicker_model, CANONICAL_KICKER_MODELS
+    from nkm_injection.units import validate_kicker_model, CANONICAL_KICKER_MODELS
 
     for m in CANONICAL_KICKER_MODELS:
         assert validate_kicker_model(m) == m
@@ -243,7 +243,7 @@ def test_validate_kicker_model():
 
 def test_beam_generation_rng_isolation():
     """Verify generate_6d_beam is deterministic and does not corrupt global numpy random state."""
-    from nkm.beam import generate_6d_beam
+    from nkm_injection.beam import generate_6d_beam
 
     # Save global numpy state before call
     np.random.seed(999)

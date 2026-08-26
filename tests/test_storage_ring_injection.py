@@ -11,7 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.storage_ring_injection import (
+from src.nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig,
     load_storage_ring_injection_lattice,
     track_multiturn_injection,
@@ -20,9 +20,9 @@ from src.nkm.storage_ring_injection import (
     get_kicker_evaluator,
     SeptumModel
 )
-from src.nkm.tracking import TrackingResult
-from src.nkm.beam import generate_6d_beam
-from src.nkm.kickmap import NKMKickMap2D
+from src.nkm_injection.tracking import TrackingResult
+from src.nkm_injection.beam import generate_6d_beam
+from src.nkm_injection.kickmap import NKMKickMap2D
 
 
 @pytest.fixture

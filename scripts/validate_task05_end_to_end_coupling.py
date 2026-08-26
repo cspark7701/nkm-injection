@@ -20,15 +20,15 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.end_to_end import (
+from src.nkm_injection.end_to_end import (
     BoosterExtractionConfig,
     generate_booster_extraction_distribution,
     run_end_to_end_pipeline
 )
-from src.nkm.bts_lattice import BTSConfig, create_bts_lattice
-from src.nkm.storage_ring_injection import StorageRingInjectionConfig
-from src.nkm.kickmap import NKMKickMap2D
-from src.nkm.paper import set_publication_style, PUBLICATION_COLORS
+from src.nkm_injection.bts_lattice import BTSConfig, create_bts_lattice
+from src.nkm_injection.storage_ring_injection import StorageRingInjectionConfig
+from src.nkm_injection.kickmap import NKMKickMap2D
+from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 
 
 def run_task05_validation() -> dict:

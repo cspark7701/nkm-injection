@@ -11,7 +11,7 @@ This directory (`docs/exec-plans/active/`) contains all active, ongoing, or pend
    - Active files track current status, target objectives, step-by-step progress, open questions, and verification commands.
 
 2. **Completed Tasks (`docs/exec-plans/completed/`)**:
-   - When an active task or milestone is fully completed, verified, and tested, its execution plan file is moved to [`docs/exec-plans/completed/`](file:///home/cspark/Work/projects/nkm/docs/exec-plans/completed/).
+   - When an active task or milestone is fully completed, verified, and tested, its execution plan file is moved to [`docs/exec-plans/completed/`](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/).
 
 ---
 
@@ -19,4 +19,4 @@ This directory (`docs/exec-plans/active/`) contains all active, ongoing, or pend
 
 | Task File | Description | Status | Target Completion |
 | :--- | :--- | :--- | :--- |
-| [`jinst_manuscript_preparation.md`](file:///home/cspark/Work/projects/nkm/docs/exec-plans/active/jinst_manuscript_preparation.md) | JINST Journal Manuscript Preparation & Submission Setup | In Progress | Active |
+| [`jinst_manuscript_preparation.md`](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/active/jinst_manuscript_preparation.md) | JINST Journal Manuscript Preparation & Submission Setup | In Progress | Active |

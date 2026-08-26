@@ -17,13 +17,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.fieldmap import (
+from src.nkm_injection.fieldmap import (
     load_1d_fieldmap,
     validate_1d_fieldmap,
     NKMFieldMap1D,
     OutOfDomainError
 )
-from src.nkm.kickmap import (
+from src.nkm_injection.kickmap import (
     load_2d_kickmap,
     NKMKickMap2D
 )

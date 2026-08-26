@@ -12,7 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.convergence_study import (
+from src.nkm_injection.convergence_study import (
     smoke_config,
     pilot_config,
     production_config,
@@ -24,13 +24,13 @@ from src.nkm.convergence_study import (
     compute_injection_acceptance,
     run_ensemble_study,
 )
-from src.nkm.storage_ring_injection import (
+from src.nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig,
     load_storage_ring_injection_lattice,
     track_multiturn_injection,
     TrackingResult,
 )
-from src.nkm.beam import generate_6d_beam
+from src.nkm_injection.beam import generate_6d_beam
 
 
 # ---------------------------------------------------------------------------

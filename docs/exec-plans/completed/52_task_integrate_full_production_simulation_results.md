@@ -9,7 +9,7 @@
     - **Linearized NKM**: 16.49% capture (first loss turn: 4.49)
     - **RADIA Fieldmap NKM**: 11.95% capture (first loss turn: 4.48), 0.0149 mm stored centroid oscillation
 - **Paper & Manifest Pipeline Synchronization**:
-  - Fixed raw backslash string escaping in LaTeX formatting within [`src/nkm/paper.py`](file:///home/cspark/Work/projects/nkm/src/nkm/paper.py).
+  - Fixed raw backslash string escaping in LaTeX formatting within [`src/nkm/paper.py`](file:///home/cspark/Work/projects/nkm-injection/src/nkm/paper.py).
   - Executed `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json` and generated validated paper artifacts under `results/paper/paper_run_20260814_091926/`.
 - **Documentation Verification**:
   - Verified alignment of all markdown documentation (`README.md`, `docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`, `docs/paper_results.md`, `docs/index.html`, etc.) with latest production outputs and test suite.

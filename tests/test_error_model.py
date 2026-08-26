@@ -11,9 +11,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
-from src.nkm.robust_optimization import evaluate_robustness_statistics, compute_one_at_a_time_sensitivity
-from src.nkm.bts_lattice import BTSConfig
+from src.nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
+from src.nkm_injection.robust_optimization import evaluate_robustness_statistics, compute_one_at_a_time_sensitivity
+from src.nkm_injection.bts_lattice import BTSConfig
 
 
 def test_ensemble_reproducibility():

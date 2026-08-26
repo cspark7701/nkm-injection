@@ -34,7 +34,7 @@ jobs:
         run: |
           python3 -c "
           from pathlib import Path
-          from src.nkm.results_schema import compute_input_data_hashes
+          from src.nkm_injection.results_schema import compute_input_data_hashes
           hashes = compute_input_data_hashes(Path('.'))
           print('Input File Cryptographic Hashes:')
           for name, h in hashes.items():

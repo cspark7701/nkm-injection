@@ -15,12 +15,12 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.results_schema import (
+from src.nkm_injection.results_schema import (
     PublicationManifest,
     validate_publication_manifest,
     compute_input_data_hashes
 )
-from src.nkm.paper import run_paper_pipeline
+from src.nkm_injection.paper import run_paper_pipeline
 
 
 def test_publication_manifest_load_save(tmp_path):

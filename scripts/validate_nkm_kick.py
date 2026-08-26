@@ -18,10 +18,10 @@ repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm.units import compute_rigidity
-from src.nkm.fieldmap import NKMFieldMap1D, load_1d_fieldmap
-from src.nkm.kickmap import NKMKickMap2D
-from src.nkm.validation import (
+from src.nkm_injection.units import compute_rigidity
+from src.nkm_injection.fieldmap import NKMFieldMap1D, load_1d_fieldmap
+from src.nkm_injection.kickmap import NKMKickMap2D
+from src.nkm_injection.validation import (
     get_input_data_hashes,
     compute_cross_validation,
     perform_interpolation_study,

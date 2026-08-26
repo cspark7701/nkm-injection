@@ -11,7 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm.optimization import (
+from src.nkm_injection.optimization import (
     BTSOptimizationConfig,
     BTSOptimizationEvaluator,
     DeterministicObjective,
@@ -19,7 +19,7 @@ from src.nkm.optimization import (
     optimize_bts_quadrupoles,
     compute_sensitivity_matrix
 )
-from src.nkm.robust_optimization import RobustMonteCarloObjective
+from src.nkm_injection.robust_optimization import RobustMonteCarloObjective
 
 
 @pytest.fixture

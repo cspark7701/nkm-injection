@@ -219,6 +219,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 70. [**Milestone 70 — Task: Rename Source Package Directory to src/nkm_injection**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/70_rename_src_nkm_to_nkm_injection.md)
     - Renamed source package directory from `src/nkm` to `src/nkm_injection` adhering to Python package naming standards. Updated all import statements across `tests/`, `scripts/`, `notebooks/`, and workflows. Reinstalled editable package and verified 100% pass rate across 177 tests.
 
+71. [**Milestone 71 — Task: Create accelerator-toolbox Patch and Automated Installer**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/71_add_accelerator_toolbox_patch_and_installer.md)
+    - Created unified patch `patches/accelerator_toolbox_nkm.patch`, standalone extension sources in `patches/pyat_extensions/`, and helper script `scripts/install_accelerator_toolbox.sh` to build `accelerator-toolbox` with OpenMP and NKM extensions (`pyNKMPass`, `NonlinearKicker`). Verified 100% test pass rate.
+
 
 
 

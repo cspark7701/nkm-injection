@@ -1,0 +1,158 @@
+diff --git a/pyat/at/integrators/__init__.py b/pyat/at/integrators/__init__.py
+index 4182141a..caa9bf2f 100644
+--- a/pyat/at/integrators/__init__.py
++++ b/pyat/at/integrators/__init__.py
+@@ -1 +1,3 @@
+ """Integrators for tracking in the Accelerator Toolbox"""
++
++from .pyNKMPass import *
+diff --git a/pyat/at/integrators/pyNKMPass.py b/pyat/at/integrators/pyNKMPass.py
+new file mode 100644
+index 00000000..3e89b799
+--- /dev/null
++++ b/pyat/at/integrators/pyNKMPass.py
+@@ -0,0 +1,98 @@
++import numpy as np
++from ..constants import clight
++
++#*********************************Pass Method for Nonlinear Kicker Magnet
++def trackFunction(r_in, elem=None):
++    """
++    Pure Python tracking function for the nonlinear kicker magnet.
++    
++    Parameters:
++        r_in: (6, num_particles) NumPy array containing 6D phase space coordinates.
++        elem: NonlinearKicker element with field map.
++    
++    Returns:
++        Updated 6D phase space coordinates.
++    """
++
++    # Extract properties
++    Length = elem.Length
++    Nslice = elem.Nslice
++    Energy = elem.Energy
++    FieldMap = elem.FieldMap
++    
++    if FieldMap is None:
++        raise ValueError("FieldMap is required for nkmpassmethod.")
++
++    Brho = - 1e9 * Energy / clight    # Brho
++
++    num_particles = r_in.shape[1]  # Number of particles
++    dz = Length / Nslice  # Slice thickness
++
++    for i in range(num_particles):
++        for j in range(Nslice):
++            x_mm = r_in[0, i] * 1e3              # convert to mm
++            y_mm = r_in[2, i] * 1e3              # convert to mm
++            z_mm = r_in[5, i] * 1e3 - Length * 1e3 / 2 # convert relative z to mm and shift to -l/2
++            
++            # Interpolate B field in Tesla at (x, y, z)
++            Bx, By, Bz = interpolate_field(FieldMap, x_mm, y_mm, z_mm)
++
++            # Compute kicks (AT conventions)
++            delta_p_x = - By * dz / Brho
++            delta_p_y = 0.0
++            #delta_p_y =   Bx * dz / Brho
++            #delta_delta = 0  # No energy gain from purely magnetic kicker
++
++            # Update momenta and energy deviation
++            r_in[1, i] += delta_p_x
++            r_in[3, i] += delta_p_y
++            #r_in[5, i] += delta_delta  # no energy change for magnetic fields
++
++            # Drift motion update (x, y) due to finite element length
++            r_in[0, i] += r_in[1, i] * dz  # x += px * dz
++            r_in[2, i] += r_in[3, i] * dz  # y += py * dz
++            #r_in[4, i] += dz               # Step along the relative z-axis
++
++            # Longitudinal motion update
++            tau = r_in[4, i]
++            delta = r_in[5, i]
++
++            delta_E = (r_in[1, i] * By - r_in[3, i] * Bx) * dz / Brho 
++            delta_E = (r_in[1, i] * By) * dz / Brho
++            r_in[4, i] += delta_E
++
++            r_in[5, i] += dz * (1 + r_in[4, i]) / np.sqrt(1 + 2 * r_in[4, i])
++
++    r_in[5,:] -= Length
++   
++    return r_in
++
++def interpolate_field(FieldMap, x, y, z):
++    """
++    Interpolates the 3D field map at a given (x, y, z).
++    
++    Parameters:
++        FieldMap: Precomputed field map stored in NumPy format.
++        x: X position of the particle.
++        y: Y position of the particle.
++        z: Z position of the particle.
++    
++    Returns:
++        Interpolated (Bx, By, Bz) field values at (x, y, z).
++    """
++    nx, ny, nz, _ = FieldMap.shape
++    x_range = np.linspace(-50, 50, nx)
++    y_range = np.linspace(-50, 50, ny)
++    z_range = np.linspace(-300, 300, nz)
++    
++    x_idx = np.searchsorted(x_range, x) - 1
++    y_idx = np.searchsorted(y_range, y) - 1
++    z_idx = np.searchsorted(z_range, z) - 1
++    
++    return FieldMap[x_idx, y_idx, z_idx, 0], FieldMap[x_idx, y_idx, z_idx, 1], FieldMap[x_idx, y_idx, z_idx, 2]
+diff --git a/pyat/at/lattice/elements/__init__.py b/pyat/at/lattice/elements/__init__.py
+index 81a28b65..9c336d1b 100644
+--- a/pyat/at/lattice/elements/__init__.py
++++ b/pyat/at/lattice/elements/__init__.py
+@@ -12,4 +12,5 @@ from .magnet_elements import *
+ from .crabcavity_element import *
+ from .idtable_element import *
+ from .variable_elements import *
++from .nonlinear_kicker import *
+ from . import rectangular_bend
+diff --git a/pyat/at/lattice/elements/nonlinear_kicker.py b/pyat/at/lattice/elements/nonlinear_kicker.py
+new file mode 100644
+index 00000000..7461cf1b
+--- /dev/null
++++ b/pyat/at/lattice/elements/nonlinear_kicker.py
+@@ -0,0 +1,37 @@
++import numpy as np
++from .element_object import Element
++
++class NonlinearKicker(Element):
++    """
++    A custom nonlinear kicker element for AT, using pyNKMPass.
++    
++    Attributes:
++        FamName (str): The family name of the element.
++        Length (float): The length of the kicker magnet (m).
++        FieldMap (numpy.ndarray): 3D field map loaded from Radia.
++    """
++    _BUILD_ATTRIBUTES = Element._BUILD_ATTRIBUTES + ["Length", "Energy", "Nslice", "Filename_in"]
++
++    def __init__(self, family_name: str, Length: float, Energy: float, Nslice: int, **kwargs):
++        """Initialize the nonlinear kicker element."""
++        Filename_in = kwargs.pop("Filename_in", None)
++        field_map = self.fieldmap_from_file(Filename_in) if Filename_in else None
++        kwargs.setdefault("PassMethod", "pyNKMPass")
++        
++        super().__init__(family_name, Length=Length, Energy=Energy, Nslice=Nslice, **kwargs)
++        
++        # Store additional attributes
++        self.Filename_in = Filename_in
++        self.FieldMap = field_map
++        self.Length = Length
++        self.Energy = Energy
++        self.Nslice = Nslice
++    
++    @staticmethod    
++    def fieldmap_from_file(Filename_in):
++        """Load nonlinear kicker field map from file."""
++        if Filename_in is None:
++            raise ValueError("Filename_in must be provided to load field map.")
++        
++        return np.load(Filename_in)  # Load the precomputed 3D field

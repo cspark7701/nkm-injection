@@ -68,7 +68,20 @@ source venv/bin/activate
 
 ### Step 3: Install Package & Dependencies
 
-Upgrade `pip` and install the exact pinned scientific dependencies locked in `requirements-lock.txt`, followed by the `nkm` package in editable mode:
+#### Step 3a: (Optional / Recommended) Install Accelerator Toolbox with NKM Extensions
+
+To install or build `accelerator-toolbox` (`pyAT`) with native OpenMP parallel tracking and the custom `pyNKMPass` / `NonlinearKicker` patch:
+
+```bash
+# Automated installer (patches & installs accelerator-toolbox with OpenMP)
+./scripts/install_accelerator_toolbox.sh /home/cspark/Work/simulation_codes-working/accelerator_toolbox
+```
+
+*(See [`patches/README.md`](../patches/README.md) for details on the included `patches/accelerator_toolbox_nkm.patch` and `patches/pyat_extensions/` files).*
+
+#### Step 3b: Install Locked Dependencies & `nkm-injection`
+
+Upgrade `pip` and install the exact pinned scientific dependencies locked in `requirements-lock.txt`, followed by the `nkm-injection` package in editable mode:
 
 ```bash
 # Upgrade pip
@@ -77,7 +90,7 @@ python3 -m pip install --upgrade pip
 # Install locked dependencies
 pip install -r requirements-lock.txt
 
-# Install nkm package with development & MOGA optional extras
+# Install nkm-injection package with development & MOGA optional extras
 pip install -e .[dev,moga]
 ```
 
@@ -93,7 +106,7 @@ pytest -v
 
 Expected output:
 ```text
-161 passed in ~15 minutes
+177 passed in ~1 minute
 ```
 
 > **Note**: Missing simulation output files (such as `storage_ring_lattice_nkm.mat`) are automatically resurrected from the protected source data (`K4GSR_HBIv4-1.mat`) upon running `pytest` or loading the lattice for the first time.

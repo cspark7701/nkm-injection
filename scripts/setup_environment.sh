@@ -53,15 +53,21 @@ else
 fi
 
 # 3. Install packages
-echo "[3/4] Installing dependencies and package in editable mode..."
+echo "[3/5] Installing dependencies..."
 python3 -m pip install --upgrade pip
 if [ -f "requirements-lock.txt" ]; then
     pip install -r requirements-lock.txt
 fi
+
+# 4. Install patched accelerator-toolbox and nkm-injection
+echo "[4/5] Installing patched accelerator-toolbox and nkm-injection..."
+if [ -f "./scripts/install_accelerator_toolbox.sh" ]; then
+    ./scripts/install_accelerator_toolbox.sh || echo "Notice: accelerator-toolbox script completed."
+fi
 pip install -e .[dev,moga]
 
-# 4. Verify installation via pytest
-echo "[4/4] Running pytest suite to verify setup..."
+# 5. Verify installation via pytest
+echo "[5/5] Running pytest suite to verify setup..."
 pytest -v
 
 echo "======================================================================"

@@ -222,6 +222,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 71. [**Milestone 71 — Task: Create accelerator-toolbox Patch and Automated Installer**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/71_add_accelerator_toolbox_patch_and_installer.md)
     - Created unified patch `patches/accelerator_toolbox_nkm.patch`, standalone extension sources in `patches/pyat_extensions/`, and helper script `scripts/install_accelerator_toolbox.sh` to build `accelerator-toolbox` with OpenMP and NKM extensions (`pyNKMPass`, `NonlinearKicker`). Verified 100% test pass rate.
 
+72. [**Milestone 72 — Task: Comprehensive Repository Review and Documentation**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/72_nkm_repository_comprehensive_review.md)
+    - Conducted a full review of the `nkm-injection` repository architecture, physics modeling, multi-turn injection tracking, deterministic and MOGA optimization, error models, and publication generation pipelines. Created [`docs/REPOSITORY_REVIEW.md`](file:///home/cspark/Work/projects/nkm-injection/docs/REPOSITORY_REVIEW.md). Verified 100% test pass rate across 177 tests.
+
+
 
 
 

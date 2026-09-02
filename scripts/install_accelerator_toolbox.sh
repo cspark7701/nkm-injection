@@ -26,7 +26,7 @@ if [ ! -d "${AT_DIR}" ]; then
   read -rp "Clone accelerator-toolbox from GitHub? (y/N): " CONFIRM
   if [[ "${CONFIRM}" =~ ^[Yy]$ ]]; then
     mkdir -p "$(dirname "${AT_DIR}")"
-    git clone https://github.com/atcollab/accelerator-toolbox.git "${AT_DIR}"
+    git clone https://github.com/atcollab/at.git "${AT_DIR}"
     echo "Cloned accelerator-toolbox."
   else
     echo "Aborted."

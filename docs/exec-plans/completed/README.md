@@ -240,6 +240,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 77. [**Milestone 77 — Task 13: Structure Convergence and Dynamic Acceptance Return Types**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/77_refactor_structure_convergence_and_acceptance_return_types.md)
     - Replaced untyped dictionary return structures in `src/nkm_injection/convergence_study.py` with strongly typed dataclasses (`ConvergenceScanResult`, `AcceptanceResult`, `EnsembleStudyResult`) inheriting from `SerializableConfigMixin`. Added runtime profiling, statistical summary methods (`mean_efficiency`, `std_efficiency`), dynamic acceptance window calculators (`acceptance_window_mm`), pandas DataFrame exports (`to_dataframe()`), and backwards-compatible sequence and dictionary indexing. Verified 100% pass rate across all 190 tests in the test suite.
 
+78. [**Milestone 78 — Task 14: Formalize Kicker and Field Map Evaluator Protocols**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/78_refactor_formalize_kicker_and_fieldmap_evaluator_protocols.md)
+    - Defined runtime-checkable `FieldMap3DProtocol` and `KickerEvaluatorProtocol` in `src/nkm_injection/units.py`. Created mock field maps (`ZeroFieldMap3D`, `UniformFieldMap3D`, `LinearGradientFieldMap3D`) for zero-I/O testing, updated `NKMKickMap2D` and created typed kicker evaluator classes (`OffKickerEvaluator`, `IdealKickerEvaluator`, `LinearKickerEvaluator`) in `storage_ring_injection.py`. Updated `SymplecticSplitIntegrator` and `LorentzRK4Integrator` type annotations. Added unit tests in `tests/test_nkm_integrators.py` and verified 100% pass rate across all 192 tests in the test suite.
+
+
 
 
 

@@ -144,3 +144,100 @@ def test_track_nkm_symplectic_alias_and_legacy_rk4():
     np.testing.assert_allclose(out_rk4, out_thick_sym)
 
 
+# ---------------------------------------------------------------------------
+# Task 14 — Protocol and Mock Evaluator Tests
+# ---------------------------------------------------------------------------
+
+from src.nkm_injection.units import (
+    FieldMap3DProtocol,
+    KickerEvaluatorProtocol,
+    ZeroFieldMap3D,
+    UniformFieldMap3D,
+    LinearGradientFieldMap3D,
+    KickMapMetadata
+)
+from src.nkm_injection.storage_ring_injection import (
+    OffKickerEvaluator,
+    IdealKickerEvaluator,
+    LinearKickerEvaluator,
+    StorageRingInjectionConfig,
+    get_kicker_evaluator
+)
+from src.nkm_injection.kickmap import NKMKickMap2D
+
+
+def test_field_map_3d_protocol_and_mock_evaluators():
+    """Verify that mock field maps conform to FieldMap3DProtocol and track accurately."""
+    x = np.array([-0.010, 0.0, 0.010])
+    y = np.array([0.0, 0.005, -0.005])
+
+    # 1. ZeroFieldMap3D
+    zero_map = ZeroFieldMap3D()
+    assert isinstance(zero_map, FieldMap3DProtocol)
+    by, bx = zero_map(x, y, z=0.1)
+    np.testing.assert_allclose(by, 0.0)
+    np.testing.assert_allclose(bx, 0.0)
+
+    # 2. UniformFieldMap3D
+    unif_map = UniformFieldMap3D(by_T=0.146, bx_T=-0.05)
+    assert isinstance(unif_map, FieldMap3DProtocol)
+    by, bx = unif_map(x, y, z=0.2)
+    np.testing.assert_allclose(by, 0.146)
+    np.testing.assert_allclose(bx, -0.05)
+
+    # 3. LinearGradientFieldMap3D
+    grad_map = LinearGradientFieldMap3D(gradient_T_per_m=2.5)
+    assert isinstance(grad_map, FieldMap3DProtocol)
+    by, bx = grad_map(x, y, z=0.0)
+    np.testing.assert_allclose(by, 2.5 * x)
+    np.testing.assert_allclose(bx, 2.5 * y)
+
+    # 4. Direct tracking with mock field map instance in SymplecticSplitIntegrator
+    beam_in = np.zeros((6, 1))
+    beam_in[0, 0] = -0.010
+    integrator = SymplecticSplitIntegrator(unif_map, length_m=0.525, n_slices=20, energy_GeV=4.0)
+    beam_out = integrator.track(beam_in)
+    assert abs(beam_out[1, 0]) > 0.0
+
+
+def test_kicker_evaluator_protocols():
+    """Verify that all 4 kicker models produce evaluators conforming to KickerEvaluatorProtocol."""
+    cfg = StorageRingInjectionConfig()
+
+    # 1. Off model
+    eval_off, meta_off = get_kicker_evaluator("off", config=cfg)
+    assert isinstance(eval_off, KickerEvaluatorProtocol)
+    assert eval_off.model_type == "off"
+    kx, ky = eval_off.evaluate_kicks(np.array([-0.016, 0.0]))
+    np.testing.assert_allclose(kx, 0.0)
+    np.testing.assert_allclose(ky, 0.0)
+
+    # 2. Ideal model
+    eval_ideal, meta_ideal = get_kicker_evaluator("ideal", config=cfg)
+    assert isinstance(eval_ideal, KickerEvaluatorProtocol)
+    assert eval_ideal.model_type == "ideal"
+    kx, ky = eval_ideal.evaluate_kicks(np.array([-0.016, 0.0]))
+    assert abs(kx[0]) > 0.0
+    np.testing.assert_allclose(ky, 0.0)
+
+    # 3. Linear model
+    eval_linear, meta_linear = get_kicker_evaluator("linear", config=cfg)
+    assert isinstance(eval_linear, KickerEvaluatorProtocol)
+    assert eval_linear.model_type == "linear"
+    kx, ky = eval_linear.evaluate_kicks(np.array([-0.016, 0.0]))
+    assert abs(kx[0]) > 0.0
+    np.testing.assert_allclose(ky, 0.0)
+
+    # 4. Fieldmap model (mocked metadata or loaded from file)
+    kmap_path = REPO_ROOT / "kickmap_file.txt"
+    if kmap_path.is_file():
+        kmap = NKMKickMap2D(kmap_path)
+        assert isinstance(kmap, KickerEvaluatorProtocol)
+        assert kmap.model_type == "fieldmap"
+        eval_fmap, meta_fmap = get_kicker_evaluator("fieldmap", config=cfg, kickmap_obj=kmap)
+        assert isinstance(eval_fmap, KickerEvaluatorProtocol)
+        kx, ky = eval_fmap.evaluate_kicks(np.array([-0.016, 0.0]))
+        assert abs(kx[0]) > 0.0
+
+
+

@@ -12,7 +12,8 @@ from .units import (
     compute_rigidity,
     integrated_field_to_transverse_kicks,
     ELECTRON_CHARGE_C,
-    KickMapMetadata
+    KickMapMetadata,
+    FieldMap3DProtocol
 )
 
 
@@ -26,7 +27,7 @@ class SymplecticSplitIntegrator:
       2. Centered thin kick at slice center z_mid
       3. Half-drift dz / 2
     """
-    def __init__(self, field_fn: Callable[[np.ndarray, np.ndarray, float], Tuple[np.ndarray, np.ndarray]],
+    def __init__(self, field_fn: Union[FieldMap3DProtocol, Callable[[np.ndarray, np.ndarray, float], Tuple[np.ndarray, np.ndarray]]],
                  length_m: float = 0.525,
                  n_slices: int = 40,
                  energy_GeV: float = 4.0,
@@ -95,7 +96,7 @@ class LorentzRK4Integrator:
     
     Non-symplectic 4th-order ODE integrator for 6D particle trajectories.
     """
-    def __init__(self, field_fn: Callable[[np.ndarray, np.ndarray, float], Tuple[np.ndarray, np.ndarray]],
+    def __init__(self, field_fn: Union[FieldMap3DProtocol, Callable[[np.ndarray, np.ndarray, float], Tuple[np.ndarray, np.ndarray]]],
                  length_m: float = 0.525,
                  n_slices: int = 40,
                  energy_GeV: float = 4.0,

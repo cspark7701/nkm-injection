@@ -46,7 +46,12 @@ from .units import (
     validate_finite,
     compute_rigidity,
     integrated_field_to_transverse_kicks,
-    transverse_kicks_to_integrated_field
+    transverse_kicks_to_integrated_field,
+    FieldMap3DProtocol,
+    KickerEvaluatorProtocol,
+    ZeroFieldMap3D,
+    UniformFieldMap3D,
+    LinearGradientFieldMap3D
 )
 from .optimization import BaseOpticsObjective, DeterministicObjective, OpticsOptimizer, BTSOptimizationEvaluator
 from .robust_optimization import RobustMonteCarloObjective
@@ -54,7 +59,11 @@ from .storage_ring_injection import (
     SeptumModel,
     ElementAperture,
     track_element_resolved_injection,
-    StorageRingInjectionConfig
+    StorageRingInjectionConfig,
+    OffKickerEvaluator,
+    IdealKickerEvaluator,
+    LinearKickerEvaluator,
+    get_kicker_evaluator
 )
 from .end_to_end import (
     BoosterExtractionConfig,

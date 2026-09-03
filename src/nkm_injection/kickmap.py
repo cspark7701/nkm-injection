@@ -107,6 +107,8 @@ class NKMKickMap2D(BaseFieldMap):
         self.y_grid = y_grid
         self.kx_map = kx_map
         self.ky_map = ky_map
+        self.model_type = "fieldmap"
+        self.energy_eV = float(self.metadata.beam_energy_eV) if self.metadata.beam_energy_eV is not None else 4.0e9
         
         fill_val = None if allow_extrapolation else np.nan
         bounds_err = not allow_extrapolation
@@ -116,6 +118,10 @@ class NKMKickMap2D(BaseFieldMap):
                                                    bounds_error=bounds_err, fill_value=fill_val)
         self._interp_ky = RegularGridInterpolator((self.y_grid, self.x_grid), self.ky_map,
                                                    bounds_error=bounds_err, fill_value=fill_val)
+
+    def __call__(self, x: Union[float, np.ndarray], y: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        """Evaluate raw map values (Kx, Ky) at (x, y)."""
+        return self.evaluate(x, y)
 
     def evaluate(self, x: Union[float, np.ndarray], y: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
         """
@@ -170,6 +176,19 @@ class NKMKickMap2D(BaseFieldMap):
         else:
             raise ValueError(f"Cannot evaluate kick angle directly from value_type '{self.metadata.value_type}'")
         return kick_x, kick_y
+
+    def evaluate_kicks(self, x: Union[float, np.ndarray],
+                       y: Optional[Union[float, np.ndarray]] = None) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        """
+        Evaluate (delta_xp_rad, delta_yp_rad) in radians for transverse coordinates.
+        Conforms to KickerEvaluatorProtocol.
+        """
+        if y is None:
+            if isinstance(x, np.ndarray):
+                y = np.zeros_like(x)
+            else:
+                y = 0.0
+        return self.evaluate_kick(x, y)
 
     def verify_grid_interpolation(self) -> float:
         """

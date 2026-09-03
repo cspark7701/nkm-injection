@@ -6,7 +6,7 @@ rigidity calculations, and sign conventions for NKM magnetic fields and kicks.
 """
 
 from dataclasses import dataclass
-from typing import Literal, Optional, Union, NewType, Tuple
+from typing import Literal, Optional, Union, NewType, Tuple, Protocol, runtime_checkable
 import numpy as np
 
 # Physical NewType unit aliases
@@ -244,3 +244,64 @@ def kick_to_integrated_field(kick_rad: Union[float, np.ndarray],
         coordinate_convention=metadata.sign_convention
     )
     return convert_integrated_field(int_by_Tm, "T_m", metadata.value_unit)
+
+
+# ---------------------------------------------------------------------------
+# Protocols and Mock Evaluators
+# ---------------------------------------------------------------------------
+
+@runtime_checkable
+class FieldMap3DProtocol(Protocol):
+    """
+    Protocol for 3D/slice magnetic field evaluators.
+    Returns (By, Bx) in Tesla for transverse coordinates (x, y) in meters at slice z in meters.
+    """
+    def __call__(self, x: np.ndarray, y: np.ndarray, z: float) -> Tuple[np.ndarray, np.ndarray]:
+        """Return (By, Bx) in Tesla for transverse coordinates (x, y) at slice z."""
+        ...
+
+
+@runtime_checkable
+class KickerEvaluatorProtocol(Protocol):
+    """
+    Protocol for transverse kicker evaluators.
+    """
+    model_type: KickerModelType
+    length_m: float
+    energy_eV: float
+    metadata: KickMapMetadata
+
+    def evaluate_kicks(self, x: Union[float, np.ndarray], y: Optional[Union[float, np.ndarray]] = None) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        """Return (delta_xp_rad, delta_yp_rad) in radians for transverse coordinates (x, y) in meters."""
+        ...
+
+    def __call__(self, x: Union[float, np.ndarray], y: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        """Evaluate raw kick values according to metadata.value_unit (typically mrad)."""
+        ...
+
+
+@dataclass
+class ZeroFieldMap3D:
+    """Mock zero-field evaluator conforming to FieldMap3DProtocol."""
+    def __call__(self, x: np.ndarray, y: np.ndarray, z: float = 0.0) -> Tuple[np.ndarray, np.ndarray]:
+        return np.zeros_like(x), np.zeros_like(y)
+
+
+@dataclass
+class UniformFieldMap3D:
+    """Mock uniform-field evaluator conforming to FieldMap3DProtocol."""
+    by_T: float = 0.0
+    bx_T: float = 0.0
+
+    def __call__(self, x: np.ndarray, y: np.ndarray, z: float = 0.0) -> Tuple[np.ndarray, np.ndarray]:
+        return np.full_like(x, self.by_T), np.full_like(y, self.bx_T)
+
+
+@dataclass
+class LinearGradientFieldMap3D:
+    """Mock linear-gradient (quadrupole) field evaluator conforming to FieldMap3DProtocol."""
+    gradient_T_per_m: float = 0.0
+
+    def __call__(self, x: np.ndarray, y: np.ndarray, z: float = 0.0) -> Tuple[np.ndarray, np.ndarray]:
+        return self.gradient_T_per_m * x, self.gradient_T_per_m * y
+

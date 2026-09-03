@@ -20,7 +20,8 @@ from .units import (
     compute_rigidity,
     convert_kick_angle,
     integrated_field_to_kick,
-    ELECTRON_CHARGE_C
+    ELECTRON_CHARGE_C,
+    KickerEvaluatorProtocol
 )
 from .beam import (
     generate_6d_beam,
@@ -216,13 +217,91 @@ def load_storage_ring_injection_lattice(config: Optional[StorageRingInjectionCon
     return ring, nkm_idx
 
 
+@dataclass
+class OffKickerEvaluator:
+    """Zero transverse kick evaluator conforming to KickerEvaluatorProtocol."""
+    length_m: float = 0.525
+    energy_eV: float = 4.0e9
+    model_type: KickerModelType = "off"
+    metadata: KickMapMetadata = field(default_factory=lambda: KickMapMetadata(
+        coordinate_unit="m",
+        value_type="kick_angle",
+        value_unit="mrad",
+        beam_energy_eV=4.0e9
+    ))
+
+    def __call__(self, x: Union[float, np.ndarray], y: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        return np.zeros_like(x), np.zeros_like(y)
+
+    def evaluate_kicks(self, x: Union[float, np.ndarray], y: Optional[Union[float, np.ndarray]] = None) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        if y is None:
+            y = np.zeros_like(x) if isinstance(x, np.ndarray) else 0.0
+        return np.zeros_like(x), np.zeros_like(y)
+
+
+@dataclass
+class IdealKickerEvaluator:
+    """Ideal Courant-Snyder kick evaluator conforming to KickerEvaluatorProtocol."""
+    ideal_kick_mrad: float
+    length_m: float = 0.525
+    energy_eV: float = 4.0e9
+    model_type: KickerModelType = "ideal"
+    metadata: KickMapMetadata = field(default_factory=lambda: KickMapMetadata(
+        coordinate_unit="m",
+        value_type="kick_angle",
+        value_unit="mrad",
+        beam_energy_eV=4.0e9
+    ))
+
+    def __call__(self, x: Union[float, np.ndarray], y: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        if isinstance(x, np.ndarray):
+            return np.full_like(x, self.ideal_kick_mrad), np.zeros_like(y)
+        return float(self.ideal_kick_mrad), 0.0
+
+    def evaluate_kicks(self, x: Union[float, np.ndarray], y: Optional[Union[float, np.ndarray]] = None) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        if y is None:
+            y = np.zeros_like(x) if isinstance(x, np.ndarray) else 0.0
+        if isinstance(x, np.ndarray):
+            return np.full_like(x, self.ideal_kick_mrad * 1e-3), np.zeros_like(y)
+        return float(self.ideal_kick_mrad * 1e-3), 0.0
+
+
+@dataclass
+class LinearKickerEvaluator:
+    """Linear Taylor-expanded kick evaluator conforming to KickerEvaluatorProtocol."""
+    k0_mrad: float
+    k1_mrad_per_mm: float
+    x_ref_mm: float
+    length_m: float = 0.525
+    energy_eV: float = 4.0e9
+    model_type: KickerModelType = "linear"
+    metadata: KickMapMetadata = field(default_factory=lambda: KickMapMetadata(
+        coordinate_unit="m",
+        value_type="kick_angle",
+        value_unit="mrad",
+        beam_energy_eV=4.0e9
+    ))
+
+    def __call__(self, x: Union[float, np.ndarray], y: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        kx = self.k0_mrad + self.k1_mrad_per_mm * (x * 1e3 - self.x_ref_mm)
+        ky = np.zeros_like(y)
+        return kx, ky
+
+    def evaluate_kicks(self, x: Union[float, np.ndarray], y: Optional[Union[float, np.ndarray]] = None) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray]]:
+        if y is None:
+            y = np.zeros_like(x) if isinstance(x, np.ndarray) else 0.0
+        kx_mrad, ky_mrad = self(x, y)
+        return kx_mrad * 1e-3, ky_mrad * 1e-3
+
+
 def get_kicker_evaluator(
     model: Union[str, KickerModelType],
     config: Optional[StorageRingInjectionConfig] = None,
     kickmap_obj: Optional[NKMKickMap2D] = None
-) -> Tuple[Callable[[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray]], KickMapMetadata]:
+) -> Tuple[Union[KickerEvaluatorProtocol, Callable[[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray]]], KickMapMetadata]:
     """
     Return a standardized kicker evaluation callable (x, y) -> (kx, ky) and its KickMapMetadata.
+    The returned evaluator conforms to KickerEvaluatorProtocol.
 
     Kicker Models
     -------------
@@ -245,9 +324,12 @@ def get_kicker_evaluator(
             value_unit="mrad",
             beam_energy_eV=config.energy_eV
         )
-        def kick_off(x, y):
-            return np.zeros_like(x), np.zeros_like(y)
-        return kick_off, meta
+        evaluator = OffKickerEvaluator(
+            length_m=config.nkm_length_m,
+            energy_eV=config.energy_eV,
+            metadata=meta
+        )
+        return evaluator, meta
 
     elif validated_model == "ideal":
         x_inj = config.septum_x_offset_m
@@ -258,9 +340,13 @@ def get_kicker_evaluator(
             value_unit="mrad",
             beam_energy_eV=config.energy_eV
         )
-        def kick_ideal(x, y):
-            return np.full_like(x, ideal_kick_mrad), np.zeros_like(y)
-        return kick_ideal, meta
+        evaluator = IdealKickerEvaluator(
+            ideal_kick_mrad=ideal_kick_mrad,
+            length_m=config.nkm_length_m,
+            energy_eV=config.energy_eV,
+            metadata=meta
+        )
+        return evaluator, meta
 
     elif validated_model == "linear":
         x_ref_m = config.septum_x_offset_m
@@ -280,11 +366,15 @@ def get_kicker_evaluator(
             value_unit="mrad",
             beam_energy_eV=config.energy_eV
         )
-        def kick_linear(x, y):
-            kx = k0_mrad + k1_mrad_per_mm * (x * 1e3 - x_ref_mm)
-            ky = np.zeros_like(y)
-            return kx, ky
-        return kick_linear, meta
+        evaluator = LinearKickerEvaluator(
+            k0_mrad=k0_mrad,
+            k1_mrad_per_mm=k1_mrad_per_mm,
+            x_ref_mm=x_ref_mm,
+            length_m=config.nkm_length_m,
+            energy_eV=config.energy_eV,
+            metadata=meta
+        )
+        return evaluator, meta
 
     elif validated_model == "fieldmap":
         if kickmap_obj is None:
@@ -295,7 +385,7 @@ def get_kicker_evaluator(
             value_unit="mrad",
             beam_energy_eV=config.energy_eV
         ))
-        return kickmap_obj.evaluate, meta
+        return kickmap_obj, meta
 
 
 def track_multiturn_injection(beam: np.ndarray,

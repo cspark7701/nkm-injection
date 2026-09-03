@@ -16,10 +16,11 @@ from .optics import (
     DEFAULT_BTS_ENTRANCE_TWISS,
     DEFAULT_BTS_TARGET_TWISS
 )
+from .results_schema import SerializableConfigMixin
 
 
 @dataclass
-class OpticsTargetConfig:
+class OpticsTargetConfig(SerializableConfigMixin):
     """Target optics parameters and physical normalization tolerances at BTS exit."""
     # Target Twiss values at BTS exit
     target_beta_x: float = DEFAULT_BTS_TARGET_TWISS.beta_x
@@ -44,6 +45,24 @@ class OpticsTargetConfig:
     init_alpha_y: float = DEFAULT_BTS_ENTRANCE_TWISS.alpha_y
     init_disp_x: float = DEFAULT_BTS_ENTRANCE_TWISS.disp_x
     init_disp_px: float = DEFAULT_BTS_ENTRANCE_TWISS.disp_px
+
+    def validate(self) -> None:
+        """Validate physical parameters for optics targets."""
+        if self.target_beta_x <= 0 or self.target_beta_y <= 0:
+            raise ValueError("Target beta functions must be positive")
+        if self.init_beta_x <= 0 or self.init_beta_y <= 0:
+            raise ValueError("Initial beta functions must be positive")
+        sigmas = [
+            ("sigma_beta_x", self.sigma_beta_x),
+            ("sigma_beta_y", self.sigma_beta_y),
+            ("sigma_alpha_x", self.sigma_alpha_x),
+            ("sigma_alpha_y", self.sigma_alpha_y),
+            ("sigma_disp_x", self.sigma_disp_x),
+            ("sigma_disp_px", self.sigma_disp_px),
+        ]
+        for name, sig in sigmas:
+            if sig <= 0:
+                raise ValueError(f"OpticsTargetConfig normalization {name} must be positive, got {sig}")
 
 
 

@@ -14,10 +14,11 @@ import at
 from .units import compute_rigidity, ELECTRON_CHARGE_C
 from .bts_lattice import BTSConfig, create_bts_lattice
 from .optics import compute_twiss_propagation, compute_mismatch_metric, DEFAULT_BTS_ENTRANCE_TWISS
+from .results_schema import SerializableConfigMixin
 
 
 @dataclass
-class ErrorBudgetConfig:
+class ErrorBudgetConfig(SerializableConfigMixin):
     """Standard deviation tolerances for 5 physical uncertainty categories."""
     # 1. Optics errors
     quad_k_rel_std: float = 1.0e-3       # Quad gradient relative error (0.1%)
@@ -47,6 +48,12 @@ class ErrorBudgetConfig:
     ring_co_x_std_m: float = 2.0e-4           # Closed-orbit error (200 um)
     ring_beta_rel_std: float = 0.03           # Injection point optics error (3%)
     septum_x_std_m: float = 1.0e-4            # Septum position uncertainty (100 um)
+
+    def validate(self) -> None:
+        """Validate that all standard deviation tolerances are non-negative."""
+        for attr, val in self.__dict__.items():
+            if isinstance(val, (int, float)) and val < 0:
+                raise ValueError(f"ErrorBudgetConfig tolerance {attr} cannot be negative, got {val}")
 
 
 def sample_error_ensemble(config: Optional[ErrorBudgetConfig] = None,

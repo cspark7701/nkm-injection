@@ -5,15 +5,183 @@ Defines result directory schemas, cryptographic input file hashing, environment 
 and validation checks for fully data-driven publication reproduction.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, is_dataclass, fields
 from pathlib import Path
 import hashlib
 import json
 import os
 import sys
 import subprocess
-from typing import Dict, List, Optional, Tuple, Any, Union
+from typing import Dict, List, Optional, Tuple, Any, Union, get_type_hints, get_origin, get_args
 import numpy as np
+
+
+def _to_serializable(val: Any) -> Any:
+    """Recursively convert values, collections, paths, and dataclasses to JSON-serializable types."""
+    if val is None or isinstance(val, (str, int, float, bool)):
+        return val
+    if isinstance(val, (np.integer,)):
+        return int(val)
+    if isinstance(val, (np.floating,)):
+        return float(val)
+    if isinstance(val, np.ndarray):
+        return val.tolist()
+    if isinstance(val, Path):
+        return str(val)
+    if hasattr(val, "to_dict") and callable(val.to_dict):
+        return val.to_dict()
+    if is_dataclass(val):
+        return {f.name: _to_serializable(getattr(val, f.name)) for f in fields(val)}
+    if isinstance(val, dict):
+        return {str(k): _to_serializable(v) for k, v in val.items()}
+    if isinstance(val, (list, tuple)):
+        return [_to_serializable(item) for item in val]
+    return str(val)
+
+
+class SerializableConfigMixin:
+    """
+    Mixin providing robust serialization, deserialization, type coercion,
+    JSON file I/O, and domain validation for configuration dataclasses.
+    """
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert dataclass fields into a JSON-serializable dictionary."""
+        if not is_dataclass(self):
+            return {k: _to_serializable(v) for k, v in self.__dict__.items() if not k.startswith('_')}
+        res = {}
+        for f in fields(self):
+            val = getattr(self, f.name)
+            res[f.name] = _to_serializable(val)
+        return res
+
+    def to_json(self, indent: int = 2) -> str:
+        """Serialize configuration to a formatted JSON string."""
+        return json.dumps(self.to_dict(), indent=indent)
+
+    def save(self, filepath: Union[str, Path], indent: int = 2) -> None:
+        """Save configuration directly to a JSON file."""
+        p = Path(filepath)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with open(p, "w", encoding="utf-8") as f:
+            f.write(self.to_json(indent=indent))
+
+    @classmethod
+    def _coerce_field_value(cls, val: Any, hint: Any) -> Any:
+        """Coerce raw dictionary/JSON values to matching field type annotations."""
+        if val is None:
+            return None
+
+        origin = get_origin(hint)
+        args = get_args(hint)
+
+        # Handle Optional / Union (e.g. Union[float, None], Optional[float])
+        if origin is Union:
+            non_none_args = [a for a in args if a is not type(None)]
+            if len(non_none_args) == 1:
+                hint = non_none_args[0]
+                origin = get_origin(hint)
+                args = get_args(hint)
+
+        # Nested dataclass / SerializableConfigMixin
+        if isinstance(val, dict):
+            if hasattr(hint, "from_dict") and callable(getattr(hint, "from_dict")):
+                return hint.from_dict(val)
+            if isinstance(hint, type) and is_dataclass(hint):
+                return hint(**val)
+
+        # Dict mapping conversion
+        if origin is dict or hint in (dict, Dict) or origin in (dict, Dict):
+            if isinstance(val, dict) and args and len(args) == 2:
+                val_type = args[1]
+                return {k: cls._coerce_field_value(v, val_type) for k, v in val.items()}
+            return val
+
+        # List sequence conversion
+        if origin is list or hint in (list, List) or origin in (list, List):
+            if isinstance(val, (list, tuple)) and args and len(args) == 1:
+                elem_type = args[0]
+                return [cls._coerce_field_value(x, elem_type) for x in val]
+            return list(val) if isinstance(val, (list, tuple)) else val
+
+        # Tuple conversion
+        if hint in (tuple, Tuple) or origin in (tuple, Tuple):
+            if isinstance(val, (list, tuple)):
+                if args and args[0] is not ... and len(args) == len(val):
+                    return tuple(cls._coerce_field_value(x, a) for x, a in zip(val, args))
+                elif args and args[0] is not ... and len(args) == 2 and args[1] is ...:
+                    return tuple(cls._coerce_field_value(x, args[0]) for x in val)
+                return tuple(val)
+
+        # Path conversion
+        if hint is Path or (isinstance(hint, type) and issubclass(hint, Path)):
+            return Path(val)
+
+        # Numeric and primitive conversions
+        if hint is int:
+            if isinstance(val, (int, float, np.number, str)):
+                return int(val)
+        if hint is float:
+            if isinstance(val, (int, float, np.number, str)):
+                return float(val)
+        if hint is bool:
+            return bool(val)
+
+        return val
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> Any:
+        """
+        Instantiate and validate dataclass from a dictionary, safely handling
+        nested configs, type coercion, and ignoring unexpected extra keys.
+        """
+        if not isinstance(data, dict):
+            raise TypeError(f"Expected dict for {cls.__name__}.from_dict, got {type(data).__name__}")
+
+        if not is_dataclass(cls):
+            instance = cls()
+            for k, v in data.items():
+                if hasattr(instance, k):
+                    setattr(instance, k, v)
+            if hasattr(instance, "validate") and callable(instance.validate):
+                instance.validate()
+            return instance
+
+        try:
+            type_hints = get_type_hints(cls)
+        except Exception:
+            type_hints = {}
+
+        kwargs = {}
+        for f in fields(cls):
+            if f.name in data:
+                raw_val = data[f.name]
+                hint = type_hints.get(f.name, f.type)
+                kwargs[f.name] = cls._coerce_field_value(raw_val, hint)
+
+        instance = cls(**kwargs)
+        if hasattr(instance, "validate") and callable(instance.validate):
+            instance.validate()
+        return instance
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Any:
+        """Instantiate and validate configuration from JSON string."""
+        data = json.loads(json_str)
+        return cls.from_dict(data)
+
+    @classmethod
+    def load(cls, filepath: Union[str, Path]) -> Any:
+        """Load and instantiate configuration from a JSON file."""
+        p = Path(filepath)
+        if not p.is_file():
+            raise FileNotFoundError(f"Configuration file not found: {p}")
+        with open(p, "r", encoding="utf-8") as f:
+            return cls.from_json(f.read())
+
+    def validate(self) -> None:
+        """Default validation hook to be optionally overridden by subclasses."""
+        pass
 
 
 @dataclass
@@ -102,7 +270,7 @@ def record_environment_metadata(output_dir: Path) -> Dict[str, str]:
 
 
 @dataclass
-class PublicationManifest:
+class PublicationManifest(SerializableConfigMixin):
     """Publication manifest container linking validated simulation run outputs."""
     field_validation_run: str = "results/field_validation/run_01"
     tracking_convergence_run: str = "results/tracking_convergence/run_01"
@@ -112,21 +280,6 @@ class PublicationManifest:
     moga_run: str = "results/publication_moga/run_01"
     input_hash_manifest: str = "results/baseline/protected_files_manifest.json"
     git_commit: str = ""
-
-    @classmethod
-    def load(cls, manifest_path: Union[str, Path]) -> "PublicationManifest":
-        p = Path(manifest_path)
-        if not p.is_file():
-            raise FileNotFoundError(f"Publication manifest file not found: {p}")
-        with open(p, "r") as f:
-            data = json.load(f)
-        return cls(**data)
-
-    def save(self, output_path: Union[str, Path]) -> None:
-        p = Path(output_path)
-        p.parent.mkdir(parents=True, exist_ok=True)
-        with open(p, "w") as f:
-            json.dump(self.__dict__, f, indent=2)
 
 
 def validate_publication_manifest(manifest: PublicationManifest,

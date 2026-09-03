@@ -30,10 +30,11 @@ from .beam import (
 )
 from .tracking import track_nkm_thin_kick, track_nkm_thick_symplectic, TrackingResult
 from .kickmap import NKMKickMap2D
+from .results_schema import SerializableConfigMixin
 
 
 @dataclass
-class StorageRingInjectionConfig:
+class StorageRingInjectionConfig(SerializableConfigMixin):
     """Configuration parameters for storage ring injection simulation."""
     mat_filename: str = "storage_ring_lattice_nkm.mat"
     energy_eV: float = 4.0e9
@@ -71,6 +72,27 @@ class StorageRingInjectionConfig:
     stored_emit_y_m: float = 1.0e-11
     stored_espread: float = 1.0e-3
     stored_blength_m: float = 5.0e-3
+
+    def validate(self) -> None:
+        """Validate physical parameters for storage ring injection."""
+        if self.energy_eV <= 0:
+            raise ValueError(f"StorageRingInjectionConfig energy_eV must be positive, got {self.energy_eV}")
+        if self.nkm_length_m <= 0:
+            raise ValueError(f"nkm_length_m must be positive, got {self.nkm_length_m}")
+        if self.septum_thickness_m <= 0:
+            raise ValueError(f"septum_thickness_m must be positive, got {self.septum_thickness_m}")
+        if self.aperture_x_m <= 0 or self.aperture_y_m <= 0 or self.injection_aperture_x_m <= 0:
+            raise ValueError("Physical aperture limits must be positive")
+        if self.beta_x_nkm_m <= 0:
+            raise ValueError("beta_x_nkm_m must be positive")
+        if self.inj_beta_x_m <= 0 or self.inj_beta_y_m <= 0:
+            raise ValueError("Injected beam beta functions must be positive")
+        if self.inj_emit_x_m <= 0 or self.inj_emit_y_m <= 0 or self.inj_espread <= 0 or self.inj_blength_m <= 0:
+            raise ValueError("Injected beam emittance/spread/length must be positive")
+        if self.stored_beta_x_m <= 0 or self.stored_beta_y_m <= 0:
+            raise ValueError("Stored beam beta functions must be positive")
+        if self.stored_emit_x_m <= 0 or self.stored_emit_y_m <= 0 or self.stored_espread <= 0 or self.stored_blength_m <= 0:
+            raise ValueError("Stored beam emittance/spread/length must be positive")
 
 
 @dataclass

@@ -28,6 +28,7 @@ from .bts_lattice import BTSConfig, create_bts_lattice
 from .optics import compute_twiss_propagation, compute_mismatch_metric
 from .constraints import BTSHardwareConstraints, BTSConstraintConfig
 from .objectives import BTSNormalizedObjectives, OpticsTargetConfig
+from .results_schema import SerializableConfigMixin
 
 
 # ---------------------------------------------------------------------------
@@ -35,7 +36,7 @@ from .objectives import BTSNormalizedObjectives, OpticsTargetConfig
 # ---------------------------------------------------------------------------
 
 @dataclass
-class BTSOptimizationConfig:
+class BTSOptimizationConfig(SerializableConfigMixin):
     """Configuration for BTS quadrupole optics optimization."""
     target_config: OpticsTargetConfig = field(default_factory=OpticsTargetConfig)
     constraint_config: BTSConstraintConfig = field(default_factory=BTSConstraintConfig)
@@ -46,6 +47,17 @@ class BTSOptimizationConfig:
     # Optimizer settings
     random_seed: int = 42
     max_iter: int = 100
+
+    def validate(self) -> None:
+        """Validate optimization parameters and nested configs."""
+        if self.max_iter <= 0:
+            raise ValueError(f"max_iter must be positive, got {self.max_iter}")
+        if len(self.quad_bounds) != 2 or self.quad_bounds[0] >= self.quad_bounds[1]:
+            raise ValueError(f"quad_bounds must be (min, max), got {self.quad_bounds}")
+        if self.target_config is not None and hasattr(self.target_config, "validate"):
+            self.target_config.validate()
+        if self.constraint_config is not None and hasattr(self.constraint_config, "validate"):
+            self.constraint_config.validate()
 
 
 # ---------------------------------------------------------------------------

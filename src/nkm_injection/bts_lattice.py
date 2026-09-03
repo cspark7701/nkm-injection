@@ -10,9 +10,11 @@ from typing import Dict, List, Optional, Tuple, Any
 import numpy as np
 import at
 
+from .results_schema import SerializableConfigMixin
+
 
 @dataclass
-class BTSConfig:
+class BTSConfig(SerializableConfigMixin):
     """Configuration data structure for the BTS transfer line."""
     energy_eV: float = 4.0e9  # Beam energy in eV (4.0 GeV)
     
@@ -90,6 +92,16 @@ class BTSConfig:
         return [self.k_q11, self.k_q12, self.k_q13,
                 self.k_q21, self.k_q22, self.k_q23,
                 self.k_q31, self.k_q32, self.k_q33]
+
+    def validate(self) -> None:
+        """Validate physical boundaries and parameters for BTS transfer line."""
+        if self.energy_eV <= 0:
+            raise ValueError(f"BTSConfig energy_eV must be positive, got {self.energy_eV}")
+        if self.ap1_limit <= 0 or self.ap2_limit <= 0:
+            raise ValueError(f"Aperture limits must be positive: ap1={self.ap1_limit}, ap2={self.ap2_limit}")
+        for attr, val in self.__dict__.items():
+            if (attr.startswith("l_") or attr.startswith("l_dr")) and isinstance(val, (int, float)) and val < 0:
+                raise ValueError(f"BTSConfig length {attr} must be non-negative, got {val}")
 
 
 def create_bts_lattice(config: Optional[BTSConfig] = None) -> at.Lattice:

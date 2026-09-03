@@ -22,6 +22,7 @@ import numpy as np
 from .units import compute_rigidity, ELECTRON_CHARGE_C
 from .bts_lattice import BTSConfig, create_bts_lattice
 from .optics import compute_twiss_propagation
+from .results_schema import SerializableConfigMixin
 
 
 # ---------------------------------------------------------------------------
@@ -71,7 +72,7 @@ class ConstraintRecord:
 # ---------------------------------------------------------------------------
 
 @dataclass
-class QuadrupoleHardwareBounds:
+class QuadrupoleHardwareBounds(SerializableConfigMixin):
     """Hardware limits for a specific quadrupole family or individual magnet.
 
     Attributes
@@ -88,9 +89,18 @@ class QuadrupoleHardwareBounds:
     r_bore_m: float = 0.01935  # m  (19.35 mm)
     b_pole_max_T: float = 1.2  # T
 
+    def validate(self) -> None:
+        """Validate quadrupole hardware limits."""
+        if self.k_min >= self.k_max:
+            raise ValueError(f"k_min ({self.k_min}) must be less than k_max ({self.k_max}) for {self.name}")
+        if self.r_bore_m <= 0:
+            raise ValueError(f"r_bore_m must be positive, got {self.r_bore_m}")
+        if self.b_pole_max_T <= 0:
+            raise ValueError(f"b_pole_max_T must be positive, got {self.b_pole_max_T}")
+
 
 @dataclass
-class BTSConstraintConfig:
+class BTSConstraintConfig(SerializableConfigMixin):
     """Configuration for physical hardware and beam-envelope constraints.
 
     All quantities are in SI units unless noted.
@@ -142,6 +152,23 @@ class BTSConstraintConfig:
         # q33 has tighter bound: must not over-focus at NKM injection point
         "q33": QuadrupoleHardwareBounds("q33", k_min=-2.5, k_max=2.5),
     })
+
+    def validate(self) -> None:
+        """Validate physical parameters for constraint evaluation."""
+        if self.energy_eV <= 0:
+            raise ValueError(f"energy_eV must be positive, got {self.energy_eV}")
+        if self.beta_max_limit_m <= 0:
+            raise ValueError(f"beta_max_limit_m must be positive, got {self.beta_max_limit_m}")
+        if self.disp_max_limit_m <= 0:
+            raise ValueError(f"disp_max_limit_m must be positive, got {self.disp_max_limit_m}")
+        if self.emit_x_m <= 0 or self.emit_y_m <= 0 or self.energy_spread <= 0:
+            raise ValueError("Design beam emittances and energy spread must be positive")
+        if self.b_pole_limit_T <= 0:
+            raise ValueError(f"b_pole_limit_T must be positive, got {self.b_pole_limit_T}")
+        if self.quad_bounds:
+            for q_name, q_bound in self.quad_bounds.items():
+                if hasattr(q_bound, "validate"):
+                    q_bound.validate()
 
 
 # ---------------------------------------------------------------------------

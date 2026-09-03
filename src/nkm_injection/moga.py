@@ -29,10 +29,11 @@ from .optics import compute_twiss_propagation, compute_mismatch_metric
 from .optimization import BTSOptimizationConfig, BTSOptimizationEvaluator
 from .constraints import BTSHardwareConstraints, BTSConstraintConfig
 from .objectives import BTSNormalizedObjectives, OpticsTargetConfig
+from .results_schema import SerializableConfigMixin
 
 
 @dataclass
-class BTSMOGAConfig:
+class BTSMOGAConfig(SerializableConfigMixin):
     """Configuration container for BTS MOGA Pareto optimization."""
     pop_size: int = 20
     n_gen: int = 15
@@ -59,6 +60,29 @@ class BTSMOGAConfig:
     def __post_init__(self):
         if self.emittance_x_mrad is not None:
             self.emittance_x_m_rad = self.emittance_x_mrad
+
+    def validate(self) -> None:
+        """Validate physical parameters for MOGA optimization."""
+        if self.pop_size <= 0:
+            raise ValueError(f"pop_size must be positive, got {self.pop_size}")
+        if self.n_gen <= 0:
+            raise ValueError(f"n_gen must be positive, got {self.n_gen}")
+        if len(self.quad_bounds) != 2 or self.quad_bounds[0] >= self.quad_bounds[1]:
+            raise ValueError(f"quad_bounds must be a valid (min, max) tuple, got {self.quad_bounds}")
+        if self.beta_max_limit <= 0:
+            raise ValueError(f"beta_max_limit must be positive, got {self.beta_max_limit}")
+        if self.mismatch_max_limit <= 0:
+            raise ValueError(f"mismatch_max_limit must be positive, got {self.mismatch_max_limit}")
+        if self.aperture_radius_m <= 0:
+            raise ValueError(f"aperture_radius_m must be positive, got {self.aperture_radius_m}")
+        if self.emittance_x_m_rad <= 0:
+            raise ValueError(f"emittance_x_m_rad must be positive, got {self.emittance_x_m_rad}")
+        if self.energy_spread <= 0:
+            raise ValueError(f"energy_spread must be positive, got {self.energy_spread}")
+        if self.eval_n_mc_seeds <= 0:
+            raise ValueError(f"eval_n_mc_seeds must be positive, got {self.eval_n_mc_seeds}")
+        if self.bts_opt_config is not None and hasattr(self.bts_opt_config, "validate"):
+            self.bts_opt_config.validate()
 
 
 

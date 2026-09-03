@@ -231,6 +231,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 74. [**Milestone 74 — Task: Improve Simulation Convergence and Satisfaction Parameters (Steps 4–7)**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/74_improve_simulation_convergence_and_satisfaction_parameters.md)
     - Resolved non-convergence in Step 4 by updating nominal injection position to $x_{\text{inj}} = -20.0\text{ mm}$ (achieving 100% capture and $\Delta = 0.0000$ convergence). Formally resolved optimizer convergence in Step 5 (`Optimization success: True`). Evaluated Step 6 error budget on matched quadrupole strengths (0.0% failure rate). Resolved Step 7 MOGA feasibility and Pareto convergence (`pop_size=40, n_gen=20`, 100% feasible, 31 Pareto solutions). Verified 100% test pass rate across 177 tests.
 
+75. [**Milestone 75 — Task 11: Unify Configuration Serialization and Validation Framework**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/75_refactor_unify_configuration_serialization_and_validation.md)
+    - Implemented `SerializableConfigMixin` in `src/nkm_injection/results_schema.py` providing unified `.to_dict()`, `.to_json()`, `.save()`, `.from_dict()`, `.from_json()`, `.load()`, and physical domain validation hooks. Adopted the mixin across `PublicationManifest`, `BTSConfig`, `StorageRingInjectionConfig`, `BTSMOGAConfig`, `ErrorBudgetConfig`, `OpticsTargetConfig`, `BTSOptimizationConfig`, `BTSConstraintConfig`, and `QuadrupoleHardwareBounds`. Added comprehensive round-trip and validation unit tests. Verified 100% pass rate across all 181 tests.
+
+
 
 
 

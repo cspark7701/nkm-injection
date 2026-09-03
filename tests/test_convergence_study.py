@@ -263,3 +263,126 @@ class TestMatchedTwissParameterization:
         )
         assert len(results) == 1
         assert "capture_efficiency" in results[0]
+
+
+# ---------------------------------------------------------------------------
+# Task 13 — Structured Return Dataclass Tests
+# ---------------------------------------------------------------------------
+
+from src.nkm_injection.convergence_study import (
+    ConvergenceScanResult,
+    AcceptanceResult,
+    EnsembleStudyResult,
+)
+import pandas as pd
+
+
+class TestStructuredReturnTypes:
+    def test_convergence_scan_result_methods_and_df(self):
+        res = ConvergenceScanResult(
+            scan_parameter="particle_count",
+            scan_values=np.array([100, 500, 1000]),
+            efficiencies=np.array([0.95, 0.98, 1.0]),
+            survived_counts=np.array([95, 490, 1000]),
+            cpu_times_s=np.array([0.1, 0.5, 1.0]),
+            final_emittance_x=np.array([1.2e-7, 1.1e-7, 1.0e-7]),
+            metadata={"n_turns": 10, "kicker_model": "fieldmap"}
+        )
+        assert len(res) == 3
+        assert res.scan_parameter == "particle_count"
+        assert pytest.approx(res.mean_efficiency()) == np.mean([0.95, 0.98, 1.0])
+        assert res.std_efficiency() > 0.0
+
+        # Dict / sequence access
+        assert res[0]["n_particles"] == 100
+        assert res[0]["survived"] == 95
+        assert np.array_equal(res["n_particles"], [100, 500, 1000])
+        assert np.allclose(res["efficiencies"], [0.95, 0.98, 1.0])
+        assert res["n_turns"] == 10
+
+        # DataFrame export
+        df = res.to_dataframe()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == 3
+        assert "n_particles" in df.columns
+        assert "capture_efficiency" in df.columns
+        assert "cpu_time_s" in df.columns
+
+        # Serialization
+        d = res.to_dict()
+        assert d["scan_parameter"] == "particle_count"
+        loaded = ConvergenceScanResult.from_dict(d)
+        assert loaded.scan_parameter == "particle_count"
+        assert np.array_equal(loaded.scan_values, res.scan_values)
+
+    def test_acceptance_result_methods_and_df(self, ring_and_config):
+        ring, config = ring_and_config
+        res = compute_injection_acceptance(
+            x_offsets_m=np.array([-0.020, -0.018, -0.016]),
+            n_particles=20,
+            n_turns=2,
+            ring=ring,
+            kicker_model="off",
+            kickmap_obj=None,
+            config=config,
+            seed=42
+        )
+        assert isinstance(res, AcceptanceResult)
+        assert len(res) == 3
+        assert len(res.x_grid_m) == 3
+        assert len(res.survival_fraction_grid) == 3
+
+        # Dict / slice access
+        assert "x_offset_mm" in res[0]
+        assert "capture_efficiency" in res[0]
+        assert len(res["x_offsets_mm"]) == 3
+
+        # Acceptance window
+        win_lo, win_hi = res.acceptance_window_mm(threshold=0.0)
+        assert not np.isnan(win_lo)
+        assert not np.isnan(win_hi)
+
+        # DataFrame export
+        df = res.to_dataframe()
+        assert isinstance(df, pd.DataFrame)
+        assert "x_offset_m" in df.columns
+        assert "capture_efficiency" in df.columns
+
+        # Serialization
+        d = res.to_dict()
+        loaded = AcceptanceResult.from_dict(d)
+        assert np.array_equal(loaded.x_grid_m, res.x_grid_m)
+
+    def test_ensemble_study_result_methods_and_df(self, ring_and_config):
+        ring, config = ring_and_config
+        tier = smoke_config()
+        tier.n_turns = 2
+
+        res = run_ensemble_study(
+            tier=tier,
+            ring=ring,
+            kicker_model="off",
+            kickmap_obj=None,
+            config=config,
+            stored_beam_n_particles=20
+        )
+        assert isinstance(res, EnsembleStudyResult)
+        assert res.kicker_model == "off"
+        assert "capture_efficiency_ci" in res
+        assert "per_seed_results" in res
+        assert "mean_stored_perturbation" in res
+        assert res["label"] == "smoke"
+
+        # DataFrame export
+        df = res.to_dataframe()
+        assert isinstance(df, pd.DataFrame)
+        assert len(df) == len(tier.seeds)
+        assert "seed" in df.columns
+        assert "capture_efficiency" in df.columns
+
+        # Serialization
+        d = res.to_dict()
+        loaded = EnsembleStudyResult.from_dict(d)
+        assert loaded.label == "smoke"
+        assert loaded.kicker_model == "off"
+

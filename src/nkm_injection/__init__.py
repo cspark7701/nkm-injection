@@ -63,6 +63,9 @@ from .end_to_end import (
 )
 from .convergence_study import (
     InjectionStudyTierConfig,
+    ConvergenceScanResult,
+    AcceptanceResult,
+    EnsembleStudyResult,
     smoke_config,
     pilot_config,
     production_config,

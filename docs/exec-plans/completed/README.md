@@ -237,6 +237,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 76. [**Milestone 76 — Task 12: Standardize Parallel Execution and Worker Dispatch Utility**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/76_refactor_standardize_parallel_execution_and_worker_dispatch.md)
     - Created dedicated concurrency module `src/nkm_injection/concurrency.py` providing `parallel_map` with OpenMP-safe multiprocessing (`forkserver`/`spawn`), deterministic independent worker seed generation (`generate_worker_seeds`), CPU worker count resolution (`resolve_workers`), and graceful sequential fallback. Integrated parallel worker dispatch across `robust_optimization.py`, `errors.py`, `convergence_study.py`, and `paper.py`. Aligned CLI argument `-w, --workers` across analysis and reproduction scripts (`run_tolerance_study.py`, `run_publication_tolerances.py`, `run_multiturn_injection.py`, `reproduce_paper.py`, `run_bts_moga.py`). Added concurrency unit tests in `tests/test_optimization.py`. Verified 100% pass rate across all 187 tests.
 
+77. [**Milestone 77 — Task 13: Structure Convergence and Dynamic Acceptance Return Types**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/77_refactor_structure_convergence_and_acceptance_return_types.md)
+    - Replaced untyped dictionary return structures in `src/nkm_injection/convergence_study.py` with strongly typed dataclasses (`ConvergenceScanResult`, `AcceptanceResult`, `EnsembleStudyResult`) inheriting from `SerializableConfigMixin`. Added runtime profiling, statistical summary methods (`mean_efficiency`, `std_efficiency`), dynamic acceptance window calculators (`acceptance_window_mm`), pandas DataFrame exports (`to_dataframe()`), and backwards-compatible sequence and dictionary indexing. Verified 100% pass rate across all 190 tests in the test suite.
+
+
 
 
 

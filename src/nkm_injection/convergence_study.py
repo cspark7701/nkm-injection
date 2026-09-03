@@ -2,17 +2,20 @@
 NKM Multi-Turn Injection Convergence Study Module
 
 Provides:
+- Strongly typed return dataclasses (ConvergenceScanResult, AcceptanceResult, EnsembleStudyResult)
 - Separated smoke / pilot / production simulation configurations
 - Convergence scanning over particle count, turn count, NKM slice count, and random seed
 - Bootstrap confidence interval estimation for capture efficiency
 - Stored-beam perturbation quantification (centroid oscillation, emittance growth)
 - Loss-map and first-loss-turn distribution reporting
 - Injection acceptance and septum clearance metrics
+- Tabular pandas DataFrame export support
 """
 
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional, Tuple, Any, Sequence, Union
 import json
 import numpy as np
 
@@ -24,6 +27,287 @@ from .storage_ring_injection import (
 )
 from .beam import generate_6d_beam
 from .kickmap import NKMKickMap2D
+from .results_schema import SerializableConfigMixin
+from .concurrency import parallel_map, resolve_workers
+
+
+# ---------------------------------------------------------------------------
+# Structured Return Dataclasses
+# ---------------------------------------------------------------------------
+
+@dataclass
+class ConvergenceScanResult(SerializableConfigMixin):
+    """
+    Structured, strongly typed result of a multi-turn injection convergence scan.
+    
+    Attributes
+    ----------
+    scan_parameter : str
+        Parameter varied during scan ('particle_count' or 'turn_count').
+    scan_values : np.ndarray
+        Array of tested scan parameter values (e.g. N_particles or N_turns).
+    efficiencies : np.ndarray
+        Array of capture efficiencies (survival fractions in [0, 1]).
+    survived_counts : np.ndarray
+        Array of surviving particle counts.
+    cpu_times_s : np.ndarray
+        Array of execution times in seconds per scan point.
+    final_emittance_x : Optional[np.ndarray] = None
+        Horizontal emittance (m*rad or mm*mrad) at scan end.
+    final_emittance_y : Optional[np.ndarray] = None
+        Vertical emittance (m*rad or mm*mrad) at scan end.
+    records : List[Dict[str, Any]] = field(default_factory=list)
+        Row dictionaries representing per-point results.
+    metadata : Dict[str, Any] = field(default_factory=dict)
+        Additional contextual metadata (e.g. kicker_model, turns, particles, seed).
+    """
+    scan_parameter: str
+    scan_values: np.ndarray
+    efficiencies: np.ndarray
+    survived_counts: np.ndarray
+    cpu_times_s: np.ndarray
+    final_emittance_x: Optional[np.ndarray] = None
+    final_emittance_y: Optional[np.ndarray] = None
+    records: List[Dict[str, Any]] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not isinstance(self.scan_values, np.ndarray):
+            self.scan_values = np.asarray(self.scan_values)
+        if not isinstance(self.efficiencies, np.ndarray):
+            self.efficiencies = np.asarray(self.efficiencies, dtype=float)
+        if not isinstance(self.survived_counts, np.ndarray):
+            self.survived_counts = np.asarray(self.survived_counts, dtype=int)
+        if not isinstance(self.cpu_times_s, np.ndarray):
+            self.cpu_times_s = np.asarray(self.cpu_times_s, dtype=float)
+        if self.final_emittance_x is not None and not isinstance(self.final_emittance_x, np.ndarray):
+            self.final_emittance_x = np.asarray(self.final_emittance_x, dtype=float)
+        if self.final_emittance_y is not None and not isinstance(self.final_emittance_y, np.ndarray):
+            self.final_emittance_y = np.asarray(self.final_emittance_y, dtype=float)
+        if not self.records:
+            param_key = "n_particles" if self.scan_parameter == "particle_count" else "n_turns"
+            recs = []
+            for i, val in enumerate(self.scan_values):
+                rec = {
+                    param_key: int(val),
+                    "survived": int(self.survived_counts[i]) if i < len(self.survived_counts) else 0,
+                    "capture_efficiency": float(self.efficiencies[i]) if i < len(self.efficiencies) else 0.0,
+                    "cpu_time_s": float(self.cpu_times_s[i]) if i < len(self.cpu_times_s) else 0.0,
+                }
+                if self.final_emittance_x is not None and i < len(self.final_emittance_x):
+                    rec["emittance_x_mrad"] = float(self.final_emittance_x[i])
+                if self.final_emittance_y is not None and i < len(self.final_emittance_y):
+                    rec["emittance_y_mrad"] = float(self.final_emittance_y[i])
+                recs.append(rec)
+            self.records = recs
+
+    def __len__(self) -> int:
+        return len(self.records)
+
+    def __iter__(self):
+        return iter(self.records)
+
+    def __getitem__(self, key: Union[int, slice, str]) -> Any:
+        if isinstance(key, (int, slice)):
+            return self.records[key]
+        if isinstance(key, str):
+            if key in ("records", "scan_values", "efficiencies", "survived_counts", "cpu_times_s", "final_emittance_x", "final_emittance_y", "metadata", "scan_parameter"):
+                return getattr(self, key)
+            if key in ("particle_counts", "n_particles") and self.scan_parameter == "particle_count":
+                return self.scan_values
+            if key in ("turns", "n_turns") and self.scan_parameter == "turn_count":
+                return self.scan_values
+            if key in ("survivals", "capture_efficiencies"):
+                return self.efficiencies
+            if key in self.metadata:
+                return self.metadata[key]
+            raise KeyError(f"Key '{key}' not found in ConvergenceScanResult")
+        raise TypeError(f"Invalid index type {type(key)}")
+
+    def mean_efficiency(self) -> float:
+        """Return mean capture efficiency across scan points."""
+        return float(np.mean(self.efficiencies)) if len(self.efficiencies) > 0 else float("nan")
+
+    def std_efficiency(self) -> float:
+        """Return standard deviation of capture efficiency across scan points."""
+        return float(np.std(self.efficiencies)) if len(self.efficiencies) > 0 else float("nan")
+
+    def to_dataframe(self):
+        """Convert scan results to a pandas DataFrame."""
+        import pandas as pd
+        param_col = "n_particles" if self.scan_parameter == "particle_count" else "n_turns"
+        data = {
+            param_col: self.scan_values,
+            "survived": self.survived_counts,
+            "capture_efficiency": self.efficiencies,
+            "cpu_time_s": self.cpu_times_s,
+        }
+        if self.final_emittance_x is not None:
+            data["emittance_x_mrad"] = self.final_emittance_x
+        if self.final_emittance_y is not None:
+            data["emittance_y_mrad"] = self.final_emittance_y
+        return pd.DataFrame(data)
+
+
+@dataclass
+class AcceptanceResult(SerializableConfigMixin):
+    """
+    Structured, strongly typed result of an injection acceptance scan.
+    
+    Attributes
+    ----------
+    x_grid_m : np.ndarray
+        Tested horizontal offsets in meters.
+    survival_fraction_grid : np.ndarray
+        Array of capture efficiencies corresponding to x_grid_m.
+    x_offsets_mm : np.ndarray
+        Horizontal offsets in millimeters.
+    acceptance_area_m_rad : float
+        Calculated physical acceptance integral (in mm or m).
+    xp_grid_rad : Optional[np.ndarray] = None
+        Tested horizontal angles in radians (if 2D acceptance grid), or None.
+    records : List[Dict[str, Any]] = field(default_factory=list)
+        Row dictionaries representing per-point results.
+    metadata : Dict[str, Any] = field(default_factory=dict)
+        Additional contextual metadata (e.g. kicker_model, particles, turns, seed).
+    """
+    x_grid_m: np.ndarray
+    survival_fraction_grid: np.ndarray
+    x_offsets_mm: np.ndarray
+    acceptance_area_m_rad: float = 0.0
+    xp_grid_rad: Optional[np.ndarray] = None
+    records: List[Dict[str, Any]] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not isinstance(self.x_grid_m, np.ndarray):
+            self.x_grid_m = np.asarray(self.x_grid_m, dtype=float)
+        if not isinstance(self.survival_fraction_grid, np.ndarray):
+            self.survival_fraction_grid = np.asarray(self.survival_fraction_grid, dtype=float)
+        if not isinstance(self.x_offsets_mm, np.ndarray):
+            self.x_offsets_mm = np.asarray(self.x_offsets_mm, dtype=float)
+        if self.xp_grid_rad is not None and not isinstance(self.xp_grid_rad, np.ndarray):
+            self.xp_grid_rad = np.asarray(self.xp_grid_rad, dtype=float)
+        if not self.records:
+            recs = []
+            for i, x_m in enumerate(self.x_grid_m):
+                recs.append({
+                    "x_offset_m": float(x_m),
+                    "x_offset_mm": float(self.x_offsets_mm[i]) if i < len(self.x_offsets_mm) else float(x_m * 1e3),
+                    "capture_efficiency": float(self.survival_fraction_grid[i]) if i < len(self.survival_fraction_grid) else 0.0,
+                })
+            self.records = recs
+
+    def __len__(self) -> int:
+        return len(self.records)
+
+    def __iter__(self):
+        return iter(self.records)
+
+    def __getitem__(self, key: Union[int, slice, str]) -> Any:
+        if isinstance(key, (int, slice)):
+            return self.records[key]
+        if isinstance(key, str):
+            if key in ("records", "x_grid_m", "xp_grid_rad", "survival_fraction_grid", "x_offsets_mm", "acceptance_area_m_rad", "metadata"):
+                return getattr(self, key)
+            if key in ("x_offsets_m", "x_offsets"):
+                return self.x_grid_m.tolist()
+            if key in ("efficiencies", "capture_efficiencies"):
+                return self.survival_fraction_grid.tolist()
+            if key in self.metadata:
+                return self.metadata[key]
+            raise KeyError(f"Key '{key}' not found in AcceptanceResult")
+        raise TypeError(f"Invalid index type {type(key)}")
+
+    def acceptance_window_mm(self, threshold: float = 0.9) -> Tuple[float, float]:
+        """Return [x_min_mm, x_max_mm] range where capture efficiency >= threshold."""
+        mask = self.survival_fraction_grid >= threshold
+        if not np.any(mask):
+            return float("nan"), float("nan")
+        valid_x = self.x_offsets_mm[mask]
+        return float(np.min(valid_x)), float(np.max(valid_x))
+
+    def to_dataframe(self):
+        """Convert acceptance scan results to a pandas DataFrame."""
+        import pandas as pd
+        data = {
+            "x_offset_m": self.x_grid_m,
+            "x_offset_mm": self.x_offsets_mm,
+            "capture_efficiency": self.survival_fraction_grid,
+        }
+        if self.xp_grid_rad is not None:
+            data["xp_offset_rad"] = self.xp_grid_rad
+        return pd.DataFrame(data)
+
+
+@dataclass
+class EnsembleStudyResult(SerializableConfigMixin):
+    """
+    Structured, strongly typed result of a multi-seed ensemble injection study.
+    
+    Attributes
+    ----------
+    label : str
+        Human-readable simulation tier label ('smoke', 'pilot', 'production').
+    kicker_model : str
+        Kicker model formulation used ('off', 'ideal', 'linear', 'fieldmap').
+    tier : Dict[str, Any]
+        Tier configuration parameters (n_particles, n_turns, n_slices, seeds).
+    capture_efficiency_ci : Dict[str, float]
+        Bootstrap confidence interval dict (mean, std, ci_lo, ci_hi).
+    per_seed_results : List[Dict[str, Any]]
+        List of per-seed metric dictionaries.
+    mean_stored_perturbation : Dict[str, float]
+        Mean stored-beam perturbation dictionary across all seeds.
+    first_loss_distribution : Optional[Dict[str, Any]] = None
+        Turn-resolved first loss distribution dictionary from seed 0.
+    metadata : Dict[str, Any] = field(default_factory=dict)
+        Additional simulation metadata.
+    """
+    label: str
+    kicker_model: str
+    tier: Dict[str, Any]
+    capture_efficiency_ci: Dict[str, float]
+    per_seed_results: List[Dict[str, Any]]
+    mean_stored_perturbation: Dict[str, float]
+    first_loss_distribution: Optional[Dict[str, Any]] = None
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def __getitem__(self, key: str) -> Any:
+        if hasattr(self, key):
+            return getattr(self, key)
+        if key in self.metadata:
+            return self.metadata[key]
+        raise KeyError(f"Key '{key}' not found in EnsembleStudyResult")
+
+    def __contains__(self, key: str) -> bool:
+        return hasattr(self, key) or key in self.metadata
+
+    def get(self, key: str, default: Any = None) -> Any:
+        try:
+            return self[key]
+        except KeyError:
+            return default
+
+    def keys(self):
+        return [
+            "label", "kicker_model", "tier", "capture_efficiency_ci",
+            "per_seed_results", "mean_stored_perturbation",
+            "first_loss_distribution", "metadata"
+        ]
+
+    def values(self):
+        return [self[k] for k in self.keys()]
+
+    def items(self):
+        return [(k, self[k]) for k in self.keys()]
+
+    def to_dataframe(self):
+        """Convert per-seed ensemble metrics to a pandas DataFrame."""
+        import pandas as pd
+        if not self.per_seed_results:
+            return pd.DataFrame()
+        return pd.DataFrame(self.per_seed_results)
 
 
 # ---------------------------------------------------------------------------
@@ -159,17 +443,24 @@ def particle_count_convergence_scan(
     kickmap_obj: Optional[NKMKickMap2D],
     config: StorageRingInjectionConfig,
     seed: int = 42,
-) -> List[Dict[str, Any]]:
+) -> ConvergenceScanResult:
     """
-    Run injection tracking across a series of particle counts; return capture efficiencies.
+    Run injection tracking across a series of particle counts; return strongly typed ConvergenceScanResult.
 
     Returns
     -------
-    list of dict, one per N_particles value, with fields:
-        n_particles, survived, capture_efficiency
+    ConvergenceScanResult
+        Structured scan result with scan_values, efficiencies, survived_counts, cpu_times_s, records, and to_dataframe().
     """
     results = []
+    effs = []
+    survived_list = []
+    times = []
+    emit_x_list = []
+    emit_y_list = []
+
     for np_val in n_particle_values:
+        t0 = time.perf_counter()
         beam = generate_6d_beam(
             n_particles=np_val,
             beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
@@ -184,12 +475,32 @@ def particle_count_convergence_scan(
             kickmap_obj=kickmap_obj,
             config=config
         )
+        dt = time.perf_counter() - t0
+        effs.append(res.survival_fraction)
+        survived_list.append(res.survived_particles)
+        times.append(dt)
+        emit_x_list.append(res.emittance_x_mrad)
+        emit_y_list.append(res.emittance_y_mrad)
         results.append({
             "n_particles": np_val,
             "survived": res.survived_particles,
-            "capture_efficiency": res.survival_fraction
+            "capture_efficiency": res.survival_fraction,
+            "cpu_time_s": dt,
+            "emittance_x_mrad": res.emittance_x_mrad,
+            "emittance_y_mrad": res.emittance_y_mrad
         })
-    return results
+
+    return ConvergenceScanResult(
+        scan_parameter="particle_count",
+        scan_values=np.array(n_particle_values, dtype=int),
+        efficiencies=np.array(effs, dtype=float),
+        survived_counts=np.array(survived_list, dtype=int),
+        cpu_times_s=np.array(times, dtype=float),
+        final_emittance_x=np.array(emit_x_list, dtype=float),
+        final_emittance_y=np.array(emit_y_list, dtype=float),
+        records=results,
+        metadata={"n_turns": n_turns, "kicker_model": kicker_model, "seed": seed}
+    )
 
 
 def turn_count_convergence_scan(
@@ -200,11 +511,17 @@ def turn_count_convergence_scan(
     kickmap_obj: Optional[NKMKickMap2D],
     config: StorageRingInjectionConfig,
     seed: int = 42,
-) -> List[Dict[str, Any]]:
+) -> ConvergenceScanResult:
     """
-    Run injection tracking across a series of turn counts; return survival at end of each run.
+    Run injection tracking across a series of turn counts; return strongly typed ConvergenceScanResult.
     """
     results = []
+    effs = []
+    survived_list = []
+    times = []
+    emit_x_list = []
+    emit_y_list = []
+
     beam_base = generate_6d_beam(
         n_particles=n_particles,
         beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
@@ -214,18 +531,39 @@ def turn_count_convergence_scan(
         seed=seed
     )
     for n_turn_val in n_turn_values:
+        t0 = time.perf_counter()
         res = track_multiturn_injection(
             beam_base.copy(), ring, n_turns=n_turn_val,
             kicker_model=kicker_model,
             kickmap_obj=kickmap_obj,
             config=config
         )
+        dt = time.perf_counter() - t0
+        effs.append(res.survival_fraction)
+        survived_list.append(res.survived_particles)
+        times.append(dt)
+        emit_x_list.append(res.emittance_x_mrad)
+        emit_y_list.append(res.emittance_y_mrad)
         results.append({
             "n_turns": n_turn_val,
             "survived": res.survived_particles,
-            "capture_efficiency": res.survival_fraction
+            "capture_efficiency": res.survival_fraction,
+            "cpu_time_s": dt,
+            "emittance_x_mrad": res.emittance_x_mrad,
+            "emittance_y_mrad": res.emittance_y_mrad
         })
-    return results
+
+    return ConvergenceScanResult(
+        scan_parameter="turn_count",
+        scan_values=np.array(n_turn_values, dtype=int),
+        efficiencies=np.array(effs, dtype=float),
+        survived_counts=np.array(survived_list, dtype=int),
+        cpu_times_s=np.array(times, dtype=float),
+        final_emittance_x=np.array(emit_x_list, dtype=float),
+        final_emittance_y=np.array(emit_y_list, dtype=float),
+        records=results,
+        metadata={"n_particles": n_particles, "kicker_model": kicker_model, "seed": seed}
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -307,7 +645,7 @@ def compute_stored_beam_perturbation(stored_result: TrackingResult) -> Dict[str,
 # ---------------------------------------------------------------------------
 
 def compute_injection_acceptance(
-    x_offsets_m: np.ndarray,
+    x_offsets_m: Union[Sequence[float], np.ndarray],
     n_particles: int,
     n_turns: int,
     ring,
@@ -315,17 +653,20 @@ def compute_injection_acceptance(
     kickmap_obj: Optional[NKMKickMap2D],
     config: StorageRingInjectionConfig,
     seed: int = 42,
-) -> List[Dict[str, Any]]:
+) -> AcceptanceResult:
     """
-    Sweep injection x-offset to map the injection acceptance window.
+    Sweep injection x-offset to map the injection acceptance window; return strongly typed AcceptanceResult.
 
     Returns
     -------
-    list of dict, one per x_offset_m, with fields:
-        x_offset_m, x_offset_mm, capture_efficiency
+    AcceptanceResult
+        Structured acceptance result with x_grid_m, survival_fraction_grid, x_offsets_mm, acceptance_area_m_rad, and to_dataframe().
     """
     results = []
-    for x_off in x_offsets_m:
+    x_arr = np.asarray(x_offsets_m, dtype=float)
+    effs = []
+
+    for x_off in x_arr:
         beam = generate_6d_beam(
             n_particles=n_particles,
             beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
@@ -340,20 +681,33 @@ def compute_injection_acceptance(
             kickmap_obj=kickmap_obj,
             config=config
         )
+        effs.append(res.survival_fraction)
         results.append({
             "x_offset_m": float(x_off),
             "x_offset_mm": float(x_off * 1e3),
             "capture_efficiency": res.survival_fraction
         })
-    return results
+
+    effs_arr = np.array(effs, dtype=float)
+    if len(x_arr) > 1:
+        trapz_fn = getattr(np, "trapezoid", getattr(np, "trapz", None))
+        area = float(abs(trapz_fn(effs_arr, x_arr))) if trapz_fn else float(np.sum(effs_arr) * abs(x_arr[1] - x_arr[0]))
+    else:
+        area = 0.0
+
+    return AcceptanceResult(
+        x_grid_m=x_arr,
+        survival_fraction_grid=effs_arr,
+        x_offsets_mm=x_arr * 1e3,
+        acceptance_area_m_rad=area,
+        records=results,
+        metadata={"n_particles": n_particles, "n_turns": n_turns, "kicker_model": kicker_model, "seed": seed}
+    )
 
 
 # ---------------------------------------------------------------------------
 # Full Multi-Seed Ensemble Runner
 # ---------------------------------------------------------------------------
-
-from .concurrency import parallel_map, resolve_workers
-
 
 def _run_single_seed_ensemble(args: Tuple[int, int, InjectionStudyTierConfig, str, Any, Optional[NKMKickMap2D], StorageRingInjectionConfig, int]) -> Dict[str, Any]:
     """Top-level pickleable worker function for single-seed ensemble tracking."""
@@ -428,18 +782,14 @@ def run_ensemble_study(
     config: Optional[StorageRingInjectionConfig] = None,
     stored_beam_n_particles: int = 1000,
     n_workers: Optional[int] = 1,
-) -> Dict[str, Any]:
+) -> EnsembleStudyResult:
     """
     Run multi-seed ensemble injection study for one (kicker_model, tier) combination using sequential or parallel execution.
 
     Returns
     -------
-    dict with:
-        label, kicker_model, tier
-        capture_efficiency_ci (bootstrap CI dict)
-        per_seed_results (list of per-seed metric dicts)
-        stored_perturbation (mean across seeds)
-        first_loss_distribution (from seed 0)
+    EnsembleStudyResult
+        Structured ensemble study result with bootstrap confidence intervals, per-seed results, stored beam perturbations, and to_dataframe().
     """
     if config is None:
         config = StorageRingInjectionConfig()
@@ -471,17 +821,17 @@ def run_ensemble_study(
             vals = [p[k] for p in all_stored_perturbations if not np.isnan(p[k])]
             mean_perturbation[k] = float(np.mean(vals)) if vals else float("nan")
 
-    return {
-        "label": tier.label,
-        "kicker_model": kicker_model,
-        "tier": {
+    return EnsembleStudyResult(
+        label=tier.label,
+        kicker_model=kicker_model,
+        tier={
             "n_particles": tier.n_particles,
             "n_turns": tier.n_turns,
             "n_slices": tier.n_slices,
             "seeds": tier.seeds
         },
-        "capture_efficiency_ci": ci,
-        "per_seed_results": per_seed,
-        "mean_stored_perturbation": mean_perturbation,
-        "first_loss_distribution": first_loss_dist,
-    }
+        capture_efficiency_ci=ci,
+        per_seed_results=per_seed,
+        mean_stored_perturbation=mean_perturbation,
+        first_loss_distribution=first_loss_dist,
+    )

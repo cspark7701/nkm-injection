@@ -172,8 +172,7 @@ def main():
     )
     for row in np_conv:
         print(f"  N_part={row['n_particles']:6d}: capture = {row['capture_efficiency']:.4f}")
-    with open(output_dir / "convergence_particle_count.json", "w") as f:
-        json.dump(np_conv, f, indent=2)
+    np_conv.save(output_dir / "convergence_particle_count.json")
 
     print("\n--- Turn Count Convergence Scan ---\n")
     nt_conv = turn_count_convergence_scan(
@@ -187,8 +186,7 @@ def main():
     )
     for row in nt_conv:
         print(f"  N_turns={row['n_turns']:5d}: capture = {row['capture_efficiency']:.4f}")
-    with open(output_dir / "convergence_turn_count.json", "w") as f:
-        json.dump(nt_conv, f, indent=2)
+    nt_conv.save(output_dir / "convergence_turn_count.json")
 
     # -----------------------------------------------------------------------
     # Multi-Seed Ensemble per Kicker Model
@@ -216,8 +214,7 @@ def main():
         print(f"    Capture: {ci['mean']:.4f} [{ci['ci_lo']:.4f}, {ci['ci_hi']:.4f}] 95% CI | "
               f"Stored osc: {pert.get('centroid_oscillation_x_mm', float('nan')):.4f} mm")
 
-        with open(output_dir / f"model_{model}_results.json", "w") as f:
-            json.dump(res, f, indent=2, default=str)
+        res.save(output_dir / f"model_{model}_results.json")
 
     # -----------------------------------------------------------------------
     # Injection Acceptance Scan
@@ -236,8 +233,7 @@ def main():
     )
     for row in acceptance_data:
         print(f"  x_offset={row['x_offset_mm']:.1f} mm: capture = {row['capture_efficiency']:.4f}")
-    with open(output_dir / "injection_acceptance.json", "w") as f:
-        json.dump(acceptance_data, f, indent=2)
+    acceptance_data.save(output_dir / "injection_acceptance.json")
 
     # -----------------------------------------------------------------------
     # Combined Summary Metrics Table

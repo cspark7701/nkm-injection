@@ -71,7 +71,7 @@ def main():
     # ----------------------------------------------------------------
     # 1. Multi-start optimization  (3 starts: nominal + 2 random)
     # ----------------------------------------------------------------
-    print("\nRunning 2-stage optimization (Least-Squares + SLSQP, 3 starts) …")
+    print("\nRunning 2-stage optimization (Least-Squares + SLSQP, 3 starts) …\n")
     res = optimize_bts_quadrupoles(method="least_squares", config=config, n_starts=3)
 
     print(f"\nOptimization success      : {res.success}")
@@ -83,7 +83,7 @@ def main():
     print(f"Peak Beta Y               : {res.final_max_beta_y:.2f} m")
     print(f"Constraints satisfied     : {res.constraints_satisfied}")
     if res.violations:
-        print("Violations:")
+        print("\nViolations:")
         for v in res.violations:
             print(f"  ✗ {v}")
 
@@ -93,7 +93,7 @@ def main():
     # ----------------------------------------------------------------
     # 2. Jacobian Sensitivity Matrix
     # ----------------------------------------------------------------
-    print("\nComputing Jacobian sensitivity matrix …")
+    print("\nComputing Jacobian sensitivity matrix …\n")
     sens = compute_sensitivity_matrix(res.optimized_strengths, config=config)
     print(f"Jacobian Condition Number : {sens['condition_number']:.2f}")
     print(f"Singular Values           : {sens['singular_values']}")

@@ -63,7 +63,9 @@ def main():
 
     results_by_slice = []
 
-    for n_slices in slice_counts:
+    for i, n_slices in enumerate(slice_counts):
+        if i > 0:
+            print()
         # Track reference injected particle
         ref_out = track_nkm_thick_symplectic(ref_in, field_fn, length_m=length_m, n_slices=n_slices, energy_GeV=energy_GeV)
         ref_x_exit_mm = float(ref_out[0, 0] * 1e3)

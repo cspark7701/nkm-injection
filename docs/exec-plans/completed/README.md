@@ -225,6 +225,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 72. [**Milestone 72 — Task: Comprehensive Repository Review and Documentation**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/72_nkm_repository_comprehensive_review.md)
     - Conducted a full review of the `nkm-injection` repository architecture, physics modeling, multi-turn injection tracking, deterministic and MOGA optimization, error models, and publication generation pipelines. Created [`docs/REPOSITORY_REVIEW.md`](file:///home/cspark/Work/projects/nkm-injection/docs/REPOSITORY_REVIEW.md). Verified 100% test pass rate across 177 tests.
 
+73. [**Milestone 73 — Task: Add Blank Lines Between Simulation Steps and Iterations in Verbose Mode**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/73_add_blank_lines_between_simulation_steps_and_iterations.md)
+    - Formatted simulation runner script `scripts/run_full_production_simulation.sh` and individual analysis scripts (`run_multiturn_injection.py`, `run_publication_moga.py`, `run_tracking_convergence.py`, `run_publication_tolerances.py`, `optimize_bts_publication.py`, `validate_nkm_fieldmap.py`, `reproduce_paper.py`) with blank lines separating steps, sections, and iterations in verbose output. Verified 100% test pass rate across 177 tests.
+
+
 
 
 

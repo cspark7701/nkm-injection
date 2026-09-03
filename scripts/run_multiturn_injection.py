@@ -139,7 +139,7 @@ def main():
     # -----------------------------------------------------------------------
     # Convergence Scans (using pilot particle/turn counts as reference limits)
     # -----------------------------------------------------------------------
-    print("\n--- Particle Count Convergence Scan ---")
+    print("\n--- Particle Count Convergence Scan ---\n")
     # Convergence scans use a small representative particle count (N=20) and turn count (N=5)
     # to detect capture-rate trends across the grid; physics claims are made from the
     # multi-seed ensemble below. Increase CONV_N_PARTICLES to 50+ for pilot/production tiers.
@@ -175,7 +175,7 @@ def main():
     with open(output_dir / "convergence_particle_count.json", "w") as f:
         json.dump(np_conv, f, indent=2)
 
-    print("\n--- Turn Count Convergence Scan ---")
+    print("\n--- Turn Count Convergence Scan ---\n")
     nt_conv = turn_count_convergence_scan(
         n_turn_values=nt_scan_values,
         n_particles=conv_n_particles,
@@ -197,7 +197,8 @@ def main():
     all_model_results: dict = {}
 
     print("\n--- Multi-Seed Ensemble Injection Study ---")
-    for model in models:
+    for i, model in enumerate(models):
+        print()
         model_kmap = kickmap_obj if model == "fieldmap" else None
         print(f"  Running kicker model: {model} ...", flush=True)
         res = run_ensemble_study(
@@ -220,7 +221,7 @@ def main():
     # -----------------------------------------------------------------------
     # Injection Acceptance Scan
     # -----------------------------------------------------------------------
-    print("\n--- Injection Acceptance Scan ---")
+    print("\n--- Injection Acceptance Scan ---\n")
     x_off_scan = np.linspace(-0.022, -0.010, 7)
     acceptance_data = compute_injection_acceptance(
         x_offsets_m=x_off_scan,

@@ -40,7 +40,7 @@ def main():
 
     try:
         summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf)
-        print("\n--- Reproduction Pipeline Completed Successfully ---")
+        print("\n--- Reproduction Pipeline Completed Successfully ---\n")
         print(f"Manifest Verified: {summary['manifest_valid']}")
         print(f"Input Hashes Verified: {summary['input_hashes_verified']}")
         print(f"Tables Generated: {summary['tables_count']}")

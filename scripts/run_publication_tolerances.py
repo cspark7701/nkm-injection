@@ -40,26 +40,26 @@ def main():
 
     # 1. Fast Monte Carlo Ensemble (N=100 for verification)
     n_samples = 100
-    print(f"Sampling Monte Carlo ensemble (N={n_samples})...")
+    print(f"\nSampling Monte Carlo ensemble (N={n_samples})...\n")
     samples = sample_error_ensemble(config, n_samples=n_samples, seed=42)
 
     stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples)
 
-    print("\n--- Monte Carlo Robustness Percentiles ---")
+    print("\n--- Monte Carlo Robustness Percentiles ---\n")
     print(f"Failure Probability: {stats['failure_probability']*100:.1f}%")
     print(f"Horizontal Mismatch Mx: p50={stats['mismatch_x']['p50_median']:.4f}, p68={stats['mismatch_x']['p68']:.4f}, p95={stats['mismatch_x']['p95']:.4f}, p99={stats['mismatch_x']['p99']:.4f}")
     print(f"Vertical Mismatch My:   p50={stats['mismatch_y']['p50_median']:.4f}, p68={stats['mismatch_y']['p68']:.4f}, p95={stats['mismatch_y']['p95']:.4f}, p99={stats['mismatch_y']['p99']:.4f}")
     print(f"Bootstrap 95% CI for Median Mx: [{stats['mismatch_x']['bootstrap_95ci_median'][0]:.4f}, {stats['mismatch_x']['bootstrap_95ci_median'][1]:.4f}]")
-    print(f"\n--- Failure Modes ---")
+    print(f"\n--- Failure Modes ---\n")
     for fm, count in stats.get("failure_modes", {}).items():
         print(f"  {fm}: {count}")
-    print(f"\n--- MC Convergence ---")
+    print(f"\n--- MC Convergence ---\n")
     conv = stats.get("convergence_check", {})
     print(f"  Converged: {conv.get('converged', False)}")
     print(f"  Diff N=50 to N=100: {conv.get('N_50_to_100_diff', 0.0):.6f}")
 
     # 2. One-At-A-Time Sensitivity Ranking
-    print("\n--- One-At-A-Time (OAT) Sensitivity Ranking ---")
+    print("\n--- One-At-A-Time (OAT) Sensitivity Ranking ---\n")
     rankings = compute_one_at_a_time_sensitivity(nominal_bts, target_twiss, n_samples=30, seed=42)
     for rank, (label, val) in enumerate(rankings.items(), start=1):
         print(f"{rank}. {label:35s}: Delta Merit = {val:.6f}")

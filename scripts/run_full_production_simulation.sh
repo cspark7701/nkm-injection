@@ -85,6 +85,7 @@ run_step() {
     local cmd=("$@")
 
     if [ "${DRY_RUN}" = true ]; then
+        echo ""
         echo "======================================================================"
         echo " [DRY-RUN] ${step_name}"
         echo " Command  : ${cmd[*]}"
@@ -96,20 +97,28 @@ run_step() {
             echo " Status   : Executable command verified"
         fi
         echo "======================================================================"
+        echo ""
     elif [ "${VERBOSE}" = true ]; then
+        echo ""
         echo "======================================================================"
         echo " [EXEC] ${step_name}"
         echo " Command: ${cmd[*]}"
         echo "======================================================================"
+        echo ""
         "${cmd[@]}" 2>&1 | tee -a "${LOG_FILE}"
+        echo ""
     else
+        echo ""
         echo "[RUNNING] ${step_name} (log -> ${LOG_FILE}) ..."
+        echo "" >> "${LOG_FILE}"
         echo "=== [EXEC] ${step_name} ===" >> "${LOG_FILE}"
         echo "Command: ${cmd[*]}" >> "${LOG_FILE}"
+        echo "" >> "${LOG_FILE}"
         if "${cmd[@]}" >> "${LOG_FILE}" 2>&1; then
             echo "[COMPLETED] ${step_name}"
         else
             local status=$?
+            echo ""
             echo "======================================================================"
             echo " [ERROR FAILED] ${step_name} (exit code ${status})"
             echo " Log file: ${LOG_FILE}"
@@ -117,6 +126,7 @@ run_step() {
             echo "--- ERROR LOG TRACEBACK (Last 30 lines) ---"
             tail -n 30 "${LOG_FILE}"
             echo "----------------------------------------------------------------------"
+            echo ""
             exit ${status}
         fi
     fi

@@ -38,9 +38,11 @@ def main():
     multi_seed_results = {}
     knee_quad_strengths = []
 
-    for seed in seeds:
+    for i, seed in enumerate(seeds):
+        if i > 0:
+            print()
         cfg = BTSMOGAConfig(pop_size=15, n_gen=5, seed=seed)
-        print(f"\n--- Running Seed {seed} ---")
+        print(f"--- Running Seed {seed} ---")
         res = run_bts_moga(cfg)
 
         seed_dir = output_dir / f"seed_{seed}"

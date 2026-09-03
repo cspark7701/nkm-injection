@@ -101,7 +101,7 @@ def run_fieldmap_validation():
     with open(METRICS_JSON, "w") as f:
         json.dump(metrics_summary, f, indent=2)
         
-    print("=== NKM Field Map Validation Summary ===")
+    print("\n=== NKM Field Map Validation Summary ===\n")
     print(f"1D Field Map Valid: {val_1d['valid']}")
     print(f"1D Peak By: {val_1d['peak_by_T']:.6f} T")
     print(f"2D Grid Interp Max Error: {grid_interp_err:.3e}")

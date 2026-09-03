@@ -69,3 +69,90 @@ def test_set_publication_style():
     assert "beta_y" in PUBLICATION_COLORS
     assert "dispersion" in PUBLICATION_COLORS
 
+
+# ---------------------------------------------------------------------------
+# Task 16 — LaTeX Table and Macro Builder Tests
+# ---------------------------------------------------------------------------
+
+from src.nkm_injection.paper import (
+    escape_latex,
+    format_scientific,
+    format_uncertainty,
+    LaTeXTableBuilder,
+    LaTeXMacroBuilder
+)
+
+
+def test_escape_latex():
+    """Verify special LaTeX character escaping while preserving math mode."""
+    raw = "Beta_x error of 5% in beam #1 & #2 with $\\beta_x = 10.5$"
+    escaped = escape_latex(raw)
+    assert "\\%" in escaped
+    assert "\\_" in escaped
+    assert "\\&" in escaped
+    assert "\\#" in escaped
+    assert "$\\beta_x = 10.5$" in escaped  # Math block preserved intact
+
+
+def test_format_scientific_and_uncertainty():
+    """Verify scientific notation and uncertainty string formatting."""
+    assert format_scientific(0.0) == "0"
+    assert format_scientific(12) == "12"
+    assert format_scientific(3.14159, precision=2) == "3.14"
+    assert "10^{-5}" in format_scientific(1.23e-5, precision=2)
+    assert "10^{6}" in format_scientific(4.5e6, precision=1)
+
+    unc_str = format_uncertainty(1.234, 0.056, precision=2)
+    assert unc_str == "$1.23 \\pm 0.06$"
+
+
+def test_latex_table_builder(tmp_path):
+    """Verify LaTeXTableBuilder row addition, validation, rendering, and disk output."""
+    builder = LaTeXTableBuilder(
+        caption="Sample Optical Parameters",
+        label="tab:sample_optics",
+        columns=["Parameter", "Value", "Unit"],
+        alignment="lcl"
+    )
+    builder.add_row("$\\beta_x$", 13.626, "m")
+    builder.add_row(["$\\alpha_x$", -2.046, "-"])
+
+    # Column length mismatch validation
+    with pytest.raises(ValueError, match="does not match column count"):
+        builder.add_row("Extra", 1.0, "m", "Unexpected")
+
+    latex_str = builder.render_latex()
+    assert "\\begin{table}" in latex_str
+    assert "\\toprule" in latex_str
+    assert "\\midrule" in latex_str
+    assert "\\bottomrule" in latex_str
+    assert "\\label{tab:sample_optics}" in latex_str
+    assert "13.626" in latex_str
+
+    md_str = builder.render_markdown()
+    assert "# Sample Optical Parameters" in md_str
+    assert "| Parameter | Value | Unit |" in md_str
+
+    # Save to disk
+    tex_file = builder.save(tmp_path / "table.tex")
+    md_file = builder.save(tmp_path / "table.md")
+    assert tex_file.is_file()
+    assert md_file.is_file()
+
+
+def test_latex_macro_builder(tmp_path):
+    """Verify LaTeXMacroBuilder declaration rendering and disk output."""
+    builder = LaTeXMacroBuilder()
+    builder.add("beam_energy_GeV", 4.0, precision=1, unit="GeV")
+    builder.add("\\bts_length", 27.812, precision=3, unit="m")
+    builder.add("kicker_type", "Nonlinear")
+
+    rendered = builder.render()
+    assert "\\newcommand{\\beamenergyGeV}{4.0\\,\\text{GeV}}" in rendered
+    assert "\\newcommand{\\btslength}{27.812\\,\\text{m}}" in rendered
+    assert "\\newcommand{\\kickertype}{Nonlinear}" in rendered
+
+    macro_file = builder.save(tmp_path / "paper_macros.tex")
+    assert macro_file.is_file()
+
+

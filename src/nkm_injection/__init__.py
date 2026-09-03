@@ -27,7 +27,12 @@ from .paper import (
     generate_paper_figures,
     run_paper_pipeline,
     set_publication_style,
-    PUBLICATION_COLORS
+    PUBLICATION_COLORS,
+    escape_latex,
+    format_scientific,
+    format_uncertainty,
+    LaTeXTableBuilder,
+    LaTeXMacroBuilder
 )
 from .fieldmap import (
     BaseFieldMap,

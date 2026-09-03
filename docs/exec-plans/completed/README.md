@@ -246,6 +246,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 79. [**Milestone 79 — Task 15: Vectorized 3D Field Map Interpolation and PyNKMPass Optimization**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/79_refactor_vectorized_fieldmap_interpolation_and_pynkmpass_optimization.md)
     - Vectorized 3D field map interpolation and inverted tracking loops in `pyNKMPass` to process all macro-particles simultaneously with continuous trilinear interpolation weights. Added `interpolate_3d_field_vectorized` and `NKMFieldMap3D` to `src/nkm_injection/fieldmap.py`, updated `patches/pyat_extensions/pyat/at/integrators/pyNKMPass.py` and regenerated `patches/accelerator_toolbox_nkm.patch`. Added unit tests in `tests/test_fieldmap.py` verifying $< 10^{-14}$ agreement between vectorized and sequential tracking. Verified 100% pass rate across all 195 tests in the test suite.
 
+80. [**Milestone 80 — Task 16: Automated LaTeX Table and Macro Publication Builder**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/80_refactor_automated_latex_table_and_macro_builder.md)
+    - Refactored manual LaTeX string formatting into modular `LaTeXTableBuilder` and `LaTeXMacroBuilder` in `src/nkm_injection/paper.py`. Added `escape_latex`, `format_scientific`, and `format_uncertainty` utilities for robust character escaping and uniform number representation. Refactored `generate_paper_tables` to emit synchronized `.tex` and `.md` tables and macros (`paper_macros.tex`). Added unit tests in `tests/test_paper_pipeline.py`. Verified 100% pass rate across all 199 tests in the test suite.
+
+
 
 
 

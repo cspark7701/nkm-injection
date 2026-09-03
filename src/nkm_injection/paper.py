@@ -77,6 +77,175 @@ def set_publication_style(font_size: int = 10,
     return params
 
 
+# ---------------------------------------------------------------------------
+# LaTeX Table and Macro Publication Builders (Task 16)
+# ---------------------------------------------------------------------------
+
+def escape_latex(text: str) -> str:
+    """
+    Escape special LaTeX characters (%, _, &, #) in plain text, preserving math mode spans ($...$).
+    """
+    if not isinstance(text, str):
+        return str(text)
+
+    parts = text.split("$")
+    escaped_parts = []
+    for i, part in enumerate(parts):
+        if i % 2 == 0:  # Non-math part
+            p = part
+            p = p.replace("\\", "\\textbackslash{}")
+            p = p.replace("%", "\\%")
+            p = p.replace("_", "\\_")
+            p = p.replace("&", "\\&")
+            p = p.replace("#", "\\#")
+            escaped_parts.append(p)
+        else:  # Math part
+            escaped_parts.append(f"${part}$")
+    return "".join(escaped_parts)
+
+
+def format_scientific(value: Union[float, int, str], precision: int = 4, sci_threshold: float = 1e-4) -> str:
+    """Format a numerical value into clean LaTeX scientific notation if needed."""
+    if isinstance(value, (int, np.integer)):
+        return str(value)
+    if isinstance(value, (float, np.floating)):
+        if abs(value) == 0.0:
+            return "0"
+        if abs(value) < sci_threshold or abs(value) >= 1e5:
+            formatted = f"{value:.{precision}e}"
+            mantissa, exp = formatted.split("e")
+            exp_int = int(exp)
+            return f"{float(mantissa):.{precision}f} \\times 10^{{{exp_int}}}"
+        return f"{value:.{precision}f}"
+    return str(value)
+
+
+def format_uncertainty(mean: float, std: float, precision: int = 2) -> str:
+    """Format value with uncertainty as $mean \\pm std$."""
+    return f"${mean:.{precision}f} \\pm {std:.{precision}f}$"
+
+
+class LaTeXTableBuilder:
+    """
+    Modular builder for booktabs-formatted LaTeX tables and Markdown tables.
+    """
+    def __init__(self,
+                 caption: str,
+                 label: str,
+                 columns: List[str],
+                 alignment: Optional[str] = None):
+        self.caption = caption
+        self.label = label
+        self.columns = columns
+        self.alignment = alignment or ("l" + "c" * (len(columns) - 1))
+        self.rows: List[List[Any]] = []
+
+    def add_row(self, *values: Any) -> "LaTeXTableBuilder":
+        """Add a row of cell values to the table."""
+        if len(values) == 1 and isinstance(values[0], (list, tuple)):
+            row = list(values[0])
+        else:
+            row = list(values)
+        if len(row) != len(self.columns):
+            raise ValueError(f"Row length {len(row)} does not match column count {len(self.columns)}")
+        self.rows.append(row)
+        return self
+
+    def render_latex(self) -> str:
+        """Render complete booktabs-formatted LaTeX table."""
+        header_escaped = " & ".join(escape_latex(str(c)) for c in self.columns)
+        lines = [
+            "\\begin{table}[htbp]",
+            "\\centering",
+            f"\\caption{{{escape_latex(self.caption)}}}",
+            f"\\label{{{self.label}}}",
+            f"\\begin{{tabular}}{{{self.alignment}}}",
+            "\\toprule",
+            f"{header_escaped} \\\\",
+            "\\midrule"
+        ]
+        for row in self.rows:
+            row_str = " & ".join(escape_latex(str(v)) for v in row)
+            lines.append(f"{row_str} \\\\")
+        lines.extend([
+            "\\bottomrule",
+            "\\end{tabular}",
+            "\\end{table}"
+        ])
+        return "\n".join(lines) + "\n"
+
+    def render_markdown(self) -> str:
+        """Render clean GitHub-flavored Markdown table."""
+        lines = [
+            f"# {self.caption}\n",
+            "| " + " | ".join(str(c) for c in self.columns) + " |",
+            "| " + " | ".join([":---" if i == 0 else ":---:" for i in range(len(self.columns))]) + " |"
+        ]
+        for row in self.rows:
+            lines.append("| " + " | ".join(str(v) for v in row) + " |")
+        return "\n".join(lines) + "\n"
+
+    def render(self) -> str:
+        """Default render method returning LaTeX string."""
+        return self.render_latex()
+
+    def save(self, filepath: Union[str, Path]) -> Path:
+        """Save table to file (.tex or .md based on extension)."""
+        fp = Path(filepath)
+        fp.parent.mkdir(parents=True, exist_ok=True)
+        content = self.render_markdown() if fp.suffix == ".md" else self.render_latex()
+        with open(fp, "w") as f:
+            f.write(content)
+        return fp
+
+
+class LaTeXMacroBuilder:
+    """
+    Builder for LaTeX macros (\\newcommand{\\macroName}{value}).
+    """
+    def __init__(self):
+        self.macros: Dict[str, str] = {}
+
+    def add(self,
+            name: str,
+            value: Union[str, float, int],
+            precision: int = 3,
+            unit: Optional[str] = None) -> "LaTeXMacroBuilder":
+        """Add a macro definition."""
+        macro_name = name.lstrip("\\").replace("_", "").replace("-", "")
+        if isinstance(value, (float, np.floating)):
+            val_str = f"{value:.{precision}f}"
+        else:
+            val_str = str(value)
+
+        if unit:
+            formatted_val = f"{val_str}\\,\\text{{{unit}}}"
+        else:
+            formatted_val = val_str
+
+        self.macros[macro_name] = formatted_val
+        return self
+
+    def render(self) -> str:
+        """Render macro declarations string."""
+        lines = [
+            "% Auto-generated publication LaTeX macros",
+            "% Generated by nkm_injection.paper.LaTeXMacroBuilder",
+            ""
+        ]
+        for name, val in self.macros.items():
+            lines.append(f"\\newcommand{{\\{name}}}{{{val}}}")
+        return "\n".join(lines) + "\n"
+
+    def save(self, filepath: Union[str, Path]) -> Path:
+        """Save macros to a .tex file."""
+        fp = Path(filepath)
+        fp.parent.mkdir(parents=True, exist_ok=True)
+        with open(fp, "w") as f:
+            f.write(self.render())
+        return fp
+
+
 def generate_paper_tables(repo_root: Path, output_dir: Path) -> Dict[str, str]:
     """
     Generate publication tables dynamically from optics calculations and configuration objects.
@@ -90,46 +259,64 @@ def generate_paper_tables(repo_root: Path, output_dir: Path) -> Dict[str, str]:
     prop = compute_twiss_propagation(lat, twiss_init)
 
     # Table 1: BTS Line & Storage Ring Reference Parameters
-    t1_md = f"""# Table 1: BTS Line & Storage Ring Reference Parameters
+    t1_builder = LaTeXTableBuilder(
+        caption="Table 1: BTS Line & Storage Ring Reference Parameters",
+        label="tab:bts_parameters",
+        columns=["Parameter", "Symbol", "Value", "Unit"],
+        alignment="llcl"
+    )
+    t1_builder.add_row("Beam Energy", "$E_0$", f"{nominal_config.energy_eV * 1e-9:.1f}", "GeV")
+    t1_builder.add_row("Relativistic Gamma", "$\\gamma$", f"{nominal_config.energy_eV / 0.51099895e6:.2f}", "-")
+    t1_builder.add_row("Entrance Beta ($\\beta_x, \\beta_y$)", "$(\\beta_{x0}, \\beta_{y0})$", f"({twiss_init['beta'][0]:.4f}, {twiss_init['beta'][1]:.4f})", "m")
+    t1_builder.add_row("Entrance Alpha ($\\alpha_x, \\alpha_y$)", "$(\\alpha_{x0}, \\alpha_{y0})$", f"({twiss_init['alpha'][0]:.4f}, {twiss_init['alpha'][1]:.4f})", "-")
+    t1_builder.add_row("Entrance Dispersion ($D_x, D_x'$)", "$(D_{x0}, D_{x0}')$", f"({twiss_init['dispersion'][0]:.4f}, {twiss_init['dispersion'][1]:.4f})", "m, rad")
+    t1_builder.add_row("Exit Beta ($\\beta_x, \\beta_y$)", "$(\\beta_{xExit}, \\beta_{yExit})$", f"({prop['final_beta'][0]:.4f}, {prop['final_beta'][1]:.4f})", "m")
+    t1_builder.add_row("Exit Dispersion ($D_x, D_x'$)", "$(D_{xExit}, D_{xExit}')$", f"({prop['final_dispersion'][0]:.4f}, {prop['final_dispersion'][1]:.4f})", "m, rad")
 
-| Parameter | Symbol | Value | Unit |
-| :--- | :--- | :--- | :--- |
-| Beam Energy | $E_0$ | {nominal_config.energy_eV * 1e-9:.1f} | GeV |
-| Relativistic Gamma | $\\gamma$ | {nominal_config.energy_eV / 0.51099895e6:.2f} | - |
-| Entrance Beta ($\\beta_x, \\beta_y$) | $(\\beta_{{x0}}, \\beta_{{y0}})$ | ({twiss_init['beta'][0]:.4f}, {twiss_init['beta'][1]:.4f}) | m |
-| Entrance Alpha ($\\alpha_x, \\alpha_y$) | $(\\alpha_{{x0}}, \\alpha_{{y0}})$ | ({twiss_init['alpha'][0]:.4f}, {twiss_init['alpha'][1]:.4f}) | - |
-| Entrance Dispersion ($D_x, D_x'$) | $(D_{{x0}}, D_{{x0}}')$ | ({twiss_init['dispersion'][0]:.4f}, {twiss_init['dispersion'][1]:.4f}) | m, rad |
-| Exit Beta ($\\beta_x, \\beta_y$) | $(\\beta_{{xExit}}, \\beta_{{yExit}})$ | ({prop['final_beta'][0]:.4f}, {prop['final_beta'][1]:.4f}) | m |
-| Exit Dispersion ($D_x, D_x'$) | $(D_{{xExit}}, D_{{xExit}}')$ | ({prop['final_dispersion'][0]:.4f}, {prop['final_dispersion'][1]:.4f}) | m, rad |
-"""
+    t1_builder.save(output_dir / "table1_bts_parameters.tex")
+    t1_builder.save(output_dir / "table1_bts_parameters.md")
+    tables["table1"] = t1_builder.render_markdown()
 
-    t1_path = output_dir / "table1_bts_parameters.md"
-    with open(t1_path, "w") as f:
-        f.write(t1_md)
-
-    tables["table1"] = t1_md
-
-    # Table 2: Quadrupole Strengths
+    # Table 2: Quadrupole Strengths & Hardware Limits
+    t2_builder = LaTeXTableBuilder(
+        caption="Table 2: Quadrupole Strengths & Hardware Limits",
+        label="tab:quad_strengths",
+        columns=["Quadrupole", "Nominal $K$ [$\\text{m}^{-2}$]", "Hardware Bounds [$\\text{m}^{-2}$]"],
+        alignment="lcc"
+    )
     quad_names = ['q11', 'q12', 'q13', 'q21', 'q22', 'q23', 'q31', 'q32', 'q33']
     k_list = nominal_config.quad_strengths_list
-
-    rows = []
     for qname, k_val in zip(quad_names, k_list):
-        rows.append(f"| `{qname}` | {k_val:+.4f} | `[-3.0, +3.0]` |")
-    t2_body = "\n".join(rows)
+        t2_builder.add_row(f"`{qname}`", f"{k_val:+.4f}", "`[-3.0, +3.0]`")
 
-    t2_md = f"""# Table 2: Quadrupole Strengths & Hardware Limits
+    t2_builder.save(output_dir / "table2_quad_strengths.tex")
+    t2_builder.save(output_dir / "table2_quad_strengths.md")
+    tables["table2"] = t2_builder.render_markdown()
 
-| Quadrupole | Nominal $K$ [$\\text{{m}}^{{-2}}$] | Hardware Bounds [$\\text{{m}}^{{-2}}$] |
-| :--- | :--- | :--- |
-{t2_body}
-"""
+    # Table 3: Optics Comparison Summary
+    t3_builder = LaTeXTableBuilder(
+        caption="Table 3: Optical Functions & Matching Summary",
+        label="tab:optics_summary",
+        columns=["Parameter", "Entrance Value", "Exit Value", "Design Target", "Unit"],
+        alignment="lcccc"
+    )
+    t3_builder.add_row("$\\beta_x$", f"{twiss_init['beta'][0]:.4f}", f"{prop['final_beta'][0]:.4f}", "13.6260", "m")
+    t3_builder.add_row("$\\beta_y$", f"{twiss_init['beta'][1]:.4f}", f"{prop['final_beta'][1]:.4f}", "3.5410", "m")
+    t3_builder.add_row("$\\alpha_x$", f"{twiss_init['alpha'][0]:.4f}", f"{prop['final_alpha'][0]:.4f}", "-2.0460", "-")
+    t3_builder.add_row("$\\alpha_y$", f"{twiss_init['alpha'][1]:.4f}", f"{prop['final_alpha'][1]:.4f}", "0.7760", "-")
+    t3_builder.add_row("$D_x$", f"{twiss_init['dispersion'][0]:.4f}", f"{prop['final_dispersion'][0]:.4f}", "0.0000", "m")
 
-    t2_path = output_dir / "table2_quad_strengths.md"
-    with open(t2_path, "w") as f:
-        f.write(t2_md)
+    t3_builder.save(output_dir / "table3_optics_comparison.tex")
+    t3_builder.save(output_dir / "table3_optics_comparison.md")
+    tables["table3"] = t3_builder.render_markdown()
 
-    tables["table2"] = t2_md
+    # Paper Macros
+    macro_builder = LaTeXMacroBuilder()
+    macro_builder.add("beamEnergyGeV", nominal_config.energy_eV * 1e-9, precision=1, unit="GeV")
+    macro_builder.add("btsLengthM", prop['s_pos'][-1], precision=3, unit="m")
+    macro_builder.add("peakBetaXM", float(np.max(prop['beta'][:, 0])), precision=2, unit="m")
+    macro_builder.add("peakBetaYM", float(np.max(prop['beta'][:, 1])), precision=2, unit="m")
+    macro_builder.save(output_dir / "paper_macros.tex")
 
     return tables
 

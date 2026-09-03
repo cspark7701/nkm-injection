@@ -169,3 +169,111 @@ def scipy_erf(x):
     return erf(x)
 
 
+# ---------------------------------------------------------------------------
+# Task 15 — 3D Field Map Vectorized Interpolation and pyNKMPass Tests
+# ---------------------------------------------------------------------------
+
+from src.nkm_injection.fieldmap import interpolate_3d_field_vectorized, NKMFieldMap3D
+from src.nkm_injection.units import FieldMap3DProtocol
+from patches.pyat_extensions.pyat.at.integrators.pyNKMPass import (
+    trackFunction as pyNKMPass_track,
+    interpolate_field_vectorized as pyNKMPass_interp
+)
+
+
+def test_3d_field_vectorized_interpolation_single_vs_batch():
+    """Verify single-particle vs batch-vectorized 3D field interpolation precision (< 1e-12)."""
+    nx, ny, nz = 11, 11, 21
+    x_grid = np.linspace(-50, 50, nx)
+    y_grid = np.linspace(-50, 50, ny)
+    z_grid = np.linspace(-300, 300, nz)
+
+    # Create synthetic 3D field: Bx = y, By = B0 * exp(-x^2), Bz = z/1000
+    X, Y, Z = np.meshgrid(x_grid, y_grid, z_grid, indexing='ij')
+    field_map = np.zeros((nx, ny, nz, 3))
+    field_map[..., 0] = Y * 1e-3
+    field_map[..., 1] = 0.146 * np.exp(-((X / 15.0) ** 2))
+    field_map[..., 2] = Z * 1e-4
+
+    # 1. Exact node interpolation test
+    bx_node, by_node, bz_node = interpolate_3d_field_vectorized(
+        field_map, x_grid[5], y_grid[5], z_grid[10]
+    )
+    assert pytest.approx(bx_node, abs=1e-12) == field_map[5, 5, 10, 0]
+    assert pytest.approx(by_node, abs=1e-12) == field_map[5, 5, 10, 1]
+    assert pytest.approx(bz_node, abs=1e-12) == field_map[5, 5, 10, 2]
+
+    # 2. Batch vs single-point comparison
+    rng = np.random.default_rng(42)
+    test_x = rng.uniform(-40, 40, size=50)
+    test_y = rng.uniform(-40, 40, size=50)
+    test_z = rng.uniform(-250, 250, size=50)
+
+    # Batch evaluation
+    bx_batch, by_batch, bz_batch = interpolate_3d_field_vectorized(
+        field_map, test_x, test_y, test_z
+    )
+
+    # Point-by-point evaluation
+    bx_single = np.zeros(50)
+    by_single = np.zeros(50)
+    bz_single = np.zeros(50)
+    for i in range(50):
+        bx_single[i], by_single[i], bz_single[i] = interpolate_3d_field_vectorized(
+            field_map, test_x[i], test_y[i], test_z[i]
+        )
+
+    np.testing.assert_allclose(bx_batch, bx_single, atol=1e-14)
+    np.testing.assert_allclose(by_batch, by_single, atol=1e-14)
+    np.testing.assert_allclose(bz_batch, bz_single, atol=1e-14)
+
+
+def test_nkm_fieldmap_3d_class_and_protocol():
+    """Verify NKMFieldMap3D conforms to FieldMap3DProtocol."""
+    nx, ny, nz = 11, 11, 21
+    field_map = np.zeros((nx, ny, nz, 3))
+    field_map[..., 1] = 0.146  # Uniform By = 0.146 T
+
+    fmap3d = NKMFieldMap3D(field_map)
+    assert isinstance(fmap3d, FieldMap3DProtocol)
+
+    x = np.array([-0.010, 0.0, 0.010])
+    y = np.array([0.0, 0.005, -0.005])
+    by, bx = fmap3d(x, y, z=0.0)
+
+    np.testing.assert_allclose(by, 0.146)
+    np.testing.assert_allclose(bx, 0.0)
+
+
+def test_py_nkm_pass_vectorized_tracking():
+    """Verify pyNKMPass vectorized tracking gives identical results to single-particle tracking."""
+    class DummyElem:
+        Length = 0.525
+        Nslice = 10
+        Energy = 4.0
+        FieldMap = np.zeros((11, 11, 21, 3))
+
+    elem = DummyElem()
+    elem.FieldMap[..., 1] = 0.146  # Uniform By = 0.146 T
+
+    rng = np.random.default_rng(42)
+    n_part = 20
+    r_batch = np.zeros((6, n_part))
+    r_batch[0, :] = rng.uniform(-0.020, 0.020, n_part)
+    r_batch[1, :] = rng.uniform(-1e-3, 1e-3, n_part)
+    r_batch[2, :] = rng.uniform(-0.010, 0.010, n_part)
+    r_batch[3, :] = rng.uniform(-1e-3, 1e-3, n_part)
+
+    # 1. Batch vectorized tracking
+    r_out_batch = pyNKMPass_track(r_batch.copy(), elem)
+
+    # 2. Individual particle tracking
+    r_out_single = np.zeros_like(r_batch)
+    for i in range(n_part):
+        single_p = r_batch[:, i:i+1].copy()
+        r_out_single[:, i:i+1] = pyNKMPass_track(single_p, elem)
+
+    np.testing.assert_allclose(r_out_batch, r_out_single, atol=1e-14)
+
+
+

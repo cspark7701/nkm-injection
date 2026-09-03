@@ -243,6 +243,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 78. [**Milestone 78 — Task 14: Formalize Kicker and Field Map Evaluator Protocols**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/78_refactor_formalize_kicker_and_fieldmap_evaluator_protocols.md)
     - Defined runtime-checkable `FieldMap3DProtocol` and `KickerEvaluatorProtocol` in `src/nkm_injection/units.py`. Created mock field maps (`ZeroFieldMap3D`, `UniformFieldMap3D`, `LinearGradientFieldMap3D`) for zero-I/O testing, updated `NKMKickMap2D` and created typed kicker evaluator classes (`OffKickerEvaluator`, `IdealKickerEvaluator`, `LinearKickerEvaluator`) in `storage_ring_injection.py`. Updated `SymplecticSplitIntegrator` and `LorentzRK4Integrator` type annotations. Added unit tests in `tests/test_nkm_integrators.py` and verified 100% pass rate across all 192 tests in the test suite.
 
+79. [**Milestone 79 — Task 15: Vectorized 3D Field Map Interpolation and PyNKMPass Optimization**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/79_refactor_vectorized_fieldmap_interpolation_and_pynkmpass_optimization.md)
+    - Vectorized 3D field map interpolation and inverted tracking loops in `pyNKMPass` to process all macro-particles simultaneously with continuous trilinear interpolation weights. Added `interpolate_3d_field_vectorized` and `NKMFieldMap3D` to `src/nkm_injection/fieldmap.py`, updated `patches/pyat_extensions/pyat/at/integrators/pyNKMPass.py` and regenerated `patches/accelerator_toolbox_nkm.patch`. Added unit tests in `tests/test_fieldmap.py` verifying $< 10^{-14}$ agreement between vectorized and sequential tracking. Verified 100% pass rate across all 195 tests in the test suite.
+
+
 
 
 

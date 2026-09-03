@@ -307,3 +307,141 @@ class NKMFieldMap1D(BaseFieldMap):
         fit_vals = np.polyval(coeffs, self.x)
         max_residual = float(np.max(np.abs(self.by - fit_vals)))
         return coeffs, max_residual
+
+
+# ---------------------------------------------------------------------------
+# 3D Vectorized Field Map Interpolation
+# ---------------------------------------------------------------------------
+
+def interpolate_3d_field_vectorized(
+    field_map: np.ndarray,
+    x_mm: Union[float, np.ndarray],
+    y_mm: Union[float, np.ndarray],
+    z_mm: Union[float, np.ndarray],
+    x_range_mm: Tuple[float, float] = (-50.0, 50.0),
+    y_range_mm: Tuple[float, float] = (-50.0, 50.0),
+    z_range_mm: Tuple[float, float] = (-300.0, 300.0),
+) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray], Union[float, np.ndarray]]:
+    """
+    Vectorized trilinear interpolation of 3D magnetic field map (Bx, By, Bz) in Tesla.
+
+    Parameters
+    ----------
+    field_map : np.ndarray
+        Array of shape (nx, ny, nz, 3) containing [Bx, By, Bz] in Tesla.
+    x_mm, y_mm, z_mm : float or np.ndarray
+        Coordinates in millimeters.
+    x_range_mm, y_range_mm, z_range_mm : tuple of float
+        Bounding box of grid in mm (default [-50, 50], [-50, 50], [-300, 300]).
+
+    Returns
+    -------
+    Bx, By, Bz : float or np.ndarray
+        Interpolated field components in Tesla matching input coordinate shape.
+    """
+    nx, ny, nz, _ = field_map.shape
+    x_arr = np.asarray(x_mm, dtype=float)
+    y_arr = np.asarray(y_mm, dtype=float)
+    z_arr = np.asarray(z_mm, dtype=float)
+
+    x_min, x_max = x_range_mm
+    y_min, y_max = y_range_mm
+    z_min, z_max = z_range_mm
+
+    ux = np.clip((x_arr - x_min) / (x_max - x_min) * (nx - 1), 0.0, nx - 1.0)
+    uy = np.clip((y_arr - y_min) / (y_max - y_min) * (ny - 1), 0.0, ny - 1.0)
+    uz = np.clip((z_arr - z_min) / (z_max - z_min) * (nz - 1), 0.0, nz - 1.0)
+
+    i0 = np.floor(ux).astype(int)
+    j0 = np.floor(uy).astype(int)
+    k0 = np.floor(uz).astype(int)
+
+    i1 = np.minimum(i0 + 1, nx - 1)
+    j1 = np.minimum(j0 + 1, ny - 1)
+    k1 = np.minimum(k0 + 1, nz - 1)
+
+    wx = ux - i0
+    wy = uy - j0
+    wz = uz - k0
+
+    if wx.ndim > 0:
+        wx = wx[..., np.newaxis]
+        wy = wy[..., np.newaxis]
+        wz = wz[..., np.newaxis]
+
+    c000 = (1.0 - wx) * (1.0 - wy) * (1.0 - wz)
+    c100 = wx * (1.0 - wy) * (1.0 - wz)
+    c010 = (1.0 - wx) * wy * (1.0 - wz)
+    c110 = wx * wy * (1.0 - wz)
+    c001 = (1.0 - wx) * (1.0 - wy) * wz
+    c101 = wx * (1.0 - wy) * wz
+    c011 = (1.0 - wx) * wy * wz
+    c111 = wx * wy * wz
+
+    b_interp = (
+        c000 * field_map[i0, j0, k0]
+        + c100 * field_map[i1, j0, k0]
+        + c010 * field_map[i0, j1, k0]
+        + c110 * field_map[i1, j1, k0]
+        + c001 * field_map[i0, j0, k1]
+        + c101 * field_map[i1, j0, k1]
+        + c011 * field_map[i0, j1, k1]
+        + c111 * field_map[i1, j1, k1]
+    )
+
+    if b_interp.ndim == 1:
+        return b_interp[0], b_interp[1], b_interp[2]
+    return b_interp[..., 0], b_interp[..., 1], b_interp[..., 2]
+
+
+class NKMFieldMap3D(BaseFieldMap):
+    """
+    3D Field Map evaluator with vectorized trilinear interpolation conforming to FieldMap3DProtocol.
+    """
+    def __init__(self,
+                 field_map: np.ndarray,
+                 x_range_m: Tuple[float, float] = (-0.050, 0.050),
+                 y_range_m: Tuple[float, float] = (-0.050, 0.050),
+                 z_range_m: Tuple[float, float] = (-0.300, 0.300),
+                 allow_extrapolation: bool = False,
+                 metadata: Optional[KickMapMetadata] = None,
+                 filepath: Optional[Union[str, Path]] = None):
+        super().__init__(
+            x_min=x_range_m[0],
+            x_max=x_range_m[1],
+            y_min=y_range_m[0],
+            y_max=y_range_m[1],
+            allow_extrapolation=allow_extrapolation,
+            metadata=metadata,
+            filepath=filepath
+        )
+        self.field_map = field_map
+        self.x_range_m = x_range_m
+        self.y_range_m = y_range_m
+        self.z_range_m = z_range_m
+        self.z_min = z_range_m[0]
+        self.z_max = z_range_m[1]
+
+    def evaluate(self, x_m: Union[float, np.ndarray],
+                 y_m: Union[float, np.ndarray],
+                 z_m: Union[float, np.ndarray]) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray], Union[float, np.ndarray]]:
+        """
+        Evaluate (Bx, By, Bz) in Tesla at (x_m, y_m, z_m) in meters.
+        """
+        x_mm = np.asarray(x_m) * 1e3
+        y_mm = np.asarray(y_m) * 1e3
+        z_mm = np.asarray(z_m) * 1e3
+        x_range_mm = (self.x_range_m[0] * 1e3, self.x_range_m[1] * 1e3)
+        y_range_mm = (self.y_range_m[0] * 1e3, self.y_range_m[1] * 1e3)
+        z_range_mm = (self.z_range_m[0] * 1e3, self.z_range_m[1] * 1e3)
+
+        return interpolate_3d_field_vectorized(
+            self.field_map, x_mm, y_mm, z_mm,
+            x_range_mm=x_range_mm, y_range_mm=y_range_mm, z_range_mm=z_range_mm
+        )
+
+    def __call__(self, x: np.ndarray, y: np.ndarray, z: float = 0.0) -> Tuple[np.ndarray, np.ndarray]:
+        """Conforms to FieldMap3DProtocol returning (By, Bx) in Tesla for transverse coords (x, y) at slice z."""
+        bx, by, _ = self.evaluate(x, y, z)
+        return by, bx
+

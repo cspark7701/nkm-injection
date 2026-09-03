@@ -241,9 +241,17 @@ def get_kicker_evaluator(
         return kick_ideal, meta
 
     elif validated_model == "linear":
-        K0_MRAD = -2.1046  # dipole term at x = -16 mm
-        K1_MRAD_PER_MM = -0.45043  # linear gradient dk/dx [mrad/mm]
-        X_REF_MM = config.septum_x_offset_m * 1e3  # nominal injection offset [mm]
+        x_ref_m = config.septum_x_offset_m
+        if kickmap_obj is not None:
+            k0_mrad = float(kickmap_obj.evaluate(x_ref_m, 0.0)[0])
+            dx_m = 1e-3
+            k_plus = float(kickmap_obj.evaluate(x_ref_m + dx_m, 0.0)[0])
+            k_minus = float(kickmap_obj.evaluate(x_ref_m - dx_m, 0.0)[0])
+            k1_mrad_per_mm = float((k_plus - k_minus) / (2.0 * dx_m * 1e3))
+        else:
+            k0_mrad = -2.70 if abs(x_ref_m - (-0.020)) < 0.002 else -2.1046
+            k1_mrad_per_mm = -0.45043
+        x_ref_mm = x_ref_m * 1e3
         meta = KickMapMetadata(
             coordinate_unit="m",
             value_type="kick_angle",
@@ -251,7 +259,7 @@ def get_kicker_evaluator(
             beam_energy_eV=config.energy_eV
         )
         def kick_linear(x, y):
-            kx = K0_MRAD + K1_MRAD_PER_MM * (x * 1e3 - X_REF_MM)
+            kx = k0_mrad + k1_mrad_per_mm * (x * 1e3 - x_ref_mm)
             ky = np.zeros_like(y)
             return kx, ky
         return kick_linear, meta
@@ -313,14 +321,16 @@ def track_multiturn_injection(beam: np.ndarray,
         # 1. Apply Kicker on Turn 1 only
         if turn == 1 and validated_model != "off":
             kick_fn, meta = get_kicker_evaluator(validated_model, config=config, kickmap_obj=kickmap_obj)
-            current_beam = track_nkm_thin_kick(
-                current_beam,
-                kick_fn,
-                scale_factor=scale_factor,
-                length_m=config.nkm_length_m,
-                energy_GeV=energy_GeV,
-                metadata=meta
-            )
+            valid_mask = ~np.isnan(current_beam[0, :])
+            if np.any(valid_mask):
+                current_beam[:, valid_mask] = track_nkm_thin_kick(
+                    current_beam[:, valid_mask],
+                    kick_fn,
+                    scale_factor=scale_factor,
+                    length_m=config.nkm_length_m,
+                    energy_GeV=energy_GeV,
+                    metadata=meta
+                )
 
         # 2. Propagate one turn using the linear one-turn transfer map M66.
         # Using the full one-turn map avoids false losses from narrow-aperture

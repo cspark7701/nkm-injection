@@ -105,7 +105,7 @@ def main():
     set_publication_style(font_size=10, dpi=300)
 
     # Load lattice
-    config = StorageRingInjectionConfig()
+    config = StorageRingInjectionConfig(septum_x_offset_m=-0.020)
     ring, nkm_idx = load_storage_ring_injection_lattice(config)
 
     kick_path = repo_root / "kickmap_file.txt"

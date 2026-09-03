@@ -41,7 +41,7 @@ def main():
     for i, seed in enumerate(seeds):
         if i > 0:
             print()
-        cfg = BTSMOGAConfig(pop_size=15, n_gen=5, seed=seed)
+        cfg = BTSMOGAConfig(pop_size=40, n_gen=20, seed=seed)
         print(f"--- Running Seed {seed} ---")
         res = run_bts_moga(cfg)
 

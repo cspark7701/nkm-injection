@@ -64,7 +64,7 @@ def main():
 
     config = BTSOptimizationConfig(
         random_seed=42,
-        max_iter=20,
+        max_iter=100,
         constraint_config=BTSConstraintConfig(),
     )
 

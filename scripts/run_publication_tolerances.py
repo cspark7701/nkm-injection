@@ -35,7 +35,24 @@ def main():
     print(f"Output directory: {output_dir}")
 
     config = ErrorBudgetConfig()
-    nominal_bts = BTSConfig()
+    
+    # Check for optimized BTS quadrupole strengths from Step 5
+    opt_runs = sorted((repo_root / "results" / "bts_publication_optimization").glob("run_*/bts_optimization_summary.json"))
+    if opt_runs:
+        with open(opt_runs[-1]) as f:
+            opt_data = json.load(f)
+        k_opt = opt_data.get("optimized_strengths_raw", None)
+        if k_opt and len(k_opt) >= 9:
+            nominal_bts = BTSConfig(
+                k_q11=k_opt[0], k_q12=k_opt[1], k_q13=k_opt[2],
+                k_q21=k_opt[3], k_q22=k_opt[4], k_q23=k_opt[5],
+                k_q31=k_opt[6], k_q32=k_opt[7], k_q33=k_opt[8]
+            )
+        else:
+            nominal_bts = BTSConfig()
+    else:
+        nominal_bts = BTSConfig()
+
     target_twiss = {"beta": [2.336495, 4.256241], "alpha": [-0.016335, 0.017772]}
 
     # 1. Fast Monte Carlo Ensemble (N=100 for verification)

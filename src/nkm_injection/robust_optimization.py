@@ -14,6 +14,7 @@ from scipy.optimize import minimize
 from .bts_lattice import BTSConfig, create_bts_lattice
 from .optics import compute_twiss_propagation, compute_mismatch_metric, DEFAULT_BTS_ENTRANCE_TWISS
 from .errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
+from .concurrency import parallel_map, resolve_workers
 from .optimization import BaseOpticsObjective, BTSOptimizationConfig, BTSNormalizedObjectives, BTSHardwareConstraints
 
 
@@ -27,7 +28,8 @@ class RobustMonteCarloObjective(BaseOpticsObjective):
     def __init__(self,
                  config: Optional[BTSOptimizationConfig] = None,
                  n_samples: int = 20,
-                 seed: int = 42):
+                 seed: int = 42,
+                 n_workers: Optional[int] = 1):
         self.config = config or BTSOptimizationConfig()
         self.objectives = BTSNormalizedObjectives(self.config.target_config)
         self.constraints = BTSHardwareConstraints(self.config.constraint_config)
@@ -35,6 +37,7 @@ class RobustMonteCarloObjective(BaseOpticsObjective):
         self.quad_names = self.objectives.quad_names
         self.n_samples = n_samples
         self.seed = seed
+        self.n_workers = n_workers
         self.samples = sample_error_ensemble(n_samples=n_samples, seed=seed)
 
     def compute_residual_vector(self, strengths: np.ndarray) -> np.ndarray:
@@ -56,7 +59,7 @@ class RobustMonteCarloObjective(BaseOpticsObjective):
             k_q21=float(strengths[3]), k_q22=float(strengths[4]), k_q23=float(strengths[5]),
             k_q31=float(strengths[6]), k_q32=float(strengths[7]), k_q33=float(strengths[8])
         )
-        stats = evaluate_robustness_statistics(bts_config, target_twiss, self.samples)
+        stats = evaluate_robustness_statistics(bts_config, target_twiss, self.samples, n_workers=self.n_workers)
         
         mx_p50 = stats["mismatch_x"]["p50"]
         my_p50 = stats["mismatch_y"]["p50"]
@@ -76,15 +79,126 @@ class RobustMonteCarloObjective(BaseOpticsObjective):
         }
 
 
+def _eval_single_robustness_sample(args: Tuple[BTSConfig, Dict[str, Any], Dict[str, Any], Optional[Any]]) -> Dict[str, Any]:
+    """Top-level pickleable worker function for single Monte Carlo sample evaluation."""
+    nominal_config, s, target_twiss, capture_efficiency_fn = args
+    try:
+        from .storage_ring_injection import get_kicker_evaluator, StorageRingInjectionConfig
+        inj_cfg = StorageRingInjectionConfig(energy_eV=nominal_config.energy_eV)
+        nkm_kick_fn, _ = get_kicker_evaluator("fieldmap", config=inj_cfg)
+    except Exception:
+        def nkm_kick_fn(x, y):
+            return (-0.005749 * (x / -0.016), np.zeros_like(x))
+
+    try:
+        lattice, init_twiss = apply_sample_errors(nominal_config, s)
+        prop = compute_twiss_propagation(lattice, init_twiss)
+        beta_end = prop["final_beta"]
+        alpha_end = prop["final_alpha"]
+
+        mx = compute_mismatch_metric(beta_end[0], alpha_end[0], target_twiss["beta"][0], target_twiss["alpha"][0])
+        my = compute_mismatch_metric(beta_end[1], alpha_end[1], target_twiss["beta"][1], target_twiss["alpha"][1])
+
+        bx_max = prop["max_beta_x"]
+        by_max = prop["max_beta_y"]
+
+        x_co = float(s.get("ring_co_x_m", 0.0))
+        dx_nkm = float(s.get("nkm_dx_m", 0.0))
+        scale_err = float(s.get("nkm_scale_err", 0.0))
+        net_x = x_co - dx_nkm
+        try:
+            kx, _ = nkm_kick_fn(np.array([net_x]), np.array([0.0]))
+            stored_kick_mrad = float(abs(kx[0])) * (1.0 + scale_err) * 1e3
+        except Exception:
+            stored_kick_mrad = float(abs(net_x * 0.359) * (1.0 + scale_err) * 1e3)
+
+        eff = 1.0
+        if capture_efficiency_fn is not None:
+            eff = capture_efficiency_fn(init_twiss.get("nkm_errors", {}), init_twiss.get("ring_errors", {}), init_twiss.get("centroid_offset", [0]*6))
+
+        failed = False
+        failure_mode = None
+        if bx_max > 60.0 or by_max > 60.0:
+            failed = True
+            failure_mode = "beta_exceeded"
+        elif mx > 0.5 or my > 0.5:
+            failed = True
+            failure_mode = "mismatch_exceeded"
+        elif eff < 0.8 and capture_efficiency_fn is not None:
+            failed = True
+            failure_mode = "capture_failed"
+
+        return {
+            "mx": mx,
+            "my": my,
+            "bx_max": bx_max,
+            "by_max": by_max,
+            "stored_kick_mrad": stored_kick_mrad,
+            "eff": eff,
+            "failed": failed,
+            "failure_mode": failure_mode
+        }
+    except Exception:
+        return {
+            "mx": 1e3,
+            "my": 1e3,
+            "bx_max": 1e3,
+            "by_max": 1e3,
+            "stored_kick_mrad": 1e3,
+            "eff": 0.0,
+            "failed": True,
+            "failure_mode": "mismatch_exceeded"
+        }
+
+
+def _eval_oat_single_category(args: Tuple[BTSConfig, Dict[str, Any], str, str, List[Dict[str, Any]], float]) -> Tuple[str, float]:
+    """Top-level pickleable worker function for single OAT error sensitivity evaluation."""
+    nominal_config, target_twiss, err_key, label, base_samples, ref_merit = args
+    delta_merits = []
+    for s in base_samples:
+        iso_sample = {
+            "sample_id": s["sample_id"],
+            "quad_k_err": s["quad_k_err"] if err_key == "quad_k_err" else [0.0]*9,
+            "quad_dx_m": s["quad_dx_m"] if err_key == "quad_dx_m" else [0.0]*9,
+            "quad_dy_m": [0.0]*9,
+            "quad_roll_rad": s["quad_roll_rad"] if err_key == "quad_roll_rad" else [0.0]*9,
+            "quad_ds_m": [0.0]*9,
+            "booster_x_m": s["booster_x_m"] if err_key == "booster_x_m" else 0.0,
+            "booster_xp_rad": s["booster_xp_rad"] if err_key == "booster_xp_rad" else 0.0,
+            "energy_dp_p": s["energy_dp_p"] if err_key == "energy_dp_p" else 0.0,
+            "beta_mismatch_x": s["beta_mismatch_x"] if err_key == "beta_mismatch" else 0.0,
+            "beta_mismatch_y": s["beta_mismatch_y"] if err_key == "beta_mismatch" else 0.0,
+            "nkm_scale_err": s["nkm_scale_err"] if err_key == "nkm_scale_err" else 0.0,
+            "nkm_dx_m": s["nkm_dx_m"] if err_key == "nkm_dx_m" else 0.0,
+            "nkm_timing_mrad": s.get("nkm_timing_mrad", 0.0) if err_key == "nkm_timing_mrad" else 0.0,
+            "ring_co_x_m": s["ring_co_x_m"] if err_key == "ring_co_x_m" else 0.0,
+            "septum_x_m": s["septum_x_m"] if err_key == "septum_x_m" else 0.0,
+        }
+        lattice, init_twiss = apply_sample_errors(nominal_config, iso_sample)
+        prop = compute_twiss_propagation(lattice, init_twiss)
+        mx = compute_mismatch_metric(prop["final_beta"][0], prop["final_alpha"][0], target_twiss["beta"][0], target_twiss["alpha"][0])
+        my = compute_mismatch_metric(prop["final_beta"][1], prop["final_alpha"][1], target_twiss["beta"][1], target_twiss["alpha"][1])
+        delta_merits.append(abs((mx + my) - ref_merit))
+
+    return label, float(np.mean(delta_merits))
+
+
 def evaluate_robustness_statistics(nominal_config: BTSConfig,
-                                     target_twiss: Dict[str, Any],
-                                     samples: List[Dict[str, Any]],
-                                     capture_efficiency_fn: Optional[Any] = None) -> Dict[str, Any]:
+                                   target_twiss: Dict[str, Any],
+                                   samples: List[Dict[str, Any]],
+                                   capture_efficiency_fn: Optional[Any] = None,
+                                   n_workers: Optional[int] = 1) -> Dict[str, Any]:
     """
     Evaluate Monte Carlo statistics (p50, p68, p95, p99, failure probability, bootstrap CI)
-    across a set of error realization samples.
+    across a set of error realization samples using sequential or parallel execution.
     """
     n_samples = len(samples)
+    if n_samples == 0:
+        return {}
+
+    task_args = [(nominal_config, s, target_twiss, capture_efficiency_fn) for s in samples]
+    results = parallel_map(_eval_single_robustness_sample, task_args, n_workers=n_workers, desc="evaluate_robustness_statistics")
+
     mx_list = []
     my_list = []
     bx_max_list = []
@@ -94,69 +208,17 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
     stored_kick_list = []
     eff_list = []
 
-    # Initialize kicker evaluator for fieldmap / analytical NKM kick
-    try:
-        from .storage_ring_injection import get_kicker_evaluator, StorageRingInjectionConfig
-        inj_cfg = StorageRingInjectionConfig(energy_eV=nominal_config.energy_eV)
-        nkm_kick_fn, _ = get_kicker_evaluator("fieldmap", config=inj_cfg)
-    except Exception:
-        def nkm_kick_fn(x, y):
-            return (-0.005749 * (x / -0.016), np.zeros_like(x))
-
-    for s in samples:
-        try:
-            lattice, init_twiss = apply_sample_errors(nominal_config, s)
-            prop = compute_twiss_propagation(lattice, init_twiss)
-            beta_end = prop["final_beta"]
-            alpha_end = prop["final_alpha"]
-
-            mx = compute_mismatch_metric(beta_end[0], alpha_end[0], target_twiss["beta"][0], target_twiss["alpha"][0])
-            my = compute_mismatch_metric(beta_end[1], alpha_end[1], target_twiss["beta"][1], target_twiss["alpha"][1])
-
-            mx_list.append(mx)
-            my_list.append(my)
-            bx_max_list.append(prop["max_beta_x"])
-            by_max_list.append(prop["max_beta_y"])
-            
-            x_co = float(s.get("ring_co_x_m", 0.0))
-            dx_nkm = float(s.get("nkm_dx_m", 0.0))
-            scale_err = float(s.get("nkm_scale_err", 0.0))
-            net_x = x_co - dx_nkm
-            try:
-                kx, _ = nkm_kick_fn(np.array([net_x]), np.array([0.0]))
-                stored_kick_mrad = float(abs(kx[0])) * (1.0 + scale_err) * 1e3
-            except Exception:
-                stored_kick_mrad = float(abs(net_x * 0.359) * (1.0 + scale_err) * 1e3)
-            stored_kick_list.append(stored_kick_mrad)
-            
-            eff = 1.0
-            if capture_efficiency_fn is not None:
-                eff = capture_efficiency_fn(init_twiss.get("nkm_errors", {}), init_twiss.get("ring_errors", {}), init_twiss.get("centroid_offset", [0]*6))
-            eff_list.append(eff)
-            
-            failed = False
-            if prop["max_beta_x"] > 60.0 or prop["max_beta_y"] > 60.0:
-                failure_modes["beta_exceeded"] += 1
-                failed = True
-            elif mx > 0.5 or my > 0.5:
-                failure_modes["mismatch_exceeded"] += 1
-                failed = True
-            elif eff < 0.8 and capture_efficiency_fn is not None: # assume < 0.8 is failure if fn provided
-                failure_modes["capture_failed"] += 1
-                failed = True
-            
-            if failed:
-                failures += 1
-
-        except Exception:
-            mx_list.append(1e3)
-            my_list.append(1e3)
-            bx_max_list.append(1e3)
-            by_max_list.append(1e3)
-            stored_kick_list.append(1e3)
-            eff_list.append(0.0)
+    for res in results:
+        mx_list.append(res["mx"])
+        my_list.append(res["my"])
+        bx_max_list.append(res["bx_max"])
+        by_max_list.append(res["by_max"])
+        stored_kick_list.append(res["stored_kick_mrad"])
+        eff_list.append(res["eff"])
+        if res["failed"]:
             failures += 1
-            failure_modes["mismatch_exceeded"] += 1
+            if res["failure_mode"] in failure_modes:
+                failure_modes[res["failure_mode"]] += 1
 
     mx_arr = np.array(mx_list)
     my_arr = np.array(my_list)
@@ -236,10 +298,11 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
 def compute_one_at_a_time_sensitivity(nominal_config: BTSConfig,
                                        target_twiss: Dict[str, Any],
                                        n_samples: int = 50,
-                                       seed: int = 42) -> Dict[str, float]:
+                                       seed: int = 42,
+                                       n_workers: Optional[int] = 1) -> Dict[str, float]:
     """
     Perform One-At-A-Time (OAT) sensitivity scans across individual error categories
-    to rank dominant error contributors.
+    to rank dominant error contributors using sequential or parallel execution.
     """
     base_samples = sample_error_ensemble(n_samples=n_samples, seed=seed)
 
@@ -264,35 +327,12 @@ def compute_one_at_a_time_sensitivity(nominal_config: BTSConfig,
         ("septum_x_m", "Septum Position Error (100 um)"),
     ]
 
-    rankings = {}
-    for err_key, label in error_types:
-        delta_merits = []
-        for s in base_samples:
-            iso_sample = {
-                "sample_id": s["sample_id"],
-                "quad_k_err": s["quad_k_err"] if err_key == "quad_k_err" else [0.0]*9,
-                "quad_dx_m": s["quad_dx_m"] if err_key == "quad_dx_m" else [0.0]*9,
-                "quad_dy_m": [0.0]*9,
-                "quad_roll_rad": s["quad_roll_rad"] if err_key == "quad_roll_rad" else [0.0]*9,
-                "quad_ds_m": [0.0]*9,
-                "booster_x_m": s["booster_x_m"] if err_key == "booster_x_m" else 0.0,
-                "booster_xp_rad": s["booster_xp_rad"] if err_key == "booster_xp_rad" else 0.0,
-                "energy_dp_p": s["energy_dp_p"] if err_key == "energy_dp_p" else 0.0,
-                "beta_mismatch_x": s["beta_mismatch_x"] if err_key == "beta_mismatch" else 0.0,
-                "beta_mismatch_y": s["beta_mismatch_y"] if err_key == "beta_mismatch" else 0.0,
-                "nkm_scale_err": s["nkm_scale_err"] if err_key == "nkm_scale_err" else 0.0,
-                "nkm_dx_m": s["nkm_dx_m"] if err_key == "nkm_dx_m" else 0.0,
-                "nkm_timing_mrad": s.get("nkm_timing_mrad", 0.0) if err_key == "nkm_timing_mrad" else 0.0,
-                "ring_co_x_m": s["ring_co_x_m"] if err_key == "ring_co_x_m" else 0.0,
-                "septum_x_m": s["septum_x_m"] if err_key == "septum_x_m" else 0.0,
-            }
-            lattice, init_twiss = apply_sample_errors(nominal_config, iso_sample)
-            prop = compute_twiss_propagation(lattice, init_twiss)
-            mx = compute_mismatch_metric(prop["final_beta"][0], prop["final_alpha"][0], target_twiss["beta"][0], target_twiss["alpha"][0])
-            my = compute_mismatch_metric(prop["final_beta"][1], prop["final_alpha"][1], target_twiss["beta"][1], target_twiss["alpha"][1])
-            delta_merits.append(abs((mx + my) - ref_merit))
-
-        rankings[label] = float(np.mean(delta_merits))
+    task_args = [
+        (nominal_config, target_twiss, err_key, label, base_samples, ref_merit)
+        for err_key, label in error_types
+    ]
+    results = parallel_map(_eval_oat_single_category, task_args, n_workers=n_workers, desc="compute_one_at_a_time_sensitivity")
+    rankings = dict(results)
 
     return dict(sorted(rankings.items(), key=lambda item: item[1], reverse=True))
 

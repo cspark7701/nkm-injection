@@ -8,6 +8,7 @@ ranks dominant error contributors via OAT sensitivity scans, and outputs JSON me
 results/publication_tolerances/run_<timestamp>/.
 """
 
+import argparse
 import sys
 import json
 import datetime
@@ -26,9 +27,23 @@ from src.nkm_injection.robust_optimization import (
 )
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Publication Error Model & Tolerance Budget Simulation")
+    parser.add_argument("-w", "--workers", type=int, default=None,
+                        help="Number of parallel CPU worker cores.")
+    parser.add_argument("--samples", type=int, default=100,
+                        help="Number of Monte Carlo error samples.")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Random seed for reproducibility.")
+    parser.add_argument("--output-dir", type=Path, default=None,
+                        help="Override output directory path.")
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = repo_root / "results" / "publication_tolerances" / f"run_{timestamp}"
+    output_dir = args.output_dir or (repo_root / "results" / "publication_tolerances" / f"run_{timestamp}")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== NKM Publication Error Model & Tolerance Budget ===")
@@ -55,12 +70,12 @@ def main():
 
     target_twiss = {"beta": [2.336495, 4.256241], "alpha": [-0.016335, 0.017772]}
 
-    # 1. Fast Monte Carlo Ensemble (N=100 for verification)
-    n_samples = 100
-    print(f"\nSampling Monte Carlo ensemble (N={n_samples})...\n")
-    samples = sample_error_ensemble(config, n_samples=n_samples, seed=42)
+    # 1. Fast Monte Carlo Ensemble
+    n_samples = args.samples
+    print(f"\nSampling Monte Carlo ensemble (N={n_samples}, workers={args.workers})...\n")
+    samples = sample_error_ensemble(config, n_samples=n_samples, seed=args.seed)
 
-    stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples)
+    stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, n_workers=args.workers)
 
     print("\n--- Monte Carlo Robustness Percentiles ---\n")
     print(f"Failure Probability: {stats['failure_probability']*100:.1f}%")
@@ -77,7 +92,7 @@ def main():
 
     # 2. One-At-A-Time Sensitivity Ranking
     print("\n--- One-At-A-Time (OAT) Sensitivity Ranking ---\n")
-    rankings = compute_one_at_a_time_sensitivity(nominal_bts, target_twiss, n_samples=30, seed=42)
+    rankings = compute_one_at_a_time_sensitivity(nominal_bts, target_twiss, n_samples=30, seed=args.seed, n_workers=args.workers)
     for rank, (label, val) in enumerate(rankings.items(), start=1):
         print(f"{rank}. {label:35s}: Delta Merit = {val:.6f}")
 

@@ -234,6 +234,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 75. [**Milestone 75 — Task 11: Unify Configuration Serialization and Validation Framework**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/75_refactor_unify_configuration_serialization_and_validation.md)
     - Implemented `SerializableConfigMixin` in `src/nkm_injection/results_schema.py` providing unified `.to_dict()`, `.to_json()`, `.save()`, `.from_dict()`, `.from_json()`, `.load()`, and physical domain validation hooks. Adopted the mixin across `PublicationManifest`, `BTSConfig`, `StorageRingInjectionConfig`, `BTSMOGAConfig`, `ErrorBudgetConfig`, `OpticsTargetConfig`, `BTSOptimizationConfig`, `BTSConstraintConfig`, and `QuadrupoleHardwareBounds`. Added comprehensive round-trip and validation unit tests. Verified 100% pass rate across all 181 tests.
 
+76. [**Milestone 76 — Task 12: Standardize Parallel Execution and Worker Dispatch Utility**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/76_refactor_standardize_parallel_execution_and_worker_dispatch.md)
+    - Created dedicated concurrency module `src/nkm_injection/concurrency.py` providing `parallel_map` with OpenMP-safe multiprocessing (`forkserver`/`spawn`), deterministic independent worker seed generation (`generate_worker_seeds`), CPU worker count resolution (`resolve_workers`), and graceful sequential fallback. Integrated parallel worker dispatch across `robust_optimization.py`, `errors.py`, `convergence_study.py`, and `paper.py`. Aligned CLI argument `-w, --workers` across analysis and reproduction scripts (`run_tolerance_study.py`, `run_publication_tolerances.py`, `run_multiturn_injection.py`, `reproduce_paper.py`, `run_bts_moga.py`). Added concurrency unit tests in `tests/test_optimization.py`. Verified 100% pass rate across all 187 tests.
+
+
 
 
 

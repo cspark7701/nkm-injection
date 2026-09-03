@@ -352,6 +352,74 @@ def compute_injection_acceptance(
 # Full Multi-Seed Ensemble Runner
 # ---------------------------------------------------------------------------
 
+from .concurrency import parallel_map, resolve_workers
+
+
+def _run_single_seed_ensemble(args: Tuple[int, int, InjectionStudyTierConfig, str, Any, Optional[NKMKickMap2D], StorageRingInjectionConfig, int]) -> Dict[str, Any]:
+    """Top-level pickleable worker function for single-seed ensemble tracking."""
+    i, seed, tier, kicker_model, ring, kickmap_obj, config, stored_beam_n_particles = args
+    beam = generate_6d_beam(
+        n_particles=tier.n_particles,
+        beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
+        beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
+        espread=config.inj_espread, blength=config.inj_blength_m,
+        x_offset=config.septum_x_offset_m,
+        seed=seed
+    )
+    stored_beam = generate_6d_beam(
+        n_particles=stored_beam_n_particles,
+        beta_x=config.stored_beta_x_m, alpha_x=config.stored_alpha_x, emit_x=config.stored_emit_x_m,
+        beta_y=config.stored_beta_y_m, alpha_y=config.stored_alpha_y, emit_y=config.stored_emit_y_m,
+        espread=config.stored_espread, blength=config.stored_blength_m,
+        x_offset=0.0,
+        seed=seed
+    )
+
+    inj_res = track_multiturn_injection(
+        beam, ring, n_turns=tier.n_turns,
+        kicker_model=kicker_model,
+        kickmap_obj=kickmap_obj,
+        config=config
+    )
+    stored_res = track_multiturn_injection(
+        stored_beam, ring, n_turns=tier.n_turns,
+        kicker_model=kicker_model,
+        kickmap_obj=kickmap_obj,
+        config=config
+    )
+
+    perturbation = compute_stored_beam_perturbation(stored_res)
+    fld = compute_first_loss_turn_distribution(inj_res, tier.n_turns)
+
+    final_centroid = inj_res.centroid
+    if final_centroid is not None:
+        sep_clearance_mm = abs(final_centroid["x_mm"] - config.septum_x_offset_m * 1e3)
+    else:
+        sep_clearance_mm = float("nan")
+
+    per_seed_item = {
+        "seed": seed,
+        "n_particles": tier.n_particles,
+        "n_turns": tier.n_turns,
+        "survived": inj_res.survived_particles,
+        "capture_efficiency": inj_res.survival_fraction,
+        "centroid_x_mm": final_centroid["x_mm"] if final_centroid else float("nan"),
+        "emittance_x_mrad": inj_res.emittance_x_mrad,
+        "emittance_y_mrad": inj_res.emittance_y_mrad,
+        "septum_clearance_mm": sep_clearance_mm,
+        "n_losses": len(inj_res.loss_log),
+        "stored_perturbation": perturbation
+    }
+
+    return {
+        "index": i,
+        "survived": inj_res.survived_particles,
+        "perturbation": perturbation,
+        "fld": fld,
+        "per_seed_item": per_seed_item
+    }
+
+
 def run_ensemble_study(
     tier: InjectionStudyTierConfig,
     ring,
@@ -359,9 +427,10 @@ def run_ensemble_study(
     kickmap_obj: Optional[NKMKickMap2D],
     config: Optional[StorageRingInjectionConfig] = None,
     stored_beam_n_particles: int = 1000,
+    n_workers: Optional[int] = 1,
 ) -> Dict[str, Any]:
     """
-    Run multi-seed ensemble injection study for one (kicker_model, tier) combination.
+    Run multi-seed ensemble injection study for one (kicker_model, tier) combination using sequential or parallel execution.
 
     Returns
     -------
@@ -375,78 +444,32 @@ def run_ensemble_study(
     if config is None:
         config = StorageRingInjectionConfig()
 
+    task_args = [
+        (i, seed, tier, kicker_model, ring, kickmap_obj, config, stored_beam_n_particles)
+        for i, seed in enumerate(tier.seeds)
+    ]
+    results = parallel_map(_run_single_seed_ensemble, task_args, n_workers=n_workers, desc="run_ensemble_study")
+
     survived_counts: List[int] = []
     per_seed: List[Dict[str, Any]] = []
     all_stored_perturbations: List[Dict[str, float]] = []
     first_loss_dist: Optional[Dict[str, Any]] = None
 
-    for i, seed in enumerate(tier.seeds):
-        beam = generate_6d_beam(
-            n_particles=tier.n_particles,
-            beta_x=config.inj_beta_x_m, alpha_x=config.inj_alpha_x, emit_x=config.inj_emit_x_m,
-            beta_y=config.inj_beta_y_m, alpha_y=config.inj_alpha_y, emit_y=config.inj_emit_y_m,
-            espread=config.inj_espread, blength=config.inj_blength_m,
-            x_offset=config.septum_x_offset_m,
-            seed=seed
-        )
-        stored_beam = generate_6d_beam(
-            n_particles=stored_beam_n_particles,
-            beta_x=config.stored_beta_x_m, alpha_x=config.stored_alpha_x, emit_x=config.stored_emit_x_m,
-            beta_y=config.stored_beta_y_m, alpha_y=config.stored_alpha_y, emit_y=config.stored_emit_y_m,
-            espread=config.stored_espread, blength=config.stored_blength_m,
-            x_offset=0.0,
-            seed=seed
-        )
-
-        inj_res = track_multiturn_injection(
-            beam, ring, n_turns=tier.n_turns,
-            kicker_model=kicker_model,
-            kickmap_obj=kickmap_obj,
-            config=config
-        )
-        stored_res = track_multiturn_injection(
-            stored_beam, ring, n_turns=tier.n_turns,
-            kicker_model=kicker_model,
-            kickmap_obj=kickmap_obj,
-            config=config
-        )
-
-        survived_counts.append(inj_res.survived_particles)
-        perturbation = compute_stored_beam_perturbation(stored_res)
-        all_stored_perturbations.append(perturbation)
-
-        fld = compute_first_loss_turn_distribution(inj_res, tier.n_turns)
-        if i == 0:
-            first_loss_dist = fld
-
-        # Septum clearance: |final_centroid_x - septum_x|
-        final_centroid = inj_res.centroid
-        if final_centroid is not None:
-            sep_clearance_mm = abs(final_centroid["x_mm"] - config.septum_x_offset_m * 1e3)
-        else:
-            sep_clearance_mm = float("nan")
-
-        per_seed.append({
-            "seed": seed,
-            "n_particles": tier.n_particles,
-            "n_turns": tier.n_turns,
-            "survived": inj_res.survived_particles,
-            "capture_efficiency": inj_res.survival_fraction,
-            "centroid_x_mm": final_centroid["x_mm"] if final_centroid else float("nan"),
-            "emittance_x_mrad": inj_res.emittance_x_mrad,
-            "emittance_y_mrad": inj_res.emittance_y_mrad,
-            "septum_clearance_mm": sep_clearance_mm,
-            "n_losses": len(inj_res.loss_log),
-            "stored_perturbation": perturbation
-        })
+    for res in results:
+        survived_counts.append(res["survived"])
+        all_stored_perturbations.append(res["perturbation"])
+        per_seed.append(res["per_seed_item"])
+        if res["index"] == 0:
+            first_loss_dist = res["fld"]
 
     ci = bootstrap_capture_ci(survived_counts, tier.n_particles)
 
     # Mean stored perturbation across seeds
     mean_perturbation: Dict[str, float] = {}
-    for k in all_stored_perturbations[0]:
-        vals = [p[k] for p in all_stored_perturbations if not np.isnan(p[k])]
-        mean_perturbation[k] = float(np.mean(vals)) if vals else float("nan")
+    if all_stored_perturbations:
+        for k in all_stored_perturbations[0]:
+            vals = [p[k] for p in all_stored_perturbations if not np.isnan(p[k])]
+            mean_perturbation[k] = float(np.mean(vals)) if vals else float("nan")
 
     return {
         "label": tier.label,

@@ -173,15 +173,19 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
 def evaluate_monte_carlo_robustness(nominal_config: BTSConfig,
                                      target_twiss: Dict[str, Any],
                                      n_samples: int = 100,
-                                     seed: int = 42) -> Dict[str, Any]:
+                                     seed: int = 42,
+                                     n_workers: Optional[int] = 1) -> Dict[str, Any]:
     """Legacy alias delegating to robust_optimization module."""
     from .robust_optimization import evaluate_robustness_statistics
     samples = sample_error_ensemble(n_samples=n_samples, seed=seed)
-    return evaluate_robustness_statistics(nominal_config, target_twiss, samples)
+    return evaluate_robustness_statistics(nominal_config, target_twiss, samples, n_workers=n_workers)
 
 
 def compute_error_sensitivity_ranking(nominal_config: BTSConfig,
-                                       target_twiss: Dict[str, Any]) -> Dict[str, float]:
+                                       target_twiss: Dict[str, Any],
+                                       n_samples: int = 50,
+                                       seed: int = 42,
+                                       n_workers: Optional[int] = 1) -> Dict[str, float]:
     """Legacy alias delegating to robust_optimization module."""
     from .robust_optimization import compute_one_at_a_time_sensitivity
-    return compute_one_at_a_time_sensitivity(nominal_config, target_twiss)
+    return compute_one_at_a_time_sensitivity(nominal_config, target_twiss, n_samples=n_samples, seed=seed, n_workers=n_workers)

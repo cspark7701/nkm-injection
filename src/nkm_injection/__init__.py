@@ -2,6 +2,7 @@
 
 __version__ = "0.2.0"
 
+from .concurrency import parallel_map, resolve_workers, generate_worker_seeds
 from .results_schema import (
     SerializableConfigMixin,
     PublicationManifest,

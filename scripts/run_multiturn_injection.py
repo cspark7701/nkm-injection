@@ -207,7 +207,8 @@ def main():
             kicker_model=model,
             kickmap_obj=model_kmap,
             config=config,
-            stored_beam_n_particles=min(tier.n_particles, 1000)
+            stored_beam_n_particles=min(tier.n_particles, 1000),
+            n_workers=args.workers
         )
         all_model_results[model] = res
         ci = res["capture_efficiency_ci"]

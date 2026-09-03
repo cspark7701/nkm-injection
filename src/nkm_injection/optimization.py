@@ -29,6 +29,7 @@ from .optics import compute_twiss_propagation, compute_mismatch_metric
 from .constraints import BTSHardwareConstraints, BTSConstraintConfig
 from .objectives import BTSNormalizedObjectives, OpticsTargetConfig
 from .results_schema import SerializableConfigMixin
+from .concurrency import parallel_map, resolve_workers, generate_worker_seeds
 
 
 # ---------------------------------------------------------------------------

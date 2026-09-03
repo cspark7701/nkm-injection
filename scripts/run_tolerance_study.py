@@ -7,6 +7,7 @@ ranks dominant error sources via sensitivity scans, and exports figures and metr
 to results/tolerances/.
 """
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -30,8 +31,20 @@ RANKING_PLOT_PATH = OUTPUT_DIR / "tolerance_sensitivity_ranking.png"
 METRICS_JSON = OUTPUT_DIR / "robustness_metrics.json"
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="BTS & NKM Tolerance & Robustness Study")
+    parser.add_argument("-w", "--workers", type=int, default=None,
+                        help="Number of parallel CPU worker cores.")
+    parser.add_argument("--samples", type=int, default=200,
+                        help="Number of Monte Carlo error samples.")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Random seed for reproducibility.")
+    return parser.parse_args()
+
+
 def run_tolerance_study():
     """Run Milestone 6 robustness and error budget analysis."""
+    args = parse_args()
     print("=== Starting BTS & NKM Robustness & Tolerance Study ===", flush=True)
     
     # SLSQP-optimized quadrupole configuration from Milestone 4
@@ -53,13 +66,13 @@ def run_tolerance_study():
         'dispersion': [0.080868, 0.047472, 0.0, 0.0]
     }
     
-    # 1. Run 200 Monte Carlo seed simulations (convergence study)
-    print("Running 200 Monte Carlo seed evaluations...", flush=True)
-    mc_results = evaluate_monte_carlo_robustness(opt_config, target_twiss, n_samples=200, seed=42)
+    # 1. Run Monte Carlo seed simulations (convergence study)
+    print(f"Running {args.samples} Monte Carlo seed evaluations (workers={args.workers})...", flush=True)
+    mc_results = evaluate_monte_carlo_robustness(opt_config, target_twiss, n_samples=args.samples, seed=args.seed, n_workers=args.workers)
     
     # 2. Run error sensitivity ranking
-    print("Computing error sensitivity rankings...", flush=True)
-    rankings = compute_error_sensitivity_ranking(opt_config, target_twiss)
+    print(f"Computing error sensitivity rankings (workers={args.workers})...", flush=True)
+    rankings = compute_error_sensitivity_ranking(opt_config, target_twiss, n_workers=args.workers)
     
     # 3. Create Plots
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

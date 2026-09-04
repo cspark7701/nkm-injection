@@ -4,7 +4,7 @@
 # NKM & BTS Transfer Line Physics Simulation Framework (4GSR)
 #
 # Usage:
-#   ./cleanup.sh [OPTIONS]
+#   ./scripts/cleanup.sh [OPTIONS]
 #
 # Options:
 #   -a, --all         Clean all simulation outputs including results/ runs,
@@ -18,7 +18,7 @@
 
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${REPO_ROOT}"
 
 DRY_RUN=false
@@ -65,7 +65,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -h|--help)
             cat << 'HLP'
-Usage: ./cleanup.sh [OPTIONS]
+Usage: ./scripts/cleanup.sh [OPTIONS]
 
 Clean simulation outputs, caches, and temporary artifacts while strictly
 preserving protected scientific source data (By.txt, kickmap_file.txt,
@@ -86,7 +86,7 @@ HLP
             ;;
         *)
             echo "Unknown option: $1" >&2
-            echo "Run './cleanup.sh --help' for usage details." >&2
+            echo "Run './scripts/cleanup.sh --help' for usage details." >&2
             exit 1
             ;;
     esac

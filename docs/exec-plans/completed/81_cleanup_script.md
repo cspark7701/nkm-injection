@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-Created [`cleanup.sh`](file:///home/cspark/Work/projects/nkm-injection/cleanup.sh) in the repository root to provide a safe, convenient, and deterministic cleanup utility for generated simulation outputs, caches, and temporary build artifacts across the repository.
+Created [`scripts/cleanup.sh`](file:///home/cspark/Work/projects/nkm-injection/scripts/cleanup.sh) in `scripts/` to provide a safe, convenient, and deterministic cleanup utility for generated simulation outputs, caches, and temporary build artifacts across the repository.
 
 The script strictly enforces repository safeguards specified in `AGENTS.md`:
 1. **Never deletes immutable protected scientific source data files** (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`, `nkm_field.xlsx`, `nkm_field_expanded.xlsx`, `nlk.py`, `NKM_radia.ipynb`, `NKM_radia_y=0.ipynb`, `storage_ring.ipynb`).
@@ -21,7 +21,7 @@ The script strictly enforces repository safeguards specified in `AGENTS.md`:
 ## CLI Options & Usage
 
 ```bash
-./cleanup.sh [OPTIONS]
+./scripts/cleanup.sh [OPTIONS]
 ```
 
 | Flag | Long Option | Description |
@@ -37,8 +37,8 @@ The script strictly enforces repository safeguards specified in `AGENTS.md`:
 
 ## Verification & Safeguards
 
-- Verified `./cleanup.sh --help` displays usage instructions.
-- Verified `./cleanup.sh --dry-run` correctly identifies simulation output directories under `results/` and generated root files (`storage_ring_lattice_nkm.mat`), while strictly excluding `results/baseline/`.
-- Verified `./cleanup.sh --cache --dry-run` targets `__pycache__` and `.pytest_cache/`.
-- Verified `./cleanup.sh --all --dry-run` combines simulation outputs, caches, and LaTeX auxiliary files.
+- Verified `./scripts/cleanup.sh --help` displays usage instructions.
+- Verified `./scripts/cleanup.sh --dry-run` correctly identifies simulation output directories under `results/` and generated root files (`storage_ring_lattice_nkm.mat`), while strictly excluding `results/baseline/`.
+- Verified `./scripts/cleanup.sh --cache --dry-run` targets `__pycache__` and `.pytest_cache/`.
+- Verified `./scripts/cleanup.sh --all --dry-run` combines simulation outputs, caches, and LaTeX auxiliary files.
 - Verified cryptographic integrity of all protected scientific data files via `scripts/inventory_protected_hashes.py` (`Verification SUCCESS: All protected file hashes match!`).

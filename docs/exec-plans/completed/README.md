@@ -250,7 +250,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Refactored manual LaTeX string formatting into modular `LaTeXTableBuilder` and `LaTeXMacroBuilder` in `src/nkm_injection/paper.py`. Added `escape_latex`, `format_scientific`, and `format_uncertainty` utilities for robust character escaping and uniform number representation. Refactored `generate_paper_tables` to emit synchronized `.tex` and `.md` tables and macros (`paper_macros.tex`). Added unit tests in `tests/test_paper_pipeline.py`. Verified 100% pass rate across all 199 tests in the test suite.
 
 81. [**Milestone 81 — Task: Create cleanup.sh Script to Clean Output Folders**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/81_cleanup_script.md)
-    - Created `cleanup.sh` in the repository root to safely remove generated simulation outputs, caches, and build artifacts. Implemented strict protection guards for baseline references (`results/baseline/`) and immutable scientific source data (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`, etc.), along with dry-run (`-d`) and non-interactive (`-y`) execution modes.
+    - Created `scripts/cleanup.sh` to safely remove generated simulation outputs, caches, and build artifacts. Implemented strict protection guards for baseline references (`results/baseline/`) and immutable scientific source data (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`, etc.), along with dry-run (`-d`) and non-interactive (`-y`) execution modes.
 
 
 

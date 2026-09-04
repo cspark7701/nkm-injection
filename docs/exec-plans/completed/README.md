@@ -256,7 +256,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Created `scripts/check_github_actions.sh` to locally validate all GitHub Actions CI workflows (`ci.yml`, `paper-regression.yml`, `release-zenodo.yml`) before pushing to remote. Implemented workflow YAML linting, protected file hash verification, paper reproduction validation, test suite regression checks, and post-run file immutability guards.
 
 83. [**Milestone 83 — Task: Create Antigravity Session Resume Script**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/83_resume_session_script.md)
-    - Created `scripts/resume_session.sh` to seamlessly resume an Antigravity (`agy`) CLI session for this repository upon quitting. Supports automatic repo-scoped conversation discovery, pinned conversation resumption (`7dcb6418-14dc-4479-9d1c-ded46901bfcf`), historical session listing (`--list`), and custom conversation IDs.
+    - Created `scripts/resume_agy_session.sh` to seamlessly resume an Antigravity (`agy`) CLI session for this repository upon quitting. Supports automatic repo-scoped conversation discovery, pinned conversation resumption (`7dcb6418-14dc-4479-9d1c-ded46901bfcf`), historical session listing (`--list`), and custom conversation IDs.
 
 
 

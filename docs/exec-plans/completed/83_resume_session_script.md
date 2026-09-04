@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-Created [`scripts/resume_session.sh`](file:///home/cspark/Work/projects/nkm-injection/scripts/resume_session.sh) to allow resuming an Antigravity (`agy`) CLI pair-programming session for this repository seamlessly after quitting (`/exit`, `/quit`, or `Ctrl+D Ctrl+D`).
+Created [`scripts/resume_agy_session.sh`](file:///home/cspark/Work/projects/nkm-injection/scripts/resume_agy_session.sh) to allow resuming an Antigravity (`agy`) CLI pair-programming session for this repository seamlessly after quitting (`/exit`, `/quit`, or `Ctrl+D Ctrl+D`).
 
 Key capabilities:
 1. **Automatic Repository-Scoped Discovery**: Inspects transcripts under `~/.gemini/antigravity-cli/brain/` to automatically locate the latest conversation tied to the `nkm-injection` repository.
@@ -21,7 +21,7 @@ Key capabilities:
 ## CLI Options & Usage
 
 ```bash
-./scripts/resume_session.sh [OPTIONS]
+./scripts/resume_agy_session.sh [OPTIONS]
 ```
 
 | Flag | Long Option | Description |
@@ -37,6 +37,6 @@ Key capabilities:
 
 ## Verification
 
-- Verified `./scripts/resume_session.sh --help` displays all options and documentation.
-- Verified `./scripts/resume_session.sh --list` accurately identifies the active repository conversation (`7dcb6418-14dc-4479-9d1c-ded46901bfcf`) and prior sessions.
+- Verified `./scripts/resume_agy_session.sh --help` displays all options and documentation.
+- Verified `./scripts/resume_agy_session.sh --list` accurately identifies the active repository conversation (`7dcb6418-14dc-4479-9d1c-ded46901bfcf`) and prior sessions.
 - Verified protected scientific data files and baseline manifests remain unmodified.

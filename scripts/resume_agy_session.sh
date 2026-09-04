@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# resume_session.sh — Resume / Continue Antigravity (agy) Session for NKM Repo
+# resume_agy_session.sh — Resume / Continue Antigravity (agy) Session for NKM Repo
 # NKM & BTS Transfer Line Physics Simulation Framework (4GSR)
 #
 # Usage:
-#   ./scripts/resume_session.sh [OPTIONS]
+#   ./scripts/resume_agy_session.sh [OPTIONS]
 #
 # Options:
 #   -c, --current     Resume the specific session active during script creation:
@@ -47,7 +47,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -h|--help)
             cat << 'HLP'
-Usage: ./scripts/resume_session.sh [OPTIONS]
+Usage: ./scripts/resume_agy_session.sh [OPTIONS]
 
 Resumes an Antigravity (agy) CLI session for the nkm-injection repository.
 Ensures you return directly to this workspace and conversation state after
@@ -70,7 +70,7 @@ HLP
             ;;
         *)
             echo "Unknown option: $1" >&2
-            echo "Run './scripts/resume_session.sh --help' for usage details." >&2
+            echo "Run './scripts/resume_agy_session.sh --help' for usage details." >&2
             exit 1
             ;;
     esac

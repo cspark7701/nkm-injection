@@ -252,6 +252,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 81. [**Milestone 81 — Task: Create cleanup.sh Script to Clean Output Folders**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/81_cleanup_script.md)
     - Created `scripts/cleanup.sh` to safely remove generated simulation outputs, caches, and build artifacts. Implemented strict protection guards for baseline references (`results/baseline/`) and immutable scientific source data (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`, etc.), along with dry-run (`-d`) and non-interactive (`-y`) execution modes.
 
+82. [**Milestone 82 — Task: Create Pre-Push GitHub Actions Validation Script**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/82_check_github_actions_script.md)
+    - Created `scripts/check_github_actions.sh` to locally validate all GitHub Actions CI workflows (`ci.yml`, `paper-regression.yml`, `release-zenodo.yml`) before pushing to remote. Implemented workflow YAML linting, protected file hash verification, paper reproduction validation, test suite regression checks, and post-run file immutability guards.
+
 
 
 

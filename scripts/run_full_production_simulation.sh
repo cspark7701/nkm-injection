@@ -11,6 +11,8 @@
 #   -v, --verbose      Enable verbose output to screen (default).
 #   -w, --workers W    Number of parallel CPU worker cores (default: 90% of cores).
 #   -o, --output-dir   Base directory for production outputs.
+#   --color            Force colorized terminal output.
+#   --no-color         Disable colorized output.
 #   -h, --help         Show this help message.
 # ==============================================================================
 
@@ -24,6 +26,53 @@ N_WORKERS=${DEFAULT_CORES}
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 OUTPUT_DIR="${REPO_ROOT}/results/production_run_${TIMESTAMP}"
+
+# ANSI Terminal Color Configuration
+USE_COLOR=false
+if [[ (-t 1 && "${TERM:-}" != "dumb" && -z "${NO_COLOR:-}") || "${FORCE_COLOR:-0}" == "1" ]]; then
+    USE_COLOR=true
+fi
+
+init_colors() {
+    if [ "${USE_COLOR}" = true ]; then
+        C_RESET=$'\033[0m'
+        C_BOLD=$'\033[1m'
+        C_DIM=$'\033[2m'
+        C_RED=$'\033[31m'
+        C_GREEN=$'\033[32m'
+        C_YELLOW=$'\033[33m'
+        C_BLUE=$'\033[34m'
+        C_MAGENTA=$'\033[35m'
+        C_CYAN=$'\033[36m'
+        C_WHITE=$'\033[37m'
+        C_BOLD_RED=$'\033[1;31m'
+        C_BOLD_GREEN=$'\033[1;32m'
+        C_BOLD_YELLOW=$'\033[1;33m'
+        C_BOLD_BLUE=$'\033[1;34m'
+        C_BOLD_MAGENTA=$'\033[1;35m'
+        C_BOLD_CYAN=$'\033[1;36m'
+        C_BOLD_WHITE=$'\033[1;37m'
+    else
+        C_RESET=''
+        C_BOLD=''
+        C_DIM=''
+        C_RED=''
+        C_GREEN=''
+        C_YELLOW=''
+        C_BLUE=''
+        C_MAGENTA=''
+        C_CYAN=''
+        C_WHITE=''
+        C_BOLD_RED=''
+        C_BOLD_GREEN=''
+        C_BOLD_YELLOW=''
+        C_BOLD_BLUE=''
+        C_BOLD_MAGENTA=''
+        C_BOLD_CYAN=''
+        C_BOLD_WHITE=''
+    fi
+}
+init_colors
 
 # Parse command line flags
 while [[ $# -gt 0 ]]; do
@@ -48,6 +97,16 @@ while [[ $# -gt 0 ]]; do
             OUTPUT_DIR="$2"
             shift 2
             ;;
+        --color)
+            USE_COLOR=true
+            init_colors
+            shift
+            ;;
+        --no-color)
+            USE_COLOR=false
+            init_colors
+            shift
+            ;;
         -h|--help)
             echo "Usage: ./scripts/run_full_production_simulation.sh [OPTIONS]"
             echo "Options:"
@@ -56,6 +115,8 @@ while [[ $# -gt 0 ]]; do
             echo "  -v, --verbose      Enable verbose output to screen (default)."
             echo "  -w, --workers W    Number of parallel CPU worker cores (default: 90% cores = ${DEFAULT_CORES})."
             echo "  -o, --output-dir D Set custom output directory."
+            echo "  --color            Force colorized terminal output."
+            echo "  --no-color         Disable colorized terminal output."
             echo "  -h, --help         Show this help message."
             exit 0
             ;;
@@ -86,43 +147,59 @@ run_step() {
 
     if [ "${DRY_RUN}" = true ]; then
         echo ""
-        echo "======================================================================"
-        echo " [DRY-RUN] ${step_name}"
-        echo " Command  : ${cmd[*]}"
+        echo "${C_BOLD_YELLOW}======================================================================${C_RESET}"
+        echo "${C_BOLD_YELLOW} [DRY-RUN] ${C_BOLD_WHITE}▶▶ ${step_name}${C_RESET}"
+        echo "${C_YELLOW} Command  : ${cmd[*]}${C_RESET}"
         local script_path="${cmd[1]}"
         if [ -f "${script_path}" ]; then
             python3 -m py_compile "${script_path}"
-            echo " Status   : Script '${script_path}' verified (syntax OK)"
+            echo "${C_GREEN} Status   : Script '${script_path}' verified (syntax OK)${C_RESET}"
         else
-            echo " Status   : Executable command verified"
+            echo "${C_GREEN} Status   : Executable command verified${C_RESET}"
         fi
-        echo "======================================================================"
+        echo "${C_BOLD_YELLOW}======================================================================${C_RESET}"
         echo ""
     elif [ "${VERBOSE}" = true ]; then
         echo ""
-        echo "======================================================================"
-        echo " [EXEC] ${step_name}"
-        echo " Command: ${cmd[*]}"
-        echo "======================================================================"
+        echo "${C_BOLD_CYAN}======================================================================${C_RESET}"
+        echo "${C_BOLD_CYAN} [EXEC] ${C_BOLD_YELLOW}▶▶ ${step_name}${C_RESET}"
+        echo "${C_DIM} Command: ${cmd[*]}${C_RESET}"
+        echo "${C_BOLD_CYAN}======================================================================${C_RESET}"
         echo ""
-        "${cmd[@]}" 2>&1 | tee -a "${LOG_FILE}"
-        echo ""
+        echo "" >> "${LOG_FILE}"
+        echo "=== [EXEC] ${step_name} ===" >> "${LOG_FILE}"
+        echo "Command: ${cmd[*]}" >> "${LOG_FILE}"
+        echo "" >> "${LOG_FILE}"
+        if "${cmd[@]}" 2>&1 | tee -a "${LOG_FILE}"; then
+            echo ""
+            echo "${C_BOLD_GREEN}[STEP COMPLETED] ✔ ${step_name}${C_RESET}"
+            echo ""
+        else
+            local status=$?
+            echo ""
+            echo "${C_BOLD_RED}======================================================================${C_RESET}"
+            echo "${C_BOLD_RED} [ERROR FAILED] ✖ ${step_name} (exit code ${status})${C_RESET}"
+            echo "${C_RED} Log file: ${LOG_FILE}${C_RESET}"
+            echo "${C_BOLD_RED}======================================================================${C_RESET}"
+            echo ""
+            exit ${status}
+        fi
     else
         echo ""
-        echo "[RUNNING] ${step_name} (log -> ${LOG_FILE}) ..."
+        echo "${C_BOLD_CYAN}[RUNNING]${C_RESET} ${C_BOLD_YELLOW}▶▶ ${step_name}${C_RESET} ${C_DIM}(log -> ${LOG_FILE}) ...${C_RESET}"
         echo "" >> "${LOG_FILE}"
         echo "=== [EXEC] ${step_name} ===" >> "${LOG_FILE}"
         echo "Command: ${cmd[*]}" >> "${LOG_FILE}"
         echo "" >> "${LOG_FILE}"
         if "${cmd[@]}" >> "${LOG_FILE}" 2>&1; then
-            echo "[COMPLETED] ${step_name}"
+            echo "${C_BOLD_GREEN}[COMPLETED] ✔ ${step_name}${C_RESET}"
         else
             local status=$?
             echo ""
-            echo "======================================================================"
-            echo " [ERROR FAILED] ${step_name} (exit code ${status})"
-            echo " Log file: ${LOG_FILE}"
-            echo "======================================================================"
+            echo "${C_BOLD_RED}======================================================================${C_RESET}"
+            echo "${C_BOLD_RED} [ERROR FAILED] ✖ ${step_name} (exit code ${status})${C_RESET}"
+            echo "${C_RED} Log file: ${LOG_FILE}${C_RESET}"
+            echo "${C_BOLD_RED}======================================================================${C_RESET}"
             echo "--- ERROR LOG TRACEBACK (Last 30 lines) ---"
             tail -n 30 "${LOG_FILE}"
             echo "----------------------------------------------------------------------"
@@ -132,16 +209,16 @@ run_step() {
     fi
 }
 
-echo "======================================================================"
-echo "          NKM Full Production Simulation & Analysis Pipeline          "
-echo "======================================================================"
-echo " Timestamp        : ${TIMESTAMP}"
-echo " Parallel Workers : ${N_WORKERS} CPU Cores (~90% allocation)"
-echo " Output Directory : ${OUTPUT_DIR}"
-echo " Verbose Screen   : ${VERBOSE}"
-echo " Dry Run Mode     : ${DRY_RUN}"
-echo " Master Log File  : ${LOG_FILE}"
-echo "======================================================================"
+echo "${C_BOLD_BLUE}======================================================================${C_RESET}"
+echo "${C_BOLD_BLUE}          ${C_BOLD_WHITE}NKM Full Production Simulation & Analysis Pipeline${C_BOLD_BLUE}          ${C_RESET}"
+echo "${C_BOLD_BLUE}======================================================================${C_RESET}"
+echo " ${C_CYAN}Timestamp        :${C_RESET} ${TIMESTAMP}"
+echo " ${C_CYAN}Parallel Workers :${C_RESET} ${N_WORKERS} CPU Cores (~90% allocation)"
+echo " ${C_CYAN}Output Directory :${C_RESET} ${OUTPUT_DIR}"
+echo " ${C_CYAN}Verbose Screen   :${C_RESET} ${VERBOSE}"
+echo " ${C_CYAN}Dry Run Mode     :${C_RESET} ${DRY_RUN}"
+echo " ${C_CYAN}Master Log File  :${C_RESET} ${LOG_FILE}"
+echo "${C_BOLD_BLUE}======================================================================${C_RESET}"
 
 # ------------------------------------------------------------------------------
 # STEP 1: Environment Verification & Input Hash Cataloging
@@ -216,7 +293,8 @@ run_step "Step 7: Multi-Objective MOGA Pareto Optimization Study" \
 run_step "Step 8: Publication Figure & Table Data Consolidation" \
     python3 "${REPO_ROOT}/scripts/reproduce_paper.py"
 
-echo "======================================================================"
-echo " Full Production Simulation & Analysis Pipeline Completed Successfully!"
-echo " Results Directory: ${OUTPUT_DIR}"
-echo "======================================================================"
+echo ""
+echo "${C_BOLD_GREEN}======================================================================${C_RESET}"
+echo "${C_BOLD_GREEN} Full Production Simulation & Analysis Pipeline Completed Successfully!${C_RESET}"
+echo "${C_BOLD_GREEN} Results Directory: ${C_BOLD_WHITE}${OUTPUT_DIR}${C_RESET}"
+echo "${C_BOLD_GREEN}======================================================================${C_RESET}"

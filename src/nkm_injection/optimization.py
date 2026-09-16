@@ -327,13 +327,20 @@ class OpticsOptimizer:
                     max_nfev=self.config.max_iter
                 )
                 # Stage 2: SLSQP refinement
-                opt_res = minimize(
-                    self.objective.compute_scalar_merit,
-                    ls_res.x,
-                    method="SLSQP",
-                    bounds=bounds_list,
-                    options={'maxiter': self.config.max_iter, 'ftol': 1e-6}
-                )
+                # Only refine with SLSQP when Stage 1 converged to a viable candidate
+                # away from the boundary limits, avoiding ill-posed line search steps
+                # into the bounds that cause SciPy clipping warnings.
+                on_bound = np.any(np.isclose(ls_res.x, lo, atol=1e-4) | np.isclose(ls_res.x, hi, atol=1e-4))
+                if ls_res.success and not on_bound:
+                    opt_res = minimize(
+                        self.objective.compute_scalar_merit,
+                        ls_res.x,
+                        method="SLSQP",
+                        bounds=bounds_list,
+                        options={'maxiter': self.config.max_iter, 'ftol': 1e-6}
+                    )
+                else:
+                    opt_res = ls_res
             else:
                 opt_res = minimize(
                     self.objective.compute_scalar_merit,

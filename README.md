@@ -42,6 +42,22 @@ Notebooks `01-03` include rich inline visualization cells, such as phase-space p
 
 ---
 
+## Production Simulation Results & Key Findings
+
+The complete 8-step production pipeline was executed (`results/production_run_20260915_175049/`), validating numerical convergence, capture performance, and optics feasibility across all physics subsystems:
+
+| Simulation Phase | Key Benchmark & Parameters | Production Finding / Metric |
+| :--- | :--- | :--- |
+| **Field Validation** | Odd symmetry residual $B_y(z)$ | Residual $< 8.52 \times 10^{-12}\text{ T}$; Lorentz kick sign verified ($\Delta x' = -5.434\text{ mrad}$). |
+| **Symplectic Slicing** | Convergence scan $N_{\text{slices}} \in \{10, \dots, 160\}$ | Trajectory converges to $< 10^{-6}\text{ mrad}$; $N_{\text{slices}} = 40$ established as production standard (100% survival). |
+| **Multi-Turn Injection** | 1,000-turn tracking, 10,000 macro-particles, 5 seeds | **99.78% capture efficiency** [99.75%, 99.79% 95% CI] with only **$5.78\,\mu\text{m}$** stored beam disturbance ($>440\times$ lower than ideal kicker). |
+| **Optics Optimization** | 2-stage deterministic SLSQP quadrupole matching | Exit mismatch $\mathcal{M}_{x,y} < 10^{-15}$; $\beta_{x,\max} = 30.23\text{ m}$, $\beta_{y,\max} = 44.52\text{ m}$ (satisfying $\le 60\text{ m}$ bounds). |
+| **Tolerance Budget** | 100-sample Monte Carlo error budget | **100.0% feasible fraction** (0% failure probability); median mismatches $\mathcal{M}_x = 0.0014$, $\mathcal{M}_y = 0.0028$. |
+| **MOGA Pareto Study** | 5 independent random seeds (NSGA-II) | 100.0% feasibility across all seeds; 27–40 Pareto front solutions per seed with consistent knee-point dispersion ($\sigma = 1.37\text{ m}^{-2}$). |
+| **Paper Pipeline** | Dynamic publication compilation | Verified cryptographic hashes, compiled figures/tables, and generated [`docs/jinst-paper/paper.pdf`](docs/jinst-paper/paper.pdf). |
+
+---
+
 ## Protected Scientific Source Data
 
 The following source data and reference files are **immutable** and must not be reformatted, renamed, or modified:

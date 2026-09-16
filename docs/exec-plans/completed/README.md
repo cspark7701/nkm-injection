@@ -258,6 +258,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 83. [**Milestone 83 — Task: Create Antigravity Session Resume Script**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/83_resume_session_script.md)
     - Created `scripts/resume_agy_session.sh` to seamlessly resume an Antigravity (`agy`) CLI session for this repository upon quitting. Supports automatic repo-scoped conversation discovery, pinned conversation resumption (`7dcb6418-14dc-4479-9d1c-ded46901bfcf`), historical session listing (`--list`), and custom conversation IDs.
 
+84. [**Milestone 84 — Task: Production Simulation Run Archival & Key Convergence Findings**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/84_production_simulation_run_20260915.md)
+    - Completed full end-to-end production simulation run (`results/production_run_20260915_175049/`), archiving quantitative convergence findings across all 8 simulation stages: thick symplectic convergence at $N_{\text{slices}}=40$, $99.78\%$ 1,000-turn multi-turn capture with $<5.8\,\mu\text{m}$ stored beam perturbation, exact SLSQP optics matching ($\mathcal{M} < 10^{-15}$, $\beta_{x,\max}=30.2\text{ m}, \beta_{y,\max}=44.5\text{ m}$), 100% Monte Carlo tolerance feasibility, multi-seed MOGA Pareto reproducibility, and JINST manuscript compilation.
+
 
 
 

@@ -306,6 +306,8 @@ def load_publication_inputs(manifest: PublicationManifest, repo_root: Path) -> P
     def tolerance_parser(raw):
         raw = _mapping(raw, 'tolerance summary')
         stats = _mapping(_required(raw, 'robustness_statistics'), 'robustness_statistics')
+        if stats.get('n_invalid_evaluations', 0) != 0:
+            raise ValueError('Tolerance publication requires zero invalid evaluations')
         count = _count(_required(raw, 'n_samples'), 'n_samples')
         if count != _count(_required(stats, 'n_samples'), 'robustness_statistics.n_samples'):
             raise ValueError('tolerance sample counts differ')

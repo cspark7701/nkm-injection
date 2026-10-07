@@ -39,6 +39,10 @@ def parse_args(argv=None):
                         help="Random seed for reproducibility.")
     parser.add_argument("--output-dir", type=Path, default=None,
                         help="Override output directory path.")
+    parser.add_argument("--kicker-model", choices=("fieldmap", "linear", "ideal", "off"),
+                        default="fieldmap", help="Explicit kicker model; never a fallback")
+    parser.add_argument("--kickmap-path", type=Path, default=None,
+                        help="Selected field map; defaults to the protected repository map")
     parser.add_argument("--optimization-summary", type=Path, default=None,
                         help="Explicit BTS optimization summary from the current production run")
     return parser.parse_args(argv)
@@ -98,7 +102,20 @@ def main(argv=None):
     print(f"\nSampling Monte Carlo ensemble (N={n_samples}, workers={args.workers})...\n")
     samples = sample_error_ensemble(config, n_samples=n_samples, seed=args.seed)
 
-    stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, n_workers=args.workers)
+    evaluation_kwargs = {"n_workers": args.workers}
+    if args.kicker_model != "fieldmap" or args.kickmap_path is not None:
+        evaluation_kwargs.update(kicker_model=args.kicker_model, kickmap_path=args.kickmap_path)
+    stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, **evaluation_kwargs)
+    print(f"Invalid evaluations: {stats.get('n_invalid_evaluations', 0)}")
+    if stats.get("n_invalid_evaluations", 0):
+        diagnostic_path = output_dir / "publication_tolerances_summary.json"
+        diagnostic_path.write_text(json.dumps({"timestamp": timestamp, "seed": args.seed,
+            "workers": args.workers, "optimization_source": optimization_source,
+            "n_samples": n_samples, "robustness_statistics": stats,
+            "sensitivity_ranking": {}}, indent=2, allow_nan=False) + "\n")
+        failed_ids = [r["outcome"]["identity"]["sample_id"] for r in stats["sample_results"]
+                      if r["outcome"]["status"] == "invalid"]
+        raise RuntimeError(f"Invalid evaluations for samples {failed_ids}; diagnostics: {diagnostic_path}")
 
     print("\n--- Monte Carlo Robustness Percentiles ---\n")
     print(f"Failure Probability: {stats['failure_probability']*100:.1f}%")

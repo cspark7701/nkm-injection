@@ -27,6 +27,8 @@ from scipy.optimize import minimize, least_squares
 from .bts_lattice import BTSConfig, create_bts_lattice
 from .optics import compute_twiss_propagation, compute_mismatch_metric
 from .constraints import BTSHardwareConstraints, BTSConstraintConfig
+from .evaluation import (EvaluationOutcome, EXPECTED_NUMERICAL_ERRORS,
+                         exception_context, validate_optics_result)
 from .objectives import BTSNormalizedObjectives, OpticsTargetConfig
 from .results_schema import SerializableConfigMixin
 from .concurrency import parallel_map, resolve_workers, generate_worker_seeds
@@ -89,6 +91,7 @@ class CandidateRecord:
     optimizer_message: str    # raw optimizer status message
     strengths: List[float]    # optimized quad strengths  [m⁻²]
     exception: str = ""       # exception message if evaluator raised
+    evaluation_outcome: Dict[str, Any] = field(default_factory=dict)
 
     def as_dict(self) -> Dict[str, Any]:
         return {
@@ -108,6 +111,7 @@ class CandidateRecord:
             "optimizer_message": self.optimizer_message,
             "strengths": self.strengths,
             "exception": self.exception,
+            "evaluation_outcome": self.evaluation_outcome,
         }
 
 
@@ -182,11 +186,12 @@ class DeterministicObjective(BaseOpticsObjective):
         - **Hard constraint violations**: structured ConstraintRecord list
         - **Diagnostic metrics**: max beta, dispersion, etc.
         """
-        self.objectives.set_quads(strengths)
         try:
+            self.objectives.set_quads(strengths)
             prop = compute_twiss_propagation(self.objectives.lattice,
                                              self.objectives.initial_twiss)
-        except Exception as exc:
+            validate_optics_result(prop)
+        except EXPECTED_NUMERICAL_ERRORS as exc:
             return {
                 "feasible": False,
                 "merit": 1e9,
@@ -197,9 +202,19 @@ class DeterministicObjective(BaseOpticsObjective):
                 "violations": [f"Propagator exception: {exc}"],
                 "records": [],
                 "exception": str(exc),
+                "outcome": EvaluationOutcome("invalid",
+                    {"strengths_m_minus2": np.asarray(strengths).tolist()},
+                    {"optics_model": "BTS linear pyAT"},
+                    exception=exception_context(exc, "optics")).to_dict(),
             }
 
         r_vec = self.objectives.compute_residual_vector(strengths)
+        if self.objectives.last_outcome.status == "invalid":
+            return {"feasible": False, "merit": 1e9, "mismatch_x": 1e6,
+                    "mismatch_y": 1e6, "max_beta_x": 1e6, "max_beta_y": 1e6,
+                    "violations": ["Invalid normalized residual evaluation"], "records": [],
+                    "exception": self.objectives.last_outcome.exception["message"],
+                    "outcome": self.objectives.last_outcome.to_dict()}
         merit = float(np.sum(r_vec**2))
 
         beta_end  = prop["final_beta"]
@@ -223,6 +238,9 @@ class DeterministicObjective(BaseOpticsObjective):
                                                     mismatch_y=float(my))
 
         return {
+            "outcome": EvaluationOutcome("valid" if validation["feasible"] else "infeasible",
+                {"strengths_m_minus2": np.asarray(strengths).tolist()},
+                {"optics_model": "BTS linear pyAT"}, validation["violations"]).to_dict(),
             "feasible": validation["feasible"],
             "violations": validation["violations"],
             "records": validation["records"],
@@ -350,7 +368,7 @@ class OpticsOptimizer:
                     options={'maxiter': self.config.max_iter}
                 )
             return np.array(opt_res.x), opt_res, ""
-        except Exception as exc:
+        except EXPECTED_NUMERICAL_ERRORS as exc:
             return x0.copy(), None, str(exc)
 
     # ------------------------------------------------------------------
@@ -400,19 +418,24 @@ class OpticsOptimizer:
 
             try:
                 final_eval = self.objective.evaluate(x_opt)
-            except Exception as e:
+            except EXPECTED_NUMERICAL_ERRORS as e:
                 final_eval = {
                     "feasible": False, "merit": 1e9,
                     "mismatch_x": 1e6, "mismatch_y": 1e6,
                     "max_beta_x": 1e6, "max_beta_y": 1e6,
                     "violations": [f"Evaluation exception: {e}"],
                     "records": [], "exception": str(e),
+                    "outcome": EvaluationOutcome("invalid",
+                        {"strengths_m_minus2": x_opt.tolist()}, {"optics_model": "BTS linear pyAT"},
+                        exception=exception_context(e, "final_evaluation")).to_dict(),
                 }
 
             opt_success = bool(opt_res.success) if opt_res is not None else False
             opt_message = str(getattr(opt_res, "message", "")) if opt_res is not None else exc_msg
             n_iter = (getattr(opt_res, "nit", None) or getattr(opt_res, "nfev", 0)) if opt_res is not None else 0
 
+            outcome = final_eval.get("outcome", {})
+            outcome.setdefault("identity", {}).update(start_idx=start_idx, seed=seed_i)
             rec = CandidateRecord(
                 start_idx=start_idx,
                 seed=seed_i,
@@ -429,7 +452,8 @@ class OpticsOptimizer:
                 violations=final_eval.get("violations", []),
                 optimizer_message=opt_message,
                 strengths=x_opt.tolist(),
-                exception=exc_msg,
+                exception=exc_msg or final_eval.get("exception", ""),
+                evaluation_outcome=outcome,
             )
             candidates.append(rec)
             if rec.physically_feasible:

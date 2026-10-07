@@ -289,3 +289,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 88. [**Milestone 88 — Task 03: Strict Shared Field-Map Validation**](88_task03_strict_fieldmap_validation.md)
     - Enforced finite grid/axis and section agreement checks, closed domains and NumPy broadcasting; shared 3-D interpolation with the standalone pyAT extension, documented explicit boundary policies and verified 306 tests plus clean-process source-map validation.
+
+89. [**Milestone 89 — Task 04: Explicit Evaluation Outcomes**](89_task04_explicit_evaluation_outcomes.md)
+    - Removed silent kicker substitutions, saved sample/candidate identity and model provenance, separated invalid evaluations from physical failure statistics, propagated unexpected errors and retained unknown loss positions explicitly; verified 332 tests, serial/process-worker failure diagnostics and clean-process reproducibility.

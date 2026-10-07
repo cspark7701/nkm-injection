@@ -17,6 +17,8 @@ from .optics import (
     DEFAULT_BTS_TARGET_TWISS
 )
 from .results_schema import SerializableConfigMixin
+from .evaluation import (EvaluationOutcome, EXPECTED_NUMERICAL_ERRORS,
+                         exception_context, require_finite, validate_optics_result)
 
 
 @dataclass
@@ -48,6 +50,8 @@ class OpticsTargetConfig(SerializableConfigMixin):
 
     def validate(self) -> None:
         """Validate physical parameters for optics targets."""
+        if not all(np.isfinite(value) for value in vars(self).values()):
+            raise ValueError("Optics target configuration must be finite")
         if self.target_beta_x <= 0 or self.target_beta_y <= 0:
             raise ValueError("Target beta functions must be positive")
         if self.init_beta_x <= 0 or self.init_beta_y <= 0:
@@ -75,6 +79,8 @@ class BTSNormalizedObjectives:
                  lattice: Optional[Any] = None,
                  copy_lattice: bool = False):
         self.config = config or OpticsTargetConfig()
+        self.config.validate()
+        self.last_outcome = None
 
         self.initial_twiss = {
             'beta': [self.config.init_beta_x, self.config.init_beta_y],
@@ -96,6 +102,10 @@ class BTSNormalizedObjectives:
 
     def set_quads(self, strengths: np.ndarray) -> None:
         """Update quadrupole strengths K in the lattice in-place."""
+        strengths = np.asarray(strengths, dtype=float)
+        if strengths.shape != (9,):
+            raise ValueError("Candidate must contain nine quadrupole strengths (m^-2)")
+        require_finite(strengths, "Candidate strengths (m^-2)")
         k_map = dict(zip(self.quad_names, strengths))
         for elem in self._quad_elems:
             elem.K = k_map[elem.FamName]
@@ -106,9 +116,13 @@ class BTSNormalizedObjectives:
         
         r_i = (O_i - O_i,target) / sigma_i
         """
-        self.set_quads(strengths)
+        self.last_outcome = None
+        identity = {"strengths_m_minus2": np.asarray(strengths).tolist()}
+        provenance = {"optics_model": "BTS linear pyAT"}
         try:
+            self.set_quads(strengths)
             prop = compute_twiss_propagation(self.lattice, self.initial_twiss)
+            validate_optics_result(prop)
             beta_end = prop["final_beta"]
             alpha_end = prop["final_alpha"]
             disp_end = prop["final_dispersion"]
@@ -120,8 +134,14 @@ class BTSNormalizedObjectives:
             r_dx = (disp_end[0] - self.config.target_disp_x) / self.config.sigma_disp_x
             r_dpx = (disp_end[1] - self.config.target_disp_px) / self.config.sigma_disp_px
 
-            return np.array([r_bx, r_by, r_ax, r_ay, r_dx, r_dpx])
-        except Exception:
+            residuals = np.array([r_bx, r_by, r_ax, r_ay, r_dx, r_dpx])
+            require_finite(residuals, "Normalized residuals")
+            self.last_outcome = EvaluationOutcome("valid", identity, provenance)
+            return residuals
+        except EXPECTED_NUMERICAL_ERRORS as error:
+            self.last_outcome = EvaluationOutcome(
+                "invalid", identity, provenance,
+                exception=exception_context(error, "optics_residuals"))
             return np.full(6, 1e4)
 
     def compute_scalar_merit(self, strengths: np.ndarray) -> float:

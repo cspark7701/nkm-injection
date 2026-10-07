@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable, Literal
 import numpy as np
+from .evaluation import EXPECTED_NUMERICAL_ERRORS, exception_context
 import at
 
 from .units import (
@@ -597,15 +598,23 @@ def track_element_resolved_injection(beam: np.ndarray,
     turn_survived = []
     loss_log = []
 
-    # Get s positions of lattice elements
+    # Unknown positions remain explicit; programming errors still propagate.
+    position_error = None
     try:
-        s_positions = ring.get_s_pos()
-    except Exception:
-        s_positions = np.zeros(len(ring))
+        position_fn = getattr(ring, "get_s_pos", None)
+        if position_fn is None:
+            raise NotImplementedError("Lattice does not provide s positions")
+        s_positions = np.asarray(position_fn(), dtype=float)
+        if s_positions.ndim != 1:
+            raise ValueError("Lattice s positions must be a 1-D array in meters")
+    except (NotImplementedError, *EXPECTED_NUMERICAL_ERRORS) as error:
+        s_positions = np.full(len(ring), np.nan)
+        position_error = exception_context(error, "loss_positions")
 
     for turn in range(1, n_turns + 1):
         for elem_idx, elem in enumerate(ring):
-            s_pos = float(s_positions[elem_idx]) if elem_idx < len(s_positions) else 0.0
+            s_pos = (float(s_positions[elem_idx])
+                     if elem_idx < len(s_positions) and np.isfinite(s_positions[elem_idx]) else None)
             elem_name = getattr(elem, "FamName", f"ELEM_{elem_idx}")
 
             # Apply NKM kicker on turn 1
@@ -690,6 +699,9 @@ def track_element_resolved_injection(beam: np.ndarray,
         metadata={
             "kicker_model": kicker_model,
             "n_turns": n_turns,
-            "tracking_mode": "element_resolved"
+            "tracking_mode": "element_resolved",
+            "loss_position_exception": position_error,
+            "loss_positions_complete": bool(len(s_positions) >= len(ring) and
+                                             np.all(np.isfinite(s_positions[:len(ring)])))
         }
     )

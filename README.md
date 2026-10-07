@@ -43,6 +43,8 @@ Notebooks `01-03` include rich inline visualization cells, such as phase-space p
 
 Field-map loading and interpolation enforce finite grids, matching section axes and closed domain bounds, with explicit extrapolation and NumPy broadcasting. See [field-map contracts and migration](docs/FIELDMAP_CONTRACTS.md).
 
+Robustness studies load the selected field map and record invalid evaluations separately from physical failures. See [evaluation outcomes and compatibility](docs/EVALUATION_OUTCOMES.md) for model selection, diagnostics and statistical denominators.
+
 Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.
 
 ---

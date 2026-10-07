@@ -178,11 +178,14 @@ def build_storage_ring_nkm_lattice(source_mat_path: Optional[Union[str, Path]] =
 
 def load_storage_ring_injection_lattice(config: Optional[StorageRingInjectionConfig] = None,
                                         mat_path: Optional[Union[str, Path]] = None,
-                                        auto_generate: bool = True) -> Tuple[at.Lattice, int]:
+                                        auto_generate: bool = True,
+                                        source_mat_path: Optional[Union[str, Path]] = None) -> Tuple[at.Lattice, int]:
     """
     Load storage ring AT lattice and return (lattice, nkm_element_index).
     If mat_path does not exist and auto_generate is True, resurrects storage_ring_lattice_nkm.mat
-    from K4GSR_HBIv4-1.mat.
+    from K4GSR_HBIv4-1.mat. source_mat_path selects an explicit source checkout
+    when generating; omitted values retain the existing repository default.
+    Configuration quantities use m, rad and eV.
     """
     if config is None:
         config = StorageRingInjectionConfig()
@@ -195,7 +198,7 @@ def load_storage_ring_injection_lattice(config: Optional[StorageRingInjectionCon
 
     if not mat_path.is_file():
         if auto_generate:
-            lattice = build_storage_ring_nkm_lattice()
+            lattice = build_storage_ring_nkm_lattice(source_mat_path)
             at.save_mat(lattice, mat_path)
         else:
             raise FileNotFoundError(f"Storage ring lattice file not found: {mat_path}")

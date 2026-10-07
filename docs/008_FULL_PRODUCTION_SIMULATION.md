@@ -1,95 +1,50 @@
-# Full Production Simulation & Analysis Pipeline Guide
+# Full production simulation and analysis
 
-This guide documents the **Single-File Full Production Simulation & Analysis Pipeline** for the NKM and BTS Transfer Line framework at 4GSR.
+The shell launcher and notebook 04 share the installed `nkm_injection.production` runner. It executes eight stages in order, routes each artifact into one fresh run directory and records the selected inputs for publication. See [runner configuration and workload tiers](012_PRODUCTION_RUNNER.md) for the complete contract.
 
-The pipeline executes full physics simulations, numerical parameter scans, optics optimization, Monte Carlo tolerance budgeting, and multi-objective Pareto trade-off studies in a single, automated, reproducible run.
+## Installation and commands
 
----
-
-## 1. Primary Components & 1-to-1 Mapping
-
-The full production simulation suite consists of two 1-to-1 matching entry points:
-
-1. **Automated Shell Script**: [`scripts/run_full_production_simulation.sh`](file:///home/cspark/Work/projects/nkm-injection/scripts/run_full_production_simulation.sh)
-2. **Consolidated Jupyter Notebook**: [`notebooks/04_full_production_simulation.ipynb`](file:///home/cspark/Work/projects/nkm-injection/notebooks/04_full_production_simulation.ipynb)
-
-Both entry points execute the exact same 8 simulation steps in identical sequence using shared underlying Python modules in `src/nkm/`.
-
----
-
-## 2. Command Line Usage & Options
-
-### Running the Production Script
+Install the project in the interpreter used by the launcher. See [installation](007_INSTALLATION.md) for Accelerator Toolbox setup.
 
 ```bash
-# Perform a DRY RUN (validates all script paths, syntax, & parameters without executing heavy calculations)
-./scripts/run_full_production_simulation.sh --dry-run
+python -m pip install -e ".[dev]"
 
-# Run with default settings (Verbose output, 90% CPU cores allocated)
-./scripts/run_full_production_simulation.sh
+# Read-only preview with explicit workers and a fresh destination.
+./scripts/run_full_production_simulation.sh --dry-run --workers 4 \
+    --output-dir results/new_production --no-color
 
-# Run in QUIET mode (Ideal for LLM / AI agent prompts like Codex / Antigravity to prevent token consumption)
-./scripts/run_full_production_simulation.sh --quiet
+# Reduced execution check; choose another fresh destination for every run.
+./scripts/run_full_production_simulation.sh --tier smoke --workers 2 \
+    --output-dir results/new_smoke --quiet
 
-# Specify custom parallel worker cores and output directory
-./scripts/run_full_production_simulation.sh --workers 7 --output-dir results/my_custom_run
+# Full production workload. PDF compilation is optional.
+./scripts/run_full_production_simulation.sh --tier production --workers 4 \
+    --output-dir results/new_full_run --compile-pdf
 ```
 
-### Command Line Options
+`NKM_PYTHON=/path/to/python` selects an interpreter; otherwise the shell uses `python3`. The shell can be invoked from another directory and supplies its source checkout explicitly. The installed CLI is `python -m nkm_injection.cli --repo-root /path/to/checkout`. `--help` lists all options, including seeds, tolerance/OAT counts and statistical policy. Quiet mode preserves per-stage logs and prints stage status.
 
-| Flag | Long Option | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `-d` | `--dry-run` | Off | Performs a dry run of all 8 simulation steps, verifying input files and Python script syntax without running long simulations. |
-| `-q` | `--quiet` | Off (`--verbose`) | Suppresses screen output and redirects all verbose stdout/stderr to a master log file under `results/production_run_<timestamp>/logs/production_run.log`. Recommended for background runs and AI agent turns. |
-| `-v` | `--verbose` | On | Prints full real-time simulation step logs directly to terminal screen. |
-| `-w` | `--workers W` | 90% Cores | Number of parallel CPU worker cores ($N_{\text{workers}} = \max(1, \lfloor 0.9 \times N_{\text{cpu}} \rfloor)$). |
-| `-o` | `--output-dir` | `results/production_run_<timestamp>` | Custom target directory for output artifacts. |
-| `-h` | `--help` | — | Displays usage summary. |
+Notebook [04_full_production_simulation.ipynb](../notebooks/04_full_production_simulation.ipynb) defaults to a read-only preview. Its `ProductionRunConfig` selects the same stage routing and defaults. Notebook 03 remains independently executable.
 
----
+## Stages and artifacts
 
-## 3. Parallel Execution & CPU Core Scaling
+| Order | Stage | Main artifacts |
+| :--- | :--- | :--- |
+| 1 | Protected source inventory | `baseline/protected_files_manifest.json` |
+| 2 | Field-map validation | `fieldmap/fieldmap_validation_metrics.json`, comparison plot |
+| 3 | Symplectic slicing study | `convergence/tracking_convergence_summary.json` |
+| 4 | Injection model comparison and convergence scans | `multiturn/config.json`, `injection_metrics_summary.json`, run-local lattice and plots |
+| 5 | Deterministic nine-quadrupole BTS matching | `optimization/config.json`, `bts_optimization_summary.json`, candidate table |
+| 6 | Selected-optics tolerance budget | `tolerances/publication_tolerances_summary.json` |
+| 7 | Multi-seed NSGA-II | `moga/multi_seed_moga_summary.json`, per-seed artifacts and run-local lattice |
+| 8 | Publication | `summary/metrics.json`, `upstream_artifacts.json`, `figures/figure_data.json`, tables and figures |
 
-The pipeline detects total system CPU cores via `os.cpu_count()` and defaults to **90% of available cores** (e.g., 7 cores on an 8-core system), leaving 10% for OS responsiveness:
+Only injection ensembles and tolerance Monte Carlo/OAT dispatch use `--workers`. Slicing, BTS matching and MOGA remain sequential. Production slicing uses 1000 beam particles and slice counts 10, 20, 40, 80, 160. Production injection uses 10000 particles, 1000 turns and five seeds. Production tolerances use 100 Monte Carlo samples and 30 OAT samples per category. Production MOGA uses population 40, 20 generations and five seeds. Smoke and pilot reduce workloads without changing canonical physics settings; they are execution checks, not production evidence.
 
-- **Monte Carlo Tolerance Scan**: Distributes 500 seeds across $N_{\text{workers}}$ parallel workers using Python `multiprocessing`.
-- **MOGA NSGA-II Evaluation**: Evaluates population generations across $N_{\text{workers}}$ concurrent worker processes.
-- **Tracking Convergence**: Evaluates slicing integration steps concurrently.
+## Output and failure behavior
 
----
+Each production destination must be new. It contains `production_config.json`, `production_status.json`, `publication_manifest.json`, `logs/<stage>.log` and the eight stage directories above. Outputs inside the source checkout must be under `results/`. Generated lattices and all figures stay inside the new run.
 
-## 4. Sequential 8-Step Pipeline Breakdown
+Tolerances consume the feasible BTS summary from the current run. Before publication, the runner validates the protected-source baseline and loads all selected artifacts. Child errors, missing or empty outputs, invalid publication inputs and changed hashes stop later stages and leave diagnostic logs and failed status intact.
 
-1. **Step 1: Input Hash Cataloging & Baseline Metrics**: Verifies SHA-256 hashes of scientific source files (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`).
-2. **Step 2: Field & Kick Map Cross-Validation**: Fits 5th-order field polynomials and verifies 2D kickmap symmetry.
-3. **Step 3: Symplectic Slicing Convergence**: Scans $N_{\text{slices}} \in \{5, 10, 20, 50, 100\}$ to confirm $< 10^{-6}\text{ rad}$ angular convergence.
-4. **Step 4: Multi-Turn Storage Ring Tracking**: Simulates 1,000 particles across 1,000 turns over 4 kicker models with physical apertures.
-5. **Step 5: SLSQP Quadrupole Optics Matching**: Optimizes 8 BTS quad families for target injection Twiss parameters ($\beta_x = 7.56\text{ m}, \beta_y = 12.27\text{ m}$).
-6. **Step 6: Monte Carlo Tolerance Budget**: Simulates quad misalignments ($\sigma_{x,y}=100\,\mu\text{m}$), roll errors ($\sigma_\phi=0.5\text{ mrad}$), and gradient errors.
-7. **Step 7: MOGA NSGA-II Pareto Optimization**: Generates multi-objective Pareto trade-off fronts between mismatch, beta peaks, and stay-clears.
-8. **Step 8: Publication Data Consolidation**: Compiles final figures, metrics, LaTeX tables, and provenance logs into `results/production_run_<timestamp>/summary/`.
-
----
-
-## 5. Structured Results Directory Layout
-
-```text
-results/production_run_<timestamp>/
-├── logs/
-│   └── production_run.log
-├── fieldmap/
-│   └── fieldmap_validation_metrics.json
-├── convergence/
-│   └── tracking_convergence_metrics.json
-├── multiturn/
-│   └── multiturn_injection_metrics.json
-├── optimization/
-│   └── bts_matching_metrics.json
-├── tolerances/
-│   └── tolerance_study_metrics.json
-├── moga/
-│   └── moga_pareto_results.json
-└── summary/
-    ├── paper_figures/
-    └── paper_metrics_summary.json
-```
+PDF builds are opt-in, operate under `summary/build/` and require fresh nonempty `summary/paper.pdf` plus `summary/pdf_build.json`. Manuscript sources remain unchanged. See [publication validation and builds](021_PUBLICATION_LIFECYCLE.md).

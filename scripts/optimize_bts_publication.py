@@ -17,7 +17,6 @@ Saved outputs
 import argparse
 import json
 import datetime
-import hashlib
 import subprocess
 from pathlib import Path
 import numpy as np
@@ -36,36 +35,33 @@ from nkm_injection.bts_lattice import BTSConfig
 from nkm_injection.optimization_handoff import HANDOFF_UNITS, QUAD_NAMES
 
 
-def _git_commit() -> str:
+def _git_commit(root=None) -> str:
     try:
         return subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=repo_root, text=True
+            ["git", "rev-parse", "HEAD"], cwd=root or repo_root, text=True
         ).strip()
     except Exception:
         return "unknown"
 
 
-def _input_hash(path: Path) -> str:
-    """SHA-256 of a source file (first 16 hex chars)."""
-    try:
-        return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
-    except Exception:
-        return "unknown"
-
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output, input_hashes, check_seed
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Publication BTS optimization (sequential)")
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument('--tier', choices=('smoke', 'pilot', 'production'), default='production')
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
+    root = source_root(args, repo_root)
+    check_seed(args.seed)
+    hashes = input_hashes(root, ("kickmap_file.txt",))
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = args.output_dir or (
-        repo_root / "results" / "bts_publication_optimization" / f"run_{timestamp}"
-    )
+    output_dir = stage_output(args, root, 'bts_publication_optimization')
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== Deterministic BTS Quadrupole Optimization (Task 07) ===")
@@ -80,8 +76,9 @@ def main(argv=None):
     # ----------------------------------------------------------------
     # 1. Multi-start optimization  (3 starts: nominal + 2 random)
     # ----------------------------------------------------------------
-    print("\nRunning 2-stage optimization (Least-Squares + SLSQP, 3 starts) …\n")
-    res = optimize_bts_quadrupoles(method="least_squares", config=config, n_starts=3)
+    n_starts = {"smoke": 1, "pilot": 2, "production": 3}[args.tier]
+    print(f"\nRunning 2-stage optimization (Least-Squares + SLSQP, {n_starts} starts) …\n")
+    res = optimize_bts_quadrupoles(method="least_squares", config=config, n_starts=n_starts)
 
     print(f"\nOptimization success      : {res.success}")
     print(f"Feasible candidates found : {res.n_feasible_found}/{res.n_total_starts}")
@@ -122,6 +119,7 @@ def main(argv=None):
     summary_data = {
         "timestamp": timestamp,
         "method": res.method,
+        "termination_message": res.message,
         "success": res.success,
         "n_feasible_found": res.n_feasible_found,
         "n_total_starts": res.n_total_starts,
@@ -153,7 +151,7 @@ def main(argv=None):
     # ----------------------------------------------------------------
     config_data = {
         "timestamp": timestamp,
-        "git_commit": _git_commit(),
+        "git_commit": _git_commit(root),
         "random_seed": config.random_seed,
         "max_iter": config.max_iter,
         "n_starts": res.n_total_starts,
@@ -167,9 +165,8 @@ def main(argv=None):
         "constraint_config": config.constraint_config.to_dict(),
         "beta_max_limit_m": config.constraint_config.beta_max_limit_m,
         "mismatch_limit": config.constraint_config.mismatch_limit,
-        "input_files": {
-            "kickmap_file.txt": _input_hash(repo_root / "kickmap_file.txt"),
-        },
+        "input_files": hashes,
+        "tier": args.tier,
     }
     cfg_path = output_dir / "config.json"
     with open(cfg_path, "w") as f:

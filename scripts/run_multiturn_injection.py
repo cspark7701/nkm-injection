@@ -58,6 +58,8 @@ from nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 # CLI
 # ---------------------------------------------------------------------------
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output, input_hashes, check_seed, nullable_result_metrics
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="NKM Multi-Turn Injection Convergence Study")
     parser.add_argument("-w", "--workers", type=int, default=None,
@@ -66,6 +68,8 @@ def parse_args(argv=None):
                         help="Simulation tier: smoke (CI), pilot (dev), production (pub).")
     parser.add_argument("--output-dir", type=Path, default=None,
                         help="Override output directory path.")
+    parser.add_argument('--seed', type=int, default=42)
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
@@ -75,11 +79,12 @@ def parse_args(argv=None):
 
 def main(argv=None):
     args = parse_args(argv)
+    root = source_root(args, repo_root)
+    check_seed(args.seed)
+    hashes = input_hashes(root, ("K4GSR_HBIv4-1.mat", "kickmap_file.txt"))
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    output_dir = args.output_dir or (
-        repo_root / "results" / "multiturn_injection" / f"run_{timestamp}"
-    )
+    output_dir = stage_output(args, root, 'multiturn_injection')
     figures_dir = output_dir / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
 
@@ -91,6 +96,7 @@ def main(argv=None):
     else:
         tier = production_config()
 
+    tier.seeds = [args.seed + seed - 42 for seed in tier.seeds]
     print(f"=== NKM Multi-Turn Injection Convergence Study ===")
     print(f"Tier         : {tier.label}")
     print(f"Particles    : {tier.n_particles}")
@@ -104,10 +110,10 @@ def main(argv=None):
     # Load lattice
     config = StorageRingInjectionConfig(septum_x_offset_m=-0.020,
                                         mat_filename=str(output_dir.resolve() / "storage_ring_lattice_nkm.mat"))
-    ring, nkm_idx = load_storage_ring_injection_lattice(config)
+    ring, nkm_idx = load_storage_ring_injection_lattice(config, source_mat_path=root / "K4GSR_HBIv4-1.mat")
 
-    kick_path = repo_root / "kickmap_file.txt"
-    kickmap_obj = NKMKickMap2D(kick_path) if kick_path.is_file() else None
+    kick_path = root / "kickmap_file.txt"
+    kickmap_obj = NKMKickMap2D(kick_path)
 
     # Save config JSON
     config_dict = {
@@ -119,14 +125,8 @@ def main(argv=None):
             "n_slices": tier.n_slices,
             "seeds": tier.seeds,
         },
-        "injection_config": {
-            "energy_eV": config.energy_eV,
-            "nkm_length_m": config.nkm_length_m,
-            "septum_x_offset_m": config.septum_x_offset_m,
-            "septum_thickness_m": config.septum_thickness_m,
-            "aperture_x_m": config.aperture_x_m,
-            "aperture_y_m": config.aperture_y_m,
-        },
+        "injection_config": config.to_dict(),
+        "input_sha256": hashes,
         "lattice_elements": len(ring),
         "nkm_element_index": nkm_idx,
         "kickmap_available": kickmap_obj is not None,
@@ -157,7 +157,7 @@ def main(argv=None):
         nt_scan_values = [10, 50, 100, 200, 500]
         conv_n_particles = 200
 
-    kicker_for_convergence = "fieldmap" if kickmap_obj else "ideal"
+    kicker_for_convergence = "fieldmap"
 
     np_conv = particle_count_convergence_scan(
         n_particle_values=np_scan_values,
@@ -166,7 +166,7 @@ def main(argv=None):
         kicker_model=kicker_for_convergence,
         kickmap_obj=kickmap_obj,
         config=config,
-        seed=42
+        seed=args.seed
     )
     for row in np_conv:
         print(f"  N_part={row['n_particles']:6d}: capture = {row['capture_efficiency']:.4f}")
@@ -180,7 +180,7 @@ def main(argv=None):
         kicker_model=kicker_for_convergence,
         kickmap_obj=kickmap_obj,
         config=config,
-        seed=42
+        seed=args.seed
     )
     for row in nt_conv:
         print(f"  N_turns={row['n_turns']:5d}: capture = {row['capture_efficiency']:.4f}")
@@ -212,7 +212,8 @@ def main(argv=None):
         print(f"    Capture: {ci['mean']:.4f} [{ci['ci_lo']:.4f}, {ci['ci_hi']:.4f}] 95% CI | "
               f"Stored osc: {pert.get('centroid_oscillation_x_mm', float('nan')):.4f} mm")
 
-        res.save(output_dir / f"model_{model}_results.json")
+        (output_dir / f"model_{model}_results.json").write_text(
+            json.dumps(nullable_result_metrics(res), indent=2, allow_nan=False) + "\n")
 
     # -----------------------------------------------------------------------
     # Injection Acceptance Scan
@@ -227,7 +228,7 @@ def main(argv=None):
         kicker_model=kicker_for_convergence,
         kickmap_obj=kickmap_obj,
         config=config,
-        seed=42
+        seed=args.seed
     )
     for row in acceptance_data:
         print(f"  x_offset={row['x_offset_mm']:.1f} mm: capture = {row['capture_efficiency']:.4f}")
@@ -258,7 +259,9 @@ def main(argv=None):
             "fraction_lost_turn1": fld.get("fraction_lost_on_turn_1", float("nan")),
         })
     with open(output_dir / "injection_metrics_summary.json", "w") as f:
-        json.dump(summary_rows, f, indent=2, default=str)
+        # Undefined loss/perturbation statistics are unavailable, not JSON NaN.
+        summary_rows = nullable_result_metrics(summary_rows)
+        json.dump(summary_rows, f, indent=2, allow_nan=False)
 
     # -----------------------------------------------------------------------
     # Figures
@@ -288,7 +291,7 @@ def main(argv=None):
     plt.close(fig)
 
     # Fig 2: First-loss turn distribution histogram (fieldmap or best-available model)
-    best_model = "fieldmap" if kickmap_obj else "ideal"
+    best_model = "fieldmap"
     fld = all_model_results[best_model].get("first_loss_distribution") or {}
     hist = fld.get("turn_histogram", {})
     if hist:
@@ -373,7 +376,7 @@ def main(argv=None):
     for row in summary_rows:
         print(f"{row['kicker_model']:<12} {row['capture_mean']:>8.4f} "
               f"{row['capture_ci_lo']:>10.4f} {row['capture_ci_hi']:>10.4f} "
-              f"{row['stored_centroid_osc_mm']:>12.4f}")
+              f"{row['stored_centroid_osc_mm'] if row['stored_centroid_osc_mm'] is not None else 'unavailable':>12}")
 
     # Convergence evidence summary
     cap_values = [r["capture_efficiency"] for r in np_conv]
@@ -381,9 +384,9 @@ def main(argv=None):
         max_residual = abs(cap_values[-1] - cap_values[-2])
         print(f"\nConvergence evidence (N_part scan, last 2 steps): delta = {max_residual:.6f}")
         if max_residual < 0.001:
-            print("  => CONVERGED (residual < 0.1 percentage point)")
+            print("  => Last two capture estimates agree within 0.1 percentage point; this is descriptive stability.")
         else:
-            print("  => NOT YET CONVERGED — increase N_particles for final results")
+            print("  => Last two capture estimates differ; increase N_particles before assessing stability.")
 
     print(f"\nOutput directory : {output_dir}")
     print(f"Generated figures: {[f.name for f in sorted(figures_dir.glob('*.png'))]}")

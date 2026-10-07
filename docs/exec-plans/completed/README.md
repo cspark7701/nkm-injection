@@ -319,3 +319,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 98. [**Milestone 98 — Chronological Markdown Document Names**](98_chronological_markdown_document_names.md)
     - Prefixed the 22 top-level Markdown documents with three-digit chronological numbers, updated repository references while preserving subfolder filenames and notebook code, and verified document links, structure and protected-file hashes.
+
+99. [**Milestone 99 — Production Scripts After Refactoring**](99_refactored_production_scripts.md)
+    - Migrated the launcher and eight stages to explicit source/output contracts, tier budgets, seeds and statistical settings; preserved production defaults, verified real complete smoke runs and protected hashes, and documented strict result/artifact handling.

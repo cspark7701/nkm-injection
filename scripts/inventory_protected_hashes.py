@@ -3,7 +3,7 @@
 Protected Files Hash Inventory Script
 
 Computes and verifies SHA256 checksums for all protected source data files in the NKM repository.
-Saves manifest to results/baseline/protected_files_manifest.json.
+Saves a new manifest under results/baseline/run_<timestamp>/ by default.
 """
 
 import argparse
@@ -68,19 +68,20 @@ def find_protected_files(root: Path) -> List[Path]:
     return sorted(protected_files, key=lambda p: p.name)
 
 
-def create_hash_manifest() -> Dict[str, str]:
+def create_hash_manifest(repo_root=None) -> Dict[str, str]:
     """Build a manifest dictionary mapping relative path to SHA256 hash."""
     manifest = {}
-    protected_files = find_protected_files(REPO_ROOT)
+    root = Path(repo_root or REPO_ROOT)
+    protected_files = find_protected_files(root)
     
     for fpath in protected_files:
-        rel_path = fpath.relative_to(REPO_ROOT).as_posix()
+        rel_path = fpath.relative_to(root).as_posix()
         manifest[rel_path] = compute_sha256(fpath)
         
     return manifest
 
 
-def verify_hash_manifest(manifest_path: Path = OUTPUT_MANIFEST) -> bool:
+def verify_hash_manifest(manifest_path: Path = OUTPUT_MANIFEST, repo_root=None) -> bool:
     """Verify that protected files match recorded SHA256 manifest."""
     if not manifest_path.is_file():
         raise FileNotFoundError(f"Manifest file not found: {manifest_path}")
@@ -88,9 +89,10 @@ def verify_hash_manifest(manifest_path: Path = OUTPUT_MANIFEST) -> bool:
     with open(manifest_path, "r") as f:
         recorded_manifest = json.load(f)
         
+    root = Path(repo_root or REPO_ROOT)
     all_matched = True
     for rel_path, expected_hash in recorded_manifest.items():
-        fpath = REPO_ROOT / rel_path
+        fpath = root / rel_path
         if not fpath.is_file():
             print(f"[MISSING] Protected file missing: {rel_path}")
             all_matched = False
@@ -106,16 +108,21 @@ def verify_hash_manifest(manifest_path: Path = OUTPUT_MANIFEST) -> bool:
     return all_matched
 
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Inventory protected input hashes")
-    parser.add_argument("--output-dir", type=Path, default=OUTPUT_MANIFEST.parent)
+    parser.add_argument("--output-dir", type=Path, default=None)
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
 def main(argv=None):
-    output_manifest = parse_args(argv).output_dir / OUTPUT_MANIFEST.name
+    args = parse_args(argv)
+    root = source_root(args, REPO_ROOT)
+    output_manifest = stage_output(args, root, 'baseline') / OUTPUT_MANIFEST.name
     output_manifest.parent.mkdir(parents=True, exist_ok=True)
-    manifest = create_hash_manifest()
+    manifest = create_hash_manifest(root)
     
     with open(output_manifest, "w") as f:
         json.dump(manifest, f, indent=2)
@@ -126,10 +133,10 @@ def main(argv=None):
         print(f"  {path:30s} -> {h[:12]}...")
         
     # Self-verify
-    if verify_hash_manifest(output_manifest):
+    if verify_hash_manifest(output_manifest, root):
         print("Verification SUCCESS: All protected file hashes match!")
     else:
-        print("Verification FAILURE: One or more protected files do not match!")
+        raise RuntimeError("Protected source hash verification failed")
 
 
 if __name__ == "__main__":

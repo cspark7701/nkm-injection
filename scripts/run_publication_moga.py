@@ -24,38 +24,50 @@ from nkm_injection.moga import (
 )
 
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output, input_hashes, check_seed
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Multi-seed publication MOGA (sequential)")
     parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument("--tier", choices=("smoke", "pilot", "production"), default="production")
+    parser.add_argument("--seed", type=int, default=42)
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
+    root = source_root(args, repo_root)
+    check_seed(args.seed)
+    hashes = input_hashes(root, ("K4GSR_HBIv4-1.mat", "kickmap_file.txt"))
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = args.output_dir or (repo_root / "results" / "publication_moga" / f"run_{timestamp}")
+    output_dir = stage_output(args, root, 'publication_moga')
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== NKM Publication MOGA Pareto Optimization ===")
     print(f"Output directory: {output_dir}")
 
-    from nkm_injection.storage_ring_injection import StorageRingInjectionConfig
+    from nkm_injection.storage_ring_injection import StorageRingInjectionConfig, load_storage_ring_injection_lattice
     ring_config = StorageRingInjectionConfig(
         mat_filename=str(output_dir.resolve() / "storage_ring_lattice_nkm.mat"))
-    seeds = [42, 101, 202, 303, 404]
+    load_storage_ring_injection_lattice(ring_config, source_mat_path=root / "K4GSR_HBIv4-1.mat")
+    presets = {"smoke": ([42], 4, 2, 16, 1), "pilot": ([42, 101, 202], 20, 10, 100, 2),
+               "production": ([42, 101, 202, 303, 404], 40, 20, 1000, 2)}
+    base_seeds, pop_size, n_gen, n_particles, n_mc_seeds = presets[args.tier]
+    seeds = [args.seed + value - 42 for value in base_seeds]
     multi_seed_results = {}
     knee_quad_strengths = []
 
     for i, seed in enumerate(seeds):
         if i > 0:
             print()
-        cfg = BTSMOGAConfig(pop_size=40, n_gen=20, seed=seed)
+        cfg = BTSMOGAConfig(pop_size=pop_size, n_gen=n_gen, seed=seed)
         print(f"--- Running Seed {seed} ---")
         res = run_bts_moga(cfg)
 
         seed_dir = output_dir / f"seed_{seed}"
         if res.success:
-            reevaluate_pareto_finalists(res, n_particles=1000, n_mc_seeds=2, ring_config=ring_config)
+            reevaluate_pareto_finalists(res, n_particles=n_particles, n_mc_seeds=n_mc_seeds, ring_config=ring_config, seed=args.seed)
         save_moga_results_json(res, seed_dir)
 
         print(f"Seed {seed}: Success={res.success}, Feasible Fraction={res.feasible_fraction*100:.1f}%, Pareto Count={len(res.pareto_x)}")
@@ -76,18 +88,24 @@ def main(argv=None):
         knee_arr = np.array(knee_quad_strengths)
         knee_std = float(np.mean(np.std(knee_arr, axis=0)))
     else:
-        knee_std = 0.0
+        knee_std = None
 
-    print(f"\nKnee Point Quad Strength Standard Deviation across seeds: {knee_std:.6f}")
+    print(f"\nKnee Point Quad Strength Standard Deviation across seeds: {knee_std if knee_std is not None else 'unavailable'}")
 
     summary_file = output_dir / "multi_seed_moga_summary.json"
     with open(summary_file, 'w') as f:
         json.dump({
             "timestamp": timestamp,
             "seeds": seeds,
+            "tier": args.tier,
+            "input_sha256": hashes,
+            "workload": {"pop_size": pop_size, "n_gen": n_gen, "finalist_particles": n_particles,
+                         "finalist_mc_seeds": n_mc_seeds, "finalist_turns": 10, "kicker_model": "ideal"},
+            "storage_ring_config": ring_config.to_dict(),
             "seed_metrics": multi_seed_results,
+            "knee_count": len(knee_quad_strengths),
             "knee_quad_std": knee_std
-        }, f, indent=2)
+        }, f, indent=2, allow_nan=False)
     print(f"Saved multi-seed summary: {summary_file}")
 
 

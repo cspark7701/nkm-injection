@@ -4,7 +4,7 @@ NKM Field Map Validation & Processing Script for Milestone 3
 
 Loads NKM field map spreadsheets and text files, validates finite bounds,
 quantifies symmetry residuals, fits polynomial field profiles, and generates validation plots.
-Outputs saved to results/fieldmap/ and docs/validation/.
+Outputs saved to a fresh results/fieldmap/run_<timestamp>/ directory by default.
 """
 
 import argparse
@@ -31,13 +31,15 @@ PLOT_PATH = OUTPUT_DIR / "nkm_fieldmap_comparison.png"
 METRICS_JSON = OUTPUT_DIR / "fieldmap_validation_metrics.json"
 
 
-def run_fieldmap_validation(output_dir=None):
+def run_fieldmap_validation(output_dir=None, repo_root=None):
     """Execute field map validation pipeline."""
-    output_dir = Path(output_dir) if output_dir is not None else OUTPUT_DIR
+    root = Path(repo_root or REPO_ROOT).resolve()
+    from types import SimpleNamespace
+    output_dir = stage_output(SimpleNamespace(output_dir=output_dir), root, "fieldmap")
     plot_path = output_dir / PLOT_PATH.name
     metrics_json = output_dir / METRICS_JSON.name
     # 1. Load and validate 1D By.txt
-    by_txt_path = REPO_ROOT / "By.txt"
+    by_txt_path = root / "By.txt"
     x_1d, by_1d = load_1d_fieldmap(by_txt_path)
     val_1d = validate_1d_fieldmap(x_1d, by_1d)
     
@@ -45,12 +47,14 @@ def run_fieldmap_validation(output_dir=None):
     coeffs, fit_residual = fmap_1d.fit_polynomial(degree=5)
     
     # 2. Load and validate 2D kickmap_file.txt
-    kick_txt_path = REPO_ROOT / "kickmap_file.txt"
+    kick_txt_path = root / "kickmap_file.txt"
     kmap_2d = NKMKickMap2D(kick_txt_path)
     grid_interp_err = kmap_2d.verify_grid_interpolation()
     sym_2d = kmap_2d.compute_symmetry_residuals()
     lorentz_test = kmap_2d.verify_lorentz_kick_sign(x_offset_m=-0.010)
     
+    if not val_1d["valid"] or not lorentz_test["sign_verified"]:
+        raise ValueError("Field-map or Lorentz-sign validation failed")
     # 3. Create plots
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
@@ -69,7 +73,7 @@ def run_fieldmap_validation(output_dir=None):
     # Plot 2: 2D integrated kick contour
     X_grid, Y_grid = np.meshgrid(kmap_2d.x_grid * 1e3, kmap_2d.y_grid * 1e3)
     cs = ax2.contourf(X_grid, Y_grid, kmap_2d.kx_map, levels=20, cmap='Spectral_r')
-    fig.colorbar(cs, ax=ax2, label=r'$\int B_y ds$ [T$\cdot$m]')
+    fig.colorbar(cs, ax=ax2, label='Horizontal kick [mrad]')
     ax2.set_xlabel('x [mm]')
     ax2.set_ylabel('y [mm]')
     ax2.set_title('NKM 2D Integrated Kick Map')
@@ -84,6 +88,7 @@ def run_fieldmap_validation(output_dir=None):
 
     # 4. Save metrics JSON
     metrics_summary = {
+        "input_sha256": input_hashes(root, ("By.txt", "kickmap_file.txt")),
         "1d_fieldmap_validation": val_1d,
         "1d_polyfit": {
             "degree": 5,
@@ -114,11 +119,15 @@ def run_fieldmap_validation(output_dir=None):
     print(f"Metrics saved to: {metrics_json}")
 
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output, input_hashes
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Validate NKM field maps")
-    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    parser.add_argument("--output-dir", type=Path, default=None)
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
 if __name__ == "__main__":
-    run_fieldmap_validation(parse_args().output_dir)
+    args = parse_args()
+    run_fieldmap_validation(args.output_dir, source_root(args, REPO_ROOT))

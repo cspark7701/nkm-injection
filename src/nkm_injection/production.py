@@ -15,6 +15,7 @@ import sys
 from typing import Callable, Optional, Tuple, Dict, Any
 
 from .publication_inputs import load_publication_inputs
+from .statistics import StatisticalPolicy
 from .results_schema import SerializableConfigMixin, PublicationManifest, validate_publication_manifest
 
 REQUIRED_INPUTS = ('By.txt', 'kickmap_file.txt', 'K4GSR_HBIv4-1.mat',
@@ -31,8 +32,8 @@ def _positive_integer(value, name, minimum=1):
 class ProductionRunConfig(SerializableConfigMixin):
     """Job settings; seed controls slicing, optimization and tolerance sampling.
 
-    Injection and MOGA retain their existing fixed tier/multi-seed presets,
-    which are saved by their producers. workers=None selects 90% of CPU cores.
+    Injection and MOGA offset their tier seed presets from seed=42.
+    All workload tiers preserve the canonical physics configurations. workers=None selects 90% of CPU cores.
     output_dir is an exact new run directory; existing directories are rejected.
     """
     repo_root: Path = field(default_factory=lambda: Path(__file__).resolve().parents[2])
@@ -40,7 +41,9 @@ class ProductionRunConfig(SerializableConfigMixin):
     workers: Optional[int] = None
     seed: int = 42
     tier: str = 'production'
-    tolerance_samples: int = 100
+    tolerance_samples: Optional[int] = None
+    oat_samples: Optional[int] = None
+    statistical_policy: StatisticalPolicy = field(default_factory=StatisticalPolicy)
     compile_pdf: bool = False
     verbose: bool = True
     color: str = 'auto'
@@ -48,6 +51,11 @@ class ProductionRunConfig(SerializableConfigMixin):
 
     def __post_init__(self):
         self.repo_root = Path(self.repo_root).resolve()
+        if self.tier in ('smoke', 'pilot', 'production'):
+            if self.tolerance_samples is None:
+                self.tolerance_samples = {'smoke': 4, 'pilot': 30, 'production': 100}[self.tier]
+            if self.oat_samples is None:
+                self.oat_samples = {'smoke': 2, 'pilot': 10, 'production': 30}[self.tier]
         self.output_dir = (Path(self.output_dir).resolve() if self.output_dir is not None else
                            self.repo_root / 'results' / f'production_run_{datetime.now():%Y%m%d_%H%M%S_%f}')
 
@@ -60,6 +68,8 @@ class ProductionRunConfig(SerializableConfigMixin):
             _positive_integer(self.workers, 'workers')
         _positive_integer(self.seed, 'seed', 0)
         _positive_integer(self.tolerance_samples, 'tolerance_samples')
+        _positive_integer(self.oat_samples, 'oat_samples')
+        self.statistical_policy.validate()
         if self.tier not in ('smoke', 'pilot', 'production'):
             raise ValueError('tier must be smoke, pilot or production')
         if self.color not in ('auto', 'always', 'never'):
@@ -70,6 +80,10 @@ class ProductionRunConfig(SerializableConfigMixin):
             raise ValueError(f'Python executable unavailable: {self.python_executable}')
         if not self.repo_root.is_dir():
             raise ValueError(f'repository root unavailable: {self.repo_root}')
+        if (self.output_dir == self.repo_root or self.repo_root.is_relative_to(self.output_dir) or
+                self.output_dir.is_relative_to(self.repo_root) and
+                not self.output_dir.is_relative_to(self.repo_root / 'results')):
+            raise ValueError('output must be separate from sources and under results/ inside the checkout')
         if self.output_dir.exists():
             raise ValueError(f'output directory already exists; choose a new run: {self.output_dir}')
         for name in REQUIRED_INPUTS:
@@ -103,26 +117,34 @@ def production_stages(config: ProductionRunConfig) -> Tuple[ProductionStage, ...
         ('fieldmap', 'NKM field validation', 'validate_nkm_fieldmap.py',
          ('fieldmap_validation_metrics.json',), ()),
         ('convergence', 'Symplectic slicing convergence', 'run_tracking_convergence.py',
-         ('tracking_convergence_summary.json',), ('--seed', str(config.seed))),
+         ('tracking_convergence_summary.json',), ('--seed', str(config.seed), '--tier', config.tier)),
         ('multiturn', 'Multi-turn injection', 'run_multiturn_injection.py',
          ('config.json', 'injection_metrics_summary.json'),
-         ('--tier', config.tier, '--workers', str(config.resolved_workers))),
+         ('--tier', config.tier, '--seed', str(config.seed), '--workers', str(config.resolved_workers))),
         ('optimization', 'Deterministic BTS matching', 'optimize_bts_publication.py',
-         ('config.json', 'bts_optimization_summary.json'), ('--seed', str(config.seed))),
+         ('config.json', 'bts_optimization_summary.json'), ('--seed', str(config.seed), '--tier', config.tier)),
         ('tolerances', 'Monte Carlo tolerance study', 'run_publication_tolerances.py',
          ('publication_tolerances_summary.json',),
          ('--samples', str(config.tolerance_samples), '--seed', str(config.seed),
+          '--oat-samples', str(config.oat_samples),
+          '--bootstrap-count', str(config.statistical_policy.bootstrap_count),
+          '--bootstrap-seed', str(config.statistical_policy.bootstrap_seed),
+          '--ci-level', str(config.statistical_policy.ci_level),
+          '--convergence-sizes', *map(str, config.statistical_policy.convergence_sizes),
+          '--convergence-tolerance', str(config.statistical_policy.convergence_tolerance),
+          '--invalid-sample-policy', config.statistical_policy.invalid_sample_policy,
           '--workers', str(config.resolved_workers), '--optimization-summary',
           str(out / 'optimization' / 'bts_optimization_summary.json'))),
         ('moga', 'Multi-seed MOGA study', 'run_publication_moga.py',
-         ('multi_seed_moga_summary.json',), ()),
+         ('multi_seed_moga_summary.json',), ('--tier', config.tier, '--seed', str(config.seed))),
         ('summary', 'Selected-run publication generation', 'reproduce_paper.py',
-         ('metrics.json', 'upstream_artifacts.json', 'figures/figure_data.json'),
+         ('metrics.json', 'upstream_artifacts.json', 'figures/figure_data.json') +
+         (('paper.pdf', 'pdf_build.json') if config.compile_pdf else ()),
          ('--manifest', str(manifest_path)) + (() if config.compile_pdf else ('--no-pdf',))),
     )
     for name, label, script, artifacts, args in specs:
         command = (config.python_executable, '-B', str(root / 'scripts' / script),
-                   '--output-dir', str(out / name)) + args
+                   '--output-dir', str(out / name), '--repo-root', str(root)) + args
         stages.append(ProductionStage(name, label, command, out / name, artifacts,
                        config.resolved_workers if name in ('multiturn', 'tolerances') else 1))
     return tuple(stages)
@@ -207,6 +229,8 @@ def run_production(config: Optional[ProductionRunConfig] = None, *, dry_run: boo
     try:
         for stage, record in zip(stages, report['stages']):
             current = record
+            record['status'] = 'running'
+            status_path.write_text(json.dumps(report, indent=2) + '\n')
             _status(f'\n[RUNNING] {stage.label}', config)
             if stage.name == 'summary':
                 manifest = _manifest(config)
@@ -219,7 +243,7 @@ def run_production(config: Optional[ProductionRunConfig] = None, *, dry_run: boo
             execute(stage)
             for artifact in stage.expected_artifacts:
                 path = stage.output_dir / artifact
-                if not path.is_file():
+                if not path.is_file() or path.stat().st_size == 0:
                     raise FileNotFoundError(f'{stage.name} did not produce required artifact: {path}')
             record['status'] = 'completed'
             status_path.write_text(json.dumps(report, indent=2) + '\n')

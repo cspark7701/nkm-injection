@@ -231,7 +231,7 @@ def test_tolerance_cli_saves_invalid_diagnostics_and_stops(tmp_path, monkeypatch
     monkeypatch.setattr(cli, 'repo_root', tmp_path)
     monkeypatch.setattr(cli, 'evaluate_robustness_statistics', evaluate)
     monkeypatch.setattr(cli, 'compute_one_at_a_time_sensitivity', lambda *a, **k: pytest.fail('OAT must not run on invalid ensemble'))
-    output = tmp_path / 'new_results'
+    output = tmp_path / 'results/new_results'
     with pytest.raises(RuntimeError, match=r'Invalid evaluations for samples \[0\]'):
         cli.main(['--reference', '--samples', '1', '--output-dir', str(output), '--kicker-model', 'off'])
     raw = json.loads((output/'publication_tolerances_summary.json').read_text())

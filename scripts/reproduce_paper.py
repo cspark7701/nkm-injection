@@ -19,6 +19,8 @@ from nkm_injection.results_schema import (PublicationManifest, validate_publicat
                                          initialize_publication_manifest)
 
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Manifest-driven Paper Reproduction Pipeline")
     parser.add_argument("-w", "--workers", type=int, default=None,
@@ -30,15 +32,17 @@ def parse_args(argv=None):
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--validate-only', action='store_true', help='Read-only validation of hashes and selected stage artifacts')
     mode.add_argument('--initialize', action='store_true', help='Explicitly create missing run directories and source hash baseline')
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 def main(argv=None):
     args = parse_args(argv)
+    root = source_root(args, repo_root)
     if args.validate_only or args.initialize:
-        path = Path(args.manifest) if args.manifest else repo_root / 'config/publication_manifest.json'
+        path = Path(args.manifest) if args.manifest else root / 'config/publication_manifest.json'
         manifest = PublicationManifest.load(path) if args.manifest or path.is_file() else PublicationManifest()
-        report = (initialize_publication_manifest(manifest, repo_root) if args.initialize else
-                  validate_publication_manifest(manifest, repo_root))
+        report = (initialize_publication_manifest(manifest, root) if args.initialize else
+                  validate_publication_manifest(manifest, root))
         print(json.dumps(report, indent=2))
         if args.validate_only and not report['valid']:
             raise SystemExit(1)
@@ -51,8 +55,9 @@ def main(argv=None):
     print(f"Run ID: {run_id}")
 
     try:
-        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf, workers=args.workers,
-                                     output_dir=args.output_dir, create_if_missing=False)
+        output_dir = stage_output(args, root, "paper")
+        summary = run_paper_pipeline(repo_root=root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf, workers=args.workers,
+                                     output_dir=output_dir, create_if_missing=False)
         if not args.no_pdf and not summary['pdf_compiled']:
             raise RuntimeError(f"Requested PDF build failed: {summary['pdf_build']['error']}")
         print("\n--- Reproduction Pipeline Completed Successfully ---\n")
@@ -63,7 +68,7 @@ def main(argv=None):
         print(f"PDF Compiled: {summary.get('pdf_compiled', False)}")
         if summary.get('pdf_path'):
             print(f"PDF Path: {summary['pdf_path']}")
-        print(f"Output Directory: {args.output_dir or repo_root / 'results' / 'paper' / run_id}")
+        print(f"Output Directory: {output_dir}")
     except Exception as e:
         print(f"\n[ERROR] Paper reproduction pipeline failed: {e}")
         sys.exit(1)

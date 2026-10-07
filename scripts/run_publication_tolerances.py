@@ -26,6 +26,8 @@ from nkm_injection.robust_optimization import (
 )
 
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output, input_hashes, check_seed
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Publication Error Model & Tolerance Budget Simulation")
     parser.add_argument("-w", "--workers", type=int, default=None,
@@ -57,11 +59,13 @@ def parse_args(argv=None):
     parser.add_argument('--convergence-sizes', type=int, nargs=2, default=(50, 100), metavar=('SMALL', 'LARGE'))
     parser.add_argument('--convergence-tolerance', type=float, default=.05)
     parser.add_argument('--invalid-sample-policy', choices=('exclude', 'raise'), default='exclude')
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
+    root = source_root(args, repo_root)
     if args.samples <= 0 or args.oat_samples <= 0 or args.seed < 0 or (args.oat_seed is not None and args.oat_seed < 0):
         raise ValueError("Sample counts must be positive and seeds non-negative")
     policy = StatisticalPolicy(bootstrap_count=args.bootstrap_count, bootstrap_seed=args.bootstrap_seed,
@@ -75,7 +79,7 @@ def main(argv=None):
     optimization_source = selected.source
     oat_seed = args.seed if args.oat_seed is None else args.oat_seed
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-    output_dir = args.output_dir or (repo_root / "results" / "publication_tolerances" / f"run_{timestamp}")
+    output_dir = stage_output(args, root, 'publication_tolerances')
     if output_dir.exists() and any(output_dir.iterdir()):
         raise ValueError("Tolerance output directory must be new or empty")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -110,8 +114,8 @@ def main(argv=None):
                          "beta_max_limit_m": selected.constraints.beta_max_limit_m,
                          "mismatch_limit": selected.constraints.mismatch_limit,
                          "mismatch_definition": "sum", "beta_tolerance_m": .01, "mismatch_tolerance": .05}
-    if args.kicker_model != "fieldmap" or args.kickmap_path is not None:
-        evaluation_kwargs.update(kicker_model=args.kicker_model, kickmap_path=args.kickmap_path)
+    evaluation_kwargs.update(kicker_model=args.kicker_model,
+                             kickmap_path=args.kickmap_path or root / "kickmap_file.txt")
     try:
         stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, **evaluation_kwargs)
     except InvalidStatisticalSamplesError as error:

@@ -287,8 +287,9 @@ def load_publication_inputs(manifest: PublicationManifest, repo_root: Path) -> P
             if not lo <= capture <= hi:
                 raise ValueError('capture mean must lie inside the confidence interval')
             stored = _required(row, 'stored_centroid_osc_mm')
-            # Legacy zero-survivor runs store NaN; retain absence, never replace it with zero.
-            if capture == 0 and (stored is None or isinstance(stored, float) and np.isnan(stored)):
+            # Explicit null means the stored-beam metric is unavailable, independently of
+            # injected capture. Legacy zero-capture NaN remains compatible; never use zero.
+            if stored is None or capture == 0 and isinstance(stored, float) and np.isnan(stored):
                 stored_m = None
             else:
                 stored_m = _number(stored, 'stored_centroid_osc_mm', 0) * 1e-3

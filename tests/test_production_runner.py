@@ -233,7 +233,8 @@ def test_tolerance_receives_current_strengths_targets_and_workers(publication_ca
 def test_injection_lattice_path_is_local(tmp_path, monkeypatch):
     import scripts.run_multiturn_injection as cli
     seen = []
-    def stop_after_configuration(config):
+    def stop_after_configuration(config, *, source_mat_path=None):
+        assert source_mat_path == REPO_ROOT / "K4GSR_HBIv4-1.mat"
         seen.append(config.mat_filename)
         raise RuntimeError('configuration checked')
     monkeypatch.setattr(cli, 'load_storage_ring_injection_lattice', stop_after_configuration)
@@ -282,3 +283,84 @@ def test_pdf_build_cannot_write_to_manuscript_sources(publication_case, tmp_path
     assert commands
     assert (output / 'paper.pdf').read_bytes() == b'new compiled PDF'
     assert all(p.read_bytes() == raw for p, raw in before.items())
+
+
+@pytest.mark.parametrize('tier,mc,oat', [('smoke', 4, 2), ('pilot', 30, 10), ('production', 100, 30)])
+def test_tier_budgets_seed_and_policy_are_routed(tier, mc, oat):
+    from nkm_injection.statistics import StatisticalPolicy
+    policy = StatisticalPolicy(bootstrap_count=25, bootstrap_seed=7, ci_level=.9,
+                               convergence_sizes=(2, 4), convergence_tolerance=.1,
+                               invalid_sample_policy='raise')
+    config = ProductionRunConfig(repo_root=REPO_ROOT, output_dir='/tmp/unused-tier-contract',
+                                 tier=tier, seed=123, statistical_policy=policy)
+    assert (config.tolerance_samples, config.oat_samples) == (mc, oat)
+    restored = ProductionRunConfig.from_json(config.to_json())
+    assert restored.statistical_policy.to_dict() == policy.to_dict()
+    for stage in production_stages(config):
+        module = importlib.import_module('scripts.' + Path(stage.command[2]).stem)
+        args = module.parse_args(list(stage.command[3:]))
+        assert args.repo_root == REPO_ROOT
+        if hasattr(args, 'seed'):
+            assert args.seed == 123
+        if hasattr(args, 'tier'):
+            assert args.tier == tier
+        if stage.name == 'tolerances':
+            assert (args.samples, args.oat_samples) == (mc, oat)
+            assert args.bootstrap_count == 25 and args.bootstrap_seed == 7
+            assert args.ci_level == .9 and args.convergence_sizes == [2, 4]
+            assert args.invalid_sample_policy == 'raise'
+
+
+def test_stage_paths_refuse_source_and_occupied_destinations(tmp_path):
+    from types import SimpleNamespace
+    from nkm_injection.stage_cli import stage_output
+    root = tmp_path / 'checkout'; root.mkdir()
+    for path in (root, root / 'src/new', tmp_path):
+        with pytest.raises(ValueError, match='separate from sources'):
+            stage_output(SimpleNamespace(output_dir=path), root, 'study')
+        assert not (root / 'src').exists()
+    output = root / 'results/new'; output.mkdir(parents=True)
+    assert stage_output(SimpleNamespace(output_dir=output), root, 'study') == output
+    (output / 'keep.txt').write_text('keep')
+    with pytest.raises(ValueError, match='new or empty'):
+        stage_output(SimpleNamespace(output_dir=output), root, 'study')
+    assert (output / 'keep.txt').read_text() == 'keep'
+
+
+def test_inventory_uses_selected_source_checkout(tmp_path):
+    import hashlib
+    import scripts.inventory_protected_hashes as cli
+    root = tmp_path / 'sources'; root.mkdir()
+    source = root / 'By.txt'; source.write_text('selected scientific source')
+    output = tmp_path / 'inventory'
+    cli.main(['--repo-root', str(root), '--output-dir', str(output)])
+    saved = json.loads((output / 'protected_files_manifest.json').read_text())
+    assert saved == {'By.txt': hashlib.sha256(source.read_bytes()).hexdigest()}
+    assert not (root / 'results').exists()
+
+
+def test_unavailable_metrics_are_null_but_infinity_is_rejected():
+    import numpy as np
+    from nkm_injection.stage_cli import nullable_result_metrics
+    assert nullable_result_metrics({'missing': np.nan, 'observed': np.float64(2)}) == {
+        'missing': None, 'observed': 2.0}
+    with pytest.raises(ValueError, match='finite'):
+        nullable_result_metrics({'invalid': np.inf})
+
+
+def test_empty_artifact_stops_pipeline(production_case):
+    _, config, _ = production_case
+    def empty(stage):
+        (stage.output_dir / stage.expected_artifacts[0]).touch()
+    with pytest.raises(RuntimeError, match='required artifact'):
+        run_production(config, executor=empty)
+    saved = json.loads((config.output_dir / 'production_status.json').read_text())
+    assert saved['failed_stage'] == 'baseline'
+
+
+def test_requested_pdf_is_a_required_artifact():
+    config = ProductionRunConfig(repo_root=REPO_ROOT, output_dir='/tmp/unused-pdf-contract', compile_pdf=True)
+    summary = production_stages(config)[-1]
+    assert 'paper.pdf' in summary.expected_artifacts
+    assert 'pdf_build.json' in summary.expected_artifacts
+    assert '--no-pdf' not in summary.command

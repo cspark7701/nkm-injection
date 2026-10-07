@@ -21,24 +21,31 @@ from nkm_injection.beam import generate_6d_beam, compute_beam_statistics
 from nkm_injection.tracking import track_nkm_thick_symplectic, track_nkm_thick_rk4
 
 
+from nkm_injection.stage_cli import add_source_argument, source_root, stage_output, input_hashes, check_seed
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="NKM slicing convergence (sequential)")
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument('--tier', choices=('smoke', 'pilot', 'production'), default='production')
+    add_source_argument(parser)
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
+    root = source_root(args, repo_root)
+    check_seed(args.seed)
+    hashes = input_hashes(root, ("By.txt",))
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = args.output_dir or (repo_root / "results" / "field_validation" / f"tracking_convergence_{timestamp}")
+    output_dir = stage_output(args, root, 'tracking_convergence')
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== NKM Thick-Element Tracking Convergence Study ===")
     print(f"Output directory: {output_dir}")
 
     # Load 1D field map By.txt
-    by_path = repo_root / "By.txt"
+    by_path = root / "By.txt"
     x_by, by_vals = load_1d_fieldmap(by_path)
     fmap = NKMFieldMap1D(x_by, by_vals)
 
@@ -47,7 +54,8 @@ def main(argv=None):
         bx = np.zeros_like(x)
         return by, bx
 
-    slice_counts = [10, 20, 40, 80, 160]
+    slice_counts = [10, 20, 40] if args.tier == 'smoke' else [10, 20, 40, 80, 160]
+    n_particles = {'smoke': 16, 'pilot': 100, 'production': 1000}[args.tier]
     length_m = 0.525
     energy_GeV = 4.0
 
@@ -57,7 +65,7 @@ def main(argv=None):
 
     # 2. Injected beam distribution (1000 particles)
     beam_inj_in = generate_6d_beam(
-        n_particles=1000,
+        n_particles=n_particles,
         beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
         beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
         x_offset=-0.016,
@@ -102,6 +110,15 @@ def main(argv=None):
     summary_output = {
         "timestamp": timestamp,
         "seed": args.seed,
+        "tier": args.tier,
+        "n_particles": n_particles,
+        "distribution": {"beta_x_m": 10., "alpha_x": 0., "emit_x_m_rad": 1e-7,
+                         "beta_y_m": 5., "alpha_y": 0., "emit_y_m_rad": 1e-8,
+                         "energy_spread": 1.1e-3, "bunch_length_m": .0134, "x_offset_m": -.016},
+        "energy_eV": energy_GeV*1e9, "length_m": length_m,
+        "input_sha256": hashes,
+        "observation_point": "NKM exit",
+        "recommended_slices_policy": "configured production standard; not inferred from smoke results",
         "execution_mode": "sequential",
         "slice_counts": slice_counts,
         "results": results_by_slice,

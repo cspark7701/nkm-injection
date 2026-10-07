@@ -64,7 +64,7 @@ def test_only_supplied_run_is_used_and_metadata_reconstructs_inputs(optimization
     oat = []
     monkeypatch.setattr(cli,'evaluate_robustness_statistics',evaluate)
     monkeypatch.setattr(cli,'compute_one_at_a_time_sensitivity',lambda *args, **kwargs: oat.append((args,kwargs)) or {})
-    output = tmp_path/'new tolerance'
+    output = tmp_path/'results/new tolerance'
     cli.main(['--optimization-summary',str(first), '--error-config',str(error_path),
               '--samples','3','--seed','123','--oat-samples','4','--oat-seed','99',
               '--workers','2','--output-dir',str(output)])
@@ -137,7 +137,7 @@ def test_explicit_reference_mode_ignores_other_runs(optimization_runs,tmp_path,m
     monkeypatch.setattr(cli,'repo_root',tmp_path)
     monkeypatch.setattr(cli,'evaluate_robustness_statistics',lambda *a,**k: fake_statistics())
     monkeypatch.setattr(cli,'compute_one_at_a_time_sensitivity',lambda *a,**k: {})
-    output=tmp_path/'reference'
+    output=tmp_path/'results/reference'
     cli.main(['--reference','--output-dir',str(output),'--seed','5','--oat-samples','2'])
     saved=json.loads((output/'publication_tolerances_summary.json').read_text())
     assert saved['optimization_source']=={'mode':'reference'}

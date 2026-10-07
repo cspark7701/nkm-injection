@@ -156,3 +156,15 @@ assert summary['figures_count'] == 4
                                capture_output=True, text=True, timeout=60)
     assert completed.returncode == 0, completed.stderr
     assert (root / 'results/paper/fresh_process/upstream_artifacts.json').is_file()
+
+
+def test_stored_beam_absence_is_independent_of_injected_capture(publication_case):
+    root, manifest = publication_case()
+    path = root / manifest.injection_run / 'injection_metrics_summary.json'
+    data = json.loads(path.read_text())
+    data[0].update(capture_mean=.8, capture_ci_lo=.7, capture_ci_hi=.9,
+                   stored_centroid_osc_mm=None)
+    path.write_text(json.dumps(data, allow_nan=False))
+    inputs = load_publication_inputs(manifest, root)
+    assert inputs.injection[0].capture == .8
+    assert inputs.injection[0].stored_oscillation_m is None

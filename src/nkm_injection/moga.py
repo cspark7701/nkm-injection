@@ -175,7 +175,7 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
 
 
 
-def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5, n_turns: int = 10, ring_config=None):
+def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5, n_turns: int = 10, ring_config=None, seed: int = 42):
     """Reevaluate finalists with optional run-local storage-ring configuration.
 
     ring_config uses StorageRingInjectionConfig (m, rad, eV); its mat_filename
@@ -209,7 +209,7 @@ def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, 
         transmissions = []
         clearances = []
         for s in range(n_mc_seeds):
-            booster_cfg = BoosterExtractionConfig(n_particles=n_particles, seed=42 + s)
+            booster_cfg = BoosterExtractionConfig(n_particles=n_particles, seed=seed + s)
             res = run_end_to_end_pipeline(
                 booster_config=booster_cfg,
                 bts_config=bts_cfg,

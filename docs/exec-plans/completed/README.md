@@ -304,3 +304,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 93. [**Milestone 93 — Task 08: Canonical Package Imports**](93_task08_canonical_package_imports.md)
     - Unified maintained callers under the installed namespace, preserved root exports through lazy loading, added the production console command, and verified 416 tests plus editable/wheel imports, CLI help and notebook import smoke checks outside the checkout.
+
+94. [**Milestone 94 — Task 09: Shared Tracking Input Contracts**](94_task09_tracking_input_contracts.md)
+    - Shared validated integrator parameters, particle/loss boundaries and drift; required positive counts and finite coordinates, preserved original loss identities including native AT losses, documented migration, and verified 520 tests plus a fresh-process drift/aperture smoke check.

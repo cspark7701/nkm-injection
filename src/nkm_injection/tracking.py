@@ -17,6 +17,7 @@ from .units import (
     ELECTRON_CHARGE_C
 )
 from .integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
+from .tracking_contracts import TrackingParameters, validate_particle_array, drift, finite_components, finite_scalar
 
 
 @dataclass
@@ -51,6 +52,7 @@ class TrackingResult:
                   metadata: Optional[Dict[str, Any]] = None) -> "TrackingResult":
         """Construct a TrackingResult directly from a 6D beam array and compute beam statistics."""
         from .beam import compute_beam_statistics
+        beam, _ = validate_particle_array(beam)
         stats = compute_beam_statistics(beam)
         return cls(
             particles_6d=beam,
@@ -156,25 +158,11 @@ def track_nkm_thin_kick(beam: np.ndarray,
     Returns:
         Tracked 6D particle array after centered thin kick.
     """
-    out_beam = beam.copy()
-    valid_mask = ~np.isnan(out_beam[0, :])
-    if not np.any(valid_mask):
-        return out_beam
-
-    half_L = length_m * 0.5
-
-    # 1. Initial drift through L/2
-    out_beam[0, valid_mask] += out_beam[1, valid_mask] * half_L
-    out_beam[2, valid_mask] += out_beam[3, valid_mask] * half_L
-
-    # 2. Thin Kick at center
-    x_pos = out_beam[0, valid_mask]
-    y_pos = out_beam[2, valid_mask]
-    
-    kx_val, ky_val = kick_fn(x_pos, y_pos)
-    
-    energy_eV = energy_GeV * 1e9
-    
+    if not callable(kick_fn):
+        raise TypeError('kick_fn must be callable')
+    parameters = TrackingParameters(length_m=length_m, energy_GeV=energy_GeV,
+                                    scale_factor=scale_factor)
+    energy_eV = parameters.energy_eV
     # Resolve metadata without magnitude guessing
     if metadata is None:
         if hasattr(kick_fn, "__self__") and hasattr(kick_fn.__self__, "metadata"):
@@ -194,6 +182,21 @@ def track_nkm_thin_kick(beam: np.ndarray,
                 beam_energy_eV=energy_eV
             )
             
+    metadata.validate()
+    if metadata.beam_energy_eV is not None:
+        finite_scalar(metadata.beam_energy_eV, 'metadata.beam_energy_eV', minimum=0, nonzero=True)
+    TrackingParameters(length_m=length_m, energy_GeV=energy_GeV,
+                       particle_charge_C=metadata.particle_charge_C, scale_factor=scale_factor)
+    out_beam, valid_mask = validate_particle_array(beam, copy=True)
+    half_L = parameters.length_m * 0.5
+    if not np.any(valid_mask) or parameters.scale_factor == 0:
+        drift(out_beam, valid_mask, parameters.length_m)
+        validate_particle_array(out_beam)
+        return out_beam
+    drift(out_beam, valid_mask, half_L)
+    kx_val, ky_val = finite_components(kick_fn(out_beam[0, valid_mask], out_beam[2, valid_mask]),
+                                     (int(valid_mask.sum()),), 'kick_fn')
+
     if metadata.value_type == "kick_angle":
         delta_xp = convert_kick_angle(kx_val, metadata.value_unit, "rad") * scale_factor
         delta_yp = convert_kick_angle(ky_val, metadata.value_unit, "rad") * scale_factor
@@ -215,8 +218,8 @@ def track_nkm_thin_kick(beam: np.ndarray,
     out_beam[3, valid_mask] += delta_yp
     
     # 3. Final drift through L/2
-    out_beam[0, valid_mask] += out_beam[1, valid_mask] * half_L
-    out_beam[2, valid_mask] += out_beam[3, valid_mask] * half_L
+    drift(out_beam, valid_mask, half_L)
+    validate_particle_array(out_beam)
     
     return out_beam
 

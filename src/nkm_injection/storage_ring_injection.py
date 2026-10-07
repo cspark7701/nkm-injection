@@ -33,6 +33,7 @@ from .beam import (
 from .tracking import track_nkm_thin_kick, track_nkm_thick_symplectic, TrackingResult
 from .kickmap import NKMKickMap2D
 from .results_schema import SerializableConfigMixin
+from .tracking_contracts import TrackingParameters, positive_count, finite_scalar, validate_particle_array, require_finite_active
 
 
 @dataclass
@@ -79,8 +80,7 @@ class StorageRingInjectionConfig(SerializableConfigMixin):
         """Validate physical parameters for storage ring injection."""
         if self.energy_eV <= 0:
             raise ValueError(f"StorageRingInjectionConfig energy_eV must be positive, got {self.energy_eV}")
-        if self.nkm_length_m <= 0:
-            raise ValueError(f"nkm_length_m must be positive, got {self.nkm_length_m}")
+        finite_scalar(self.nkm_length_m, 'nkm_length_m', minimum=0)
         if self.septum_thickness_m <= 0:
             raise ValueError(f"septum_thickness_m must be positive, got {self.septum_thickness_m}")
         if self.aperture_x_m <= 0 or self.aperture_y_m <= 0 or self.injection_aperture_x_m <= 0:
@@ -389,6 +389,18 @@ def get_kicker_evaluator(
         return kickmap_obj, meta
 
 
+
+def _ring_tracking_inputs(beam, n_turns, scale_factor, config):
+    """Validate ring boundaries using eV/C/m and preserve initial lost indices."""
+    n_turns = positive_count(n_turns, 'n_turns')
+    energy_eV = finite_scalar(config.energy_eV, 'energy_eV', minimum=0, nonzero=True)
+    TrackingParameters(length_m=config.nkm_length_m, energy_GeV=energy_eV * 1e-9,
+                       particle_charge_C=config.particle_charge_C, scale_factor=scale_factor)
+    for name in ('aperture_x_m', 'aperture_y_m', 'injection_aperture_x_m'):
+        finite_scalar(getattr(config, name), name, minimum=0, nonzero=True)
+    current, active = validate_particle_array(beam, copy=True)
+    return current, n_turns, np.flatnonzero(~active).tolist()
+
 def track_multiturn_injection(beam: np.ndarray,
                               ring: at.Lattice,
                               n_turns: int = 10,
@@ -417,15 +429,15 @@ def track_multiturn_injection(beam: np.ndarray,
     one-turn map at dp=0 is computed once per call and is never reused across
     calls. Keep the lattice unchanged during each call; changes between calls
     (strengths, geometry, energy, alignment or RF/radiation settings) are read
-    when the next map is computed. A zero-turn call does not compute a map.
+    when the next map is computed. Turn counts must be positive integers.
     """
     if config is None:
         config = StorageRingInjectionConfig()
 
+    current_beam, n_turns, initial_lost_indices = _ring_tracking_inputs(beam, n_turns, scale_factor, config)
     validated_model = validate_kicker_model(kicker_model)
     energy_GeV = config.energy_eV * 1e-9
-    n_particles = beam.shape[1]
-    current_beam = beam.copy()
+    n_particles = current_beam.shape[1]
 
     # Track histories
     turn_centroids = []
@@ -440,14 +452,17 @@ def track_multiturn_injection(beam: np.ndarray,
     # Call-local map: lattice identity does not describe its mutable physics.
     # Reuse this map only across turns within this tracking call.
     M66 = None
-    if n_turns > 0:
+    if np.any(validate_particle_array(current_beam)[1]):
         M66, _ = ring.find_m66(dp=0.0)
+        M66 = np.asarray(M66, dtype=float)
+        if M66.shape != (6, 6) or not np.isfinite(M66).all():
+            raise ValueError('one-turn map must be finite with shape (6, 6)')
 
     for turn in range(1, n_turns + 1):
         # 1. Apply Kicker on Turn 1 only
         if turn == 1 and validated_model != "off":
             kick_fn, meta = get_kicker_evaluator(validated_model, config=config, kickmap_obj=kickmap_obj)
-            valid_mask = ~np.isnan(current_beam[0, :])
+            valid_mask = validate_particle_array(current_beam)[1]
             if np.any(valid_mask):
                 current_beam[:, valid_mask] = track_nkm_thin_kick(
                     current_beam[:, valid_mask],
@@ -464,16 +479,17 @@ def track_multiturn_injection(beam: np.ndarray,
         # Courant-Snyder invariant (betatron oscillation + dispersion). Physical
         # aperture checking is done explicitly below via config.aperture_x_m and
         # config.aperture_y_m, which define the effective injection acceptance.
-        valid_before = ~np.isnan(current_beam[0, :])
+        valid_before = validate_particle_array(current_beam)[1]
         if np.any(valid_before):
             current_beam[:, valid_before] = M66 @ current_beam[:, valid_before]
+            require_finite_active(current_beam, valid_before)
 
         # 3. Check physical aperture limits & loss accounting.
         # Turn 1: use the wider injection aperture (injected beam may temporarily
         # occupy the injection septum region). Turns 2+: use stored-beam aperture.
         ap_x = config.injection_aperture_x_m if turn == 1 else config.aperture_x_m
         ap_y = config.aperture_y_m
-        valid_mask = ~np.isnan(current_beam[0, :])
+        valid_mask = validate_particle_array(current_beam)[1]
         loss_x = np.abs(current_beam[0, :]) > ap_x
         loss_y = np.abs(current_beam[2, :]) > ap_y
         loss_any = loss_x | loss_y
@@ -508,13 +524,14 @@ def track_multiturn_injection(beam: np.ndarray,
         centroid=final_stats["centroid"],
         emittance_x_mrad=float(final_stats["emittance_x_mrad"]),
         emittance_y_mrad=float(final_stats["emittance_y_mrad"]),
-        centroid_history=np.array(turn_centroids),
-        emittance_history=np.array(turn_emittances),
+        centroid_history=np.array(turn_centroids).reshape(-1, 2),
+        emittance_history=np.array(turn_emittances).reshape(-1, 2),
         survival_history=turn_survived,
         loss_log=loss_log,
         metadata={
             "kicker_model": kicker_model,
             "n_turns": n_turns,
+            "initial_lost_indices": initial_lost_indices,
         }
     )
 
@@ -580,6 +597,7 @@ def track_element_resolved_injection(beam: np.ndarray,
     if config is None:
         config = StorageRingInjectionConfig()
 
+    current_beam, n_turns, initial_lost_indices = _ring_tracking_inputs(beam, n_turns, scale_factor, config)
     validated_model = validate_kicker_model(kicker_model)
 
     if septum_model is None:
@@ -597,8 +615,7 @@ def track_element_resolved_injection(beam: np.ndarray,
     )
 
     energy_GeV = config.energy_eV * 1e-9
-    n_particles = beam.shape[1]
-    current_beam = beam.copy()
+    n_particles = current_beam.shape[1]
 
     turn_centroids = []
     turn_emittances = []
@@ -636,15 +653,40 @@ def track_element_resolved_injection(beam: np.ndarray,
                     metadata=meta
                 )
             else:
-                # Track single element
-                res_elem = elem.track(current_beam, energy=config.energy_eV)
-                if isinstance(res_elem, tuple):
-                    current_beam = res_elem[0]
-                elif isinstance(res_elem, np.ndarray) and res_elem.ndim == 4:
-                    current_beam = res_elem[:, :, 0, 0]
+                # Track only active columns; preserve pre-existing lost coordinates.
+                active = validate_particle_array(current_beam)[1]
+                indices = np.flatnonzero(active)
+                if indices.size:
+                    before = current_beam[:, active].copy(order='F')
+                    tracked = before.copy(order='F')
+                    res_elem = elem.track(tracked, energy=config.energy_eV)
+                    if isinstance(res_elem, tuple):
+                        tracked = res_elem[0]
+                    elif isinstance(res_elem, np.ndarray):
+                        tracked = res_elem[:, :, 0, 0] if res_elem.ndim == 4 else res_elem
+                    elif res_elem is not None:
+                        raise TypeError('element tracker must return coordinates, tuple or None')
+                    # Single-element AT passes mark aperture loss using ct=+Inf;
+                    # normalize this backend-only sentinel before public validation.
+                    tracked = np.asarray(tracked)
+                    if tracked.shape != before.shape:
+                        raise ValueError('element tracker changed particle shape/count')
+                    backend_lost = np.isposinf(tracked[5]) & np.isfinite(tracked[:5]).all(axis=0)
+                    if backend_lost.any():
+                        tracked = tracked.copy()
+                        tracked[:, backend_lost] = np.nan
+                    tracked, still_active = validate_particle_array(tracked)
+                    current_beam[:, active] = tracked
+                    for local in np.flatnonzero(~still_active):
+                        loss_log.append({
+                            "particle_index": int(indices[local]), "turn": turn,
+                            "element_index": elem_idx, "element_name": elem_name,
+                            "s_position_m": s_pos, "cause": "at_tracking_loss",
+                            "x_m": float(before[0, local]), "y_m": float(before[2, local])
+                        })
 
             # Element-resolved loss checks
-            valid_mask = ~np.isnan(current_beam[0, :])
+            valid_mask = validate_particle_array(current_beam)[1]
             if not np.any(valid_mask):
                 continue
 
@@ -699,13 +741,14 @@ def track_element_resolved_injection(beam: np.ndarray,
         centroid=final_stats["centroid"],
         emittance_x_mrad=float(final_stats["emittance_x_mrad"]),
         emittance_y_mrad=float(final_stats["emittance_y_mrad"]),
-        centroid_history=np.array(turn_centroids),
-        emittance_history=np.array(turn_emittances),
+        centroid_history=np.array(turn_centroids).reshape(-1, 2),
+        emittance_history=np.array(turn_emittances).reshape(-1, 2),
         survival_history=turn_survived,
         loss_log=loss_log,
         metadata={
             "kicker_model": kicker_model,
             "n_turns": n_turns,
+            "initial_lost_indices": initial_lost_indices,
             "tracking_mode": "element_resolved",
             "loss_position_exception": position_error,
             "loss_positions_complete": bool(len(s_positions) >= len(ring) and

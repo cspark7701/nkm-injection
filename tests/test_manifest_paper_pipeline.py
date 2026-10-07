@@ -165,7 +165,7 @@ def test_validation_guards_catch_invalid_values():
         BTSConfig.from_dict({"energy_eV": -1.0})
 
     # 2. StorageRingInjectionConfig: negative length or beta
-    with pytest.raises(ValueError, match="nkm_length_m must be positive"):
+    with pytest.raises(ValueError, match="nkm_length_m must be >= 0"):
         StorageRingInjectionConfig.from_dict({"nkm_length_m": -0.5})
 
     # 3. BTSMOGAConfig: inverted quad bounds

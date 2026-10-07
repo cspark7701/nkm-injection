@@ -8,6 +8,7 @@ shifting centroids, computing 2D/4D/6D beam covariance matrices, and measuring p
 from dataclasses import dataclass
 from typing import Dict, Tuple, Optional, Any, Union
 import numpy as np
+from .tracking_contracts import validate_particle_array
 import at
 
 
@@ -63,7 +64,7 @@ def compute_beam_centroid(beam: np.ndarray) -> np.ndarray:
     Compute mean centroid of a 6D particle beam [x_mean, xp_mean, y_mean, yp_mean, delta_mean, s_mean].
     Filters out NaN (lost) particles.
     """
-    valid_mask = ~np.isnan(beam[0, :])
+    beam, valid_mask = validate_particle_array(beam)
     if not np.any(valid_mask):
         return np.full(6, np.nan)
         
@@ -76,7 +77,7 @@ def compute_projected_emittance(beam: np.ndarray) -> Tuple[float, float]:
     
     emit_u = sqrt( <u^2> <u'^2> - <u u'>^2 )
     """
-    valid_mask = ~np.isnan(beam[0, :])
+    beam, valid_mask = validate_particle_array(beam)
     if not np.any(valid_mask):
         return np.nan, np.nan
         
@@ -99,7 +100,7 @@ def compute_beam_statistics(beam: np.ndarray) -> Dict[str, Any]:
     """
     Compute full statistical summary of a 6D particle beam.
     """
-    valid_mask = ~np.isnan(beam[0, :])
+    beam, valid_mask = validate_particle_array(beam)
     n_total = beam.shape[1]
     n_valid = int(np.sum(valid_mask))
     survival_fraction = float(n_valid / n_total) if n_total > 0 else 0.0

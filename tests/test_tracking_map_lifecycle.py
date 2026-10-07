@@ -125,13 +125,12 @@ def test_legacy_cache_attribute_cannot_override_current_map(beam, monkeypatch):
     assert ring.calls == 1
 
 
-def test_zero_turns_do_not_require_map_or_change_beam(beam):
+def test_zero_turns_rejected_before_computing_map(beam):
     class NoMapRing:
         def find_m66(self, **kwargs):
             pytest.fail('Zero-turn tracking must not compute a map')
-    result = track_multiturn_injection(beam, NoMapRing(), n_turns=0, kicker_model='off')
-    np.testing.assert_array_equal(result.particles_6d, beam)
-    assert result.survival_history == []
+    with pytest.raises(ValueError, match='n_turns must be a positive integer'):
+        track_multiturn_injection(beam, NoMapRing(), n_turns=0, kicker_model='off')
 
 
 def test_recomputation_preserves_aperture_loss_accounting():

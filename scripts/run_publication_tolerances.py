@@ -8,20 +8,19 @@ ranks dominant error contributors via OAT sensitivity scans, and outputs JSON me
 results/publication_tolerances/run_<timestamp>/.
 """
 
-from dataclasses import replace
-import hashlib
 import argparse
 import sys
 import json
 import datetime
 from pathlib import Path
-import numpy as np
 
 repo_root = Path(__file__).resolve().parent.parent
 if str(repo_root) not in sys.path:
     sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.bts_lattice import BTSConfig
+from src.nkm_injection.optimization_handoff import (
+    HANDOFF_UNITS, QUAD_NAMES, load_optimization_handoff, reference_handoff, load_error_budget,
+)
 from src.nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble
 from src.nkm_injection.robust_optimization import (
     evaluate_robustness_statistics,
@@ -43,73 +42,70 @@ def parse_args(argv=None):
                         default="fieldmap", help="Explicit kicker model; never a fallback")
     parser.add_argument("--kickmap-path", type=Path, default=None,
                         help="Selected field map; defaults to the protected repository map")
-    parser.add_argument("--optimization-summary", type=Path, default=None,
-                        help="Explicit BTS optimization summary from the current production run")
+    selection = parser.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--optimization-summary", type=Path,
+                           help="Selected feasible summary with adjacent complete config.json")
+    selection.add_argument("--reference", action="store_true",
+                           help="Explicitly use canonical reference optics instead of an optimization")
+    parser.add_argument("--error-config", type=Path, default=None,
+                        help="Complete ErrorBudgetConfig JSON; default budget is saved explicitly")
+    parser.add_argument("--oat-samples", type=int, default=30,
+                        help="Number of one-at-a-time samples per category")
+    parser.add_argument("--oat-seed", type=int, default=None,
+                        help="OAT seed; defaults to the Monte Carlo seed")
     return parser.parse_args(argv)
 
 
 def main(argv=None):
     args = parse_args(argv)
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    if args.samples <= 0 or args.oat_samples <= 0 or args.seed < 0 or (args.oat_seed is not None and args.oat_seed < 0):
+        raise ValueError("Sample counts must be positive and seeds non-negative")
+    selected = reference_handoff() if args.reference else load_optimization_handoff(args.optimization_summary)
+    config, error_source = load_error_budget(args.error_config)
+    nominal_bts, target_twiss = selected.bts, selected.target_twiss
+    optimization_source = selected.source
+    oat_seed = args.seed if args.oat_seed is None else args.oat_seed
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     output_dir = args.output_dir or (repo_root / "results" / "publication_tolerances" / f"run_{timestamp}")
+    if output_dir.exists() and any(output_dir.iterdir()):
+        raise ValueError("Tolerance output directory must be new or empty")
     output_dir.mkdir(parents=True, exist_ok=True)
-
     print("=== NKM Publication Error Model & Tolerance Budget ===")
+    print(f"Input mode: {selected.source['mode']}")
     print(f"Output directory: {output_dir}")
-
-    config = ErrorBudgetConfig()
-    
-    optimization_source = None
-    if args.optimization_summary is not None:
-        path = args.optimization_summary.resolve()
-        raw = path.read_bytes()
-        opt_data = json.loads(raw)
-        strengths = opt_data["optimized_strengths_raw"]
-        if (opt_data.get("success") is not True or
-                opt_data.get("constraints_satisfied") is not True or
-                np.asarray(strengths).shape != (9,) or not np.all(np.isfinite(strengths))):
-            raise ValueError("Explicit optimization must contain a successful feasible nine-strength solution")
-        saved = json.loads(path.with_name("config.json").read_text())
-        from src.nkm_injection.objectives import OpticsTargetConfig
-        target = OpticsTargetConfig.from_dict(saved["target_config"])
-        nominal_bts = replace(BTSConfig.from_dict(saved["bts_config"]),
-                              **dict(zip(("k_" + q for q in ("q11", "q12", "q13", "q21", "q22", "q23", "q31", "q32", "q33")), strengths)))
-        target_twiss = {"beta": [target.target_beta_x, target.target_beta_y],
-                        "alpha": [target.target_alpha_x, target.target_alpha_y]}
-        optimization_source = {"path": str(path), "sha256": hashlib.sha256(raw).hexdigest()}
-    else:
-        # Check for optimized BTS quadrupole strengths from Step 5
-        opt_runs = sorted((repo_root / "results" / "bts_publication_optimization").glob("run_*/bts_optimization_summary.json"))
-        if opt_runs:
-            with open(opt_runs[-1]) as f:
-                opt_data = json.load(f)
-            k_opt = opt_data.get("optimized_strengths_raw", None)
-            if k_opt and len(k_opt) >= 9:
-                nominal_bts = BTSConfig(
-                    k_q11=k_opt[0], k_q12=k_opt[1], k_q13=k_opt[2],
-                    k_q21=k_opt[3], k_q22=k_opt[4], k_q23=k_opt[5],
-                    k_q31=k_opt[6], k_q32=k_opt[7], k_q33=k_opt[8]
-                )
-            else:
-                nominal_bts = BTSConfig()
-        else:
-            nominal_bts = BTSConfig()
-
-        target_twiss = {"beta": [2.336495, 4.256241], "alpha": [-0.016335, 0.017772]}
+    reproducibility = {
+        "tolerance_input_schema_version": 1,
+        "optimization_source": optimization_source,
+        "error_config_source": error_source,
+        "nominal_bts_config": nominal_bts.to_dict(),
+        "nominal_strengths_by_name_m_minus2": dict(zip(QUAD_NAMES, nominal_bts.quad_strengths_list)),
+        "target_config": selected.target.to_dict(),
+        "constraint_config": selected.constraints.to_dict(),
+        "error_config": config.to_dict(),
+        "initial_twiss": selected.initial_twiss,
+        "target_twiss": target_twiss,
+        "units": dict(HANDOFF_UNITS),
+        "sampling": {"monte_carlo": {"n_samples": args.samples, "seed": args.seed},
+                     "oat": {"n_samples_per_category": args.oat_samples, "seed": oat_seed},
+                     "bootstrap": {"seed": 42, "replicates": 1000}},
+    }
 
     # 1. Fast Monte Carlo Ensemble
     n_samples = args.samples
     print(f"\nSampling Monte Carlo ensemble (N={n_samples}, workers={args.workers})...\n")
     samples = sample_error_ensemble(config, n_samples=n_samples, seed=args.seed)
 
-    evaluation_kwargs = {"n_workers": args.workers}
+    evaluation_kwargs = {"n_workers": args.workers, "initial_twiss": selected.initial_twiss,
+                         "beta_max_limit_m": selected.constraints.beta_max_limit_m,
+                         "mismatch_limit": selected.constraints.mismatch_limit,
+                         "mismatch_definition": "sum", "beta_tolerance_m": .01, "mismatch_tolerance": .05}
     if args.kicker_model != "fieldmap" or args.kickmap_path is not None:
         evaluation_kwargs.update(kicker_model=args.kicker_model, kickmap_path=args.kickmap_path)
     stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, **evaluation_kwargs)
     print(f"Invalid evaluations: {stats.get('n_invalid_evaluations', 0)}")
     if stats.get("n_invalid_evaluations", 0):
         diagnostic_path = output_dir / "publication_tolerances_summary.json"
-        diagnostic_path.write_text(json.dumps({"timestamp": timestamp, "seed": args.seed,
+        diagnostic_path.write_text(json.dumps({**reproducibility, "timestamp": timestamp, "seed": args.seed,
             "workers": args.workers, "optimization_source": optimization_source,
             "n_samples": n_samples, "robustness_statistics": stats,
             "sensitivity_ranking": {}}, indent=2, allow_nan=False) + "\n")
@@ -132,11 +128,13 @@ def main(argv=None):
 
     # 2. One-At-A-Time Sensitivity Ranking
     print("\n--- One-At-A-Time (OAT) Sensitivity Ranking ---\n")
-    rankings = compute_one_at_a_time_sensitivity(nominal_bts, target_twiss, n_samples=30, seed=args.seed, n_workers=args.workers)
+    rankings = compute_one_at_a_time_sensitivity(nominal_bts, target_twiss, n_samples=args.oat_samples, seed=oat_seed, n_workers=args.workers,
+        error_config=config, initial_twiss=selected.initial_twiss)
     for rank, (label, val) in enumerate(rankings.items(), start=1):
         print(f"{rank}. {label:35s}: Delta Merit = {val:.6f}")
 
     summary_data = {
+        **reproducibility,
         "timestamp": timestamp,
         "seed": args.seed,
         "workers": args.workers,
@@ -148,7 +146,7 @@ def main(argv=None):
 
     json_path = output_dir / "publication_tolerances_summary.json"
     with open(json_path, 'w') as f:
-        json.dump(summary_data, f, indent=2)
+        json.dump(summary_data, f, indent=2, allow_nan=False)
     print(f"\nSaved summary JSON: {json_path}")
 
 

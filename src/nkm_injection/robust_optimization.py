@@ -103,7 +103,14 @@ class RobustMonteCarloObjective(BaseOpticsObjective):
 
 def _eval_single_robustness_sample(args) -> Dict[str, Any]:
     """Pickleable worker: kicks in rad, beta in m; no substitute physics models."""
-    nominal_config, sample, target_twiss, capture_efficiency_fn, model, map_path = args
+    nominal_config, sample, target_twiss, capture_efficiency_fn, model, map_path, *extra = args
+    options = extra[0] if extra else {}
+    entrance = options.get("initial_twiss")
+    beta_limit = options.get("beta_max_limit_m", 60.)
+    mismatch_limit = options.get("mismatch_limit", .5)
+    beta_tolerance = options.get("beta_tolerance_m", 0.)
+    mismatch_tolerance = options.get("mismatch_tolerance", 0.)
+    mismatch_definition = options.get("mismatch_definition", "per_plane")
     identity = {"sample_id": sample["sample_id"],
                 "nominal_strengths_m_minus2": list(nominal_config.quad_strengths_list)}
     provenance = {"kicker_model": model, "beam_energy_eV": nominal_config.energy_eV,
@@ -119,7 +126,8 @@ def _eval_single_robustness_sample(args) -> Dict[str, Any]:
             kickmap_obj=kickmap)
         provenance["metadata"] = asdict(metadata)
         phase = "optics"
-        lattice, init_twiss = apply_sample_errors(nominal_config, sample)
+        lattice, init_twiss = apply_sample_errors(nominal_config, sample,
+            **({"initial_twiss": entrance} if entrance is not None else {}))
         prop = compute_twiss_propagation(lattice, init_twiss)
         validate_optics_result(prop)
         beta_end, alpha_end = prop["final_beta"], prop["final_alpha"]
@@ -139,9 +147,10 @@ def _eval_single_robustness_sample(args) -> Dict[str, Any]:
                 raise ValueError("Capture callback must return an efficiency between zero and one")
         require_finite([mx, my, bx_max, by_max, stored_kick_mrad], "Robustness metrics")
         reasons = []
-        if bx_max > 60 or by_max > 60:
+        if bx_max > beta_limit + beta_tolerance or by_max > beta_limit + beta_tolerance:
             reasons.append("beta_exceeded")
-        if mx > .5 or my > .5:
+        mismatch_value = mx + my if mismatch_definition == "sum" else max(mx, my)
+        if mismatch_value > mismatch_limit + mismatch_tolerance:
             reasons.append("mismatch_exceeded")
         if eff is not None and eff < .8:
             reasons.append("capture_failed")
@@ -164,7 +173,7 @@ def _eval_single_robustness_sample(args) -> Dict[str, Any]:
 
 def _eval_oat_single_category(args: Tuple[BTSConfig, Dict[str, Any], str, str, List[Dict[str, Any]], float]) -> Tuple[str, float]:
     """Top-level pickleable worker function for single OAT error sensitivity evaluation."""
-    nominal_config, target_twiss, err_key, label, base_samples, ref_merit = args
+    nominal_config, target_twiss, err_key, label, base_samples, ref_merit, initial_twiss = args
     delta_merits = []
     for s in base_samples:
         iso_sample = {
@@ -186,7 +195,7 @@ def _eval_oat_single_category(args: Tuple[BTSConfig, Dict[str, Any], str, str, L
             "septum_x_m": s["septum_x_m"] if err_key == "septum_x_m" else 0.0,
         }
         try:
-            lattice, init_twiss = apply_sample_errors(nominal_config, iso_sample)
+            lattice, init_twiss = apply_sample_errors(nominal_config, iso_sample, initial_twiss=initial_twiss)
             prop = compute_twiss_propagation(lattice, init_twiss)
             validate_optics_result(prop)
             mx = compute_mismatch_metric(prop["final_beta"][0], prop["final_alpha"][0], target_twiss["beta"][0], target_twiss["alpha"][0])
@@ -208,7 +217,13 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
                                    capture_efficiency_fn: Optional[Any] = None,
                                    n_workers: Optional[int] = 1,
                                    kicker_model: str = "fieldmap",
-                                   kickmap_path: Optional[Union[str, Path]] = None) -> Dict[str, Any]:
+                                   kickmap_path: Optional[Union[str, Path]] = None,
+                                   initial_twiss: Optional[Dict[str, Any]] = None,
+                                   beta_max_limit_m: float = 60.,
+                                   mismatch_limit: float = .5,
+                                   mismatch_definition: str = "per_plane",
+                                   beta_tolerance_m: float = 0.,
+                                   mismatch_tolerance: float = 0.) -> Dict[str, Any]:
     """
     Evaluate Monte Carlo statistics (p50, p68, p95, p99, failure probability, bootstrap CI)
     across a set of error realization samples using sequential or parallel execution.
@@ -218,6 +233,9 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
     Invalid evaluations have null metrics and are excluded from percentiles.
     failure_probability is physical failures / valid evaluations (None if none);
     feasible_fraction is physically feasible / all requested evaluations.
+    Optional entrance optics use m and dimensionless Twiss values. Thresholds
+    default to per-plane mismatch with zero tolerance; explicit sum mode and
+    beta/mismatch tolerances support saved optimizer feasibility conventions.
     """
     n_samples = len(samples)
     if n_samples == 0:
@@ -231,7 +249,18 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
             raise ValueError(f"Target {key} must contain two finite values")
     if np.any(np.asarray(target_twiss["beta"]) <= 0):
         raise ValueError("Target beta functions must be positive (m)")
-    task_args = [(nominal_config, s, target_twiss, capture_efficiency_fn, model, map_path) for s in samples]
+    for label, limit in (("beta_max_limit_m", beta_max_limit_m), ("mismatch_limit", mismatch_limit)):
+        if not np.isfinite(limit) or limit <= 0:
+            raise ValueError(f"{label} must be finite and positive")
+    if mismatch_definition not in ("per_plane", "sum"):
+        raise ValueError("mismatch_definition must be 'per_plane' or 'sum'")
+    for label, tolerance in (("beta_tolerance_m", beta_tolerance_m), ("mismatch_tolerance", mismatch_tolerance)):
+        if not np.isfinite(tolerance) or tolerance < 0:
+            raise ValueError(f"{label} must be finite and non-negative")
+    options = {"mismatch_definition": mismatch_definition, "beta_tolerance_m": beta_tolerance_m,
+               "mismatch_tolerance": mismatch_tolerance, "initial_twiss": initial_twiss, "beta_max_limit_m": beta_max_limit_m,
+               "mismatch_limit": mismatch_limit}
+    task_args = [(nominal_config, s, target_twiss, capture_efficiency_fn, model, map_path, options) for s in samples]
     results = parallel_map(_eval_single_robustness_sample, task_args, n_workers=n_workers, desc="evaluate_robustness_statistics")
 
     mx_list = []
@@ -285,6 +314,7 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
     return {
         "n_samples": n_samples,
         "evaluation_schema_version": 1,
+        "evaluation_thresholds": {key: value for key, value in options.items() if key != "initial_twiss"},
         "n_valid_evaluations": n_valid,
         "n_invalid_evaluations": n_samples - n_valid,
         "invalid_evaluation_fraction": (n_samples - n_valid) / n_samples,
@@ -342,36 +372,42 @@ def compute_one_at_a_time_sensitivity(nominal_config: BTSConfig,
                                        target_twiss: Dict[str, Any],
                                        n_samples: int = 50,
                                        seed: int = 42,
-                                       n_workers: Optional[int] = 1) -> Dict[str, float]:
+                                       n_workers: Optional[int] = 1,
+                                       error_config: Optional[ErrorBudgetConfig] = None,
+                                       initial_twiss: Optional[Dict[str, Any]] = None) -> Dict[str, float]:
     """
     Perform One-At-A-Time (OAT) sensitivity scans across individual error categories
     to rank dominant error contributors using sequential or parallel execution.
+    Optional error_config sets the sampled budget; entrance beta/dispersion use
+    m and alpha/dispersion derivatives are dimensionless. Reference and sampled
+    optics share the same supplied entrance configuration.
     """
-    base_samples = sample_error_ensemble(n_samples=n_samples, seed=seed)
+    error_config = error_config or ErrorBudgetConfig()
+    base_samples = sample_error_ensemble(error_config, n_samples=n_samples, seed=seed)
 
     ref_lattice = create_bts_lattice(nominal_config)
-    ref_twiss = DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
+    ref_twiss = initial_twiss if initial_twiss is not None else DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
     ref_prop = compute_twiss_propagation(ref_lattice, ref_twiss)
     ref_mx = compute_mismatch_metric(ref_prop["final_beta"][0], ref_prop["final_alpha"][0], target_twiss["beta"][0], target_twiss["alpha"][0])
     ref_my = compute_mismatch_metric(ref_prop["final_beta"][1], ref_prop["final_alpha"][1], target_twiss["beta"][1], target_twiss["alpha"][1])
     ref_merit = ref_mx + ref_my
 
     error_types = [
-        ("quad_k_err", "Quad Gradient Error (0.1%)"),
-        ("quad_dx_m", "Quad Alignment Offset (100 um)"),
-        ("quad_roll_rad", "Quad Roll Error (0.5 mrad)"),
-        ("booster_x_m", "Booster Centroid Jitter X (0.5 mm)"),
-        ("booster_xp_rad", "Booster Centroid Jitter Xp (0.2 mrad)"),
-        ("energy_dp_p", "Energy Error (0.1%)"),
-        ("beta_mismatch", "Twiss Beta Mismatch (5%)"),
-        ("nkm_scale_err", "NKM Field Scale Jitter (0.5%)"),
-        ("nkm_dx_m", "NKM Horizontal Alignment (200 um)"),
-        ("ring_co_x_m", "Ring Closed-Orbit Error (200 um)"),
-        ("septum_x_m", "Septum Position Error (100 um)"),
+        ("quad_k_err", f"Quad Gradient Error ({error_config.quad_k_rel_std*100:g}%)"),
+        ("quad_dx_m", f"Quad Alignment Offset ({error_config.quad_dx_std_m*1e6:g} um)"),
+        ("quad_roll_rad", f"Quad Roll Error ({error_config.quad_roll_std_rad*1e3:g} mrad)"),
+        ("booster_x_m", f"Booster Centroid Jitter X ({error_config.booster_x_jitter_std_m*1e3:g} mm)"),
+        ("booster_xp_rad", f"Booster Centroid Jitter Xp ({error_config.booster_xp_jitter_std_rad*1e3:g} mrad)"),
+        ("energy_dp_p", f"Energy Error ({error_config.energy_dp_p_std*100:g}%)"),
+        ("beta_mismatch", f"Twiss Beta Mismatch ({error_config.beta_mismatch_rel_std*100:g}%)"),
+        ("nkm_scale_err", f"NKM Field Scale Jitter ({error_config.nkm_scale_std*100:g}%)"),
+        ("nkm_dx_m", f"NKM Horizontal Alignment ({error_config.nkm_dx_std_m*1e6:g} um)"),
+        ("ring_co_x_m", f"Ring Closed-Orbit Error ({error_config.ring_co_x_std_m*1e6:g} um)"),
+        ("septum_x_m", f"Septum Position Error ({error_config.septum_x_std_m*1e6:g} um)"),
     ]
 
     task_args = [
-        (nominal_config, target_twiss, err_key, label, base_samples, ref_merit)
+        (nominal_config, target_twiss, err_key, label, base_samples, ref_merit, initial_twiss)
         for err_key, label in error_types
     ]
     results = parallel_map(_eval_oat_single_category, task_args, n_workers=n_workers, desc="compute_one_at_a_time_sensitivity")

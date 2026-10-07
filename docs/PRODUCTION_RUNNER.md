@@ -52,7 +52,7 @@ Every stage command receives `--output-dir`. Only stages that actually use worke
 
 The runner checks expected artifacts after each successful child process. Before publication, it verifies input hashes and loads the complete selected publication bundle. Only then does it save the manifest and launch reproduction. Missing files, malformed publication inputs, changed scientific hashes and child failures stop later stages. The run is left intact for diagnosis; it is never reused or automatically overwritten.
 
-The tolerance CLI's explicit path mode reads strengths and targets from this run and records the selected summary path/hash. Its legacy no-path discovery remains available to standalone callers; removing that fallback and completing its configuration contract remains Task 06. Injection is still the existing independently configured study, not a newly coupled BTS-to-ring simulation.
+The tolerance CLI requires this run's explicit optimization summary (or explicitly selected reference mode for standalone studies). It validates saved strengths/configurations and records summary/config hashes, nominal geometry and entrance/target optics, error settings and Monte Carlo/OAT seeds and counts. See [tolerance inputs](TOLERANCE_INPUTS.md). Injection is still the existing independently configured study, not a newly coupled BTS-to-ring simulation.
 
 ## Saved job records
 

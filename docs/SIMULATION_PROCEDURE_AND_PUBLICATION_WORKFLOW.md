@@ -65,7 +65,7 @@ flowchart TD
 
 ### Step 5: Error Budget & Monte Carlo Robustness Analysis
 - **Modules**: `src/nkm/errors.py`, `src/nkm/robust_optimization.py`
-- **Script**: `python3 scripts/run_publication_tolerances.py`
+- **Script**: `python3 scripts/run_publication_tolerances.py --optimization-summary path/to/bts_optimization_summary.json`
 - **Procedure**:
   1. Model uncertainties across 5 categories: Optics, Orbit/Alignment, Beam, NKM, and Storage Ring errors.
   2. Apply rigidity-consistent energy error scaling ($B\rho = E/c$).
@@ -112,7 +112,7 @@ flowchart TD
 | **Tracking Convergence** | `python3 scripts/run_tracking_convergence.py` | Runs $N_{\text{slices}}$ slice convergence study. |
 | **Multi-Turn Injection** | `python3 scripts/run_multiturn_injection.py` | Evaluates turn-by-turn capture efficiency & kicker models. |
 | **Deterministic Opt** | `python3 scripts/optimize_bts_publication.py` | Executes 2-stage SLSQP matching & Jacobian SVD analysis. |
-| **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py` | Runs Monte Carlo robustness & OAT sensitivity rankings. |
+| **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py --optimization-summary path/to/bts_optimization_summary.json` | Runs Monte Carlo robustness & OAT sensitivity rankings. |
 | **MOGA Trade-offs** | `python3 scripts/run_publication_moga.py` | Runs multi-seed NSGA-II Pareto optimization. |
 | **Paper Reproduction** | `python3 scripts/reproduce_paper.py` | Regenerates all manuscript figures, tables & provenanced metrics. |
 | **Test Suite** | `pytest -v` | Executes all 161 unit, integration, and regression tests. |

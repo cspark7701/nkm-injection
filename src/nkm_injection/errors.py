@@ -6,7 +6,7 @@ Beam, NKM, and Storage Ring errors), Monte Carlo sampling with common random num
 rigidity-consistent energy error scaling, and one-at-a-time tolerance sensitivity scans.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Dict, List, Optional, Tuple, Any, Union
 import numpy as np
 import at
@@ -98,11 +98,15 @@ def sample_error_ensemble(config: Optional[ErrorBudgetConfig] = None,
     return samples
 
 
-def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tuple[at.Lattice, Dict[str, Any]]:
+def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any],
+                        initial_twiss: Optional[Dict[str, Any]] = None) -> Tuple[at.Lattice, Dict[str, Any]]:
     """
     Apply an error realization sample to construct a perturbed AT lattice and initial Twiss.
     Energy errors scale beam rigidity B_rho consistently without changing physical fields.
     Centroid jitter is treated strictly as phase-space offset, independent of dispersion.
+    Nominal geometry/apertures are retained. Optional entrance beta/dispersion
+    use m; alpha and dispersion derivatives are dimensionless. Defaults remain
+    the canonical BTS entrance for callers that omit initial_twiss.
     """
     k_list = nominal_config.quad_strengths_list
     dp_p = sample.get("energy_dp_p", 0.0)
@@ -111,12 +115,8 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
     # Energy error alters beam rigidity B_rho = E / c
     energy_perturbed_eV = nominal_config.energy_eV * (1.0 + dp_p)
 
-    pert_config = BTSConfig(
-        k_q11=perturbed_k[0], k_q12=perturbed_k[1], k_q13=perturbed_k[2],
-        k_q21=perturbed_k[3], k_q22=perturbed_k[4], k_q23=perturbed_k[5],
-        k_q31=perturbed_k[6], k_q32=perturbed_k[7], k_q33=perturbed_k[8],
-        energy_eV=energy_perturbed_eV
-    )
+    pert_config = replace(nominal_config, energy_eV=energy_perturbed_eV,
+        **dict(zip(('k_' + name for name in ('q11', 'q12', 'q13', 'q21', 'q22', 'q23', 'q31', 'q32', 'q33')), perturbed_k)))
 
     lattice = create_bts_lattice(pert_config)
     quad_names = ['q11', 'q12', 'q13', 'q21', 'q22', 'q23', 'q31', 'q32', 'q33']
@@ -149,12 +149,19 @@ def apply_sample_errors(nominal_config: BTSConfig, sample: Dict[str, Any]) -> Tu
             elem.R1 = r_mat
             elem.R2 = r_mat.T
 
+    entrance = initial_twiss if initial_twiss is not None else DEFAULT_BTS_ENTRANCE_TWISS.to_dict()
+    for key, size in (("beta", 2), ("alpha", 2), ("dispersion", 4)):
+        values = np.asarray(entrance[key], dtype=float)
+        if values.shape != (size,) or not np.all(np.isfinite(values)):
+            raise ValueError(f"Entrance {key} must contain {size} finite values")
+    if np.any(np.asarray(entrance["beta"]) <= 0):
+        raise ValueError("Entrance beta functions must be positive (m)")
     # Initial Twiss with Twiss mismatch errors (dispersion is NOT corrupted by centroid jitter)
     init_twiss = {
-        'beta': [DEFAULT_BTS_ENTRANCE_TWISS.beta_x * (1.0 + sample.get("beta_mismatch_x", 0.0)),
-                 DEFAULT_BTS_ENTRANCE_TWISS.beta_y * (1.0 + sample.get("beta_mismatch_y", 0.0))],
-        'alpha': [DEFAULT_BTS_ENTRANCE_TWISS.alpha_x, DEFAULT_BTS_ENTRANCE_TWISS.alpha_y],
-        'dispersion': [DEFAULT_BTS_ENTRANCE_TWISS.disp_x, DEFAULT_BTS_ENTRANCE_TWISS.disp_px, 0.0, 0.0],
+        'beta': [entrance['beta'][0] * (1.0 + sample.get("beta_mismatch_x", 0.0)),
+                 entrance['beta'][1] * (1.0 + sample.get("beta_mismatch_y", 0.0))],
+        'alpha': list(entrance['alpha']),
+        'dispersion': list(entrance['dispersion']),
         'centroid_offset': [sample.get('booster_x_m', 0.0), sample.get('booster_xp_rad', 0.0), 0.0, 0.0, 0.0, 0.0],
         'nkm_errors': {
             'scale_err': sample.get('nkm_scale_err', 0.0),

@@ -37,7 +37,7 @@ Notebooks `01-03` include rich inline visualization cells, such as phase-space p
 | **Multi-Turn Injection Validation** | `notebooks/02_multiturn_injection_validation.ipynb` | Multi-Turn Injection Validation. |
 | **Multi-Turn Injection** | `python3 scripts/run_multiturn_injection.py -w W` | Turn-by-turn capture efficiency & kicker models. |
 | **Deterministic Opt** | `python3 scripts/optimize_bts_publication.py` | 2-stage SLSQP quad matching & SVD Jacobian analysis. |
-| **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py` | Monte Carlo robustness & OAT sensitivity rankings. |
+| **Tolerance Budget** | `python3 scripts/run_publication_tolerances.py --optimization-summary path/to/bts_optimization_summary.json` | Monte Carlo robustness & OAT sensitivity rankings. |
 | **MOGA Trade-offs** | `python3 scripts/run_bts_moga.py -w W` | Multi-seed NSGA-II Pareto optimization. |
 | **Paper Reproduction** | `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W` | Fully manifest-driven figure and table compilation. |
 
@@ -46,6 +46,8 @@ Field-map loading and interpolation enforce finite grids, matching section axes 
 Robustness studies load the selected field map and record invalid evaluations separately from physical failures. See [evaluation outcomes and compatibility](docs/EVALUATION_OUTCOMES.md) for model selection, diagnostics and statistical denominators.
 
 Multi-turn tracking recomputes its one-turn map for each call so lattice edits take effect. See [tracking map lifecycle and measured setup cost](docs/TRACKING_MAP_LIFECYCLE.md).
+
+Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.
 
 Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.
 

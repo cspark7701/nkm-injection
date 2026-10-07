@@ -295,3 +295,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 90. [**Milestone 90 — Task 05: Call-Local One-Turn Tracking Maps**](90_task05_tracking_map_lifecycle.md)
     - Removed the shared identity-based map cache, verified in-place lattice edits and concurrent-call independence, preserved loss accounting, verified 342 tests and measured repeated-call setup cost against the previous implementation.
+
+91. [**Milestone 91 — Task 06: Explicit Optimization Inputs for Tolerance Studies**](91_task06_explicit_optimization_handoff.md)
+    - Required validated optimization/reference selection, preserved saved geometry and entrance optics, recorded complete configurations and source/sampling provenance, and verified 372 tests plus a fresh-process tolerance CLI run.

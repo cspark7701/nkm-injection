@@ -14,7 +14,7 @@ Robustness and optimization diagnostics distinguish a physics result that violat
 
 Sample identity includes `sample_id` and nominal candidate quadrupole strengths in m^-2. Optimizer outcomes include candidate strengths; saved candidate records add restart index and seed. Model provenance includes selected kicker name, beam energy in eV, map path, SHA-256 and kick-map metadata when applicable. Nonfinite numerical identity values serialize as null in outcome diagnostics. Missing capture callbacks are not reported as a measured capture efficiency.
 
-Robustness thresholds remain beta maxima above 60 m, dimensionless mismatch above 0.5, and supplied capture efficiency below 0.8. Every applicable reason is recorded, so failure-mode counts can overlap. `failure_mode` retains the first reason for legacy consumers. Invalid results have `failed=False` because that flag describes physical infeasibility; consumers must inspect `outcome.status` and aggregate invalid counts.
+The low-level robustness defaults are beta maxima above 60 m and dimensionless mismatch above 0.5; the tolerance CLI explicitly supplies the selected optimization constraint limits. Capture failures use a supplied capture efficiency below 0.8. Every applicable reason is recorded, so failure-mode counts can overlap. `failure_mode` retains the first reason for legacy consumers. Invalid results have `failed=False` because that flag describes physical infeasibility; consumers must inspect `outcome.status` and aggregate invalid counts.
 
 ## Explicit kicker selection and units
 

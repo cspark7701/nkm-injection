@@ -36,6 +36,8 @@ from src.nkm_injection.optimization import (
 from src.nkm_injection.constraints import BTSConstraintConfig
 from src.nkm_injection.bts_lattice import BTSConfig
 
+from src.nkm_injection.optimization_handoff import HANDOFF_UNITS, QUAD_NAMES
+
 
 def _git_commit() -> str:
     try:
@@ -136,6 +138,7 @@ def main(argv=None):
         "constraints_satisfied": res.constraints_satisfied,
         "violations": res.violations,
         "optimized_strengths_raw": res.optimized_strengths.tolist(),
+        "optimized_strengths_by_name_m_minus2": dict(zip(QUAD_NAMES, res.optimized_strengths.tolist())),
         "optimized_strengths_rounded": rounded_k.tolist(),
         "sensitivity": {
             "condition_number": sens["condition_number"],
@@ -160,6 +163,8 @@ def main(argv=None):
         "method": res.method,
         "quad_bounds_global": list(config.quad_bounds),
         "publication_input_schema_version": 1,
+        "quadrupole_names": list(QUAD_NAMES),
+        "units": dict(HANDOFF_UNITS),
         "bts_config": BTSConfig().to_dict(),
         "target_config": config.target_config.to_dict(),
         "constraint_config": config.constraint_config.to_dict(),

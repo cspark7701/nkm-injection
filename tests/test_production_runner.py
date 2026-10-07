@@ -213,7 +213,7 @@ def test_tolerance_receives_current_strengths_targets_and_workers(publication_ca
     root, manifest = publication_case(delta=0.2)
     summary_path = root / manifest.bts_optimization_run / 'bts_optimization_summary.json'
     calls = []
-    def evaluate(bts, target, samples, n_workers):
+    def evaluate(bts, target, samples, n_workers, **kwargs):
         calls.append((bts.quad_strengths_list, target, n_workers))
         metric = {'p50_median': 0.01, 'p68': 0.02, 'p95': 0.03, 'p99': 0.04,
                   'bootstrap_95ci_median': [0.005, 0.015]}

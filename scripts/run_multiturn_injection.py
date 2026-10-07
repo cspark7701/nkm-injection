@@ -61,7 +61,7 @@ from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 # CLI
 # ---------------------------------------------------------------------------
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="NKM Multi-Turn Injection Convergence Study")
     parser.add_argument("-w", "--workers", type=int, default=None,
                         help="Number of parallel CPU worker cores.")
@@ -69,15 +69,15 @@ def parse_args():
                         help="Simulation tier: smoke (CI), pilot (dev), production (pub).")
     parser.add_argument("--output-dir", type=Path, default=None,
                         help="Override output directory path.")
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
-def main():
-    args = parse_args()
+def main(argv=None):
+    args = parse_args(argv)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
     output_dir = args.output_dir or (
@@ -105,7 +105,8 @@ def main():
     set_publication_style(font_size=10, dpi=300)
 
     # Load lattice
-    config = StorageRingInjectionConfig(septum_x_offset_m=-0.020)
+    config = StorageRingInjectionConfig(septum_x_offset_m=-0.020,
+                                        mat_filename=str(output_dir.resolve() / "storage_ring_lattice_nkm.mat"))
     ring, nkm_idx = load_storage_ring_injection_lattice(config)
 
     kick_path = repo_root / "kickmap_file.txt"

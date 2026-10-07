@@ -6,6 +6,7 @@ Computes and verifies SHA256 checksums for all protected source data files in th
 Saves manifest to results/baseline/protected_files_manifest.json.
 """
 
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -16,6 +17,7 @@ PROTECTED_EXACT_FILES = [
     "NKM_radia_y=0.ipynb",
     "nlk.py",
     "storage_ring.ipynb",
+    "K4GSR_HBIv4-1.mat",
 ]
 
 PROTECTED_EXTENSIONS = [
@@ -104,20 +106,27 @@ def verify_hash_manifest(manifest_path: Path = OUTPUT_MANIFEST) -> bool:
     return all_matched
 
 
-def main():
-    OUTPUT_MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Inventory protected input hashes")
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_MANIFEST.parent)
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    output_manifest = parse_args(argv).output_dir / OUTPUT_MANIFEST.name
+    output_manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest = create_hash_manifest()
     
-    with open(OUTPUT_MANIFEST, "w") as f:
+    with open(output_manifest, "w") as f:
         json.dump(manifest, f, indent=2)
         
-    print(f"Protected files hash manifest saved to {OUTPUT_MANIFEST}")
+    print(f"Protected files hash manifest saved to {output_manifest}")
     print(f"Total protected files cataloged: {len(manifest)}")
     for path, h in manifest.items():
         print(f"  {path:30s} -> {h[:12]}...")
         
     # Self-verify
-    if verify_hash_manifest(OUTPUT_MANIFEST):
+    if verify_hash_manifest(output_manifest):
         print("Verification SUCCESS: All protected file hashes match!")
     else:
         print("Verification FAILURE: One or more protected files do not match!")

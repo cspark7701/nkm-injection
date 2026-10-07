@@ -27,6 +27,7 @@ Notebooks `01-03` include rich inline visualization cells, such as phase-space p
 
 - **Authoritative Simulation Notebooks**: `notebooks/01_bts_main_simulation.ipynb`, `notebooks/02_multiturn_injection_validation.ipynb`, `notebooks/04_full_production_simulation.ipynb`
 - **Optional MOGA Pareto Notebook**: `notebooks/03_bts_moga_pareto.ipynb`
+- **Shared Production Runner**: `./scripts/run_full_production_simulation.sh --dry-run -w 4`; shell and notebook 04 use the same [configuration and stage routing](docs/PRODUCTION_RUNNER.md).
 - **Single-Command Manifest-Driven Paper Reproduction**: `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W`
 
 | Workflow Phase | Script Command | Description |

@@ -7,6 +7,7 @@ quantifies symmetry residuals, fits polynomial field profiles, and generates val
 Outputs saved to results/fieldmap/ and docs/validation/.
 """
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -33,8 +34,11 @@ PLOT_PATH = OUTPUT_DIR / "nkm_fieldmap_comparison.png"
 METRICS_JSON = OUTPUT_DIR / "fieldmap_validation_metrics.json"
 
 
-def run_fieldmap_validation():
+def run_fieldmap_validation(output_dir=None):
     """Execute field map validation pipeline."""
+    output_dir = Path(output_dir) if output_dir is not None else OUTPUT_DIR
+    plot_path = output_dir / PLOT_PATH.name
+    metrics_json = output_dir / METRICS_JSON.name
     # 1. Load and validate 1D By.txt
     by_txt_path = REPO_ROOT / "By.txt"
     x_1d, by_1d = load_1d_fieldmap(by_txt_path)
@@ -76,9 +80,11 @@ def run_fieldmap_validation():
     
     plt.tight_layout()
     
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(PLOT_PATH, dpi=300)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    fig.savefig(plot_path, dpi=300)
     
+    plt.close(fig)
+
     # 4. Save metrics JSON
     metrics_summary = {
         "1d_fieldmap_validation": val_1d,
@@ -98,7 +104,7 @@ def run_fieldmap_validation():
         }
     }
     
-    with open(METRICS_JSON, "w") as f:
+    with open(metrics_json, "w") as f:
         json.dump(metrics_summary, f, indent=2)
         
     print("\n=== NKM Field Map Validation Summary ===\n")
@@ -107,9 +113,15 @@ def run_fieldmap_validation():
     print(f"2D Grid Interp Max Error: {grid_interp_err:.3e}")
     print(f"2D Kx Odd Symmetry Residual: {sym_2d['kx_odd_x_symmetry_residual']:.3e}")
     print(f"Lorentz Kick at x=-10mm Kx: {lorentz_test['kx_value']:.4f}")
-    print(f"Plot saved to: {PLOT_PATH}")
-    print(f"Metrics saved to: {METRICS_JSON}")
+    print(f"Plot saved to: {plot_path}")
+    print(f"Metrics saved to: {metrics_json}")
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Validate NKM field maps")
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    return parser.parse_args(argv)
 
 
 if __name__ == "__main__":
-    run_fieldmap_validation()
+    run_fieldmap_validation(parse_args().output_dir)

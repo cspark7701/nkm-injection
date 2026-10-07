@@ -42,7 +42,7 @@ Direct two-argument `generate_paper_tables` and `generate_paper_figures` calls r
 
 The updated `scripts/optimize_bts_publication.py` saves all three configurations and the publication schema version. Older optimization `config.json` files and the repository's legacy example manifest do not contain a complete selected-run bundle. They now fail clearly instead of producing apparently selected results from defaults. Supply a manifest pointing to complete artifacts. For historical runs, add metadata only to a new copy after verifying the exact original settings; do not infer missing targets or overwrite source results. No historical results were migrated or regenerated for this change.
 
-Use a new run ID for each publication generation. PDF build isolation and read-only manifest initialization are addressed separately by Task 11; the existing PDF compilation behavior is unchanged here.
+Use a new run ID for each publication generation. The shared production runner constructs its manifest from actual stage outputs and supplies an exact `output_dir` for publication. With that option, PDF compilation builds in the output directory instead of manuscript sources. Standalone default-destination PDF behavior, compilation error reporting and read-only manifest initialization remain Task 11 work. See [production routing](PRODUCTION_RUNNER.md).
 
 ## Validation
 

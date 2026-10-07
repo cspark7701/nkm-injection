@@ -500,10 +500,13 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
                        manifest: Optional[Union[str, Path, "PublicationManifest"]] = None,
                        create_if_missing: bool = True,
                        compile_pdf: bool = False,
-                       workers: Optional[int] = None) -> Dict[str, Any]:
+                       workers: Optional[int] = None,
+                       output_dir: Optional[Path] = None) -> Dict[str, Any]:
     """
     Execute full data-driven paper pipeline consuming a validated PublicationManifest.
     Fails if manifest validation fails, required files are missing, or input hashes differ.
+    output_dir, when supplied, is the exact destination; PDF build writes then
+    use its build/ directory instead of the manuscript source directory.
     """
     from .results_schema import PublicationManifest, validate_publication_manifest
 
@@ -535,7 +538,11 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
     if "MISSING" in input_hashes.values():
         raise FileNotFoundError(f"Missing scientific input data files: {input_hashes}")
 
-    schema = PaperResultSchema(run_id=run_id, base_dir=repo_root / "results" / "paper")
+    if output_dir is None:
+        schema = PaperResultSchema(run_id=run_id, base_dir=repo_root / "results" / "paper")
+    else:
+        output_dir = Path(output_dir).resolve()
+        schema = PaperResultSchema(run_id=output_dir.name, base_dir=output_dir.parent)
     schema.initialize_directories()
 
     record_environment_metadata(schema.run_dir)
@@ -555,6 +562,13 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
     pdf_path = None
     if compile_pdf:
         jinst_dir = repo_root / "docs" / "jinst-paper"
+        if output_dir is not None:
+            # Run-local build inputs keep production writes away from manuscript sources.
+            import shutil
+            build_dir = schema.run_dir / "build"
+            shutil.copytree(jinst_dir, build_dir,
+                            ignore=shutil.ignore_patterns("paper.pdf", "*.aux", "*.log", "*.bbl", "*.blg"))
+            jinst_dir = build_dir
         tex_file = jinst_dir / "paper.tex"
         if tex_file.is_file():
             import shutil

@@ -175,7 +175,12 @@ def compute_true_aperture_margin(beta_m: float, disp_m: float, config: BTSMOGACo
 
 
 
-def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5, n_turns: int = 10):
+def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, n_mc_seeds: int = 5, n_turns: int = 10, ring_config=None):
+    """Reevaluate finalists with optional run-local storage-ring configuration.
+
+    ring_config uses StorageRingInjectionConfig (m, rad, eV); its mat_filename
+    routes the generated lattice without changing default behavior for callers.
+    """
     from .end_to_end import run_end_to_end_pipeline, BoosterExtractionConfig
     from .bts_lattice import BTSConfig, create_bts_lattice
     from .optics import compute_twiss_propagation, compute_beam_envelope
@@ -208,6 +213,7 @@ def reevaluate_pareto_finalists(result: BTSMOGAResult, n_particles: int = 5000, 
             res = run_end_to_end_pipeline(
                 booster_config=booster_cfg,
                 bts_config=bts_cfg,
+                ring_config=ring_config,
                 n_turns=n_turns,
                 kicker_model="ideal"
             )

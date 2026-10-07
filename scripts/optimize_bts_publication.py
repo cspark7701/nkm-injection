@@ -14,6 +14,7 @@ Saved outputs
 - config.json                      : reproducibility metadata
 """
 
+import argparse
 import sys
 import json
 import datetime
@@ -53,9 +54,17 @@ def _input_hash(path: Path) -> str:
         return "unknown"
 
 
-def main():
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Publication BTS optimization (sequential)")
+    parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument("--seed", type=int, default=42)
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = (
+    output_dir = args.output_dir or (
         repo_root / "results" / "bts_publication_optimization" / f"run_{timestamp}"
     )
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -64,7 +73,7 @@ def main():
     print(f"Output directory: {output_dir}")
 
     config = BTSOptimizationConfig(
-        random_seed=42,
+        random_seed=args.seed,
         max_iter=100,
         constraint_config=BTSConstraintConfig(),
     )

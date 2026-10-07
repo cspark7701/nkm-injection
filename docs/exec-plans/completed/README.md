@@ -283,3 +283,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 86. [**Milestone 86 — Task 01: Manifest-Driven Publication Inputs**](86_task01_manifest_driven_publication_inputs.md)
     - Made tables and figures consume validated selected-run artifacts, saved full upstream SHA-256 provenance and figure data, added complete optimizer metadata and isolated regression fixtures, and documented schema/migration requirements.
+
+87. [**Milestone 87 — Task 02: Shared Production Run Orchestration**](87_task02_shared_production_run_orchestration.md)
+    - Unified shell/notebook execution with a validated configuration and stage runner; routed outputs, workers, current-run optimization and publication manifests explicitly, added read-only previews and run-local lattice/PDF builds, and verified 249 tests plus a clean Jupyter-kernel preview.

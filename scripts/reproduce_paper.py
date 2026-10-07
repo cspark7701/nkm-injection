@@ -21,16 +21,18 @@ from src.nkm_injection.paper import run_paper_pipeline
 
 import argparse
 
-def parse_args():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description="Manifest-driven Paper Reproduction Pipeline")
     parser.add_argument("-w", "--workers", type=int, default=None,
                         help="Number of parallel CPU worker cores.")
     parser.add_argument("--manifest", type=str, default=None, help="Path to publication manifest JSON file")
     parser.add_argument("--no-pdf", action="store_true", help="Skip LaTeX PDF compilation")
-    return parser.parse_args()
+    parser.add_argument("--output-dir", type=Path, default=None,
+                        help="Exact publication output directory")
+    return parser.parse_args(argv)
 
-def main():
-    args = parse_args()
+def main(argv=None):
+    args = parse_args(argv)
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     run_id = f"paper_run_{timestamp}"
@@ -39,7 +41,8 @@ def main():
     print(f"Run ID: {run_id}")
 
     try:
-        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf, workers=args.workers)
+        summary = run_paper_pipeline(repo_root=repo_root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf, workers=args.workers,
+                                     output_dir=args.output_dir, create_if_missing=False)
         print("\n--- Reproduction Pipeline Completed Successfully ---\n")
         print(f"Manifest Verified: {summary['manifest_valid']}")
         print(f"Input Hashes Verified: {summary['input_hashes_verified']}")
@@ -48,7 +51,7 @@ def main():
         print(f"PDF Compiled: {summary.get('pdf_compiled', False)}")
         if summary.get('pdf_path'):
             print(f"PDF Path: {summary['pdf_path']}")
-        print(f"Output Directory: {repo_root / 'results' / 'paper' / run_id}")
+        print(f"Output Directory: {args.output_dir or repo_root / 'results' / 'paper' / run_id}")
     except Exception as e:
         print(f"\n[ERROR] Paper reproduction pipeline failed: {e}")
         sys.exit(1)

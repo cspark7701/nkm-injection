@@ -7,6 +7,7 @@ for reference particle trajectories, beam centroids, RMS sizes, projected emitta
 loss fractions, and stored beam perturbations.
 """
 
+import argparse
 import sys
 import json
 import datetime
@@ -23,9 +24,17 @@ from src.nkm_injection.beam import generate_6d_beam, compute_beam_statistics
 from src.nkm_injection.tracking import track_nkm_thick_symplectic, track_nkm_thick_rk4
 
 
-def main():
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="NKM slicing convergence (sequential)")
+    parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument("--seed", type=int, default=42)
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = repo_root / "results" / "field_validation" / f"tracking_convergence_{timestamp}"
+    output_dir = args.output_dir or (repo_root / "results" / "field_validation" / f"tracking_convergence_{timestamp}")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== NKM Thick-Element Tracking Convergence Study ===")
@@ -55,7 +64,7 @@ def main():
         beta_x=10.0, alpha_x=0.0, emit_x=1e-7,
         beta_y=5.0, alpha_y=0.0, emit_y=1e-8,
         x_offset=-0.016,
-        seed=42
+        seed=args.seed
     )
 
     # 3. Stored beam reference at x = 0.0 mm
@@ -95,6 +104,8 @@ def main():
 
     summary_output = {
         "timestamp": timestamp,
+        "seed": args.seed,
+        "execution_mode": "sequential",
         "slice_counts": slice_counts,
         "results": results_by_slice,
         "recommended_production_slices": 40

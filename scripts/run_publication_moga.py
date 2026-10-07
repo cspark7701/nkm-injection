@@ -8,6 +8,7 @@ computes Pareto-front and knee-point variability, and archives JSON/CSV results 
 results/publication_moga/run_<timestamp>/.
 """
 
+import argparse
 import sys
 import json
 import datetime
@@ -26,14 +27,24 @@ from src.nkm_injection.moga import (
 )
 
 
-def main():
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Multi-seed publication MOGA (sequential)")
+    parser.add_argument("--output-dir", type=Path, default=None)
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_dir = repo_root / "results" / "publication_moga" / f"run_{timestamp}"
+    output_dir = args.output_dir or (repo_root / "results" / "publication_moga" / f"run_{timestamp}")
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("=== NKM Publication MOGA Pareto Optimization ===")
     print(f"Output directory: {output_dir}")
 
+    from src.nkm_injection.storage_ring_injection import StorageRingInjectionConfig
+    ring_config = StorageRingInjectionConfig(
+        mat_filename=str(output_dir.resolve() / "storage_ring_lattice_nkm.mat"))
     seeds = [42, 101, 202, 303, 404]
     multi_seed_results = {}
     knee_quad_strengths = []
@@ -47,7 +58,7 @@ def main():
 
         seed_dir = output_dir / f"seed_{seed}"
         if res.success:
-            reevaluate_pareto_finalists(res, n_particles=1000, n_mc_seeds=2)
+            reevaluate_pareto_finalists(res, n_particles=1000, n_mc_seeds=2, ring_config=ring_config)
         save_moga_results_json(res, seed_dir)
 
         print(f"Seed {seed}: Success={res.success}, Feasible Fraction={res.feasible_fraction*100:.1f}%, Pareto Count={len(res.pareto_x)}")

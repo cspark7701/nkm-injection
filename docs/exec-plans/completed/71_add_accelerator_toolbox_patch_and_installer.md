@@ -11,5 +11,5 @@
 - **Verification**:
   - Successfully executed `./scripts/install_accelerator_toolbox.sh`.
   - Verified `import at; at.NonlinearKicker; from at.integrators import pyNKMPass` with `at.__version__ == 0.7.2.dev26+g4701d48c.d20260831`.
-  - Updated [`docs/INSTALLATION.md`](file:///home/cspark/Work/projects/nkm-injection/docs/INSTALLATION.md#L68-L80) with pyAT setup instructions.
+  - Updated [`docs/007_INSTALLATION.md`](file:///home/cspark/Work/projects/nkm-injection/docs/007_INSTALLATION.md#L68-L80) with pyAT setup instructions.
   - All protected scientific source data files remain clean and untampered.

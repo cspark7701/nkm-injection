@@ -40,7 +40,7 @@ Robustness results add `evaluation_schema_version=1`, `n_valid_evaluations`, `n_
 - `failure_probability` is physical failures divided by valid evaluations, or null when no evaluation is valid.
 - `feasible_fraction` is physically feasible samples divided by all requested samples; invalid samples cannot increase this fraction.
 - When all evaluations are invalid, physics summaries and interval endpoints are null. No synthetic large mismatches enter statistics.
-- Invalid evaluations now yield an explicit blocked convergence status; insufficient required prefixes yield insufficient evidence. See [statistical summaries and prefix stability](STATISTICAL_CONVERGENCE.md).
+- Invalid evaluations now yield an explicit blocked convergence status; insufficient required prefixes yield insufficient evidence. See [statistical summaries and prefix stability](020_STATISTICAL_CONVERGENCE.md).
 
 A robust optimizer candidate with any invalid sample is invalid and penalized. The tolerance CLI saves an incomplete ensemble's diagnostics, skips OAT and exits unsuccessfully. Publication input validation rejects summaries reporting any invalid evaluation, preventing conditional statistics from being published as complete-ensemble results.
 

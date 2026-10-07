@@ -3,7 +3,7 @@
 Publication validation is read-only. `validate_publication_manifest(manifest,
 repo_root)` checks the complete scientific-input SHA-256 baseline, the six
 selected run directories and the seven required stage artifacts described in
-[publication inputs](PUBLICATION_INPUTS.md). Missing baselines, empty runs,
+[publication inputs](011_PUBLICATION_INPUTS.md). Missing baselines, empty runs,
 malformed consumed metrics and mismatched hashes fail validation; failed runs
 are not reported as verified. Validation records the selected artifact hashes
 in its report without writing files.

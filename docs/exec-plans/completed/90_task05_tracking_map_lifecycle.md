@@ -11,7 +11,7 @@ Multi-turn injection cached M66 on a function attribute keyed by lattice identit
 
 - Removed the identity-based function cache and computed `ring.find_m66(dp=0.0)` once for each positive-turn call. Reused the local map only across that call's turns.
 - Preserved zero-turn behavior, public signatures, result schemas, kicker timing, reference momentum, apertures and loss accounting.
-- Documented particle units, the requirement to leave a lattice unchanged during a call, compatibility and benchmark cost in [tracking map lifecycle](../../TRACKING_MAP_LIFECYCLE.md). No prepared context or replacement cross-call cache was added.
+- Documented particle units, the requirement to leave a lattice unchanged during a call, compatibility and benchmark cost in [tracking map lifecycle](../../015_TRACKING_MAP_LIFECYCLE.md). No prepared context or replacement cross-call cache was added.
 - Reviewed error application: perturbed lattice factories already construct new lattices and need no invalidation API.
 - Updated README and the ignored Task 05 backlog status/manifest.
 

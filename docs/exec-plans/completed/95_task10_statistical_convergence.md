@@ -46,7 +46,7 @@ claim; settings, estimands, denominators and counts are recorded.
   CLI saves them and stops without rerunning physics or OAT. Existing invalid
   ensemble publication rejection remains intact.
 - Documented interpretation/migration in
-  [statistical summaries and prefix stability](../../STATISTICAL_CONVERGENCE.md),
+  [statistical summaries and prefix stability](../../020_STATISTICAL_CONVERGENCE.md),
   linked from README and updated evaluation/tolerance guidance. Updated the
   ignored backlog and manifest.
 

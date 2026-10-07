@@ -52,7 +52,7 @@ Every stage command receives `--output-dir`. Only stages that actually use worke
 
 The runner checks expected artifacts after each successful child process. Before publication, it verifies input hashes and loads the complete selected publication bundle. Only then does it save the manifest and launch reproduction. Missing files, malformed publication inputs, changed scientific hashes and child failures stop later stages. The run is left intact for diagnosis; it is never reused or automatically overwritten.
 
-The tolerance CLI requires this run's explicit optimization summary (or explicitly selected reference mode for standalone studies). It validates saved strengths/configurations and records summary/config hashes, nominal geometry and entrance/target optics, error settings and Monte Carlo/OAT seeds and counts. See [tolerance inputs](TOLERANCE_INPUTS.md). Injection is still the existing independently configured study, not a newly coupled BTS-to-ring simulation.
+The tolerance CLI requires this run's explicit optimization summary (or explicitly selected reference mode for standalone studies). It validates saved strengths/configurations and records summary/config hashes, nominal geometry and entrance/target optics, error settings and Monte Carlo/OAT seeds and counts. See [tolerance inputs](016_TOLERANCE_INPUTS.md). Injection is still the existing independently configured study, not a newly coupled BTS-to-ring simulation.
 
 ## Saved job records
 
@@ -62,7 +62,7 @@ The tolerance CLI requires this run's explicit optimization summary (or explicit
 - `publication_manifest.json`: actual selected run directories and run-local protected-input hash manifest.
 - Stage outputs and optional `summary/build/` compilation artifacts remain inside the new root.
 
-Direct stage CLIs retain their old default destinations when `--output-dir` is omitted. `run_paper_pipeline(output_dir=...)` also supports an exact publication destination; with PDF compilation enabled, it copies manuscript inputs into `build/` and leaves manuscript sources unchanged. PDF command failures are reported with run-local logs; standalone validation is read-only and initialization is explicit. See [publication lifecycle](PUBLICATION_LIFECYCLE.md). PDF output is deliberately opt-in for the shared runner; the standalone reproduction CLI retains its `--no-pdf` option.
+Direct stage CLIs retain their old default destinations when `--output-dir` is omitted. `run_paper_pipeline(output_dir=...)` also supports an exact publication destination; with PDF compilation enabled, it copies manuscript inputs into `build/` and leaves manuscript sources unchanged. PDF command failures are reported with run-local logs; standalone validation is read-only and initialization is explicit. See [publication lifecycle](021_PUBLICATION_LIFECYCLE.md). PDF output is deliberately opt-in for the shared runner; the standalone reproduction CLI retains its `--no-pdf` option.
 
 ## Verification
 

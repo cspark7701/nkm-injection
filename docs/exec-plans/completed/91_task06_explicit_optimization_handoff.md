@@ -18,7 +18,7 @@ The CLI now requires a selected summary or explicit reference mode. Both summary
 - Passed saved peak-beta/total-mismatch limits with the optimizer's 0.01 m/0.05 feasibility tolerances. Low-level robustness defaults remain backward compatible; actual definitions/tolerances are recorded in evaluation metadata. OAT labels now reflect its selected budget.
 - Added explicit units/names and a named raw-strength mapping to new optimization outputs. Complete existing schema-1 outputs remain supported through their documented units/order; older incomplete metadata requires a verified new copy.
 - Required new/empty tolerance output directories, retained complete handoff metadata for invalid evaluation diagnostics, and updated affected test adapters for the explicit API contract.
-- Documented input selection, reconstruction, units and migration in [tolerance inputs](../../TOLERANCE_INPUTS.md); updated README, production/procedure/evaluation guidance and ignored backlog status/manifest.
+- Documented input selection, reconstruction, units and migration in [tolerance inputs](../../016_TOLERANCE_INPUTS.md); updated README, production/procedure/evaluation guidance and ignored backlog status/manifest.
 
 ## Verification
 

@@ -14,7 +14,7 @@ This task performed a complete repository-wide audit and removal of facility-spe
 1. **Repository-Wide Search & Sanitation**:
    - Conducted case-insensitive ripgrep audit (`pohang` / `POHANG` / `Pohang`).
    - Standardized all terminology to generic 4.0 GeV 4GSR storage ring specifications.
-   - Updated files: `AGENTS.md`, `src/nkm/results_schema.py`, `scripts/run_full_production_simulation.sh`, `docs/index.html`, `docs/nkm_consolidated_report.tex` (recompiled `docs/nkm_consolidated_report.pdf`), `docs/FULL_PRODUCTION_SIMULATION.md`, and past milestone summaries.
+   - Updated files: `AGENTS.md`, `src/nkm/results_schema.py`, `scripts/run_full_production_simulation.sh`, `docs/index.html`, `docs/nkm_consolidated_report.tex` (recompiled `docs/nkm_consolidated_report.pdf`), `docs/008_FULL_PRODUCTION_SIMULATION.md`, and past milestone summaries.
 2. **Verification**:
    - Post-cleanup ripgrep returned 0 occurrences across the entire codebase.
 

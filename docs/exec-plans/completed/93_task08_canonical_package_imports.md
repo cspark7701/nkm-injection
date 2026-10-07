@@ -28,7 +28,7 @@ legacy namespace fails before loading submodules, preventing duplicate classes.
   current directory. The existing script adapter defaults to its own checkout.
   Production routing, options, dry-run behavior and physics remain unchanged.
 - Documented editable/wheel installation, script/notebook execution, lazy
-  behavior and migration in [package imports](../../PACKAGE_IMPORTS.md), linked
+  behavior and migration in [package imports](../../018_PACKAGE_IMPORTS.md), linked
   from README and installation guidance. Legacy pickle paths require explicit
   recovery in their original environment; JSON structure is unchanged.
 - Added fresh-process tests for dependency isolation, export/class identity,

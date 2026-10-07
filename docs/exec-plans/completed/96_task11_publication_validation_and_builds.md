@@ -38,7 +38,7 @@ artifacts without writing; initialization and PDF building have separate lifecyc
   source runs are rejected before publication writes. Empty production-stage
   destinations remain supported. Pipeline negative tests use temporary bundles.
 - Documented commands, migration and build reports in
-  [publication lifecycle](../../PUBLICATION_LIFECYCLE.md), with updated README,
+  [publication lifecycle](../../021_PUBLICATION_LIFECYCLE.md), with updated README,
   publication-input and production-runner guidance.
 
 ## Validation

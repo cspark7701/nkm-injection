@@ -2,7 +2,7 @@
 
 Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ring (BTS) transfer line optics matching, off-axis beam injection, and reproducible publication generation.
 
-> **Comprehensive Guide**: See [`docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`](docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md) for the single-file complete specification of the simulation procedure and paper reproduction pipeline.
+> **Comprehensive Guide**: See [`docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`](docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md) for the single-file complete specification of the simulation procedure and paper reproduction pipeline.
 
 ---
 
@@ -19,7 +19,7 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 ## Visualization
 
-Notebooks `01-03` select complete configurations, execute reusable package studies and plot returned results in fresh run directories. See [notebook workflows and migration](docs/NOTEBOOK_WORKFLOWS.md) for preserved optics, tracking model changes and independent clean-kernel smoke execution. Visualizations include phase-space portraits, field maps, Pareto scatter matrices, hypervolume convergence plots, quad strength bars and radar charts.
+Notebooks `01-03` select complete configurations, execute reusable package studies and plot returned results in fresh run directories. See [notebook workflows and migration](docs/022_NOTEBOOK_WORKFLOWS.md) for preserved optics, tracking model changes and independent clean-kernel smoke execution. Visualizations include phase-space portraits, field maps, Pareto scatter matrices, hypervolume convergence plots, quad strength bars and radar charts.
 
 ---
 
@@ -27,7 +27,7 @@ Notebooks `01-03` select complete configurations, execute reusable package studi
 
 - **Authoritative Simulation Notebooks**: `notebooks/01_bts_main_simulation.ipynb`, `notebooks/02_multiturn_injection_validation.ipynb`, `notebooks/04_full_production_simulation.ipynb`
 - **Optional MOGA Pareto Notebook**: `notebooks/03_bts_moga_pareto.ipynb`
-- **Shared Production Runner**: `./scripts/run_full_production_simulation.sh --dry-run -w 4`; shell and notebook 04 use the same [configuration and stage routing](docs/PRODUCTION_RUNNER.md).
+- **Shared Production Runner**: `./scripts/run_full_production_simulation.sh --dry-run -w 4`; shell and notebook 04 use the same [configuration and stage routing](docs/012_PRODUCTION_RUNNER.md).
 - **Single-Command Manifest-Driven Paper Reproduction**: `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W`
 
 | Workflow Phase | Script Command | Description |
@@ -41,23 +41,23 @@ Notebooks `01-03` select complete configurations, execute reusable package studi
 | **MOGA Trade-offs** | `python3 scripts/run_bts_moga.py -w W` | Multi-seed NSGA-II Pareto optimization. |
 | **Paper Reproduction** | `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W` | Fully manifest-driven figure and table compilation. |
 
-Field-map loading and interpolation enforce finite grids, matching section axes and closed domain bounds, with explicit extrapolation and NumPy broadcasting. See [field-map contracts and migration](docs/FIELDMAP_CONTRACTS.md).
+Field-map loading and interpolation enforce finite grids, matching section axes and closed domain bounds, with explicit extrapolation and NumPy broadcasting. See [field-map contracts and migration](docs/013_FIELDMAP_CONTRACTS.md).
 
-Robustness studies load the selected field map and record invalid evaluations separately from physical failures. See [evaluation outcomes and compatibility](docs/EVALUATION_OUTCOMES.md) for model selection, diagnostics and statistical denominators.
+Robustness studies load the selected field map and record invalid evaluations separately from physical failures. See [evaluation outcomes and compatibility](docs/014_EVALUATION_OUTCOMES.md) for model selection, diagnostics and statistical denominators.
 
-Tracking validates `(6, N)` coordinates, lost-particle markers and finite parameters at shared boundaries. See [tracking input contracts and migration](docs/TRACKING_INPUT_CONTRACTS.md) for integer counts, units and loss accounting.
+Tracking validates `(6, N)` coordinates, lost-particle markers and finite parameters at shared boundaries. See [tracking input contracts and migration](docs/019_TRACKING_INPUT_CONTRACTS.md) for integer counts, units and loss accounting.
 
-Multi-turn tracking recomputes its one-turn map for each call so lattice edits take effect. See [tracking map lifecycle and measured setup cost](docs/TRACKING_MAP_LIFECYCLE.md).
+Multi-turn tracking recomputes its one-turn map for each call so lattice edits take effect. See [tracking map lifecycle and measured setup cost](docs/015_TRACKING_MAP_LIFECYCLE.md).
 
-Use the installed `nkm_injection` package in scripts and notebooks. See [canonical imports and entry points](docs/PACKAGE_IMPORTS.md) for lazy public exports, migration and the `nkm-production` command.
+Use the installed `nkm_injection` package in scripts and notebooks. See [canonical imports and entry points](docs/018_PACKAGE_IMPORTS.md) for lazy public exports, migration and the `nkm-production` command.
 
-Configuration JSON loading now validates types and rejects unknown fields by default. See [configuration serialization and migration](docs/CONFIGURATION_SERIALIZATION.md) for supported values and explicit compatibility mode.
+Configuration JSON loading now validates types and rejects unknown fields by default. See [configuration serialization and migration](docs/017_CONFIGURATION_SERIALIZATION.md) for supported values and explicit compatibility mode.
 
-Statistical summaries now save bootstrap settings and report insufficient evidence when required convergence prefixes are unavailable. See [statistical summaries and prefix stability](docs/STATISTICAL_CONVERGENCE.md).
+Statistical summaries now save bootstrap settings and report insufficient evidence when required convergence prefixes are unavailable. See [statistical summaries and prefix stability](docs/020_STATISTICAL_CONVERGENCE.md).
 
-Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.
+Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/016_TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.
 
-Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details. See [publication lifecycle](docs/PUBLICATION_LIFECYCLE.md) for read-only validation, explicit initialization and isolated PDF builds.
+Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/011_PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details. See [publication lifecycle](docs/021_PUBLICATION_LIFECYCLE.md) for read-only validation, explicit initialization and isolated PDF builds.
 
 ---
 
@@ -93,7 +93,7 @@ All generated simulation outputs are saved under the `results/` directory.
 
 ## Installation & Setup
 
-> **Detailed Guide**: See [`docs/INSTALLATION.md`](docs/INSTALLATION.md) for full step-by-step installation instructions across Conda and venv.
+> **Detailed Guide**: See [`docs/007_INSTALLATION.md`](docs/007_INSTALLATION.md) for full step-by-step installation instructions across Conda and venv.
 
 ### Automated Setup (1-Command)
 

@@ -100,7 +100,7 @@ flowchart TD
 - **Script**: `pytest -v tests/test_paper_regression.py`
 - **Procedure**:
   1. Run automated CI and regression test suite verifying integrated kick angle ($-5.7491 \pm 0.01\text{ mrad}$), optics mismatch, multi-turn centroid oscillation ($< 0.1\text{ mm}$), and quadrupole hardware bounds.
-  2. Verify pre-release checklist (`docs/release_checklist.md`) and tag Zenodo-compatible release (`v0.1.0-rc1`).
+  2. Verify pre-release checklist (`docs/005_release_checklist.md`) and tag Zenodo-compatible release (`v0.1.0-rc1`).
 
 ---
 

@@ -4,7 +4,7 @@
 - `src/nkm/results_schema.py`: Result provenance schema module defining directory layout, SHA-256 cryptographic input file hashing (`By.txt`, `kickmap_file.txt`, `K4GSR_HBIv4-1.mat`, `storage_ring_lattice_nkm.mat`), environment/git commit logging, and statistically consistent RMS envelope calculation.
 - `scripts/reproduce_paper.py`: Executable single-command reproduction script validating input hashes, generating figures/tables, and logging provenance metadata under `results/paper/paper_run_<timestamp>/`.
 - `tests/test_paper_pipeline.py`: Unit test suite verifying input data hash checking, RMS envelope formulas, schema directory setup, and single-command paper pipeline execution.
-- `docs/paper_result_provenance.md`: Documentation deliverable specifying result schema structure, input file hashes, RMS envelope equation, and reproduction instructions.
+- `docs/004_paper_result_provenance.md`: Documentation deliverable specifying result schema structure, input file hashes, RMS envelope equation, and reproduction instructions.
 - `docs/exec-plans/completed/16_data_driven_paper_pipeline.md`: Task completion summary (saved with prefix `16_` per user directive).
 
 ## 2. Files Modified

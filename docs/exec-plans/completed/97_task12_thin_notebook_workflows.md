@@ -53,7 +53,7 @@ runner and now shares repository/fresh-output resolution.
 - Added `scripts/smoke_notebook_workflows.py`: separate clean kernels using the
   invoking interpreter, reduced settings, fresh outputs and a saved smoke report.
 - Documented scientific assumptions, migration and units in
-  [notebook workflows](../../NOTEBOOK_WORKFLOWS.md) and linked from README.
+  [notebook workflows](../../022_NOTEBOOK_WORKFLOWS.md) and linked from README.
 
 ## Compatibility and scientific limits
 

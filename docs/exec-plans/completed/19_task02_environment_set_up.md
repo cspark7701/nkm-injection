@@ -7,11 +7,11 @@
 
 ## 1. Executive Summary
 
-Task 02 delivered a comprehensive setup procedure and installer instructions (`INSTALLATION.md`) targeting new users and clean environment deployments across different machines.
+Task 02 delivered a comprehensive setup procedure and installer instructions (`007_INSTALLATION.md`) targeting new users and clean environment deployments across different machines.
 
 ## 2. Work Completed
 
-1. **Installation Documentation (`INSTALLATION.md`)**:
+1. **Installation Documentation (`007_INSTALLATION.md`)**:
    - Detailed step-by-step instructions for repository cloning, virtual environment creation (`venv` / `conda`), dependency resolution, package installation in editable mode (`pip install -e .`), and running `pytest`.
 2. **Environment Reproducibility**:
    - Included exact lockfile references (`requirements-lock.txt`) to guarantee deterministic package installation across platforms.

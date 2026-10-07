@@ -15,7 +15,7 @@ The 3-D interpolation paths silently clamped coordinates outside map coverage an
 - Made 3-D raise/extrapolate/clip policies explicit. The class's allow_extrapolation flag now selects linear edge-cell continuation instead of implicit clipping. Closed endpoints are accepted; immediately outside floating-point neighbors are rejected without tolerance.
 - Retained sorting in the 1-D file loader, validated its output, repaired CSV delimiter handling, and validated quadrature inputs. Two-node linear maps work; cubic requests require at least four nodes. Symmetry diagnostics handle sparse positive-side samples safely.
 - Reused the shared NumPy-only source in the pyAT installer and patch artifact. Tracking validates the map once before slicing and leaves already-lost particles unchanged. The external pyAT installation was not modified.
-- Documented units, layouts, boundary migration, broadcasting, numerical tolerances and extension installation in [field-map contracts](../../FIELDMAP_CONTRACTS.md); updated README and the ignored backlog status/manifest.
+- Documented units, layouts, boundary migration, broadcasting, numerical tolerances and extension installation in [field-map contracts](../../013_FIELDMAP_CONTRACTS.md); updated README and the ignored backlog status/manifest.
 
 ## Verification
 

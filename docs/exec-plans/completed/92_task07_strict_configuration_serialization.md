@@ -32,7 +32,7 @@ unsafe conversions. Explicit compatibility loading only ignores unknown fields.
   `null` instead of NaN so valid no-loss ensemble results remain serializable.
   Other nonfinite results are still rejected rather than silently sanitized.
 - Documented behavior, units, migration and compatibility in
-  [configuration serialization](../../CONFIGURATION_SERIALIZATION.md), linked
+  [configuration serialization](../../017_CONFIGURATION_SERIALIZATION.md), linked
   from README. Updated the ignored backlog and its task manifest.
 
 ## Verification

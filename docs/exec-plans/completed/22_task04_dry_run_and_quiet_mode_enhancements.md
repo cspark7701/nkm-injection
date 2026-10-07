@@ -22,7 +22,7 @@ The pipeline now supports safe parameter/syntax dry-running via `--dry-run` (`-d
    - Enhanced `run_step()` in `scripts/run_full_production_simulation.sh` under `--quiet` mode.
    - Displays clean real-time status banners on screen (`[RUNNING] Step N: <name>...` and `[COMPLETED] Step N: <name>`) while directing verbose step output to `results/production_run_<timestamp>/logs/production_run.log`.
 
-3. **Documentation Update (`docs/FULL_PRODUCTION_SIMULATION.md`)**:
+3. **Documentation Update (`docs/008_FULL_PRODUCTION_SIMULATION.md`)**:
    - Updated CLI options table and usage guide detailing `--dry-run` execution, quiet-mode logging behavior, output directory structures, and toleranced result validation procedures (`pytest tests/test_paper_regression.py`).
 
 ## 3. Protected Files Status

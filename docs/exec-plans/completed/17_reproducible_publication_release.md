@@ -7,8 +7,8 @@
 - `.github/workflows/ci.yml`: GitHub Actions CI pipeline running unit tests and Python compatibility checks.
 - `.github/workflows/paper-regression.yml`: GitHub Actions workflow running single-command paper reproduction and publication regression tests.
 - `tests/test_paper_regression.py`: Justified toleranced paper regression test suite verifying integrated NKM kick angle, optics mismatch, multi-turn centroid oscillation, and quadrupole hardware limits.
-- `docs/reproducibility.md`: User guide detailing setup, input file hashes, and reproduction commands.
-- `docs/release_checklist.md`: Pre-release verification checklist for Zenodo tagging and journal manuscript release.
+- `docs/002_reproducibility.md`: User guide detailing setup, input file hashes, and reproduction commands.
+- `docs/005_release_checklist.md`: Pre-release verification checklist for Zenodo tagging and journal manuscript release.
 - `docs/exec-plans/completed/17_reproducible_publication_release.md`: Task completion summary (saved with prefix `17_` per user directive).
 
 ## 2. Files Modified

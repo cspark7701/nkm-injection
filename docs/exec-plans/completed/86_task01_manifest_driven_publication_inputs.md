@@ -13,7 +13,7 @@ Previously, the paper pipeline validated a manifest but generated tables and fig
 - Updated `paper.py`: selected inputs passed to both generators; seven tables, four figures, numerical figure data and upstream provenance. Existing filenames and two-argument nominal-reference generators remain supported with explicit reference labels.
 - Updated the optimization producer to save the complete lattice, target and constraint configuration plus schema version 1.
 - Added temporary publication fixtures and regression tests. Changed existing pipeline tests to consume isolated complete inputs rather than repository baseline directories.
-- Documented schemas, assumptions, units, behavior changes and historical-run migration in `docs/PUBLICATION_INPUTS.md`; linked it from README.
+- Documented schemas, assumptions, units, behavior changes and historical-run migration in `docs/011_PUBLICATION_INPUTS.md`; linked it from README.
 
 ## Validation
 

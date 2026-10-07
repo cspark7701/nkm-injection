@@ -63,16 +63,16 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Audited local GitHub Actions CI workflows, enforcing 100% local operation without remote pushes or remote API checks.
 
 19. [**Milestone 19 — Task 02: Environment Setup & Installation Guide**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/19_task02_environment_set_up.md)
-    - Created comprehensive setup instructions (`INSTALLATION.md`) and package installation verification workflows.
+    - Created comprehensive setup instructions (`007_INSTALLATION.md`) and package installation verification workflows.
 
 20. [**Milestone 20 — Task 03: Consolidated Technical Document & GitHub.io Project Webpage**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/20_task03_consolidated_document_and_website.md)
     - Authored consolidated LaTeX report (`docs/nkm_consolidated_report.tex` / `.pdf`) and built modern github.io webpage (`docs/index.html`) featuring author Chong Shik Park and Korea University affiliation.
 
 21. [**Milestone 21 — Task 04: Full Production Simulation Script, Parity Notebook, & Documentation**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/21_task04_full_simulation_script.md)
-    - Constructed unified full production shell script (`scripts/run_full_production_simulation.sh`), matching Jupyter notebook (`notebooks/04_full_production_simulation.ipynb`), and documentation (`docs/FULL_PRODUCTION_SIMULATION.md`), with 90% CPU parallelization option and screen verbosity toggle. Held dry run execution per user signal.
+    - Constructed unified full production shell script (`scripts/run_full_production_simulation.sh`), matching Jupyter notebook (`notebooks/04_full_production_simulation.ipynb`), and documentation (`docs/008_FULL_PRODUCTION_SIMULATION.md`), with 90% CPU parallelization option and screen verbosity toggle. Held dry run execution per user signal.
 
 22. [**Milestone 22 — Task 04: Production Simulation Dry-Run & Quiet-Mode Progress Enhancements**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/22_task04_dry_run_and_quiet_mode_enhancements.md)
-    - Implemented `-d` / `--dry-run` pre-flight syntax and parameter validation, enhanced `--quiet` mode real-time step notifications (`[RUNNING]` / `[COMPLETED]`), and updated `docs/FULL_PRODUCTION_SIMULATION.md`.
+    - Implemented `-d` / `--dry-run` pre-flight syntax and parameter validation, enhanced `--quiet` mode real-time step notifications (`[RUNNING]` / `[COMPLETED]`), and updated `docs/008_FULL_PRODUCTION_SIMULATION.md`.
 
 23. [**Milestone 23 — Task 03a: Read the Docs (Sphinx / Wyrm) Project Webpage Style**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/23_task03a_readthedocs_website_style.md)
     - Converted `docs/index.html` into a Read the Docs (Sphinx / Wyrm / WarpX) style documentation webpage featuring sidebar search, TOC tree, breadcrumb bar, admonition boxes, Wyrm data tables, theme switcher, and author Chong Shik Park attribution.
@@ -211,7 +211,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Created isolated static website bundle in `docs/site/` (`index.html`, `style.css`, `.nojekyll`, reports, and documentation) and created `scripts/sync_site.sh` for syncing with standalone `nkm-injection.github.io` repository. Verified 100% test pass rate.
 
 68. [**Milestone 68 — Task: Update Repository Name and URLs to nkm-injection**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/68_rename_repo_to_nkm_injection.md)
-    - Updated repository and package names across `pyproject.toml` (`nkm-injection`), `CITATION.cff`, `README.md`, `docs/INSTALLATION.md`, `docs/reproducibility.md`, `scripts/setup_environment.sh`, and documentation website links (`https://github.com/nkm-injection/nkm-injection`). Verified 100% test pass rate.
+    - Updated repository and package names across `pyproject.toml` (`nkm-injection`), `CITATION.cff`, `README.md`, `docs/007_INSTALLATION.md`, `docs/002_reproducibility.md`, `scripts/setup_environment.sh`, and documentation website links (`https://github.com/nkm-injection/nkm-injection`). Verified 100% test pass rate.
 
 69. [**Milestone 69 — Task: Update Workspace Directory Paths to nkm-injection**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/69_update_workspace_paths_to_nkm_injection.md)
     - Realigned workspace and documentation markdown links, file URIs, and script paths across 46 files in `docs/` and `scripts/` from `Work/projects/nkm/` to `Work/projects/nkm-injection/`. Verified 100% test pass rate.
@@ -316,3 +316,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 97. [**Milestone 97 — Task 12: Configured Notebook Study Workflows**](97_task12_thin_notebook_workflows.md)
     - Extracted configured geometry/objectives/tracking/studies into reusable workflows, preserved characterized optics and independent MOGA execution, routed artifacts to fresh runs, documented tracking model changes, and verified 600 tests plus four independent clean-kernel notebook executions.
+
+98. [**Milestone 98 — Chronological Markdown Document Names**](98_chronological_markdown_document_names.md)
+    - Prefixed the 22 top-level Markdown documents with three-digit chronological numbers, updated repository references while preserving subfolder filenames and notebook code, and verified document links, structure and protected-file hashes.

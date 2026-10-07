@@ -7,7 +7,7 @@
 
 ## 1. Executive Summary & Objective
 
-The objective of Milestone 08 is to synthesize all physical results into publication-ready LaTeX/Markdown tables and 300 DPI vector figures (`src/nkm/paper.py`), provide a one-command paper reproduction pipeline (`scripts/reproduce_paper.py`), build an automated regression test suite (`tests/test_paper_regression.py`), and author comprehensive journal paper documentation (`docs/paper_results.md`, `docs/reproducibility.md`, `docs/jinst-paper/paper.tex`).
+The objective of Milestone 08 is to synthesize all physical results into publication-ready LaTeX/Markdown tables and 300 DPI vector figures (`src/nkm/paper.py`), provide a one-command paper reproduction pipeline (`scripts/reproduce_paper.py`), build an automated regression test suite (`tests/test_paper_regression.py`), and author comprehensive journal paper documentation (`docs/001_paper_results.md`, `docs/002_reproducibility.md`, `docs/jinst-paper/paper.tex`).
 
 ---
 
@@ -50,9 +50,9 @@ All 41 unit, integration, and paper regression tests pass cleanly:
 - `src/nkm/paper.py`: Automated paper table and figure generation pipeline.
 - `scripts/reproduce_paper.py`: One-command paper reproduction runner.
 - `tests/test_paper_regression.py`: Automated paper regression test suite.
-- `docs/paper_results.md`: Publication summary report with LaTeX code snippets.
-- `docs/reproducibility.md`: Repository reproducibility guide.
-- `docs/simulation_steps.md`: Step-by-step paper simulation guide.
+- `docs/001_paper_results.md`: Publication summary report with LaTeX code snippets.
+- `docs/002_reproducibility.md`: Repository reproducibility guide.
+- `docs/003_simulation_steps.md`: Step-by-step paper simulation guide.
 - `docs/jinst-paper/paper.tex`: JINST LaTeX manuscript.
 
 ---

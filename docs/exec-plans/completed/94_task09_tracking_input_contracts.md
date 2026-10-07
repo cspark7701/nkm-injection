@@ -42,7 +42,7 @@ corruption raise errors rather than becoming silent physical losses.
 - Allowed zero NKM geometric length in configuration domain validation. Updated
   zero-turn/configuration regressions and current map-lifecycle documentation.
 - Documented units, accepted loss markers, limits, numerical tolerances and
-  migration in [tracking input contracts](../../TRACKING_INPUT_CONTRACTS.md),
+  migration in [tracking input contracts](../../019_TRACKING_INPUT_CONTRACTS.md),
   linked from README. Updated ignored backlog completion records.
 
 ## Verification

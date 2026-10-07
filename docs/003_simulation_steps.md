@@ -146,6 +146,6 @@ pytest tests/test_paper_regression.py
 ## 6. Paper Documentation References
 
 You can consult the pre-compiled Markdown reports for direct copy-pasting of text, tables, and references:
-- **Paper Results & LaTeX Snippets**: [`docs/paper_results.md`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_results.md)
-- **Reproducibility Guide**: [`docs/reproducibility.md`](file:///home/cspark/Work/projects/nkm-injection/docs/reproducibility.md)
+- **Paper Results & LaTeX Snippets**: [`docs/001_paper_results.md`](file:///home/cspark/Work/projects/nkm-injection/docs/001_paper_results.md)
+- **Reproducibility Guide**: [`docs/002_reproducibility.md`](file:///home/cspark/Work/projects/nkm-injection/docs/002_reproducibility.md)
 - **MOGA Optimization Report**: [`docs/validation/moga_pareto_optimization.md`](file:///home/cspark/Work/projects/nkm-injection/docs/validation/moga_pareto_optimization.md)

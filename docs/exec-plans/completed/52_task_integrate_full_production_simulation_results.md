@@ -12,7 +12,7 @@
   - Fixed raw backslash string escaping in LaTeX formatting within [`src/nkm/paper.py`](file:///home/cspark/Work/projects/nkm-injection/src/nkm/paper.py).
   - Executed `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json` and generated validated paper artifacts under `results/paper/paper_run_20260814_091926/`.
 - **Documentation Verification**:
-  - Verified alignment of all markdown documentation (`README.md`, `docs/SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`, `docs/paper_results.md`, `docs/index.html`, etc.) with latest production outputs and test suite.
+  - Verified alignment of all markdown documentation (`README.md`, `docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`, `docs/001_paper_results.md`, `docs/index.html`, etc.) with latest production outputs and test suite.
 - **Verification**:
   - Full test suite passed: **161 passed out of 161 tests** (100% pass rate).
   - All protected scientific source files remain clean and untampered.

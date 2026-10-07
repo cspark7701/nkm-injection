@@ -58,7 +58,7 @@ nkm-injection/
 │   ├── exec-plans/completed/ # 71 chronological execution plan records
 │   ├── jinst-paper/        # LaTeX manuscript source and assets
 │   ├── site/               # Documentation website
-│   └── SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md
+│   └── 006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md
 ├── config/                 # Publication manifest (`publication_manifest.json`)
 └── results/                # Generated simulation data (git-ignored, non-destructive)
 ```

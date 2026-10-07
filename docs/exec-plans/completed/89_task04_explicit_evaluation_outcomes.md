@@ -19,7 +19,7 @@ Evaluation now preserves selected model provenance and distinguishes valid physi
 - Added sample/category context and finite optics checks to OAT failures without inventing rankings.
 - Added explicit model/path options to the tolerance CLI. Invalid ensembles save diagnostic summaries, skip OAT and exit unsuccessfully; publication validation rejects declared invalid tolerance evaluations.
 - Replaced fabricated loss positions with null values and coverage/exception metadata. Retained supplied zero positions and allowed programming errors to propagate.
-- Documented units, thresholds, statistical denominators, additive fields and historical model migration in [evaluation outcomes](../../EVALUATION_OUTCOMES.md); updated README and the ignored Task 04 backlog status/manifest.
+- Documented units, thresholds, statistical denominators, additive fields and historical model migration in [evaluation outcomes](../../014_EVALUATION_OUTCOMES.md); updated README and the ignored Task 04 backlog status/manifest.
 
 ## Verification
 

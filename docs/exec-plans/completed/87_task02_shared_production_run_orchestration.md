@@ -16,7 +16,7 @@ The shell runner accepted output/worker settings but forwarded them incompletely
 - Routed generated injection/MOGA finalist lattices beneath their stage directories. Added an optional ring configuration to finalist reevaluation without changing other callers.
 - Added an exact publication output option. When supplied, PDF compilation copies manuscript inputs into the run-local build directory and leaves sources unchanged; PDF compilation is opt-in in the shared runner.
 - Added the original storage-ring MAT file to protected hash inventory.
-- Documented job defaults, units, handoffs, compatibility and remaining scope in `docs/PRODUCTION_RUNNER.md`, and updated publication guidance and README.
+- Documented job defaults, units, handoffs, compatibility and remaining scope in `docs/012_PRODUCTION_RUNNER.md`, and updated publication guidance and README.
 
 ## Verification
 

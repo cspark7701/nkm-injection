@@ -10,7 +10,8 @@ from typing import Dict, Tuple, Optional, Any, Union
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 
-from .fieldmap import OutOfDomainError, BaseFieldMap
+from .fieldmap import BaseFieldMap
+from ._fieldmap_validation import broadcast_coordinates, validate_axis, validate_values
 from .units import (
     KickMapMetadata,
     convert_kick_angle,
@@ -47,28 +48,32 @@ def load_2d_kickmap(filepath: Union[str, Path]) -> Tuple[float, np.ndarray, np.n
         
     tokens = ' '.join(lines).split()
     
+    start_indices = [i for i, token in enumerate(tokens) if token == "START"]
+    if len(start_indices) != 2 or start_indices[0] != 3:
+        raise ValueError("Expected length, Nx, Ny and exactly two START sections")
     length_m = float(tokens[0])
-    nx = int(tokens[1])
-    ny = int(tokens[2])
-    
-    start_indices = [i for i, t in enumerate(tokens) if t == 'START']
-    if len(start_indices) < 2:
-        raise ValueError(f"Expected at least 2 'START' tokens in kickmap file, found {len(start_indices)}")
-        
-    s1, s2 = start_indices[0], start_indices[1]
-    
-    # Section 1 (Vertical kick / By field integral map Ky)
-    map1_tokens = [float(t) for t in tokens[s1 + 1 : s2]]
-    x_grid = np.array(map1_tokens[:nx])
-    map1_arr = np.array(map1_tokens[nx:]).reshape(ny, nx + 1)
-    y_grid = map1_arr[:, 0]
-    ky_map = map1_arr[:, 1:]
-    
-    # Section 2 (Horizontal kick / Bx field integral map Kx)
-    map2_tokens = [float(t) for t in tokens[s2 + 1 :]]
-    map2_arr = np.array(map2_tokens[nx:]).reshape(ny, nx + 1)
-    kx_map = map2_arr[:, 1:]
-    
+    nx, ny = int(tokens[1]), int(tokens[2])
+    if not np.isfinite(length_m) or length_m <= 0:
+        raise ValueError("Kick-map length (m) must be finite and positive")
+    if nx < 2 or ny < 2:
+        raise ValueError("Kick-map dimensions Nx and Ny must each be at least two")
+    s1, s2 = start_indices
+
+    def parse_section(section, name):
+        expected = nx + ny * (nx + 1)
+        if len(section) != expected:
+            raise ValueError(f"{name} must contain {expected} values, got {len(section)}")
+        values = np.asarray(section, dtype=float)
+        x = validate_axis(values[:nx], f"{name} x (m)")
+        rows = values[nx:].reshape(ny, nx + 1)
+        y = validate_axis(rows[:, 0], f"{name} y (m)")
+        return x, y, validate_values(rows[:, 1:], (ny, nx), name)
+
+    x_grid, y_grid, ky_map = parse_section(tokens[s1 + 1:s2], "section 1")
+    x_second, y_second, kx_map = parse_section(tokens[s2 + 1:], "section 2")
+    if not np.array_equal(x_grid, x_second) or not np.array_equal(y_grid, y_second):
+        raise ValueError("Kick-map sections must have identical x and y axes")
+
     return length_m, x_grid, y_grid, kx_map, ky_map
 
 
@@ -132,20 +137,17 @@ class NKMKickMap2D(BaseFieldMap):
             y: vertical position in m
             
         Returns:
-            Tuple of raw (Kx, Ky) values.
+            Raw (Kx, Ky) with NumPy broadcast shape, or floats for scalars.
+            Nonfinite queries and incompatible shapes raise ValueError; outside
+            queries raise OutOfDomainError unless extrapolation is enabled.
         """
-        x_arr = np.atleast_1d(x)
-        y_arr = np.atleast_1d(y)
-        
-        pts = np.column_stack([y_arr, x_arr])
-        try:
-            kx_eval = self._interp_kx(pts)
-            ky_eval = self._interp_ky(pts)
-        except ValueError as err:
-            raise OutOfDomainError(f"Points out of 2D grid domain x∈[{self.x_min}, {self.x_max}], y∈[{self.y_min}, {self.y_max}]: {err}")
-        
-        if np.ndim(x) == 0 and np.ndim(y) == 0:
-            return float(kx_eval[0]), float(ky_eval[0])
+        x_arr, y_arr = broadcast_coordinates(("x (m)", x), ("y (m)", y))
+        self.check_domain_bounds(x_arr, y_arr)
+        pts = np.stack((y_arr, x_arr), axis=-1).reshape(-1, 2)
+        kx_eval = self._interp_kx(pts).reshape(x_arr.shape)
+        ky_eval = self._interp_ky(pts).reshape(x_arr.shape)
+        if x_arr.ndim == 0:
+            return float(kx_eval), float(ky_eval)
         return kx_eval, ky_eval
 
     def evaluate_kick(self, x: Union[float, np.ndarray],

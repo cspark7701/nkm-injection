@@ -44,6 +44,11 @@ if [ -d "${EXTENSIONS_DIR}" ]; then
   echo "  Copied standalone extension files to ${AT_DIR}"
 fi
 
+# Install the same NumPy-only map contracts used by the project, without a
+# runtime dependency on nkm-injection in the external pyAT installation.
+cp "${REPO_ROOT}/src/nkm_injection/_fieldmap_validation.py" \
+   "${AT_DIR}/pyat/at/integrators/_nkm_fieldmap.py"
+
 # Ensure imports are registered in pyat/at/integrators/__init__.py and pyat/at/lattice/elements/__init__.py
 if ! grep -q "pyNKMPass" "${AT_DIR}/pyat/at/integrators/__init__.py"; then
   echo "from .pyNKMPass import *" >> "${AT_DIR}/pyat/at/integrators/__init__.py"

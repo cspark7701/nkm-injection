@@ -17,9 +17,10 @@ from .units import KickMapMetadata, compute_rigidity, convert_coordinate, conver
 import hashlib
 
 
-class OutOfDomainError(ValueError):
-    """Raised when querying field values outside tabulated bounds."""
-    pass
+from ._fieldmap_validation import (
+    OutOfDomainError, broadcast_coordinates, check_bounds, validate_axis,
+    validate_bounds, validate_values, validate_3d_map, trilinear,
+)
 
 
 class BaseFieldMap:
@@ -37,6 +38,9 @@ class BaseFieldMap:
                  allow_extrapolation: bool = False,
                  metadata: Optional[KickMapMetadata] = None,
                  filepath: Optional[Union[str, Path]] = None):
+        validate_bounds((x_min, x_max), "x")
+        if y_min is not None or y_max is not None:
+            validate_bounds((y_min, y_max), "y")
         self.x_min = float(x_min)
         self.x_max = float(x_max)
         self.y_min = float(y_min) if y_min is not None else None
@@ -53,23 +57,9 @@ class BaseFieldMap:
         
         Raises OutOfDomainError if points fall outside domain bounds and allow_extrapolation is False.
         """
-        if self.allow_extrapolation:
-            return
-
-        x_arr = np.asarray(x)
-        out_x = (x_arr < self.x_min) | (x_arr > self.x_max)
-        if np.any(out_x):
-            raise OutOfDomainError(
-                f"x values out of range [{self.x_min}, {self.x_max}]: {x_arr[out_x]}"
-            )
-
-        if y is not None and self.y_min is not None and self.y_max is not None:
-            y_arr = np.asarray(y)
-            out_y = (y_arr < self.y_min) | (y_arr > self.y_max)
-            if np.any(out_y):
-                raise OutOfDomainError(
-                    f"y values out of range [{self.y_min}, {self.y_max}]: {y_arr[out_y]}"
-                )
+        check_bounds(x, (self.x_min, self.x_max), "x", self.allow_extrapolation)
+        if y is not None and self.y_min is not None:
+            check_bounds(y, (self.y_min, self.y_max), "y", self.allow_extrapolation)
 
     def compute_file_hash(self, filepath: Optional[Union[str, Path]] = None, algorithm: str = "sha256") -> str:
         """
@@ -116,13 +106,8 @@ def integrate_longitudinal_field(z: np.ndarray,
     Returns:
         Integrated field I_y in T*m.
     """
-    if len(z) != len(by):
-        raise ValueError("z and by arrays must have equal length")
-    if len(z) < 2:
-        raise ValueError("At least 2 points required for numerical quadrature")
-
-    z_arr = np.asarray(z, dtype=float)
-    by_arr = np.asarray(by, dtype=float)
+    z_arr = validate_axis(z, "z (m)")
+    by_arr = validate_values(by, z_arr.shape, "By (T)")
 
     if method == "simpson":
         try:
@@ -171,11 +156,9 @@ def load_1d_fieldmap(filepath: Union[str, Path],
             x = df.iloc[:, 0].values.astype(float)
             by = df.iloc[:, 1].values.astype(float)
     elif ext in ('.txt', '.csv'):
-        # Attempt space/csv delimiter
-        try:
-            df = pd.read_csv(path, sep=r'\s+', header=None)
-        except Exception:
-            df = pd.read_csv(path, header=None)
+        df = pd.read_csv(path, sep=r"[,\s]+", header=None, engine="python")
+        if df.shape[1] != 2:
+            raise ValueError("Text field map must contain exactly two columns: x (m), By (T)")
         x = df.iloc[:, 0].values.astype(float)
         by = df.iloc[:, 1].values.astype(float)
     else:
@@ -183,7 +166,8 @@ def load_1d_fieldmap(filepath: Union[str, Path],
         
     # Sort by x coordinate
     sort_idx = np.argsort(x)
-    return x[sort_idx], by[sort_idx]
+    x = validate_axis(x[sort_idx], "x (m)")
+    return x, validate_values(by[sort_idx], x.shape, "By (T)")
 
 
 def validate_1d_fieldmap(x: np.ndarray, by: np.ndarray) -> Dict[str, Any]:
@@ -193,6 +177,10 @@ def validate_1d_fieldmap(x: np.ndarray, by: np.ndarray) -> Dict[str, Any]:
     Returns:
         Dictionary of validation metrics.
     """
+    x = np.asarray(x, dtype=float)
+    by = np.asarray(by, dtype=float)
+    if x.ndim != 1 or x.size < 2 or by.shape != x.shape:
+        raise ValueError("x and By must be equal-length 1-D arrays with at least two nodes")
     is_finite_x = bool(np.all(np.isfinite(x)))
     is_finite_by = bool(np.all(np.isfinite(by)))
     
@@ -209,11 +197,14 @@ def validate_1d_fieldmap(x: np.ndarray, by: np.ndarray) -> Dict[str, Any]:
     peak_by = float(np.max(np.abs(by)))
     
     # Symmetry metric (odd or even symmetry check around x=0)
-    if x_min < 0 and x_max > 0:
+    if is_finite_x and is_finite_by and is_strictly_monotonic and x_min < 0 and x_max > 0:
         pos_mask = (x > 0) & (x <= min(abs(x_min), abs(x_max)))
         x_pos = x[pos_mask]
         by_pos = by[pos_mask]
         
+        if x_pos.size == 0:
+            x_pos = np.array([min(abs(x_min), abs(x_max))])
+            by_pos = np.interp(x_pos, x, by)
         by_neg_interp = np.interp(-x_pos, x, by)
         odd_sym_residual = float(np.max(np.abs(by_pos + by_neg_interp)))
         even_sym_residual = float(np.max(np.abs(by_pos - by_neg_interp)))
@@ -244,6 +235,8 @@ class NKMFieldMap1D(BaseFieldMap):
                  allow_extrapolation: bool = False,
                  metadata: Optional[KickMapMetadata] = None,
                  filepath: Optional[Union[str, Path]] = None):
+        x = validate_axis(x, "x (m)")
+        by = validate_values(by, x.shape, "By (T)")
         val = validate_1d_fieldmap(x, by)
         if not val["valid"]:
             raise ValueError(f"Invalid 1D field map data: {val}")
@@ -268,7 +261,8 @@ class NKMFieldMap1D(BaseFieldMap):
         
         fill_val = "extrapolate" if allow_extrapolation else np.nan
         self._interp_linear = interp1d(x, by, kind='linear', bounds_error=False, fill_value=fill_val)
-        self._interp_cubic = interp1d(x, by, kind='cubic', bounds_error=False, fill_value=fill_val)
+        self._interp_cubic = (interp1d(x, by, kind='cubic', bounds_error=False, fill_value=fill_val)
+                              if x.size >= 4 else None)
 
     def evaluate(self, x_eval: Union[float, np.ndarray], method: str = 'linear') -> Union[float, np.ndarray]:
         """
@@ -278,6 +272,10 @@ class NKMFieldMap1D(BaseFieldMap):
         """
         self.check_domain_bounds(x_eval)
             
+        if method not in ("linear", "cubic"):
+            raise ValueError("Interpolation method must be 'linear' or 'cubic'")
+        if method == "cubic" and self._interp_cubic is None:
+            raise ValueError("Cubic interpolation requires at least four nodes")
         interp_fn = self._interp_cubic if method == 'cubic' else self._interp_linear
         res = interp_fn(x_eval)
         
@@ -321,6 +319,7 @@ def interpolate_3d_field_vectorized(
     x_range_mm: Tuple[float, float] = (-50.0, 50.0),
     y_range_mm: Tuple[float, float] = (-50.0, 50.0),
     z_range_mm: Tuple[float, float] = (-300.0, 300.0),
+    boundary_policy: str = "raise",
 ) -> Tuple[Union[float, np.ndarray], Union[float, np.ndarray], Union[float, np.ndarray]]:
     """
     Vectorized trilinear interpolation of 3D magnetic field map (Bx, By, Bz) in Tesla.
@@ -337,61 +336,12 @@ def interpolate_3d_field_vectorized(
     Returns
     -------
     Bx, By, Bz : float or np.ndarray
-        Interpolated field components in Tesla matching input coordinate shape.
+        Interpolated fields in T with NumPy broadcast coordinate shape.
+        Outside queries raise by default; boundary_policy explicitly permits
+        linear extrapolation or clipping. NaN/Inf always raise ValueError.
     """
-    nx, ny, nz, _ = field_map.shape
-    x_arr = np.asarray(x_mm, dtype=float)
-    y_arr = np.asarray(y_mm, dtype=float)
-    z_arr = np.asarray(z_mm, dtype=float)
-
-    x_min, x_max = x_range_mm
-    y_min, y_max = y_range_mm
-    z_min, z_max = z_range_mm
-
-    ux = np.clip((x_arr - x_min) / (x_max - x_min) * (nx - 1), 0.0, nx - 1.0)
-    uy = np.clip((y_arr - y_min) / (y_max - y_min) * (ny - 1), 0.0, ny - 1.0)
-    uz = np.clip((z_arr - z_min) / (z_max - z_min) * (nz - 1), 0.0, nz - 1.0)
-
-    i0 = np.floor(ux).astype(int)
-    j0 = np.floor(uy).astype(int)
-    k0 = np.floor(uz).astype(int)
-
-    i1 = np.minimum(i0 + 1, nx - 1)
-    j1 = np.minimum(j0 + 1, ny - 1)
-    k1 = np.minimum(k0 + 1, nz - 1)
-
-    wx = ux - i0
-    wy = uy - j0
-    wz = uz - k0
-
-    if wx.ndim > 0:
-        wx = wx[..., np.newaxis]
-        wy = wy[..., np.newaxis]
-        wz = wz[..., np.newaxis]
-
-    c000 = (1.0 - wx) * (1.0 - wy) * (1.0 - wz)
-    c100 = wx * (1.0 - wy) * (1.0 - wz)
-    c010 = (1.0 - wx) * wy * (1.0 - wz)
-    c110 = wx * wy * (1.0 - wz)
-    c001 = (1.0 - wx) * (1.0 - wy) * wz
-    c101 = wx * (1.0 - wy) * wz
-    c011 = (1.0 - wx) * wy * wz
-    c111 = wx * wy * wz
-
-    b_interp = (
-        c000 * field_map[i0, j0, k0]
-        + c100 * field_map[i1, j0, k0]
-        + c010 * field_map[i0, j1, k0]
-        + c110 * field_map[i1, j1, k0]
-        + c001 * field_map[i0, j0, k1]
-        + c101 * field_map[i1, j0, k1]
-        + c011 * field_map[i0, j1, k1]
-        + c111 * field_map[i1, j1, k1]
-    )
-
-    if b_interp.ndim == 1:
-        return b_interp[0], b_interp[1], b_interp[2]
-    return b_interp[..., 0], b_interp[..., 1], b_interp[..., 2]
+    values, ranges = validate_3d_map(field_map, (x_range_mm, y_range_mm, z_range_mm))
+    return trilinear(values, (x_mm, y_mm, z_mm), ranges, boundary_policy)
 
 
 class NKMFieldMap3D(BaseFieldMap):
@@ -406,6 +356,8 @@ class NKMFieldMap3D(BaseFieldMap):
                  allow_extrapolation: bool = False,
                  metadata: Optional[KickMapMetadata] = None,
                  filepath: Optional[Union[str, Path]] = None):
+        field_map, ranges = validate_3d_map(field_map, (x_range_m, y_range_m, z_range_m))
+        x_range_m, y_range_m, z_range_m = ranges
         super().__init__(
             x_min=x_range_m[0],
             x_max=x_range_m[1],
@@ -428,17 +380,16 @@ class NKMFieldMap3D(BaseFieldMap):
         """
         Evaluate (Bx, By, Bz) in Tesla at (x_m, y_m, z_m) in meters.
         """
-        x_mm = np.asarray(x_m) * 1e3
-        y_mm = np.asarray(y_m) * 1e3
-        z_mm = np.asarray(z_m) * 1e3
-        x_range_mm = (self.x_range_m[0] * 1e3, self.x_range_m[1] * 1e3)
-        y_range_mm = (self.y_range_m[0] * 1e3, self.y_range_m[1] * 1e3)
-        z_range_mm = (self.z_range_m[0] * 1e3, self.z_range_m[1] * 1e3)
-
-        return interpolate_3d_field_vectorized(
-            self.field_map, x_mm, y_mm, z_mm,
-            x_range_mm=x_range_mm, y_range_mm=y_range_mm, z_range_mm=z_range_mm
+        return trilinear(
+            self.field_map, (x_m, y_m, z_m),
+            (self.x_range_m, self.y_range_m, self.z_range_m),
+            "extrapolate" if self.allow_extrapolation else "raise",
         )
+
+    @property
+    def domain_bounds(self):
+        """Closed x, y and z domain bounds in meters."""
+        return {**super().domain_bounds, "z": (self.z_min, self.z_max)}
 
     def __call__(self, x: np.ndarray, y: np.ndarray, z: float = 0.0) -> Tuple[np.ndarray, np.ndarray]:
         """Conforms to FieldMap3DProtocol returning (By, Bx) in Tesla for transverse coords (x, y) at slice z."""

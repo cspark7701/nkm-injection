@@ -286,3 +286,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 87. [**Milestone 87 — Task 02: Shared Production Run Orchestration**](87_task02_shared_production_run_orchestration.md)
     - Unified shell/notebook execution with a validated configuration and stage runner; routed outputs, workers, current-run optimization and publication manifests explicitly, added read-only previews and run-local lattice/PDF builds, and verified 249 tests plus a clean Jupyter-kernel preview.
+
+88. [**Milestone 88 — Task 03: Strict Shared Field-Map Validation**](88_task03_strict_fieldmap_validation.md)
+    - Enforced finite grid/axis and section agreement checks, closed domains and NumPy broadcasting; shared 3-D interpolation with the standalone pyAT extension, documented explicit boundary policies and verified 306 tests plus clean-process source-map validation.

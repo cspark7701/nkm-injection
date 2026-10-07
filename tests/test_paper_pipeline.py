@@ -46,14 +46,16 @@ def test_rms_envelope_formula():
     assert env_3sig[0] == pytest.approx(3.0 * expected_rms_0, rel=1e-6)
 
 
-def test_paper_pipeline_execution(tmp_path):
+def test_paper_pipeline_execution(tmp_path, publication_case):
     schema = PaperResultSchema(run_id="test_run", base_dir=tmp_path)
     schema.initialize_directories()
 
     assert schema.figures_dir.is_dir()
     assert schema.tables_dir.is_dir()
 
-    summary = run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_run_pipeline", compile_pdf=False)
+    root, manifest = publication_case()
+    summary = run_paper_pipeline(repo_root=root, run_id="test_run_pipeline", manifest=manifest,
+                                 compile_pdf=False, create_if_missing=False)
     assert summary["input_hashes_verified"] is True
     assert summary["tables_count"] >= 2
     assert summary["figures_count"] >= 2

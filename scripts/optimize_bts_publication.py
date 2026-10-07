@@ -33,6 +33,7 @@ from src.nkm_injection.optimization import (
     round_strengths,
 )
 from src.nkm_injection.constraints import BTSConstraintConfig
+from src.nkm_injection.bts_lattice import BTSConfig
 
 
 def _git_commit() -> str:
@@ -149,6 +150,10 @@ def main():
         "n_starts": res.n_total_starts,
         "method": res.method,
         "quad_bounds_global": list(config.quad_bounds),
+        "publication_input_schema_version": 1,
+        "bts_config": BTSConfig().to_dict(),
+        "target_config": config.target_config.to_dict(),
+        "constraint_config": config.constraint_config.to_dict(),
         "beta_max_limit_m": config.constraint_config.beta_max_limit_m,
         "mismatch_limit": config.constraint_config.mismatch_limit,
         "input_files": {

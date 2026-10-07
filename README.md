@@ -40,6 +40,8 @@ Notebooks `01-03` include rich inline visualization cells, such as phase-space p
 | **MOGA Trade-offs** | `python3 scripts/run_bts_moga.py -w W` | Multi-seed NSGA-II Pareto optimization. |
 | **Paper Reproduction** | `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W` | Fully manifest-driven figure and table compilation. |
 
+Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.
+
 ---
 
 ## Production Simulation Results & Key Findings

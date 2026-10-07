@@ -35,21 +35,12 @@ def test_publication_manifest_load_save(tmp_path):
     assert loaded.field_validation_run == "results/field_validation/run_01"
 
 
-def test_validate_publication_manifest_success():
-    manifest = PublicationManifest(
-        field_validation_run="results/field_validation",
-        tracking_convergence_run="results/tracking_convergence",
-        bts_optimization_run="results/baseline",
-        injection_run="results/multiturn_injection",
-        tolerance_run="results/baseline",
-        moga_run="results/baseline",
-        input_hash_manifest="results/baseline/protected_files_manifest.json"
-    )
-
-    val = validate_publication_manifest(manifest, REPO_ROOT)
-    assert val["valid"] is True
-    assert len(val["errors"]) == 0
-    assert len(val["verified_runs"]) == 6
+def test_validate_publication_manifest_success(publication_case):
+    root, manifest = publication_case()
+    val = validate_publication_manifest(manifest, root, create_if_missing=False)
+    assert val['valid'] is True
+    assert len(val['errors']) == 0
+    assert len(val['verified_runs']) == 6
 
 
 def test_validate_publication_manifest_missing_run():
@@ -62,22 +53,14 @@ def test_validate_publication_manifest_missing_run():
     assert any("non_existent_run_directory_xyz" in err for err in val["errors"])
 
 
-def test_run_paper_pipeline_manifest_execution(tmp_path):
-    manifest = PublicationManifest(
-        field_validation_run="results/field_validation",
-        tracking_convergence_run="results/tracking_convergence",
-        bts_optimization_run="results/baseline",
-        injection_run="results/multiturn_injection",
-        tolerance_run="results/baseline",
-        moga_run="results/baseline",
-        input_hash_manifest="results/baseline/protected_files_manifest.json"
-    )
-
-    summary = run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_manifest_run", manifest=manifest, compile_pdf=False)
-    assert summary["manifest_valid"] is True
-    assert summary["input_hashes_verified"] is True
-    assert summary["tables_count"] >= 2
-    assert summary["figures_count"] >= 2
+def test_run_paper_pipeline_manifest_execution(publication_case):
+    root, manifest = publication_case()
+    summary = run_paper_pipeline(repo_root=root, run_id='test_manifest_run', manifest=manifest,
+                                 compile_pdf=False, create_if_missing=False)
+    assert summary['manifest_valid'] is True
+    assert summary['input_hashes_verified'] is True
+    assert summary['tables_count'] == 7
+    assert summary['figures_count'] == 4
 
 
 def test_run_paper_pipeline_fails_on_invalid_manifest():

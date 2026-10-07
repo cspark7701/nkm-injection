@@ -277,3 +277,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 
 
+
+85. [**Milestone 85 — Repository Refactoring Opportunity Review**](85_repository_refactor_opportunity_review.md)
+    - Reviewed the current package, scripts, notebooks, tests and prior refactors; saved 12 numbered proposed tasks with source evidence, priorities, dependencies and acceptance criteria in [05_refactor_tasks](../../../05_refactor_tasks/README.md). Recorded dependency-related test collection limits.

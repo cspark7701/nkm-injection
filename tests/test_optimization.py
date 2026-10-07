@@ -2,16 +2,13 @@
 Unit and Integration Tests for Milestone 4 BTS Deterministic Optimization
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.optimization import (
+from nkm_injection.optimization import (
     BTSOptimizationConfig,
     BTSOptimizationEvaluator,
     DeterministicObjective,
@@ -19,7 +16,7 @@ from src.nkm_injection.optimization import (
     optimize_bts_quadrupoles,
     compute_sensitivity_matrix
 )
-from src.nkm_injection.robust_optimization import RobustMonteCarloObjective
+from nkm_injection.robust_optimization import RobustMonteCarloObjective
 
 
 @pytest.fixture
@@ -96,16 +93,16 @@ def test_optics_optimizer_strategy_pattern(opt_config):
 # Task 12 — Concurrency & Worker Dispatch Tests
 # ===========================================================================
 
-from src.nkm_injection.concurrency import (
+from nkm_injection.concurrency import (
     parallel_map,
     resolve_workers,
     generate_worker_seeds,
     _sample_square,
     _failing_worker
 )
-from src.nkm_injection.bts_lattice import BTSConfig
-from src.nkm_injection.errors import sample_error_ensemble
-from src.nkm_injection.robust_optimization import (
+from nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.errors import sample_error_ensemble
+from nkm_injection.robust_optimization import (
     evaluate_robustness_statistics,
     compute_one_at_a_time_sensitivity,
 )

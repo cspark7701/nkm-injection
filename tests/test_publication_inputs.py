@@ -5,8 +5,8 @@ import json
 import numpy as np
 import pytest
 
-from src.nkm_injection.publication_inputs import load_publication_inputs
-from src.nkm_injection.paper import run_paper_pipeline, generate_paper_tables
+from nkm_injection.publication_inputs import load_publication_inputs
+from nkm_injection.paper import run_paper_pipeline, generate_paper_tables
 
 
 def test_selected_manifest_changes_tables_and_figure_data(publication_case, monkeypatch):
@@ -145,7 +145,7 @@ def test_pipeline_in_fresh_python_process(publication_case):
     code = """
 import sys
 from pathlib import Path
-from src.nkm_injection.paper import run_paper_pipeline
+from nkm_injection.paper import run_paper_pipeline
 summary = run_paper_pipeline(Path(sys.argv[1]), 'fresh_process',
                              manifest=Path(sys.argv[2]), create_if_missing=False)
 assert summary['tables_count'] == 7

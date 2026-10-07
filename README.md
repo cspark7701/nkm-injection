@@ -47,6 +47,8 @@ Robustness studies load the selected field map and record invalid evaluations se
 
 Multi-turn tracking recomputes its one-turn map for each call so lattice edits take effect. See [tracking map lifecycle and measured setup cost](docs/TRACKING_MAP_LIFECYCLE.md).
 
+Use the installed `nkm_injection` package in scripts and notebooks. See [canonical imports and entry points](docs/PACKAGE_IMPORTS.md) for lazy public exports, migration and the `nkm-production` command.
+
 Configuration JSON loading now validates types and rejects unknown fields by default. See [configuration serialization and migration](docs/CONFIGURATION_SERIALIZATION.md) for supported values and explicit compatibility mode.
 
 Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.

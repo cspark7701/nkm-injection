@@ -6,27 +6,24 @@ multi-turn capture efficiency, stored-beam perturbation limits, quadrupole hardw
 and robust failure probabilities.
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.units import KickMapMetadata, integrated_field_to_kick
-from src.nkm_injection.kickmap import NKMKickMap2D
-from src.nkm_injection.bts_lattice import BTSConfig, create_bts_lattice
-from src.nkm_injection.optics import compute_twiss_propagation, compute_mismatch_metric
-from src.nkm_injection.constraints import BTSHardwareConstraints
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.units import KickMapMetadata, integrated_field_to_kick
+from nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.bts_lattice import BTSConfig, create_bts_lattice
+from nkm_injection.optics import compute_twiss_propagation, compute_mismatch_metric
+from nkm_injection.constraints import BTSHardwareConstraints
+from nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig,
     load_storage_ring_injection_lattice,
     track_multiturn_injection,
     compute_multiturn_injection_metrics
 )
-from src.nkm_injection.beam import generate_6d_beam
+from nkm_injection.beam import generate_6d_beam
 
 
 def test_regression_integrated_nkm_kick():
@@ -77,7 +74,7 @@ def test_regression_multiturn_stored_beam_perturbation():
 
 def test_regression_constant_field_kick_both_planes():
     """Verify constant field kick calculation in both transverse planes (x and y)."""
-    from src.nkm_injection.units import integrated_field_to_transverse_kicks
+    from nkm_injection.units import integrated_field_to_transverse_kicks
     # B_y * L = 0.07672 T*m -> delta_px = -5.749 mrad for electron
     # B_x * L = 0.01335 T*m -> delta_py = +1.0 mrad for electron
     kx_rad, ky_rad = integrated_field_to_transverse_kicks(
@@ -92,8 +89,8 @@ def test_regression_constant_field_kick_both_planes():
 
 def test_regression_thin_vs_thick_kick_agreement():
     """Verify agreement between thin kick and 40-slice thick RK4 tracking."""
-    from src.nkm_injection.tracking import track_nkm_thin_kick, track_nkm_thick_symplectic
-    from src.nkm_injection.beam import generate_6d_beam
+    from nkm_injection.tracking import track_nkm_thin_kick, track_nkm_thick_symplectic
+    from nkm_injection.beam import generate_6d_beam
 
     beam = generate_6d_beam(n_particles=100, beta_x=5.0, alpha_x=0.0, emit_x=1e-8, beta_y=5.0, alpha_y=0.0, emit_y=1e-9, seed=42)
     kickmap_obj = NKMKickMap2D(REPO_ROOT / "kickmap_file.txt")
@@ -118,7 +115,7 @@ def test_regression_thin_vs_thick_kick_agreement():
 
 def test_regression_known_aperture_and_septum_loss():
     """Verify physical aperture loss and septum blade interception detection."""
-    from src.nkm_injection.storage_ring_injection import ElementAperture, SeptumModel
+    from nkm_injection.storage_ring_injection import ElementAperture, SeptumModel
 
     aperture = ElementAperture(x_min=-0.010, x_max=0.010, y_min=-0.010, y_max=0.010)
     x_arr = np.array([0.015, 0.005])
@@ -137,7 +134,7 @@ def test_regression_known_aperture_and_septum_loss():
 
 def test_regression_uncertainty_error_response():
     """Verify Monte Carlo perturbed lattice response to each individual uncertainty source."""
-    from src.nkm_injection.errors import sample_error_ensemble, apply_sample_errors
+    from nkm_injection.errors import sample_error_ensemble, apply_sample_errors
 
     sample = {
         "sample_id": 0,

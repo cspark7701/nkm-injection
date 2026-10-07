@@ -9,7 +9,6 @@ and genuine RK4 Lorentz Integrator). Performs slice count convergence scan (N_sl
 Outputs machine-readable metrics to results/tracking_convergence/task03_run_<timestamp>/metrics.json.
 """
 
-import sys
 import json
 import datetime
 from pathlib import Path
@@ -17,14 +16,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.units import compute_rigidity, integrated_field_to_transverse_kicks, ELECTRON_CHARGE_C
-from src.nkm_injection.beam import generate_6d_beam, compute_beam_statistics
-from src.nkm_injection.tracking import track_nkm_thin_kick, track_nkm_thick_symplectic, track_nkm_thick_rk4, TrackingResult
-from src.nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
-from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
+from nkm_injection.units import compute_rigidity, integrated_field_to_transverse_kicks, ELECTRON_CHARGE_C
+from nkm_injection.beam import generate_6d_beam, compute_beam_statistics
+from nkm_injection.tracking import track_nkm_thin_kick, track_nkm_thick_symplectic, track_nkm_thick_rk4, TrackingResult
+from nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
+from nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 
 
 def run_task03_validation() -> dict:

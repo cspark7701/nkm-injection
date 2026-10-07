@@ -7,7 +7,6 @@ and tracking representations, generates diagnostic plots, and saves results
 to results/field_validation/<run-id>/.
 """
 
-import sys
 import json
 import datetime
 from pathlib import Path
@@ -15,13 +14,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.units import compute_rigidity
-from src.nkm_injection.fieldmap import NKMFieldMap1D, load_1d_fieldmap
-from src.nkm_injection.kickmap import NKMKickMap2D
-from src.nkm_injection.validation import (
+from nkm_injection.units import compute_rigidity
+from nkm_injection.fieldmap import NKMFieldMap1D, load_1d_fieldmap
+from nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.validation import (
     get_input_data_hashes,
     compute_cross_validation,
     perform_interpolation_study,

@@ -301,3 +301,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 92. [**Milestone 92 — Task 07: Strict Configuration Serialization**](92_task07_strict_configuration_serialization.md)
     - Added strict typed loading with explicit compatibility mode, finite/lossless conversion checks and nested field paths; preserved supported round trips and safe file writes, represented undefined no-loss statistics as null, and verified 408 tests plus clean-process configuration I/O.
+
+93. [**Milestone 93 — Task 08: Canonical Package Imports**](93_task08_canonical_package_imports.md)
+    - Unified maintained callers under the installed namespace, preserved root exports through lazy loading, added the production console command, and verified 416 tests plus editable/wheel imports, CLI help and notebook import smoke checks outside the checkout.

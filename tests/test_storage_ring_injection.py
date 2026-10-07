@@ -2,16 +2,13 @@
 Unit and integration tests for src/nkm/storage_ring_injection.py (Task 04)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig,
     load_storage_ring_injection_lattice,
     track_multiturn_injection,
@@ -20,9 +17,9 @@ from src.nkm_injection.storage_ring_injection import (
     get_kicker_evaluator,
     SeptumModel
 )
-from src.nkm_injection.tracking import TrackingResult
-from src.nkm_injection.beam import generate_6d_beam
-from src.nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.tracking import TrackingResult
+from nkm_injection.beam import generate_6d_beam
+from nkm_injection.kickmap import NKMKickMap2D
 
 
 @pytest.fixture

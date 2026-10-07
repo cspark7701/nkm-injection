@@ -8,7 +8,6 @@ and exports results to results/bts_optimization/.
 """
 
 import json
-import sys
 import time
 from pathlib import Path
 import numpy as np
@@ -16,12 +15,10 @@ import matplotlib.pyplot as plt
 import at
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_lattice
-from src.nkm_injection.optics import compute_twiss_propagation, compute_mismatch_metric, plot_bts_optics
-from src.nkm_injection.optimization import (
+from nkm_injection.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_lattice
+from nkm_injection.optics import compute_twiss_propagation, compute_mismatch_metric, plot_bts_optics
+from nkm_injection.optimization import (
     BTSOptimizationConfig,
     optimize_bts_quadrupoles,
     compute_sensitivity_matrix

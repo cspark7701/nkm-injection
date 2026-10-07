@@ -8,7 +8,6 @@ on controlled test lattices and storage ring configurations.
 Outputs machine-readable metrics under results/loss_validation/task04_run_<timestamp>/metrics.json.
 """
 
-import sys
 import json
 import datetime
 from pathlib import Path
@@ -17,18 +16,16 @@ import matplotlib.pyplot as plt
 import at
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.beam import generate_6d_beam
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.beam import generate_6d_beam
+from nkm_injection.storage_ring_injection import (
     SeptumModel,
     ElementAperture,
     track_element_resolved_injection,
     StorageRingInjectionConfig,
     build_storage_ring_nkm_lattice
 )
-from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
+from nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 
 
 def run_task04_validation() -> dict:

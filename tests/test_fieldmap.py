@@ -2,16 +2,13 @@
 Unit and Integration Tests for Milestone 3 NKM Field Map Ingestion & Validation
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.fieldmap import (
+from nkm_injection.fieldmap import (
     load_1d_fieldmap,
     validate_1d_fieldmap,
     BaseFieldMap,
@@ -19,7 +16,7 @@ from src.nkm_injection.fieldmap import (
     integrate_longitudinal_field,
     OutOfDomainError
 )
-from src.nkm_injection.kickmap import (
+from nkm_injection.kickmap import (
     load_2d_kickmap,
     NKMKickMap2D
 )
@@ -173,8 +170,8 @@ def scipy_erf(x):
 # Task 15 — 3D Field Map Vectorized Interpolation and pyNKMPass Tests
 # ---------------------------------------------------------------------------
 
-from src.nkm_injection.fieldmap import interpolate_3d_field_vectorized, NKMFieldMap3D
-from src.nkm_injection.units import FieldMap3DProtocol
+from nkm_injection.fieldmap import interpolate_3d_field_vectorized, NKMFieldMap3D
+from nkm_injection.units import FieldMap3DProtocol
 from patches.pyat_extensions.pyat.at.integrators.pyNKMPass import (
     trackFunction as pyNKMPass_track,
     interpolate_field_vectorized as pyNKMPass_interp

@@ -7,7 +7,7 @@ import tempfile
 import pytest
 import numpy as np
 
-from src.nkm_injection.moga import (
+from nkm_injection.moga import (
     BTSMOGAConfig,
     BTSMOGAProblem,
     run_bts_moga,

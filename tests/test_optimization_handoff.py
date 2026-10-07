@@ -8,14 +8,14 @@ import numpy as np
 import pytest
 
 from scripts import run_publication_tolerances as cli
-from src.nkm_injection.bts_lattice import BTSConfig, create_bts_lattice
-from src.nkm_injection.constraints import BTSConstraintConfig
-from src.nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
-from src.nkm_injection.objectives import OpticsTargetConfig
-from src.nkm_injection.optimization_handoff import (
+from nkm_injection.bts_lattice import BTSConfig, create_bts_lattice
+from nkm_injection.constraints import BTSConstraintConfig
+from nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
+from nkm_injection.objectives import OpticsTargetConfig
+from nkm_injection.optimization_handoff import (
     QUAD_NAMES, HANDOFF_UNITS, load_optimization_handoff,
 )
-from src.nkm_injection.robust_optimization import evaluate_robustness_statistics, compute_one_at_a_time_sensitivity
+from nkm_injection.robust_optimization import evaluate_robustness_statistics, compute_one_at_a_time_sensitivity
 
 
 @pytest.fixture
@@ -178,7 +178,7 @@ def test_saved_entrance_and_thresholds_reach_real_workers(workers):
     target={'beta':[2.5,4.2],'alpha':[0.,0.]}
     stats=evaluate_robustness_statistics(config,target,samples,n_workers=workers,
         kicker_model='off',initial_twiss=entrance,beta_max_limit_m=1e6,mismatch_limit=1e6)
-    from src.nkm_injection.optics import compute_twiss_propagation,compute_mismatch_metric
+    from nkm_injection.optics import compute_twiss_propagation,compute_mismatch_metric
     lattice,twiss=apply_sample_errors(config,samples[0],initial_twiss=entrance)
     prop=compute_twiss_propagation(lattice,twiss)
     expected=compute_mismatch_metric(prop['final_beta'][0],prop['final_alpha'][0],2.5,0.)

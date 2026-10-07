@@ -2,22 +2,19 @@
 Unit and integration tests for fully data-driven paper pipeline (Task 08)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.results_schema import (
+from nkm_injection.results_schema import (
     PaperResultSchema,
     compute_file_hash,
     compute_input_data_hashes,
     compute_rms_envelope
 )
-from src.nkm_injection.paper import (
+from nkm_injection.paper import (
     run_paper_pipeline,
     set_publication_style,
     PUBLICATION_COLORS
@@ -76,7 +73,7 @@ def test_set_publication_style():
 # Task 16 — LaTeX Table and Macro Builder Tests
 # ---------------------------------------------------------------------------
 
-from src.nkm_injection.paper import (
+from nkm_injection.paper import (
     escape_latex,
     format_scientific,
     format_uncertainty,

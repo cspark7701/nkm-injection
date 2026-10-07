@@ -2,24 +2,21 @@
 Unit tests for Symplectic Split and Lorentz RK4 integrators (Task 03)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
-from src.nkm_injection.tracking import (
+from nkm_injection.integrators import SymplecticSplitIntegrator, LorentzRK4Integrator
+from nkm_injection.tracking import (
     track_nkm_thick_symplectic,
     track_nkm_thick_rk4,
     track_nkm_thin_kick,
     track_nkm_symplectic,
     track_nkm_rk4
 )
-from src.nkm_injection.units import compute_rigidity, ELECTRON_CHARGE_C
+from nkm_injection.units import compute_rigidity, ELECTRON_CHARGE_C
 
 
 def test_zero_field_limit():
@@ -148,7 +145,7 @@ def test_track_nkm_symplectic_alias_and_legacy_rk4():
 # Task 14 — Protocol and Mock Evaluator Tests
 # ---------------------------------------------------------------------------
 
-from src.nkm_injection.units import (
+from nkm_injection.units import (
     FieldMap3DProtocol,
     KickerEvaluatorProtocol,
     ZeroFieldMap3D,
@@ -156,14 +153,14 @@ from src.nkm_injection.units import (
     LinearGradientFieldMap3D,
     KickMapMetadata
 )
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.storage_ring_injection import (
     OffKickerEvaluator,
     IdealKickerEvaluator,
     LinearKickerEvaluator,
     StorageRingInjectionConfig,
     get_kicker_evaluator
 )
-from src.nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.kickmap import NKMKickMap2D
 
 
 def test_field_map_3d_protocol_and_mock_evaluators():

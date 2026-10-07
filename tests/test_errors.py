@@ -4,24 +4,21 @@ Unit, Integration, and Physics-Level Tests for BTS & NKM Error Modeling and Robu
 Consolidates basic error configuration tests and Task 08 physical error model validation.
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.bts_lattice import BTSConfig
-from src.nkm_injection.errors import (
+from nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.errors import (
     ErrorBudgetConfig,
     sample_error_ensemble,
     apply_sample_errors,
     evaluate_monte_carlo_robustness,
     compute_error_sensitivity_ranking
 )
-from src.nkm_injection.robust_optimization import (
+from nkm_injection.robust_optimization import (
     evaluate_robustness_statistics,
     compute_one_at_a_time_sensitivity,
     nominal_vs_robust_comparison

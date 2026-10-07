@@ -2,18 +2,15 @@
 Unit and integration tests for publication BTS optimization (Task 05)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.constraints import BTSHardwareConstraints, BTSConstraintConfig
-from src.nkm_injection.objectives import BTSNormalizedObjectives, OpticsTargetConfig
-from src.nkm_injection.optimization import (
+from nkm_injection.constraints import BTSHardwareConstraints, BTSConstraintConfig
+from nkm_injection.objectives import BTSNormalizedObjectives, OpticsTargetConfig
+from nkm_injection.optimization import (
     BTSOptimizationConfig,
     BTSOptimizationEvaluator,
     optimize_bts_quadrupoles,

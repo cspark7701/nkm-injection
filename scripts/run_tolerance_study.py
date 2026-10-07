@@ -9,17 +9,14 @@ to results/tolerances/.
 
 import argparse
 import json
-import sys
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.bts_lattice import BTSConfig
-from src.nkm_injection.errors import (
+from nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.errors import (
     ErrorBudgetConfig,
     evaluate_monte_carlo_robustness,
     compute_error_sensitivity_ranking

@@ -3,16 +3,13 @@ Unit Tests for Task 06 — Converged Multi-Turn Injection Studies
 Tests smoke/pilot/production config separation, bootstrap CI, convergence scans.
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.convergence_study import (
+from nkm_injection.convergence_study import (
     smoke_config,
     pilot_config,
     production_config,
@@ -24,13 +21,13 @@ from src.nkm_injection.convergence_study import (
     compute_injection_acceptance,
     run_ensemble_study,
 )
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig,
     load_storage_ring_injection_lattice,
     track_multiturn_injection,
     TrackingResult,
 )
-from src.nkm_injection.beam import generate_6d_beam
+from nkm_injection.beam import generate_6d_beam
 
 
 # ---------------------------------------------------------------------------
@@ -271,7 +268,7 @@ class TestMatchedTwissParameterization:
 # Task 13 — Structured Return Dataclass Tests
 # ---------------------------------------------------------------------------
 
-from src.nkm_injection.convergence_study import (
+from nkm_injection.convergence_study import (
     ConvergenceScanResult,
     AcceptanceResult,
     EnsembleStudyResult,

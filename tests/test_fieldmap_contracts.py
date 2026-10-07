@@ -7,12 +7,12 @@ import sys
 import numpy as np
 import pytest
 
-from src.nkm_injection.fieldmap import (
+from nkm_injection.fieldmap import (
     NKMFieldMap1D, NKMFieldMap3D, OutOfDomainError,
     integrate_longitudinal_field, interpolate_3d_field_vectorized,
     load_1d_fieldmap, validate_1d_fieldmap,
 )
-from src.nkm_injection.kickmap import NKMKickMap2D, load_2d_kickmap
+from nkm_injection.kickmap import NKMKickMap2D, load_2d_kickmap
 from patches.pyat_extensions.pyat.at.integrators.pyNKMPass import (
     interpolate_field_vectorized, trackFunction, OutOfDomainError as PyATOutOfDomainError,
 )

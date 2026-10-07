@@ -1,11 +1,8 @@
 import json
-import sys
 from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
 from scripts.inventory_protected_hashes import verify_hash_manifest, OUTPUT_MANIFEST
 from scripts.record_baseline_metrics import OUTPUT_JSON

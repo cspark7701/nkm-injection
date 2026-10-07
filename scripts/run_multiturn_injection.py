@@ -25,17 +25,14 @@ Output directory layout:
 
 import argparse
 import json
-import sys
 import datetime
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.convergence_study import (
+from nkm_injection.convergence_study import (
     smoke_config,
     pilot_config,
     production_config,
@@ -47,14 +44,14 @@ from src.nkm_injection.convergence_study import (
     compute_injection_acceptance,
     run_ensemble_study,
 )
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig,
     load_storage_ring_injection_lattice,
     track_multiturn_injection,
 )
-from src.nkm_injection.beam import generate_6d_beam
-from src.nkm_injection.kickmap import NKMKickMap2D
-from src.nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
+from nkm_injection.beam import generate_6d_beam
+from nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.paper import set_publication_style, PUBLICATION_COLORS
 
 
 # ---------------------------------------------------------------------------

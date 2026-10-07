@@ -5,22 +5,19 @@ Verifies PublicationManifest schema validation, error stopping on missing or cor
 and reproduce_paper CLI integration.
 """
 
-import sys
 import json
 import pytest
 from pathlib import Path
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.results_schema import (
+from nkm_injection.results_schema import (
     PublicationManifest,
     validate_publication_manifest,
     compute_input_data_hashes
 )
-from src.nkm_injection.paper import run_paper_pipeline
+from nkm_injection.paper import run_paper_pipeline
 
 
 def test_publication_manifest_load_save(tmp_path):
@@ -76,7 +73,7 @@ def test_run_paper_pipeline_fails_on_invalid_manifest():
 # Task 11 — SerializableConfigMixin & Validation Tests
 # ===========================================================================
 
-from src.nkm_injection import (
+from nkm_injection import (
     SerializableConfigMixin,
     BTSConfig,
     StorageRingInjectionConfig,
@@ -86,7 +83,7 @@ from src.nkm_injection import (
     BTSConstraintConfig,
     QuadrupoleHardwareBounds,
 )
-from src.nkm_injection.optimization import BTSOptimizationConfig
+from nkm_injection.optimization import BTSOptimizationConfig
 
 
 def test_serializable_config_mixin_roundtrips(tmp_path):

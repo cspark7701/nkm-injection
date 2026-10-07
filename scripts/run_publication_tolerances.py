@@ -9,20 +9,17 @@ results/publication_tolerances/run_<timestamp>/.
 """
 
 import argparse
-import sys
 import json
 import datetime
 from pathlib import Path
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.optimization_handoff import (
+from nkm_injection.optimization_handoff import (
     HANDOFF_UNITS, QUAD_NAMES, load_optimization_handoff, reference_handoff, load_error_budget,
 )
-from src.nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble
-from src.nkm_injection.robust_optimization import (
+from nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble
+from nkm_injection.robust_optimization import (
     evaluate_robustness_statistics,
     compute_one_at_a_time_sensitivity
 )

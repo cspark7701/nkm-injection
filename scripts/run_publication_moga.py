@@ -9,17 +9,14 @@ results/publication_moga/run_<timestamp>/.
 """
 
 import argparse
-import sys
 import json
 import datetime
 from pathlib import Path
 import numpy as np
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.moga import (
+from nkm_injection.moga import (
     reevaluate_pareto_finalists,
     BTSMOGAConfig,
     run_bts_moga,
@@ -42,7 +39,7 @@ def main(argv=None):
     print("=== NKM Publication MOGA Pareto Optimization ===")
     print(f"Output directory: {output_dir}")
 
-    from src.nkm_injection.storage_ring_injection import StorageRingInjectionConfig
+    from nkm_injection.storage_ring_injection import StorageRingInjectionConfig
     ring_config = StorageRingInjectionConfig(
         mat_filename=str(output_dir.resolve() / "storage_ring_lattice_nkm.mat"))
     seeds = [42, 101, 202, 303, 404]

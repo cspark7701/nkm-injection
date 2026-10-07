@@ -8,15 +8,12 @@ Saves outputs to results/optics_validation/ and docs/validation/.
 """
 
 import json
-import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_lattice
-from src.nkm_injection.optics import (
+from nkm_injection.bts_lattice import BTSConfig, create_bts_lattice, validate_bts_lattice
+from nkm_injection.optics import (
     compute_bts_optics_metrics,
     compute_mismatch_metric,
     plot_bts_optics,

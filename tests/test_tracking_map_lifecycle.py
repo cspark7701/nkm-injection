@@ -6,8 +6,8 @@ import at
 import numpy as np
 import pytest
 
-from src.nkm_injection.beam import generate_6d_beam
-from src.nkm_injection.storage_ring_injection import (
+from nkm_injection.beam import generate_6d_beam
+from nkm_injection.storage_ring_injection import (
     StorageRingInjectionConfig, track_multiturn_injection,
 )
 

@@ -4,6 +4,8 @@ This guide provides step-by-step instructions for setting up the **Nonlinear Kic
 
 ---
 
+Package imports use `nkm_injection` after installation in the active Python/Jupyter environment. See [package imports and entry points](PACKAGE_IMPORTS.md) for editable/wheel execution, legacy import migration and `nkm-production --help`.
+
 ## Prerequisites
 
 - **Operating System**: Linux (Ubuntu 20.04+ recommended) or macOS

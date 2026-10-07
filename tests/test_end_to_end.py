@@ -2,22 +2,19 @@
 Unit Tests for Task 05 — End-to-End BTS-to-Storage-Ring Coupling
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.end_to_end import (
+from nkm_injection.end_to_end import (
     BoosterExtractionConfig,
     generate_booster_extraction_distribution,
     run_end_to_end_pipeline
 )
-from src.nkm_injection.bts_lattice import BTSConfig
-from src.nkm_injection.storage_ring_injection import StorageRingInjectionConfig
+from nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.storage_ring_injection import StorageRingInjectionConfig
 
 
 def test_booster_extraction_distribution():

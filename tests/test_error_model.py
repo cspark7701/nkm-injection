@@ -2,18 +2,15 @@
 Unit tests for NKM error model and robust optimization (Task 06)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
-from src.nkm_injection.robust_optimization import evaluate_robustness_statistics, compute_one_at_a_time_sensitivity
-from src.nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
+from nkm_injection.robust_optimization import evaluate_robustness_statistics, compute_one_at_a_time_sensitivity
+from nkm_injection.bts_lattice import BTSConfig
 
 
 def test_ensemble_reproducibility():

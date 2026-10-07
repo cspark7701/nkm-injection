@@ -1,22 +1,19 @@
 """Isolated selected-run artifacts for publication integration tests."""
 import json
 from pathlib import Path
-import sys
 
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
 
 @pytest.fixture
 def publication_case(tmp_path):
     """Build complete run bundles without simulations or repository result writes."""
-    from src.nkm_injection.bts_lattice import BTSConfig
-    from src.nkm_injection.constraints import BTSConstraintConfig
-    from src.nkm_injection.objectives import OpticsTargetConfig
-    from src.nkm_injection.results_schema import PublicationManifest, compute_input_data_hashes
+    from nkm_injection.bts_lattice import BTSConfig
+    from nkm_injection.constraints import BTSConstraintConfig
+    from nkm_injection.objectives import OpticsTargetConfig
+    from nkm_injection.results_schema import PublicationManifest, compute_input_data_hashes
 
     def build(name='selected', delta=0.0):
         root = tmp_path / name

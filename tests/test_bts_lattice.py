@@ -2,22 +2,19 @@
 Unit and Integration Tests for Milestone 2 BTS Lattice & Optics Validation
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.bts_lattice import (
+from nkm_injection.bts_lattice import (
     BTSConfig,
     create_bts_lattice,
     validate_bts_lattice,
     check_symplecticity
 )
-from src.nkm_injection.optics import (
+from nkm_injection.optics import (
     compute_mismatch_metric,
     compute_twiss_propagation,
     compute_bts_optics_metrics,

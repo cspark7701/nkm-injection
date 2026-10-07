@@ -8,18 +8,15 @@ Performs field scale and offset scans, and exports figures/metrics to results/in
 """
 
 import json
-import sys
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.beam import generate_6d_beam, compute_beam_statistics
-from src.nkm_injection.kickmap import NKMKickMap2D
-from src.nkm_injection.injection import simulate_nkm_models
+from nkm_injection.beam import generate_6d_beam, compute_beam_statistics
+from nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.injection import simulate_nkm_models
 
 OUTPUT_DIR = REPO_ROOT / "results" / "injection"
 PLOT_PATH = OUTPUT_DIR / "nkm_injection_phasespace.png"

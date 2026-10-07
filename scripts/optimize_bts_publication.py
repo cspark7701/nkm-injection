@@ -15,7 +15,6 @@ Saved outputs
 """
 
 import argparse
-import sys
 import json
 import datetime
 import hashlib
@@ -24,19 +23,17 @@ from pathlib import Path
 import numpy as np
 
 repo_root = Path(__file__).resolve().parent.parent
-if str(repo_root) not in sys.path:
-    sys.path.insert(0, str(repo_root))
 
-from src.nkm_injection.optimization import (
+from nkm_injection.optimization import (
     BTSOptimizationConfig,
     optimize_bts_quadrupoles,
     compute_sensitivity_matrix,
     round_strengths,
 )
-from src.nkm_injection.constraints import BTSConstraintConfig
-from src.nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.constraints import BTSConstraintConfig
+from nkm_injection.bts_lattice import BTSConfig
 
-from src.nkm_injection.optimization_handoff import HANDOFF_UNITS, QUAD_NAMES
+from nkm_injection.optimization_handoff import HANDOFF_UNITS, QUAD_NAMES
 
 
 def _git_commit() -> str:

@@ -7,15 +7,15 @@ import at
 import numpy as np
 import pytest
 
-from src.nkm_injection import objectives as objective_module
-from src.nkm_injection import optimization as optimization_module
-from src.nkm_injection import robust_optimization as robust
-from src.nkm_injection.bts_lattice import BTSConfig
-from src.nkm_injection.concurrency import parallel_map
-from src.nkm_injection.errors import sample_error_ensemble
-from src.nkm_injection.evaluation import EvaluationExecutionError
-from src.nkm_injection.objectives import BTSNormalizedObjectives, OpticsTargetConfig
-from src.nkm_injection.storage_ring_injection import track_element_resolved_injection
+from nkm_injection import objectives as objective_module
+from nkm_injection import optimization as optimization_module
+from nkm_injection import robust_optimization as robust
+from nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.concurrency import parallel_map
+from nkm_injection.errors import sample_error_ensemble
+from nkm_injection.evaluation import EvaluationExecutionError
+from nkm_injection.objectives import BTSNormalizedObjectives, OpticsTargetConfig
+from nkm_injection.storage_ring_injection import track_element_resolved_injection
 
 TARGET = {"beta": [2.336495, 4.256241], "alpha": [-.016335, .017772]}
 MAP = Path(__file__).resolve().parents[1] / 'kickmap_file.txt'
@@ -194,7 +194,7 @@ def test_unexpected_loss_position_error_propagates():
 
 
 def test_publication_rejects_incomplete_tolerance_evaluations(publication_case):
-    from src.nkm_injection.publication_inputs import load_publication_inputs
+    from nkm_injection.publication_inputs import load_publication_inputs
     root, manifest = publication_case('invalid-evaluations')
     path = root / manifest.tolerance_run / 'publication_tolerances_summary.json'
     raw = json.loads(path.read_text())

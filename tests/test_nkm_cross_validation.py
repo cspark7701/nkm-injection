@@ -2,23 +2,20 @@
 Unit and integration tests for src/nkm/validation.py (Task 02)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.validation import (
+from nkm_injection.validation import (
     get_input_data_hashes,
     compute_cross_validation,
     perform_interpolation_study,
     perform_grid_convergence_study,
     perform_linearity_study
 )
-from src.nkm_injection.kickmap import NKMKickMap2D
+from nkm_injection.kickmap import NKMKickMap2D
 
 
 def test_input_data_hashes():

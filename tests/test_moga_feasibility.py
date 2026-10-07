@@ -2,16 +2,13 @@
 Unit and integration tests for MOGA feasibility and Pareto reproducibility (Task 07)
 """
 
-import sys
 from pathlib import Path
 import numpy as np
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
-from src.nkm_injection.moga import (
+from nkm_injection.moga import (
     BTSMOGAConfig,
     BTSMOGAProblem,
     run_bts_moga,

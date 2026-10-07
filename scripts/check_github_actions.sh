@@ -130,7 +130,7 @@ run_check "Protected Input Cryptographic Hashes (inventory_protected_hashes.py)"
 run_check "Cryptographic Hashes Verification via schema" \
     python3 -c "
 from pathlib import Path
-from src.nkm_injection.results_schema import compute_input_data_hashes
+from nkm_injection.results_schema import compute_input_data_hashes
 hashes = compute_input_data_hashes(Path('.'))
 for name, h in hashes.items():
     assert h != 'MISSING', f'Protected file missing: {name}'
@@ -175,7 +175,7 @@ fi
 run_check "Post-Execution Protected Files Immutability Verification" \
     python3 -c "
 from pathlib import Path
-from src.nkm_injection.results_schema import compute_input_data_hashes
+from nkm_injection.results_schema import compute_input_data_hashes
 import json
 
 manifest_path = Path('results/baseline/protected_files_manifest.json')

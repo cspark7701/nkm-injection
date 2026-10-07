@@ -8,13 +8,9 @@ and residual dispersion. Saves history, Pareto front CSV, representative designs
 """
 
 import argparse
-import os
-import sys
 import time
 import numpy as np
 
-# Add src to path if running directly
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")))
 
 from nkm_injection.moga import (
     BTSMOGAConfig,

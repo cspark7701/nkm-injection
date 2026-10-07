@@ -9,9 +9,9 @@ import sys
 
 import pytest
 
-from src.nkm_injection.production import ProductionRunConfig, production_stages, run_production, REQUIRED_INPUTS
-from src.nkm_injection.paper import run_paper_pipeline
-from src.nkm_injection.results_schema import PublicationManifest
+from nkm_injection.production import ProductionRunConfig, production_stages, run_production, REQUIRED_INPUTS
+from nkm_injection.paper import run_paper_pipeline
+from nkm_injection.results_schema import PublicationManifest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -198,7 +198,7 @@ def test_small_stages_write_to_explicit_directory(tmp_path, script, artifact):
 
 
 def test_subprocess_failure_reports_log(tmp_path):
-    from src.nkm_injection.production import ProductionStage, _execute
+    from nkm_injection.production import ProductionStage, _execute
     config = ProductionRunConfig(output_dir=tmp_path / 'failed', verbose=False)
     (config.output_dir / 'logs').mkdir(parents=True)
     stage = ProductionStage('child', 'Failing child',
@@ -258,7 +258,7 @@ def test_moga_lattice_configuration_is_forwarded(tmp_path, monkeypatch):
 
 
 def test_pdf_build_cannot_write_to_manuscript_sources(publication_case, tmp_path, monkeypatch):
-    import src.nkm_injection.paper as paper
+    import nkm_injection.paper as paper
     root, manifest = publication_case()
     source = root / 'docs/jinst-paper'
     (source / 'figures').mkdir(parents=True)

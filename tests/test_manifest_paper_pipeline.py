@@ -40,12 +40,13 @@ def test_validate_publication_manifest_success(publication_case):
     assert len(val['verified_runs']) == 6
 
 
-def test_validate_publication_manifest_missing_run():
+def test_validate_publication_manifest_missing_run(publication_case):
+    root, _ = publication_case()
     manifest = PublicationManifest(
         field_validation_run="results/non_existent_run_directory_xyz"
     )
 
-    val = validate_publication_manifest(manifest, REPO_ROOT, create_if_missing=False)
+    val = validate_publication_manifest(manifest, root, create_if_missing=False)
     assert val["valid"] is False
     assert any("non_existent_run_directory_xyz" in err for err in val["errors"])
 
@@ -60,13 +61,14 @@ def test_run_paper_pipeline_manifest_execution(publication_case):
     assert summary['figures_count'] == 4
 
 
-def test_run_paper_pipeline_fails_on_invalid_manifest():
+def test_run_paper_pipeline_fails_on_invalid_manifest(publication_case):
+    root, _ = publication_case()
     manifest = PublicationManifest(
         field_validation_run="results/missing_directory_123"
     )
 
     with pytest.raises(ValueError, match="Publication manifest validation failed"):
-        run_paper_pipeline(repo_root=REPO_ROOT, run_id="test_invalid_run", manifest=manifest, create_if_missing=False)
+        run_paper_pipeline(repo_root=root, run_id="test_invalid_run", manifest=manifest, create_if_missing=False)
 
 
 # ===========================================================================

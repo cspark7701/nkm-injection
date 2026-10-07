@@ -57,7 +57,7 @@ Statistical summaries now save bootstrap settings and report insufficient eviden
 
 Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.
 
-Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.
+Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details. See [publication lifecycle](docs/PUBLICATION_LIFECYCLE.md) for read-only validation, explicit initialization and isolated PDF builds.
 
 ---
 

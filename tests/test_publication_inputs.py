@@ -65,7 +65,7 @@ def test_selected_manifest_changes_tables_and_figure_data(publication_case, monk
 def test_missing_artifact_rejected(publication_case, stage, filename):
     root, manifest = publication_case()
     (root / getattr(manifest, stage) / filename).unlink()
-    with pytest.raises(FileNotFoundError, match=filename.replace('.', r'\.')):
+    with pytest.raises(ValueError, match=filename.replace('.', r'\.')):
         run_paper_pipeline(root, 'missing', manifest=manifest, create_if_missing=False)
     assert not (root / 'results/paper/missing').exists()
 

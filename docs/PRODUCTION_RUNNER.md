@@ -62,7 +62,7 @@ The tolerance CLI requires this run's explicit optimization summary (or explicit
 - `publication_manifest.json`: actual selected run directories and run-local protected-input hash manifest.
 - Stage outputs and optional `summary/build/` compilation artifacts remain inside the new root.
 
-Direct stage CLIs retain their old default destinations when `--output-dir` is omitted. `run_paper_pipeline(output_dir=...)` also supports an exact publication destination; with PDF compilation enabled, it copies manuscript inputs into `build/` and leaves manuscript sources unchanged. PDF tool error reporting and read-only standalone manifest initialization remain Task 11 work. PDF output is deliberately opt-in for the shared runner; the standalone reproduction CLI retains its `--no-pdf` option.
+Direct stage CLIs retain their old default destinations when `--output-dir` is omitted. `run_paper_pipeline(output_dir=...)` also supports an exact publication destination; with PDF compilation enabled, it copies manuscript inputs into `build/` and leaves manuscript sources unchanged. PDF command failures are reported with run-local logs; standalone validation is read-only and initialization is explicit. See [publication lifecycle](PUBLICATION_LIFECYCLE.md). PDF output is deliberately opt-in for the shared runner; the standalone reproduction CLI retains its `--no-pdf` option.
 
 ## Verification
 

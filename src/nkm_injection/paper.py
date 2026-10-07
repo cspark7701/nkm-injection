@@ -498,22 +498,26 @@ def generate_paper_figures(repo_root: Path, output_dir: Path,
 def run_paper_pipeline(repo_root: Optional[Path] = None,
                        run_id: str = "paper_run",
                        manifest: Optional[Union[str, Path, "PublicationManifest"]] = None,
-                       create_if_missing: bool = True,
+                       create_if_missing: bool = False,
                        compile_pdf: bool = False,
                        workers: Optional[int] = None,
                        output_dir: Optional[Path] = None) -> Dict[str, Any]:
     """
     Execute full data-driven paper pipeline consuming a validated PublicationManifest.
     Fails if manifest validation fails, required files are missing, or input hashes differ.
-    output_dir, when supplied, is the exact destination; PDF build writes then
-    use its build/ directory instead of the manuscript source directory.
+    output_dir, when supplied, is the exact destination. PDF builds always
+    use a fresh run-local build/ directory containing copied manuscript inputs.
     """
     from .results_schema import PublicationManifest, validate_publication_manifest
 
     if repo_root is None:
         repo_root = Path(__file__).resolve().parent.parent.parent
 
-    # Resolve or create default manifest
+    repo_root = Path(repo_root).resolve()
+    if output_dir is None and (not run_id or Path(run_id).name != run_id or run_id in (".", "..")):
+        raise ValueError("run_id must be a single directory name")
+
+    # Resolve selected manifest
     if manifest is None:
         default_manifest_path = repo_root / "config" / "publication_manifest.json"
         if default_manifest_path.is_file():
@@ -543,6 +547,13 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
     else:
         output_dir = Path(output_dir).resolve()
         schema = PaperResultSchema(run_id=output_dir.name, base_dir=output_dir.parent)
+    # Reject occupied destinations before writing any publication artifacts.
+    destination = schema.run_dir.resolve()
+    protected_directories = [repo_root / 'docs' / 'jinst-paper'] + [repo_root / value for value in val_status['verified_runs'].values()]
+    if any(destination == path.resolve() or destination.is_relative_to(path.resolve()) for path in protected_directories):
+        raise ValueError('Publication output must be separate from source manuscript and selected runs')
+    if destination.exists() and (not destination.is_dir() or any(destination.iterdir())):
+        raise ValueError('Publication output directory must be new or empty')
     schema.initialize_directories()
 
     record_environment_metadata(schema.run_dir)
@@ -558,46 +569,13 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
     tables = generate_paper_tables(repo_root, schema.tables_dir, inputs=inputs)
     figures = generate_paper_figures(repo_root, schema.figures_dir, inputs=inputs)
 
-    pdf_compiled = False
-    pdf_path = None
+    pdf_build = {"status": "not_requested", "commands": [], "pdf_path": None}
     if compile_pdf:
-        jinst_dir = repo_root / "docs" / "jinst-paper"
-        if output_dir is not None:
-            # Run-local build inputs keep production writes away from manuscript sources.
-            import shutil
-            build_dir = schema.run_dir / "build"
-            shutil.copytree(jinst_dir, build_dir,
-                            ignore=shutil.ignore_patterns("paper.pdf", "*.aux", "*.log", "*.bbl", "*.blg"))
-            jinst_dir = build_dir
-        tex_file = jinst_dir / "paper.tex"
-        if tex_file.is_file():
-            import shutil
-            import subprocess
-
-            # Copy generated figures into jinst-paper figures directory if present
-            jinst_fig_dir = jinst_dir / "figures"
-            jinst_fig_dir.mkdir(parents=True, exist_ok=True)
-            for fig_p in figures:
-                shutil.copy(fig_p, jinst_fig_dir / fig_p.name)
-
-            # Check if pdflatex is available
-            if shutil.which("pdflatex"):
-                try:
-                    cmd_pdf = ["pdflatex", "-interaction=nonstopmode", "paper.tex"]
-                    cmd_bib = ["bibtex", "paper"]
-                    subprocess.run(cmd_pdf, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-                    subprocess.run(cmd_bib, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-                    subprocess.run(cmd_pdf, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-                    subprocess.run(cmd_pdf, cwd=jinst_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
-
-                    compiled_file = jinst_dir / "paper.pdf"
-                    if compiled_file.is_file():
-                        pdf_compiled = True
-                        pdf_path = str(compiled_file)
-                        # Copy generated PDF to run_dir for archival
-                        shutil.copy(compiled_file, schema.run_dir / "paper.pdf")
-                except Exception as e:
-                    print(f"Warning: PDF compilation failed: {e}")
+        from .publication_build import build_publication_pdf
+        pdf_build = build_publication_pdf(repo_root / "docs" / "jinst-paper", schema.run_dir,
+                                          figures, schema.tables_dir)
+    pdf_compiled = pdf_build['status'] == 'completed'
+    pdf_path = pdf_build['pdf_path']
 
     metrics_summary = {
         "run_id": run_id,
@@ -607,6 +585,7 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
         "figures_count": len(figures),
         "pdf_compiled": pdf_compiled,
         "pdf_path": pdf_path,
+        "pdf_build": pdf_build,
         "verified_runs": val_status["verified_runs"],
         "upstream_artifacts": inputs.artifacts,
         "publication_input_schema_version": 1

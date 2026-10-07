@@ -14,6 +14,7 @@ _EXPORTS = {
     'PublicationManifest': 'results_schema',
     'PaperResultSchema': 'results_schema',
     'validate_publication_manifest': 'results_schema',
+    'initialize_publication_manifest': 'results_schema',
     'compute_input_data_hashes': 'results_schema',
     'BTSConfig': 'bts_lattice',
     'create_bts_lattice': 'bts_lattice',

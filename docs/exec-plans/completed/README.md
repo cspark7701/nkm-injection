@@ -310,3 +310,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 95. [**Milestone 95 — Task 10: Statistical Summaries and Convergence Evidence**](95_task10_statistical_convergence.md)
     - Extracted explicit statistical policies and estimand-aware bootstrap helpers, required distinct available prefixes before stability claims, preserved invalid/physical outcome separation and saved settings/diagnostics, and verified 558 tests plus a fresh two-worker tolerance CLI run.
+
+96. [**Milestone 96 — Task 11: Read-only Publication Validation and Isolated PDF Builds**](96_task11_publication_validation_and_builds.md)
+    - Separated explicit initialization from strict artifact/hash validation, isolated all PDF builds with logs and return-code checks, rejected stale/occupied outputs, and verified 579 tests plus fresh-process CLI generation with unchanged protected inputs and repository results.

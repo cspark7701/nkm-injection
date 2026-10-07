@@ -118,75 +118,105 @@ class PublicationManifest(SerializableConfigMixin):
     git_commit: str = ""
 
 
+def _check_publication_hashes(manifest, root):
+    """Read and verify a complete scientific baseline without changing files."""
+    path = root / manifest.input_hash_manifest
+    if not path.is_file():
+        raise ValueError(f"Protected hash manifest missing: {manifest.input_hash_manifest}")
+    def pairs(items):
+        data = {}
+        for key, value in items:
+            if key in data:
+                raise ValueError(f"Duplicate baseline entry: {key}")
+            data[key] = value
+        return data
+    expected = json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=pairs)
+    current = compute_input_data_hashes(root)
+    if not isinstance(expected, dict) or not set(current).issubset(expected):
+        raise ValueError('Hash baseline must include every required scientific input')
+    for name, digest in expected.items():
+        source = (root / name).resolve()
+        if Path(name).is_absolute() or not source.is_relative_to(root):
+            raise ValueError(f'Invalid relative baseline path: {name}')
+        if not isinstance(digest, str) or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
+            raise ValueError(f'Invalid SHA-256 baseline for {name}')
+        if compute_file_hash(source) != digest:
+            raise ValueError(f'Hash mismatch for protected file {name}')
+    return current
+
+
+def _publication_runs(manifest):
+    return {name: getattr(manifest, name) for name in (
+        'field_validation_run', 'tracking_convergence_run', 'bts_optimization_run',
+        'injection_run', 'tolerance_run', 'moga_run')}
+
+
+def initialize_publication_manifest(manifest: PublicationManifest, repo_root: Path) -> Dict[str, Any]:
+    """Explicitly create missing run directories/baseline; never rebase existing hashes.
+
+    Initialization records present source bytes, not scientific validation or
+    stage completion. Units and source data are unchanged.
+    """
+    root = Path(repo_root).resolve()
+    hashes = compute_input_data_hashes(root)
+    if 'MISSING' in hashes.values():
+        raise FileNotFoundError('Cannot initialize with missing scientific inputs')
+    baseline = root / manifest.input_hash_manifest
+    if baseline.exists():
+        _check_publication_hashes(manifest, root)
+    runs = _publication_runs(manifest)
+    for name, relative in runs.items():
+        path = root / relative
+        if path.exists() and not path.is_dir():
+            raise ValueError(f'Result run is not a directory: {name}: {relative}')
+    created = []
+    for relative in runs.values():
+        path = root / relative
+        if not path.exists():
+            path.mkdir(parents=True)
+            created.append(str(path))
+    baseline_created = not baseline.exists()
+    if baseline_created:
+        baseline.parent.mkdir(parents=True, exist_ok=True)
+        with baseline.open('x', encoding='utf-8') as handle:
+            json.dump(hashes, handle, indent=2, allow_nan=False)
+    return {'status': 'initialized', 'created_run_directories': created,
+            'baseline_created': baseline_created, 'baseline_path': str(baseline),
+            'stage_artifacts_verified': False}
+
+
 def validate_publication_manifest(manifest: PublicationManifest,
                                   repo_root: Path,
-                                  create_if_missing: bool = True) -> Dict[str, Any]:
+                                  create_if_missing: bool = False) -> Dict[str, Any]:
+    """Read-only verification of hashes and every required selected stage artifact.
+
+    Legacy create_if_missing=True is rejected; call explicit initialization.
+    Failed validation never establishes a new baseline or verifies empty runs.
     """
-    Validate that all required result directories, files, cryptographic input hashes,
-    and validation metadata exist and are consistent.
-    """
-    validation_status = {
-        "valid": True,
-        "errors": [],
-        "warnings": [],
-        "verified_runs": {}
-    }
-
-    # 1. Verify protected input hashes against manifest
-    hash_manifest_path = repo_root / manifest.input_hash_manifest
-    if not hash_manifest_path.is_file():
-        if create_if_missing:
-            hash_manifest_path.parent.mkdir(parents=True, exist_ok=True)
-            input_hashes = compute_input_data_hashes(repo_root)
-            with open(hash_manifest_path, "w") as f:
-                json.dump(input_hashes, f, indent=2)
-        else:
-            validation_status["valid"] = False
-            validation_status["errors"].append(f"Protected hash manifest missing: {manifest.input_hash_manifest}")
-
-    if hash_manifest_path.is_file():
-        with open(hash_manifest_path, "r") as f:
-            expected_hashes = json.load(f)
-        for rel_file, exp_hash in expected_hashes.items():
-            fpath = repo_root / rel_file
-            if not fpath.is_file():
-                validation_status["valid"] = False
-                validation_status["errors"].append(f"Protected scientific input missing: {rel_file}")
-            else:
-                curr_hash = compute_file_hash(fpath)
-                if curr_hash != exp_hash:
-                    validation_status["valid"] = False
-                    validation_status["errors"].append(f"Hash mismatch for protected file {rel_file}: expected {exp_hash[:10]}, got {curr_hash[:10]}")
-
-    # 2. Check input data files hash status
-    curr_input_hashes = compute_input_data_hashes(repo_root)
-    if "MISSING" in curr_input_hashes.values():
-        validation_status["valid"] = False
-        validation_status["errors"].append(f"Missing scientific input data files: {curr_input_hashes}")
-
-    # 3. Verify existence of upstream result directories
-    run_fields = [
-        ("field_validation_run", manifest.field_validation_run),
-        ("tracking_convergence_run", manifest.tracking_convergence_run),
-        ("bts_optimization_run", manifest.bts_optimization_run),
-        ("injection_run", manifest.injection_run),
-        ("tolerance_run", manifest.tolerance_run),
-        ("moga_run", manifest.moga_run),
-    ]
-
-    for key, run_rel_path in run_fields:
-        run_path = repo_root / run_rel_path
-        if not run_path.exists():
-            if create_if_missing:
-                run_path.mkdir(parents=True, exist_ok=True)
-                validation_status["verified_runs"][key] = str(run_rel_path)
-            else:
-                validation_status["errors"].append(f"Required result run directory missing for {key}: {run_rel_path}")
-                validation_status["valid"] = False
-        else:
-            validation_status["verified_runs"][key] = str(run_rel_path)
-
-    return validation_status
+    if create_if_missing:
+        raise ValueError('Validation is read-only; use initialize_publication_manifest explicitly')
+    root = Path(repo_root).resolve()
+    status = {'valid': False, 'errors': [], 'warnings': [], 'verified_runs': {},
+              'upstream_artifacts': {}}
+    try:
+        _check_publication_hashes(manifest, root)
+    except (OSError, ValueError, TypeError) as error:
+        status['errors'].append(str(error))
+    runs = _publication_runs(manifest)
+    for name, relative in runs.items():
+        if not (root / relative).is_dir():
+            status['errors'].append(f'Required result run directory missing for {name}: {relative}')
+    if not status['errors']:
+        try:
+            from .publication_inputs import load_publication_inputs
+            inputs = load_publication_inputs(manifest, root)
+            status['upstream_artifacts'] = inputs.provenance()
+        except (OSError, ValueError, TypeError, KeyError) as error:
+            status['errors'].append(str(error))
+    if not status['errors']:
+        status['valid'] = True
+        status['verified_runs'] = runs
+    return status
 
 
 def compute_rms_envelope(beta_m: np.ndarray,

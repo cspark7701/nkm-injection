@@ -19,7 +19,7 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 ## Visualization
 
-Notebooks `01-03` include rich inline visualization cells, such as phase-space portraits, field maps, Pareto scatter matrices, hypervolume convergence plots, quad strength bars, and radar charts.
+Notebooks `01-03` select complete configurations, execute reusable package studies and plot returned results in fresh run directories. See [notebook workflows and migration](docs/NOTEBOOK_WORKFLOWS.md) for preserved optics, tracking model changes and independent clean-kernel smoke execution. Visualizations include phase-space portraits, field maps, Pareto scatter matrices, hypervolume convergence plots, quad strength bars and radar charts.
 
 ---
 

@@ -313,3 +313,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 96. [**Milestone 96 — Task 11: Read-only Publication Validation and Isolated PDF Builds**](96_task11_publication_validation_and_builds.md)
     - Separated explicit initialization from strict artifact/hash validation, isolated all PDF builds with logs and return-code checks, rejected stale/occupied outputs, and verified 579 tests plus fresh-process CLI generation with unchanged protected inputs and repository results.
+
+97. [**Milestone 97 — Task 12: Configured Notebook Study Workflows**](97_task12_thin_notebook_workflows.md)
+    - Extracted configured geometry/objectives/tracking/studies into reusable workflows, preserved characterized optics and independent MOGA execution, routed artifacts to fresh runs, documented tracking model changes, and verified 600 tests plus four independent clean-kernel notebook executions.

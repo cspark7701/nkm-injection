@@ -167,11 +167,16 @@ class DeterministicObjective(BaseOpticsObjective):
     evaluated and included in the constraint check but **not** mixed
     into the least-squares residual to keep the objective convex.
     """
-    def __init__(self, config: Optional[BTSOptimizationConfig] = None):
+    def __init__(self, config: Optional[BTSOptimizationConfig] = None,
+                 lattice=None):
         self.config = config or BTSOptimizationConfig()
-        self.objectives = BTSNormalizedObjectives(self.config.target_config)
+        self.objectives = BTSNormalizedObjectives(self.config.target_config, lattice=lattice)
         self.constraints = BTSHardwareConstraints(self.config.constraint_config)
         self.nominal_strengths = self.objectives.nominal_strengths
+        if lattice is not None:
+            self.nominal_strengths = np.array([
+                next(elem.K for elem in lattice if elem.FamName == name)
+                for name in self.objectives.quad_names])
         self.quad_names = self.objectives.quad_names
 
     def compute_residual_vector(self, strengths: np.ndarray) -> np.ndarray:
@@ -208,7 +213,7 @@ class DeterministicObjective(BaseOpticsObjective):
                     exception=exception_context(exc, "optics")).to_dict(),
             }
 
-        r_vec = self.objectives.compute_residual_vector(strengths)
+        r_vec = self.compute_residual_vector(strengths)
         if self.objectives.last_outcome.status == "invalid":
             return {"feasible": False, "merit": 1e9, "mismatch_x": 1e6,
                     "mismatch_y": 1e6, "max_beta_x": 1e6, "max_beta_y": 1e6,

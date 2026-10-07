@@ -298,3 +298,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 91. [**Milestone 91 — Task 06: Explicit Optimization Inputs for Tolerance Studies**](91_task06_explicit_optimization_handoff.md)
     - Required validated optimization/reference selection, preserved saved geometry and entrance optics, recorded complete configurations and source/sampling provenance, and verified 372 tests plus a fresh-process tolerance CLI run.
+
+92. [**Milestone 92 — Task 07: Strict Configuration Serialization**](92_task07_strict_configuration_serialization.md)
+    - Added strict typed loading with explicit compatibility mode, finite/lossless conversion checks and nested field paths; preserved supported round trips and safe file writes, represented undefined no-loss statistics as null, and verified 408 tests plus clean-process configuration I/O.

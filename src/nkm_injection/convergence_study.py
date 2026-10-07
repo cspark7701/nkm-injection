@@ -579,8 +579,8 @@ def compute_first_loss_turn_distribution(tracking_result: TrackingResult, n_turn
     dict with keys:
         first_loss_turns : list[int], turn of first loss for each lost particle
         turn_histogram : dict[int, int], number of first losses per turn
-        mean_first_loss_turn : float
-        fraction_lost_on_turn_1 : float
+        mean_first_loss_turn : Optional[float], None when no particles were lost
+        fraction_lost_on_turn_1 : Optional[float], None when no particles were lost
     """
     particle_first_loss: Dict[int, int] = {}
     for entry in tracking_result.loss_log:
@@ -595,8 +595,8 @@ def compute_first_loss_turn_distribution(tracking_result: TrackingResult, n_turn
         histogram[t] = sum(1 for v in first_loss_turns if v == t)
 
     n_lost = len(first_loss_turns)
-    mean_first = float(np.mean(first_loss_turns)) if n_lost > 0 else float("nan")
-    frac_turn1 = float(histogram.get(1, 0) / n_lost) if n_lost > 0 else float("nan")
+    mean_first = float(np.mean(first_loss_turns)) if n_lost > 0 else None
+    frac_turn1 = float(histogram.get(1, 0) / n_lost) if n_lost > 0 else None
 
     return {
         "first_loss_turns": first_loss_turns,

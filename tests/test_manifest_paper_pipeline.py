@@ -125,14 +125,14 @@ def test_serializable_config_mixin_roundtrips(tmp_path):
         assert isinstance(loaded, cls)
 
 
-def test_serializable_config_mixin_extra_keys_ignored():
+def test_serializable_config_mixin_extra_keys_ignored_explicitly():
     """Verify that unknown extra keys in dictionary/JSON do not cause failures."""
     data = {
         "energy_eV": 4.0e9,
         "unexpected_new_field": 12345,
         "another_unknown_key": "some_string",
     }
-    bts_cfg = BTSConfig.from_dict(data)
+    bts_cfg = BTSConfig.from_dict(data, strict=False)
     assert bts_cfg.energy_eV == 4.0e9
     assert not hasattr(bts_cfg, "unexpected_new_field")
 

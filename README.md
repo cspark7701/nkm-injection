@@ -47,6 +47,8 @@ Robustness studies load the selected field map and record invalid evaluations se
 
 Multi-turn tracking recomputes its one-turn map for each call so lattice edits take effect. See [tracking map lifecycle and measured setup cost](docs/TRACKING_MAP_LIFECYCLE.md).
 
+Configuration JSON loading now validates types and rejects unknown fields by default. See [configuration serialization and migration](docs/CONFIGURATION_SERIALIZATION.md) for supported values and explicit compatibility mode.
+
 Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.
 
 Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.

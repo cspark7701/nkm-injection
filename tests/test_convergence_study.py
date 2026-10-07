@@ -165,6 +165,8 @@ class TestFirstLossTurnDistribution:
         dist = compute_first_loss_turn_distribution(res, n_turns=10)
         assert dist["n_lost_particles"] == 0
         assert dist["first_loss_turns"] == []
+        assert dist["mean_first_loss_turn"] is None
+        assert dist["fraction_lost_on_turn_1"] is None
 
     def test_with_known_losses(self):
         loss_log = [

@@ -292,3 +292,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 89. [**Milestone 89 — Task 04: Explicit Evaluation Outcomes**](89_task04_explicit_evaluation_outcomes.md)
     - Removed silent kicker substitutions, saved sample/candidate identity and model provenance, separated invalid evaluations from physical failure statistics, propagated unexpected errors and retained unknown loss positions explicitly; verified 332 tests, serial/process-worker failure diagnostics and clean-process reproducibility.
+
+90. [**Milestone 90 — Task 05: Call-Local One-Turn Tracking Maps**](90_task05_tracking_map_lifecycle.md)
+    - Removed the shared identity-based map cache, verified in-place lattice edits and concurrent-call independence, preserved loss accounting, verified 342 tests and measured repeated-call setup cost against the previous implementation.

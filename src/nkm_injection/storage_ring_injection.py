@@ -411,6 +411,13 @@ def track_multiturn_injection(beam: np.ndarray,
 
     Turn 1: Kicker is active.
     Turns 2..n_turns: Kicker is inactive (0 kick).
+
+    Particle coordinates have shape (6, N), with positions in m, transverse
+    momenta in rad and relative energy deviation dimensionless. The linear
+    one-turn map at dp=0 is computed once per call and is never reused across
+    calls. Keep the lattice unchanged during each call; changes between calls
+    (strengths, geometry, energy, alignment or RF/radiation settings) are read
+    when the next map is computed. A zero-turn call does not compute a map.
     """
     if config is None:
         config = StorageRingInjectionConfig()
@@ -429,6 +436,12 @@ def track_multiturn_injection(beam: np.ndarray,
     # Aperture bounds
     ap_x = config.aperture_x_m
     ap_y = config.aperture_y_m
+
+    # Call-local map: lattice identity does not describe its mutable physics.
+    # Reuse this map only across turns within this tracking call.
+    M66 = None
+    if n_turns > 0:
+        M66, _ = ring.find_m66(dp=0.0)
 
     for turn in range(1, n_turns + 1):
         # 1. Apply Kicker on Turn 1 only
@@ -451,12 +464,6 @@ def track_multiturn_injection(beam: np.ndarray,
         # Courant-Snyder invariant (betatron oscillation + dispersion). Physical
         # aperture checking is done explicitly below via config.aperture_x_m and
         # config.aperture_y_m, which define the effective injection acceptance.
-        if not hasattr(track_multiturn_injection, "_m66_cache") or \
-                track_multiturn_injection._m66_cache.get("ring_id") != id(ring):
-            M66, _ = ring.find_m66(dp=0.0)
-            track_multiturn_injection._m66_cache = {"ring_id": id(ring), "M66": M66}
-        M66 = track_multiturn_injection._m66_cache["M66"]
-
         valid_before = ~np.isnan(current_beam[0, :])
         if np.any(valid_before):
             current_beam[:, valid_before] = M66 @ current_beam[:, valid_before]

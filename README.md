@@ -45,6 +45,8 @@ Field-map loading and interpolation enforce finite grids, matching section axes 
 
 Robustness studies load the selected field map and record invalid evaluations separately from physical failures. See [evaluation outcomes and compatibility](docs/EVALUATION_OUTCOMES.md) for model selection, diagnostics and statistical denominators.
 
+Multi-turn tracking recomputes its one-turn map for each call so lattice edits take effect. See [tracking map lifecycle and measured setup cost](docs/TRACKING_MAP_LIFECYCLE.md).
+
 Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.
 
 ---

@@ -307,3 +307,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 94. [**Milestone 94 — Task 09: Shared Tracking Input Contracts**](94_task09_tracking_input_contracts.md)
     - Shared validated integrator parameters, particle/loss boundaries and drift; required positive counts and finite coordinates, preserved original loss identities including native AT losses, documented migration, and verified 520 tests plus a fresh-process drift/aperture smoke check.
+
+95. [**Milestone 95 — Task 10: Statistical Summaries and Convergence Evidence**](95_task10_statistical_convergence.md)
+    - Extracted explicit statistical policies and estimand-aware bootstrap helpers, required distinct available prefixes before stability claims, preserved invalid/physical outcome separation and saved settings/diagnostics, and verified 558 tests plus a fresh two-worker tolerance CLI run.

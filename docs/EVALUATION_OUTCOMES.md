@@ -36,11 +36,11 @@ Normalized objectives retain the six-element penalty vector of 1e4 for expected 
 
 Robustness results add `evaluation_schema_version=1`, `n_valid_evaluations`, `n_invalid_evaluations`, `invalid_evaluation_fraction`, `sample_results` and `model_provenance`.
 
-- Percentiles and bootstrap intervals use valid and physically infeasible samples only. The fixed bootstrap seed remains 42.
+- Percentiles and bootstrap intervals use valid and physically infeasible samples only. The default bootstrap seed remains 42; explicit statistical policies save the selected seed, replicate count and confidence level.
 - `failure_probability` is physical failures divided by valid evaluations, or null when no evaluation is valid.
 - `feasible_fraction` is physically feasible samples divided by all requested samples; invalid samples cannot increase this fraction.
 - When all evaluations are invalid, physics summaries and interval endpoints are null. No synthetic large mismatches enter statistics.
-- The legacy convergence diagnostic is omitted if any evaluation is invalid. Broader convergence-method changes remain Task 10.
+- Invalid evaluations now yield an explicit blocked convergence status; insufficient required prefixes yield insufficient evidence. See [statistical summaries and prefix stability](STATISTICAL_CONVERGENCE.md).
 
 A robust optimizer candidate with any invalid sample is invalid and penalized. The tolerance CLI saves an incomplete ensemble's diagnostics, skips OAT and exits unsuccessfully. Publication input validation rejects summaries reporting any invalid evaluation, preventing conditional statistics from being published as complete-ensemble results.
 

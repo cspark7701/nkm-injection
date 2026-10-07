@@ -115,7 +115,8 @@ def test_aggregation_separates_invalid_from_physical_infeasibility(monkeypatch):
     assert stats['failure_modes']['mismatch_exceeded'] == 1
     assert [r['outcome']['status'] for r in stats['sample_results']] == ['valid', 'infeasible', 'invalid', 'invalid']
     assert stats['max_beta_x_m']['p50'] == 55.
-    assert stats['convergence_check'] == {}
+    assert stats['convergence_check']['status'] == 'blocked_invalid_evaluations'
+    assert stats['convergence_check']['converged'] is None
     json.dumps(stats, allow_nan=False)
 
 

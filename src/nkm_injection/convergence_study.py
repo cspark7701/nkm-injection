@@ -28,6 +28,8 @@ from .storage_ring_injection import (
 from .beam import generate_6d_beam
 from .kickmap import NKMKickMap2D
 from .results_schema import SerializableConfigMixin
+from .statistics import bootstrap_interval
+from .tracking_contracts import positive_count
 from .concurrency import parallel_map, resolve_workers
 
 
@@ -253,7 +255,7 @@ class EnsembleStudyResult(SerializableConfigMixin):
         Kicker model formulation used ('off', 'ideal', 'linear', 'fieldmap').
     tier : Dict[str, Any]
         Tier configuration parameters (n_particles, n_turns, n_slices, seeds).
-    capture_efficiency_ci : Dict[str, float]
+    capture_efficiency_ci : Dict[str, Any]
         Bootstrap confidence interval dict (mean, std, ci_lo, ci_hi).
     per_seed_results : List[Dict[str, Any]]
         List of per-seed metric dictionaries.
@@ -267,7 +269,7 @@ class EnsembleStudyResult(SerializableConfigMixin):
     label: str
     kicker_model: str
     tier: Dict[str, Any]
-    capture_efficiency_ci: Dict[str, float]
+    capture_efficiency_ci: Dict[str, Any]
     per_seed_results: List[Dict[str, Any]]
     mean_stored_perturbation: Dict[str, float]
     first_loss_distribution: Optional[Dict[str, Any]] = None
@@ -387,8 +389,9 @@ def bootstrap_capture_ci(
     n_particles: int,
     n_bootstrap: int = 5000,
     ci_level: float = 0.95,
-    rng: Optional[np.random.Generator] = None
-) -> Dict[str, float]:
+    rng: Optional[np.random.Generator] = None,
+    *, bootstrap_seed: int = 0,
+) -> Dict[str, Any]:
     """
     Estimate a bootstrap confidence interval for mean capture efficiency.
 
@@ -403,31 +406,31 @@ def bootstrap_capture_ci(
     ci_level : float
         Confidence level (e.g. 0.95 for 95 % CI).
     rng : numpy.random.Generator, optional
-        Random number generator for reproducibility.
+        Caller generator; its initial state is saved for replay.
+    bootstrap_seed : int
+        Seed used when rng is absent (default 0), saved with all settings.
 
     Returns
     -------
-    dict with keys: mean, std, ci_lo, ci_hi, ci_level, n_seeds, n_bootstrap
+    Dimensionless mean/std/CI with seed-run bootstrap settings and evidence
+    status. No seed runs yield null metrics; one run is descriptive only.
     """
-    if rng is None:
-        rng = np.random.default_rng(0)
-    efficiencies = np.asarray(survived_per_seed, dtype=float) / n_particles
-    n_seeds = len(efficiencies)
-    boot_means = np.array([
-        np.mean(rng.choice(efficiencies, size=n_seeds, replace=True))
-        for _ in range(n_bootstrap)
-    ])
-    alpha = (1.0 - ci_level) / 2.0
-    ci_lo = float(np.percentile(boot_means, 100 * alpha))
-    ci_hi = float(np.percentile(boot_means, 100 * (1 - alpha)))
+    n_particles = positive_count(n_particles, 'n_particles')
+    counts = np.asarray(survived_per_seed)
+    if counts.ndim != 1 or (counts.size and (counts.dtype.kind not in 'iu' or
+                                            np.any(counts < 0) or np.any(counts > n_particles))):
+        raise ValueError('survived_per_seed must be integer counts between zero and n_particles')
+    efficiencies = counts.astype(float) / n_particles
+    interval = bootstrap_interval(efficiencies, estimator='mean', count=n_bootstrap,
+                                  seed=bootstrap_seed, ci_level=ci_level, rng=rng)
+    interval['settings']['resampling_unit'] = 'seed_run'
     return {
-        "mean": float(np.mean(efficiencies)),
-        "std": float(np.std(efficiencies, ddof=1)) if n_seeds > 1 else 0.0,
-        "ci_lo": ci_lo,
-        "ci_hi": ci_hi,
-        "ci_level": ci_level,
-        "n_seeds": n_seeds,
-        "n_bootstrap": n_bootstrap
+        "mean": interval['estimate'],
+        "std": float(np.std(efficiencies, ddof=1)) if counts.size > 1 else (0.0 if counts.size else None),
+        "ci_lo": interval['ci_lo'], "ci_hi": interval['ci_hi'],
+        "ci_level": ci_level, "n_seeds": int(counts.size), "n_bootstrap": n_bootstrap,
+        "status": interval['status'], "bootstrap_settings": interval['settings'],
+        "n_particles_per_seed": n_particles, "std_ddof": 1,
     }
 
 
@@ -782,6 +785,7 @@ def run_ensemble_study(
     config: Optional[StorageRingInjectionConfig] = None,
     stored_beam_n_particles: int = 1000,
     n_workers: Optional[int] = 1,
+    *, n_bootstrap: int = 5000, bootstrap_seed: int = 0, ci_level: float = .95,
 ) -> EnsembleStudyResult:
     """
     Run multi-seed ensemble injection study for one (kicker_model, tier) combination using sequential or parallel execution.
@@ -812,7 +816,8 @@ def run_ensemble_study(
         if res["index"] == 0:
             first_loss_dist = res["fld"]
 
-    ci = bootstrap_capture_ci(survived_counts, tier.n_particles)
+    ci = bootstrap_capture_ci(survived_counts, tier.n_particles, n_bootstrap=n_bootstrap,
+                              bootstrap_seed=bootstrap_seed, ci_level=ci_level)
 
     # Mean stored perturbation across seeds
     mean_perturbation: Dict[str, float] = {}

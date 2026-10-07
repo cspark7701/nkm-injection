@@ -18,6 +18,7 @@ repo_root = Path(__file__).resolve().parent.parent
 from nkm_injection.optimization_handoff import (
     HANDOFF_UNITS, QUAD_NAMES, load_optimization_handoff, reference_handoff, load_error_budget,
 )
+from nkm_injection.statistics import StatisticalPolicy, InvalidStatisticalSamplesError
 from nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble
 from nkm_injection.robust_optimization import (
     evaluate_robustness_statistics,
@@ -50,6 +51,12 @@ def parse_args(argv=None):
                         help="Number of one-at-a-time samples per category")
     parser.add_argument("--oat-seed", type=int, default=None,
                         help="OAT seed; defaults to the Monte Carlo seed")
+    parser.add_argument('--bootstrap-count', type=int, default=1000)
+    parser.add_argument('--bootstrap-seed', type=int, default=42)
+    parser.add_argument('--ci-level', type=float, default=.95)
+    parser.add_argument('--convergence-sizes', type=int, nargs=2, default=(50, 100), metavar=('SMALL', 'LARGE'))
+    parser.add_argument('--convergence-tolerance', type=float, default=.05)
+    parser.add_argument('--invalid-sample-policy', choices=('exclude', 'raise'), default='exclude')
     return parser.parse_args(argv)
 
 
@@ -57,6 +64,11 @@ def main(argv=None):
     args = parse_args(argv)
     if args.samples <= 0 or args.oat_samples <= 0 or args.seed < 0 or (args.oat_seed is not None and args.oat_seed < 0):
         raise ValueError("Sample counts must be positive and seeds non-negative")
+    policy = StatisticalPolicy(bootstrap_count=args.bootstrap_count, bootstrap_seed=args.bootstrap_seed,
+                               ci_level=args.ci_level, convergence_sizes=tuple(args.convergence_sizes),
+                               convergence_tolerance=args.convergence_tolerance,
+                               invalid_sample_policy=args.invalid_sample_policy)
+    policy.validate()
     selected = reference_handoff() if args.reference else load_optimization_handoff(args.optimization_summary)
     config, error_source = load_error_budget(args.error_config)
     nominal_bts, target_twiss = selected.bts, selected.target_twiss
@@ -82,9 +94,11 @@ def main(argv=None):
         "initial_twiss": selected.initial_twiss,
         "target_twiss": target_twiss,
         "units": dict(HANDOFF_UNITS),
+        "statistical_policy": policy.to_dict(),
         "sampling": {"monte_carlo": {"n_samples": args.samples, "seed": args.seed},
                      "oat": {"n_samples_per_category": args.oat_samples, "seed": oat_seed},
-                     "bootstrap": {"seed": 42, "replicates": 1000}},
+                     "bootstrap": {"seed": policy.bootstrap_seed, "replicates": policy.bootstrap_count,
+                                   "ci_level": policy.ci_level, "estimator": "median_mismatch_x"}},
     }
 
     # 1. Fast Monte Carlo Ensemble
@@ -92,13 +106,17 @@ def main(argv=None):
     print(f"\nSampling Monte Carlo ensemble (N={n_samples}, workers={args.workers})...\n")
     samples = sample_error_ensemble(config, n_samples=n_samples, seed=args.seed)
 
-    evaluation_kwargs = {"n_workers": args.workers, "initial_twiss": selected.initial_twiss,
+    evaluation_kwargs = {"statistical_policy": policy, "n_workers": args.workers, "initial_twiss": selected.initial_twiss,
                          "beta_max_limit_m": selected.constraints.beta_max_limit_m,
                          "mismatch_limit": selected.constraints.mismatch_limit,
                          "mismatch_definition": "sum", "beta_tolerance_m": .01, "mismatch_tolerance": .05}
     if args.kicker_model != "fieldmap" or args.kickmap_path is not None:
         evaluation_kwargs.update(kicker_model=args.kicker_model, kickmap_path=args.kickmap_path)
-    stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, **evaluation_kwargs)
+    try:
+        stats = evaluate_robustness_statistics(nominal_bts, target_twiss, samples, **evaluation_kwargs)
+    except InvalidStatisticalSamplesError as error:
+        # Archive the rejected ensemble without rerunning any physics evaluations.
+        stats = error.summary
     print(f"Invalid evaluations: {stats.get('n_invalid_evaluations', 0)}")
     if stats.get("n_invalid_evaluations", 0):
         diagnostic_path = output_dir / "publication_tolerances_summary.json"
@@ -114,14 +132,17 @@ def main(argv=None):
     print(f"Failure Probability: {stats['failure_probability']*100:.1f}%")
     print(f"Horizontal Mismatch Mx: p50={stats['mismatch_x']['p50_median']:.4f}, p68={stats['mismatch_x']['p68']:.4f}, p95={stats['mismatch_x']['p95']:.4f}, p99={stats['mismatch_x']['p99']:.4f}")
     print(f"Vertical Mismatch My:   p50={stats['mismatch_y']['p50_median']:.4f}, p68={stats['mismatch_y']['p68']:.4f}, p95={stats['mismatch_y']['p95']:.4f}, p99={stats['mismatch_y']['p99']:.4f}")
-    print(f"Bootstrap 95% CI for Median Mx: [{stats['mismatch_x']['bootstrap_95ci_median'][0]:.4f}, {stats['mismatch_x']['bootstrap_95ci_median'][1]:.4f}]")
+    interval = stats['mismatch_x'].get('bootstrap_ci_median', stats['mismatch_x'].get('bootstrap_95ci_median'))
+    print(f"Bootstrap {policy.ci_level:.0%} CI for Median Mx: [{interval[0]:.4f}, {interval[1]:.4f}]")
     print(f"\n--- Failure Modes ---\n")
     for fm, count in stats.get("failure_modes", {}).items():
         print(f"  {fm}: {count}")
     print(f"\n--- MC Convergence ---\n")
     conv = stats.get("convergence_check", {})
-    print(f"  Converged: {conv.get('converged', False)}")
-    print(f"  Diff N=50 to N=100: {conv.get('N_50_to_100_diff', 0.0):.6f}")
+    print(f"  Prefix stability status: {conv.get('status', 'unavailable')}")
+    print(f"  Within configured tolerance: {conv.get('converged')}")
+    print(f"  Compared sample sizes: {conv.get('sample_sizes', list(policy.convergence_sizes))}")
+    print(f"  Absolute difference: {conv.get('absolute_difference')}")
 
     # 2. One-At-A-Time Sensitivity Ranking
     print("\n--- One-At-A-Time (OAT) Sensitivity Ranking ---\n")

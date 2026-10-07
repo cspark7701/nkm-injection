@@ -53,6 +53,8 @@ Use the installed `nkm_injection` package in scripts and notebooks. See [canonic
 
 Configuration JSON loading now validates types and rejects unknown fields by default. See [configuration serialization and migration](docs/CONFIGURATION_SERIALIZATION.md) for supported values and explicit compatibility mode.
 
+Statistical summaries now save bootstrap settings and report insufficient evidence when required convergence prefixes are unavailable. See [statistical summaries and prefix stability](docs/STATISTICAL_CONVERGENCE.md).
+
 Tolerance studies require a selected optimization summary or explicit reference mode. See [tolerance input validation and reconstruction](docs/TOLERANCE_INPUTS.md) for configurations, source hashes and sampling settings.
 
 Publication generation now requires complete artifacts from the runs selected by the manifest. Older optimization configs and the bundled legacy example manifest need verified run metadata before reproduction. See [publication input schemas and migration](docs/PUBLICATION_INPUTS.md) for required files, units, source hashes and compatibility details.

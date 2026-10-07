@@ -14,6 +14,7 @@ from scipy.optimize import minimize
 
 from .evaluation import (EvaluationOutcome, EvaluationExecutionError,
     EXPECTED_NUMERICAL_ERRORS, exception_context, require_finite, validate_optics_result)
+from .statistics import StatisticalPolicy, summarize_robustness_results
 from .fieldmap import OutOfDomainError
 from .kickmap import NKMKickMap2D
 from .units import validate_kicker_model
@@ -223,7 +224,8 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
                                    mismatch_limit: float = .5,
                                    mismatch_definition: str = "per_plane",
                                    beta_tolerance_m: float = 0.,
-                                   mismatch_tolerance: float = 0.) -> Dict[str, Any]:
+                                   mismatch_tolerance: float = 0.,
+                                   statistical_policy: Optional[StatisticalPolicy] = None) -> Dict[str, Any]:
     """
     Evaluate Monte Carlo statistics (p50, p68, p95, p99, failure probability, bootstrap CI)
     across a set of error realization samples using sequential or parallel execution.
@@ -236,10 +238,12 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
     Optional entrance optics use m and dimensionless Twiss values. Thresholds
     default to per-plane mismatch with zero tolerance; explicit sum mode and
     beta/mismatch tolerances support saved optimizer feasibility conventions.
+    StatisticalPolicy saves bootstrap and ordered-prefix stability settings;
+    insufficient or invalid data cannot establish stability. Empty ensembles
+    return explicit null summaries and insufficient-evidence diagnostics.
     """
-    n_samples = len(samples)
-    if n_samples == 0:
-        return {}
+    policy = statistical_policy or StatisticalPolicy()
+    policy.validate()
 
     model = validate_kicker_model(kicker_model)
     map_path = Path(kickmap_path or Path(__file__).resolve().parents[2] / "kickmap_file.txt").resolve()
@@ -263,109 +267,10 @@ def evaluate_robustness_statistics(nominal_config: BTSConfig,
     task_args = [(nominal_config, s, target_twiss, capture_efficiency_fn, model, map_path, options) for s in samples]
     results = parallel_map(_eval_single_robustness_sample, task_args, n_workers=n_workers, desc="evaluate_robustness_statistics")
 
-    mx_list = []
-    my_list = []
-    bx_max_list = []
-    by_max_list = []
-    failures = 0
-    failure_modes = {"beta_exceeded": 0, "mismatch_exceeded": 0, "capture_failed": 0}
-    stored_kick_list = []
-    eff_list = []
-
-    valid_results = [res for res in results if res["outcome"]["status"] != "invalid"]
-    n_valid = len(valid_results)
-    for res in valid_results:
-        mx_list.append(res["mx"])
-        my_list.append(res["my"])
-        bx_max_list.append(res["bx_max"])
-        by_max_list.append(res["by_max"])
-        stored_kick_list.append(res["stored_kick_mrad"])
-        eff_list.append(res["eff"])
-        if res["failed"]:
-            failures += 1
-            for reason in res["outcome"]["physical_failure_reasons"]:
-                failure_modes[reason] += 1
-
-    mx_arr = np.array(mx_list)
-    my_arr = np.array(my_list)
-    bx_arr = np.array(bx_max_list)
-    by_arr = np.array(by_max_list)
-
-    # Bootstrap 95% confidence interval for median mismatch Mx
-    rng = np.random.default_rng(42)
-    boot_medians = []
-    for _ in range(1000 if n_valid else 0):
-        boot_sample = rng.choice(mx_arr, size=n_valid, replace=True)
-        boot_medians.append(np.median(boot_sample))
-    ci_lower = float(np.percentile(boot_medians, 2.5)) if n_valid else None
-    ci_upper = float(np.percentile(boot_medians, 97.5)) if n_valid else None
-
-    # Convergence check
-    convergence_check = {}
-    if n_valid == n_samples and n_samples >= 10:
-        mx_50_val = np.median(mx_arr[:min(50, n_samples)])
-        mx_100_val = np.median(mx_arr[:min(100, n_samples)])
-        diff = abs(mx_100_val - mx_50_val)
-        convergence_check = {
-            "converged": bool(diff < 0.05),
-            "N_50_to_100_diff": float(diff)
-        }
-
-    return {
-        "n_samples": n_samples,
-        "evaluation_schema_version": 1,
-        "evaluation_thresholds": {key: value for key, value in options.items() if key != "initial_twiss"},
-        "n_valid_evaluations": n_valid,
-        "n_invalid_evaluations": n_samples - n_valid,
-        "invalid_evaluation_fraction": (n_samples - n_valid) / n_samples,
-        "sample_results": results,
-        "model_provenance": {"kicker_model": model, "map_path": str(map_path) if model == "fieldmap" else None},
-        "feasible_fraction": (n_valid - failures) / n_samples,
-        "failure_probability": failures / n_valid if n_valid else None,
-        "failure_modes": failure_modes,
-        "convergence_check": convergence_check,
-        "mismatch_x": {
-            "p50": (float(np.median(mx_arr)) if n_valid else None),
-            "p50_median": (float(np.median(mx_arr)) if n_valid else None),
-            "p68": (float(np.percentile(mx_arr, 68)) if n_valid else None),
-            "p95": (float(np.percentile(mx_arr, 95)) if n_valid else None),
-            "p99": (float(np.percentile(mx_arr, 99)) if n_valid else None),
-            "mean": (float(np.mean(mx_arr)) if n_valid else None),
-            "std": (float(np.std(mx_arr)) if n_valid else None),
-            "bootstrap_95ci_median": [ci_lower, ci_upper]
-        },
-        "mismatch_y": {
-            "p50": (float(np.median(my_arr)) if n_valid else None),
-            "p50_median": (float(np.median(my_arr)) if n_valid else None),
-            "p68": (float(np.percentile(my_arr, 68)) if n_valid else None),
-            "p95": (float(np.percentile(my_arr, 95)) if n_valid else None),
-            "p99": (float(np.percentile(my_arr, 99)) if n_valid else None),
-            "mean": (float(np.mean(my_arr)) if n_valid else None),
-            "std": (float(np.std(my_arr)) if n_valid else None),
-        },
-        "max_beta_x_m": {
-            "p50": (float(np.median(bx_arr)) if n_valid else None),
-            "p50_median": (float(np.median(bx_arr)) if n_valid else None),
-            "p95": (float(np.percentile(bx_arr, 95)) if n_valid else None),
-            "p99": (float(np.percentile(bx_arr, 99)) if n_valid else None),
-        },
-        "max_beta_y_m": {
-            "p50": (float(np.median(by_arr)) if n_valid else None),
-            "p50_median": (float(np.median(by_arr)) if n_valid else None),
-            "p95": (float(np.percentile(by_arr, 95)) if n_valid else None),
-            "p99": (float(np.percentile(by_arr, 99)) if n_valid else None),
-        },
-        "stored_beam_kick_mrad": {
-            "p50": (float(np.median(stored_kick_list)) if n_valid else None),
-            "p95": (float(np.percentile(stored_kick_list, 95)) if n_valid else None),
-            "p99": (float(np.percentile(stored_kick_list, 99)) if n_valid else None),
-            "max": (float(np.max(stored_kick_list)) if n_valid else None)
-        },
-        "capture_efficiency": {
-            "p50": (float(np.median(eff_list)) if n_valid else None),
-            "mean": (float(np.mean(eff_list)) if n_valid else None)
-        } if capture_efficiency_fn is not None else {}
-    }
+    statistics = summarize_robustness_results(results, policy, capture_enabled=capture_efficiency_fn is not None)
+    return {**statistics, "evaluation_schema_version": 1,
+            "evaluation_thresholds": {key: value for key, value in options.items() if key != "initial_twiss"},
+            "model_provenance": {"kicker_model": model, "map_path": str(map_path) if model == "fieldmap" else None}}
 
 
 def compute_one_at_a_time_sensitivity(nominal_config: BTSConfig,

@@ -127,9 +127,19 @@ class KickModelEvaluator:
     ``dipole``: uniform kick equal to the field-map kick at the reference point x_ref (calibrated control).
     ``linear``: first-order Taylor expansion of the field map about x_ref (calibrated control).
     ``off``: no kick. Coordinates outside the map domain are flagged, never extrapolated.
+
+    ``interpolation="linear"`` uses the kick map's bilinear interpolation (capture tracking).
+    ``interpolation="cubic"`` uses a bicubic spline through the same nodes; near the axis the
+    wire-kicker field is cubic in x and bilinear interpolation between the 0 and 0.5 mm nodes
+    overstates the kick, so the stored-beam response uses the spline.
     """
 
-    def __init__(self, model: str, config: InjectionStudyConfig, kickmap: Optional[NKMKickMap2D], x_ref_m: float):
+    def __init__(self, model: str, config: InjectionStudyConfig, kickmap: Optional[NKMKickMap2D], x_ref_m: float,
+                 interpolation: str = "linear"):
+        if interpolation not in ("linear", "cubic"):
+            raise ValueError("interpolation must be 'linear' or 'cubic'")
+        self.interpolation = interpolation
+        self._splines = None
         if model not in KICK_MODELS:
             raise ValueError(f"Unknown kick model {model!r}; expected one of {KICK_MODELS}")
         if model != "off" and kickmap is None:
@@ -145,8 +155,24 @@ class KickModelEvaluator:
         else:
             self.k0_rad, self.k1_rad_per_m = 0.0, 0.0
 
+    def _raw_kicks(self, x, y):
+        """Map kicks in rad at magnet-frame coordinates (domain checked by the map)."""
+        if self.interpolation == "linear":
+            kx, ky = self.kickmap.evaluate_kicks(x, y)
+            return np.asarray(kx, dtype=float), np.asarray(ky, dtype=float)
+        if self._splines is None:
+            from scipy.interpolate import RectBivariateSpline
+            from .units import convert_kick_angle
+            unit = self.kickmap.metadata.value_unit
+            self._splines = tuple(RectBivariateSpline(self.kickmap.y_grid, self.kickmap.x_grid,
+                                                      convert_kick_angle(m, unit, "rad"), kx=3, ky=3, s=0)
+                                  for m in (self.kickmap.kx_map, self.kickmap.ky_map))
+        x, y = np.broadcast_arrays(np.asarray(x, float), np.asarray(y, float))
+        self.kickmap.check_domain_bounds(x, y)
+        return self._splines[0].ev(y, x), self._splines[1].ev(y, x)
+
     def _map_kx(self, x, y):
-        kx, _ = self.kickmap.evaluate_kicks(x - self.config.nkm_dx_m, y)
+        kx, _ = self._raw_kicks(x - self.config.nkm_dx_m, y)
         return self.gain * np.asarray(kx, dtype=float)
 
     def in_domain(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
@@ -164,7 +190,7 @@ class KickModelEvaluator:
             return np.full_like(x, self.k0_rad + self.config.kick_offset_rad), np.zeros_like(y)
         if self.model == "linear":
             return self.k0_rad + self.k1_rad_per_m * (x - self.x_ref_m) + self.config.kick_offset_rad, np.zeros_like(y)
-        kx, ky = self.kickmap.evaluate_kicks(x - self.config.nkm_dx_m, y)
+        kx, ky = self._raw_kicks(x - self.config.nkm_dx_m, y)
         return (self.gain * np.asarray(kx) + self.config.kick_offset_rad, self.gain * np.asarray(ky))
 
 
@@ -372,13 +398,16 @@ def _track_map(config, ring, beam, n_turns, first_loss_turn):
 
 
 def stored_beam_response(config: InjectionStudyConfig, ring: PreparedRing, kicker: KickModelEvaluator,
-                         n: int = 100000, seed: int = 7) -> Dict[str, Any]:
+                         n: int = 100000, seed: int = 7, interpolation: str = "cubic") -> Dict[str, Any]:
     """Stored-beam disturbance from one NKM pass, evaluated at the NKM centre (linear optics).
 
+    The field-map kick uses the bicubic spline by default (``interpolation``), see KickModelEvaluator.
     Returns the centroid kick (rad), the centroid betatron amplitude A = beta |<dx'>| (m) and its
     ratio to the rms beam size, and the filamented horizontal emittance growth (fraction),
     computed from the exact kicks applied to an equilibrium Monte Carlo sample.
     """
+    if kicker.model == "fieldmap" and kicker.interpolation != interpolation:
+        kicker = KickModelEvaluator(kicker.model, kicker.config, kicker.kickmap, kicker.x_ref_m, interpolation)
     beam = stored_beam_at_nkm(config, ring, n, seed)
     x0 = beam[0] - ring.orbit6[0]
     kx, ky = kicker.kicks(beam[0] + config.closed_orbit_x_m, beam[2])
@@ -403,6 +432,7 @@ def stored_beam_response(config: InjectionStudyConfig, ring: PreparedRing, kicke
             "centroid_amplitude_m": amp, "rms_beam_size_m": sigma_x, "amplitude_over_sigma": amp / sigma_x,
             "emittance_before_m_rad": e0, "emittance_after_kick_m_rad": e1,
             "filamented_emittance_m_rad": eps_fil, "filamented_emittance_growth": eps_fil / e0 - 1.0,
+            "interpolation": kicker.interpolation if kicker.model == "fieldmap" else None,
             "observation": "NKM centre, single pass, linear optics"}
 
 

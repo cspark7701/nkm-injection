@@ -1,6 +1,6 @@
 # Task 004 — Establish fair controls and a coupled injection operating region
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 108). Created: 2026-10-09.
 Dependencies: 002, 003.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

@@ -87,3 +87,17 @@ def test_stored_beam_response_controls(ring, kickmap):
     assert r_fm["amplitude_over_sigma"] < 1e-2
     assert r_dp["amplitude_over_sigma"] > 100
     assert r_dp["centroid_amplitude_m"] == pytest.approx(ring.twiss_x[0] * abs(r_dp["mean_kick_x_rad"]), rel=1e-12)
+
+
+def test_cubic_interpolation_matches_nodes_and_cubic_law(kickmap):
+    cfg = InjectionStudyConfig()
+    lin = KickModelEvaluator("fieldmap", cfg, kickmap, -0.009)
+    cub = KickModelEvaluator("fieldmap", cfg, kickmap, -0.009, interpolation="cubic")
+    nodes = kickmap.x_grid[::5]
+    assert np.allclose(lin.kicks(nodes, np.zeros_like(nodes))[0], cub.kicks(nodes, np.zeros_like(nodes))[0], atol=1e-15, rtol=0)
+    c = cub.kicks(np.array([1e-3]), np.zeros(1))[0][0] / 1e-9  # cubic coefficient from the 1 mm node
+    x = np.array([1e-4, 2e-4, 3e-4])
+    assert np.allclose(cub.kicks(x, np.zeros(3))[0], c * x ** 3, rtol=0.01)
+    assert np.all(lin.kicks(x, np.zeros(3))[0] > 2 * c * x ** 3)  # bilinear overstates near the axis
+    with pytest.raises(ValueError):
+        KickModelEvaluator("fieldmap", cfg, kickmap, -0.009, interpolation="quadratic")

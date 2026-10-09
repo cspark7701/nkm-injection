@@ -346,3 +346,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 107. [**Milestone 107 — Journal Task 005: Tolerance Replication and Uncertainty (S4)**](107_task005_tolerance_replication.md)
     - Ran three 50k-sample fixed-optics tolerance ensembles, added saved-observation post-processing, and reported quantile intervals, failure bounds and the unmet 1e-5 prefix target.
+
+108. [**Milestone 108 — Journal Task 004: Calibrated Controls and Operating Region (S6)**](108_task004_operating_region.md)
+    - Mapped the native-tracking injection window with paired calibrated controls and coupled BTS handoff, selected the operating point by a predeclared rule, quantified transparency versus alignment and explained the original control results.

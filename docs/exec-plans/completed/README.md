@@ -349,3 +349,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 108. [**Milestone 108 — Journal Task 004: Calibrated Controls and Operating Region (S6)**](108_task004_operating_region.md)
     - Mapped the native-tracking injection window with paired calibrated controls and coupled BTS handoff, selected the operating point by a predeclared rule, quantified transparency versus alignment and explained the original control results.
+
+109. [**Milestone 109 — Journal Task 006: Combined-Error Capture Robustness (S7)**](109_task006_capture_robustness.md)
+    - Ran coupled combined-error capture ensembles with diagnostic scenarios and identified injected-orbit jitter at the septum as the limiting tolerance.

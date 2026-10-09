@@ -1,6 +1,6 @@
 # Task 006 — Implement and run combined-error capture robustness
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 109). Created: 2026-10-09.
 Dependencies: 003, 004; audited error coverage from 002.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

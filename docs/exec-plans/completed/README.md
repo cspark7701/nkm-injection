@@ -355,3 +355,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 110. [**Milestone 110 — Journal Task 007: Role of Pareto Optimisation**](110_task007_moga_decision.md)
     - Decided, with code and artifact evidence, to omit MOGA from the article's claims and not to run S8.
+
+111. [**Milestone 111 — Journal Task 008: Research Article Rewrite**](111_task008_research_article.md)
+    - Rewrote the manuscript around the capture/transparency/robustness question with macro-driven results, explicit limitations and no unsupported claims.

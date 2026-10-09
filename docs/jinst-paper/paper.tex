@@ -3,23 +3,25 @@
 \usepackage{jinstpub}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\usepackage{siunitx}
-\usepackage{subcaption}
 \usepackage{amsmath}
 
-\title{Design, Field Map Ingestion, and Multi-Objective Optics Matching for a Nonlinear Kicker Magnet Injection System}
+% All numerical results quoted in the text are generated from the selected campaign artifacts
+% by scripts/build_journal_figures.py (see generated/figure_provenance.csv).
+\input{generated/journal_macros.tex}
+
+\title{Capture window and robustness of nonlinear-kicker injection into a 4\,GeV storage ring with a small dynamic aperture}
 
 \author[a,1]{Chong Shik Park\note{Corresponding author.}}
 
-\affiliation[a]{Department of Accelerator Science, Korea University, Sejong 30019, South Korea}
+\affiliation[a]{Department of Accelerator Science and Center for Accelerator Research, Korea University,\\Sejong 30019, Republic of Korea}
 
 \emailAdd{kuphy@korea.ac.kr}
 
 \abstract{
-We present a comprehensive framework for magnetic field map ingestion, 6D symplectic particle tracking, multi-turn storage ring physical aperture dynamics, and multi-objective Pareto optics optimization for a $4.0~\mathrm{GeV}$ Booster-to-Storage Ring (BTS) beam transport line featuring a Nonlinear Kicker Magnet (NKM). Off-axis top-up injection requires precise optical matching and field map integration to maximize injected beam capture while suppressing stored beam perturbations. Detailed RADIA 3D/2D field calculations are ingested and validated, confirming an integrated injection kick of $\Delta x' = -5.749~\mathrm{mrad}$ at the $-16.0~\mathrm{mm}$ septum offset with negligible residual field ($< 10^{-6}~\mathrm{T}\cdot\mathrm{m}$) along the stored beam axis. The unoptimized baseline lattice severely violates vertical beta limits ($\beta_{y,\max} = 242.61~\mathrm{m}$) with a large mismatch metric ($\mathcal{M}_y = 28.61$). Using single-objective SLSQP optimization, the vertical beta function is constrained to $52.54~\mathrm{m}$ ($\beta_{x,\max} = 30.66~\mathrm{m}$) with residual mismatch driven below $1.5 \times 10^{-7}$. Furthermore, multi-objective Pareto optimization via NSGA-II reveals explicit trade-offs between optical mismatch, aperture risk, and residual dispersion. A representative knee-point compromise design achieves a total exit mismatch of $\mathcal{M}_x + \mathcal{M}_y = 0.6061$ ($61.5\times$ improvement over baseline) and reduces peak beta to $25.14~\mathrm{m}$. Multi-turn tracking over 1,000 turns with physical apertures ($\pm 30~\mathrm{mm} \times \pm 15~\mathrm{mm}$) demonstrates that RADIA fieldmap NKM limits stored beam centroid oscillations to $0.0048~\mathrm{mm}$ compared to $2.0466~\mathrm{mm}$ for an ideal dipole kicker ($430\times$ reduction). Monte Carlo error budget simulations over 500 equivalent seeds confirm robust feasibility under realistic magnet, alignment, and field scale uncertainties.
+A single nonlinear kicker magnet (NKM) can inject off-axis without disturbing the stored beam, but its kick varies across the injected bunch, and fourth-generation storage rings offer little dynamic aperture to absorb the resulting spread. We quantify this trade-off for a wire-based NKM in a 4\,GeV ring whose on-momentum horizontal dynamic aperture at the injection point extends from $\DAxMinMm$ to $+\DAxMaxMm$\,mm, using the RADIA kick map, a transfer line tracked particle by particle from the booster, a 2\,m septum-to-kicker drift and native nonlinear ring tracking. A linear one-turn-map model overestimates capture by tens of percentage points. Capture is highest when the incoming angle is cancelled close to the kick-map extremum, where the kick gradient across the bunch is smallest: at the selected operating point \RepFieldmapCapture\,\% of the injected particles survive 500 turns, compared with \RepDipoleCapture\,\% for a uniform kick of equal strength, and the angular window is about $\pm0.5$\,mrad. For an aligned kicker the stored-beam centroid moves by less than $10^{-5}$ of its rms size; because the field is cubic near the axis, a 0.2\,mm offset between kicker and stored orbit raises it to \StoredTwoTenthAmp\ of the rms size. Under a combined error budget the mean capture drops to \RobMeanCapture\,\% (95\,\% interval \RobMeanCaptureLo--\RobMeanCaptureHi\,\%), limited by the injected-orbit error at the septum that booster extraction jitter produces; correcting the static trajectory does not help (\RobCorrectedMean\,\%), whereas removing that jitter raises it to \RobNoJitterMean\,\%.
 }
 
-\keywords{Beam dynamics, Transfer lines, Kicker magnets, Particle tracking, Multi-objective optimization, Synchrotron radiation}
+\keywords{Beam dynamics; Accelerator modelling and simulations (multi-particle dynamics, single-particle dynamics); Instrumentation for particle accelerators and storage rings - high energy (linear accelerators, synchrotrons)}
 
 \begin{document}
 \maketitle
@@ -28,336 +30,122 @@ We present a comprehensive framework for magnetic field map ingestion, 6D symple
 \section{Introduction}
 \label{sec:intro}
 
-Modern third- and fourth-generation diffraction-limited storage ring (DLSR) light sources operate with ultralow natural emittances ($\epsilon_x \lesssim 100~\mathrm{pm}\cdot\mathrm{rad}$), narrow physical vacuum chamber apertures, and short beam lifetimes due to dominant Intra-Beam Scattering (IBS) and Touschek scattering mechanisms~\cite{NKM_Injection_2021, MAXIV_NKM_2018}. To maintain high average photon brilliance, constant thermal loading on front-end optical components, and stable X-ray beam intensity for user end-stations, storage rings must be operated in continuous top-up injection mode. In top-up operation, electron bunches are periodically injected into the storage ring at short time intervals (typically every few seconds or minutes) without interrupting active user data acquisition.
+Top-up injection into low-emittance storage rings requires that the stored beam is not disturbed while charge is added. A conventional four-kicker orbit bump leaves residual oscillations of the stored beam because the kicker pulses cannot be matched perfectly. A single pulsed multipole magnet whose field vanishes on the stored-beam axis avoids this problem: pulsed sextupole injection was demonstrated at the KEK Photon Factory~\cite{Takaki2010}, a non-linear kicker (NLK) with zero central field and an off-axis field maximum was developed for BESSY~II~\cite{Atkinson2011,Gora2023}, and a multipole injection kicker (MIK) installed at MAX~IV and SOLEIL reduces the stored-beam perturbation below 2\,\% of its rms size~\cite{Ollier2023}.
 
-Conventional top-up injection schemes rely on a four-dipole local closed-orbit bump (bumpers) or thin pulsed septum magnets to bring the circulating beam close to the injected beam path. However, pulse-to-pulse waveform mismatches, eddy currents induced in metallic vacuum chambers, and residual non-linearities in bumper quadrupoles inevitably cause dynamic closed-orbit leakage~\cite{SLS_NKM_2016}. Even sub-micrometer centroid oscillations of the stored beam during injection disturb sensitive photon beamlines, causing temporal intensity fluctuations and spatial drift at experiment focal spots.
+The price of transparency is a kick that varies across the injected bunch. Liu \emph{et al.}~\cite{Liu2016} identified the nonlinearity of the kick at the injected-beam position, together with the injected-beam size, as the main cause of reduced injection efficiency. The effect is aggravated in fourth-generation lattices, whose strong sextupoles restrict the dynamic aperture (DA) available for the kicked bunch, and beam-based studies at BESSY~II reached up to 97\,\% efficiency only with optimised sextupole settings~\cite{Gora2023}.
 
-To overcome these operational limitations, Nonlinear Kicker Magnets (NKMs)—also referred to as non-linear kicker (NLK) systems—have emerged as a transformative technology for transparent, perturbation-free top-up injection. An NKM produces a tailored non-axisymmetric octupole-like magnetic field profile $B_y(x,y)$. The field profile is engineered to provide a strong, flat kick region at large horizontal offsets ($x \approx -16.0~\mathrm{mm}$), deflecting the incoming injected bunch into the storage ring acceptance. Simultaneously, both the transverse magnetic field and its spatial derivative vanish along the central axis ($x = 0~\mathrm{mm}$), ensuring that circulating stored electron bunches pass through the kicker completely undisturbed.
+This article quantifies that trade-off for a specific case: a wire-based NKM computed with RADIA~\cite{Chubar1998}, placed 2\,m downstream of the injection septum of a 4\,GeV storage ring whose on-momentum horizontal DA at the injection point is only about 12\,mm. We ask how wide the injection window is, how much capture is lost relative to a uniform kick, how transparent the NKM is for the stored beam, and how robust the window is against realistic errors. The injected beam is tracked particle by particle from the booster through a matched transfer line (BTS), and capture is evaluated with native nonlinear ring tracking. The study is simulation-only; it does not claim experimental or operational validation.
 
-Achieving optimal performance with an NKM requires a holistic, mathematically rigorous integration of realistic 3D/2D magnetic field calculations into the transfer line optics matching problem. The Booster-to-Storage Ring (BTS) transport line must match the incoming beam's Twiss parameters $(\beta_x, \alpha_x, \beta_y, \alpha_y, D_x, D_x')$ to the injection point of the storage ring while strictly controlling maximum beta functions $(\beta_{\max} \le 60.0~\mathrm{m})$ along the transport line to prevent physical beam scraping. Furthermore, evaluating physical capture efficiency requires multi-turn tracking with physical aperture boundary constraints across multiple kicker models.
+\section{System and model}
+\label{sec:model}
 
-In this study, we present a comprehensive numerical simulation and optimization framework for the $4.0~\mathrm{GeV}$ BTS line and NKM injection system. The key contributions of this paper are:
-\begin{enumerate}
-    \item \textbf{Field Ingestion \& Validation}: Ingestion of RADIA 3D magnetostatic calculations and 2D integrated kick maps with strict cryptographic hashing (SHA-256) and symmetry verification.
-    \item \textbf{Thick Symplectic Integration}: Centered Drift-Kick-Drift split-operator symplectic tracking with convergence validation across slice counts $N_{\text{slices}} \in \{5, 10, 20, 50, 100\}$.
-    \item \textbf{Multi-Turn Aperture Dynamics}: 1,000-turn 6D particle tracking comparing 4 kicker models (\texttt{off}, \texttt{ideal}, \texttt{linear}, \texttt{fieldmap}) under physical septum and beamline aperture boundaries ($\pm 30~\mathrm{mm} \times \pm 15~\mathrm{mm}$).
-    \item \textbf{Optics Optimization}: Single-objective SLSQP quad matching and multi-objective NSGA-II Pareto trade-off optimization balancing optical mismatch, peak beta heights, and residual dispersion.
-    \item \textbf{Robust Error Budgeting}: 500-seed Monte Carlo sensitivity analysis evaluating failure modes, One-At-A-Time (OAT) parameter rankings, and bootstrap confidence intervals.
-\end{enumerate}
+\subsection{Storage ring and dynamic aperture}
 
-All physical models, numerical evaluators, and regression benchmarks are implemented within a modular Python package built upon Accelerator Toolbox (pyAT)~\cite{PyAT_2019}.
+The ring lattice (circumference 799.30\,m, 3483 elements) is tracked with the Accelerator Toolbox~\cite{Terebilo2001,Rogers2017} in six dimensions with RF and radiation pass methods. At the kicker centre, which is the injection, kick and observation point, $\beta_x = 16.27$\,m, $\alpha_x=-0.145$, $\beta_y = 5.60$\,m and $D_x = 0.3$\,mm. The tunes are 68.18/23.26, the chromaticities $+6.0/+3.4$, the equilibrium emittance 61.6\,pm\,rad and the rms energy spread $1.26\times10^{-3}$. The synchrotron period is about 290 turns and the horizontal damping time about 3950 turns. The lattice contains no physical apertures; losses are produced by the septum blade and by dynamical instability.
 
-\section{BTS Transfer Line \& Linear Optics Matching}
-\label{sec:bts_optics}
-
-\subsection{Lattice Architecture \& Reference Parameters}
-
-The $4.0~\mathrm{GeV}$ BTS transfer line connects the extraction septum of the booster synchrotron to the injection septum of the storage ring. The physical layout comprises 36 lattice elements, including 9 quadrupole magnets grouped into 3 family sectors (\texttt{q11}--\texttt{q13}, \texttt{q21}--\texttt{q23}, \texttt{q31}--\texttt{q33}), bending dipoles (\texttt{bm1}, \texttt{btsbm}, \texttt{sepext}, \texttt{sepsr}), drift spaces, diagnostic markers, and physical vacuum chamber apertures. The reference design parameters of the BTS line and target storage ring optics are summarized in Table~\ref{tab:bts_parameters}.
-
-\begin{table}[htbp]
-\centering
-\caption{Booster-to-Storage Ring (BTS) transfer line and target storage ring injection parameters.}
-\label{tab:bts_parameters}
-\begin{tabular}{lccc}
-\hline\hline
-Parameter & Symbol & Value & Unit \\
-\hline
-Beam Energy & $E_0$ & $4.0$ & GeV \\
-Relativistic Gamma & $\gamma$ & $7827.79$ & -- \\
-Magnetic Rigidity & $(B\rho)_0$ & $13.3426$ & $\mathrm{T}\cdot\mathrm{m}$ \\
-Horizontal Geometric Emittance & $\epsilon_x$ & $5.0 \times 10^{-9}$ & m\,rad \\
-Vertical Geometric Emittance & $\epsilon_y$ & $1.0 \times 10^{-10}$ & m\,rad \\
-RMS Bunch Length & $\sigma_s$ & $13.4$ & mm \\
-RMS Energy Spread & $\sigma_\delta$ & $1.1 \times 10^{-3}$ & -- \\
-Entrance Beta ($\beta_x, \beta_y$) & $(\beta_{x0}, \beta_{y0})$ & $(7.5600, 12.2690)$ & m \\
-Entrance Alpha ($\alpha_x, \alpha_y$) & $(\alpha_{x0}, \alpha_{y0})$ & $(1.5231, -1.6547)$ & -- \\
-Entrance Dispersion ($D_x, D_x'$) & $(D_{x0}, D_{x0}')$ & $(0.2762, -0.0657)$ & m, rad \\
-Target Exit Beta ($\beta_x, \beta_y$) & $(\beta_{xT}, \beta_{yT})$ & $(2.3365, 4.2562)$ & m \\
-Target Exit Alpha ($\alpha_x, \alpha_y$) & $(\alpha_{xT}, \alpha_{yT})$ & $(-0.0163, 0.0178)$ & -- \\
-Target Exit Dispersion ($D_x, D_x'$) & $(D_{xT}, D_{xT}')$ & $(0.0809, 0.0475)$ & m, rad \\
-\hline\hline
-\end{tabular}
-\end{table}
-
-\subsection{Phase-Space Mismatch Metric Formulation}
-
-To rigorously quantify the quality of optical matching at the BTS exit ($s = 29.8~\mathrm{m}$) relative to the storage ring target injection optics, we utilize the uncoupled 2D phase-space mismatch metric $\mathcal{M}_u$ ($u \in \{x, y\}$):
-\begin{equation}
-\mathcal{M}_u = \frac{1}{2} \operatorname{Tr}\left(\mathbf{\Sigma}_{u,\text{target}}^{-1} \mathbf{\Sigma}_{u,\text{out}}\right) - 1,
-\label{eq:mismatch}
-\end{equation}
-where $\mathbf{\Sigma}_u$ is the beam covariance matrix in transverse phase space $(u, u')$ defined by:
-\begin{equation}
-\mathbf{\Sigma}_u = \epsilon_u \begin{bmatrix} \beta_u & -\alpha_u \\ -\alpha_u & \gamma_u \end{bmatrix}, \quad \gamma_u = \frac{1 + \alpha_u^2}{\beta_u}.
-\end{equation}
-The mismatch metric $\mathcal{M}_u \ge 0$ is strictly non-negative and vanishes ($\mathcal{M}_u = 0$) if and only if the output Twiss parameters $(\beta_u, \alpha_u)$ perfectly match the target injection values. A physical mismatch $\mathcal{M}_u > 0$ corresponds to emittance dilution and filamentation upon injection into the storage ring.
-
-\subsection{Baseline Unoptimized Optics Performance}
-
-In the unoptimized baseline configuration, the initial quadrupole strengths produce severe optical mismatch and peak beta function violations along the transport line:
-\begin{itemize}
-    \item Horizontal mismatch: $\mathcal{M}_x = 8.6746$
-    \item Vertical mismatch: $\mathcal{M}_y = 28.6147$ (Total $\mathcal{M}_x + \mathcal{M}_y = 37.2893$)
-    \item Peak vertical beta: $\beta_{y,\max} = 242.61~\mathrm{m}$, which drastically exceeds the physical vacuum chamber stay-clear limit of $60.0~\mathrm{m}$.
-    \item Exit dispersion mismatch: $D_{x,\text{out}} = 0.2984~\mathrm{m}$ (Target: $0.0809~\mathrm{m}$).
-\end{itemize}
-This baseline establishes the quantitative starting benchmark to be optimized.
-
-\section{Nonlinear Kicker Magnet Field Map \& Ingestion}
-\label{sec:nkm_field}
-
-\subsection{Field Ingestion \& Symmetry Verification}
-
-The NKM magnetic field map was calculated using RADIA 3D magnetostatic software for a physical magnet length of $L_{\text{NKM}} = 0.525~\mathrm{m}$. The 2D integrated field map $\int B_y\,ds$ and $\int B_x\,ds$ was tabulated over a $201 \times 201$ spatial grid covering $x, y \in [-25.0, +25.0]~\mathrm{mm}$ with a spatial step of $0.25~\mathrm{mm}$.
-
-We perform automated ingestion and verification of the field map, enforcing:
-\begin{enumerate}
-    \item \textbf{Cryptographic Hash Check}: SHA-256 hash verification against authoritative scientific source data files (\texttt{By.txt}, \texttt{kickmap\_file.txt}).
-    \item \textbf{Odd Symmetry in $x$}: $\Delta x'(-x, y) = -\Delta x'(x, y)$, with a maximum numerical residual error below $10^{-12}$.
-    \item \textbf{Lorentz Deflection Sign}: A negative horizontal deflection $\Delta x' < 0$ is imparted to electron beams ($q = -e$) at negative horizontal offsets ($x < 0$).
-\end{enumerate}
-
-Figure~\ref{fig:nkm_kick_profile} illustrates the integrated kick profile $\Delta x'(x, 0)$ along the horizontal midplane.
+Figure~\ref{fig:da} shows the DA obtained by native tracking of single particles over 500 turns. On momentum, particles with $x'=0$ at the kicker centre are stable between $\DAxMinMm$ and $+\DAxMaxMm$\,mm (1\,mm grid); the stable range is $\pm14$\,mm at $\delta=-1\,\%$ and shrinks to $\pm3$\,mm at $\delta=-3\,\%$. The corresponding horizontal acceptance is about 9\,$\mu$m\,rad.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{figures/fig3_nkm_fieldmap_kick.pdf}
-\caption{Integrated horizontal kick profile $\Delta x'(x, 0)$ produced by the RADIA 2D field map as a function of horizontal offset $x$. The red dashed line denotes the injection septum position ($x = -16.0~\mathrm{mm}$), where a nominal kick of $-5.749~\mathrm{mrad}$ is delivered. The field and gradient vanish at $x = 0~\mathrm{mm}$.}
-\label{fig:nkm_kick_profile}
+\includegraphics[width=0.95\textwidth]{generated/figures/fig2_dynamic_aperture.pdf}
+\caption{Dynamic aperture at the NKM centre from native element-by-element tracking of single particles for 500 turns (1\,mm grid in $x$): turns survived versus horizontal position and momentum deviation at $x'=0$ (left) and versus horizontal position and angle at $\delta=0$ (right).}
+\label{fig:da}
 \end{figure}
 
-At the nominal injection offset ($x = -16.0~\mathrm{mm}$), the NKM provides an integrated deflection of $\Delta x' = -5.749~\mathrm{mrad}$, bending the injected beam onto the storage ring acceptance trajectory. At the stored beam center ($x = 0.0~\mathrm{mm}$), the field strength is zero ($< 10^{-6}~\mathrm{T}\cdot\mathrm{m}$), ensuring zero stored-beam perturbation.
+\subsection{Nonlinear kicker field map}
 
-\subsection{Thick Symplectic Integration}
-
-Particle propagation through the thick $0.31~\mathrm{m}$ active field section of the NKM is modeled using a 2nd-order Drift-Kick-Drift split-operator integration scheme:
-\begin{equation}
-\mathbf{r}_{k+1/2} = \mathbf{r}_k + \frac{\Delta z}{2} \mathbf{r}'_k, \quad
-\mathbf{r}'_{k+1} = \mathbf{r}'_k + \frac{q}{p_0} \mathbf{B}\left(\mathbf{r}_{k+1/2}\right) \Delta z, \quad
-\mathbf{r}_{k+1} = \mathbf{r}_{k+1/2} + \frac{\Delta z}{2} \mathbf{r}'_{k+1}.
-\end{equation}
-Convergence scans across slice counts $N_{\text{slices}} \in \{5, 10, 20, 50, 100\}$ confirm that $N_{\text{slices}} \ge 40$ achieves angular trajectory convergence to $< 5 \times 10^{-5}~\mathrm{mrad}$. Quadrupole roll tilt misalignments are modeled via rigorous 6D symplectic coordinate transformations satisfying $\mathbf{R}_1 \mathbf{J} \mathbf{R}_1^T = \mathbf{J}$, rotating both transverse spatial coordinates and canonical momenta angles simultaneously.
-
-\section{Optics Optimization: SLSQP \& NSGA-II MOGA}
-\label{sec:optimization}
-
-\subsection{Single-Objective SLSQP Formulation}
-
-To match exit Twiss parameters while enforcing hard aperture limits, we first formulate a single-objective constrained optimization problem for the 9 quadrupole gradients $\mathbf{K} = (K_1, \dots, K_9)$:
-\begin{equation}
-\min_{\mathbf{K} \in [-3, 3]^9} J(\mathbf{K}) = w_x \mathcal{M}_x + w_y \mathcal{M}_y + w_D (\Delta D_x)^2 + w_{D'} (\Delta D_x')^2 + P_\beta,
-\end{equation}
-subject to hard hardware and optics constraints:
-\begin{equation}
-\beta_{x,\max}(\mathbf{K}) \le 60.0~\mathrm{m}, \quad \beta_{y,\max}(\mathbf{K}) \le 60.0~\mathrm{m}, \quad |K_i| \le 3.0~\mathrm{m}^{-2}.
-\end{equation}
-Using Sequential Least Squares Programming (SLSQP) with 3 seeded multi-starts, SLSQP successfully lowers the merit function from $2.45 \times 10^7$ down to $0.00471$, constraining $\beta_{x,\max}$ to $30.66~\mathrm{m}$, $\beta_{y,\max}$ to $52.54~\mathrm{m}$, and reducing total optical mismatch to $\mathcal{M}_x + \mathcal{M}_y < 2.5 \times 10^{-7}$ with an SVD condition number of $1390.14$.
-
-\subsection{Multi-Objective Genetic Algorithm (NSGA-II MOGA)}
-
-To explore trade-offs between mismatch, beta peaks, and dispersion without relying on arbitrary scalar weights, we implement a 3-objective Pareto optimization problem using NSGA-II~\cite{NSGA2_2002, Pymoo_2020}:
-
-\begin{align}
-\text{Minimize } & f_1(\mathbf{K}) = \mathcal{M}_x + \mathcal{M}_y \quad &\text{(Total Optical Mismatch)} \\
-\text{Minimize } & f_2(\mathbf{K}) = \max\left(\beta_{x,\max}, \beta_{y,\max}\right) \quad &\text{(Peak Beta / Aperture Risk)} \\
-\text{Minimize } & f_3(\mathbf{K}) = \sqrt{(D_{x,\text{out}} - D_{xT})^2 + (D_{px,\text{out}} - D_{pxT})^2} \quad &\text{(Residual Dispersion)}
-\end{align}
-
-Subject to inequality constraints $g_i(\mathbf{K}) \le 0$:
-\begin{equation}
-g_1 = \beta_{x,\max} - 60.0 \le 0, \quad g_2 = \beta_{y,\max} - 60.0 \le 0, \quad g_3 = (\mathcal{M}_x + \mathcal{M}_y) - 50.0 \le 0.
-\end{equation}
-
-Multi-seed runs (seeds 42, 101, 202, 303, 404) evaluated hypervolume convergence. Seed 404 produced 3 non-dominated Pareto solutions with a final hypervolume of $57,602.67$. Four key representative solutions were identified:
-\begin{enumerate}
-    \item \textbf{\texttt{min\_mismatch}}: Minimizes total exit mismatch ($f_1 = 0.2403$).
-    \item \textbf{\texttt{max\_aperture\_margin}}: Minimizes peak beta function ($f_2 = 25.14~\mathrm{m}$).
-    \item \textbf{\texttt{min\_dispersion}}: Minimizes residual dispersion ($f_3 = 0.0123~\mathrm{m}$).
-    \item \textbf{\texttt{knee\_point}}: Balanced compromise closest to the normalized ideal point.
-\end{enumerate}
-
-\subsection{Optimization Results Comparison}
-
-The quadrupole strengths and resulting linear optics metrics across Baseline, SLSQP, and MOGA configurations are presented in Tables~\ref{tab:quad_strengths} and~\ref{tab:optics_comparison}.
-
-\begin{table}[htbp]
-\centering
-\caption{Comparison of the 9 BTS quadrupole strengths $K$ across baseline, single-objective SLSQP, and MOGA knee-point configurations.}
-\label{tab:quad_strengths}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lcccc}
-\hline\hline
-Quadrupole & Nominal $K$ [$\mathrm{m}^{-2}$] & SLSQP Optimum [$\mathrm{m}^{-2}$] & MOGA Knee-Point [$\mathrm{m}^{-2}$] & Bounds [$\mathrm{m}^{-2}$] \\
-\hline
-\texttt{q11} & $+0.4486$ & $-0.7746$ & $+0.7380$ & $[-3.0, +3.0]$ \\
-\texttt{q12} & $-1.0268$ & $-0.5587$ & $+0.4150$ & $[-3.0, +3.0]$ \\
-\texttt{q13} & $+0.8876$ & $+1.3741$ & $+0.4150$ & $[-3.0, +3.0]$ \\
-\texttt{q21} & $-1.0665$ & $-1.3038$ & $-0.9902$ & $[-3.0, +3.0]$ \\
-\texttt{q22} & $+1.4884$ & $+2.9914$ & $+1.2880$ & $[-3.0, +3.0]$ \\
-\texttt{q23} & $-0.6699$ & $-2.4490$ & $+1.2880$ & $[-3.0, +3.0]$ \\
-\texttt{q31} & $+0.5899$ & $+1.9593$ & $-2.0800$ & $[-3.0, +3.0]$ \\
-\texttt{q32} & $-1.1687$ & $-1.3836$ & $+4.1300$ & $[-3.0, +3.0]$ \\
-\texttt{q33} & $+0.9417$ & $+0.3937$ & $-2.2400$ & $[-3.0, +3.0]$ \\
-\hline\hline
-\end{tabular}%
-}
-\end{table}
-
-\begin{table}[htbp]
-\centering
-\caption{Linear optics propagation and phase-space mismatch metrics across baseline, SLSQP, and MOGA knee-point optimization.}
-\label{tab:optics_comparison}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lccccc}
-\hline\hline
-Optics Metric & Baseline & SLSQP Optimum & MOGA Knee-Point & Target & Status \\
-\hline
-Total Mismatch ($\mathcal{M}_x+\mathcal{M}_y$) & $37.2893$ & $< 10^{-6}$ & \textbf{0.6061} & $\to 0.0$ & \textbf{61.5$\times$ Impv.} \\
-Horizontal Mismatch ($\mathcal{M}_x$) & $8.6746$ & $< 10^{-7}$ & \textbf{0.2850} & $\to 0.0$ & \textbf{30.4$\times$ Impv.} \\
-Vertical Mismatch ($\mathcal{M}_y$) & $28.6147$ & $< 10^{-6}$ & \textbf{0.3211} & $\to 0.0$ & \textbf{89.1$\times$ Impv.} \\
-Peak Beta $\beta_{x,\max}$ & $52.25$\,m & $30.66$\,m & \textbf{25.14}\,m & $\le 60.0$\,m & Passed \\
-Peak Beta $\beta_{y,\max}$ & $242.61$\,m & $52.54$\,m & \textbf{24.80}\,m & $\le 60.0$\,m & Passed \\
-Exit Dispersion $D_x$ & $0.2984$\,m & $0.0809$\,m & \textbf{0.0809}\,m & $0.0809$\,m & Matched \\
-Exit Dispersion Angle $D_x'$ & $-0.0710$\,rad & $0.0475$\,rad & \textbf{0.0475}\,rad & $0.0475$\,rad & Matched \\
-\hline\hline
-\end{tabular}%
-}
-\end{table}
-
-Figure~\ref{fig:bts_optics} displays the Twiss parameter propagation comparison along the longitudinal coordinate $s$.
+The NKM is formed by four current filaments of length 525\,mm. RADIA field integrals along the beam axis, $\int B\,\mathrm{d}l$, divided by the magnetic rigidity $B\rho=13.343$\,T\,m at 4\,GeV, give the kick map on a $201\times201$ grid over $|x|,|y|\le50$\,mm (0.5\,mm spacing). On the midplane the integrated kick equals the central field profile $B_y(x)$ multiplied by the magnet length to within $10^{-10}$ relative, the field vanishes on axis (kick $<10^{-12}$\,rad) and grows as $x^3$ near the axis. The horizontal kick reaches its extremum of \KickPeakMrad\,mrad at $x=\KickPeakXmm$\,mm (figure~\ref{fig:kick}). The kick map carries no charge sign; the polarity is a choice of coil current. We use the polarity for which the kick at $x<0$ is negative, so that it cancels the positive angle of a beam travelling from the septum towards the axis. A field scale $S$ multiplies the map. Coordinates outside the map are counted as losses; the map is never extrapolated.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig1_bts_optics_comparison.pdf}
-\caption{Comparison of horizontal and vertical beta functions ($\beta_x, \beta_y$) and dispersion ($D_x$) along the BTS transport line for the baseline (dashed lines) and optimized optics (solid lines).}
-\label{fig:bts_optics}
+\includegraphics[width=0.8\textwidth]{generated/figures/fig1_kick_geometry.pdf}
+\caption{Horizontal NKM kick at $y=0$ for field scales $S=0.9$, 1.0 and 1.1 (blue), compared with the kick required to cancel the incoming angle of a beam launched from the septum at $x_\mathrm{inj}=-20$ and $-21$\,mm with angle $x'_\mathrm{in}=(x-x_\mathrm{inj})/L$, $L=2.26$\,m (black). Intersections are angle-matched operating points. The shaded band is the on-momentum dynamic aperture.}
+\label{fig:kick}
 \end{figure}
 
-As shown in Figure~\ref{fig:bts_envelopes}, the statistically consistent total $3\sigma$ transverse beam envelope $3\sigma_x(s) = 3\sqrt{\epsilon_x \beta_x(s) + [D_x(s) \sigma_\delta]^2}$ for the MOGA solution remains safely inside physical vacuum chamber aperture boundaries ($\pm 19.35~\mathrm{mm}$) across the entire $29.8~\mathrm{m}$ transport line.
+\subsection{Injection geometry and transfer-line handoff}
+
+The injected bunch is generated at the booster extraction point with $\beta_{x,y}=7.56/12.27$\,m, geometric emittances 100/10\,nm\,rad and rms energy spread $1.1\times10^{-3}$, and is tracked element by element through the 21.79\,m BTS line with the matched quadrupole settings (exit mismatch $\mathcal{M}_{x,y}=0$, peak $\beta_{x,y}=31.4/50.7$\,m) or the baseline settings. At the septum exit the BTS distribution is shifted to the ring frame with centroid $(x_\mathrm{inj}, x'_\mathrm{inj})$. The septum blade has its stored-beam edge at $-16$\,mm and a thickness of 2\,mm; it removes injected particles on the wrong side at creation and circulating particles with $x<-16$\,mm on every turn. The bunch drifts 2.26\,m to the NKM centre, receives one thin kick (single-turn pulse) and is tracked for 500 turns. Capture is the fraction of particles alive after 500 turns, with 95\,\% Wilson intervals~\cite{Wilson1927}. For each $(x_\mathrm{inj}, S)$ the matched angle cancels the kick at the nominal centroid; the angle offset from this value is scanned separately.
+
+Two controls receive the identical injected particles. The \emph{dipole} control is a uniform kick equal to the NKM kick at the nominal centroid, and the \emph{linearised} control is the first-order Taylor expansion of the map at that point. The stored-beam response is evaluated from the exact kicks applied to a $10^5$-particle equilibrium beam: the centroid betatron amplitude $A=\beta_x|\langle\Delta x'\rangle|$ is reported relative to the rms beam size $\sigma_x=31.7\,\mu$m.
+
+\section{Model validation}
+\label{sec:validation}
+
+Native element-by-element tracking is the reference. A linear one-turn map with the same septum check reproduces small-amplitude orbits (relative residual below 2\,\% at 1\,mm after 10 turns) but has no DA. On identical injected bunches it predicts \ProvCaptureMap\,\% capture where native tracking gives \ProvCaptureNative\,\% (figure~\ref{fig:validation}, provisional point $x_\mathrm{inj}=-20$\,mm, $x'_\mathrm{inj}=5.75$\,mrad, $S=1$), and for the dipole control the difference exceeds 40 percentage points. The linear map is therefore used only as a cross-check. Capture converges in the number of turns: 0.44 after 500 and 0.43 after 2000 turns. Increasing the particle number from 200 to 1000 changes the estimate within its interval. With zero field scale the NKM reproduces the kicker-off case exactly. A uniform 1\,$\mu$rad kick on the stored beam gives a tracked centroid amplitude of 15.7\,$\mu$m versus $\beta_x\Delta x'=16.3\,\mu$m, which validates the stored-beam estimate. A chamber aperture of $\pm12\times\pm6$\,mm at every element lowers capture by about 3 percentage points.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig2_beam_envelopes_apertures.pdf}
-\caption{Transverse $3\sigma$ horizontal and vertical beam envelopes compared against physical vacuum chamber aperture boundaries along the BTS transport line.}
-\label{fig:bts_envelopes}
+\includegraphics[width=0.95\textwidth]{generated/figures/fig3_model_validation.pdf}
+\caption{Left: capture after 500 turns at the provisional point for native element tracking (filled) and the linear one-turn map (hatched) on identical 200-particle bunches (field map: mean of three bunches). Right: field-map capture versus the number of turns (native tracking).}
+\label{fig:validation}
 \end{figure}
 
-\section{Multi-Turn Storage Ring Injection Dynamics}
-\label{sec:multiturn}
+\section{Injection operating window}
+\label{sec:window}
 
-\subsection{Physical Aperture Model \& Multi-Turn Setup}
+Figure~\ref{fig:window} maps the field-map capture over $x_\mathrm{inj}$, $S$ and the angle offset (200 particles per point, coupled matched-BTS bunch, native tracking). With the kicker off no particle is captured at any point, because the incoming angle of 4.9--6.2\,mrad carries the bunch outside the DA. Capture is highest when the matched centroid lies close to the kick-map extremum: the selected operating point $x_\mathrm{inj}=\OpXinjMm$\,mm, $S=\OpScale$, $x'_\mathrm{inj}=\OpXpMrad$\,mrad (maximum lower confidence bound) captures \OpCaptureGrid\,\%. Increasing $S$ moves the matched centroid towards the axis, where the kick gradient across the 0.7\,mm wide bunch is larger, and capture decreases monotonically. The angular window is narrow and asymmetric: an offset of $+0.5$\,mrad reduces capture to 13--64\,\%, $-0.5$\,mrad to 15--85\,\%.
 
-Multi-turn storage ring injection dynamics were simulated by tracking 10,000 6D Gaussian particles over 1,000 storage ring turns. The simulation incorporates physical aperture boundary limits:
-\begin{itemize}
-    \item Stored beam physical aperture: $\pm 30.0~\mathrm{mm}$ (horizontal) $\times \pm 15.0~\mathrm{mm}$ (vertical).
-    \item Injected beam turn-1 aperture: $\pm 45.0~\mathrm{mm}$ (wider stay-clear in injection region).
-    \item Physical septum blade: Inner edge at $x = -16.0~\mathrm{mm}$, thickness $d_{\text{sept}} = 2.0~\mathrm{mm}$.
-\end{itemize}
-
-Four kicker models were evaluated:
-\begin{enumerate}
-    \item \texttt{off}: NKM inactive (reference benchmark).
-    \item \texttt{ideal}: Ideal localized dipole kick ($\Delta x' = -5.749~\mathrm{mrad}$).
-    \item \texttt{linear}: Linearized NKM profile.
-    \item \texttt{fieldmap}: RADIA 2D field map NKM.
-\end{enumerate}
-
-\subsection{Multi-Turn Capture Metrics \& Discussion}
-
-The multi-turn tracking metrics averaged over 5 independent random seeds ($N = 10,000$ particles per seed, 1,000 turns) are summarized in Table~\ref{tab:multiturn_summary}.
-
-\begin{table}[htbp]
+\begin{figure}[htbp]
 \centering
-\caption{Multi-turn storage ring injection metrics (1,000 turns, 10,000 particles, 5 seeds).}
-\label{tab:multiturn_summary}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{lcccc}
-\hline\hline
-Kicker Model & Mean Capture [\%] & 95\% CI & Stored Centroid Osc. [mm] & Mean 1st Loss Turn \\
-\hline
-\texttt{off} & $100.0\%$ & $[100.0\%, 100.0\%]$ & $0.0054$ & -- \\
-\texttt{ideal} & $100.0\%$ & $[100.0\%, 100.0\%]$ & $2.0466$ & -- \\
-\texttt{linear} & $6.39\%$ & $[6.17\%, 6.58\%]$ & -- & $4.62$ \\
-\texttt{fieldmap} & $5.06\%$ & $[4.89\%, 5.19\%]$ & $0.0048$ & $4.57$ \\
-\hline\hline
-\end{tabular}%
-}
-\end{table}
+\includegraphics[width=0.95\textwidth]{generated/figures/fig4_operating_region.pdf}
+\caption{Left: field-map capture (\%) at the angle-matched condition versus septum position $x_\mathrm{inj}$ and field scale $S$; dashes mark combinations without an inner matched solution inside the DA. Right: capture versus the angle offset at the selected operating point with 95\,\% Wilson intervals. Native tracking, 200 particles, 500 turns.}
+\label{fig:window}
+\end{figure}
 
-Discussion of key multi-turn findings:
-\begin{itemize}
-    \item \textbf{Stored Beam Transparency}: The RADIA fieldmap NKM produces a stored-beam centroid oscillation of only $0.0048~\mathrm{mm}$ ($4.76~\mu\mathrm{m}$), which is $430\times$ smaller than the $2.0466~\mathrm{mm}$ perturbation caused by an ideal dipole kicker. This confirms the transparent top-up capability of the NKM design.
-    \item \textbf{Capture Efficiency vs. Apertures}: Under nominal injection offset ($x = -16.0~\mathrm{mm}$), the fieldmap NKM yields a $5.06\%$ multi-turn capture rate due to physical septum blade proximity ($1.44\%$ lost on Turn 1, average first loss turn $4.57$). Injection acceptance scans demonstrate that shifting the injection offset to $x = -20.0~\mathrm{mm}$ yields $99.40\%$ capture, while $x = -22.0~\mathrm{mm}$ achieves $100.0\%$ capture.
-\end{itemize}
+Figure~\ref{fig:controls} compares the models on four independent 500-particle bunches at the operating point. The NKM captures \RepFieldmapCapture\,\% on average, the linearised control \RepLinearCapture\,\% and the uniform dipole \RepDipoleCapture\,\%; the kicker-off case captures \RepOffCapture\,\%. The capture deficit of the NKM relative to the uniform kick is the cost of the kick variation across the bunch. In return, the aligned NKM displaces the stored-beam centroid by \StoredAlignedAmp\ rms sizes and increases its emittance by a fraction \StoredAlignedEmit, whereas the dipole and linearised controls displace it by \StoredDipoleAmp\ and \StoredLinearAmp\ rms sizes. Because the field grows as $x^3$ near the axis, the disturbance depends on the offset between the kicker centre and the stored orbit: \StoredTwoTenthAmp\ rms sizes at 0.2\,mm and \StoredHalfMmAmp\ at 0.5\,mm. The stored-beam response uses a bicubic spline through the kick-map nodes; bilinear interpolation between the nodes at 0 and 0.5\,mm would overstate the near-axis kick. With the baseline BTS optics the same NKM setting captures only \BaselineBTSCapture\,\%, so matching the transfer line is a prerequisite.
 
-\section{Monte Carlo Error Budget \& Sensitivity Analysis}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{generated/figures/fig5_controls.pdf}
+\caption{Paired comparison at the operating point. Left: capture of four independent 500-particle bunches (markers) and their mean (bar) for each kick model. Right: stored-beam centroid amplitude in units of the rms beam size after one passage for the NKM aligned and offset by 0.2 and 0.5\,mm from the stored orbit, and for the calibrated controls (logarithmic scale).}
+\label{fig:controls}
+\end{figure}
+
+\section{Robustness}
 \label{sec:robustness}
 
-\subsection{Uncertainty Sources \& Sampling Setup}
+\subsection{Transfer-line optics}
 
-To evaluate performance robustness against real-world machine imperfections, Monte Carlo sampling was conducted across 500 random error realizations incorporating 11 uncertainty sources:
-\begin{itemize}
-    \item Quadrupole gradient errors: $\sigma_K / K = 0.1\%$
-    \item Quadrupole misalignments: $\sigma_{dx} = \sigma_{dy} = 100~\mu\mathrm{m}$
-    \item Quadrupole roll tilt errors: $\sigma_{\text{roll}} = 0.5~\mathrm{mrad}$
-    \item Energy error: $\sigma_\delta = 0.1\%$ (with rigidity scaling $B\rho = E/c$)
-    \item Booster centroid jitter: $\sigma_x = 0.5~\mathrm{mm}, \sigma_{xp} = 0.2~\mathrm{mrad}$
-    \item NKM field scale jitter: $\sigma_B = 0.5\%$
-    \item NKM horizontal alignment: $\sigma_{x,\text{nkm}} = 200~\mu\mathrm{m}$
-    \item Storage ring closed-orbit error: $\sigma_{\text{co}} = 200~\mu\mathrm{m}$
-    \item Septum position error: $\sigma_{\text{sept}} = 100~\mu\mathrm{m}$
-\end{itemize}
-All random realizations are generated using isolated NumPy random number generators (\texttt{default\_rng}) to guarantee thread-isolated, deterministic execution across parallel workers.
+With the matched BTS optics fixed (figure~\ref{fig:bts}), three independent ensembles of 50\,000 error realizations (quadrupole gradient 0.1\,\%, offsets 100\,$\mu$m, roll 0.5\,mrad, energy 0.1\,\%, booster $\beta$ mismatch 5\,\%) give a median horizontal exit mismatch of $\mathcal{M}_x=\TolMedianMx\times10^{-3}$ (pooled 95\,\% interval \TolMedianMxLo--\TolMedianMxHi$\times10^{-3}$). Only \TolFailures\ of the \TolN\ realizations exceeds the 60\,m $\beta$ limit, corresponding to a failure probability below \TolFailUpper\ (exact 95\,\% bound~\cite{Clopper1934}). The booster $\beta$ mismatch dominates the one-at-a-time ranking, followed by the quadrupole gradient and energy errors. A predeclared prefix-stability target of $10^{-5}$ on the median was not met (changes of 1.1--2.1$\times10^{-5}$ between 25\,000 and 50\,000 samples); the established precision of the median is about 1.2\,\%.
 
-\subsection{Sensitivity Ranking \& Statistical Percentiles}
-
-The 500-seed Monte Carlo statistics and One-At-A-Time (OAT) sensitivity rankings are summarized in Table~\ref{tab:sensitivity_ranking}
-\begin{table}[htbp]
+\begin{figure}[htbp]
 \centering
-\caption{One-At-A-Time (OAT) sensitivity ranking of uncertainty sources on optical mismatch.}
-\label{tab:sensitivity_ranking}
-\begin{tabular}{lc}
-\hline\hline
-Uncertainty Parameter & $\Delta \text{Merit}$ Residual \\
-\hline
-Twiss Beta Mismatch ($5\%$) & \textbf{0.9469} \\
-Quad Gradient Error ($0.1\%$) & \textbf{0.1432} \\
-Energy Error ($0.1\%$) & \textbf{0.0259} \\
-Quad Roll Error ($0.5~\mathrm{mrad}$) & $0.000068$ \\
-Quad Alignment Offset ($100~\mu\mathrm{m}$) & $< 10^{-9}$ \\
-Booster Centroid Jitter $X$ ($0.5~\mathrm{mm}$) & $0.0000$ \\
-NKM Field Scale Jitter ($0.5\%$) & $0.0000$ \\
-\hline\hline
-\end{tabular}
-\end{table}
+\includegraphics[width=0.95\textwidth]{generated/figures/fig7_bts_tolerance.pdf}
+\caption{Left: horizontal and vertical $\beta$ functions along the BTS for the baseline (dashed) and matched (solid) quadrupole settings, propagated from the booster extraction optics. Right: median horizontal exit mismatch of three independent 50\,000-sample error ensembles with order-statistic 95\,\% intervals; the band is the pooled interval.}
+\label{fig:bts}
+\end{figure}
 
-Key statistical percentiles across Monte Carlo error sampling:
-\begin{itemize}
-    \item Horizontal mismatch: Median $P_{50}(\mathcal{M}_x) = 8.71$, $P_{68} = 8.80$, $P_{95} = 9.31$, $P_{99} = 9.52$, Bootstrap 95\% CI for median: $[8.58, 8.75]$.
-    \item Vertical mismatch: Median $P_{50}(\mathcal{M}_y) = 28.49$, $P_{68} = 28.88$, $P_{95} = 30.51$, $P_{99} = 31.18$.
-    \item Stored-beam kick perturbation: Median $0.00039~\mathrm{mrad}$ ($0.39~\mu\mathrm{rad}$), $P_{95} = 0.00264~\mathrm{mrad}$, $P_{99} = 0.00295~\mathrm{mrad}$, maximum $0.00505~\mathrm{mrad}$.
-\end{itemize}
+\subsection{Injection capture under combined errors}
 
-The sensitivity ranking confirms that incoming booster Twiss parameter mismatch ($5\%$) and quadrupole gradient errors ($0.1\%$) are the dominant drivers of optical mismatch at the BTS exit.
+Capture robustness is evaluated by tracking, for each error realization, a 200-particle booster bunch through the perturbed BTS (gradient, offset, roll and dipole-field errors; booster centroid jitter 0.5\,mm/0.2\,mrad, $\beta$ mismatch 5\,\%, energy offset 0.1\,\%, emittance 10\,\% and energy-spread variation) into the ring with septum position (0.1\,mm), NKM field scale (0.5\,\%), NKM alignment (0.2\,mm) and closed-orbit (0.2\,mm) errors, for 500 turns. Realizations are the resampling unit. Over \RobNReal\ realizations from three independent seeds the mean capture is \RobMeanCapture\,\% (95\,\% cluster-bootstrap interval \RobMeanCaptureLo--\RobMeanCaptureHi\,\%, median \RobMedianCapture\,\%) and \RobFracAbove\,\% of the realizations exceed \RobThreshold\,\% capture (figure~\ref{fig:robust}). The realization without errors captures \RobZeroError\,\%. The paired uniform-dipole control also degrades, from \RepDipoleCapture\ to \RobDipoleMean\,\% (seed 42), so most of the loss is caused by the errors; the NKM loses a further \RobPairedDiff\ percentage points relative to the dipole on identical beams, because its kick gradient amplifies the centroid errors. The injected-orbit error at the septum is the strongest predictor (Spearman $\rho=\RobTopRho$ for the angle error): the BTS turns the assumed booster jitter into rms errors of \RobExitRmsXmm\,mm and \RobExitRmsXpMrad\,mrad at the septum, comparable to the angular window. Two diagnostic ensembles on the same error realizations separate static and shot-to-shot sources. In operation the static trajectory error that 0.1\,mm quadrupole offsets produce at the septum (\RobStaticRmsXmm\,mm rms) is removed by steering; with ideal correction of the static trajectory at the septum exit, keeping the booster centroid and energy jitter and all optics, kicker and ring errors, the mean capture is \RobCorrectedMean\,\% (median \RobCorrectedMedian\,\%, \RobCorrectedN\ realizations), not significantly different from the uncorrected case. Removing the booster jitter instead, while leaving the static errors uncorrected, raises the mean capture to \RobNoJitterMean\,\% (\RobNoJitterN\ realizations). The shot-to-shot injected-orbit jitter is therefore the limiting error. Under the same errors the stored-beam centroid amplitude is \RobStoredMedian\ rms sizes (median), \RobStoredPNinetyFive\ (95th percentile) and at most \RobStoredMax, dominated by the kicker and closed-orbit offsets. Tripling all error amplitudes reduces capture to a few per cent, which confirms that the ensemble responds to the errors.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{generated/figures/fig6_capture_robustness.pdf}
+\caption{Combined-error robustness at the operating point. Left: cumulative distribution of capture per error realization for the NKM (three seeds), the paired uniform-dipole control and the NKM without booster centroid jitter. Right: NKM capture versus the magnitude of the injected-orbit angle error at the septum exit.}
+\label{fig:robust}
+\end{figure}
+
+\section{Discussion and limitations}
+\label{sec:discussion}
+
+The results support four statements for this lattice. First, the dynamic aperture, not the kick strength, limits NKM injection, and a linear ring model cannot predict capture. Second, the useful window is defined by cancelling the incoming angle close to the kick-map extremum, where the kick gradient across the bunch is smallest; this quantifies, for this design, the efficiency mechanism identified in~\cite{Liu2016}. Third, the NKM is transparent for the stored beam, but because its field is cubic near the axis the transparency is set by the alignment of the kicker centre to the stored orbit: a 0.2\,mm offset already produces a centroid oscillation of about a tenth of the rms beam size. Fourth, with an angular window of about $\pm0.5$\,mrad, the injected-orbit stability at the septum, rather than magnet errors in the transfer line, determines whether the window can be used: the assumed booster extraction jitter must be reduced, or the transfer-line optics chosen to reduce its transmission to the septum, before capture comparable to the nominal value can be expected.
+
+The limitations are explicit. The ring is tracked without magnet errors or chamber apertures; the NKM is a thin kick derived from field integrals; the kick map is a magnetostatic calculation without measurement; the error budget is assumed rather than derived from component specifications; and capture is defined as survival over 500 turns, not as lifetime. A dedicated optimisation of the injected-beam optics at the septum and of the ring sextupoles, as done at BESSY~II~\cite{Gora2023}, is expected to enlarge the window and was not attempted here.
 
 \section{Conclusions}
 \label{sec:conclusions}
 
-We have presented an end-to-end numerical simulation, field map ingestion, multi-turn particle tracking, and multi-objective optimization framework for a $4.0~\mathrm{GeV}$ Booster-to-Storage Ring transfer line featuring a Nonlinear Kicker Magnet. 
+For a wire-based NKM in a 4\,GeV ring with a $\DAxMinMm$ to $+\DAxMaxMm$\,mm on-momentum dynamic aperture, nonlinear tracking with a coupled transfer line shows that angle-matched injection near the kick-map extremum captures \RepFieldmapCapture\,\% of the bunch, \RepDipoleCapture\,\% for an equally strong uniform kick, with an angular tolerance of about $\pm0.5$\,mrad. The aligned kicker leaves the stored beam essentially undisturbed; transparency is limited by kicker-to-orbit alignment at the 0.1--0.2\,mm level. Under the assumed combined errors the mean capture is \RobMeanCapture\,\%, limited by the injected-orbit error transmitted from booster extraction. Linear one-turn-map models overestimate capture and should not be used to design such injection systems.
 
-The primary conclusions are:
-\begin{enumerate}
-    \item \textbf{Field Ingestion \& Validation}: Cryptographically verified RADIA 2D field maps confirm an integrated injection deflection of $-5.749~\mathrm{mrad}$ at $x = -16.0~\mathrm{mm}$ while maintaining zero field and zero gradient on the stored beam axis.
-    \item \textbf{Optics Matching}: Multi-objective NSGA-II MOGA optimization identifies a knee-point design that reduces total exit mismatch from $37.29$ to $0.6061$ ($61.5\times$ improvement) and brings peak beta functions down from $242.61~\mathrm{m}$ to $25.14~\mathrm{m}$.
-    \item \textbf{Transparent Injection}: 1,000-turn 6D particle tracking proves that the fieldmap NKM reduces stored-beam centroid perturbation to $0.0048~\mathrm{mm}$ ($4.76~\mu\mathrm{m}$), representing a $430\times$ reduction compared to conventional dipole kickers ($2.0466~\mathrm{mm}$).
-    \item \textbf{Error Robustness}: Monte Carlo error simulations establish that booster Twiss mismatch ($5\%$) and quadrupole gradient errors ($0.1\%$) are the primary drivers of optics degradation, while stored-beam perturbation remains below $0.0051~\mathrm{mrad}$ across all realizations.
-\end{enumerate}
+\section*{Data, software and code availability}
 
-This framework provides a reproducible, data-driven methodology for designing transparent top-up injection systems in modern diffraction-limited storage rings.
+{\sloppy The simulation code, configurations and analysis scripts are available in the nkm-injection repository (\url{https://github.com/cspark7701/nkm-injection}). The figures and numbers in this article are generated from the campaign artifacts listed, with SHA-256 digests, in the file \texttt{figure\_provenance.csv} of the manuscript directory \texttt{docs/\allowbreak jinst-paper/\allowbreak generated}. The RADIA field map, the ring lattice and the transfer-line definition are included as input files. An archived release with a persistent identifier will be created on acceptance.\par}
 
 \acknowledgments
 
-The author acknowledges support from Korea University and the beam physics research group. Computations were performed using the refactored NKM simulation framework.
+The author thanks the accelerator physics group at Korea University. Generative AI assistance (Anthropic Claude, used through Claude Code) was used to implement simulation drivers, run the campaign, audit references and draft parts of the manuscript; all results were checked and the author takes full responsibility for the content.
 
 \bibliographystyle{unsrt}
 \bibliography{paper}

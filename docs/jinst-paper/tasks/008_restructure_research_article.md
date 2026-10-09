@@ -1,6 +1,6 @@
 # Task 008 — Rewrite the manuscript around a scientific argument
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 111). Created: 2026-10-09.
 Dependencies: 001, 002; scientific results from 003-007 before finalizing claims.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

@@ -367,3 +367,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 114. [**Milestone 114 — Journal Task 011: Independent Scientific Review**](114_task011_scientific_review.md)
     - Recomputed headline numbers, quantified the thin-versus-thick NKM approximation (−4 points), corrected wording and ran the full local check suite.
+
+115. [**Milestone 115 — Journal Task 012: Submission Package and Final Gate**](115_task012_submission_package.md)
+    - Built a reproducible, gated submission package (archive, PDF, supplement, hashes, environment) and the final checklist; author confirmation pending.

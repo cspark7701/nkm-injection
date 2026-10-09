@@ -373,3 +373,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 116. [**Milestone 116 — Repair Failing GitHub CI Test Collection**](116_ci_test_collection_fix.md)
     - Fixed bare-`pytest` import failures with a pytest `pythonpath` setting, unified workflow commands and updated actions; verified in clean Python 3.10/3.11 environments.
+
+117. [**Milestone 117 — Follow-up Campaigns: Thick-Magnet Robustness, Three-Seed Diagnostics, 400k Tolerances**](117_followup_thick_diagnostic_tolerance.md)
+    - Thick NKM raises combined-error capture to 47.4 % (magnet-model effect, confirmed by cross-runs); diagnostics confirmed on three seeds; 400k-sample tolerance run meets the prefix-stability target; manuscript updated.

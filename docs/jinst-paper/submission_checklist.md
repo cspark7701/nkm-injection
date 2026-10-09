@@ -15,7 +15,7 @@ Output: `nkm_jinst_submission_source.tar.gz` (paper.tex, paper.bib, compiled pap
 referenced figures only), `paper.pdf`, `supplement/` (manifest, provenance, claim table, review, bibliography audit,
 cover letter) and `package_manifest.json` (SHA-256 of every source and output, git commit, Python/pyAT/NumPy/SciPy/
 Matplotlib/TeX versions, commands). The builder fails on LaTeX errors, undefined references or citations, BibTeX
-warnings and overfull boxes. Reference build: `results/journal_campaign_01/submission_package_v1` — 10 pages, clean.
+warnings and overfull boxes. Reference build: `results/journal_campaign_01/submission_package_v2` — 10 pages, clean.
 The committed `docs/jinst-paper/paper.pdf` is that build.
 
 ## Headline findings → evidence → review
@@ -29,9 +29,10 @@ The committed `docs/jinst-paper/paper.pdf` is that build.
 | thick-magnet capture 87.0 % (abstract, §4, §6) | thick_nkm_check | B14 | added in review |
 | stored-beam 5e-6 σ aligned, 0.10 σ at 0.2 mm (§4) | computed by builder from operating point | B6 | bicubic; bilinear is upper bound |
 | angular window ≈ ±0.5 mrad (§4) | operating_region_grid | B7 | supported |
-| BTS tolerance median M_x and failure bound; prefix target unmet (§5.1) | tolerance_replicates | B8 | disclosed |
+| BTS tolerance median M_x and failure bound; prefix target met with 400k run (§5.1) | tolerance_replicates | B8, B18 | met (milestone 117) |
 | combined-error capture 37.8 % [33.1, 42.7] (§5.2) | capture_analysis | B9 | recomputed, agrees |
-| static correction 43.9 %, no jitter 54.5 %, dipole 59.3 % (§5.2) | capture_raw_* | B10 | wording corrected |
+| thick-magnet combined-error capture 47.4 %; model attribution (§5.2) | capture_raw_thick_*, cross runs | B15, B16 | added after review (milestone 117) |
+| static correction 40.9 %, no jitter 50.8 % (3 seeds); dipole 59.3 % (§5.2) | capture_raw_* | B10, B17 | three seeds (milestone 117) |
 | septum orbit jitter and Spearman driver (§5.2) | capture_raw_*, capture_analysis | B11 | supported |
 | stored beam under errors (§5.2) | capture_analysis | B12 | supported |
 
@@ -43,7 +44,7 @@ optimisation in `backups_20261009/production_statistical_01` (read-only). Seeds 
 - [x] All reported simulations ran (campaign_manifest digests verified by the builder); no planned study is described as done.
 - [x] MOGA excluded from claims (`moga_decision.md`).
 - [x] Statistical intervals stated (Wilson, Clopper–Pearson, cluster bootstrap, order statistics).
-- [x] Model limitations stated in §6 (no ring errors/apertures, thin kick −4 points, magnetostatic map, assumed budget, 500-turn survival).
+- [x] Model limitations stated in §6 (no ring errors/apertures, thin vs thick magnet both reported, magnetostatic map, assumed budget, 500-turn survival).
 - [x] References verified (`bibliography_audit.md`); no undefined citations.
 - [x] Local checker and full test suite passed; protected files unchanged.
 - [x] Isolated build clean; archive contains only referenced files.

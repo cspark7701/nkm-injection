@@ -33,7 +33,11 @@ integrates the identical S6 replicate bunches (4 seeds × 500 particles, native 
 All losses are ring losses (no septum-creation or outside-map losses). Conclusion: thin-kick capture values are optimistic
 by ≈ 4 percentage points; the conclusions (window position, dipole comparison, robustness ranking) are unchanged.
 Action taken: the abstract quotes the thick-magnet value, §4 reports the check, §6 lists it as a limitation.
-Not checked: thick-magnet effect on the combined-error ensemble (expected to shift it by a similar amount).
+Follow-up (milestone 117): the thick magnet was run on the full combined-error ensemble. Contrary to the expectation
+above it captures **more** under errors (47.4 % vs 37.8 %, paired +9.5 points), because it is less sensitive to
+positive septum angle errors; cross-runs show this is a magnet-model effect, not an angle effect
+(`capture_robustness.md`). The manuscript now quotes both models and states that the thin kick is optimistic only
+for the nominal beam.
 
 ## 3. Claim review
 
@@ -58,8 +62,8 @@ Not checked: thick-magnet effect on the combined-error ensemble (expected to shi
 ## 5. Remaining referee-level limitations (stated in the paper)
 
 Ring without magnet errors and chamber apertures; magnetostatic map without measurement; assumed error budget;
-500-turn survival instead of lifetime; no sextupole or septum-optics optimisation; single seed for the diagnostic
-ensembles.
+500-turn survival instead of lifetime; no sextupole or septum-optics optimisation; thick-magnet model uses the midplane
+B_y(x) profile without fringe fields. (Diagnostic ensembles now use three seeds; tolerance prefix target now met.)
 
 ## Verdict
 

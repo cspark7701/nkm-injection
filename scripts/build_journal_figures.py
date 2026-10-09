@@ -269,52 +269,112 @@ class Builder:
         self.save(fig, "fig5_controls", ["operating_region_replicate", "operating_point_config"],
                   "operating point; 4 independent 500-particle bunches; stored response from 1e5-particle equilibrium sample, bicubic map")
 
+    def _raw(self, key):
+        p = self.path(key); b = p.read_bytes(); self.used[key] = (str(p), hashlib.sha256(b).hexdigest())
+        return json.loads(b)
+
+    def _caps(self, keys, model="fieldmap"):
+        """{(seed, sample_id): (capture, exit centroid x [m], exit centroid x' [rad])} over the given raw artifacts."""
+        out = {}
+        for k in keys:
+            d = self._raw(k)
+            for r in d["realizations"]:
+                if r["sample_id"] >= 0:
+                    out[(d["cli"]["seed"], r["sample_id"])] = (r["models"][model]["capture_fraction"],
+                                                              r["bts_exit"]["centroid_x_m"], r["bts_exit"]["centroid_xp_rad"])
+        return out
+
+    @staticmethod
+    def _paired(a, b, seed=1729, count=10000):
+        ids = sorted(set(a) & set(b))
+        d = np.array([a[i][0] - b[i][0] for i in ids])
+        boot = d[np.random.default_rng(seed).integers(0, len(d), size=(count, len(d)))].mean(axis=1)
+        return float(d.mean()), float(np.quantile(boot, 0.025)), float(np.quantile(boot, 0.975)), len(d)
+
     def fig_capture_robustness(self):
-        an = self.load("capture_analysis")
-        raws = {}
-        for key in ("capture_raw_42", "capture_raw_123", "capture_raw_777", "capture_raw_nojitter", "capture_raw_corrected"):
-            p = self.path(key); b = p.read_bytes(); self.used[key] = (str(p), hashlib.sha256(b).hexdigest())
-            raws[key] = json.loads(b)
+        self.load("capture_analysis")
+        seeds = (42, 123, 777)
+        thin = self._caps([f"capture_raw_{s}" for s in seeds])
+        cor = self._caps([f"capture_raw_corrected_{s}" for s in seeds])
+        noj = self._caps([f"capture_raw_nojitter_{s}" for s in seeds])
+        thick = self._caps([f"capture_raw_thick_{s}" for s in seeds], "fieldmap_thick")
+        dip = self._caps(["capture_raw_42"], "dipole")
         fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.0), layout="constrained")
-        def ecdf(vals, color, label, ls="-"):
-            v = np.sort(np.asarray(vals) * 100)
+        def ecdf(d, color, label, ls="-"):
+            v = np.sort(np.array([x[0] for x in d.values()]) * 100)
             axes[0].step(v, np.arange(1, len(v) + 1) / len(v), where="post", color=color, ls=ls, label=label)
-        pooled = [r["models"]["fieldmap"]["capture_fraction"] for k in ("capture_raw_42", "capture_raw_123", "capture_raw_777")
-                  for r in raws[k]["realizations"] if r["sample_id"] >= 0]
-        dip = [r["models"]["dipole"]["capture_fraction"] for r in raws["capture_raw_42"]["realizations"] if r["sample_id"] >= 0]
-        noj = [r["models"]["fieldmap"]["capture_fraction"] for r in raws["capture_raw_nojitter"]["realizations"] if r["sample_id"] >= 0]
-        cor = [r["models"]["fieldmap"]["capture_fraction"] for r in raws["capture_raw_corrected"]["realizations"] if r["sample_id"] >= 0]
-        ecdf(pooled, COL["fieldmap"], f"NKM, all errors ({len(pooled)})")
-        ecdf(cor, COL["fieldmap"], f"NKM, static orbit corrected ({len(cor)})", ls="--")
-        ecdf(noj, COL["fieldmap"], f"NKM, no booster jitter ({len(noj)})", ls=":")
+        ecdf(thin, COL["fieldmap"], f"NKM thin, all errors ({len(thin)})")
+        ecdf(cor, COL["fieldmap"], f"NKM thin, static orbit corrected ({len(cor)})", ls="--")
+        ecdf(noj, COL["fieldmap"], f"NKM thin, no booster jitter ({len(noj)})", ls=":")
+        ecdf(thick, INK, f"NKM thick, all errors ({len(thick)})", ls="-.")
         ecdf(dip, COL["dipole"], f"dipole control, all errors ({len(dip)})")
         axes[0].set_xlabel("capture per error realization [%]"); axes[0].set_ylabel("cumulative fraction")
-        axes[0].legend(loc="lower right", fontsize=7)
-        xs, cs = [], []
-        for k in ("capture_raw_42", "capture_raw_123", "capture_raw_777"):
-            z = None
-            for r in raws[k]["realizations"]:
-                if r["sample_id"] >= 0:
-                    xs.append(abs(r["bts_exit"]["centroid_xp_rad"]) * 1e3); cs.append(r["models"]["fieldmap"]["capture_fraction"] * 100)
-        ex, exp_ = [], []
-        for k in ("capture_raw_42", "capture_raw_123", "capture_raw_777"):
-            for r in raws[k]["realizations"]:
-                if r["sample_id"] >= 0:
-                    ex.append(r["bts_exit"]["centroid_x_m"]); exp_.append(r["bts_exit"]["centroid_xp_rad"])
-        cx = [r["bts_exit"]["centroid_x_m"] for r in raws["capture_raw_corrected"]["realizations"] if r["sample_id"] >= 0]
-        cxp = [r["bts_exit"]["centroid_xp_rad"] for r in raws["capture_raw_corrected"]["realizations"] if r["sample_id"] >= 0]
+        axes[0].legend(loc="upper left", fontsize=6.5)
+        edges = np.array([-1.0, -0.5, -0.25, 0.0, 0.25, 0.5, 1.0])
+        centres = 0.5 * (edges[:-1] + edges[1:])
+        for d, lab, mk, fc, ls, dx in ((thin, "thin kick", "o", COL["fieldmap"], "-", -0.02),
+                                        (thick, "thick magnet", "s", "none", "--", 0.02)):
+            xp = np.clip(np.array([x[2] for x in d.values()]) * 1e3, edges[0] + 1e-9, edges[-1] - 1e-9)
+            c = np.array([x[0] for x in d.values()]) * 100
+            idx = np.digitize(xp, edges) - 1
+            m = [c[idx == i].mean() for i in range(len(centres))]
+            e = [c[idx == i].std(ddof=1) / np.sqrt(max(1, np.sum(idx == i))) for i in range(len(centres))]
+            axes[1].errorbar(centres + dx, m, yerr=e, color=COL["fieldmap"] if fc != "none" else INK, marker=mk, mfc=fc,
+                             ls=ls, capsize=2, ms=5, lw=1.2, label=lab)
+        axes[1].set_xlabel("injected-orbit angle error at septum [mrad]"); axes[1].set_ylabel("mean NKM capture [%]")
+        axes[1].set_ylim(0, 100); axes[1].legend(loc="upper left", fontsize=7)
+        cx = [x[1] for x in cor.values()]; cxp = [x[2] for x in cor.values()]
         self.macro("RobExitRmsXmm", float(np.std(cx)) * 1e3, "{:.2f}")      # jitter only (static orbit corrected)
         self.macro("RobExitRmsXpMrad", float(np.std(cxp)) * 1e3, "{:.2f}")
-        self.macro("RobExitRmsXmmAll", float(np.std(ex)) * 1e3, "{:.2f}")   # all errors, uncorrected
-        sx = [r["bts_exit"]["centroid_x_m"] for r in raws["capture_raw_nojitter"]["realizations"] if r["sample_id"] >= 0]
-        self.macro("RobStaticRmsXmm", float(np.sqrt(np.mean(np.square(sx)))) * 1e3, "{:.1f}")  # static only (no jitter)
-        axes[1].scatter(xs, cs, s=14, color=COL["fieldmap"], alpha=0.8, edgecolors="none")
-        axes[1].set_xlabel("|injected-orbit angle error at septum| [mrad]"); axes[1].set_ylabel("NKM capture [%]")
-        axes[1].set_ylim(-3, 103)
-        self.robust = {"pooled": pooled, "dipole": dip, "nojitter": noj, "corrected": cor}
-        self.save(fig, "fig6_capture_robustness", ["capture_analysis", "capture_raw_42", "capture_raw_123", "capture_raw_777",
-                                                   "capture_raw_nojitter", "capture_raw_corrected"],
-                  "combined errors; coupled BTS tracking; native ring tracking 500 turns; 200 particles per realization")
+        self.macro("RobExitRmsXmmAll", float(np.std([x[1] for x in thin.values()])) * 1e3, "{:.2f}")
+        self.macro("RobStaticRmsXmm", float(np.sqrt(np.mean(np.square([x[1] for x in noj.values()])))) * 1e3, "{:.1f}")
+        for name, (a, b) in {"Corrected": (cor, thin), "NoJitter": (noj, thin), "Thick": (thick, thin)}.items():
+            m, lo, hi, n = self._paired(a, b)
+            self.macro(f"Rob{name}Gain", m * 100, "{:.1f}")
+            self.macro(f"Rob{name}GainLo", lo * 100, "{:.1f}")
+            self.macro(f"Rob{name}GainHi", hi * 100, "{:.1f}")
+        cross = {"thin_at_thick": self._caps([f"capture_raw_thin_at_thick_{s}" for s in (42, 123)]),
+                 "thick_at_thin": self._caps([f"capture_raw_thick_at_thin_{s}" for s in (42, 123)], "fieldmap_thick")}
+        sub = lambda d: {k: v for k, v in d.items() if k[0] in (42, 123)}
+        for name, (a, b) in {"XAngleOnly": (cross["thin_at_thick"], sub(thin)),
+                             "XModelSameAngle": (cross["thick_at_thin"], sub(thin)),
+                             "XThickRematch": (sub(thick), cross["thick_at_thin"])}.items():
+            m, lo, hi, n = self._paired(a, b)
+            self.macro(name, m * 100, "{:+.1f}")
+            self.macro(name + "Lo", lo * 100, "{:+.1f}")
+            self.macro(name + "Hi", hi * 100, "{:+.1f}")
+            self.macro("XCrossN", n, "{:d}")
+        self.robust = {"pooled": [x[0] for x in thin.values()], "dipole": [x[0] for x in dip.values()],
+                       "nojitter": [x[0] for x in noj.values()], "corrected": [x[0] for x in cor.values()],
+                       "thick": [x[0] for x in thick.values()]}
+        self.save(fig, "fig6_capture_robustness",
+                  ["capture_analysis"] + [f"capture_raw_{k}{s}" for k in ("", "corrected_", "nojitter_", "thick_") for s in seeds],
+                  "combined errors; coupled BTS tracking; native ring tracking 500 turns; 200 particles per realization; "
+                  "right: mean capture in bins of the signed septum angle error (standard error)")
+        self.amplitude_sensitivity()
+
+    def amplitude_sensitivity(self):
+        """Betatron amplitude at the NKM centre after the kick for a +-0.3 mrad septum angle error (thin vs thick)."""
+        from nkm_injection.injection_study import InjectionStudyConfig, KickModelEvaluator, ThickNKMKicker, _apply_kick
+        from nkm_injection.fieldmap import load_1d_fieldmap
+        from nkm_injection.kickmap import NKMKickMap2D
+        thin_cfg = InjectionStudyConfig.from_dict(self.load("operating_point_config"))
+        thick_cfg = InjectionStudyConfig.from_dict(self.load("operating_point_config_thick"))
+        x, by = load_1d_fieldmap(self.root / "By.txt")
+        beta, alpha = 16.27, -0.145   # ring optics at the NKM centre (physics_model.md)
+        gamma = (1 + alpha ** 2) / beta
+        lever = thin_cfg.septum_to_nkm_drift_m + 0.2625
+        def amp(cfg, kick, dxp):
+            b = np.zeros((6, 1)); xp = cfg.injection_xp_rad + dxp; b[0] = cfg.injection_x_m + lever * xp; b[1] = xp
+            _apply_kick(b, kick, 0.0)
+            return np.sqrt(beta * (gamma * b[0, 0] ** 2 + 2 * alpha * b[0, 0] * b[1, 0] + beta * b[1, 0] ** 2))
+        thin_k = KickModelEvaluator("fieldmap", thin_cfg, NKMKickMap2D(self.root / thin_cfg.kickmap_path), thin_cfg.nkm_entry_x_m)
+        thick_k = ThickNKMKicker(thick_cfg, x, by)
+        for lab, cfg, k in (("Thin", thin_cfg, thin_k), ("Thick", thick_cfg, thick_k)):
+            a0 = amp(cfg, k, 0.0)
+            self.macro(f"Amp{lab}Nominal", a0 * 1e3, "{:.2f}")
+            self.macro(f"Amp{lab}PlusDelta", (amp(cfg, k, 0.3e-3) - a0) * 1e3, "{:+.2f}")
+            self.macro(f"Amp{lab}MinusDelta", (amp(cfg, k, -0.3e-3) - a0) * 1e3, "{:+.2f}")
 
     def fig_bts_and_tolerance(self):
         tol = self.load("tolerance_replicates")
@@ -338,10 +398,11 @@ class Builder:
                              color=COL["fieldmap"], marker="o", capsize=3)
         pooled = tol["pooled"]["quantiles"]["mismatch_x"]
         axes[1].axhspan(pooled["p50_ci"][0] * 1e3, pooled["p50_ci"][1] * 1e3, color="#cde2fb", lw=0)
-        axes[1].set_xticks(range(len(runs))); axes[1].set_xticklabels([k.replace("seed", "seed ") for k in runs])
+        axes[1].set_xticks(range(len(runs))); axes[1].set_xticklabels([k.replace("seed", "").replace("_400k", "\n(400k)") for k in runs])
+        axes[1].set_xlabel("seed")
         axes[1].set_ylabel("median $\\mathcal{M}_x$ [$10^{-3}$]")
         self.save(fig, "fig7_bts_tolerance", ["tolerance_replicates", "optimization_summary"],
-                  "linear BTS optics; tolerance medians with order-statistic 95% CIs per seed (50,000 samples) and pooled band")
+                  "linear BTS optics; tolerance medians with order-statistic 95% CIs per seed (50,000 samples; seed 2026: 400,000) and pooled band")
 
     # ------------------------------------------------------------------
     def tables_and_macros(self):
@@ -384,6 +445,19 @@ class Builder:
         self.macro("RobCorrectedN", len(self.robust["corrected"]), "{:d}")
         self.macro("RobCorrectedFracAbove", np.mean(np.asarray(self.robust["corrected"]) >= 0.9) * 100, "{:.0f}")
         self.macro("RobCorrectedMedian", np.median(self.robust["corrected"]) * 100, "{:.1f}")
+        self.macro("RobNoJitterMedian", np.median(self.robust["nojitter"]) * 100, "{:.1f}")
+        ath = self.load("capture_analysis_thick")["pooled"]
+        self.macro("RobThickMean", ath["mean"] * 100, "{:.1f}")
+        self.macro("RobThickMeanLo", ath["mean_ci95"][0] * 100, "{:.1f}")
+        self.macro("RobThickMeanHi", ath["mean_ci95"][1] * 100, "{:.1f}")
+        self.macro("RobThickMedian", ath["median"] * 100, "{:.1f}")
+        self.macro("RobThickN", len(self.robust["thick"]), "{:d}")
+        z = self.load("capture_robustness_thick")["zero_error_realization"]["fieldmap_thick"]
+        self.macro("RobThickZeroError", z * 100, "{:.1f}")
+        for key, name in (("capture_analysis_corrected", "Corrected"), ("capture_analysis_nojitter", "NoJitter")):
+            ci = self.load(key)["pooled"]["mean_ci95"]
+            self.macro(f"Rob{name}MeanLo", ci[0] * 100, "{:.1f}")
+            self.macro(f"Rob{name}MeanHi", ci[1] * 100, "{:.1f}")
         sb = an["stored_beam_cubic"]["amplitude_over_sigma"]
         self.macro("RobStoredMedian", sb["median"], "{:.2f}")
         self.macro("RobStoredPNinetyFive", sb["p95"], "{:.1f}")
@@ -400,6 +474,14 @@ class Builder:
         self.macro("TolFailures", p["failures"]["k"], "{:d}")
         self.macro("TolN", f"{p['failures']['n']:,d}".replace(",", "\\,"))
         self.macro("TolFailUpper", tex_sci(p["failures"]["clopper_pearson"][1], 2))
+        big = tol["runs"]["seed2026_400k"]["prefix"]
+        self.macro("TolPrefixChangeBig", tex_sci(big["absolute_change"], 2))
+        self.macro("TolPrefixSmall", f"{big['sizes'][0]:,d}".replace(",", "\\,"))
+        self.macro("TolPrefixLarge", f"{big['sizes'][1]:,d}".replace(",", "\\,"))
+        old_ch = [r["prefix"]["absolute_change"] for k, r in tol["runs"].items() if k != "seed2026_400k"]
+        self.macro("TolPrefixOldMin", min(old_ch) * 1e5, "{:.1f}")
+        self.macro("TolPrefixOldMax", max(old_ch) * 1e5, "{:.1f}")
+        self.macro("TolNRuns", len(tol["runs"]), "{:d}")
         lines = ["% Generated by scripts/build_journal_figures.py; do not edit."]
         for k, v in sorted(self.macros.items()):
             lines.append(f"\\newcommand{{\\{k}}}{{{v}}}")

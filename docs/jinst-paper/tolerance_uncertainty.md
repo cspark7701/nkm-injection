@@ -38,3 +38,12 @@ Observables are BTS-exit optics only (physics_model.md §7); capture is studied 
 The matched BTS optics are robust in the implemented optics error model: the median exit mismatch is
 M_x ≈ 2.1×10⁻³ (±1.2 %) and one realization in 1.5×10⁵ exceeds the 60 m β limit. These ensembles do not
 include injection capture; capture robustness is quantified separately (Task 006).
+
+## Follow-up: 400,000-sample ensemble (2026-10-10, milestone 117)
+
+`scripts/run_publication_tolerances.py --samples 400000 --seed 2026 --oat-samples 5000 --convergence-sizes 200000
+400000 --convergence-tolerance 1e-5 --invalid-sample-policy raise --workers 2` (5 h 46 min), output
+`results/journal_campaign_01/tolerances_seed2026_400k/`. Median M_x = 2.0835×10⁻³ [2.0693, 2.0969]; 4 β-limit
+failures; **prefix stability met**: |Δmedian| = 2.4×10⁻⁶ between 200k and 400k (target 1×10⁻⁵). OAT ranking unchanged.
+Pooled four runs (550,000; `followup_analysis/tolerance_replicates_with_400k.json`): median 2.086×10⁻³
+[2.074, 2.099] (±0.6 %), 5 failures, Clopper–Pearson 95 % [3.0×10⁻⁶, 2.1×10⁻⁵]; across-run SD of the median 1.24×10⁻⁵.

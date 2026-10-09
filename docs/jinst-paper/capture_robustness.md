@@ -44,3 +44,29 @@ interpolation (median 0.58 σ_x) are an upper bound.
 At the selected operating point the NKM window is too narrow for the assumed booster extraction jitter: mean capture
 ≈ 38–44 % with or without static orbit correction. Static magnet errors are secondary; the injected-orbit jitter is
 the limiting tolerance. The NKM remains far more transparent than a uniform kicker under the same errors.
+
+## Follow-up campaigns (2026-10-10, milestone 117)
+
+Same driver, budget, particles (200), turns (500) and bootstrap (10,000, seed 1729); realizations are paired by
+(seed, sample_id). Raw files under `results/journal_campaign_01/capture_errors_*`; pooled analyses in
+`results/journal_campaign_01/followup_analysis/`.
+
+| Ensemble (3 seeds × 50) | Mean [95 % CI] | Median | Paired vs thin, all errors |
+| :--- | :--- | ---: | :--- |
+| thin kick, all errors (unchanged) | 37.8 % [33.1, 42.7] | 34.5 % | — |
+| thin, static trajectory corrected | 40.9 % [36.3, 45.6] | 38.2 % | +3.0 [+0.4, +5.7] |
+| thin, no booster jitter | 50.8 % [45.9, 55.8] | 54.8 % | +13.0 [+8.8, +17.3] |
+| thick magnet (160 slices), re-matched x′ = 4.636 mrad | 47.4 % [42.4, 52.4] | 47.8 % | +9.5 [+6.1, +13.2] |
+
+The single-seed values quoted earlier (static corrected 43.9 %, no jitter 54.5 % from 30 realizations) were high by
+3–4 points. The seed-42 no-jitter rerun with 50 realizations reproduces the earlier 30 realizations exactly.
+Thick zero-error realization: 88.5 %.
+
+**Thin vs thick attribution** (seeds 42 and 123, 100 paired realizations): thin kick moved to 4.636 mrad −1.8
+[−4.4, +0.9] (no angle effect); thick at the thin angle 4.869 mrad +5.3 [+1.7, +9.2]; re-matching the thick angle
++3.9 [+1.2, +6.7]. The gain is a magnet-model effect and is confined to positive septum angle errors (thick minus
+thin ≈ +18–22 points for 0 < Δx′ < 0.5 mrad, none for Δx′ < 0). Single-particle check: a +0.3 mrad septum error
+changes the post-kick betatron amplitude by +1.31 mm (thin) versus −0.12 mm (thick); −0.3 mrad gives +0.65 / +0.60 mm.
+
+**Consequence.** The thin kick is optimistic by ≈ 4 points for the nominal beam but pessimistic by ≈ 10 points
+under errors; the article quotes both models. Jitter remains the limiting error.

@@ -370,3 +370,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 115. [**Milestone 115 — Journal Task 012: Submission Package and Final Gate**](115_task012_submission_package.md)
     - Built a reproducible, gated submission package (archive, PDF, supplement, hashes, environment) and the final checklist; author confirmation pending.
+
+116. [**Milestone 116 — Repair Failing GitHub CI Test Collection**](116_ci_test_collection_fix.md)
+    - Fixed bare-`pytest` import failures with a pytest `pythonpath` setting, unified workflow commands and updated actions; verified in clean Python 3.10/3.11 environments.

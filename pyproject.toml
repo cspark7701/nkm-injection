@@ -50,6 +50,10 @@ addopts = "-ra --disable-warnings"
 testpaths = [
     "tests",
 ]
+# Tests import repository-root packages (scripts/, patches/, nlk.py); make bare `pytest` behave like `python -m pytest`.
+pythonpath = [
+    ".",
+]
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::PendingDeprecationWarning",

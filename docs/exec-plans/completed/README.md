@@ -322,3 +322,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 99. [**Milestone 99 — Production Scripts After Refactoring**](99_refactored_production_scripts.md)
     - Migrated the launcher and eight stages to explicit source/output contracts, tier budgets, seeds and statistical settings; preserved production defaults, verified real complete smoke runs and protected hashes, and documented strict result/artifact handling.
+
+100. [**Milestone 100 — Complete Publication Hash Baseline**](100_complete_publication_hash_baseline.md)
+    - Fixed the missing storage-ring MAT baseline entry with a versioned verified baseline, added explicit baseline overrides and precise diagnostics, and verified 614 full-suite tests plus real paper generation without changing protected inputs or existing results.

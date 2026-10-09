@@ -5,6 +5,6 @@
   "injection_run": "results/multiturn_injection",
   "tolerance_run": "results/baseline",
   "moga_run": "results/baseline",
-  "input_hash_manifest": "results/baseline/protected_files_manifest.json",
+  "input_hash_manifest": "config/publication_input_hashes.json",
   "git_commit": ""
 }

@@ -132,8 +132,15 @@ def _check_publication_hashes(manifest, root):
         return data
     expected = json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=pairs)
     current = compute_input_data_hashes(root)
-    if not isinstance(expected, dict) or not set(current).issubset(expected):
-        raise ValueError('Hash baseline must include every required scientific input')
+    if not isinstance(expected, dict):
+        raise ValueError(f'Hash baseline must be a JSON object: {path}')
+    missing = sorted(set(current) - set(expected))
+    if missing:
+        raise ValueError(
+            f'Hash baseline must include every required scientific input; missing: {", ".join(missing)}; '
+            f'baseline: {path}. Select a complete baseline with --input-hash-manifest, '
+            'or generate a new one with scripts/inventory_protected_hashes.py. '
+            'Generating a baseline does not change the selected publication manifest.')
     for name, digest in expected.items():
         source = (root / name).resolve()
         if Path(name).is_absolute() or not source.is_relative_to(root):

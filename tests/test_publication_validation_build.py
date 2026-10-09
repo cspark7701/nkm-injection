@@ -185,3 +185,80 @@ def test_pipeline_rejects_output_collisions(publication_case, destination):
     with pytest.raises(ValueError, match='separate|new or empty'):
         run_paper_pipeline(root, 'collision', manifest=manifest, output_dir=output)
     assert snapshot(root) == before
+
+
+def test_incomplete_baseline_identifies_missing_input_and_selected_path(publication_case):
+    root, manifest = publication_case()
+    path = root / manifest.input_hash_manifest
+    data = json.loads(path.read_text())
+    del data['K4GSR_HBIv4-1.mat']
+    path.write_text(json.dumps(data))
+    before = snapshot(root)
+    report = validate_publication_manifest(manifest, root)
+    assert not report['valid']
+    assert 'missing: K4GSR_HBIv4-1.mat' in report['errors'][0]
+    assert str(path) in report['errors'][0]
+    assert '--input-hash-manifest' in report['errors'][0]
+    assert snapshot(root) == before
+
+
+@pytest.mark.parametrize('absolute', [False, True])
+def test_explicit_complete_baseline_override_generates_paper(publication_case, absolute):
+    from scripts import reproduce_paper as cli
+    root, manifest = publication_case()
+    old = root / manifest.input_hash_manifest
+    complete = root / 'results/new baseline/protected_files_manifest.json'
+    complete.parent.mkdir()
+    complete.write_bytes(old.read_bytes())
+    incomplete = json.loads(old.read_text()); del incomplete['K4GSR_HBIv4-1.mat']
+    old.write_text(json.dumps(incomplete))
+    selected = root / 'selected.json'; manifest.save(selected)
+    before = snapshot(root)
+    override = complete if absolute else complete.relative_to(root)
+    args = ['--repo-root', str(root), '--manifest', str(selected),
+            '--input-hash-manifest', str(override)]
+    cli.main(args + ['--validate-only'])
+    assert snapshot(root) == before
+    output = root / 'results/new paper'
+    cli.main(args + ['--no-pdf', '--output-dir', str(output)])
+    saved = json.loads((output / 'publication_manifest.json').read_text())
+    assert saved['input_hash_manifest'] == str(override)
+    metrics = json.loads((output / 'metrics.json').read_text())
+    assert metrics['input_hashes_verified'] and metrics['manifest_valid']
+    assert metrics['tables_count'] == 7 and metrics['figures_count'] == 4
+    assert all(snapshot(root)[p] == value for p, value in before.items())
+
+
+def test_baseline_override_does_not_accept_mismatched_hashes(publication_case):
+    from scripts import reproduce_paper as cli
+    root, manifest = publication_case()
+    selected = root / 'selected.json'; manifest.save(selected)
+    baseline = root / 'bad baseline.json'
+    data = json.loads((root / manifest.input_hash_manifest).read_text()); data['By.txt'] = '0' * 64
+    baseline.write_text(json.dumps(data))
+    before = snapshot(root)
+    with pytest.raises(SystemExit) as error:
+        cli.main(['--repo-root', str(root), '--manifest', str(selected), '--validate-only',
+                  '--input-hash-manifest', str(baseline)])
+    assert error.value.code == 1
+    assert snapshot(root) == before
+
+
+def test_generation_reports_missing_selected_manifest(tmp_path, capsys):
+    from scripts import reproduce_paper as cli
+    output = tmp_path / 'publication'
+    with pytest.raises(SystemExit) as error:
+        cli.main(['--manifest', str(tmp_path / 'missing.json'), '--no-pdf',
+                  '--output-dir', str(output)])
+    assert error.value.code == 1
+    assert '[ERROR] Paper reproduction pipeline failed:' in capsys.readouterr().out
+    assert not output.exists()
+
+
+def test_bundled_manifest_selects_versioned_complete_baseline():
+    from nkm_injection.results_schema import PublicationManifest, compute_input_data_hashes
+    root = Path(__file__).resolve().parents[1]
+    manifest = PublicationManifest.load(root / 'config/publication_manifest.json')
+    baseline = root / manifest.input_hash_manifest
+    assert baseline.parent == root / 'config'
+    assert json.loads(baseline.read_text()) == compute_input_data_hashes(root)

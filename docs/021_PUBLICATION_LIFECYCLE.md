@@ -87,3 +87,37 @@ or numerical tolerances change: public selected-run inputs retain m, rad, eV,
 T and T m conventions, and the documented mismatch roundoff tolerance remains
 1e-12. Full production studies and protected-input regeneration are unnecessary
 for this lifecycle refactor.
+
+## Incomplete legacy hash baselines
+
+A baseline created before the storage-ring input became required may omit
+`K4GSR_HBIv4-1.mat`. Validation now names missing files and the exact selected
+baseline. It still rejects incomplete baselines and mismatched digests.
+
+Running `inventory_protected_hashes.py` creates a fresh baseline; it does not
+update an existing publication manifest. Select that file explicitly:
+
+```bash
+python scripts/inventory_protected_hashes.py --output-dir results/baseline/new_inventory
+python scripts/reproduce_paper.py --manifest path/to/complete_run/publication_manifest.json \
+    --input-hash-manifest results/baseline/new_inventory/protected_files_manifest.json \
+    --validate-only
+python scripts/reproduce_paper.py --manifest path/to/complete_run/publication_manifest.json \
+    --input-hash-manifest results/baseline/new_inventory/protected_files_manifest.json \
+    --no-pdf --output-dir results/paper/new_run
+```
+
+Relative override paths resolve under `--repo-root`; absolute paths also work.
+The override applies to validation, initialization and generation. It changes
+only the in-memory selection and is saved in generated publication provenance;
+it never edits the supplied manifest or overwrites the old baseline. A new
+baseline records current bytes and cannot establish which previously unrecorded
+input bytes were used by an old simulation.
+
+The bundled legacy manifest now selects `config/publication_input_hashes.json`,
+a versioned baseline containing all five canonical scientific inputs. These
+digests match the complete inventory generated on 2026-10-09 (all ten inventory
+entries were checked) and do not depend on an ignored local results directory.
+Its older stage directory references still require complete artifacts and metadata.
+Use the explicit `publication_manifest.json` emitted by a successful production
+run for reproduction; changing the baseline alone cannot repair missing results.

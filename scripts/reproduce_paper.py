@@ -26,6 +26,8 @@ def parse_args(argv=None):
     parser.add_argument("-w", "--workers", type=int, default=None,
                         help="Number of parallel CPU worker cores.")
     parser.add_argument("--manifest", type=str, default=None, help="Path to publication manifest JSON file")
+    parser.add_argument("--input-hash-manifest", type=Path, default=None,
+                        help="Explicit baseline override; relative paths resolve under --repo-root")
     parser.add_argument("--no-pdf", action="store_true", help="Skip LaTeX PDF compilation")
     parser.add_argument("--output-dir", type=Path, default=None,
                         help="Exact publication output directory")
@@ -35,12 +37,19 @@ def parse_args(argv=None):
     add_source_argument(parser)
     return parser.parse_args(argv)
 
+def _selected_manifest(args, root):
+    path = Path(args.manifest) if args.manifest else root / 'config/publication_manifest.json'
+    manifest = PublicationManifest.load(path) if args.manifest or path.is_file() else PublicationManifest()
+    if args.input_hash_manifest is not None:
+        manifest.input_hash_manifest = str(args.input_hash_manifest)
+    return manifest
+
+
 def main(argv=None):
     args = parse_args(argv)
     root = source_root(args, repo_root)
     if args.validate_only or args.initialize:
-        path = Path(args.manifest) if args.manifest else root / 'config/publication_manifest.json'
-        manifest = PublicationManifest.load(path) if args.manifest or path.is_file() else PublicationManifest()
+        manifest = _selected_manifest(args, root)
         report = (initialize_publication_manifest(manifest, root) if args.initialize else
                   validate_publication_manifest(manifest, root))
         print(json.dumps(report, indent=2))
@@ -55,8 +64,9 @@ def main(argv=None):
     print(f"Run ID: {run_id}")
 
     try:
+        manifest = _selected_manifest(args, root)
         output_dir = stage_output(args, root, "paper")
-        summary = run_paper_pipeline(repo_root=root, run_id=run_id, manifest=args.manifest, compile_pdf=not args.no_pdf, workers=args.workers,
+        summary = run_paper_pipeline(repo_root=root, run_id=run_id, manifest=manifest, compile_pdf=not args.no_pdf, workers=args.workers,
                                      output_dir=output_dir, create_if_missing=False)
         if not args.no_pdf and not summary['pdf_compiled']:
             raise RuntimeError(f"Requested PDF build failed: {summary['pdf_build']['error']}")

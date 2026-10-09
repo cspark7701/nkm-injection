@@ -1,6 +1,6 @@
 # Task 005 — Replicate fixed-optics tolerances and report defensible uncertainty
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 107). Created: 2026-10-09.
 Dependencies: 002; repeat after 003-004 if the physical model changes.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

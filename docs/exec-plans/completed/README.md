@@ -343,3 +343,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 106. [**Milestone 106 — Journal Task 003: Tracking-Backend Validation (S5)**](106_task003_tracking_validation_driver.md)
     - Implemented and ran the S5 driver: native dynamic aperture, native vs linear-map discrepancy on paired beams, turn/particle convergence, limiting cases and stored-beam response validation.
+
+107. [**Milestone 107 — Journal Task 005: Tolerance Replication and Uncertainty (S4)**](107_task005_tolerance_replication.md)
+    - Ran three 50k-sample fixed-optics tolerance ensembles, added saved-observation post-processing, and reported quantile intervals, failure bounds and the unmet 1e-5 prefix target.

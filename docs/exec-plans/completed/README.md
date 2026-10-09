@@ -340,3 +340,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 105. [**Milestone 105 — Journal Task 002: Canonical Physics Model and Claim Audit**](105_task002_canonical_physics_and_claim_audit.md)
     - Audited manuscript claims, froze the injection-study model (geometry, polarity, controls, beams, observables), quantified error-model coverage and added the versioned study configuration with tests.
+
+106. [**Milestone 106 — Journal Task 003: Tracking-Backend Validation (S5)**](106_task003_tracking_validation_driver.md)
+    - Implemented and ran the S5 driver: native dynamic aperture, native vs linear-map discrepancy on paired beams, turn/particle convergence, limiting cases and stored-beam response validation.

@@ -414,3 +414,76 @@ def study_provenance(config: InjectionStudyConfig, repo_root: Path) -> Dict[str,
     from .stage_cli import input_hashes
     return {"schema_version": config.schema_version,
             "input_sha256": input_hashes(Path(repo_root), (config.ring_source, config.kickmap_path))}
+
+
+# ---------------------------------------------------------------------------
+# Coupled BTS handoff and per-process caching
+# ---------------------------------------------------------------------------
+
+def booster_beam(initial_twiss: Dict[str, Any], beam: InjectedBeamConfig, n: int, seed: int,
+                 centroid: Optional[np.ndarray] = None) -> np.ndarray:
+    """Gaussian booster-extraction beam at the BTS entrance (Twiss dict: beta/alpha in m/1, dispersion m/rad)."""
+    rng = np.random.default_rng(seed)
+    b, a, d = initial_twiss["beta"], initial_twiss["alpha"], initial_twiss["dispersion"]
+    out = gaussian_beam(n, (b[0], a[0]), (b[1], a[1]), beam.emit_x_m_rad, beam.emit_y_m_rad,
+                        (d[0], d[1]), beam.energy_spread, beam.bunch_length_m, rng)
+    if centroid is not None:
+        out += np.asarray(centroid, dtype=float)[:, None]
+    return out
+
+
+def track_bts(lattice: at.Lattice, beam: np.ndarray) -> np.ndarray:
+    """Single pass through a BTS lattice; lost particles are NaN columns (same column order)."""
+    out = np.array(beam, dtype=float, copy=True)
+    lattice.track(out, nturns=1, refpts=None, in_place=True)
+    return out
+
+
+def beam_moments(beam: np.ndarray) -> Dict[str, Any]:
+    """Centroid (m, rad) and rms Twiss/emittance of live particles in x and y (dispersion removed)."""
+    live = np.isfinite(beam[0])
+    b = beam[:, live]
+    res = {"n_live": int(live.sum())}
+    if b.shape[1] < 3:
+        return res
+    d = b[4] - b[4].mean()
+    for name, (i, j) in (("x", (0, 1)), ("y", (2, 3))):
+        u, up = b[i] - b[i].mean(), b[j] - b[j].mean()
+        var_d = np.mean(d * d)
+        if name == "x" and var_d > 0:
+            disp, dispp = np.mean(u * d) / var_d, np.mean(up * d) / var_d
+            u, up = u - disp * d, up - dispp * d
+            res["disp_x_m"], res["disp_px"] = float(disp), float(dispp)
+        suu, spp, sup = np.mean(u * u), np.mean(up * up), np.mean(u * up)
+        eps = float(np.sqrt(max(suu * spp - sup ** 2, 0.0)))
+        res[f"centroid_{name}_m"] = float(b[i].mean())
+        res[f"centroid_{name}p_rad"] = float(b[j].mean())
+        res[f"emit_{name}_m_rad"] = eps
+        res[f"beta_{name}_m"] = float(suu / eps) if eps > 0 else None
+        res[f"alpha_{name}"] = float(-sup / eps) if eps > 0 else None
+    res["delta_mean"], res["delta_rms"] = float(b[4].mean()), float(b[4].std())
+    return res
+
+
+_RING_CACHE: Dict[str, PreparedRing] = {}
+
+
+def cached_ring(config: InjectionStudyConfig, repo_root: Path, work_dir: Path) -> PreparedRing:
+    """Process-local cache of prepared rings keyed by the lattice-relevant configuration."""
+    key = json.dumps([str(Path(repo_root).resolve()), str(Path(work_dir).resolve()), config.ring_source,
+                      config.energy_eV, config.septum_edge_x_m, config.septum_to_nkm_drift_m,
+                      config.chamber_half_x_m, config.chamber_half_y_m])
+    if key not in _RING_CACHE:
+        _RING_CACHE[key] = prepare_ring(config, repo_root, work_dir)
+    return _RING_CACHE[key]
+
+
+def wilson_interval(k: int, n: int, z: float = 1.959963984540054) -> Tuple[Optional[float], Optional[float]]:
+    """Wilson score interval for a binomial proportion (default 95 %)."""
+    if n <= 0:
+        return None, None
+    p = k / n
+    den = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / den
+    half = z * np.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / den
+    return float(max(0.0, centre - half)), float(min(1.0, centre + half))

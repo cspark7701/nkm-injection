@@ -376,3 +376,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 117. [**Milestone 117 — Follow-up Campaigns: Thick-Magnet Robustness, Three-Seed Diagnostics, 400k Tolerances**](117_followup_thick_diagnostic_tolerance.md)
     - Thick NKM raises combined-error capture to 47.4 % (magnet-model effect, confirmed by cross-runs); diagnostics confirmed on three seeds; 400k-sample tolerance run meets the prefix-stability target; manuscript updated.
+
+118. [**Milestone 118 — Reviewer 2 Referee Report**](118_reviewer2_report.md)
+    - Major-revision referee report with 8 major and 14 minor comments and 19 prioritised revision tasks (docs/jinst-paper/reviews/reviewer2_report.md).

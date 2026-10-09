@@ -25,6 +25,8 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--raw", nargs="+", type=Path, required=True)
     p.add_argument("--model", default="fieldmap")
+    p.add_argument("--stored-model", default=None,
+                   help="Kick model for the bicubic stored-beam recompute (default: --model; use fieldmap for fieldmap_thick)")
     p.add_argument("--bootstrap-count", type=int, default=10000)
     p.add_argument("--bootstrap-seed", type=int, default=1729)
     p.add_argument("--threshold", type=float, default=0.9)
@@ -76,7 +78,7 @@ def main(argv=None):
                           nkm_dx_m=cfg0.nkm_dx_m + sc * s["nkm_dx_m"],
                           kick_offset_rad=cfg0.kick_offset_rad + sc * s["nkm_timing_mrad"] * 1e-3,
                           closed_orbit_x_m=cfg0.closed_orbit_x_m + sc * s["ring_co_x_m"])
-            kick = KickModelEvaluator(a.model, cfg, ring_cache["kmap"], cfg0.nkm_entry_x_m)
+            kick = KickModelEvaluator(a.stored_model or a.model, cfg, ring_cache["kmap"], cfg0.nkm_entry_x_m)
             sr = stored_beam_response(cfg, ring_cache["ring"], kick, n=a.stored_samples, seed=11, interpolation="cubic")
             stored.append({"seed": seed, "sample_id": r["sample_id"], "amplitude_over_sigma_cubic": sr["amplitude_over_sigma"],
                            "amplitude_over_sigma_linear_recorded": r["models"][a.model].get("stored", {}).get("amplitude_over_sigma"),
@@ -97,7 +99,7 @@ def main(argv=None):
         rho, pv = stats.spearmanr(x[ok], cap[ok])
         ranking.append({"variable": name, "spearman_rho": float(rho), "p_value": float(pv)})
     ranking.sort(key=lambda r: r["spearman_rho"])
-    out = {"inputs_sha256": inputs, "model": a.model, "n_realizations": int(len(cap)),
+    out = {"inputs_sha256": inputs, "model": a.model, "stored_model": a.stored_model or a.model, "n_realizations": int(len(cap)),
            "pooled": {"mean": float(cap.mean()), "mean_ci95": [float(np.quantile(boot, .025)), float(np.quantile(boot, .975))],
                       "median": float(np.median(cap)), "p05": float(np.quantile(cap, .05)), "min": float(cap.min()),
                       "fraction_above_threshold": k / len(cap), "threshold": a.threshold},

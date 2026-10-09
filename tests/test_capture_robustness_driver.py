@@ -67,3 +67,10 @@ def test_s7_and_analysis_end_to_end(tmp_path):
     assert all(np.isfinite(r["amplitude_over_sigma_cubic"]) for r in a["stored_beam_cubic"]["per_realization"])
     with pytest.raises(SystemExit):
         A7.main(["--raw", str(out / "capture_robustness_raw.json"), "--output", str(res)])  # never overwrite
+
+
+def test_s7_accepts_thick_model():
+    a = S7.parse_args(["--study-config", "c.json", "--optimization-summary", "o.json", "--error-config", "e.json",
+                       "--output-dir", "out", "--kicker-models", "fieldmap_thick", "--thick-slices", "80"])
+    assert a.kicker_models == ["fieldmap_thick"] and a.thick_slices == 80
+    assert "fieldmap_thick" in S7.S7_MODELS and set(S7.S7_MODELS) > {"off", "fieldmap", "dipole", "linear"}

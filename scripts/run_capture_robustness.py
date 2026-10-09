@@ -29,7 +29,8 @@ from nkm_injection.concurrency import parallel_map
 from nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble, apply_sample_errors
 from nkm_injection.injection_study import (
     InjectionStudyConfig, KickModelEvaluator, cached_ring, injected_beam_at_septum, track_injection,
-    stored_beam_response, booster_beam, track_bts, beam_moments, wilson_interval, KICK_MODELS)
+    stored_beam_response, booster_beam, track_bts, beam_moments, wilson_interval, KICK_MODELS, ThickNKMKicker)
+from nkm_injection.fieldmap import load_1d_fieldmap
 from nkm_injection.kickmap import NKMKickMap2D
 from nkm_injection.optimization_handoff import load_optimization_handoff
 from nkm_injection.bts_lattice import BTSConfig
@@ -37,6 +38,9 @@ from nkm_injection.optics import compute_mismatch_metric
 from nkm_injection.stage_cli import add_source_argument, source_root, input_hashes
 
 REPO = Path(__file__).resolve().parent.parent
+# "fieldmap_thick": drift-kick-drift NKM through the By.txt profile (Task 011 review); no stored-beam response
+# is recorded for it (the transparency study uses the bicubic kick map).
+S7_MODELS = tuple(KICK_MODELS) + ("fieldmap_thick",)
 
 
 def parse_args(argv=None):
@@ -46,7 +50,8 @@ def parse_args(argv=None):
     p.add_argument("--error-config", type=Path, required=True)
     p.add_argument("--error-scale", type=float, default=1.0, help="Multiplies every error sigma (stress tests)")
     p.add_argument("--tracking-backend", choices=("element", "map"), default="element")
-    p.add_argument("--kicker-models", nargs="+", choices=KICK_MODELS, default=["fieldmap", "dipole"])
+    p.add_argument("--kicker-models", nargs="+", choices=S7_MODELS, default=["fieldmap", "dipole"])
+    p.add_argument("--thick-slices", type=int, default=160, help="Slices for the fieldmap_thick model")
     p.add_argument("--samples", type=int, default=50)
     p.add_argument("--particles", type=int, default=200)
     p.add_argument("--turns", type=int, default=500)
@@ -128,13 +133,16 @@ def run_realization(job):
            "bts_lost": int(np.sum(~np.isfinite(exit_beam[0]))), "models": {}}
     x_ref = cfg0.nkm_entry_x_m  # controls stay calibrated at the nominal point (no error knowledge)
     for model in job["models"]:
-        kicker = KickModelEvaluator(model, cfg, None if model == "off" else kmap, x_ref)
+        if model == "fieldmap_thick":
+            kicker = ThickNKMKicker(cfg, *load_1d_fieldmap(root / "By.txt"), n_slices=job.get("thick_slices", 160))
+        else:
+            kicker = KickModelEvaluator(model, cfg, None if model == "off" else kmap, x_ref)
         res = track_injection(cfg, ring, kicker, beam, job["backend"], n_turns=job["turns"])
         entry = {"captured": res["captured"], "n": res["n_particles"], "capture_fraction": res["capture_fraction"],
                  "loss_causes": res["loss_causes"],
                  "loss_turn_histogram": np.bincount(np.asarray([t for t in res["first_loss_turn"] if t >= 0], int),
                                                     minlength=1).tolist()}
-        if model != "off":
+        if model not in ("off", "fieldmap_thick"):
             sr = stored_beam_response(cfg, ring, kicker, n=20000, seed=11)
             entry["stored"] = {k: sr[k] for k in ("mean_kick_x_rad", "centroid_amplitude_m", "amplitude_over_sigma",
                                                   "filamented_emittance_growth")}
@@ -177,7 +185,7 @@ def main(argv=None):
     cached_ring(cfg, root, work)
     base = {"config": cfg.to_dict(), "repo_root": str(root), "work_dir": str(work), "bts_config": sel.bts.to_dict(),
             "initial_twiss": sel.initial_twiss, "target_twiss": sel.target_twiss, "models": args.kicker_models,
-            "backend": args.tracking_backend, "particles": args.particles, "turns": args.turns,
+            "backend": args.tracking_backend, "thick_slices": args.thick_slices, "particles": args.particles, "turns": args.turns,
             "correct_static_orbit": args.correct_static_orbit}
     jobs = [{**base, "sample": s, "extra": e, "beam_seed": int(args.seed * 100003 + max(s["sample_id"], -1) + 1)}
             for s, e in zip(samples, extras)]
@@ -190,7 +198,7 @@ def main(argv=None):
         st = cluster_stats(caps, args.bootstrap_seed, args.bootstrap_count, args.capture_threshold)
         st["pooled_particles_capture"] = float(sum(r["models"][m]["captured"] for r in results if r["sample_id"] >= 0)
                                                / sum(r["models"][m]["n"] for r in results if r["sample_id"] >= 0))
-        if m != "off":
+        if m not in ("off", "fieldmap_thick"):
             amp = [r["models"][m]["stored"]["amplitude_over_sigma"] for r in results if r["sample_id"] >= 0]
             st["stored_amp_over_sigma"] = {"median": float(np.median(amp)), "p95": float(np.quantile(amp, 0.95)),
                                            "max": float(np.max(amp))}

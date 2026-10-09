@@ -1,0 +1,61 @@
+{
+  "manifest": "docs/jinst-paper/campaign_manifest.json",
+  "artifacts": {
+    "operating_region_grid": {
+      "path": "results/journal_campaign_01/operating_region_grid/operating_region_summary.json",
+      "sha256": "6ab3a63f179edafdfc39379b5c39a931d45035ab0b749c9d2045ec653b3e86bf"
+    },
+    "backend_validation": {
+      "path": "results/journal_campaign_01/backend_validation/backend_validation_summary.json",
+      "sha256": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0"
+    },
+    "backend_validation_raw": {
+      "path": "results/journal_campaign_01/backend_validation/backend_validation_raw.json",
+      "sha256": "eacb0ff98d1f99931e759b7e79135fb2cbd2c9f3f10ec153e1319ed82af77426"
+    },
+    "operating_region_replicate": {
+      "path": "results/journal_campaign_01/operating_region_replicate/operating_region_summary.json",
+      "sha256": "1712001fe27c2be700c41f816629939f6bede88ce96ac5775477e56416b5a505"
+    },
+    "operating_point_config": {
+      "path": "results/journal_campaign_01/operating_point_study_config.json",
+      "sha256": "31c2e0eb8b5bec857a3be080df5e49b0a94ebe95489523879654763b80073d42"
+    },
+    "capture_analysis": {
+      "path": "results/journal_campaign_01/capture_analysis/capture_analysis_pooled.json",
+      "sha256": "009d5439a0d8e3a6a3985744e08449d52b81c38649aaf6180836312633ac4df8"
+    },
+    "capture_raw_42": {
+      "path": "results/journal_campaign_01/capture_errors_seed42/capture_robustness_raw.json",
+      "sha256": "1ef5168d84a3de13d1810b0b9c666a3cc9f438c464bace6843a548e5ea9bd69b"
+    },
+    "capture_raw_123": {
+      "path": "results/journal_campaign_01/capture_errors_seed123/capture_robustness_raw.json",
+      "sha256": "7e37e130868e73597ab5255619c2eae3bc6c317002aa9f9df1bfa77d5473c0bb"
+    },
+    "capture_raw_777": {
+      "path": "results/journal_campaign_01/capture_errors_seed777/capture_robustness_raw.json",
+      "sha256": "f703cadde3f39c2b278014a2c2b6a053afcc5e52148c72103ea92346c909c5bc"
+    },
+    "capture_raw_nojitter": {
+      "path": "results/journal_campaign_01/capture_errors_no_booster_jitter/capture_robustness_raw.json",
+      "sha256": "fb296e3a66d635e73da7cd74f6d679c9ec6c4d2877312f7afa389b86156e126a"
+    },
+    "capture_raw_corrected": {
+      "path": "results/journal_campaign_01/capture_errors_static_corrected/capture_robustness_raw.json",
+      "sha256": "a40912bf6476358ebd3592c10400cb0eb869e936e8cf61fa3dd685d77bb7b3e6"
+    },
+    "tolerance_replicates": {
+      "path": "results/journal_campaign_01/tolerance_replicates/tolerance_replicate_analysis.json",
+      "sha256": "6c71cc92b294e477a1a4c9811adfc6b03c440fd986ea896c9d8e1fe73affb3de"
+    },
+    "optimization_summary": {
+      "path": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+      "sha256": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb"
+    },
+    "capture_robustness": {
+      "path": "results/journal_campaign_01/capture_errors_seed42/capture_robustness_summary.json",
+      "sha256": "599b1c100a7ed8deb8c90dbfc988af4b06ecec5fc30c9d9b0b67c6112196668c"
+    }
+  }
+}

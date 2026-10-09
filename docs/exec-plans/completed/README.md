@@ -358,3 +358,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 111. [**Milestone 111 — Journal Task 008: Research Article Rewrite**](111_task008_research_article.md)
     - Rewrote the manuscript around the capture/transparency/robustness question with macro-driven results, explicit limitations and no unsupported claims.
+
+112. [**Milestone 112 — Journal Task 009: Selected Evidence, Figures and Provenance**](112_task009_publication_evidence.md)
+    - Added the hashed campaign manifest and figure/macro builder, regenerated all manuscript figures and numbers with provenance, and extended the claim-evidence table.

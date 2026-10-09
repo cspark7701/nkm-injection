@@ -1,6 +1,6 @@
 # Task 009 — Connect the article to selected evidence and journal-quality figures
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 112). Created: 2026-10-09.
 Dependencies: 002-007 for included claims; 008 outline.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

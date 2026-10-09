@@ -337,3 +337,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 104. [**Milestone 104 — Journal Task 001: Research Question and Journal Fit**](104_task001_article_scope.md)
     - Defined the principal capture/transparency question for a small-DA lattice, bounded claims, verified closest literature and recorded JINST requirements.
+
+105. [**Milestone 105 — Journal Task 002: Canonical Physics Model and Claim Audit**](105_task002_canonical_physics_and_claim_audit.md)
+    - Audited manuscript claims, froze the injection-study model (geometry, polarity, controls, beams, observables), quantified error-model coverage and added the versioned study configuration with tests.

@@ -1,6 +1,6 @@
 # Task 002 — Freeze the canonical physical model and audit existing claims
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 105). Created: 2026-10-09.
 Dependencies: 001.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

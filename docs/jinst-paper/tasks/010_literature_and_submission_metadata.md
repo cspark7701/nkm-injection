@@ -1,6 +1,6 @@
 # Task 010 — Verify references and prepare scholarly metadata
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 113). Created: 2026-10-09.
 Dependencies: 001, 008; 009 for data/software citations.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

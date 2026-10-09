@@ -8,6 +8,8 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 1](reviewer1_report.md), 2026-10-10 | Major revision; no acceptance in present form | [12 ordered tasks](reviewer1_revision_tasks.md) |
 | [Reviewer 2](reviewer2_report.md), 2026-10-10 | Major revision | Included in the report |
 
+Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
+
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding
 chromatic scaling; arbitrary reference counts, ring-seed counts and DA reductions

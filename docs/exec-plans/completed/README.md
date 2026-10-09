@@ -382,3 +382,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 119. [**Milestone 119 — Reviewer 1 Manuscript Report and Revision Register**](119_reviewer1_manuscript_report.md)
     - Assessed the current scientific argument and selected evidence, recommended major revision, prepared twelve ordered tasks with acceptance criteria, and verified local evidence hashes, capture summaries and documentation without changing the manuscript.
+
+120. [**Milestone 120 — Consolidated Revision Plan**](120_consolidated_revision_plan.md)
+    - Merged both referee registers into tasks C1–C12 with resolved disagreements and execution order.

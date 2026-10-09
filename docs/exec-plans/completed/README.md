@@ -378,4 +378,4 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Thick NKM raises combined-error capture to 47.4 % (magnet-model effect, confirmed by cross-runs); diagnostics confirmed on three seeds; 400k-sample tolerance run meets the prefix-stability target; manuscript updated.
 
 118. [**Milestone 118 — Reviewer 2 Referee Report**](118_reviewer2_report.md)
-    - Major-revision referee report with 8 major and 14 minor comments and 19 prioritised revision tasks (docs/jinst-paper/reviews/reviewer2_report.md).
+    - Major-revision referee report with 8 major and 14 minor comments and 20 prioritised revision tasks and venue-specific guidance for an undecided target journal (docs/jinst-paper/reviews/reviewer2_report.md).

@@ -1,7 +1,8 @@
 # Referee report — Reviewer 2
 
 **Manuscript:** "Capture window and robustness of nonlinear-kicker injection into a 4 GeV storage ring with a small
-dynamic aperture" (C. S. Park), JINST regular paper.
+dynamic aperture" (C. S. Park). Prepared in JINST format. **The target journal is not yet decided**, so this report
+judges the science independently of venue and adds venue-specific guidance (see "Choice of journal").
 **Version reviewed:** `docs/jinst-paper/paper.tex` / `paper.pdf` at commit `acd891c` (10 pages, 7 figures, 10 references).
 **Date:** 2026-10-10.
 **Reviewer expertise:** storage-ring beam dynamics, off-axis and multipole-kicker injection, transfer-line design,
@@ -9,7 +10,9 @@ pulsed-magnet modelling.
 
 ## Recommendation
 
-**Major revision.** I do not recommend acceptance in the present form, and I do not recommend rejection.
+**Major revision** at any regular peer-reviewed accelerator or instrumentation journal. I do not recommend acceptance
+in the present form, and I do not recommend rejection. How heavily each comment weighs depends on the venue; the section
+"Choice of journal" explains this.
 
 The study is careful in the parts it controls. It uses native nonlinear tracking, couples the transfer line to the
 ring, compares the kicker against paired calibrated controls on identical particles, gives honest intervals, and is
@@ -31,7 +34,7 @@ the kicker is −12 to +13 mm. The main results are:
 - **Combined errors:** mean capture of 37.8 % (thin kick) or 47.4 % (thick magnet), limited by booster extraction jitter.
 - **Linear one-turn maps** are shown to overestimate capture.
 
-## Assessment against the journal criteria
+## Assessment against general journal criteria
 
 | Criterion | Assessment |
 | :--- | :--- |
@@ -90,8 +93,8 @@ from which the jitter required for e.g. 80 % mean capture can be read. The same 
 the second key factor.
 
 **M5. The pulsed-magnet aspects that decide transparency in practice are absent.**
-The NKM is modelled as an ideal single-turn magnetostatic kick. For an instrumentation journal, the following must at
-least be discussed with order-of-magnitude estimates, and preferably modelled:
+The NKM is modelled as an ideal single-turn magnetostatic kick. At any venue, the following must at least be discussed
+with order-of-magnitude estimates; for an instrumentation journal they should be modelled:
 
 - the pulse length and shape relative to the 2.67 µs revolution period;
 - residual field on the following turns;
@@ -180,7 +183,10 @@ thick/thin parenthesis once M1 is resolved.
 **m11. Notation.** Define M_x on first use (section 2.3 uses it, section 5.1 defines it). Define "capture" before
 section 2.3. Use one notation (σ or "rms sizes") throughout.
 
-**m12. Bibliography.** Use JHEP.bst, as required by JINST.
+**m12. Format.** The manuscript uses the JINST class with the `unsrt` bibliography style. Once the journal is chosen,
+convert to that journal's template and reference style. JINST requires JHEP.bst. Other candidate journals have their own
+templates and bibliography styles, and some require a word or page limit, a graphical abstract or highlights. Check
+the current author instructions.
 
 **m13. Data availability.** The availability statement points to a manuscript directory path. Provide a DOI (Zenodo) at
 submission rather than at acceptance; many referees will want to inspect the code.
@@ -221,17 +227,42 @@ required.
 | R2-16 | C | Condense section 5.1; move failure statistics and prefix stability to a supplement; fix grammar. | no | ≤ 1 paragraph in the main text | 0.5 d |
 | R2-17 | C | Figure fixes: fig 2 legend, fig 5 number format, fig 7 split into two panels; one σ notation throughout. | no | Figures pass inspection | 0.5 d |
 | R2-18 | C | Abstract reduced to the key numbers; define M_x and "capture" on first use. | no | Text | 0.5 d |
-| R2-19 | C | JHEP.bst bibliography; Zenodo DOI at submission. | no | Build with JHEP.bst; DOI in the availability statement | 0.5 d |
+| R2-19 | C | Choose the journal (see "Choice of journal"); convert to its template and reference style (JINST: JHEP.bst); Zenodo DOI at submission. | no | Clean build in the target template; DOI in the availability statement | 0.5–1 d |
+| R2-20 | B | Reframe the introduction, abstract and conclusions to the emphasis of the chosen journal (beam physics vs instrument/method vs facility design). | no | Framing matches the journal scope statement | 0.5–1 d |
 
-**Suggested order:** R2-1 → R2-14 → R2-12 → R2-2 (with R2-9) → R2-3 → R2-4 → R2-5 → R2-8 → R2-7 → R2-13. Then do the
+**Suggested order** (choose the journal first, R2-19/R2-20): R2-1 → R2-14 → R2-12 → R2-2 (with R2-9) → R2-3 → R2-4 → R2-5 → R2-8 → R2-7 → R2-13. Then do the
 documentation and literature tasks (R2-6, R2-10, R2-11, R2-15) and the editorial tasks (R2-16 to R2-19).
 
 R2-2, R2-3 and R2-5 depend on the model chosen in R2-1. Running them first would repeat the thin/thick reversal found
 in milestone 117.
+
+## Choice of journal
+
+The manuscript is in JINST format, but the venue is undecided. Each type of journal reviewing it would weigh the
+comments above differently. The author should check every journal's current scope and author instructions; the
+priorities below are this reviewer's judgement, not journal policy.
+
+| Venue type (examples) | What referees there will weigh most | Tasks that become decisive | Fit of the current paper |
+| :--- | :--- | :--- | :--- |
+| Beam-physics journal (e.g. Phys. Rev. Accel. Beams) | New physical insight that generalises beyond one lattice; rigorous models | R2-1 (validated thick/3-D kicker and its mechanism), R2-3 (ring errors), R2-4, R2-5 (general tolerance scaling), R2-10 | Weakest now. Needs the thin-vs-thick mechanism developed into a general result (e.g. scaling with magnet length, kick gradient and injection angle) and comparison with other rings. |
+| Instrumentation/methods journal (e.g. JINST, Nucl. Instrum. Methods A) | The device and the method: realistic magnet, pulse, chamber, tolerances usable by designers | R2-1, R2-7 (pulsed-magnet effects), R2-8 (transparency), R2-5 (tolerance curves), R2-11 (geometry and parameter tables) | Good fit once the pulsed-magnet and tolerance results exist; the reproducible workflow is a strength here. |
+| Synchrotron-facility journal (e.g. J. Synchrotron Rad.) | Impact on facility operation and users: top-up transparency, injection efficiency | R2-3, R2-7, R2-8, R2-15 (name the facility) | Possible if the paper becomes a design study of a named facility, with transparency for users at the centre. |
+| Conference proceedings (e.g. IPAC) | Timely, concise result; light review | none required; condense to 3–4 pages | Fits now as a short report of the operating window and the jitter limit, but publishes only part of the work and may limit later journal novelty. Check the chosen journal's prior-publication policy. |
+
+**Reviewer's suggestion.** Choose between an instrumentation/methods journal and a beam-physics journal before
+starting the revision, because the two need different additional work:
+
+- **Instrumentation/methods path:** do R2-1, R2-5, R2-7 and R2-8 first, and keep the existing JINST format if JINST is
+  chosen.
+- **Beam-physics path:** do R2-1 and R2-3 first, and generalise the thin-versus-thick result.
+
+The tasks marked A in the revision table are needed on either path. Without them, the paper would currently fit only
+conference proceedings.
 
 ## Confidential comments to the editor
 
 The work is reproducible and honest about its limits, which is to its credit. The present conclusions are sensitive to
 the kicker model; section 5.2 of the manuscript demonstrates this itself. The absolute capture values could also
 change substantially once ring errors are included. I would be glad to review a revised version. With R2-1 to R2-10
-addressed, this could become a useful reference for NKM injection design in small-DA rings.
+addressed, this could become a useful reference for NKM injection design in small-DA rings, in whichever regular journal
+the author chooses.

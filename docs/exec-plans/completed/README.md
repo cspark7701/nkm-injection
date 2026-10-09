@@ -334,3 +334,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 103. [**Milestone 103 — Campaign S1–S3 and Step 1 Physics Checks**](103_campaign_s1_s3_and_step1_physics_checks.md)
     - Reproduced S1–S3 exactly, found overlapping S3 seed lists, established kick-map units and sign mismatch, and showed with native nonlinear tracking that the linear-map injection model hides a ~12–16 mm dynamic aperture, invalidating the off/fieldmap capture comparison.
+
+104. [**Milestone 104 — Journal Task 001: Research Question and Journal Fit**](104_task001_article_scope.md)
+    - Defined the principal capture/transparency question for a small-DA lattice, bounded claims, verified closest literature and recorded JINST requirements.

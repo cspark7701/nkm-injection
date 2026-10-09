@@ -1,6 +1,6 @@
 # Task 001 — Define the scientific question, novelty and journal fit
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 104). Created: 2026-10-09.
 Dependencies: None.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

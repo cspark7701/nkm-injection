@@ -328,3 +328,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 101. [**Milestone 101 — Isolated Local Workflow Checks**](101_isolated_local_workflow_checks.md)
     - Removed historical result dependencies from local/checked-in publication checks, isolated baseline and lattice outputs, preserved strict validation and diagnostics, and verified execution from a checkout without results.
+
+102. [**Milestone 102 — Additional Simulation and Journal-Article Strategy**](102_additional_simulation_and_journal_article_strategy.md)
+    - Documented selected-run limitations, exact supported simulation commands and proposed drivers; prepared twelve ordered research-article revision tasks, verified command options, shell syntax, links and protected hashes, and left future studies explicitly planned.

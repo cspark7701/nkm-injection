@@ -4,6 +4,8 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 > **Comprehensive Guide**: See [`docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`](docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md) for the single-file complete specification of the simulation procedure and paper reproduction pipeline.
 
+For further publication studies, read the [additional simulation strategy](docs/023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md) and [ordered journal-article revision tasks](docs/jinst-paper/tasks/README.md). The plan distinguishes supported commands from proposed drivers and prioritizes physical validation, fair controls and claim-to-evidence reconciliation.
+
 ---
 
 ## Key Objectives

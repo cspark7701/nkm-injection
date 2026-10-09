@@ -121,3 +121,34 @@ entries were checked) and do not depend on an ignored local results directory.
 Its older stage directory references still require complete artifacts and metadata.
 Use the explicit `publication_manifest.json` emitted by a successful production
 run for reproduction; changing the baseline alone cannot repair missing results.
+
+## Local workflow checks without production outputs
+
+`./scripts/check_github_actions.sh` uses complete temporary publication test
+bundles for end-to-end pipeline and CLI checks. It does not select the bundled
+legacy manifest or depend on ignored `results/` directories. The checked-in paper
+and release workflow definitions run the same integration tests. These fixtures
+verify publication contracts and figure/table generation; they are synthetic
+software test inputs and provide no scientific production evidence.
+
+```bash
+NKM_PYTHON=/path/to/project/python ./scripts/check_github_actions.sh --fast
+./scripts/check_github_actions.sh --workflow paper --quiet
+./scripts/check_github_actions.sh --dry-run
+```
+
+Without `--fast`, the all/CI/release targets run the full regression suite. Paper
+checks and fast mode run the paper physics regression suite. CI/all targets also
+compute and validate baseline metrics in temporary directories. Every Python
+and pytest command uses the selected interpreter (`python3` by default). Install
+the project and its development/MOGA dependencies in that interpreter first.
+
+All check artifacts, including the before/after protected-file inventory and
+pytest outputs, stay in a fresh temporary directory. Successful checks remove
+that directory. Failed checks retain logs and print child diagnostics even in
+quiet mode. Dry runs create no directories and execute no commands. The checker
+only reads local workflow definitions and never contacts remote GitHub services.
+
+Actual paper reproduction still requires an explicit complete production run
+manifest and strict source hashes; creating empty run directories cannot satisfy
+those requirements.

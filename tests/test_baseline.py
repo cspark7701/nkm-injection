@@ -4,26 +4,30 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-from scripts.inventory_protected_hashes import verify_hash_manifest, OUTPUT_MANIFEST
-from scripts.record_baseline_metrics import OUTPUT_JSON
+from scripts.inventory_protected_hashes import create_hash_manifest, verify_hash_manifest
 
 
-@pytest.fixture
-def baseline_metrics():
-    """Load baseline metrics JSON file."""
-    if not OUTPUT_JSON.is_file():
-        from scripts.record_baseline_metrics import main as record_baseline
-        record_baseline()
-    with open(OUTPUT_JSON, "r") as f:
-        return json.load(f)
+@pytest.fixture(scope="module")
+def baseline_metrics(tmp_path_factory):
+    """Compute the reference metrics without requiring or writing repository results."""
+    import scripts.record_baseline_metrics as producer
+    output = tmp_path_factory.mktemp('baseline_metrics')
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(producer, 'OUTPUT_DIR', output)
+        patch.setattr(producer, 'OUTPUT_JSON', output / 'baseline_metrics.json')
+        patch.setattr(producer, 'OUTPUT_MD', output / 'baseline_metrics.md')
+        producer.record_baseline()
+    return json.loads((output / 'baseline_metrics.json').read_text())
 
 
-def test_protected_files_manifest():
-    """Verify that all protected files remain unchanged and match their SHA256 manifest."""
-    if not OUTPUT_MANIFEST.is_file():
-        from scripts.inventory_protected_hashes import main as inventory_hashes
-        inventory_hashes()
-    assert verify_hash_manifest(OUTPUT_MANIFEST), "Protected file hash verification failed!"
+def test_protected_files_manifest(tmp_path):
+    """Verify versioned scientific digests and a complete temporary inventory."""
+    inventory = create_hash_manifest(REPO_ROOT)
+    reference = json.loads((REPO_ROOT / 'config/publication_input_hashes.json').read_text())
+    assert all(inventory[name] == digest for name, digest in reference.items())
+    manifest = tmp_path / 'protected_files_manifest.json'
+    manifest.write_text(json.dumps(inventory))
+    assert verify_hash_manifest(manifest)
 
 
 def test_baseline_lattice_parameters(baseline_metrics):

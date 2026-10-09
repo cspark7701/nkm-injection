@@ -29,6 +29,7 @@ Notebooks `01-03` select complete configurations, execute reusable package studi
 - **Optional MOGA Pareto Notebook**: `notebooks/03_bts_moga_pareto.ipynb`
 - **Shared Production Runner**: `./scripts/run_full_production_simulation.sh --dry-run -w 4`; shell and notebook 04 use the same [configuration and stage routing](docs/012_PRODUCTION_RUNNER.md).
 - **Production smoke check**: `./scripts/run_full_production_simulation.sh --tier smoke --workers 2 --output-dir results/new_smoke --quiet`; tiers now cover all study budgets, and the runner saves explicit statistical settings and source paths.
+- **Local workflow validation**: `./scripts/check_github_actions.sh --fast`; uses temporary complete publication fixtures and requires no existing simulation results. Set `NKM_PYTHON` to the project interpreter.
 - **Single-Command Manifest-Driven Paper Reproduction**: `python3 scripts/reproduce_paper.py --manifest config/publication_manifest.json -w W`
 
 | Workflow Phase | Script Command | Description |

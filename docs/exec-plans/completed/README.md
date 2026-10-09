@@ -325,3 +325,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 100. [**Milestone 100 — Complete Publication Hash Baseline**](100_complete_publication_hash_baseline.md)
     - Fixed the missing storage-ring MAT baseline entry with a versioned verified baseline, added explicit baseline overrides and precise diagnostics, and verified 614 full-suite tests plus real paper generation without changing protected inputs or existing results.
+
+101. [**Milestone 101 — Isolated Local Workflow Checks**](101_isolated_local_workflow_checks.md)
+    - Removed historical result dependencies from local/checked-in publication checks, isolated baseline and lattice outputs, preserved strict validation and diagnostics, and verified execution from a checkout without results.

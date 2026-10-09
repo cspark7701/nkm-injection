@@ -26,9 +26,9 @@ jobs:
         run: |
           pytest -v
 
-      - name: Run Single-Command Paper Reproduction
+      - name: Verify Paper Pipeline with Complete Temporary Manifests
         run: |
-          python3 scripts/reproduce_paper.py
+          python -m pytest -v tests/test_publication_inputs.py::test_pipeline_in_fresh_python_process tests/test_publication_validation_build.py::test_explicit_complete_baseline_override_generates_paper
 
       - name: Verify Protected Input File Hashes
         run: |

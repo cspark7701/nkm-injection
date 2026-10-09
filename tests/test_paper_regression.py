@@ -51,10 +51,10 @@ def test_regression_optics_mismatch():
     assert my > 0.0
 
 
-def test_regression_multiturn_stored_beam_perturbation():
+def test_regression_multiturn_stored_beam_perturbation(tmp_path):
     """Verify stored-beam centroid oscillation stays below 0.1 mm."""
-    config = StorageRingInjectionConfig()
-    ring, _ = load_storage_ring_injection_lattice(config)
+    config = StorageRingInjectionConfig(mat_filename=str(tmp_path / "storage_ring_lattice_nkm.mat"))
+    ring, _ = load_storage_ring_injection_lattice(config, source_mat_path=REPO_ROOT / "K4GSR_HBIv4-1.mat")
     kickmap_obj = NKMKickMap2D(REPO_ROOT / "kickmap_file.txt")
 
     stored_beam = generate_6d_beam(

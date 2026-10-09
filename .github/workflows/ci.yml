@@ -26,10 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .[dev,moga]
 
-      - name: Generate baseline metrics and protected hash manifest
+      - name: Verify isolated baseline metrics and scientific hashes
         run: |
-          python3 scripts/record_baseline_metrics.py
-          python3 scripts/inventory_protected_hashes.py
+          python -m pytest -v tests/test_baseline.py
 
       - name: Run Pytest Suite
         run: |

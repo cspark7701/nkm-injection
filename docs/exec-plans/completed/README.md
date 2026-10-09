@@ -331,3 +331,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 102. [**Milestone 102 — Additional Simulation and Journal-Article Strategy**](102_additional_simulation_and_journal_article_strategy.md)
     - Documented selected-run limitations, exact supported simulation commands and proposed drivers; prepared twelve ordered research-article revision tasks, verified command options, shell syntax, links and protected hashes, and left future studies explicitly planned.
+
+103. [**Milestone 103 — Campaign S1–S3 and Step 1 Physics Checks**](103_campaign_s1_s3_and_step1_physics_checks.md)
+    - Reproduced S1–S3 exactly, found overlapping S3 seed lists, established kick-map units and sign mismatch, and showed with native nonlinear tracking that the linear-map injection model hides a ~12–16 mm dynamic aperture, invalidating the off/fieldmap capture comparison.

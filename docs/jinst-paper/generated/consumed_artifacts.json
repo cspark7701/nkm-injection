@@ -53,6 +53,10 @@
       "path": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
       "sha256": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb"
     },
+    "thick_nkm_check": {
+      "path": "results/journal_campaign_01/review/thick_nkm_check/thick_nkm_check.json",
+      "sha256": "ad0ca5a41b56c1523765fc06f1e6b0382ed0f6e778b17d7c4fe3ae99ab441026"
+    },
     "capture_robustness": {
       "path": "results/journal_campaign_01/capture_errors_seed42/capture_robustness_summary.json",
       "sha256": "599b1c100a7ed8deb8c90dbfc988af4b06ecec5fc30c9d9b0b67c6112196668c"

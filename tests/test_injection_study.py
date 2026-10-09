@@ -101,3 +101,22 @@ def test_cubic_interpolation_matches_nodes_and_cubic_law(kickmap):
     assert np.all(lin.kicks(x, np.zeros(3))[0] > 2 * c * x ** 3)  # bilinear overstates near the axis
     with pytest.raises(ValueError):
         KickModelEvaluator("fieldmap", cfg, kickmap, -0.009, interpolation="quadratic")
+
+
+def test_thick_nkm_kicker_limits_and_sign(kickmap):
+    from nkm_injection.fieldmap import load_1d_fieldmap
+    from nkm_injection.injection_study import ThickNKMKicker, _apply_kick
+    x, by = load_1d_fieldmap(ROOT / "By.txt")
+    beam = np.zeros((6, 3)); beam[0] = [-0.009, 0.0, 0.002]; beam[1] = [1e-3, 0.0, -2e-3]
+    zero = beam.copy()
+    _apply_kick(zero, ThickNKMKicker(InjectionStudyConfig(field_scale=0.0), x, by), 0.0)
+    assert np.max(np.abs(zero - beam)) < 1e-15  # zero field: back-drift and forward drift cancel exactly
+    thick, thin = beam.copy(), beam.copy()
+    cfg = InjectionStudyConfig()
+    _apply_kick(thick, ThickNKMKicker(cfg, x, by, n_slices=160), 0.0)
+    _apply_kick(thin, KickModelEvaluator("fieldmap", cfg, kickmap, -0.009), 0.0)
+    assert np.sign(thick[1, 0] - beam[1, 0]) == np.sign(thin[1, 0] - beam[1, 0]) == -1.0  # P = +1 at x < 0
+    assert abs((thick[1, 0] - thin[1, 0])) < 2e-4  # thin-lens error bounded (rad) at the kick peak region
+    far = beam.copy(); far[0] = 0.06
+    lost = ThickNKMKicker(cfg, x, by).apply(far, 0.0)
+    assert lost.all() and np.isnan(far[0]).all()  # outside the profile: lost, never extrapolated

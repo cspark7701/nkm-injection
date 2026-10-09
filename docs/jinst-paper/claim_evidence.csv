@@ -41,3 +41,4 @@ B10,abstract;sec5.2,"static correction 43.9 %; no booster jitter 54.5 %; dipole 
 B11,sec5.2,"septum orbit jitter 0.65 mm/0.33 mrad; static 0.7 mm; rho=-0.50",campaign_manifest:capture_raw_corrected/nojitter; capture_analysis,bts_exit; spearman_ranking,"as stated",native coupled,NEW (RobExitRms*/RobStaticRmsXmm/RobTopRho)
 B12,sec5.2,"stored amplitude under errors median 0.10, p95 1.7, max 6.4 sigma",campaign_manifest:capture_analysis,stored_beam_cubic,"as stated",bicubic linear optics,NEW (RobStored*)
 B13,sec2.1,"ring parameters beta 16.27 m, eps 61.6 pm, tunes, chromaticity, damping",physics_model.md section 2 (prepare_ring),lattice-derived,"as stated",AT radiation_parameters,NEW (model description)
+B14,abstract;sec4;sec6,"thick NKM capture 87.0 % (re-matched) vs thin 91.1 %",campaign_manifest:thick_nkm_check,means,"4 x 500 particles, 160 slices",native coupled,NEW (Thick* macros; scientific_review.md)

@@ -1,6 +1,6 @@
 # Task 011 — Review the article as a referee before freezing it
 
-Status: planned. Created: 2026-10-09.
+Status: completed 2026-10-09 (milestone 114). Created: 2026-10-09.
 Dependencies: 008, 009, 010; all included simulation tasks complete.
 Strategy: [additional simulations and journal strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md).
 

@@ -347,6 +347,11 @@ class Builder:
     def tables_and_macros(self):
         tol = self.load("tolerance_replicates")
         s6r = self.load("operating_region_replicate")
+        th = self.load("thick_nkm_check")
+        self.macro("ThickSameCapture", th["means"]["thick_same_angle"] * 100, "{:.1f}")
+        self.macro("ThickRematchedCapture", th["means"]["thick_rematched"] * 100, "{:.1f}")
+        self.macro("ThinRepCapture", th["means"]["thin"] * 100, "{:.1f}")
+        self.macro("ThickRematchedXpMrad", th["rematched_xp_rad"] * 1e3, "{:.2f}")
         b = self.best
         self.macro("OpXinjMm", b["x_inj_m"] * 1e3, "{:g}")
         self.macro("OpXpMrad", b["xp_inj_rad"] * 1e3, "{:.2f}")

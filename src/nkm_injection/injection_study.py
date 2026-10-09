@@ -316,8 +316,57 @@ def stored_beam_at_nkm(config: InjectionStudyConfig, ring: PreparedRing, n: int,
 # Tracking
 # ---------------------------------------------------------------------------
 
+class ThickNKMKicker:
+    """Thick NKM (drift-kick-drift slices) using the transverse profile B_y(x) of ``By.txt`` uniform over L.
+
+    Used to bound the thin-kick approximation. The beam is given at the NKM centre (as for the thin kick);
+    it is drifted back by L/2, integrated through L with field P*S*(-B_y(x - dx)) (so that the integrated
+    electron kick equals the kick-map value on the midplane) and drifted back to the centre by -L/2.
+    No vertical field (y-independent profile). Coordinates outside the profile are lost (no extrapolation).
+    """
+    model = "fieldmap_thick"
+
+    def __init__(self, config: InjectionStudyConfig, by_x_m: np.ndarray, by_T: np.ndarray, n_slices: int = 160,
+                 length_m: float = 0.525):
+        from .fieldmap import NKMFieldMap1D
+        self.config, self.n_slices, self.length_m = config, int(n_slices), float(length_m)
+        self.profile = NKMFieldMap1D(np.asarray(by_x_m, float), np.asarray(by_T, float))
+        self.interpolation = "linear"
+
+    def apply(self, beam: np.ndarray, closed_orbit_x: float) -> np.ndarray:
+        """Kick live particles in place; return the mask of particles lost outside the profile."""
+        from .tracking import track_nkm_thick_symplectic
+        live = np.flatnonzero(np.isfinite(beam[0]))
+        sub = beam[:, live].copy()
+        half = 0.5 * self.length_m
+        sub[0] -= half * sub[1]; sub[2] -= half * sub[3]  # back to the magnet entrance (paraxial drift)
+        lo, hi = self.profile.x_min, self.profile.x_max
+        gain = -self.config.kicker_polarity * self.config.field_scale
+        dx = self.config.nkm_dx_m - closed_orbit_x
+        bad = np.zeros(sub.shape[1], bool)
+
+        def field(x, y, z):
+            xs = x - dx
+            out = (xs < lo) | (xs > hi)
+            bad[out] = True
+            by = gain * self.profile.evaluate(np.clip(xs, lo, hi))
+            return np.where(out, 0.0, by), np.zeros_like(x)
+        out = track_nkm_thick_symplectic(sub, field, length_m=self.length_m, n_slices=self.n_slices,
+                                         energy_GeV=self.config.energy_eV * 1e-9)
+        out[1] += self.config.kick_offset_rad
+        out[0] -= half * out[1]; out[2] -= half * out[3]  # forward drift to exit then back by L/2 = net -L/2
+        beam[:, live] = out
+        lost = np.zeros(beam.shape[1], bool)
+        lost[live[bad]] = True
+        beam[:, lost] = np.nan
+        return lost
+
+
 def _apply_kick(beam: np.ndarray, kicker: KickModelEvaluator, closed_orbit_x: float) -> Tuple[np.ndarray, np.ndarray]:
     """Apply the thin kick in place to live particles; return (live mask, outside-map mask)."""
+    if isinstance(kicker, ThickNKMKicker):
+        live = np.isfinite(beam[0])
+        return live, kicker.apply(beam, closed_orbit_x)
     live = np.isfinite(beam[0])
     x_abs = beam[0, live] + closed_orbit_x  # magnet-frame position includes the closed-orbit offset
     y = beam[2, live]

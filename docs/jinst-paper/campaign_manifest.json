@@ -20,7 +20,8 @@
     "tolerance_replicates": "results/journal_campaign_01/tolerance_replicates/tolerance_replicate_analysis.json",
     "optimization_summary": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
     "optimization_config": "backups_20261009/production_statistical_01/optimization/config.json",
-    "error_budget": "results/journal_campaign_01/error_budget.json"
+    "error_budget": "results/journal_campaign_01/error_budget.json",
+    "thick_nkm_check": "results/journal_campaign_01/review/thick_nkm_check/thick_nkm_check.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -39,6 +40,7 @@
     "tolerance_replicates": "6c71cc92b294e477a1a4c9811adfc6b03c440fd986ea896c9d8e1fe73affb3de",
     "optimization_summary": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
     "optimization_config": "382e23dd1d4ed167e6cf321e40f5041e42c5909a0b5dbf1da9101ce4883f8ae2",
-    "error_budget": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146"
+    "error_budget": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146",
+    "thick_nkm_check": "ad0ca5a41b56c1523765fc06f1e6b0382ed0f6e778b17d7c4fe3ae99ab441026"
   }
 }

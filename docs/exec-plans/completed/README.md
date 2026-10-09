@@ -379,3 +379,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 118. [**Milestone 118 — Reviewer 2 Referee Report**](118_reviewer2_report.md)
     - Major-revision referee report with 8 major and 14 minor comments and 20 prioritised revision tasks and venue-specific guidance for an undecided target journal (docs/jinst-paper/reviews/reviewer2_report.md).
+
+119. [**Milestone 119 — Reviewer 1 Manuscript Report and Revision Register**](119_reviewer1_manuscript_report.md)
+    - Assessed the current scientific argument and selected evidence, recommended major revision, prepared twelve ordered tasks with acceptance criteria, and verified local evidence hashes, capture summaries and documentation without changing the manuscript.

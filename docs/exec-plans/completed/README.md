@@ -352,3 +352,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 109. [**Milestone 109 — Journal Task 006: Combined-Error Capture Robustness (S7)**](109_task006_capture_robustness.md)
     - Ran coupled combined-error capture ensembles with diagnostic scenarios and identified injected-orbit jitter at the septum as the limiting tolerance.
+
+110. [**Milestone 110 — Journal Task 007: Role of Pareto Optimisation**](110_task007_moga_decision.md)
+    - Decided, with code and artifact evidence, to omit MOGA from the article's claims and not to run S8.

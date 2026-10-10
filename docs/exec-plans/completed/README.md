@@ -406,3 +406,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 127. [**Milestone 127 — C5: Combined-Error Robustness with the 3-D NKM**](127_c5_combined_errors_3d.md)
     - 150 paired realizations: 3-D NKM 40.5 % vs dipole 61.4 % (−20.9 points); the gap grows from 2 points without errors; limited by the transfer-line exit centroid (booster jitter).
+
+129. [**Milestone 129 — C7: Stored-Beam Transparency from the Exact Field**](129_c7_transparency_3d.md)
+    - Aligned centroid kick exactly zero by symmetry; 0.2 mm offset gives 0.10 σ and ≈1 % emittance; 1000-turn 6-D tracking reproduces the single-pass estimates (2.23 vs 2.22 at 0.5 mm).

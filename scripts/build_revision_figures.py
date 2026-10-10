@@ -328,9 +328,15 @@ class RevisionBuilder(bj.Builder):
         rows = [r for r in tr["offset_response"] if r["dy_m"] == 0.0]
         dx = np.array([r["dx_m"] for r in rows]) * 1e3
         ax.plot(dx[1:], [r["exact"]["x"]["amplitude_over_sigma"] for r in rows[1:]], color=COL["fieldmap"], marker="o", label="horizontal offset: $A_x/\\sigma_x$")
-        ax.plot(dx[1:], [r["exact"]["x"]["filamented_emittance_growth"] for r in rows[1:]], color=COL["fieldmap"], ls="--", label="$\\Delta\\varepsilon_x/\\varepsilon_x$ (filamented)")
+        ax.plot(dx[1:], [r["exact"]["x"]["filamented_emittance_growth"] for r in rows[1:]], color=COL["fieldmap"], ls="--", label="$\\Delta\\varepsilon_x/\\varepsilon_x$ from the kick spread")
         rowsy = [r for r in tr["offset_response"] if r["dy_m"] > 0]
         ax.plot([r["dy_m"] * 1e3 for r in rowsy], [r["exact"]["y"]["amplitude_over_sigma"] for r in rowsy], color=COL["linear"], marker="^", label="vertical offset: $A_y/\\sigma_y$")
+        if self.has("c7_tracked"):
+            tk = self.load("c7_tracked")
+            td = sorted({r["dx_m"] for r in tk["rows"] if r["dx_m"] > 0})
+            ax.scatter([d * 1e3 for d in td], [np.mean([r["centroid_x_amplitude_over_sigma"] for r in tk["rows"] if r["dx_m"] == d])
+                                               for d in td], marker="s", s=36, facecolors="none", edgecolors=INK, zorder=3,
+                       label=f"tracked $A_x/\\sigma_x$ ({tk['rows'][0]['turns']} turns)")
         ax.axhline(0.1, color=INK2, lw=0.8, ls=":")
         ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlabel("NKM–orbit offset [mm]"); ax.set_ylabel("stored-beam response")
         from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
@@ -344,6 +350,10 @@ class RevisionBuilder(bj.Builder):
                 nm = {0.1: "One", 0.2: "Two", 0.5: "Five"}[d]
                 self.macro(f"Transp{nm}Amp", r["exact"]["x"]["amplitude_over_sigma"], "{:.3f}" if d < 0.2 else "{:.2f}")
                 self.macro(f"Transp{nm}Emit", tex_sci(r["exact"]["x"]["filamented_emittance_growth"], 2))
+                # total rms emittance once the centroid oscillation has also filamented: 1 + A^2/2 + growth
+                e = r["exact"]["x"]
+                self.macro(f"Transp{nm}Total", 1 + e["amplitude_over_sigma"] ** 2 / 2 + e["filamented_emittance_growth"],
+                           "{:.3f}" if d < 0.5 else "{:.2f}")
             if d == 0.1:
                 self.macro("TranspBilinOne", r["map_linear"]["x"]["amplitude_over_sigma"], "{:.2f}")
         r0 = rows[0]["exact"]["x"]
@@ -367,99 +377,122 @@ class RevisionBuilder(bj.Builder):
                     self.macro(f"Tracked{nm}Amp", np.mean([r["centroid_x_amplitude_over_sigma"] for r in rr]), "{:.2f}")
                     self.macro(f"Tracked{nm}EmitRatio", np.mean([r["emit_x_ratio_last"] for r in rr]), "{:.2f}")
             self.macro("TrackedTurns", tk["rows"][0]["turns"], "{:d}")
-        self.save(fig, "fig7_controls_transparency", ["c3_validate", "c7_analytic"],
+        self.save(fig, "fig7_controls_transparency", ["c3_validate", "c7_analytic"] + (["c7_tracked"] if self.has("c7_tracked") else []),
                   "fresh bunches (4 x 500) at the selected point for the 3-D NKM and calibrated controls (left); stored-beam "
                   "response from the exact field with deterministic Gauss-Hermite averaging (right)")
 
     # ------------------------------------------------------------------ figure 8
     def fig_robustness(self):
+        """Combined errors without (prefix c5/c6) and with ideal static orbit correction (c5c/c6c) at the septum exit."""
         seeds = (42, 123, 777)
-        nkm = self._caps([f"c5_raw_{s}" for s in seeds], "fieldmap_3d")
-        dip = self._caps([f"c5_raw_{s}" for s in seeds], "dipole")
         levels = (("0", 0.0), ("0.25", 0.25), ("0.5", 0.5), ("0.75", 0.75))
-        jit = {f: self._caps([f"c6_raw_{lab}"], "fieldmap_3d") for lab, f in levels}
-        jit[1.0] = {k: v for k, v in nkm.items() if k[0] == 42}
-        xo = self._caps(["c6_raw_x_only"], "fieldmap_3d"); po = self._caps(["c6_raw_xp_only"], "fieldmap_3d")
+        sets = {}
+        for tag, c5, c6 in (("U", "c5", "c6"), ("C", "c5c", "c6c")):
+            nkm = self._caps([f"{c5}_raw_{s}" for s in seeds], "fieldmap_3d")
+            dip = self._caps([f"{c5}_raw_{s}" for s in seeds], "dipole")
+            jit = {f: self._caps([f"{c6}_raw_{lab}"], "fieldmap_3d") for lab, f in levels}
+            jit[1.0] = {k: v for k, v in nkm.items() if k[0] == 42}
+            xo = self._caps([f"{c6}_raw_x_only"], "fieldmap_3d"); po = self._caps([f"{c6}_raw_xp_only"], "fieldmap_3d")
+            fs = sorted(jit)
+            mean = np.array([np.mean([x[0] for x in jit[f].values()]) * 100 for f in fs])
+            p10 = np.array([np.quantile([x[0] for x in jit[f].values()], 0.1) * 100 for f in fs])
+            boot = []
+            for f in fs:
+                v = np.array([x[0] for x in jit[f].values()])
+                b = v[np.random.default_rng(1729).integers(0, len(v), (5000, len(v)))].mean(axis=1)
+                boot.append(np.quantile(b, [0.025, 0.975]) * 100)
+            sets[tag] = dict(nkm=nkm, dip=dip, jit=jit, xo=xo, po=po, fs=fs, mean=mean, p10=p10, boot=np.array(boot),
+                             c5=c5)
         off = self.load("c3_nkm_offset"); emi = self.load("c3_emittance")
-        fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.8), gridspec_kw={"width_ratios": [1.15, 1.1, 1]}, layout="constrained")
+        fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.9), gridspec_kw={"width_ratios": [1.15, 1.1, 1]}, layout="constrained")
         ax = axes[0]
-        for d, c, lab in ((nkm, COL["fieldmap"], f"NKM (3-D), {len(nkm)}"), (dip, COL["dipole"], f"dipole, {len(dip)}")):
-            v = np.sort([x[0] for x in d.values()]) * 100
-            ax.step(v, np.arange(1, len(v) + 1) / len(v), where="post", color=c, label=lab)
-        ax.set_xlabel("capture per realization [%]"); ax.set_ylabel("cumulative fraction"); ax.legend(fontsize=7, loc="upper left")
+        for tag, ls, nm in (("C", "-", "corrected"), ("U", "--", "uncorrected")):
+            for key, c, lab in (("nkm", COL["fieldmap"], "NKM"), ("dip", COL["dipole"], "dipole")):
+                v = np.sort([x[0] for x in sets[tag][key].values()]) * 100
+                ax.step(v, np.arange(1, len(v) + 1) / len(v), where="post", color=c, ls=ls, label=f"{lab}, {nm}")
+        ax.set_xlabel("capture per realization [%]"); ax.set_ylabel("cumulative fraction")
+        ax.legend(fontsize=6.3, loc="upper left")
         ax = axes[1]
-        fs = sorted(jit)
-        mean = [np.mean([x[0] for x in jit[f].values()]) * 100 for f in fs]
-        p10 = [np.quantile([x[0] for x in jit[f].values()], 0.1) * 100 for f in fs]
-        boot = []
-        for f in fs:
-            v = np.array([x[0] for x in jit[f].values()])
-            b = v[np.random.default_rng(1729).integers(0, len(v), (5000, len(v)))].mean(axis=1)
-            boot.append(np.quantile(b, [0.025, 0.975]) * 100)
-        boot = np.array(boot)
-        ax.fill_between(fs, boot[:, 0], boot[:, 1], color="#cde2fb", lw=0)
-        ax.plot(fs, mean, color=COL["fieldmap"], marker="o", label="mean")
-        ax.plot(fs, p10, color=COL["fieldmap"], ls="--", marker="v", ms=4, label="10th percentile")
-        ax.scatter([1.0], [np.mean([x[0] for x in xo.values()]) * 100], marker="s", color=INK, s=22, zorder=3, label="position jitter only")
-        ax.scatter([1.0], [np.mean([x[0] for x in po.values()]) * 100], marker="D", color=INK2, s=22, zorder=3, label="angle jitter only")
+        c = sets["C"]
+        ax.fill_between(c["fs"], c["boot"][:, 0], c["boot"][:, 1], color="#cde2fb", lw=0)
+        ax.plot(c["fs"], c["mean"], color=COL["fieldmap"], marker="o", label="mean, corrected")
+        ax.plot(c["fs"], c["p10"], color=COL["fieldmap"], ls="--", marker="v", ms=4, label="10th pct., corrected")
+        u = sets["U"]
+        ax.plot(u["fs"], u["mean"], color=INK2, ls=":", marker="o", ms=3, label="mean, uncorrected")
+        ax.scatter([1.0], [np.mean([x[0] for x in c["xo"].values()]) * 100], marker="s", color=INK, s=22, zorder=3,
+                   label="position jitter only")
+        ax.scatter([1.0], [np.mean([x[0] for x in c["po"].values()]) * 100], marker="D", color=INK2, s=22, zorder=3,
+                   label="angle jitter only")
+        ax.axhline(THRESHOLD * 100, color=INK2, lw=0.6, ls="-.")
         ax.set_xlabel("booster jitter / assumed (0.5 mm, 0.2 mrad)"); ax.set_ylabel("capture [%]"); ax.set_ylim(0, 100)
-        ax.legend(fontsize=6.3, loc="lower left")
+        ax.legend(fontsize=5.8, loc="lower left")
         ax = axes[2]
-        for data, key, sc, c, mk, lab in ((off, "nkm_offset_m", 1e3, COL["fieldmap"], "o", "NKM offset [mm]"),):
-            g = {}
-            for r in data["rows"]:
-                m = r["models"]["fieldmap_3d"]; t = g.setdefault(round(r[key] * sc, 3), [0, 0]); t[0] += m["captured"]; t[1] += m["n"]
-            o = np.array(sorted(g)); cc = np.array([g[v][0] / g[v][1] for v in o]) * 100
-            ax.plot(o, cc, color=c, marker=mk, label="vs NKM–orbit offset [mm]")
+        g = {}
+        for r in off["rows"]:
+            m = r["models"]["fieldmap_3d"]; t = g.setdefault(round(r["nkm_offset_m"] * 1e3, 3), [0, 0]); t[0] += m["captured"]; t[1] += m["n"]
+        o = np.array(sorted(g)); cc = np.array([g[v][0] / g[v][1] for v in o]) * 100
+        ax.plot(o, cc, color=COL["fieldmap"], marker="o")
         ax.set_xlabel("NKM–orbit offset [mm]"); ax.set_ylabel("capture, no other errors [%]"); ax.set_ylim(0, 100)
         axt = ax.twiny(); axt.grid(False)
-        g = {}
+        emig = {}
         for r in emi["rows"]:
-            m = r["models"]["fieldmap_3d"]; t = g.setdefault(round(r["emit_x_m_rad"] * 1e9, 1), [0, 0]); t[0] += m["captured"]; t[1] += m["n"]
-        o = np.array(sorted(g)); ce = np.array([g[v][0] / g[v][1] for v in o]) * 100
+            m = r["models"]["fieldmap_3d"]; t = emig.setdefault(round(r["emit_x_m_rad"] * 1e9, 1), [0, 0]); t[0] += m["captured"]; t[1] += m["n"]
+        o = np.array(sorted(emig)); ce = np.array([emig[v][0] / emig[v][1] for v in o]) * 100
         axt.plot(o, ce, color=COL["dipole"], marker="s", ms=4)
         axt.set_xlabel("injected emittance $\\varepsilon_x$ [nm rad]", color=COL["dipole"]); axt.tick_params(axis="x", colors=COL["dipole"])
-        self._robust_macros(nkm, dip, jit, xo, po, fs, mean, p10, boot, g, off)
-        self.save(fig, "fig8_robustness", [f"c5_raw_{s}" for s in seeds] + [f"c6_raw_{l}" for l, _ in levels] +
-                  ["c6_raw_x_only", "c6_raw_xp_only", "c3_nkm_offset", "c3_emittance"],
-                  "combined errors with the 3-D NKM and the 3-D-calibrated dipole (left); capture vs booster jitter scale "
-                  "(50 paired realizations per level, seed 42; band: bootstrap 95 % of the mean) (centre); capture vs NKM-orbit "
-                  "offset and injected emittance without other errors (right)")
+        for tag, prefix in (("U", ""), ("C", "C")):
+            self._robust_macros(prefix, sets[tag])
+        self._offset_emittance_macros(emig, off)
+        keys = []
+        for c5, c6 in (("c5", "c6"), ("c5c", "c6c")):
+            keys += [f"{c5}_raw_{s}" for s in seeds] + [f"{c6}_raw_{l}" for l, _ in levels] + [f"{c6}_raw_x_only", f"{c6}_raw_xp_only"]
+        self.save(fig, "fig8_robustness", keys + ["c3_nkm_offset", "c3_emittance"],
+                  "combined errors with the 3-D NKM and the 3-D-calibrated dipole, with (solid) and without (dashed) ideal "
+                  "static orbit correction at the septum exit (left); capture vs booster jitter scale (50 paired "
+                  "realizations per level, seed 42; band: bootstrap 95 % of the corrected mean) (centre); capture vs "
+                  "NKM-orbit offset and injected emittance without other errors (right)")
 
-    def _robust_macros(self, nkm, dip, jit, xo, po, fs, mean, p10, boot, emig, off):
+    def _robust_macros(self, p, s):
+        """Macros Rob<p>*, Jit<p>* for one ensemble set; p = '' (uncorrected) or 'C' (ideal static correction)."""
+        nkm, dip, jit = s["nkm"], s["dip"], s["jit"]
         v = np.array([x[0] for x in nkm.values()])
         b = v[np.random.default_rng(1729).integers(0, len(v), (10000, len(v)))].mean(axis=1)
-        self.macro("RobMean", v.mean() * 100, "{:.1f}")
-        self.macro("RobMeanLo", np.quantile(b, 0.025) * 100, "{:.1f}")
-        self.macro("RobMeanHi", np.quantile(b, 0.975) * 100, "{:.1f}")
-        self.macro("RobMedian", np.median(v) * 100, "{:.1f}")
-        self.macro("RobPten", np.quantile(v, 0.1) * 100, "{:.1f}")
-        self.macro("RobN", len(v), "{:d}")
+        self.macro(f"Rob{p}Mean", v.mean() * 100, "{:.1f}")
+        self.macro(f"Rob{p}MeanLo", np.quantile(b, 0.025) * 100, "{:.1f}")
+        self.macro(f"Rob{p}MeanHi", np.quantile(b, 0.975) * 100, "{:.1f}")
+        self.macro(f"Rob{p}Median", np.median(v) * 100, "{:.1f}")
+        self.macro(f"Rob{p}Pten", np.quantile(v, 0.1) * 100, "{:.1f}")
+        self.macro(f"Rob{p}N", len(v), "{:d}")
+        k = int(np.sum(v >= THRESHOLD)); lo, hi = wilson(k, len(v))
+        self.macro(f"Rob{p}FracEighty", k / len(v) * 100, "{:.0f}")
+        self.macro(f"Rob{p}FracEightyLo", lo * 100, "{:.0f}"); self.macro(f"Rob{p}FracEightyHi", hi * 100, "{:.0f}")
         k = int(np.sum(v >= 0.9)); lo, hi = wilson(k, len(v))
-        self.macro("RobFracNinety", k / len(v) * 100, "{:.0f}")
-        self.macro("RobFracNinetyLo", lo * 100, "{:.0f}"); self.macro("RobFracNinetyHi", hi * 100, "{:.0f}")
+        self.macro(f"Rob{p}FracNinety", k / len(v) * 100, "{:.0f}")
+        self.macro(f"Rob{p}FracNinetyLo", lo * 100, "{:.0f}"); self.macro(f"Rob{p}FracNinetyHi", hi * 100, "{:.0f}")
         vd = np.array([x[0] for x in dip.values()])
-        self.macro("RobDipMean", vd.mean() * 100, "{:.1f}")
+        self.macro(f"Rob{p}DipMean", vd.mean() * 100, "{:.1f}")
         m, lo, hi, n = self._paired(nkm, dip)
-        self.macro("RobNkmMinusDip", m * 100, "{:+.1f}"); self.macro("RobNkmMinusDipLo", lo * 100, "{:+.1f}")
-        self.macro("RobNkmMinusDipHi", hi * 100, "{:+.1f}"); self.macro("RobPairN", n, "{:d}")
-        z = self.load("c5_summary_42")["zero_error_realization"]
-        self.macro("RobZeroErr", z["fieldmap_3d"] * 100, "{:.1f}")
-        self.macro("RobZeroErrDip", z["dipole"] * 100, "{:.1f}")
-        for f, mm, pp, bb in zip(fs, mean, p10, boot):
-            nm = {0.0: "Zero", 0.25: "Quarter", 0.5: "Half", 0.75: "ThreeQ", 1.0: "Full"}[f]
-            self.macro(f"Jit{nm}Mean", mm, "{:.1f}"); self.macro(f"Jit{nm}Pten", pp, "{:.1f}")
-            self.macro(f"Jit{nm}Lo", bb[0], "{:.1f}"); self.macro(f"Jit{nm}Hi", bb[1], "{:.1f}")
-        # required jitter scale for a mean capture of 80 % (linear interpolation of the paired curve)
-        cr = crossings(np.array(fs), np.array(mean), 80.0)
-        self.macro("JitScaleForEighty", cr[0] if cr else float("nan"), "{:.2f}")
-        self.macro("JitXOnlyMean", np.mean([x[0] for x in xo.values()]) * 100, "{:.1f}")
-        self.macro("JitXpOnlyMean", np.mean([x[0] for x in po.values()]) * 100, "{:.1f}")
-        for f, nm in ((0.0, "Zero"), (1.0, "Full")):
-            m2, lo2, hi2, _ = self._paired(jit[f], {k: v for k, v in nkm.items() if k[0] == 42})
+        self.macro(f"Rob{p}NkmMinusDip", m * 100, "{:+.1f}"); self.macro(f"Rob{p}NkmMinusDipLo", lo * 100, "{:+.1f}")
+        self.macro(f"Rob{p}NkmMinusDipHi", hi * 100, "{:+.1f}"); self.macro(f"Rob{p}PairN", n, "{:d}")
+        z = self.load(f"{s['c5']}_summary_42")["zero_error_realization"]
+        self.macro(f"Rob{p}ZeroErr", z["fieldmap_3d"] * 100, "{:.1f}")
+        self.macro(f"Rob{p}ZeroErrDip", z["dipole"] * 100, "{:.1f}")
+        names = {0.0: "Zero", 0.25: "Quarter", 0.5: "Half", 0.75: "ThreeQ", 1.0: "Full"}
+        for f, mm, pp, bb in zip(s["fs"], s["mean"], s["p10"], s["boot"]):
+            self.macro(f"Jit{p}{names[f]}Mean", mm, "{:.1f}"); self.macro(f"Jit{p}{names[f]}Pten", pp, "{:.1f}")
+            self.macro(f"Jit{p}{names[f]}Lo", bb[0], "{:.1f}"); self.macro(f"Jit{p}{names[f]}Hi", bb[1], "{:.1f}")
+        # jitter scale for a mean capture at the threshold (linear interpolation of the paired curve); the curve
+        # may stay below the threshold even without jitter, then the macro reads "none"
+        for arr, nm in ((s["mean"], "Eighty"), (s["boot"][:, 0], "EightyLo"), (s["boot"][:, 1], "EightyHi")):
+            cr = crossings(np.array(s["fs"]), np.asarray(arr), THRESHOLD * 100)
+            self.macro(f"Jit{p}ScaleFor{nm}", f"{cr[0]:.2f}" if cr else "none", "{}")
+        self.macro(f"Jit{p}XOnlyMean", np.mean([x[0] for x in s["xo"].values()]) * 100, "{:.1f}")
+        self.macro(f"Jit{p}XpOnlyMean", np.mean([x[0] for x in s["po"].values()]) * 100, "{:.1f}")
         mm, lo2, hi2, _ = self._paired(jit[0.0], jit[1.0])
-        self.macro("JitRemovalGain", mm * 100, "{:.1f}"); self.macro("JitRemovalGainLo", lo2 * 100, "{:.1f}")
-        self.macro("JitRemovalGainHi", hi2 * 100, "{:.1f}")
+        self.macro(f"Jit{p}RemovalGain", mm * 100, "{:.1f}"); self.macro(f"Jit{p}RemovalGainLo", lo2 * 100, "{:.1f}")
+        self.macro(f"Jit{p}RemovalGainHi", hi2 * 100, "{:.1f}")
+
+    def _offset_emittance_macros(self, emig, off):
         words = {25: "TwentyFive", 50: "Fifty", 100: "Hundred", 150: "OneFifty", 200: "TwoHundred"}
         for e in sorted(emig):
             if int(round(e)) in words:

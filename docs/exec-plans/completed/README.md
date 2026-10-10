@@ -436,3 +436,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 137. [**Milestone 137 — Reviewer 1 Second-Round Manuscript Report**](137_reviewer1_round2_manuscript_report.md)
     - Assessed the revised 3-D NKM manuscript, recommended focused major revision, wrote ten ordered tasks, verified 46 evidence hashes and paired jitter uncertainty, and preserved all previous reviews and scientific/manuscript inputs.
+
+138. [**Milestone 138 — Consolidated Round-2 Revision Plan**](138_consolidated_revision_plan_round2.md)
+    - Reconciled Reviewer 1 (R1B-01–10) and Reviewer 2 (R2b-1–15) round-2 tasks into D1–D15 with author inputs A1–A6; realism tasks reduced to feasible scenarios, ensembles rerun once after budget/ring/chamber are fixed; integrator validation gates new simulations.

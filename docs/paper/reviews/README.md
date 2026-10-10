@@ -7,9 +7,11 @@ recommendations and scientific tasks remain distinct from software checks.
 | :--- | :--- | :--- |
 | [Reviewer 1](reviewer1_report.md), 2026-10-10 | Major revision; no acceptance in present form | [12 ordered tasks](reviewer1_revision_tasks.md) |
 | [Reviewer 2](reviewer2_report.md), 2026-10-10 | Major revision | Included in the report |
+| [Reviewer 1, round 2](reviewer1_round2_20261011_report.md), 2026-10-11 | Focused major revision; do not accept the present version | [10 ordered tasks](reviewer1_round2_20261011_revision_tasks.md) |
 | [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
 
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
+Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
 
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding

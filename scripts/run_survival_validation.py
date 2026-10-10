@@ -87,7 +87,8 @@ def run_job(job):
         out.update({"ring_error_seed": job["ring_error_seed"], "quad_rel": job["quad_rel"], "sext_rel": job["sext_rel"],
                     "n_quads": nq, "n_sexts": ns, "ring": ring_diagnostics(ring, job["turns"])})
     beam = _beam(job, cfg, ring)
-    res = track_injection(cfg, ring, FilamentNKMKicker(cfg, n_slices=job["n_slices"]), beam, "element", n_turns=job["turns"])
+    kicker = FilamentNKMKicker(cfg, n_slices=job["n_slices"], vertical_kick=not job.get("no_vertical_kick", False))
+    res = track_injection(cfg, ring, kicker, beam, "element", n_turns=job["turns"])
     out.update({"n": res["n_particles"], "captured": res["captured"], "loss_causes": res["loss_causes"],
                 "first_loss_turn": res["first_loss_turn"], "turns": job["turns"],
                 "chamber_half_x_m": cfg.chamber_half_x_m, "chamber_half_y_m": cfg.chamber_half_y_m,
@@ -132,6 +133,7 @@ def main(argv=None):
     p.add_argument("--particles", type=int, default=500)
     p.add_argument("--turns", type=int, default=500)
     p.add_argument("--n-slices", type=int, default=640)
+    p.add_argument("--no-vertical-kick", action="store_true", help="Diagnostic: suppress the NKM vertical kick")
     p.add_argument("--workers", "-w", type=int, default=1)
     p.add_argument("--repo-root", type=Path, default=REPO)
     p.add_argument("--output-dir", type=Path, required=True)
@@ -142,7 +144,8 @@ def main(argv=None):
     bts = {"bts_config": sel.bts.to_dict(), "initial_twiss": sel.initial_twiss}
     work = out / "_lattice"
     cached_ring(cfg, a.repo_root, work)
-    base = {"repo_root": str(a.repo_root), "work_dir": str(work), "bts": bts, "n_slices": a.n_slices}
+    base = {"repo_root": str(a.repo_root), "work_dir": str(work), "bts": bts, "n_slices": a.n_slices,
+            "no_vertical_kick": a.no_vertical_kick}
     meta = {"study_config": cfg.to_dict(), "cli": {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(a).items()},
             "input_sha256": input_hashes(a.repo_root, ("kickmap_file.txt", cfg.ring_source)),
             "kicker": "wire_field.FilamentNKMKicker", "loss_definition":

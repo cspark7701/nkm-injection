@@ -400,3 +400,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 125. [**Milestone 125 — C3: Operating Window with the 3-D NKM**](125_c3_operating_window_3d.md)
     - Declared-rule selection validated on fresh seeds (93.0 %); asymmetric 0.74 mrad angular window at 80 % capture; acceptance map; offset and emittance scans.
+
+126. [**Milestone 126 — C4: Survival, Loss Accounting and Bounded Sensitivities**](126_c4_survival_and_sensitivity.md)
+    - 4000-turn survival 89.5 % (500-turn capture 3.5 points optimistic); vertical-aperture loss traced to ring coupling, not the NKM; uncorrected ring errors bound the sensitivity.

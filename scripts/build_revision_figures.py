@@ -487,6 +487,13 @@ class RevisionBuilder(bj.Builder):
             nm = words.get(lab.rstrip("mm"), lab.rstrip("mm").replace(".", "p"))
             self.macro(f"Aper{nm}Cap", v["capture"] * 100, "{:.1f}")
             rows.append((lab, v["capture"]))
+        for key, nm in (("c4_aper_y10", "AperDiagYten"), ("c4_aper_xopen", "AperDiagXopen"), ("c4_aper_xopen_novert", "AperDiagNoVert"),
+                        ("c4_aper_open_novert", "AperDiagOpenNoVert")):
+            v = next(iter(self.load(key)["summary"].values()))
+            self.macro(nm, v["capture"] * 100, "{:.1f}")
+        seeds = {r["seed"] for r in self.load("c4_aper_open_novert")["rows"]}
+        ref = [r["models"]["fieldmap_3d"] for r in self.load("c3_validate")["rows"] if r["seed"] in seeds]
+        self.macro("AperDiagRef", sum(m["captured"] for m in ref) / sum(m["n"] for m in ref) * 100, "{:.1f}")
         caps = {}
         tunes = {}
         das = {}
@@ -503,6 +510,7 @@ class RevisionBuilder(bj.Builder):
             self.macro(f"RingErr{nm}Max", c.max() * 100, "{:.1f}")
             self.macro(f"RingErr{nm}Rel", q * 100, "{:.2f}")
             self.macro(f"RingErr{nm}DAmin", np.nanmax(das[q]) * 1e3, "{:.1f}")  # smallest |DA| (least negative edge)
+            self.macro(f"RingErr{nm}DAmax", np.nanmin(das[q]) * 1e3, "{:.1f}")
             self.macro(f"RingErr{nm}Seeds", len(c), "{:d}")
         self.macro("RingErrSextRel", re["rows"][0]["sext_rel"] * 100, "{:.1f}")
         self.provenance.append({"asset": "tables/journal_macros.tex#survival", "kind": "macros",

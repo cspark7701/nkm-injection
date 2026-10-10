@@ -433,3 +433,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 136. [**Milestone 136 — Reviewer 2, Second-Round Report on the Revised Manuscript**](136_reviewer2_round2_report.md)
     - Major revision: missing chamber in the headline, uncorrected ring errors, micrometre-level wire tolerance for transparency (checked), pulse-length inconsistency, beam-based tuning, lattice version, generality; tasks R2b-1 to R2b-15.
+
+137. [**Milestone 137 — Reviewer 1 Second-Round Manuscript Report**](137_reviewer1_round2_manuscript_report.md)
+    - Assessed the revised 3-D NKM manuscript, recommended focused major revision, wrote ten ordered tasks, verified 46 evidence hashes and paired jitter uncertainty, and preserved all previous reviews and scientific/manuscript inputs.

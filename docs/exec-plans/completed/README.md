@@ -415,3 +415,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 130. [**Milestone 130 — C10: Revised Manuscript Build (KLS, Exact 3-D NKM)**](130_c10_manuscript_build.md)
     - Revision manifest (46 artifacts) → eight figures and macros → gated 13-page build; robustness text checked against final values; claim table rows C0–C16, checklist and cover letter rewritten (venue-neutral).
+
+131. [**Milestone 131 — C11: Frozen Evidence Bundle for the Revised Manuscript**](131_c11_evidence_bundle.md)
+    - 46 manifest artifacts + scientific inputs + code snapshot; `--builder revision --verify` rebuild reproduces the manuscript macros byte for byte.

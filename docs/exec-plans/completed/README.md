@@ -388,3 +388,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 121. [**Milestone 121 — C1: Exact 3-D NKM Field and Kicker-Model Validation**](121_c1_kicker_model_validation.md)
     - Biot–Savart field of the RADIA filament geometry reproduces the kick map to 1e-10; vertical-sign bug fixed; 3-D model (vertical defocusing, self-deflection) selected as principal model.
+
+122. [**Milestone 122 — C2: Finite-Length Mechanism**](122_c2_finite_length_mechanism.md)
+    - Self-deflection inside the magnet (sagitta 0.32 mm), not path averaging or field details, explains the thin/thick reversal; magnet-length design trade-off quantified.

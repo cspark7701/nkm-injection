@@ -38,3 +38,12 @@ references in order of citation (`JHEP.bst` is requested by JINST; `unsrt` is us
 Data and software availability: the repository is public on GitHub, but no permanent archive (DOI) has
 been created; the availability statement therefore cites the repository and commit and says that a
 Zenodo DOI will be created at acceptance. No archive is described as existing before it is created.
+
+## Additions for the revision (2026-10-10, task C9)
+
+| Key | Verified against | Notes |
+| :--- | :--- | :--- |
+| Kallestrup2019 | DataCite DOI 10.18429/JACoW-IPAC2019-TUPGW063; JACoW RIS (pp. 1547–1550) | MAX IV MIK coating: quadrupole fields during the pulse, simulated emittance growth ≤ 21 pm rad |
+| Alexandre2021 | Crossref DOI 10.1016/j.nima.2020.164739 (NIM A 986, 164739) | MAX IV MIK transparent top-up |
+| Velloso2023 | DataCite DOI 10.18429/JACoW-IPAC2023-WEPL087; JACoW landing page (pp. 3302–3305); author list from DataCite | SIRIUS NLK: design 99 % at −9 mm DA; ≈85 ± 8 % with design sextupoles; RCDS sextupole optimisation |
+| Elleaume1992 | JACoW EPAC'92 PDF EPAC1992_0661 (pp. 661–664) | kick-map (second-order) formalism; no DOI |

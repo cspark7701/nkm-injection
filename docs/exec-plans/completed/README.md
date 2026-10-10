@@ -391,3 +391,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 122. [**Milestone 122 — C2: Finite-Length Mechanism**](122_c2_finite_length_mechanism.md)
     - Self-deflection inside the magnet (sagitta 0.32 mm), not path averaging or field details, explains the thin/thick reversal; magnet-length design trade-off quantified.
+
+123. [**Milestone 123 — C9: Contribution and Verified Comparison**](123_c9_novelty_and_comparison.md)
+    - Stated four demonstrated contributions, a caveated NLK/MIK comparison table and four newly verified references; lattice identity flagged for author confirmation.

@@ -481,6 +481,9 @@ class RevisionBuilder(bj.Builder):
         for f, mm, pp, bb in zip(s["fs"], s["mean"], s["p10"], s["boot"]):
             self.macro(f"Jit{p}{names[f]}Mean", mm, "{:.1f}"); self.macro(f"Jit{p}{names[f]}Pten", pp, "{:.1f}")
             self.macro(f"Jit{p}{names[f]}Lo", bb[0], "{:.1f}"); self.macro(f"Jit{p}{names[f]}Hi", bb[1], "{:.1f}")
+            vv = np.array([x[0] for x in jit[f].values()])
+            self.macro(f"Jit{p}{names[f]}Median", np.median(vv) * 100, "{:.1f}")
+            self.macro(f"Jit{p}{names[f]}FracEighty", np.mean(vv >= THRESHOLD) * 100, "{:.0f}")
         # jitter scale for a mean capture at the threshold (linear interpolation of the paired curve); the curve
         # may stay below the threshold even without jitter, then the macro reads "none"
         for arr, nm in ((s["mean"], "Eighty"), (s["boot"][:, 0], "EightyLo"), (s["boot"][:, 1], "EightyHi")):

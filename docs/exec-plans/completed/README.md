@@ -424,3 +424,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 133. [**Milestone 133 — Introduction Expanded with Verified References**](133_introduction_references.md)
     - Nine verified references (DLSR overview, ESRF-EBS, top-up, swap-out, longitudinal injection, pulsed quadrupole, MAX IV dipole kicker, s-dependent integrator, KLS lattice); gated build 14 pages.
+
+134. [**Milestone 134 — Journal Fit for the Revised NKM Manuscript**](134_journal_fit_recommendation.md)
+    - Read the revised physics-focused paper, checked official journal scopes, and recommended PRAB followed by JINST and NIM A, with venue-specific framing and unchanged manuscript/scientific inputs.

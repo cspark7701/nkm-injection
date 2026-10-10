@@ -193,9 +193,12 @@ class RevisionBuilder(bj.Builder):
         ax.set_yticks(range(len(xs))); ax.set_yticklabels([f"{x*1e3:g}" for x in xs], fontsize=7)
         ax.set_xlabel("field scale $S$"); ax.set_ylabel("$x_{\\rm inj}$ [mm]"); ax.grid(False)
         best = max(grid["rows"], key=lambda r: r["models"]["fieldmap_3d"]["ci95"][0])
-        fig.colorbar(im, ax=ax, shrink=0.85, pad=0.02).set_label("capture [%]")
-        for ax, data, key, lab, nm in ((axes[1], ang, "xp_offset_rad", "angle offset from matched $x'$ [mrad]", "Angle"),
-                                       (axes[2], pos, "dx_offset_m", "septum position offset [mm]", "Pos")):
+        from matplotlib.patches import Rectangle
+        bi, bj_ = xs.index(best["x_inj_m"]), ss.index(best["field_scale"])
+        ax.add_patch(Rectangle((bj_ - 0.5, bi - 0.5), 1, 1, fill=False, ec=COL["dipole"], lw=2))
+        ax.set_title("capture [%] at the matched angle", fontsize=8)
+        for ax, data, key, lab, nm in ((axes[1], ang, "xp_offset_rad", "angle offset [mrad]", "Angle"),
+                                       (axes[2], pos, "dx_offset_m", "position offset [mm]", "Pos")):
             groups = {}
             for r in data["rows"]:
                 m = r["models"]["fieldmap_3d"]
@@ -206,7 +209,11 @@ class RevisionBuilder(bj.Builder):
             ax.fill_between(o, ci[:, 0] * 100, ci[:, 1] * 100, color="#cde2fb", lw=0)
             ax.plot(o, c * 100, color=COL["fieldmap"], marker="o", ms=3)
             ax.axhline(THRESHOLD * 100, color=INK2, lw=0.8, ls="--")
-            ax.set_xlabel(lab); ax.set_ylabel("capture [%]"); ax.set_ylim(0, 100)
+            ax.set_xlabel(lab); ax.set_ylim(0, 100)
+            if nm == "Angle":
+                ax.set_ylabel("capture [%]")
+            else:
+                ax.tick_params(labelleft=False)
             cr = crossings(o, c, THRESHOLD)
             lo_c = crossings(o, ci[:, 1], THRESHOLD); hi_c = crossings(o, ci[:, 0], THRESHOLD)
             if len(cr) >= 2:

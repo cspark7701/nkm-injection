@@ -132,10 +132,18 @@ class KickModelEvaluator:
     ``interpolation="cubic"`` uses a bicubic spline through the same nodes; near the axis the
     wire-kicker field is cubic in x and bilinear interpolation between the 0 and 0.5 mm nodes
     overstates the kick, so the stored-beam response uses the spline.
+
+    Vertical sign: ``kickmap_file.txt`` stores (∫B_y, ∫B_x)/Bρ. The curl-free (physical) kick pair is
+    (∫B_y, −∫B_x)/Bρ, verified against the exact filament field (``wire_field``), so the vertical map value is
+    multiplied by ``vertical_sign = −1``. ``vertical_sign = +1`` reproduces the pre-revision behaviour (journal
+    campaign 01) for comparison only. The linearised control includes the curl-free vertical partner −k1·y.
     """
 
     def __init__(self, model: str, config: InjectionStudyConfig, kickmap: Optional[NKMKickMap2D], x_ref_m: float,
-                 interpolation: str = "linear"):
+                 interpolation: str = "linear", vertical_sign: float = -1.0):
+        if vertical_sign not in (-1.0, 1.0):
+            raise ValueError("vertical_sign must be -1 (physical) or +1 (legacy)")
+        self.vertical_sign = float(vertical_sign)
         if interpolation not in ("linear", "cubic"):
             raise ValueError("interpolation must be 'linear' or 'cubic'")
         self.interpolation = interpolation
@@ -189,9 +197,11 @@ class KickModelEvaluator:
         if self.model == "dipole":
             return np.full_like(x, self.k0_rad + self.config.kick_offset_rad), np.zeros_like(y)
         if self.model == "linear":
-            return self.k0_rad + self.k1_rad_per_m * (x - self.x_ref_m) + self.config.kick_offset_rad, np.zeros_like(y)
+            vert = -self.k1_rad_per_m * y if self.vertical_sign < 0 else np.zeros_like(y)
+            return self.k0_rad + self.k1_rad_per_m * (x - self.x_ref_m) + self.config.kick_offset_rad, vert
         kx, ky = self._raw_kicks(x - self.config.nkm_dx_m, y)
-        return (self.gain * np.asarray(kx) + self.config.kick_offset_rad, self.gain * np.asarray(ky))
+        return (self.gain * np.asarray(kx) + self.config.kick_offset_rad,
+                self.vertical_sign * self.gain * np.asarray(ky))
 
 
 # ---------------------------------------------------------------------------
@@ -364,7 +374,7 @@ class ThickNKMKicker:
 
 def _apply_kick(beam: np.ndarray, kicker: KickModelEvaluator, closed_orbit_x: float) -> Tuple[np.ndarray, np.ndarray]:
     """Apply the thin kick in place to live particles; return (live mask, outside-map mask)."""
-    if isinstance(kicker, ThickNKMKicker):
+    if hasattr(kicker, "apply"):  # finite-length kickers (ThickNKMKicker, wire_field.FilamentNKMKicker)
         live = np.isfinite(beam[0])
         return live, kicker.apply(beam, closed_orbit_x)
     live = np.isfinite(beam[0])

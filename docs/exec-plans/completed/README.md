@@ -385,3 +385,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 120. [**Milestone 120 — Consolidated Revision Plan**](120_consolidated_revision_plan.md)
     - Merged both referee registers into tasks C1–C12 with resolved disagreements and execution order.
+
+121. [**Milestone 121 — C1: Exact 3-D NKM Field and Kicker-Model Validation**](121_c1_kicker_model_validation.md)
+    - Biot–Savart field of the RADIA filament geometry reproduces the kick map to 1e-10; vertical-sign bug fixed; 3-D model (vertical defocusing, self-deflection) selected as principal model.

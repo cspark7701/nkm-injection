@@ -3,7 +3,8 @@
 Completed: 2026-10-10. Consolidated task C5 (R1-07, R2-5, R2-6).
 - Driver: `scripts/run_capture_robustness.py` (S7) with `--kicker-models fieldmap_3d dipole`, error budget of journal
   campaign 01 at scale 1, static orbit correction.
-- Pooling: `scripts/analyze_capture_robustness.py --model fieldmap_3d --stored-model fieldmap` and `--model dipole`.
+- Pooling: `scripts/analyze_capture_robustness.py --model fieldmap_3d --stored-model fieldmap` and `--model dipole`
+  (partial rank correlations added in this milestone; unit test in `tests/test_capture_robustness_driver.py`).
 - Raw data: `results/journal_campaign_02/c5_errors_seed{42,123,777}/`; pooled summaries in
   `results/journal_campaign_02/c5_pooled/` (not committed).
 - Ensemble: 3 seeds × 50 realizations, 200 particles each, 500 turns; selected point x_inj = −19.5 mm, S = 0.85,
@@ -31,6 +32,19 @@ widen the gap from 2 to 21 points.
 | abs. exit centroid x′ | −0.49 | −0.74 |
 | booster angle jitter | −0.42 | −0.66 |
 | any magnet, septum, timing or ring error | \|ρ\| ≤ 0.13, p ≥ 0.12 | \|ρ\| ≤ 0.13, p ≥ 0.12 |
+
+Because the exit centroid is a consequence of the sampled errors, the sampled inputs were also ranked by partial
+Spearman correlation, each controlling for all other sampled inputs (`partial_spearman_sampled_inputs`, R2-13/m14):
+
+| Sampled input | NKM partial ρ (p) | Dipole partial ρ (p) |
+| :--- | ---: | ---: |
+| booster angle jitter | −0.45 (5×10⁻⁸) | −0.68 (1×10⁻¹⁹) |
+| booster position jitter | −0.16 (0.06) | −0.14 (0.10) |
+| every other input | \|ρ\| ≤ 0.15, p ≥ 0.09 | \|ρ\| ≤ 0.15, p ≥ 0.09 |
+
+Only the booster angle jitter is a significant independent driver. The errors are sampled independently, so this is
+an association with an independently varied input, not an intervention; C6 supplies the intervention (paired jitter
+scaling).
 
 The exit centroid has an rms spread of 0.91 mm and 0.33 mrad. Capture binned by exit angle:
 

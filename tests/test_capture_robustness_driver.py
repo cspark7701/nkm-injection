@@ -82,3 +82,17 @@ def test_s7_revision_options():
                        "--timing-model", "scale", "--slices-3d", "320"])
     assert a.kicker_models == ["fieldmap_3d", "dipole"] and a.control_reference == "3d" and a.timing_model == "scale"
     assert "fieldmap_3d" in S7.NO_STORED
+
+
+def test_partial_spearman_separates_confounded_driver():
+    """y depends on x1 only; x2 is correlated with x1 and x3 is independent noise."""
+    mod = _load("analyze_capture_robustness")
+    rng = np.random.default_rng(3)
+    x1 = rng.normal(size=400)
+    x2 = x1 + 0.5 * rng.normal(size=400)
+    x3 = rng.normal(size=400)
+    y = -x1 + 0.3 * rng.normal(size=400)
+    res = {r["variable"]: r for r in mod.partial_spearman({"x1": x1, "x2": x2, "x3": x3}, y)}
+    assert res["x1"]["partial_spearman_rho"] < -0.8 and res["x1"]["p_value"] < 1e-10
+    assert abs(res["x2"]["partial_spearman_rho"]) < 0.15
+    assert abs(res["x3"]["partial_spearman_rho"]) < 0.15

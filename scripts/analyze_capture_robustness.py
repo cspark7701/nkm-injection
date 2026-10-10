@@ -5,7 +5,9 @@ Reads one or more ``capture_robustness_raw.json`` files (independent seeds) and 
 * pooled per-realization capture statistics (realization = resampling unit, cluster bootstrap);
 * seed-to-seed comparison of the mean capture;
 * Spearman rank correlation between capture and each sampled error (absolute value for symmetric
-  errors) and the BTS-exit centroid angle/position, with permutation-free asymptotic p-values.
+  errors) and the BTS-exit centroid angle/position, with permutation-free asymptotic p-values;
+* partial Spearman correlation of each sampled error, controlling for all other sampled errors (the derived
+  BTS-exit quantities are excluded, since they are consequences of the sampled errors).
 Units: m, rad (reported mm, mrad); capture as a fraction.
 """
 import argparse
@@ -19,6 +21,28 @@ from scipy import stats
 SCALARS = ("booster_x_m", "booster_xp_rad", "energy_dp_p", "beta_mismatch_x", "beta_mismatch_y", "nkm_scale_err",
            "nkm_dx_m", "nkm_timing_mrad", "ring_co_x_m", "septum_x_m", "dipole_b_err")
 VECTORS = ("quad_k_err", "quad_dx_m", "quad_dy_m", "quad_roll_rad")
+
+
+def partial_spearman(features, y):
+    """Partial rank correlation of y with each column of ``features`` (dict name -> array) given all other columns.
+
+    Ranks are regressed (least squares with intercept) on the ranks of the other columns; the residuals are
+    correlated. p-values use the t distribution with n - k - 1 degrees of freedom (k = number of columns).
+    """
+    names = list(features)
+    r = np.column_stack([stats.rankdata(features[n]) for n in names])
+    ry = stats.rankdata(y)
+    n, k = r.shape
+    out = []
+    for j, name in enumerate(names):
+        z = np.column_stack([np.ones(n), np.delete(r, j, axis=1)])
+        ex = r[:, j] - z @ np.linalg.lstsq(z, r[:, j], rcond=None)[0]
+        ey = ry - z @ np.linalg.lstsq(z, ry, rcond=None)[0]
+        rho = float(np.corrcoef(ex, ey)[0, 1])
+        dof = n - k - 1
+        t = rho * np.sqrt(dof / max(1e-300, 1 - rho ** 2))
+        out.append({"variable": name, "partial_spearman_rho": rho, "p_value": float(2 * stats.t.sf(abs(t), dof))})
+    return sorted(out, key=lambda d: d["partial_spearman_rho"])
 
 
 def main(argv=None):
@@ -99,11 +123,15 @@ def main(argv=None):
         rho, pv = stats.spearmanr(x[ok], cap[ok])
         ranking.append({"variable": name, "spearman_rho": float(rho), "p_value": float(pv)})
     ranking.sort(key=lambda r: r["spearman_rho"])
+    sampled = {n: np.array([r[1][n] for r in rows], float) for n in rows[0][1]
+               if not n.startswith(("abs_exit", "exit_")) and np.ptp([r[1][n] for r in rows]) > 0}
+    partial = partial_spearman(sampled, cap)
     out = {"inputs_sha256": inputs, "model": a.model, "stored_model": a.stored_model or a.model, "n_realizations": int(len(cap)),
            "pooled": {"mean": float(cap.mean()), "mean_ci95": [float(np.quantile(boot, .025)), float(np.quantile(boot, .975))],
                       "median": float(np.median(cap)), "p05": float(np.quantile(cap, .05)), "min": float(cap.min()),
                       "fraction_above_threshold": k / len(cap), "threshold": a.threshold},
            "per_seed": per_seed, "spearman_ranking": ranking,
+           "partial_spearman_sampled_inputs": partial,
            "stored_beam_cubic": {
                "amplitude_over_sigma": {q: float(np.quantile([x["amplitude_over_sigma_cubic"] for x in stored], v))
                                         for q, v in (("median", .5), ("p95", .95), ("max", 1.0))},
@@ -117,7 +145,7 @@ def main(argv=None):
            "note": "Negative rho: larger error magnitude associated with lower capture. Correlation is not causation; errors are sampled independently."}
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(out, indent=2) + "\n")
-    print(json.dumps({"pooled": out["pooled"], "per_seed": per_seed, "top": ranking[:5],
+    print(json.dumps({"pooled": out["pooled"], "per_seed": per_seed, "top": ranking[:5], "partial_top": partial[:5],
                       "stored": {k: v for k, v in out["stored_beam_cubic"].items() if k != "per_realization"}}, indent=1))
 
 

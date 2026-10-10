@@ -18,7 +18,7 @@ A coherent research-article draft with one principal question, explicit novelty,
 
 ## Files and evidence
 
-`docs/jinst-paper/paper.tex`; proposed supplement and outline documents.
+`docs/paper/paper.tex`; proposed supplement and outline documents.
 
 ## Execution safeguards
 

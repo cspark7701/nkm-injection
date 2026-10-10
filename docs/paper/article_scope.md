@@ -43,6 +43,10 @@ lifetime, "zero perturbation", and Pareto-optimal BTS design as a main claim (de
 
 ## Journal and category
 
+The manuscript now uses the standard LaTeX `article` class in `docs/paper/`.
+The JINST choice and formatting notes below record the original provisional
+venue; apply the selected journal's template only after the final venue is chosen.
+
 Provisional venue: **JINST, regular research paper**. JINST scope includes accelerator
 instrumentation and simulation; regular papers versus technical reports are distinguished by
 scientific contribution. If the evidence supports only C1–C3 qualitatively, a JINST technical

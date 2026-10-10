@@ -1,12 +1,12 @@
 # Milestone 108 — Journal Task 004: calibrated controls and coupled operating region (S6)
 
-Completed: 2026-10-09. Task: [004](../../jinst-paper/tasks/004_calibrated_controls_and_coupled_injection.md).
+Completed: 2026-10-09. Task: [004](../../paper/tasks/004_calibrated_controls_and_coupled_injection.md).
 
 Implemented `scripts/run_injection_operating_region.py` (S6): coupled booster→BTS→septum handoff (matched and baseline
 BTS), angle matching per (x_inj, field scale) with inner-root selection and explicit infeasible points, paired
 `fieldmap`/`off`/`dipole`/`linear` models on identical particles, linear-map cross-check, replicate stage. Added a bicubic
 kick-map option used for the stored-beam response (bilinear interpolation overstates the cubic near-axis field) and tests
-(`tests/test_operating_region_driver.py`, `tests/test_injection_study.py`). Results: [`operating_region.md`](../../jinst-paper/operating_region.md).
+(`tests/test_operating_region_driver.py`, `tests/test_injection_study.py`). Results: [`operating_region.md`](../../paper/operating_region.md).
 
 Findings: kicker off captures 0 %; best capture where the matched centroid sits at the kick-map extremum; operating point
 x_inj = −20 mm, S = 0.85, x′ = 4.869 mrad: 91.1 % mean over four 500-particle bunches versus 94.6 % (dipole) and 96.3 %

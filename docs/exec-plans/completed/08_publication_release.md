@@ -7,7 +7,7 @@
 
 ## 1. Executive Summary & Objective
 
-The objective of Milestone 08 is to synthesize all physical results into publication-ready LaTeX/Markdown tables and 300 DPI vector figures (`src/nkm/paper.py`), provide a one-command paper reproduction pipeline (`scripts/reproduce_paper.py`), build an automated regression test suite (`tests/test_paper_regression.py`), and author comprehensive journal paper documentation (`docs/001_paper_results.md`, `docs/002_reproducibility.md`, `docs/jinst-paper/paper.tex`).
+The objective of Milestone 08 is to synthesize all physical results into publication-ready LaTeX/Markdown tables and 300 DPI vector figures (`src/nkm/paper.py`), provide a one-command paper reproduction pipeline (`scripts/reproduce_paper.py`), build an automated regression test suite (`tests/test_paper_regression.py`), and author comprehensive journal paper documentation (`docs/001_paper_results.md`, `docs/002_reproducibility.md`, `docs/paper/paper.tex`).
 
 ---
 
@@ -25,9 +25,9 @@ Exports 300 DPI PNG and vector PDF figures under `results/paper/figures/`:
 - **Fig. 2**: Transverse $3\sigma$ beam envelopes vs physical vacuum chamber apertures.
 - **Fig. 3**: RADIA 2D integrated deflection profile $\Delta x'(x, y=0)$.
 
-### 2.3 Journal Paper Draft (`docs/jinst-paper/paper.tex`)
+### 2.3 Journal Paper Draft (`docs/paper/paper.tex`)
 - Authored complete manuscript for **Journal of Instrumentation (JINST)** formatted using `jinstpub.sty`.
-- Successfully compiled to [**`docs/jinst-paper/paper.pdf`**](file:///home/cspark/Work/projects/nkm-injection/docs/jinst-paper/paper.pdf) (9 pages, 300 KB).
+- Successfully compiled to [**`docs/paper/paper.pdf`**](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.pdf) (9 pages, 300 KB).
 
 ---
 
@@ -53,7 +53,7 @@ All 41 unit, integration, and paper regression tests pass cleanly:
 - `docs/001_paper_results.md`: Publication summary report with LaTeX code snippets.
 - `docs/002_reproducibility.md`: Repository reproducibility guide.
 - `docs/003_simulation_steps.md`: Step-by-step paper simulation guide.
-- `docs/jinst-paper/paper.tex`: JINST LaTeX manuscript.
+- `docs/paper/paper.tex`: JINST LaTeX manuscript.
 
 ---
 

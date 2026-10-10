@@ -14,11 +14,11 @@ For JINST, check its [author instructions](https://jinst.sissa.it/jinst/help/hel
 
 ## Deliverables and acceptance
 
-`docs/jinst-paper/article_scope.md`: principal question, bounded candidate claims, literature comparison and journal requirements with access date. A clear scientific finding beyond a software workflow is identified, or the article scope is narrowed before further large runs.
+`docs/paper/article_scope.md`: principal question, bounded candidate claims, literature comparison and journal requirements with access date. A clear scientific finding beyond a software workflow is identified, or the article scope is narrowed before further large runs.
 
 ## Files and evidence
 
-`docs/jinst-paper/paper.tex` front matter/introduction; `paper.bib`; proposed `article_scope.md`.
+`docs/paper/paper.tex` front matter/introduction; `paper.bib`; proposed `article_scope.md`.
 
 ## Execution safeguards
 

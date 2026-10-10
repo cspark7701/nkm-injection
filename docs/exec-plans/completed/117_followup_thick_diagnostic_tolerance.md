@@ -18,4 +18,4 @@ for paired gains, cross-runs and single-particle amplitude sensitivity. Manuscri
 discussion, limitations and conclusions updated; the thin kick is now described as optimistic for the nominal beam
 (−4 points) but pessimistic under errors (+9.5 points). Docs: `capture_robustness.md`, `tolerance_uncertainty.md`,
 `scientific_review.md`, `claim_evidence.csv` (B15–B18), `submission_checklist.md`. Gated package build
-`submission_package_v2`: 10 pages, clean; `docs/jinst-paper/paper.pdf` updated. Results remain uncommitted.
+`submission_package_v2`: 10 pages, clean; `docs/paper/paper.pdf` updated. Results remain uncommitted.

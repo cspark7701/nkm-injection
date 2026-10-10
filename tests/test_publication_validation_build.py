@@ -151,7 +151,7 @@ def test_cli_reports_requested_pdf_failure(monkeypatch, capsys):
 def test_default_pipeline_build_is_isolated(publication_case, monkeypatch):
     from nkm_injection.paper import run_paper_pipeline
     root, manifest = publication_case()
-    source = root / 'docs/jinst-paper'
+    source = root / 'docs/paper'
     source.mkdir(parents=True)
     (source / 'paper.tex').write_text('manuscript')
     (source / 'paper.pdf').write_bytes(b'stale')
@@ -178,7 +178,7 @@ def test_pipeline_rejects_output_collisions(publication_case, destination):
     from nkm_injection.paper import run_paper_pipeline
     root, manifest = publication_case()
     output = root / {'selected_run': manifest.injection_run,
-                     'manuscript': 'docs/jinst-paper', 'occupied': 'old_output'}[destination]
+                     'manuscript': 'docs/paper', 'occupied': 'old_output'}[destination]
     output.mkdir(parents=True, exist_ok=True)
     (output / 'existing.txt').write_text('preserve')
     before = snapshot(root)

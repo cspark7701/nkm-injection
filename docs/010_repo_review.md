@@ -56,7 +56,7 @@ nkm-injection/
 ├── tests/                  # Pytest test suite (177 tests across 22 test modules)
 ├── docs/                   # Documentation, execution logs, and web artifacts
 │   ├── exec-plans/completed/ # 71 chronological execution plan records
-│   ├── jinst-paper/        # LaTeX manuscript source and assets
+│   ├── paper/        # LaTeX manuscript source and assets
 │   ├── site/               # Documentation website
 │   └── 006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md
 ├── config/                 # Publication manifest (`publication_manifest.json`)

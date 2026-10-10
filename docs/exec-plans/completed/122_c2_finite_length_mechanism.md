@@ -1,7 +1,7 @@
 # Milestone 122 — C2: Mechanism of the thin/finite-length difference
 
 Completed: 2026-10-10. Consolidated task C2 (R1-03, R2-1c). Record:
-[`kicker_model_validation.md`](../../jinst-paper/kicker_model_validation.md) §5.
+[`kicker_model_validation.md`](../../paper/kicker_model_validation.md) §5.
 
 `scripts/analyze_finite_length_mechanism.py` compares the thin, straight-path, bent-path and exact 3-D models at their
 own matched angles.

@@ -1,7 +1,7 @@
 """Coupled NKM injection study: geometry, kick models, beams and ring tracking backends.
 
 This module defines the frozen journal-campaign injection model (``InjectionStudyConfig``,
-schema version 1) documented in ``docs/jinst-paper/physics_model.md``.
+schema version 1) documented in ``docs/paper/physics_model.md``.
 
 Units at every public interface: positions m, angles / canonical momenta rad, energy eV,
 relative momentum deviation dimensionless, ct in m, geometric emittance m rad. Kick-map

@@ -54,7 +54,7 @@ and figures.
 ## PDF artifacts and failure evidence
 
 Every PDF build, including the default destination, copies manuscript inputs
-from `docs/jinst-paper/` into the publication run's fresh `build/` directory.
+from `docs/paper/` into the publication run's fresh `build/` directory.
 Source `paper.pdf` and TeX auxiliary/log files are excluded. Referenced PDF
 figures are retained; generated figures and tables are copied into the build,
 with generated LaTeX tables/macros also available at its root. The copied

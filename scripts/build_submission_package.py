@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Task 012 — build the JINST submission package in an isolated directory.
+"""Task 012 — build a general-article submission package in an isolated directory.
 
-Copies only the files the manuscript needs (paper.tex, paper.bib, jinstpub.sty, generated macros and referenced
+Copies only the files the manuscript needs (paper.tex, paper.bib, generated macros and referenced
 figures), compiles pdflatex -> bibtex -> pdflatex x2 (up to x4 while labels settle), rejects LaTeX errors, undefined references/citations, BibTeX
 warnings and overfull boxes, and writes a source archive (with the compiled paper.bbl), the PDF, the supplement
 (provenance, manifest, claim table, review), SHA-256 hashes and the software environment to a new output directory.
@@ -18,7 +18,7 @@ import tarfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-PAPER = REPO / "docs" / "jinst-paper"
+PAPER = REPO / "docs" / "paper"
 SUPPLEMENT = ["revision_manifest.json", "claim_evidence.csv", "scientific_review.md", "bibliography_audit.md",
               "cover_letter.md", "generated/figure_provenance.csv", "generated/consumed_artifacts.json"]
 BAD_LOG = re.compile(r"^!|undefined|Overfull|Rerun to get", re.I | re.M)
@@ -34,7 +34,7 @@ def referenced_figures(tex: str):
 
 def stage_sources(dest: Path):
     tex = (PAPER / "paper.tex").read_text()
-    files = ["paper.tex", "paper.bib", "jinstpub.sty", "generated/journal_macros.tex"] + referenced_figures(tex)
+    files = ["paper.tex", "paper.bib", "generated/journal_macros.tex"] + referenced_figures(tex)
     for rel in files:
         src = PAPER / rel
         if not src.is_file():
@@ -65,7 +65,7 @@ def compile_paper(src: Path):
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--output-dir", type=Path, required=True)
-    p.add_argument("--install-pdf", action="store_true", help="copy the compiled PDF to docs/jinst-paper/paper.pdf")
+    p.add_argument("--install-pdf", action="store_true", help="copy the compiled PDF to docs/paper/paper.pdf")
     a = p.parse_args(argv)
     out = a.output_dir.resolve()
     if out.exists() and any(out.iterdir()):
@@ -75,10 +75,10 @@ def main(argv=None):
     files = stage_sources(src)
     pages = compile_paper(src)
     files.append("paper.bbl")
-    archive = out / "nkm_jinst_submission_source.tar.gz"
+    archive = out / "nkm_article_submission_source.tar.gz"
     with tarfile.open(archive, "w:gz") as tar:
         for rel in files:
-            tar.add(src / rel, arcname=f"nkm_jinst_submission/{rel}")
+            tar.add(src / rel, arcname=f"nkm_article_submission/{rel}")
     shutil.copy2(src / "paper.pdf", out / "paper.pdf")
     sup = out / "supplement"
     for rel in SUPPLEMENT:
@@ -92,15 +92,15 @@ def main(argv=None):
         except md.PackageNotFoundError:
             pkgs[name] = None
     record = {
-        "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(git("status", "--porcelain", "--", "docs/jinst-paper", "scripts", "src")),
+        "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(git("status", "--porcelain", "--", "docs/paper", "scripts", "src")),
         "pages": pages, "sources": {r: sha256(src / r) for r in files},
         "outputs": {f.name: sha256(f) for f in (archive, out / "paper.pdf")},
         "supplement": {r: sha256(sup / r) for r in SUPPLEMENT},
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "packages": pkgs,
                         "tex": subprocess.run(["pdflatex", "--version"], capture_output=True, text=True).stdout.splitlines()[0]},
-        "commands": ["python scripts/make_revision_manifest.py --require-all --output docs/jinst-paper/revision_manifest.json",
-                     "python scripts/build_revision_figures.py --manifest docs/jinst-paper/revision_manifest.json "
-                     "--output-dir <new> --install-dir docs/jinst-paper/generated",
+        "commands": ["python scripts/make_revision_manifest.py --require-all --output docs/paper/revision_manifest.json",
+                     "python scripts/build_revision_figures.py --manifest docs/paper/revision_manifest.json "
+                     "--output-dir <new> --install-dir docs/paper/generated",
                      f"python scripts/build_submission_package.py --output-dir <new>{' --install-pdf' if a.install_pdf else ''}"],
     }
     (out / "package_manifest.json").write_text(json.dumps(record, indent=2) + "\n")

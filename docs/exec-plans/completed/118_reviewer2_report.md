@@ -3,7 +3,7 @@
 Completed: 2026-10-10.
 
 Wrote an independent referee report on the manuscript at commit `acd891c`:
-[`docs/jinst-paper/reviews/reviewer2_report.md`](../../jinst-paper/reviews/reviewer2_report.md).
+[`docs/paper/reviews/reviewer2_report.md`](../../paper/reviews/reviewer2_report.md).
 
 - **Recommendation:** major revision.
 - **Major comments (8):**

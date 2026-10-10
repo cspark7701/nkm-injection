@@ -2,7 +2,7 @@
 
 Completed: 2026-10-11. User request: improve the Introduction with more references.
 
-**Changes to `docs/jinst-paper/paper.tex` (Introduction).**
+**Changes to `docs/paper/paper.tex` (Introduction).**
 - **New opening paragraph:**
   - multibend-achromat rings and their small DA (Hettel2014, Raimondi2021);
   - top-up operation (Emery1999);

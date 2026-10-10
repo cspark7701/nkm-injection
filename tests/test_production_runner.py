@@ -261,7 +261,7 @@ def test_moga_lattice_configuration_is_forwarded(tmp_path, monkeypatch):
 def test_pdf_build_cannot_write_to_manuscript_sources(publication_case, tmp_path, monkeypatch):
     import nkm_injection.paper as paper
     root, manifest = publication_case()
-    source = root / 'docs/jinst-paper'
+    source = root / 'docs/paper'
     (source / 'figures').mkdir(parents=True)
     (source / 'paper.tex').write_text('mock manuscript')
     (source / 'paper.pdf').write_bytes(b'old compiled PDF')

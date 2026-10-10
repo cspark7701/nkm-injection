@@ -1,10 +1,13 @@
 \documentclass[a4paper,11pt]{article}
-\let\Bbbk\undefined
-\usepackage{jinstpub}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{lineno}
+\usepackage[hidelinks]{hyperref}
 
 % All numerical results quoted in the text are generated from the selected campaign artifacts
 % by scripts/build_revision_figures.py (see generated/figure_provenance.csv).
@@ -12,21 +15,21 @@
 
 \title{Finite-length and vertical effects in nonlinear-kicker injection into the Korea Light Source}
 
-\author[a,1]{Chong Shik Park\note{Corresponding author.}}
+\author{Chong Shik Park\thanks{Corresponding author: \href{mailto:kuphy@korea.ac.kr}{kuphy@korea.ac.kr}.}\\[0.5em]
+\small Department of Accelerator Science and Center for Accelerator Research,\\
+\small Korea University, Sejong 30019, Republic of Korea}
+\date{}
 
-\affiliation[a]{Department of Accelerator Science and Center for Accelerator Research, Korea University,\\Sejong 30019, Republic of Korea}
-
-\emailAdd{kuphy@korea.ac.kr}
-
-\abstract{
-A nonlinear kicker magnet (NKM) injects off axis while leaving an aligned stored beam undisturbed, but the injected bunch samples a strongly nonlinear field. We study a 0.525\,m four-loop wire NKM for the 4\,GeV Korea Light Source (KLS), whose on-momentum dynamic aperture at the kicker is about 12\,mm, with an exact three-dimensional filament field, a transfer line tracked from the booster and native nonlinear ring tracking. Two effects that kick-map models miss change the injection physics. The beam's own deflection inside the magnet shifts the matched angle by 0.2\,mrad and makes capture tolerant to one sign of angle error, and the vertical field off the kick extremum defocuses the off-axis bunch, costing up to five percentage points of capture. At the selected operating point the NKM captures \ValThreeD\,\% of the injected particles over 500 turns, compared with \ValDipole\,\% for an equally strong uniform kick. For the aligned kicker the stored-beam disturbance vanishes by symmetry; transparency is set by the kicker-to-orbit offset (\TranspTwoAmp\ of the rms size at 0.2\,mm). Under the assumed combined errors the mean capture is \RobCMean\,\% with ideal static orbit correction of the transfer line (\RobMean\,\% without); reducing the booster jitter to a quarter of its assumed value raises it to \JitCQuarterMean\,\%, and the remaining loss comes from the combined static errors.
-}
-
-\keywords{Beam dynamics; Accelerator modelling and simulations (multi-particle dynamics, single-particle dynamics); Instrumentation for particle accelerators and storage rings - high energy (linear accelerators, synchrotrons)}
 
 \begin{document}
 \maketitle
-\flushbottom
+
+\begin{abstract}
+A nonlinear kicker magnet (NKM) injects off axis while leaving an aligned stored beam undisturbed, but the injected bunch samples a strongly nonlinear field. We study a 0.525\,m four-loop wire NKM for the 4\,GeV Korea Light Source (KLS), whose on-momentum dynamic aperture at the kicker is about 12\,mm, with an exact three-dimensional filament field, a transfer line tracked from the booster and native nonlinear ring tracking. Two effects that kick-map models miss change the injection physics. The beam's own deflection inside the magnet shifts the matched angle by 0.2\,mrad and makes capture tolerant to one sign of angle error, and the vertical field off the kick extremum defocuses the off-axis bunch, costing up to five percentage points of capture. At the selected operating point the NKM captures \ValThreeD\,\% of the injected particles over 500 turns, compared with \ValDipole\,\% for an equally strong uniform kick. For the aligned kicker the stored-beam disturbance vanishes by symmetry; transparency is set by the kicker-to-orbit offset (\TranspTwoAmp\ of the rms size at 0.2\,mm). Under the assumed combined errors the mean capture is \RobCMean\,\% with ideal static orbit correction of the transfer line (\RobMean\,\% without); reducing the booster jitter to a quarter of its assumed value raises it to \JitCQuarterMean\,\%, and the remaining loss comes from the combined static errors.
+\end{abstract}
+
+\noindent\textbf{Keywords:} Beam dynamics; Accelerator modelling and simulations (multi-particle dynamics, single-particle dynamics); Instrumentation for particle accelerators and storage rings - high energy (linear accelerators, synchrotrons)
+
 \linenumbers
 
 \section{Introduction}
@@ -215,9 +218,9 @@ For a 0.525\,m wire NKM in the 4\,GeV KLS design lattice, exact 3-D field tracki
 
 \section*{Data, software and code availability}
 
-{\sloppy The simulation code, configurations and analysis scripts are available in the nkm-injection repository (\url{https://github.com/cspark7701/nkm-injection}). The figures and numbers are generated from the campaign artifacts listed, with SHA-256 digests, in \texttt{figure\_provenance.csv} of the manuscript directory \texttt{docs/\allowbreak jinst-paper/\allowbreak generated}. A frozen evidence bundle with the selected simulation outputs, input files, code snapshot and rebuild instructions is provided to referees; an archived release with a persistent identifier will be created on acceptance.\par}
+{\sloppy The simulation code, configurations and analysis scripts are available in the nkm-injection repository (\url{https://github.com/cspark7701/nkm-injection}). The figures and numbers are generated from the campaign artifacts listed, with SHA-256 digests, in \texttt{figure\_provenance.csv} of the manuscript directory \texttt{docs/\allowbreak paper/\allowbreak generated}. A frozen evidence bundle with the selected simulation outputs, input files, code snapshot and rebuild instructions is provided to referees; an archived release with a persistent identifier will be created on acceptance.\par}
 
-\acknowledgments
+\section*{Acknowledgments}
 
 The author thanks the accelerator physics group at Korea University. Generative AI assistance (Anthropic Claude, used through Claude Code) was used to implement simulation drivers and the field model, run the campaigns, audit references and draft parts of the manuscript; all results were checked and the author takes full responsibility for the content.
 

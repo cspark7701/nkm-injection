@@ -549,7 +549,7 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
         schema = PaperResultSchema(run_id=output_dir.name, base_dir=output_dir.parent)
     # Reject occupied destinations before writing any publication artifacts.
     destination = schema.run_dir.resolve()
-    protected_directories = [repo_root / 'docs' / 'jinst-paper'] + [repo_root / value for value in val_status['verified_runs'].values()]
+    protected_directories = [repo_root / 'docs' / 'paper'] + [repo_root / value for value in val_status['verified_runs'].values()]
     if any(destination == path.resolve() or destination.is_relative_to(path.resolve()) for path in protected_directories):
         raise ValueError('Publication output must be separate from source manuscript and selected runs')
     if destination.exists() and (not destination.is_dir() or any(destination.iterdir())):
@@ -572,7 +572,7 @@ def run_paper_pipeline(repo_root: Optional[Path] = None,
     pdf_build = {"status": "not_requested", "commands": [], "pdf_path": None}
     if compile_pdf:
         from .publication_build import build_publication_pdf
-        pdf_build = build_publication_pdf(repo_root / "docs" / "jinst-paper", schema.run_dir,
+        pdf_build = build_publication_pdf(repo_root / "docs" / "paper", schema.run_dir,
                                           figures, schema.tables_dir)
     pdf_compiled = pdf_build['status'] == 'completed'
     pdf_path = pdf_build['pdf_path']

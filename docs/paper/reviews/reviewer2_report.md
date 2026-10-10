@@ -3,7 +3,7 @@
 **Manuscript:** "Capture window and robustness of nonlinear-kicker injection into a 4 GeV storage ring with a small
 dynamic aperture" (C. S. Park). Prepared in JINST format. **The target journal is not yet decided**, so this report
 judges the science independently of venue and adds venue-specific guidance (see "Choice of journal").
-**Version reviewed:** `docs/jinst-paper/paper.tex` / `paper.pdf` at commit `acd891c` (10 pages, 7 figures, 10 references).
+**Version reviewed:** `docs/paper/paper.tex` / `paper.pdf` at commit `acd891c` (10 pages, 7 figures, 10 references).
 **Date:** 2026-10-10.
 **Reviewer expertise:** storage-ring beam dynamics, off-axis and multipole-kicker injection, transfer-line design,
 pulsed-magnet modelling.

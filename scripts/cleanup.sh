@@ -155,10 +155,10 @@ if [ "${CLEAN_CACHE}" = true ]; then
 fi
 
 # 4. Gather LaTeX auxiliary build artifacts if --all is requested
-if [ "${CLEAN_ALL}" = true ] && [ -d "docs/jinst-paper" ]; then
+if [ "${CLEAN_ALL}" = true ] && [ -d "docs/paper" ]; then
     while IFS= read -r aux_file; do
         TARGET_PATHS+=("${aux_file}")
-    done < <(find docs/jinst-paper -type f \( -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.blg" -o -name "*.out" -o -name "*.toc" \))
+    done < <(find docs/paper -type f \( -name "*.aux" -o -name "*.log" -o -name "*.bbl" -o -name "*.blg" -o -name "*.out" -o -name "*.toc" \))
 fi
 
 # Deduplicate and filter targets

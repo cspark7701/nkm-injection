@@ -11,7 +11,7 @@ the article must establish a physical result and its limitations.
 The provisional venue is JINST, consistent with the existing manuscript template.
 Its scope includes accelerator modelling and simulation, and its regular-paper
 criteria include originality, scientific quality and relevance. The target and
-novelty argument are finalized in [Task 001](jinst-paper/tasks/001_research_question_and_journal_fit.md).
+novelty argument are finalized in [Task 001](paper/tasks/001_research_question_and_journal_fit.md).
 [JINST scope and editorial policy](https://jinst.sissa.it/jinst/help/JINST/JINST_about.jsp).
 
 ## 1. Evidence already available and unresolved issues
@@ -30,7 +30,7 @@ built. These facts establish execution, not independent physical validation.
 | Tracking model | Linear one-turn M66 plus explicit thin kicker | Do not label it full nonlinear element-by-element storage-ring tracking |
 | Native comparison API | `track_element_resolved_injection` exists | Needs a reproducible comparison driver and common loss/observation conventions |
 
-The manuscript `jinst-paper/paper.tex` mixes historical numbers and models. Examples
+The manuscript `paper/paper.tex` mixes historical numbers and models. Examples
 requiring correction against selected provenance:
 
 - It places a -5.749 mrad kick at x=-16 mm. Direct evaluation of the protected map
@@ -344,6 +344,6 @@ do not merge replicates into a pretend single run or discard unsuccessful outcom
 A successful PDF build may still contain copied historical figures if manuscript
 references were not updated. Require an explicit claim-to-artifact and
 figure-to-file hash audit. Revise the article through the ordered
-[journal tasks](jinst-paper/tasks/README.md), then check the selected journal's
+[journal tasks](paper/tasks/README.md), then check the selected journal's
 current author requirements again before submission. This plan does not submit,
 publish, push, contact editors or regenerate protected source data.

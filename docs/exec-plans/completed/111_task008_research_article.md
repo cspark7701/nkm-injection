@@ -1,8 +1,8 @@
 # Milestone 111 — Journal Task 008: manuscript rewritten around the scientific argument
 
-Completed: 2026-10-09. Task: [008](../../jinst-paper/tasks/008_restructure_research_article.md).
+Completed: 2026-10-09. Task: [008](../../paper/tasks/008_restructure_research_article.md).
 
-Replaced the framework-inventory manuscript `docs/jinst-paper/paper.tex` with a research article:
+Replaced the framework-inventory manuscript `docs/paper/paper.tex` with a research article:
 "Capture window and robustness of nonlinear-kicker injection into a 4 GeV storage ring with a small dynamic
 aperture". Structure: introduction and open question; system and model (ring/DA, NKM field map and polarity,
 injection geometry and coupled BTS handoff, controls and observables); model validation; operating window with

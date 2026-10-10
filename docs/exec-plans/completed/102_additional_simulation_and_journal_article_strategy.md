@@ -6,7 +6,7 @@ No additional simulations were run and the manuscript was not rewritten.
 ## Documents prepared
 
 - [Additional simulation strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md): selected-run evidence, manuscript inconsistencies, scientific prerequisites, exact current CLI commands and parameter budgets, proposed driver contracts, uncertainty rules and publication assembly.
-- [Journal-article task index](../../jinst-paper/tasks/README.md): twelve ordered tasks with dependencies, deliverables, acceptance criteria and execution safeguards, covering novelty, model audit, tracking validation, calibrated controls, tolerance replication, capture robustness, design comparison, manuscript structure, figure provenance, references, review and submission packaging.
+- [Journal-article task index](../../paper/tasks/README.md): twelve ordered tasks with dependencies, deliverables, acceptance criteria and execution safeguards, covering novelty, model audit, tracking validation, calibrated controls, tolerance replication, capture robustness, design comparison, manuscript structure, figure provenance, references, review and submission packaging.
 - Root README links the new plan and task index.
 
 ## Evidence and boundaries

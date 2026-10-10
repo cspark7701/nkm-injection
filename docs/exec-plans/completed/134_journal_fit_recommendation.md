@@ -2,7 +2,7 @@
 
 Completed: 2026-10-11. Scope: read-only manuscript assessment and journal advice.
 
-Read `docs/jinst-paper/paper.tex` and its current numerical macros. The revised
+Read `docs/paper/paper.tex` and its current numerical macros. The revised
 title is *Finite-length and vertical effects in nonlinear-kicker injection into
 the Korea Light Source*. It now presents an exact filament-field model, a
 finite-length mechanism, physical vertical kicks, threshold-defined operating

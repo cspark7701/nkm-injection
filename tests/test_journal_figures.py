@@ -31,8 +31,8 @@ def test_manifest_hash_mismatch_is_rejected(tmp_path):
 
 def test_installed_macros_cover_manuscript():
     import re
-    tex = (ROOT / "docs/jinst-paper/paper.tex").read_text()
-    macros = (ROOT / "docs/jinst-paper/generated/journal_macros.tex").read_text()
+    tex = (ROOT / "docs/paper/paper.tex").read_text()
+    macros = (ROOT / "docs/paper/generated/journal_macros.tex").read_text()
     defined = set(re.findall(r"\\newcommand\{\\(\w+)\}", macros))
     used = set(re.findall(r"\\((?:DAx|Kick|Prov|Op|Rep|Baseline|Rob|Tol|Stored)\w*)", tex))
     assert used <= defined, used - defined

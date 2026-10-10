@@ -3,17 +3,17 @@
 Completed: 2026-10-11. Consolidated task C10 (manuscript rewrite and gated build for all reviewer items).
 
 **Build chain.**
-1. `scripts/make_revision_manifest.py --require-all --output docs/jinst-paper/revision_manifest.json` records 46
+1. `scripts/make_revision_manifest.py --require-all --output docs/paper/revision_manifest.json` records 46
    campaign-02 and supporting artifacts (key → repository-relative path, SHA-256). None is missing.
-2. `scripts/build_revision_figures.py --manifest docs/jinst-paper/revision_manifest.json --install-dir
-   docs/jinst-paper/generated` writes eight figures, `journal_macros.tex`, `figure_provenance.csv` and
+2. `scripts/build_revision_figures.py --manifest docs/paper/revision_manifest.json --install-dir
+   docs/paper/generated` writes eight figures, `journal_macros.tex`, `figure_provenance.csv` and
    `consumed_artifacts.json`. The builder verifies the digest of every artifact it reads. The campaign-01 figures
    (fig1_kick_geometry … fig7_bts_tolerance) are removed from `generated/`; `campaign_manifest.json` is kept for history.
 3. `scripts/build_submission_package.py --output-dir results/journal_campaign_02/submission_package_rev1 --install-pdf`
    compiles in isolation (pdflatex → bibtex → pdflatex ×2). Result: 13 pages; no LaTeX errors, undefined references or
    citations, BibTeX warnings or overfull boxes. The supplement now carries `revision_manifest.json`.
 
-**Manuscript (`docs/jinst-paper/paper.tex`).** Fully rewritten for the revision:
+**Manuscript (`docs/paper/paper.tex`).** Fully rewritten for the revision:
 - Title: "Finite-length and vertical effects in nonlinear-kicker injection into the Korea Light Source". The facility is
   named KLS throughout; the lattice file name K4GSR_HBIv4-1 is unchanged.
 - Sections: system and model; finite-length and vertical effects; operating window; survival, acceptance and

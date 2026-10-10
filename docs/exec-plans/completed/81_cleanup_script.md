@@ -28,7 +28,7 @@ The script strictly enforces repository safeguards specified in `AGENTS.md`:
 | :--- | :--- | :--- |
 | `-r` | `--results` | Clean simulation run outputs under `results/` (preserving `results/baseline/`) and untracked root simulation outputs. |
 | `-c` | `--cache` | Clean Python bytecode caches (`__pycache__`, `*.pyc`), `.pytest_cache/`, and `.ipynb_checkpoints/`. |
-| `-a` | `--all` | Clean all simulation runs, root temporary files, caches, and LaTeX build artifacts (`docs/jinst-paper/*.aux, *.log, *.bbl, ...`). |
+| `-a` | `--all` | Clean all simulation runs, root temporary files, caches, and LaTeX build artifacts (`docs/paper/*.aux, *.log, *.bbl, ...`). |
 | `-d` | `--dry-run` | Display files and folders identified for removal without performing deletions. |
 | `-y` | `--yes` | Skip the interactive confirmation prompt (`[y/N]`). |
 | `-h` | `--help` | Show command usage and documentation. |

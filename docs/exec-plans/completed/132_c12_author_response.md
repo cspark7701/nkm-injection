@@ -2,7 +2,7 @@
 
 Completed: 2026-10-11. Consolidated task C12 (closing the consolidated reviewer revision C1–C12).
 
-**Response.** `docs/jinst-paper/reviews/author_response.md` (commit d83904a) answers both reports. It covers:
+**Response.** `docs/paper/reviews/author_response.md` (commit d83904a) answers both reports. It covers:
 - Reviewer 1, M1–M8, and the presentation table;
 - Reviewer 2, M1–M8, minor comments m1–m14 and questions 1–4;
 - the acceptance checklist.

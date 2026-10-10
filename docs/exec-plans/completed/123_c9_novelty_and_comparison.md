@@ -1,7 +1,7 @@
 # Milestone 123 — C9: Contribution, scope and verified comparison with existing systems
 
 Completed: 2026-10-10. Consolidated task C9 (R1-01, R2-10, R2-15, R2-20). Record:
-[`novelty_and_comparison.md`](../../jinst-paper/novelty_and_comparison.md).
+[`novelty_and_comparison.md`](../../paper/novelty_and_comparison.md).
 
 **Contributions.** Four contributions are stated beyond the known near-extremum idea:
 1. finite-length self-deflection;

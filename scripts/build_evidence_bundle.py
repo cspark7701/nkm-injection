@@ -6,7 +6,7 @@ and rebuild its figures and numbers without the author's ignored ``results/`` an
 
 * ``evidence/``       every artifact selected by the campaign manifest, at its manifest-relative path, plus the
                       scientific input files (copied byte-for-byte; the originals are untouched);
-* ``code.tar.gz``     ``git archive`` of the committed source (src, scripts, config, tests, docs/jinst-paper, packaging);
+* ``code.tar.gz``     ``git archive`` of the committed source (src, scripts, config, tests, docs/paper, packaging);
 * ``campaign_manifest.json``, ``SHA256SUMS``, ``environment.json`` and ``REBUILD.md``.
 
 With ``--verify`` the bundle is rebuilt in a temporary directory with the committed builder and the regenerated
@@ -26,7 +26,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 INPUTS = ("By.txt", "kickmap_file.txt", "K4GSR_HBIv4-1.mat")
-CODE_PATHS = ("src", "scripts", "config", "tests", "docs/jinst-paper", "pyproject.toml", "README.md", "environment.yml",
+CODE_PATHS = ("src", "scripts", "config", "tests", "docs/paper", "pyproject.toml", "README.md", "environment.yml",
               "requirements-lock.txt")
 
 
@@ -36,7 +36,7 @@ def sha256(p: Path) -> str:
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--manifest", type=Path, default=REPO / "docs/jinst-paper/campaign_manifest.json")
+    p.add_argument("--manifest", type=Path, default=REPO / "docs/paper/campaign_manifest.json")
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument("--builder", choices=("journal", "revision"), default="journal",
                    help="Figure builder used by REBUILD.md and --verify (revision: build_revision_figures.py)")
@@ -87,7 +87,7 @@ python -m pip install -e "code[dev]"
 sha256sum -c SHA256SUMS
 OMP_NUM_THREADS=1 MPLBACKEND=Agg python code/scripts/{builder} \\
     --manifest campaign_manifest.json --repo-root evidence --output-dir rebuilt
-diff rebuilt/tables/journal_macros.tex code/docs/jinst-paper/generated/journal_macros.tex
+diff rebuilt/tables/journal_macros.tex code/docs/paper/generated/journal_macros.tex
 ```
 
 The builder verifies the SHA-256 digest of every artifact it reads. Raw simulation drivers and their command lines are
@@ -115,7 +115,7 @@ recorded inside each artifact (`cli` fields) and in `code/docs/exec-plans/comple
             if r.returncode != 0:
                 raise SystemExit("rebuild failed:\n" + r.stderr[-3000:])
             new = (Path(tmp) / "rebuilt/tables/journal_macros.tex").read_text()
-            ref = (code / "docs/jinst-paper/generated/journal_macros.tex").read_text()
+            ref = (code / "docs/paper/generated/journal_macros.tex").read_text()
             result["rebuild_macros_identical"] = new == ref
     (out / "bundle_summary.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=1))

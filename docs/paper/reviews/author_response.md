@@ -50,7 +50,7 @@ The audit found that the map stores (∫B_y, +∫B_x)/Bρ, which is not curl-fre
 
 **Where.** §2.2; table 1; figure 2.
 
-**Evidence.** `docs/jinst-paper/kicker_model_validation.md`; milestone 121.
+**Evidence.** `docs/paper/kicker_model_validation.md`; milestone 121.
 
 **Remaining limitation.** The model has no iron, chamber or eddy-current fields and no pulse time dependence (§8). A
 1 mm conductor-loss radius is assumed; no particle came within it.
@@ -80,7 +80,7 @@ For a +0.3 mrad error the amplitude change is:
 A length scan shows that no matched solution exists for L ≥ 0.75 m.
 
 **Novelty.** The novelty statement and a verified comparison with the closest NLK/MIK systems are in §1 and
-`docs/jinst-paper/novelty_and_comparison.md`. The contributions are:
+`docs/paper/novelty_and_comparison.md`. The contributions are:
 - self-deflection as the finite-length mechanism, with a length trade-off;
 - the vertical defocusing hidden by the map's sign;
 - transparency as an exact symmetry, with tolerances;
@@ -232,7 +232,7 @@ injected-beam centroid on the following turns.
 
 **Where.** §8.
 
-**Evidence.** `docs/jinst-paper/pulse_and_timing.md`; milestone 124.
+**Evidence.** `docs/paper/pulse_and_timing.md`; milestone 124.
 
 **Remaining limitation.** No pulse or eddy-current simulation was done. The abstract and conclusions claim only
 ideal single-pass spatial-field transparency, together with these requirements.

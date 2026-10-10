@@ -1,7 +1,7 @@
 # Milestone 121 — C1: Exact 3-D NKM field, kicker-model validation and vertical-sign fix
 
 Completed: 2026-10-10. Consolidated task C1 (R1-02, R2-1a, R2-14). Record:
-[`kicker_model_validation.md`](../../jinst-paper/kicker_model_validation.md) §§1–4, 6.
+[`kicker_model_validation.md`](../../paper/kicker_model_validation.md) §§1–4, 6.
 
 - **`src/nkm_injection/wire_field.py`:** a closed-form Biot–Savart field of the four RADIA filament loops (geometry read
   from the protected notebook source, nothing executed), and a sliced tracker in AT canonical coordinates.

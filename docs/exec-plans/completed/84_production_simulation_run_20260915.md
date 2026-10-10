@@ -19,7 +19,7 @@ Key milestone accomplishments:
 5. **Deterministic BTS Quadrupole Optics Matching (Step 5)**: SLSQP optimization achieved exact match to target injection Twiss parameters ($\beta_x = 7.56\text{ m}, \beta_y = 12.27\text{ m}$) with final merit $5.19 \times 10^{-13}$, zero constraint violations, and reduced peak betas ($\beta_{x,\max} = 30.23\text{ m}, \beta_{y,\max} = 44.52\text{ m}$).
 6. **Monte Carlo Tolerance Budget & OAT Sensitivity (Step 6)**: 100-sample study verified $100\%$ feasibility ($0\%$ failure probability) with p50 mismatches $\mathcal{M}_x = 0.00137$, $\mathcal{M}_y = 0.00277$, and stored beam kick perturbation $0.08\text{ mrad}$ (p50).
 7. **NSGA-II Multi-Seed MOGA Pareto Optimization (Step 7)**: 5 random seeds (42, 101, 202, 303, 404) each achieved $100\%$ feasible solutions and 27–40 Pareto-optimal front points with low knee-point quadrupole dispersion ($\sigma = 1.37\text{ m}^{-2}$).
-8. **Manifest-Driven Paper Pipeline (Step 8)**: Compiled figures, LaTeX tables, and publication manuscript [`docs/jinst-paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/jinst-paper/paper.pdf).
+8. **Manifest-Driven Paper Pipeline (Step 8)**: Compiled figures, LaTeX tables, and publication manuscript [`docs/paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.pdf).
 
 ---
 
@@ -81,4 +81,4 @@ Key milestone accomplishments:
 ## 3. Preservation & Verification Status
 
 - Verified that all protected files remain completely untouched and SHA-256 verified.
-- Confirmed generation and compilation of publication manuscript [`docs/jinst-paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/jinst-paper/paper.pdf).
+- Confirmed generation and compilation of publication manuscript [`docs/paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.pdf).

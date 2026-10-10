@@ -1,7 +1,7 @@
 # Milestone 124 — C8: Pulsed-magnet and timing requirements
 
 Completed: 2026-10-10. Consolidated task C8 (R1-08, R2-7). Record:
-[`pulse_and_timing.md`](../../jinst-paper/pulse_and_timing.md).
+[`pulse_and_timing.md`](../../paper/pulse_and_timing.md).
 
 **Scope.** Results apply to an ideal single-pass spatial field. Unmodelled pulse effects become requirements, computed
 by the `pulse` step of `scripts/build_revision_figures.py` from the operating point, the C7 transparency analysis and

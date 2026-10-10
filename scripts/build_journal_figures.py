@@ -3,7 +3,7 @@
 
 Every figure/table is computed from the artifacts named in the manifest (no hard-coded results).
 Outputs go to a new --output-dir; with --install-dir the PDF figures, tables and macros are also
-copied there (e.g. docs/jinst-paper/generated) together with figure_provenance.csv, which records
+copied there (e.g. docs/paper/generated) together with figure_provenance.csv, which records
 for each manuscript asset the generator, the consumed artifacts and their SHA-256 digests.
 
 Units in figures: mm, mrad (explicitly converted from m, rad). Capture fractions in percent.

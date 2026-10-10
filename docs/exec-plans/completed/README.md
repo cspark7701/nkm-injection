@@ -397,3 +397,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 124. [**Milestone 124 — C8: Pulsed-Magnet and Timing Requirements**](124_c8_pulse_and_timing.md)
     - Claims restricted to an ideal single-pass field; residual-field, on-axis residual and timing requirements derived from the measured window and exact-field transparency.
+
+125. [**Milestone 125 — C3: Operating Window with the 3-D NKM**](125_c3_operating_window_3d.md)
+    - Declared-rule selection validated on fresh seeds (93.0 %); asymmetric 0.74 mrad angular window at 80 % capture; acceptance map; offset and emittance scans.

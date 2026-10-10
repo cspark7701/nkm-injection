@@ -259,14 +259,21 @@ class RevisionBuilder(bj.Builder):
                                                                                       ps[0] * 1e3 - dp, ps[-1] * 1e3 + dp])
         mom = val["rows"][0]["injected_moments"]
         th = np.linspace(0, 2 * np.pi, 200)
-        cov = np.array([[mom["sigma_x_m"] ** 2, mom.get("cov_x_xp", 0.0)], [mom.get("cov_x_xp", 0.0), mom["sigma_xp_rad"] ** 2]])
+        # beam covariance at the septum exit: betatron part from the Twiss moments plus the dispersive part
+        e, b, a = mom["emit_x_m_rad"], mom["beta_x_m"], mom["alpha_x"]
+        D, Dp, sd = mom["disp_x_m"], mom["disp_px"], mom["delta_rms"]
+        cov = e * np.array([[b, -a], [-a, (1 + a * a) / b]]) + sd ** 2 * np.array([[D * D, D * Dp], [D * Dp, Dp * Dp]])
+        self.macro("InjSigmaXmm", np.sqrt(cov[0, 0]) * 1e3, "{:.2f}")
+        self.macro("InjSigmaXpMrad", np.sqrt(cov[1, 1]) * 1e3, "{:.2f}")
         L = np.linalg.cholesky(cov + 1e-30 * np.eye(2))
         for nsig, ls in ((1, "-"), (2, "--")):
             e = (L @ np.vstack([np.cos(th), np.sin(th)])) * nsig
             ax.plot((op.injection_x_m + e[0]) * 1e3, (op.injection_xp_rad + e[1]) * 1e3, color=COL["dipole"], ls=ls, lw=1.4)
         blade = op.septum_edge_x_m - op.septum_thickness_m
         ax.axvspan(blade * 1e3, xs[-1] * 1e3 + dx, color=INK2, alpha=0.35, lw=0)
-        ax.text(blade * 1e3 + 0.1, ps[-1] * 1e3 - 0.3, "septum", fontsize=7, color="white", rotation=90, va="top")
+        ax.annotate("septum blade\n($x\geq%.0f$ mm lost)" % (blade * 1e3), xy=(blade * 1e3, ps[-1] * 1e3 - 0.4),
+                    xytext=(blade * 1e3 - 1.9, ps[-1] * 1e3 - 0.45), fontsize=7, color=INK2, va="center",
+                    arrowprops=dict(arrowstyle="->", color=INK2, lw=0.8))
         ax.set_xlabel("$x$ at septum exit [mm]"); ax.set_ylabel("$x'$ at septum exit [mrad]"); ax.grid(False)
         ax = axes[1]
         turns = lt["rows"][0]["turns"]
@@ -277,8 +284,9 @@ class RevisionBuilder(bj.Builder):
         pre = sum(r["loss_causes"].get("septum_creation", 0) + r["loss_causes"].get("outside_field_map", 0) for r in lt["rows"])
         surv = (n - pre - lost_by) / n
         ax.plot(t, surv * 100, color=COL["fieldmap"])
+        ax.axvline(500, color=INK2, lw=0.8, ls=":"); ax.text(520, 99, "500 turns", fontsize=7, color=INK2)
         ax.set_xscale("symlog", linthresh=10); ax.set_xlabel("turn"); ax.set_ylabel("surviving fraction [%]")
-        ax.set_ylim(80, 100)
+        ax.set_ylim(80, 100); ax.set_xlim(0, turns * 1.1)
         for tt, nm in ((500, "Short"), (2000, "Mid"), (turns, "Long")):
             self.macro(f"Surv{nm}", surv[min(tt, turns)] * 100, "{:.1f}")
         self.macro("SurvTurns", turns, "{:d}")
@@ -325,6 +333,10 @@ class RevisionBuilder(bj.Builder):
         ax.plot([r["dy_m"] * 1e3 for r in rowsy], [r["exact"]["y"]["amplitude_over_sigma"] for r in rowsy], color=COL["linear"], marker="^", label="vertical offset: $A_y/\\sigma_y$")
         ax.axhline(0.1, color=INK2, lw=0.8, ls=":")
         ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlabel("NKM–orbit offset [mm]"); ax.set_ylabel("stored-beam response")
+        from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
+        ax.xaxis.set_major_locator(FixedLocator([0.05, 0.1, 0.2, 0.3, 0.5]))
+        ax.xaxis.set_major_formatter(FixedFormatter(["0.05", "0.1", "0.2", "0.3", "0.5"]))
+        ax.xaxis.set_minor_locator(NullLocator())
         ax.legend(fontsize=6.8, loc="upper left")
         for r in rows:
             d = r["dx_m"] * 1e3

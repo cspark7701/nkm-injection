@@ -412,3 +412,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 129. [**Milestone 129 — C7: Stored-Beam Transparency from the Exact Field**](129_c7_transparency_3d.md)
     - Aligned centroid kick exactly zero by symmetry; 0.2 mm offset gives 0.10 σ and ≈1 % emittance; 1000-turn 6-D tracking reproduces the single-pass estimates (2.23 vs 2.22 at 0.5 mm).
+
+130. [**Milestone 130 — C10: Revised Manuscript Build (KLS, Exact 3-D NKM)**](130_c10_manuscript_build.md)
+    - Revision manifest (46 artifacts) → eight figures and macros → gated 13-page build; robustness text checked against final values; claim table rows C0–C16, checklist and cover letter rewritten (venue-neutral).

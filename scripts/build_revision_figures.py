@@ -16,10 +16,10 @@ Units in figures: mm, mrad; capture in percent.
 """
 import argparse
 import hashlib
+import importlib.util
 import json
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 import numpy as np
@@ -27,9 +27,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import build_journal_figures as bj  # noqa: E402
-from build_journal_figures import BLUES, COL, INK, INK2, MARK, tex_sci  # noqa: E402
+_spec = importlib.util.spec_from_file_location("build_journal_figures",
+                                               Path(__file__).resolve().parent / "build_journal_figures.py")
+bj = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(bj)
+BLUES, COL, INK, INK2, MARK, tex_sci = bj.BLUES, bj.COL, bj.INK, bj.INK2, bj.MARK, bj.tex_sci
 
 from nkm_injection.injection_study import InjectionStudyConfig, KickModelEvaluator, wilson_interval  # noqa: E402
 from nkm_injection.kickmap import NKMKickMap2D  # noqa: E402
@@ -90,7 +92,7 @@ class RevisionBuilder(bj.Builder):
         xc = op.injection_x_m + LEVER * op.injection_xp_rad
         ax.axvline(xc * 1e3, color=INK2, lw=0.8, ls=":")
         ax.set_xlabel("horizontal position at NKM centre $x$ [mm]"); ax.set_ylabel("horizontal kick [mrad]")
-        ax.legend(loc="upper right", fontsize=7)
+        ax.legend(loc="lower right", fontsize=7)
         self.macro("PeakKickMrad", float(np.max(np.abs(k))) * 1e3, "{:.2f}")
         self.macro("PeakKickXmm", float(xs[np.argmax(np.abs(k))]) * 1e3, "{:.1f}")
         self.macro("WireInnerMm", f.geometry.x1_m * 1e3, "{:.2f}")
@@ -415,17 +417,19 @@ class RevisionBuilder(bj.Builder):
         ax = axes[1]
         c = sets["C"]
         ax.fill_between(c["fs"], c["boot"][:, 0], c["boot"][:, 1], color="#cde2fb", lw=0)
-        ax.plot(c["fs"], c["mean"], color=COL["fieldmap"], marker="o", label="mean, corrected")
-        ax.plot(c["fs"], c["p10"], color=COL["fieldmap"], ls="--", marker="v", ms=4, label="10th pct., corrected")
+        ax.plot(c["fs"], c["mean"], color=COL["fieldmap"], marker="o", label="mean (corr.)")
+        ax.plot(c["fs"], c["p10"], color=COL["fieldmap"], ls="--", marker="v", ms=4, label="p10 (corr.)")
         u = sets["U"]
-        ax.plot(u["fs"], u["mean"], color=INK2, ls=":", marker="o", ms=3, label="mean, uncorrected")
+        ax.plot(u["fs"], u["mean"], color=INK2, ls=":", marker="o", ms=3, label="mean (uncorr.)")
         ax.scatter([1.0], [np.mean([x[0] for x in c["xo"].values()]) * 100], marker="s", color=INK, s=22, zorder=3,
-                   label="position jitter only")
+                   label="x only (corr.)")
         ax.scatter([1.0], [np.mean([x[0] for x in c["po"].values()]) * 100], marker="D", color=INK2, s=22, zorder=3,
-                   label="angle jitter only")
+                   label="x$'$ only (corr.)")
         ax.axhline(THRESHOLD * 100, color=INK2, lw=0.6, ls="-.")
-        ax.set_xlabel("booster jitter / assumed (0.5 mm, 0.2 mrad)"); ax.set_ylabel("capture [%]"); ax.set_ylim(0, 100)
-        ax.legend(fontsize=5.8, loc="lower left")
+        ax.set_xlabel("booster jitter / assumed (0.5 mm, 0.2 mrad)"); ax.set_ylabel("capture [%]")
+        ax.set_ylim(0, 100)
+        ax.legend(fontsize=5.8, loc="upper center", ncol=3, columnspacing=0.6, handlelength=1.6, handletextpad=0.4,
+                  borderaxespad=0.2)
         ax = axes[2]
         g = {}
         for r in off["rows"]:

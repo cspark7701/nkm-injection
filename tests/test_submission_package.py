@@ -10,7 +10,7 @@ spec.loader.exec_module(BSP)
 
 def test_referenced_figures_exist_and_are_generated():
     figs = BSP.referenced_figures((BSP.PAPER / "paper.tex").read_text())
-    assert len(figs) == 7
+    assert len(figs) == 8
     assert all(f.startswith("generated/figures/") and (BSP.PAPER / f).is_file() for f in figs)
 
 

@@ -418,3 +418,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 131. [**Milestone 131 — C11: Frozen Evidence Bundle for the Revised Manuscript**](131_c11_evidence_bundle.md)
     - 46 manifest artifacts + scientific inputs + code snapshot; `--builder revision --verify` rebuild reproduces the manuscript macros byte for byte.
+
+132. [**Milestone 132 — C12: Point-by-Point Response and Final Gate**](132_c12_author_response.md)
+    - Response to both reviewers completed (both robustness ensembles, tracked transparency); 663 tests pass; final evidence bundle at a clean commit rebuilds the macros byte for byte.

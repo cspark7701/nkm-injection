@@ -399,6 +399,9 @@ def track_injection(config: InjectionStudyConfig, ring: PreparedRing, kicker: Ki
     """Track an injected beam from the septum exit for n_turns; capture = alive after the last turn.
 
     Loss causes: ``septum_creation`` (on stored side of blade at creation), ``outside_field_map``
+    (kick-map domain, or conductor/domain loss inside a finite-length magnet), ``ring`` (total ring loss; for the
+    element backend split into ``ring_septum_return`` at the septum aperture and ``ring_elsewhere``, i.e. chamber
+    apertures and dynamical instability). Previously documented as:
     (kick map domain), ``ring`` (native AT loss incl. septum aperture, chamber apertures and
     numerical divergence; or, for the map backend, septum/chamber checks at their locations
     evaluated with the linear segment maps).
@@ -427,6 +430,9 @@ def track_injection(config: InjectionStudyConfig, ring: PreparedRing, kicker: Ki
         lost = np.asarray(info["loss_map"]["islost"], dtype=bool) & start_live
         first_loss_turn[lost] = np.asarray(info["loss_map"]["turn"])[lost]
         alive = start_live & ~lost & np.isfinite(final[0])
+        loss_elem = np.asarray(info["loss_map"]["elem"])
+        causes["ring_septum_return"] = int(np.sum(lost & (loss_elem == ring.septum_index)))
+        causes["ring_elsewhere"] = int(np.sum(lost & (loss_elem != ring.septum_index)))
     else:
         alive, first_loss_turn = _track_map(config, ring, beam, n_turns, first_loss_turn)
         final = None

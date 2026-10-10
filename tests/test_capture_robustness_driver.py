@@ -74,3 +74,11 @@ def test_s7_accepts_thick_model():
                        "--output-dir", "out", "--kicker-models", "fieldmap_thick", "--thick-slices", "80"])
     assert a.kicker_models == ["fieldmap_thick"] and a.thick_slices == 80
     assert "fieldmap_thick" in S7.S7_MODELS and set(S7.S7_MODELS) > {"off", "fieldmap", "dipole", "linear"}
+
+
+def test_s7_revision_options():
+    a = S7.parse_args(["--study-config", "c.json", "--optimization-summary", "o.json", "--error-config", "e.json",
+                       "--output-dir", "out", "--kicker-models", "fieldmap_3d", "dipole", "--control-reference", "3d",
+                       "--timing-model", "scale", "--slices-3d", "320"])
+    assert a.kicker_models == ["fieldmap_3d", "dipole"] and a.control_reference == "3d" and a.timing_model == "scale"
+    assert "fieldmap_3d" in S7.NO_STORED

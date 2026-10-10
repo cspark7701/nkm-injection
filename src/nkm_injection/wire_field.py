@@ -189,3 +189,44 @@ class FilamentNKMKicker:
         ibx, iby = self.field.line_integrals(np.asarray(x, float) - self.config.nkm_dx_m, y)
         g = self.config.kicker_polarity * self.config.field_scale / self.brho
         return g * iby + self.config.kick_offset_rad, -g * ibx
+
+
+class CalibratedControl:
+    """Thin control kick at the NKM centre: ``dipole`` k0, ``linear`` k0 + k1 (x − x_ref) with the curl-free partner
+    −k1 y, or ``off``. Calibrated to the finite-length NKM response of the nominal centroid (``calibrate_controls``)."""
+
+    def __init__(self, model, k0, k1, x_ref):
+        if model not in ("dipole", "linear", "off"):
+            raise ValueError("model must be dipole, linear or off")
+        self.model, self.k0, self.k1, self.x_ref = model, float(k0), float(k1), float(x_ref)
+        self.interpolation = "none"
+
+    def in_domain(self, x, y):
+        return np.ones_like(np.asarray(x), dtype=bool)
+
+    def kicks(self, x, y):
+        x, y = np.asarray(x, float), np.asarray(y, float)
+        if self.model == "off":
+            return np.zeros_like(x), np.zeros_like(y)
+        if self.model == "dipole":
+            return np.full_like(x, self.k0), np.zeros_like(y)
+        return self.k0 + self.k1 * (x - self.x_ref), -self.k1 * y
+
+
+def centroid_exit(config, kicker, xp, dx=0.0, lever_m=2.2625):
+    """(x, p_x) at the NKM centre after the kick for a septum-exit centroid (x_inj + dx, xp); paraxial lever."""
+    from .injection_study import _apply_kick
+    b = np.zeros((6, 1)); b[0] = config.injection_x_m + dx + lever_m * xp; b[1] = xp
+    _apply_kick(b, kicker, config.closed_orbit_x_m)
+    return float(b[0, 0]), float(b[1, 0])
+
+
+def calibrate_controls(config, n_slices=640, lever_m=2.2625, h=1e-5):
+    """(k0, k1, x_ref): Δp_x of the 3-D magnet for the nominal centroid and its derivative with respect to the septum
+    position, referred to the centroid position x_ref at the NKM centre (rad, rad/m, m)."""
+    k = FilamentNKMKicker(config, n_slices=n_slices)
+    xp = config.injection_xp_rad
+    k0 = centroid_exit(config, k, xp, lever_m=lever_m)[1] - xp
+    kp = centroid_exit(config, k, xp, dx=h, lever_m=lever_m)[1] - xp
+    km = centroid_exit(config, k, xp, dx=-h, lever_m=lever_m)[1] - xp
+    return k0, (kp - km) / (2 * h), config.injection_x_m + lever_m * xp

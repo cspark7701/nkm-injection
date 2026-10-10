@@ -31,6 +31,7 @@ from nkm_injection.injection_study import (
     InjectionStudyConfig, KickModelEvaluator, cached_ring, injected_beam_at_septum, track_injection,
     stored_beam_response, booster_beam, track_bts, beam_moments, wilson_interval, KICK_MODELS, ThickNKMKicker)
 from nkm_injection.fieldmap import load_1d_fieldmap
+from nkm_injection.wire_field import CalibratedControl, FilamentNKMKicker, calibrate_controls
 from nkm_injection.kickmap import NKMKickMap2D
 from nkm_injection.optimization_handoff import load_optimization_handoff
 from nkm_injection.bts_lattice import BTSConfig
@@ -40,7 +41,9 @@ from nkm_injection.stage_cli import add_source_argument, source_root, input_hash
 REPO = Path(__file__).resolve().parent.parent
 # "fieldmap_thick": drift-kick-drift NKM through the By.txt profile (Task 011 review); no stored-beam response
 # is recorded for it (the transparency study uses the bicubic kick map).
-S7_MODELS = tuple(KICK_MODELS) + ("fieldmap_thick",)
+# "fieldmap_3d": exact 3-D filament field (wire_field.FilamentNKMKicker), principal model after revision task C1.
+S7_MODELS = tuple(KICK_MODELS) + ("fieldmap_thick", "fieldmap_3d")
+NO_STORED = ("off", "fieldmap_thick", "fieldmap_3d")  # stored-beam response computed separately (task C7)
 
 
 def parse_args(argv=None):
@@ -52,6 +55,12 @@ def parse_args(argv=None):
     p.add_argument("--tracking-backend", choices=("element", "map"), default="element")
     p.add_argument("--kicker-models", nargs="+", choices=S7_MODELS, default=["fieldmap", "dipole"])
     p.add_argument("--thick-slices", type=int, default=160, help="Slices for the fieldmap_thick model")
+    p.add_argument("--slices-3d", type=int, default=640, help="Slices for the fieldmap_3d model")
+    p.add_argument("--control-reference", choices=("thin", "3d"), default="thin",
+                   help="Calibrate dipole/linear controls to the thin map (legacy) or to the 3-D response of the nominal centroid")
+    p.add_argument("--timing-model", choices=("additive", "scale"), default="additive",
+                   help="NKM timing error as an additive dipole kick (legacy) or as an equivalent field-scale error "
+                        "(same kick change for the nominal injected centroid, zero on axis)")
     p.add_argument("--samples", type=int, default=50)
     p.add_argument("--particles", type=int, default=200)
     p.add_argument("--turns", type=int, default=500)
@@ -115,12 +124,19 @@ def run_realization(job):
         exit_beam[0] -= ref[0, 0]
         exit_beam[1] -= ref[1, 0]
     exit_mom = beam_moments(exit_beam)
+    # timing error: additive dipole kick (legacy) or the field-scale change giving the same kick change for the
+    # nominal injected centroid, whose kick magnitude equals the matched angle |x'_inj| (zero on the stored-beam axis)
+    timing_kick = s["nkm_timing_mrad"] * 1e-3
+    if job.get("timing_model", "additive") == "scale":
+        timing_rel, timing_add = timing_kick / abs(cfg0.injection_xp_rad), 0.0
+    else:
+        timing_rel, timing_add = 0.0, timing_kick
     cfg = replace(cfg0,
                   septum_edge_x_m=cfg0.septum_edge_x_m + s["septum_x_m"],
                   injection_x_m=cfg0.injection_x_m + s["septum_x_m"],
-                  field_scale=cfg0.field_scale * (1 + s["nkm_scale_err"]),
+                  field_scale=cfg0.field_scale * (1 + s["nkm_scale_err"] + timing_rel),
                   nkm_dx_m=cfg0.nkm_dx_m + s["nkm_dx_m"],
-                  kick_offset_rad=cfg0.kick_offset_rad + s["nkm_timing_mrad"] * 1e-3,
+                  kick_offset_rad=cfg0.kick_offset_rad + timing_add,
                   closed_orbit_x_m=cfg0.closed_orbit_x_m + s["ring_co_x_m"])
     beam = injected_beam_at_septum(cfg, ring, job["beam_seed"], bts_exit_beam=exit_beam)
     tgt = job["target_twiss"]
@@ -132,8 +148,13 @@ def run_realization(job):
            "static_orbit_corrected_m_rad": static,
            "bts_lost": int(np.sum(~np.isfinite(exit_beam[0]))), "models": {}}
     x_ref = cfg0.nkm_entry_x_m  # controls stay calibrated at the nominal point (no error knowledge)
+    calib = job.get("calibration_3d")
     for model in job["models"]:
-        if model == "fieldmap_thick":
+        if model == "fieldmap_3d":
+            kicker = FilamentNKMKicker(cfg, n_slices=job.get("slices_3d", 640))
+        elif model in ("dipole", "linear") and calib is not None:
+            kicker = CalibratedControl(model, *calib)
+        elif model == "fieldmap_thick":
             kicker = ThickNKMKicker(cfg, *load_1d_fieldmap(root / "By.txt"), n_slices=job.get("thick_slices", 160))
         else:
             kicker = KickModelEvaluator(model, cfg, None if model == "off" else kmap, x_ref)
@@ -142,7 +163,7 @@ def run_realization(job):
                  "loss_causes": res["loss_causes"],
                  "loss_turn_histogram": np.bincount(np.asarray([t for t in res["first_loss_turn"] if t >= 0], int),
                                                     minlength=1).tolist()}
-        if model not in ("off", "fieldmap_thick"):
+        if model not in NO_STORED:
             sr = stored_beam_response(cfg, ring, kicker, n=20000, seed=11)
             entry["stored"] = {k: sr[k] for k in ("mean_kick_x_rad", "centroid_amplitude_m", "amplitude_over_sigma",
                                                   "filamented_emittance_growth")}
@@ -186,7 +207,8 @@ def main(argv=None):
     base = {"config": cfg.to_dict(), "repo_root": str(root), "work_dir": str(work), "bts_config": sel.bts.to_dict(),
             "initial_twiss": sel.initial_twiss, "target_twiss": sel.target_twiss, "models": args.kicker_models,
             "backend": args.tracking_backend, "thick_slices": args.thick_slices, "particles": args.particles, "turns": args.turns,
-            "correct_static_orbit": args.correct_static_orbit}
+            "correct_static_orbit": args.correct_static_orbit, "slices_3d": args.slices_3d, "timing_model": args.timing_model,
+            "calibration_3d": list(calibrate_controls(cfg, args.slices_3d)) if args.control_reference == "3d" else None}
     jobs = [{**base, "sample": s, "extra": e, "beam_seed": int(args.seed * 100003 + max(s["sample_id"], -1) + 1)}
             for s, e in zip(samples, extras)]
     print(f"S7: {len(jobs)} realizations x {len(args.kicker_models)} models, workers={args.workers}", flush=True)
@@ -198,18 +220,20 @@ def main(argv=None):
         st = cluster_stats(caps, args.bootstrap_seed, args.bootstrap_count, args.capture_threshold)
         st["pooled_particles_capture"] = float(sum(r["models"][m]["captured"] for r in results if r["sample_id"] >= 0)
                                                / sum(r["models"][m]["n"] for r in results if r["sample_id"] >= 0))
-        if m not in ("off", "fieldmap_thick"):
+        if m not in NO_STORED:
             amp = [r["models"][m]["stored"]["amplitude_over_sigma"] for r in results if r["sample_id"] >= 0]
             st["stored_amp_over_sigma"] = {"median": float(np.median(amp)), "p95": float(np.quantile(amp, 0.95)),
                                            "max": float(np.max(amp))}
         stats_by_model[m] = st
     paired = None
-    if "fieldmap" in args.kicker_models and "dipole" in args.kicker_models:
-        d = np.array([r["models"]["fieldmap"]["capture_fraction"] - r["models"]["dipole"]["capture_fraction"]
+    primary = args.kicker_models[0]
+    if primary != "dipole" and "dipole" in args.kicker_models:
+        d = np.array([r["models"][primary]["capture_fraction"] - r["models"]["dipole"]["capture_fraction"]
                       for r in results if r["sample_id"] >= 0])
         rng = np.random.default_rng(args.bootstrap_seed)
         boot = d[rng.integers(0, len(d), size=(args.bootstrap_count, len(d)))].mean(axis=1)
-        paired = {"mean_difference_fieldmap_minus_dipole": float(d.mean()),
+        paired = {"primary_model": primary, f"mean_difference_{primary}_minus_dipole": float(d.mean()),
+                  "mean_difference_fieldmap_minus_dipole" if primary == "fieldmap" else "mean_difference_primary_minus_dipole": float(d.mean()),
                   "ci95": [float(np.quantile(boot, 0.025)), float(np.quantile(boot, 0.975))]}
     meta = {"timestamp": datetime.datetime.now().isoformat(), "study_config": cfg.to_dict(),
             "error_config": err.to_dict(), "error_scale": args.error_scale, "optimization_source": sel.source,

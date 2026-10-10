@@ -38,6 +38,7 @@ from nkm_injection.wire_field import FilamentNKMField  # noqa: E402
 REPO = Path(__file__).resolve().parent.parent
 COL3 = {"fieldmap_3d": COL["fieldmap"], "dipole": COL["dipole"], "linear": COL["linear"], "off": COL["off"]}
 LEVER = 2.2625
+TUNE_X_FRAC = 0.17913  # fractional horizontal tune of the KLS lattice (4D linear model, run_survival_validation ring_diagnostics)
 THRESHOLD = 0.80  # declared capture threshold defining the operating window (before the scans were analysed)
 
 
@@ -214,7 +215,7 @@ class RevisionBuilder(bj.Builder):
                 self.macro(f"Win{nm}LoUnc", max(abs(x - cr[0]) for x in (lo_c[0] if lo_c else cr[0], hi_c[0] if hi_c else cr[0])), "{:.2f}")
                 self.macro(f"Win{nm}HiUnc", max(abs(x - cr[-1]) for x in (lo_c[-1] if lo_c else cr[-1], hi_c[-1] if hi_c else cr[-1])), "{:.2f}")
             imax = int(np.argmax(c))
-            self.macro(f"Win{nm}BestOffset", o[imax], "{:+.2f}")
+            self.macro(f"Win{nm}BestOffset", o[imax] + 0.0, "{:+.2f}")
             self.macro(f"Win{nm}BestCapture", c[imax] * 100, "{:.1f}")
             self.macro(f"Win{nm}Step", float(np.min(np.diff(o))), "{:.2f}")
             self.macro(f"Win{nm}N", int(n[0]), "{:d}")
@@ -503,7 +504,7 @@ class RevisionBuilder(bj.Builder):
         x1, p1 = centroid_exit(op, FilamentNKMKicker(op, n_slices=640), op.injection_xp_rad)
         bx, ax_ = tr["optics"]["beta_x"], tr["optics"]["alpha_x"]
         g = (1 + ax_ ** 2) / bx
-        mu = 2 * np.pi * self.load("backend_validation").get("ring", {}).get("tune_x_frac", 0.17913)
+        mu = 2 * np.pi * TUNE_X_FRAC  # linear one-turn rotation at the NKM centre (centroid estimate only)
         M = np.array([[np.cos(mu) + ax_ * np.sin(mu), bx * np.sin(mu)], [-g * np.sin(mu), np.cos(mu) - ax_ * np.sin(mu)]])
         v = np.array([x1, p1])
         width = float(self.macros["WinAngleWidth"]) * 1e-3

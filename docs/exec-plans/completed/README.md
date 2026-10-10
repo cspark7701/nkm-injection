@@ -394,3 +394,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 123. [**Milestone 123 — C9: Contribution and Verified Comparison**](123_c9_novelty_and_comparison.md)
     - Stated four demonstrated contributions, a caveated NLK/MIK comparison table and four newly verified references; lattice identity flagged for author confirmation.
+
+124. [**Milestone 124 — C8: Pulsed-Magnet and Timing Requirements**](124_c8_pulse_and_timing.md)
+    - Claims restricted to an ideal single-pass field; residual-field, on-axis residual and timing requirements derived from the measured window and exact-field transparency.

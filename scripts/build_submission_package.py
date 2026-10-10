@@ -2,7 +2,7 @@
 """Task 012 — build the JINST submission package in an isolated directory.
 
 Copies only the files the manuscript needs (paper.tex, paper.bib, jinstpub.sty, generated macros and referenced
-figures), compiles pdflatex -> bibtex -> pdflatex x2, rejects LaTeX errors, undefined references/citations, BibTeX
+figures), compiles pdflatex -> bibtex -> pdflatex x2 (up to x4 while labels settle), rejects LaTeX errors, undefined references/citations, BibTeX
 warnings and overfull boxes, and writes a source archive (with the compiled paper.bbl), the PDF, the supplement
 (provenance, manifest, claim table, review), SHA-256 hashes and the software environment to a new output directory.
 """
@@ -50,9 +50,11 @@ def compile_paper(src: Path):
     bib = run("bibtex", "paper")
     if bib.returncode != 0 or "Warning" in bib.stdout:
         raise SystemExit("bibtex failed:\n" + bib.stdout)
-    for _ in range(2):
+    for _ in range(4):  # at least two passes; repeat while labels are still settling
         r = run("pdflatex", "-interaction=nonstopmode", "-halt-on-error", "paper.tex")
-    log = (src / "paper.log").read_text(errors="replace")
+        log = (src / "paper.log").read_text(errors="replace")
+        if _ >= 1 and "Rerun to get" not in log:
+            break
     bad = BAD_LOG.findall(log)
     if r.returncode != 0 or bad:
         raise SystemExit(f"LaTeX build not clean: {sorted(set(bad))}")

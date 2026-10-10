@@ -47,3 +47,17 @@ Zenodo DOI will be created at acceptance. No archive is described as existing be
 | Alexandre2021 | Crossref DOI 10.1016/j.nima.2020.164739 (NIM A 986, 164739) | MAX IV MIK transparent top-up |
 | Velloso2023 | DataCite DOI 10.18429/JACoW-IPAC2023-WEPL087; JACoW landing page (pp. 3302–3305); author list from DataCite | SIRIUS NLK: design 99 % at −9 mm DA; ≈85 ± 8 % with design sextupoles; RCDS sextupole optimisation |
 | Elleaume1992 | JACoW EPAC'92 PDF EPAC1992_0661 (pp. 661–664) | kick-map (second-order) formalism; no DOI |
+
+## Additions to the introduction (2026-10-11)
+
+| Key | Verified against | Supports |
+| :--- | :--- | :--- |
+| Hettel2014 | Crossref DOI 10.1107/S1600577514011515 (J. Synchrotron Rad. 21, 843–855) | Overview of diffraction-limited (MBA) storage rings |
+| Raimondi2021 | Crossref DOI 10.1103/PhysRevAccelBeams.24.110701 (PRAB 24, 110701) | ESRF-EBS hybrid MBA; emittance reduced about 30-fold |
+| Emery1999 | JACoW reference database: PAC'99 TUCL4, pp. 200–202 | Top-up operation (APS) |
+| Emery2003 | JACoW PAC'03 TOPA014, pp. 256–258; full text checked: beam swapped with an accumulator in a single turn, on-axis injection | On-axis swap injection |
+| Aiba2015 | Crossref DOI 10.1103/PhysRevSTAB.18.020701 (PRST-AB 18, 020701) | Longitudinal injection for small-aperture rings |
+| Harada2007 | Crossref DOI 10.1103/PhysRevSTAB.10.123501 (PRST-AB 10, 123501) | Pulsed-quadrupole injection at KEK PF-AR |
+| Leemann2012 | Crossref DOI 10.1016/j.nima.2012.07.023 (NIM A 693, 117–129) | MAX IV single-dipole-kicker injection for commissioning, since pulsed-multipole commissioning is non-trivial |
+| Wu2003 | Crossref DOI 10.1103/PhysRevE.68.046502 (PRE 68, 046502) | Symplectic integration through s-dependent fields (insertion devices, fringe fields) |
+| Kim2025 | JACoW reference database: IPAC'25 MOPS089, pp. 789–792, DOI 10.18429/JACoW-IPAC2025-MOPS089; abstract on JACoW Indico | KLS (Korea-4GSR) lattice: 4 GeV, 28 HMBA cells, about 800 m, 62 pm. The formatted JACoW entry lists four authors; the original author string has five (two "J. Kim"), and five are cited |

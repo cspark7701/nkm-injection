@@ -421,3 +421,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 132. [**Milestone 132 — C12: Point-by-Point Response and Final Gate**](132_c12_author_response.md)
     - Response to both reviewers completed (both robustness ensembles, tracked transparency); 663 tests pass; final evidence bundle at a clean commit rebuilds the macros byte for byte.
+
+133. [**Milestone 133 — Introduction Expanded with Verified References**](133_introduction_references.md)
+    - Nine verified references (DLSR overview, ESRF-EBS, top-up, swap-out, longitudinal injection, pulsed quadrupole, MAX IV dipole kicker, s-dependent integrator, KLS lattice); gated build 14 pages.

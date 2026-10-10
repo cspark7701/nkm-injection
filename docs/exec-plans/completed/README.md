@@ -430,3 +430,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 135. [**Milestone 135 — General Article Format and Manuscript Directory**](135_general_article_and_paper_directory.md)
     - Renamed the manuscript directory to docs/paper, converted the LaTeX source to a standard article, migrated build/package paths and links, and verified a clean 12-page PDF, 90 focused tests and unchanged scientific content/protected inputs.
+
+136. [**Milestone 136 — Reviewer 2, Second-Round Report on the Revised Manuscript**](136_reviewer2_round2_report.md)
+    - Major revision: missing chamber in the headline, uncorrected ring errors, micrometre-level wire tolerance for transparency (checked), pulse-length inconsistency, beam-based tuning, lattice version, generality; tasks R2b-1 to R2b-15.

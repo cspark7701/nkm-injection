@@ -445,6 +445,7 @@ class RevisionBuilder(bj.Builder):
         self.macro("RobNkmMinusDipHi", hi * 100, "{:+.1f}"); self.macro("RobPairN", n, "{:d}")
         z = self.load("c5_summary_42")["zero_error_realization"]
         self.macro("RobZeroErr", z["fieldmap_3d"] * 100, "{:.1f}")
+        self.macro("RobZeroErrDip", z["dipole"] * 100, "{:.1f}")
         for f, mm, pp, bb in zip(fs, mean, p10, boot):
             nm = {0.0: "Zero", 0.25: "Quarter", 0.5: "Half", 0.75: "ThreeQ", 1.0: "Full"}[f]
             self.macro(f"Jit{nm}Mean", mm, "{:.1f}"); self.macro(f"Jit{nm}Pten", pp, "{:.1f}")

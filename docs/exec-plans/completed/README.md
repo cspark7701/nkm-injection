@@ -403,3 +403,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 126. [**Milestone 126 — C4: Survival, Loss Accounting and Bounded Sensitivities**](126_c4_survival_and_sensitivity.md)
     - 4000-turn survival 89.5 % (500-turn capture 3.5 points optimistic); vertical-aperture loss traced to ring coupling, not the NKM; uncorrected ring errors bound the sensitivity.
+
+127. [**Milestone 127 — C5: Combined-Error Robustness with the 3-D NKM**](127_c5_combined_errors_3d.md)
+    - 150 paired realizations: 3-D NKM 40.5 % vs dipole 61.4 % (−20.9 points); the gap grows from 2 points without errors; limited by the transfer-line exit centroid (booster jitter).

@@ -38,6 +38,8 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--manifest", type=Path, default=REPO / "docs/jinst-paper/campaign_manifest.json")
     p.add_argument("--output-dir", type=Path, required=True)
+    p.add_argument("--builder", choices=("journal", "revision"), default="journal",
+                   help="Figure builder used by REBUILD.md and --verify (revision: build_revision_figures.py)")
     p.add_argument("--verify", action="store_true")
     a = p.parse_args(argv)
     out = a.output_dir.resolve()
@@ -45,6 +47,7 @@ def main(argv=None):
         raise SystemExit("--output-dir must be new or empty")
     (out / "evidence").mkdir(parents=True)
     m = json.loads(a.manifest.read_text())
+    builder = f"build_{a.builder}_figures.py"
     copied = {}
     for key, rel in m["artifacts"].items():
         src = Path(rel) if Path(rel).is_absolute() else REPO / rel
@@ -82,7 +85,7 @@ repository-relative paths and the scientific inputs {", ".join(INPUTS)}). Hashes
 mkdir code && tar -xzf code.tar.gz -C code
 python -m pip install -e "code[dev]"
 sha256sum -c SHA256SUMS
-OMP_NUM_THREADS=1 MPLBACKEND=Agg python code/scripts/build_journal_figures.py \\
+OMP_NUM_THREADS=1 MPLBACKEND=Agg python code/scripts/{builder} \\
     --manifest campaign_manifest.json --repo-root evidence --output-dir rebuilt
 diff rebuilt/tables/journal_macros.tex code/docs/jinst-paper/generated/journal_macros.tex
 ```
@@ -97,7 +100,8 @@ recorded inside each artifact (`cli` fields) and in `code/docs/exec-plans/comple
     (out / "SHA256SUMS").write_text("\n".join(lines) + "\n")
     with tarfile.open(out.with_suffix(".tar.gz"), "w:gz") as tar:
         tar.add(out, arcname=out.name)
-    result = {"artifacts": len(m["artifacts"]), "files": len(lines), "commit": commit, "uncommitted": bool(dirty),
+    result = {"builder": builder, "artifacts": len(m["artifacts"]), "files": len(lines), "commit": commit,
+              "uncommitted": bool(dirty),
               "archive": str(out.with_suffix(".tar.gz"))}
     if a.verify:
         with tempfile.TemporaryDirectory() as tmp:
@@ -105,7 +109,7 @@ recorded inside each artifact (`cli` fields) and in `code/docs/exec-plans/comple
             subprocess.run(["tar", "-xzf", str(out / "code.tar.gz"), "-C", str(code)], check=True)
             env = {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MPLBACKEND": "Agg", "PATH": "/usr/bin:/bin",
                    "PYTHONPATH": str(code / "src")}
-            r = subprocess.run([sys.executable, "-B", str(code / "scripts/build_journal_figures.py"), "--manifest",
+            r = subprocess.run([sys.executable, "-B", str(code / "scripts" / builder), "--manifest",
                                 str(out / "campaign_manifest.json"), "--repo-root", str(out / "evidence"), "--output-dir",
                                 str(Path(tmp) / "rebuilt")], cwd=tmp, env=env, capture_output=True, text=True)
             if r.returncode != 0:

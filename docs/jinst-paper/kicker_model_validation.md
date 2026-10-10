@@ -57,7 +57,7 @@ x′ = 4.869 mrad), relative to 1280 slices and a ±0.8 m span:
 | 320 | −9.4×10⁻¹⁰ | −3.3×10⁻⁹ |
 | **640 (adopted)** | **−6.7×10⁻¹¹** | −7.5×10⁻¹⁰ |
 
-**Momentum dependence:** the exit angle changes by 0.37 µrad per 10⁻³ in δ, which is negligible against the angular
+**Momentum dependence:** the exit angle changes by 0.12 µrad per 10⁻³ in δ, which is negligible against the angular
 window.
 
 ## 3. Centroid response at the operating point
@@ -125,10 +125,12 @@ Averaging over the slanted straight path does not.
 
 **Mechanism.** The finite-length effect is the beam's own deflection inside the magnet. The kick of about 5 mrad
 displaces the trajectory outward by roughly the sagitta |K|L/8 = 0.32 mm, so the field is sampled away from the
-straight line. A positive septum angle error moves the centroid inward, past the kick extremum at x = −8.5 mm. The
-outward self-deflection then carries the trajectory back across the extremum, where the kick is stronger and
-compensates the error. The thin model cannot represent this feedback: it overestimates the sensitivity to positive
-angle errors and underestimates the nominal amplitude.
+straight line. A positive septum angle error moves the incoming trajectory inward. On the undeflected straight line it
+would cross the kick extremum (x ≈ −8.6 mm at S = 0.85) onto the inner flank, where the kick weakens, so the incoming
+angle is under-compensated. The outward self-deflection instead holds the trajectory on the outer side of the
+extremum, near the kick maximum. The extra angle therefore receives an almost full additional kick, and the error is
+largely compensated (revised manuscript, figure 4, centre). The thin model cannot represent this feedback: it
+overestimates the sensitivity to positive angle errors and underestimates the nominal amplitude.
 
 **Magnet-length scan** (bent model at a fixed integrated kick profile, own matched angle):
 

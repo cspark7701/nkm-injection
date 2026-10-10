@@ -7,7 +7,7 @@ Completed: 2026-10-10. Consolidated task C1 (R1-02, R2-1a, R2-14). Record:
   from the protected notebook source, nothing executed), and a sliced tracker in AT canonical coordinates.
   - Reproduces both kick-map components to 7×10⁻¹² rad over 3,657 nodes.
   - Converged at 640 slices to 7×10⁻¹¹ rad.
-  - δ effect: 0.37 µrad per 10⁻³.
+  - δ effect: 0.12 µrad per 10⁻³.
 - **Vertical-sign bug fixed** in `KickModelEvaluator`. The map stores (∫B_y, +∫B_x); the physical pair uses −∫B_x. The
   legacy sign remains available via `vertical_sign=+1`. The linearised control gains −k₁y.
 - **Capture on identical bunches** (4 × 500 particles):

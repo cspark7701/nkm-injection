@@ -4,11 +4,11 @@ Date: 2026-10-10. Addresses R1-01, R2-10, R2-15 and R2-20.
 
 ## Scope
 
-**Lattice.** A simulation study of one wire-based NKM design in the 4 GeV storage-ring design lattice
-`K4GSR_HBIv4-1` (the repository's "4GSR high-beta" lattice): circumference 799.30 m, ε_x = 61.6 pm, on-momentum DA at the
-kicker −12/+13 mm. The facility name and the lattice revision are to be confirmed by the author before submission.
-The paper names the lattice file and presents it as a representative small-DA fourth-generation ring, not as a
-statement about an operating machine.
+**Lattice.** A simulation study of one wire-based NKM design for the **Korea Light Source (KLS)**, the 4 GeV
+fourth-generation storage ring formerly referred to as K4GSR/4GSR. The ring is modelled with the design lattice file
+`K4GSR_HBIv4-1` (high-beta injection straight, revision v4-1): circumference 799.30 m, ε_x = 61.6 pm, on-momentum DA
+at the kicker −12/+13 mm. The facility name was confirmed by the author on 2026-10-10. The paper presents the design
+lattice, not an operating machine.
 
 **Assumptions.** All error amplitudes and the booster beam parameters are design assumptions, not machine
 specifications. The study is an ideal-lattice design study with bounded sensitivities to ring errors and chamber
@@ -58,7 +58,7 @@ ranking.
 | MAX IV (3 GeV) | MIK | meets the < 10 % σ transparency specification | — | Alexandre 2021; Kallestrup 2019 |
 | SOLEIL (2.75 GeV) | MIK (copy) | < 2 % of rms size measured | — | Ollier 2023 |
 | SIRIUS (3 GeV) | NLK; booster emittance 3.5 nm | — | design 99 % at −9 mm DA; ≈ 85 ± 8 % with design sextupoles, improved by online optimisation | Liu 2016; Velloso 2023 |
-| This work (4 GeV, simulation) | four-loop wire NKM, 0.525 m | exactly zero when aligned; 0.10 σ_x at 0.2 mm offset | capture over 500 turns at the selected point (3-D model; see paper) | — |
+| This work: KLS design lattice (4 GeV, simulation) | four-loop wire NKM, 0.525 m | exactly zero when aligned; 0.10 σ_x at 0.2 mm offset | capture over 500 turns at the selected point (3-D model; see paper) | — |
 
 The ring energies of KEK-PF, MAX IV, SOLEIL and SIRIUS are general facility parameters, not taken from the cited
 papers. They are context only and are not cited as results.

@@ -18,3 +18,6 @@ were added and verified, and are logged in `bibliography_audit.md`:
 
 **Author confirmation needed.** The lattice is identified as `K4GSR_HBIv4-1` (4GSR high-beta design); the facility
 name is to be confirmed by the author.
+
+**Update (2026-10-10).** The author confirmed the facility name: **Korea Light Source (KLS)**, formerly K4GSR. The lattice
+file name `K4GSR_HBIv4-1` is kept as the input identifier.

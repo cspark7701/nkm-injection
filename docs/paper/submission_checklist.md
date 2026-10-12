@@ -1,69 +1,35 @@
-# Submission checklist — revised manuscript (KLS, exact 3-D NKM)
+# PRAB submission checklist
 
-Prepared 2026-10-11 for the consolidated reviewer revision (C1–C12). This is a reviewable package; **submission is a
-separate author action** (nothing was uploaded, pushed or sent). The journal is not yet chosen; the manuscript uses the
-standard LaTeX `article` class and is written venue-neutrally.
+Updated 2026-10-12 for D15. Target: **Physical Review Accelerators and Beams**, Research Article. The author requested a one-column main draft and a separate two-column preview. Submission remains a separate author action.
 
-## Package (rebuild locally; results are not committed)
+## Format and package
 
-```bash
-python scripts/make_revision_manifest.py --require-all --output docs/paper/revision_manifest.json
-OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg python scripts/build_revision_figures.py \
-    --manifest docs/paper/revision_manifest.json --output-dir results/<new> --install-dir docs/paper/generated
-python scripts/build_submission_package.py --output-dir results/<new> [--install-pdf]
-python scripts/build_evidence_bundle.py --manifest docs/paper/revision_manifest.json --builder revision \
-    --output-dir results/<new> --verify
-```
+- [x] REVTeX 4.2 with APS/PRAB options and native author/email/affiliation/abstract metadata.
+- [x] Primary one-column source/PDF: `paper.tex`, `paper.pdf`.
+- [x] Shared-source two-column preview: `paper_twocolumn.tex`, `paper_twocolumn.pdf`.
+- [x] APS `apsrev4-2` bibliography style; reference titles retained.
+- [x] PRAB-targeted draft cover letter; proposed PhySH headings documented.
+- [x] Separate isolated builds, source archives and layout-specific manifests.
+- [x] Scientific macros/figures and previous reviews unchanged by format conversion.
 
-`build_submission_package.py` writes the source archive (paper.tex, paper.bib, compiled paper.bbl, macros
-and the eight referenced figures), `paper.pdf`, the supplement (revision manifest, claim table, review, bibliography
-audit, cover letter, provenance) and `package_manifest.json` with SHA-256 digests, git commit, software versions and
-commands. It fails on LaTeX errors, undefined references or citations, BibTeX warnings and overfull boxes. Reference
-general-article build: `results/article_conversion_20261011` — 12 pages, clean, with no journal-specific style dependency.
-Earlier revision build: `results/journal_campaign_02/submission_package_rev1` — 13 pages, clean; the committed
-`docs/paper/paper.pdf` is that build. The evidence bundle for referees is described in milestone 131.
+Build commands and submission metadata: [prab_submission.md](prab_submission.md). Scientific evidence entry point: [round2_reproduction.md](round2_reproduction.md), `revision_manifest_round2.json` and current D rows in `claim_evidence.csv`. D15 builds installed assets and does not rerun simulations.
 
-## Headline findings → evidence
+## Scientific preparation and evidence
 
-| Finding (paper) | Artifact (revision_manifest key) | Claim row | Milestone |
-| :--- | :--- | :--- | :--- |
-| DA −12…+13 mm at the kicker | backend_validation | C1 | — |
-| exact filament field = RADIA map; 640 slices converged | kicker_validation | C2 | 121 |
-| self-deflection shifts matched angle by 0.2 mrad | mechanism | C3 | 122 |
-| vertical defocusing costs about five points | vertical_diagnostic | C4 | 122 |
-| operating point; 93.0 % NKM, 97.0 % dipole, 97.8 % linearised, 0 % off | c3_grid, c3_validate | C5 | 125 |
-| angle window 0.74 mrad, position window 1.44 mm | c3_angle, c3_position | C6 | 125 |
-| 2000-particle capture 92.4 %; 89.5 % after 4000 turns | c4_particles, c4_longturn | C7 | 126 |
-| aperture and ring-error sensitivities | c4_aperture, c4_ring_errors, c4_aper_* | C8 | 126 |
-| transparency by symmetry; 0.10 σ at 0.2 mm; tracked check | c7_analytic, c7_tracked | C9, C10 | 129 |
-| pulsed-magnet residual requirements | builder (operating point) | C11 | 124 |
-| combined errors 40.5 % / 44.4 % (no / ideal static correction); dipole 61.4 / 65.6 % | c5_raw_*, c5c_raw_* | C12–C14 | 127, 128 |
-| jitter tolerance curves; no 80 % from jitter reduction alone | c6_raw_*, c6c_raw_* | C15, C16 | 128 |
+- [ ] Complete the [third-round Reviewer 1 tasks](reviews/reviewer1_round3_20261012_revision_tasks.md), especially the contribution relative to Sun et al., evidence access and robustness interpretation.
+- [ ] Supply the existing campaign-03 referee attachment and independently verify its selected evidence and rebuild. The historical D13/D14 checks are recorded in milestones 156–157; they are not checks repeated by D15.
+- [ ] Update the frozen source/evidence packaging after any further scientific revisions, preserving historical bundles.
+- [ ] Confirm that abstract, figures, claims, manuscript and final attachment agree.
 
-Configurations: `results/journal_campaign_02/operating_point_3d.json`, frozen `error_budget.json`, selected BTS
-optimisation in `backups_20261009/production_statistical_01` (read-only). Seeds are recorded in every raw artifact.
-Rows A1–B18 of `claim_evidence.csv` document the campaign-01 manuscript and are superseded (row C0).
+The current headline is nominal design-beam capture 97.0% at 500 turns and 96.1% at 4000 turns; joint-error mean 14.8% is conditional on ten corrected rings and assumed errors. These quantities are not operational efficiency predictions. Prior campaign-02 sensitivity studies remain explicitly separate from the final design-beam results.
 
-## Gate
+## Author checks before submission
 
-- [x] All reported simulations ran; `make_revision_manifest.py --require-all` records 46 artifacts with digests, and the
-      builder verifies every digest it reads.
-- [x] MOGA excluded from claims (`moga_decision.md`).
-- [x] Statistical intervals stated (Wilson, cluster bootstrap, paired differences, partial rank correlation).
-- [x] Limitations stated (ideal lattice with bounded ring-error and aperture sensitivities, no iron/chamber/eddy fields,
-      assumed error budget, 500-turn survival checked to one damping time, no sextupole optimisation).
-- [x] References verified (`bibliography_audit.md`); no undefined citations.
-- [x] Full test suite passed; protected files unchanged.
-- [x] Isolated build clean; archive contains only referenced files.
+- [ ] Confirm final title, authorship, affiliation, email and funding statement.
+- [ ] Confirm exclusive submission and any relevant submission history.
+- [ ] Choose final PhySH headings in the APS submission portal.
+- [ ] Confirm the data/code availability statement and actual reviewer attachment access.
+- [ ] Verify AI-use disclosure and other applicable APS author requirements.
+- [ ] Submit the primary one-column draft and requested supporting files through the journal portal; the two-column version is an optional preview.
 
-## Author confirmation required before submission
-
-- [ ] Choose the journal; adapt the class, keywords and cover letter to it.
-- [ ] Final title, sole authorship, affiliation and corresponding e-mail.
-- [ ] Funding statement (none recorded in the repository).
-- [ ] Bibliography style required by the chosen journal (`unsrt` used now).
-- [ ] Persistent archive (e.g. Zenodo DOI) for code and data at acceptance; update the availability statement.
-- [ ] Review and sign the cover letter (`cover_letter.md`); decide on suggested referees.
-- [ ] Review the response to the reviewers (`reviews/author_response.md`).
-- [ ] Accept the claims, especially the vertical-sign correction of the kick map and the robustness conclusion
-      (80 % mean capture is not reached under the assumed budget).
+No DOI is invented or required by this local checklist. No manuscript or letter has been sent, uploaded or published by D15.

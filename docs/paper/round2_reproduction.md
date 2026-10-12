@@ -16,8 +16,13 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg \
   --output-dir results/round2_rebuild_new \
   --install-dir docs/paper/generated
 python scripts/build_submission_package.py \
-  --output-dir results/round2_submission_new --install-pdf
+  --layout one-column --output-dir results/round2_submission_new --install-pdf
+python scripts/build_submission_package.py \
+  --layout two-column --output-dir results/round2_submission_two_new --install-pdf
 ```
+
+The PRAB one-column draft is the default; the alternate build installs only
+`paper_twocolumn.pdf`. Both share `paper.tex` (see [PRAB formats](prab_submission.md)).
 
 Use new output directories. The figure builder verifies the hash of every
 consumed artifact. The submission builder rejects LaTeX errors, undefined

@@ -1,28 +1,32 @@
-\documentclass[a4paper,11pt]{article}
+% One-column review draft is the default; paper_twocolumn.tex selects reprint.
+\ifdefined\PRABTwoColumn
+\documentclass[aps,prab,reprint,amsmath,amssymb,floatfix,longbibliography]{revtex4-2}
+\else
+\documentclass[aps,prab,preprint,amsmath,amssymb,floatfix,longbibliography]{revtex4-2}
+\fi
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{lineno}
 \usepackage[hidelinks]{hyperref}
 
 % Numerical simulation results quoted in the text are generated from the selected campaign artifacts
 % by scripts/build_revision_figures.py (see generated/figure_provenance.csv).
 \input{generated/journal_macros.tex}
 
+\begin{document}
+
 \title{Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light Source design lattice}
 
-\author{Chong Shik Park\thanks{Corresponding author: \href{mailto:kuphy@korea.ac.kr}{kuphy@korea.ac.kr}.}\\[0.5em]
-\small Department of Accelerator Science and Center for Accelerator Research,\\
-\small Korea University, Sejong 30019, Republic of Korea}
-\date{}
+\author{Chong Shik Park}
+\email{kuphy@korea.ac.kr}
+\affiliation{Department of Accelerator Science and Center for Accelerator Research,
+Korea University, Sejong 30019, Republic of Korea}
+\date{October 12, 2026}
 
 
-\begin{document}
-\maketitle
 
 \begin{abstract}
 A single thin kick map can miss trajectory displacement inside a nonlinear injection kicker. For a 0.525\,m four-loop magnet in a 4\,GeV Korea Light Source design lattice, we compare tracking in an exact filament field, thin and sliced vector maps, and an independent adaptive trajectory solver. A sagitta-to-kick-width ratio organizes finite-length differences over two related wire families; vertical focusing depends on the sampled flank. With the design booster beam and a declared chamber, nominal capture is \ChamberNom\,\% at 500 turns and \FinalLong\,\% at 4000 turns. Under the assumed joint machine/shot budget, mean capture is \FinalNkmMean\,\%, conditional on ten corrected rings; these values are not operational efficiency predictions. Ideal centred centroid cancellation also does not ensure full-beam transparency: finite moments change, and wire placement and current imbalance impose separate tolerances. Conditional jitter differences and held-out capture-based tuning quantify the remaining margin without asserting a universal injection tolerance.
@@ -30,9 +34,9 @@ A single thin kick map can miss trajectory displacement inside a nonlinear injec
 
 \end{abstract}
 
-\noindent\textbf{Keywords:} Nonlinear kicker; off-axis injection; storage-ring beam dynamics; finite-length tracking; capture robustness
-
-\linenumbers
+\keywords{Nonlinear kicker; off-axis injection; storage-ring beam dynamics; finite-length tracking; capture robustness}
+\maketitle
+\clearpage
 
 \section{Introduction}
 \label{sec:intro}
@@ -45,7 +49,7 @@ The price of transparency is a kick that varies across the injected bunch. Liu \
 
 The Korea Light Source (KLS) is a 4\,GeV, 28-cell hybrid multibend-achromat ring of about 800\,m circumference with a natural emittance of 62\,pm~\cite{Kim2025}. This article studies these effects for a 0.525\,m four-loop wire NKM in a KLS design lattice, with the chamber-limited acceptance reported below. The kicker is modelled by the exact three-dimensional field of its current filaments, validated against the RADIA~\cite{Chubar1998} kick map, and tracked through in slices. The contributions are a quantified finite-length comparison, dimensionless sagitta-to-kick-width scaling over two related wire families, an independent off-midplane trajectory check, and conditional capture and transparency tolerances. The signed vertical field is a consistency requirement for vector maps, not a new deficiency of kick-map methods. The study includes a declared chamber and ten corrected-error rings; it does not predict commissioned-machine performance.
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering\small
 \caption{Selected published multipole-injection systems and this simulation. Top: hardware dimensions and a quoted kick (not necessarily a peak). Bottom: acceptance, efficiency and normalized disturbance, with their original conditions. A dash means no comparable value was established from the cited source. Different lattices, observation points and efficiency definitions prevent a performance ranking.}
 \label{tab:comparison}
@@ -69,7 +73,7 @@ SOLEIL & $-13/+11$ mm at injection & 97\% peak, bare lattice & below 2\% rms wit
 SIRIUS & design $-9$ mm & 99\% simulated (213 turns); about 85\% measured, 8\% variability & --- \\
 This study & first lost grid: \ChamberIdealDANeg/\ChamberIdealDAPos\ mm & \ChamberNom\% simulated (500 turns, reference chamber) & \TranspTwoAmp\ of $\sigma_x$ at 0.2 mm horizontal offset, ideal geometry \\\bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 BESSY hardware values describe the 2011 design, whereas the quoted efficiency is from 2023; they are not a single contemporaneous specification. SOLEIL's active compensation and measured construction errors demonstrate why geometric symmetry alone is insufficient~\cite{Ollier2023}. The present tolerance study addresses idealized single-error sensitivities rather than reproducing those machines.
 
@@ -82,12 +86,12 @@ The supplied file \texttt{K4GSR\_HBIv4-1} is identified by the author as the lat
 
 The KLS design lattice (file \texttt{K4GSR\_HBIv4-1}; source circumference 799.30\,m, \FinalSourceElements\ elements) is tracked with the Accelerator Toolbox~\cite{Terebilo2001,Rogers2017} in six dimensions with RF and deterministic radiation damping (table~\ref{tab:params}). No stochastic quantum-excitation pass is included. The ring is re-ordered to start at the NKM centre, which is the kick and observation point. The synchrotron period is about 290 turns and the horizontal damping time about 3950 turns. The final capture studies include the declared chamber and septum blade as well as dynamical losses (section~\ref{sec:survival}). Figure~\ref{fig:da} isolates the supplied lattice and septum without the additional chamber profile: on momentum, particles with $x'=0$ are stable between $\DAxMinMm$ and $+\DAxMaxMm$\,mm.
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering
 \caption{Principal parameters of the supplied design lattice and study geometry. Booster emittance and energy spread are design values; extraction Twiss, bunch length and vertical ratio are assumptions.}
 \label{tab:params}
 \small
-\begin{tabular}{@{}p{5cm}p{10cm}@{}}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.66\textwidth}@{}}
 \toprule
 Ring energy, circumference & 4\,GeV, 799.30\,m \\
 Tunes, chromaticities & 68.18/23.26, $+6.0/+3.4$ \\
@@ -110,14 +114,14 @@ NKM & four loops, wires at $(\pm\WireInnerMm,\pm\WireInnerMm)$ and $(\pm\WireOut
  & peak kick \PeakKickMrad\,mrad at $x=\PeakKickXmm$\,mm ($S=\OpScale$) \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=0.95\textwidth]{generated/figures/fig2_dynamic_aperture.pdf}
 \caption{Deterministic lattice/septum acceptance without the additional chamber profile (no sampling interval), at the NKM centre from native tracking of single particles for 500 turns (1\,mm grid in $x$): turns survived versus $x$ and momentum deviation at $x'=0$ (left) and versus $x$ and $x'$ at $\delta=0$ (right).}
 \label{fig:da}
-\end{figure}
+\end{figure*}
 
 \subsection{Kicker field and tracking}
 
@@ -127,23 +131,23 @@ The NKM consists of four closed rectangular filament loops, one per quadrant, ea
 
 The magnet is tracked in 640 drift--kick--drift slices over $\pm0.45$\,m in canonical AT coordinates, $\mathrm{d}p_x/\mathrm{d}s = PS(B_y-y'B_s)/B\rho$ and $\mathrm{d}p_y/\mathrm{d}s=PS(-B_x+x'B_s)/B\rho$ with slopes $x'=p_x/(1+\delta)$, polarity $P$ and field scale $S$. The kick acts on canonical momentum and carries no $1/(1+\delta)$ factor; the exit angle changes by \DeltaSensUrad\,$\mu$rad per $10^{-3}$ in $\delta$. Slice and span refinement change the exit angle by less than \SliceConvRad\,rad. Particles within 1\,mm of a conductor are counted as lost. The polarity is chosen so that the kick at $x<0$ cancels the angle of a beam travelling from the septum towards the axis (figure~\ref{fig:geom}, right).
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=0.95\textwidth]{generated/figures/fig1_nkm_geometry.pdf}
 \caption{Deterministic filament-field calculation (no sampling interval). Left: NKM cross-section at $s=0$ with the wire positions, field lines and $|B|$ of the exact filament field. Right: straight-line horizontal kick at $y=0$ for $S=\OpScale$ and the kick required to cancel the incoming angle of a beam launched from the septum at $x_\mathrm{inj}=\OpXinjMm$\,mm; their intersection (dotted) is the thin-kick matched point.}
 \label{fig:geom}
-\end{figure}
+\end{figure*}
 
 An independent adaptive DOP853 integration checks the stated paraxial equations at the nominal point, the final angular-window edges (offsets \ODEEdgeLoMrad/\ODEEdgeHiMrad\,mrad), nonzero vertical position and angle, and $\delta=\pm0.002$. Relative/absolute solver tolerances are $2\times10^{-11}/2\times10^{-13}$. Maximum 640-slice discrepancies are $\ODEMaxX$\,m in $x$, $\ODEMaxPx$\,rad in $p_x$, $\ODEMaxY$\,m in $y$ and $\ODEMaxPy$\,rad in $p_y$. Slice and span checks through 1280 slices and $\pm0.9$\,m are below one percent of a $0.1\sigma$ response in either plane. The field is exact for the filament geometry; tracking remains a validated paraxial approximation.
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering\small
 \caption{Independent trajectory check. Launch $y$ is in mm, $y'$ in mrad and $\delta$ in $10^{-3}$; absolute coordinate discrepancies are nm for positions and nrad for canonical momenta. These are deterministic solver comparisons, without sampling intervals.}
 \begin{tabular}{@{}lrrrrrrr@{}}\toprule
 Case & $y$ & $y'$ & $\delta$ & $|\Delta x|$ & $|\Delta p_x|$ & $|\Delta y|$ & $|\Delta p_y|$ \\\midrule
 \ODEValidationRows
 \bottomrule\end{tabular}
-\end{table}
+\end{table*}
 
 \subsection{Injected beam, capture and controls}
 
@@ -158,21 +162,21 @@ The effect is asymmetric. A positive septum angle error moves the trajectory inw
 
 At this diagnostic launch the 3-D magnet defocuses vertically: a centroid at $y=1$\,mm receives \VertKickThreeD\,mrad, against \VertKickThin\,mrad from the sign-corrected thin map, because the deflected path samples the field off the straight line. For paired 100\,nm\,rad horizontal-emittance sensitivity bunches at this diagnostic launch, capture is \CapThinLegacy\,\% with a reversed vertical-kick sign, \CapThinPhys\,\% with the corrected sign and \CapThreeDRematch\,\% with the 3-D magnet. Suppressing only the 3-D vertical kick restores \CapThreeDNoVert\,\% (the horizontal-only finite-length model gives \CapThickOneD\,\%), so at that point the vertical defocusing costs about five percentage points. For a curl-free thin vector kick, the linear vertical coefficient is $-\partial\Delta x'/\partial x$, with flank-dependent focusing sign, and vanishes at the kick extremum; at the operating point selected in section~\ref{sec:window}, where the centroid sits near the extremum, the approximately two-point cost is a 100\,nm\,rad sensitivity result (section~\ref{sec:survival}), not the design-beam headline.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig4_mechanism.pdf}
 \caption{Deterministic finite-length comparison at the $-20$\,mm diagnostic launch; no sampling interval. Left: betatron amplitude of the kicked centroid at the NKM centre versus septum angle error for the thin kick, the profile sampled on the straight and on the deflected path, and the exact 3-D field, each at its own matched angle. Centre: centroid path inside the magnet for angle errors of $-0.3$, 0 and $+0.3$\,mrad (solid: deflected; dashed: straight) relative to the kick extremum. Right: deflected-path model versus magnet length at fixed integrated kick.}
 \label{fig:mech}
-\end{figure}
+\end{figure*}
 
 The sagitta ratio $\eta=|K|L/(8w)$ compares trajectory displacement with the horizontal kick-lobe full width at half maximum $w$. Figure~\ref{fig:generality} varies length, integrated strength and a second wire family scaled transversely by 1.25. It is a deterministic model comparison, not a universal capture criterion. A sliced vector map retains self-deflection and the physical vertical kick; the local focusing sign changes between flanks of the kick extremum. A reversed vertical-kick sign is an input-convention error, not a failure inherent to kick maps. Capture controls throughout are paired model comparisons on identical particles, not independently optimized injection systems.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig9_generality.pdf}
 \caption{Single-centroid momentum differences versus $\eta$ for five lengths (0.2--1.0\,m), three integrated strengths and two transverse wire families. Left: thin vector map minus 3-D field. Right: vector map distributed over 1280 slices minus the 3-D field. Width $w$ is the negative kick lobe's full width at half maximum. The centroids have nonzero vertical position and angle; these deterministic comparisons have no sampling interval.}
 \label{fig:generality}
-\end{figure}
+\end{figure*}
 
 \section{Operating window}
 \label{sec:window}
@@ -181,23 +185,23 @@ At the final point and reference chamber, the native ring captures \FinalBackend
 
 Nominal native survival at 4000 turns is \FinalLong\,\% (95\,\% particle Wilson interval \FinalLongLo--\FinalLongHi\,\%), a loss of \FinalLateLoss\ percentage points after turn 500. The 500-turn prefix reproduces the paired chamber-study particle masks exactly. Fresh bunches at the interpolated lower and upper angular-edge candidates give \FinalLowerShort/\FinalUpperShort\,\% at 500 turns and \FinalLowerLong/\FinalUpperLong\,\% at 4000 turns (95\,\% intervals \FinalLowerLongLo--\FinalLowerLongHi\,\% and \FinalUpperLongLo--\FinalUpperLongHi\,\%). The degraded corrected ring 5501 gives \FinalDegradedShort\,\% at 500 turns and \FinalDegradedLong\,\% at 4000 turns (\FinalDegradedLongLo--\FinalDegradedLongHi\,\%). Thus the stated window remains a 500-turn conditional contour, not an infinite-time acceptance or a guaranteed 4000-turn 80\,\% contour.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig3_model_validation.pdf}
 \caption{Final-point validation with the 3-D NKM, design beam and reference chamber. Left: native and affine-element backends at 500 turns on the same two 500-particle bunches (seeds 1001/1002; 95\,\% particle Wilson bars). Centre: native nominal survival with turn count (same particles; Wilson band). Right: 500-to-4000-turn survival for interpolated lower/upper angular-edge candidates and corrected ring 5501, each with two fresh 500-particle bunches (seeds 2001/2002); circles/squares denote 500/4000 turns, with 95\,\% Wilson bars. Intervals are conditional on the selected models and ring, not machine-population uncertainty.}
 \label{fig:val}
-\end{figure}
+\end{figure*}
 
 The point $x_\mathrm{inj}=\OpXinjMm$\,mm, $S=\OpScale$, $x'_\mathrm{inj}=\OpXpMrad$\,mrad was selected by the largest particle-Wilson lower bound in a fixed matched-point grid using a 100/10\,nm\,rad sensitivity beam. Four fresh bunches gave \ValThreeD\,\% (\ValThreeDLo--\ValThreeDHi\,\%) for that beam and septum-only aperture. This independent sample reduces reuse of selection noise; it does not remove dependence on the searched grid or model. The design-beam/chamber studies retain these knobs without reselection and therefore test a conditional operating point rather than a new global optimum.
 
 We estimate the connected operating window above 80\,\% capture around that fixed point. Linear interpolation gives angle offsets from \FinalAngleLo\ to \FinalAngleHi\,mrad (width \FinalAngleWidth\,mrad), and position offsets span \FinalPositionLo\ to \FinalPositionHi\,mm (width \FinalPositionWidth\,mm). Each value uses seeds 1001/1002 and 500 particles per seed. A fixed 0.2\,mm/mrad grid is extended if a boundary remains above threshold, with a maximum offset of 3; crossing cells are refined once to 0.1 spacing and linearly interpolated. Grid resolution is not a confidence interval for a crossing. The long-turn edge checks use fresh particles and do not redefine the selected 500-turn window.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig5_operating_window.pdf}
 \caption{Design-beam operating window with the reference chamber and fixed NKM settings. Left/right: capture versus septum-exit angle/position offset, 500 native turns, two 500-particle bunches (seeds 1001/1002) per point. Bands are conditional 95\,\% particle Wilson intervals; the dashed line marks 80\,\%. Crossing cells have 0.1\,mrad/mm spacing after refinement.}
 \label{fig:window}
-\end{figure}
+\end{figure*}
 
 \section{Survival, acceptance and sensitivity}
 \label{sec:survival}
@@ -206,33 +210,33 @@ A larger-emittance sensitivity case uses 100/10\,nm\,rad and rms energy spread 0
 
 In that sensitivity case, the paired vertical-kick diagnostic gives \AperDiagRef\,\% with the NKM vertical kick and \AperDiagOpenNoVert\,\% when it is suppressed. A uniform 5\,mm vertical half-aperture reduces capture with or without that kick (to \AperDiagXopen\ and \AperDiagNoVert\,\%). This supports a role for transverse transfer in the ring, without diagnosing a unique coupling resonance. These artificial uniform-aperture scans are separate from the final chamber model.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig6_acceptance_survival.pdf}
 \caption{Larger-emittance sensitivity case without the additional chamber profile. Left: deterministic 500-turn single-particle survival in septum phase space ($\delta=0$, \AccPoints\ launches), with 100/10\,nm\,rad beam ellipses at one and two rms widths. Right: survival of \SurvN\ particles, seeds \SurvSeeds, through \SurvTurns\ native turns. The line is the pooled particle fraction; its final 95\,\% Wilson interval is stated in the text. The deterministic acceptance grid has no sampling interval.}
 \label{fig:accept}
-\end{figure}
+\end{figure*}
 
 
 A separate selected corrected-ring scenario applies correlated 30\,$\mu$m girder offsets, 30\,$\mu$m independent magnet offsets, 100\,$\mu$rad rolls, gradient/sextupole errors and skew-quadrupole components, all explicit sensitivity assumptions. Ten seeds (5501--5510) use the 120 HVC correctors and BPM markers with a truncated-SVD response, followed by bounded Q11/Q12 tune correction. The selected rms criterion is 100\,$\mu$m; a stricter 20\,$\mu$m target was not attained. Maximum achieved BPM rms residuals are \ScenOrbitXmax/\ScenOrbitYmax\,$\mu$m, and the largest fractional-tune residual is \ScenTuneMax. The full DA grids (figure~\ref{fig:correctedring}) define the subsequent chamber/error scenario; they are not a commissioned-machine prediction.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig10_corrected_ring.pdf}
 \caption{Selected corrected-ring scenario, ten fixed seeds. Left: deterministic 500-turn native survival on a 0.5\,mm horizontal launch grid, with RF/radiation and the reference chamber. Blue/white cells denote surviving/lost launches. First failed grid points are not exact stable edges. Right: horizontal and vertical BPM rms residuals after SVD orbit and bounded tune correction. Curves show seed variation, without a particle-sampling interval.}
 \label{fig:correctedring}
-\end{figure}
+\end{figure*}
 
 The reference arc half-apertures are 12\,mm horizontally and 9\,mm vertically~\cite{Seok2024,Seok2025}. The centre-bend vertical half-aperture is 4.87\,mm. An inscribed ellipse represents the unspecified octagonal corners. An assumed rectangular NKM straight has half-width/height 30/15\,mm. Nineteen identified ordinary straights receive 3\,m IVU segments~\cite{Seok2025}; their assignment is a scenario, not a surveyed map. The reference open half-gap is 9\,mm; a 2.5\,mm closed magnetic half-gap is a stress case and does not account for a liner. The separate incoming transport retains its source lattice and septum creation cut; its chamber has not been surveyed for this alternative injection scheme.
 
 For the 7.67\,nm\,rad design booster beam, the reference chamber gives \ChamberNom\,\% capture at 500 turns (95\,\% particle Wilson interval \ChamberNomLo--\ChamberNomHi\,\%; two 500-particle bunches, seeds 1001/1002). The paired dipole gives \ChamberDipole\,\%; the NKM-minus-dipole difference is \ChamberDiff\ percentage points (95\,\% paired-particle bootstrap interval \ChamberDiffLo\ to \ChamberDiffHi; 10\,000 draws, seed 1729). In rectangular arc scans, half-widths 10, 12 and 15\,mm give \ChamberGridTen, \ChamberGridTwelve\ and \ChamberGridFifteen\,\% at each tested half-height (4.87, 7.5, 9\,mm). Thus 10\,mm is the smallest tested rectangular-grid width exceeding 80\,\% in this ideal-ring sample, while 12\,mm retains the reference result; neither is a continuous minimum or a machine tolerance. Across the ten corrected rings, mean capture is \ChamberRingMean\,\%, median \ChamberRingMedian\,\%, tenth percentile \ChamberRingPten\,\%, and range \ChamberRingMin--\ChamberRingMax\,\%. These are different descriptors of a finite scenario population.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig11_chamber.pdf}
 \caption{Declared chamber with the design booster beam, 500 native turns and two seeds of 500 particles per ring/profile/model. Left: ideal-ring capture versus rectangular arc half-apertures, with other region limits retained. Centre: ring losses per incident particle in 20\,m bins using element-entrance positions from the NKM centre; solid/dashed/dotted denote horizontal/vertical/dynamical losses. For elliptic apertures the larger normalized coordinate defines the plane. Right: capture for each corrected ring with open and closed IVUs. Points are conditional sample fractions; the loss histograms and finite ring-seed variation have no assigned confidence band.}
 \label{fig:chamber}
-\end{figure}
+\end{figure*}
 
 \section{Stored-beam transparency}
 \label{sec:transparency}
@@ -241,7 +245,7 @@ The kick of the four-loop magnet is odd in $x$ on the midplane and its near-axis
 
 The assumed vertical-to-horizontal emittance ratio is 0.10, as supplied by the author; for a fixed vertical dipole kick, $A_y/\sigma_y\propto\varepsilon_y^{-1/2}$. Individual wire displacements and independent loop-current errors break the cancellation (tables~\ref{tab:wiretol} and \ref{tab:looptol}). The one-error-at-a-time wire limits range from \WireTolMin\ to \WireTolMax\,$\mu$m for both centroid amplitudes to remain below 0.1\,$\sigma$. Independent loop currents require relative balance of about \LoopTolerance. In series powering, a common current error preserves dipole cancellation provided the geometry remains symmetric; geometry errors still matter. These are local linear tolerances, not an allocation for simultaneous errors or a manufacturing specification.
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering\footnotesize
 \caption{On-axis wire sensitivity. Wire numbers follow the four quadrant loops, inner then outer wire. $u$ is the displaced coordinate. Dipole derivatives $D_{x,y}=\partial K_{x,y}/\partial u$ are in rad/m; $Q_n=\partial J_{xx}/\partial u$ and $Q_s=\partial J_{xy}/\partial u$ are in rad/m$^2$, with $J=\partial(K_x,K_y)/\partial(x,y)$, $J_{yy}=-J_{xx}$ and $J_{yx}=J_{xy}$ to numerical precision. $t_x,t_y$ are single-error 0.1-sigma limits in $\mu$m. A dash indicates no resolved first-order dipole sensitivity; higher orders remain. Deterministic central differences, step 0.1\,$\mu$m; no statistical interval.}
 \label{tab:wiretol}
@@ -249,9 +253,9 @@ The assumed vertical-to-horizontal emittance ratio is 0.10, as supplied by the a
 Wire & $u$ & $D_x$ & $D_y$ & $Q_n$ & $Q_s$ & $t_x$ & $t_y$\\\midrule
 \WireSensitivityRows
 \bottomrule\end{tabular}
-\end{table}
+\end{table*}
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering\small
 \caption{Independent-loop relative-current sensitivity. Dipole derivatives are in rad per relative current; normal and skew quadrupole derivatives are in rad/m per relative current. The final column is the joint two-plane 0.1-sigma single-loop limit in units of $10^{-4}$. Deterministic derivatives with relative-current step $10^{-5}$; no statistical interval.}
 \label{tab:looptol}
@@ -259,14 +263,14 @@ Wire & $u$ & $D_x$ & $D_y$ & $Q_n$ & $Q_s$ & $t_x$ & $t_y$\\\midrule
 Loop & $D_x$ & $D_y$ & $Q_n$ & $Q_s$ & Limit\\\midrule
 \LoopSensitivityRows
 \bottomrule\end{tabular}
-\end{table}
+\end{table*}
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig7_controls_transparency.pdf}
 \caption{Left: 100/10\,nm\,rad sensitivity case with the septum aperture and no additional chamber; four fresh 500-particle bunches at the selected point for the 3-D NKM, the calibrated linearised and dipole controls and the kicker off (markers: bunches; bars: mean). The inset shows per-bunch NKM-minus-dipole differences (dots), their mean (square) and a paired-bunch bootstrap 95\,\% interval (10\,000 resamples, seed 1729; only four bunches). Right: deterministic centroid amplitude and filamented emittance growth versus NKM-to-orbit offset. Open squares are the mean of two 300-particle tracked seeds, using maximum centroid differences over ends of turns 1--50; they are not 1000-turn amplitudes. Emittance ratios in the text use the end of turn 1000. No sampling interval is assigned to deterministic quadrature.}
 \label{fig:transp}
-\end{figure}
+\end{figure*}
 
 The paired controls (figure~\ref{fig:transp}, left) compare the selected models: the linearised and dipole kicks capture \ValLinear\ and \ValDipole\,\%, the paired NKM-minus-dipole difference is \ValDiffDipole\ points (95\,\% paired-bunch bootstrap interval \ValDiffDipoleLo\ to \ValDiffDipoleHi), conditional on this larger-emittance sample; with the kicker off no particle survives.
 
@@ -279,7 +283,7 @@ The published baseline thin-septum leakage of about 3.3\,G at the bumped orbit~\
 
 Table~\ref{tab:errors} defines the final untruncated Gaussian rms budget. Booster horizontal emittance 7.67\,nm\,rad and energy spread 0.106\,\% are design values~\cite{Lee2024}; extraction Twiss, bunch length and the 0.10 vertical-emittance ratio are assumptions. No public extraction-orbit or septum-current stability was supplied, so the corresponding errors remain sensitivity parameters. Small exit Twiss mismatch is not used as evidence of capture robustness.
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering\small
 \caption{Final rms error budget. S: static machine draw; J: shot draw. Unsourced entries are explicit sensitivity assumptions with the tested effect stated. Corrected-ring errors are a separate finite scenario population.}
 \label{tab:errors}
@@ -300,7 +304,7 @@ Thin-septum strength & 0.1\% relative & J & Assumed; nominal bend 10 mrad~\cite{
 RF phase & 0.001 rad & J & Assumed injection-phase sensitivity \\
 Arrival relative to NKM firing & 2 ns & J & Assumed peak-phase pulse timing \\\bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
 The published bump-kicker reproducibility is not treated as an NKM or septum specification. At the lattice RF frequency, phase error shifts the injected longitudinal coordinate by $c\Delta\phi/(2\pi f_\mathrm{RF})$. Independent arrival relative to NKM firing scales the 5.3\,$\mu$s half-sine field at peak phase and does not add another longitudinal displacement. The separate thin-septum error adds canonical momentum $(1+\delta)\,0.01\,\epsilon_\mathrm{sept}$ in radians. No equivalent transverse timing-kick term is added. Longitudinal quadrupole placement, supply quantization and a scalar ring-beta perturbation are not modelled and are not counted as applied errors.
 
@@ -314,7 +318,7 @@ The 3-D NKM mean is \FinalNkmMean\,\% (95\,\% interval \FinalNkmLo--\FinalNkmHi\
 
 The jitter scan retains the same 50 seed-42 realizations, particle seeds and ring identities while scaling only booster position and angle jitter. Table~\ref{tab:jitter} reports differences from zero jitter. Quarter jitter corresponds to 0.125\,mm and 0.05\,mrad; its paired mean difference is \FinalJitterQuarterDiff\ points, with interval \FinalJitterQuarterDiffLo\ to \FinalJitterQuarterDiffHi. The interval does not establish the predeclared one-percentage-point loss margin; the candidate jitter target remains precision-limited. Position-only and angle-only reference jitter are evaluated separately. Mean, median, tenth percentile and fraction above threshold remain distinct; no 80\,\% design specification follows from a nominal ideal-ring value.
 
-\begin{table}[htbp]
+\begin{table*}[!tbp]
 \centering\small
 \caption{Paired jitter sensitivity, 50 joint realizations per row. Capture summaries and the fraction of realizations at or above 80\,\% are percentages; differences from zero jitter and their paired 95\,\% bootstrap intervals are percentage points.}
 \label{tab:jitter}
@@ -322,7 +326,7 @@ The jitter scan retains the same 50 seed-42 realizations, particle seeds and rin
 Scale & Mean & Median & p10 & Fraction $\geq80\%$ & Difference & 95\% interval \\\midrule
 \FinalJitterRows
 \bottomrule\end{tabular}
-\end{table}
+\end{table*}
 
 Partial Spearman tests control the other sampled errors and ring-identity indicators. Their asymptotic two-sided t-test probabilities receive Holm adjustment across the sampled-error hypotheses. Scalar errors enter as magnitudes and vector errors as rms values. \FinalRankSummary\ These describe conditional associations, not causal error rankings; the complete coefficient and adjusted-probability table is included in the numerical evidence.
 
@@ -330,12 +334,12 @@ For reduced capture-based tuning, each of the 50 seed-42 static machines receive
 
 Training capture has one-percentage-point counting resolution. No BPM calibration, resolution, charge-monitor noise or actuator-error model is included, so this reduced ideal-observable search quantifies recovery without demonstrating operational beam-based feedback. Held-out results are never used to choose knobs, and the dipole control is not retuned.
 
-\begin{figure}[htbp]
+\begin{figure*}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig8_robustness.pdf}
 \caption{Final design-beam robustness with the reference chamber. Left: empirical cumulative capture distributions for 150 paired joint-error draws, conditional on ten corrected rings. Centre: NKM mean and tenth percentile and dipole mean versus jitter scale (50 paired draws); shading is a 95\,\% realization-bootstrap interval of the NKM mean. Right: held-out tuned-minus-untuned mean capture at zero and quarter jitter, with paired 95\,\% intervals (50 machines, 100 training and 200 held-out particles each). Bootstrap count 10\,000, seed 1729. All tracking uses 500 native turns.}
 \label{fig:robust}
-\end{figure}
+\end{figure*}
 
 \section{Pulsed-magnet considerations}
 \label{sec:pulse}
@@ -366,11 +370,13 @@ For the supplied KLS design lattice, the 3-D filament NKM and design booster bea
 
 {\sloppy The simulation code, configurations and analysis scripts are available in the nkm-injection repository (\url{https://github.com/cspark7701/nkm-injection}). The figures and numbers are generated from the campaign artifacts listed, with SHA-256 digests, in \texttt{figure\_provenance.csv} of the manuscript directory \texttt{docs/\allowbreak paper/\allowbreak generated}. A frozen evidence bundle with the selected simulation outputs, input files, code snapshot and rebuild instructions is prepared as a referee attachment with a hash inventory and verified rebuild instructions. It has no public DOI; the repository alone does not contain the ignored simulation outputs.\par}
 
-\section*{Acknowledgments}
+\begin{acknowledgments}
 
 The author thanks the accelerator physics group at Korea University. Generative AI assistance (Anthropic Claude through Claude Code and OpenAI Codex) was used to implement simulation drivers and the field model, run the campaigns, audit references and draft parts of the manuscript; all results were checked and the author takes full responsibility for the content.
 
-\bibliographystyle{unsrt}
+\end{acknowledgments}
+
+% REVTeX selects apsrev4-2 and writes its longbibliography controls.
 \bibliography{paper}
 
 \end{document}

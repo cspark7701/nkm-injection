@@ -1,9 +1,9 @@
 # Cover letter (draft for author review — not sent)
 
-Dear Editors,
+Dear Editors of Physical Review Accelerators and Beams,
 
 Please consider “Finite-length and vertical effects in nonlinear-kicker injection
-into a Korea Light Source design lattice” for publication as a regular paper.
+into a Korea Light Source design lattice” for publication as a Research Article in Physical Review Accelerators and Beams.
 
 The manuscript studies a preliminary 0.525 m four-loop nonlinear kicker in the
 supplied 4 GeV KLS design lattice. It compares exact filament-field tracking,
@@ -40,8 +40,8 @@ Korea University, Sejong 30019, Republic of Korea
 
 ---
 
-Author checks before sending: choose the journal, adapt the generic article
-format, confirm exclusive submission, authorship, affiliation and funding, and
-attach the frozen evidence bundle and new response. Venue selection and journal
-conversion remain the separate author-gated D15 step. No letter or submission
-has been sent by this workflow.
+Author checks before sending: confirm exclusive submission, authorship,
+affiliation and funding; complete the outstanding third-round scientific review
+revisions; and supply the frozen evidence bundle. D15 targets PRAB using REVTeX
+4.2, with a one-column primary draft and a separate two-column preview. No letter
+or submission has been sent by this workflow.

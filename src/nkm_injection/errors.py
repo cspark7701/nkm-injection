@@ -48,11 +48,14 @@ class ErrorBudgetConfig(SerializableConfigMixin):
     ring_co_x_std_m: float = 2.0e-4           # Closed-orbit error (200 um)
     ring_beta_rel_std: float = 0.03           # Injection point optics error (3%)
     septum_x_std_m: float = 1.0e-4            # Septum position uncertainty (100 um)
+    septum_strength_rel_std: float = 0.0     # Relative thin-septum bend jitter (dimensionless)
+    rf_phase_std_rad: float = 0.0            # Arrival phase relative to ring RF (rad)
+    arrival_time_std_s: float = 0.0          # Independent arrival time relative to NKM peak (s)
 
     def validate(self) -> None:
         """Validate that all standard deviation tolerances are non-negative."""
         for attr, val in self.__dict__.items():
-            if isinstance(val, (int, float)) and val < 0:
+            if isinstance(val, (int, float)) and (not np.isfinite(val) or val < 0):
                 raise ValueError(f"ErrorBudgetConfig tolerance {attr} cannot be negative, got {val}")
 
 
@@ -66,6 +69,7 @@ def sample_error_ensemble(config: Optional[ErrorBudgetConfig] = None,
         config = ErrorBudgetConfig()
 
     rng = np.random.default_rng(seed)
+    timing_rng = np.random.default_rng([seed, 4404])  # Preserve the historical stream for existing terms.
 
     samples = []
     for i in range(n_samples):
@@ -93,6 +97,11 @@ def sample_error_ensemble(config: Optional[ErrorBudgetConfig] = None,
             "ring_co_x_m": float(rng.normal(0.0, config.ring_co_x_std_m)),
             "septum_x_m": float(rng.normal(0.0, config.septum_x_std_m)),
         }
+        sample.update({
+            "septum_strength_rel": float(timing_rng.normal(0., config.septum_strength_rel_std)),
+            "rf_phase_rad": float(timing_rng.normal(0., config.rf_phase_std_rad)),
+            "arrival_time_s": float(timing_rng.normal(0., config.arrival_time_std_s)),
+        })
         samples.append(sample)
 
     return samples

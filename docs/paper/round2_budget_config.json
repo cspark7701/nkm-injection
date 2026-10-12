@@ -1,0 +1,13 @@
+{
+  "design_emit_x_m_rad": 7.67e-9,
+  "assumed_vertical_emittance_ratio": 0.1,
+  "design_energy_spread": 0.00106,
+  "septum_strength_rel_std": 0.001,
+  "rf_phase_std_rad": 0.001,
+  "arrival_time_std_s": 2e-9,
+  "legacy_nkm_timing_std_mrad": 0.0,
+  "septum_angle_rad": 0.01,
+  "rf_frequency_hz": 499593472.8240743,
+  "pulse_duration_s": 5.3e-6,
+  "status": "beam values sourced in author A4; new shot-error RMS values are parametric assumptions"
+}

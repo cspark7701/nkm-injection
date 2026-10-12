@@ -454,3 +454,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 143. [**Milestone 143 — Validate the trajectory integrator and static steering (D3)**](143_d3_trajectory_and_steering.md)
     - Checks the sliced map against an independent adaptive reference in both planes and documents precisely which static reference coordinates ideal steering removes.
+
+144. [**Milestone 144 — Separate injection shot errors and source the beam budget (D4)**](144_d4_beam_and_error_budget.md)
+    - Adds independent septum-strength, RF-phase and arrival-time terms, records the 7.67 nm rad design beam, and labels every unsupported error scale as a sensitivity assumption.

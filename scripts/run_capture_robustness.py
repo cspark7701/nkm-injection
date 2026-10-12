@@ -37,6 +37,7 @@ from nkm_injection.optimization_handoff import load_optimization_handoff
 from nkm_injection.bts_lattice import BTSConfig
 from nkm_injection.optics import compute_mismatch_metric
 from nkm_injection.steering import subtract_static_horizontal_reference
+from nkm_injection.injection_timing import apply_injection_shot_errors
 from nkm_injection.stage_cli import add_source_argument, source_root, input_hashes
 
 REPO = Path(__file__).resolve().parent.parent
@@ -70,6 +71,9 @@ def parse_args(argv=None):
     p.add_argument("--correct-static-orbit", action="store_true",
                    help="Ideal steering at the septum exit: remove the static trajectory of the perturbed BTS "
                         "(reference particle on the design orbit); booster centroid/energy jitter are kept")
+    p.add_argument("--septum-angle-mrad", type=float, default=10.)
+    p.add_argument("--rf-frequency-hz", type=float, default=499593472.8240743)
+    p.add_argument("--pulse-duration-us", type=float, default=5.3)
     p.add_argument("--bootstrap-count", type=int, default=10000)
     p.add_argument("--bootstrap-seed", type=int, default=1729)
     p.add_argument("--capture-threshold", type=float, default=0.9)
@@ -138,6 +142,11 @@ def run_realization(job):
                   kick_offset_rad=cfg0.kick_offset_rad + timing_add,
                   closed_orbit_x_m=cfg0.closed_orbit_x_m + s["ring_co_x_m"])
     beam = injected_beam_at_septum(cfg, ring, job["beam_seed"], bts_exit_beam=exit_beam)
+    timing_scale = apply_injection_shot_errors(beam, s,
+        septum_angle_rad=job.get("septum_angle_mrad", 10.)*1e-3,
+        rf_frequency_hz=job.get("rf_frequency_hz", 499593472.8240743),
+        pulse_duration_s=job.get("pulse_duration_us", 5.3)*1e-6)
+    cfg = replace(cfg, field_scale=cfg.field_scale*timing_scale)
     tgt = job["target_twiss"]
     mism = {}
     if exit_mom.get("beta_x_m"):
@@ -207,7 +216,9 @@ def main(argv=None):
             "initial_twiss": sel.initial_twiss, "target_twiss": sel.target_twiss, "models": args.kicker_models,
             "backend": args.tracking_backend, "thick_slices": args.thick_slices, "particles": args.particles, "turns": args.turns,
             "correct_static_orbit": args.correct_static_orbit, "slices_3d": args.slices_3d, "timing_model": args.timing_model,
-            "calibration_3d": list(calibrate_controls(cfg, args.slices_3d)) if args.control_reference == "3d" else None}
+            "calibration_3d": list(calibrate_controls(cfg, args.slices_3d)) if args.control_reference == "3d" else None,
+            "septum_angle_mrad": args.septum_angle_mrad, "rf_frequency_hz": args.rf_frequency_hz,
+            "pulse_duration_us": args.pulse_duration_us}
     jobs = [{**base, "sample": s, "extra": e, "beam_seed": int(args.seed * 100003 + max(s["sample_id"], -1) + 1)}
             for s, e in zip(samples, extras)]
     print(f"S7: {len(jobs)} realizations x {len(args.kicker_models)} models, workers={args.workers}", flush=True)

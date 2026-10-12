@@ -175,22 +175,24 @@ Table~\ref{tab:errors} lists the assumed errors. They are design hypotheses, not
 
 \begin{table}[htbp]
 \centering
-\caption{Assumed rms errors (Gaussian, untruncated) of the combined-error ensembles.}
+\caption{Historical rms errors (Gaussian, untruncated) of the campaign-02 ensembles. Values are assumptions, not measured specifications; the finalized campaign-03 budget is described below.}
 \label{tab:errors}
 \small
 \begin{tabular}{@{}lll@{}}
 \toprule
-Booster centroid jitter (shot-to-shot) & \BudJitX\,mm, \BudJitXp\,mrad & assumed \\
-Booster $\beta$ mismatch, emittance, energy & \BudBetaMis\,\%, \BudEmit\,\%, \BudEnergy\,\% & assumed \\
-Energy-spread variation & $\BudEspread\times10^{-4}$ & assumed \\
-BTS quadrupole gradient, offset, roll & \BudQuadK\,\%, \BudQuadDx\,$\mu$m, \BudQuadRoll\,mrad & assumed \\
-BTS dipole field & \BudDipB\,\% & assumed \\
-Septum position & \BudSeptum\,mm & assumed \\
-NKM amplitude, timing (as field scale), offset & \BudNkmScale\,\%, \BudNkmTiming\,$\mu$rad equiv., \BudNkmDx\,mm & assumed \\
-Ring closed orbit at NKM & \BudRingCo\,mm & assumed \\
+Booster centroid jitter (shot-to-shot) & \BudJitX\,mm, \BudJitXp\,mrad & sensitivity assumption \\
+Booster $\beta$ mismatch, emittance, energy & \BudBetaMis\,\%, \BudEmit\,\%, \BudEnergy\,\% & sensitivity assumption \\
+Energy-spread variation & $\BudEspread\times10^{-4}$ & sensitivity assumption \\
+BTS quadrupole gradient, offset, roll & \BudQuadK\,\%, \BudQuadDx\,$\mu$m, \BudQuadRoll\,mrad & sensitivity assumption \\
+BTS dipole field & \BudDipB\,\% & sensitivity assumption \\
+Septum position & \BudSeptum\,mm & sensitivity assumption \\
+NKM amplitude, timing (as field scale), offset & \BudNkmScale\,\%, \BudNkmTiming\,$\mu$rad equiv., \BudNkmDx\,mm & sensitivity assumption \\
+Ring closed orbit at NKM & \BudRingCo\,mm & sensitivity assumption \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+For the final campaign the booster design values are $\varepsilon_x=7.67$\,nm\,rad and $\sigma_\delta=0.00106$~\cite{Lee2024}, with an assumed vertical ratio of 0.10. Extraction orbit jitter and septum current stability are not public. The final budget therefore parametrizes them and adds separate thin-septum strength jitter (0.1\,\% relative about the published 10\,mrad bend~\cite{Hahn2024}), RF phase (0.001\,rad) and independent arrival time (2\,ns rms). These three rms values are explicit sensitivity assumptions. At the lattice RF frequency of 499.593\,MHz, phase shifts the injected longitudinal coordinate by $c\Delta\phi/(2\pi f_\mathrm{RF})$; arrival time shifts it by $c\Delta t$ and samples a 5.3\,$\mu$s half-sine at peak phase. The legacy equivalent transverse timing kick is disabled in the final budget. Alignment and strength values in table~\ref{tab:errors} test sensitivity rather than represent construction specifications; their roles and the retained unmodelled terms are recorded in the budget supplement.
 
 \subsection{Combined errors and tolerance curves}
 

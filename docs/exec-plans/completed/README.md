@@ -499,3 +499,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 158. [**Milestone 158 — Journal Recommendation After Round-Two Revision**](158_journal_recommendation_after_round2.md)
     - Read the updated 19-page article and author inputs, checked journal scopes and related publications, and recommended PRAB followed by NIM A and JINST. Identified the missing Sun et al. comparison and preserved D15 as the author’s venue-selection step.
+
+159. [**Milestone 159 — Reviewer 1 Third-Round Manuscript Report**](159_reviewer1_round3_manuscript_report.md)
+    - Reviewed the D1–D14 article, recognized resolved second-round concerns, and wrote a new focused-major-revision report with eight tasks. Verified 48 available hashes, documented 157 absent artifacts, and checked directly overlapping PRAB modelling literature while preserving all earlier reviews and manuscript files.

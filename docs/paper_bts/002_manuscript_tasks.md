@@ -93,15 +93,17 @@ Test correction predictions with finite perturbations and nonlinear reevaluation
 
 **Acceptance:** numerical rank is stable, condition numbers are dimensionally meaningful, and finite corrections reproduce claimed changes without constraint violation. Do not interpret the historical mixed-unit raw Jacobian condition number as a hardware tolerance.
 
-## B07 — Audit and complete the BTS error model
+## B07 — Audit and complete the BTS error model [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 169).
 **Dependencies:** B04, B06.
 
 For every sampled error, perturb one physical quantity and demonstrate its effect on optics, orbit, coupling, envelope or transmission. Distinguish static gradient/alignment/roll/dipole errors from shot-to-shot energy, centroid and input-Twiss jitter. Explain independent versus common power-supply errors. Implement missing effects when necessary for the claims, especially dipole and alignment errors for orbit/dispersion and roll for coupled transport. Longitudinal placement errors must be implemented or excluded explicitly.
 
 Remove NKM field scale, timing, map offsets, ring orbit and stored-kick observations from the central BTS study. The existing tolerance driver can support historical comparisons but is not a complete BTS transport tolerance model. Introduce a BTS-only configurable driver if needed; this is proposed implementation work.
 
-**Deliverables:** machine-readable coverage audit, sourced/assumed BTS error budget and validated evaluator.
+**Deliverables:**
+- [`error_model_audit.md`](error_model_audit.md): Machine-readable coverage matrix, single-parameter physical perturbation demonstrations, power-supply error classification, and disclosure of inactive historical channels.
 
 **Acceptance:** no sampled inactive category is interpreted as physical insensitivity. Zero-noise cases reproduce B05, injected test errors produce their expected responses, and invalid outcomes are separately recorded.
 

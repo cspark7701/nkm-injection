@@ -530,6 +530,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 168. [**Milestone 168 — Interpretable Correction Knobs and Dimensionless SVD (B06)**](168_b06_interpretable_correction_knobs_and_svd.md)
     - Formulated dimensionless normalized Jacobian sensitivity framework, reconciling the historical 1421.6 condition number artifact to a well-conditioned kappa=57.78; extracted 6 orthogonal tuning knobs and 3 null-space modes for envelope control; verified finite target corrections with nonlinear re-evaluation.
 
+169. [**Milestone 169 — BTS Error Model Audit and Sensitivity Responses (B07)**](169_b07_bts_error_model_audit.md)
+    - Audited physical error model and sampling distributions; demonstrated single-parameter responses for gradient, alignment, roll, and energy errors; disclosed inactive historical sampling channels (dipole error and ds placement); disentangled BTS transport errors from ring injection parameters.
+
+
 
 
 

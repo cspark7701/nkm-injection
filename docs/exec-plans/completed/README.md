@@ -451,3 +451,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 142. [**Milestone 142 — Repair survival reporting and paired jitter inference (D2)**](142_d2_existing_evidence_statistics.md)
     - Fixes the survival duration, reports conditional Wilson uncertainty, analyzes all paired jitter levels and applies Holm correction to sampled-error partial correlations.
+
+143. [**Milestone 143 — Validate the trajectory integrator and static steering (D3)**](143_d3_trajectory_and_steering.md)
+    - Checks the sliced map against an independent adaptive reference in both planes and documents precisely which static reference coordinates ideal steering removes.

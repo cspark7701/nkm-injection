@@ -36,6 +36,7 @@ from nkm_injection.kickmap import NKMKickMap2D
 from nkm_injection.optimization_handoff import load_optimization_handoff
 from nkm_injection.bts_lattice import BTSConfig
 from nkm_injection.optics import compute_mismatch_metric
+from nkm_injection.steering import subtract_static_horizontal_reference
 from nkm_injection.stage_cli import add_source_argument, source_root, input_hashes
 
 REPO = Path(__file__).resolve().parent.parent
@@ -120,9 +121,7 @@ def run_realization(job):
     static = None
     if job.get("correct_static_orbit"):
         ref = track_bts(lattice, np.zeros((6, 1)))  # static trajectory of the perturbed line (no jitter)
-        static = [float(ref[0, 0]), float(ref[1, 0])]
-        exit_beam[0] -= ref[0, 0]
-        exit_beam[1] -= ref[1, 0]
+        static = subtract_static_horizontal_reference(exit_beam, ref)
     exit_mom = beam_moments(exit_beam)
     # timing error: additive dipole kick (legacy) or the field-scale change giving the same kick change for the
     # nominal injected centroid, whose kick magnitude equals the matched angle |x'_inj| (zero on the stored-beam axis)

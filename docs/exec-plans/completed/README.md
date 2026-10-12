@@ -439,3 +439,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 138. [**Milestone 138 — Consolidated Round-2 Revision Plan**](138_consolidated_revision_plan_round2.md)
     - Reconciled Reviewer 1 (R1B-01–10) and Reviewer 2 (R2b-1–15) round-2 tasks into D1–D15 with author inputs A1–A6; realism tasks reduced to feasible scenarios, ensembles rerun once after budget/ring/chamber are fixed; integrator validation gates new simulations.
+
+139. [**Milestone 139 — Repository Orientation**](139_repository_orientation.md)
+    - Read repository instructions and README, inspected package and workflow layout, and identified current revision priorities and documentation discrepancies; scientific inputs and code unchanged.
+
+140. [**Milestone 140 — Commit Message Format**](140_commit_message_format.md)
+    - Reviewed recent local commits and adopted their imperative subject, explanatory body and status-prefixed Files section for future commit messages.

@@ -8,7 +8,7 @@ For further publication studies, read the [additional simulation strategy](docs/
 
 The manuscript is maintained in [`docs/paper/`](docs/paper/) for PRAB in REVTeX 4.2, with a one-column primary draft and a separate two-column preview ([build instructions](docs/paper/prab_submission.md)). The [round-2 reproduction guide](docs/paper/round2_reproduction.md) identifies the final evidence manifest and frozen referee attachment; ignored simulation outputs are supplied separately. Build a fresh source package and PDF with `python scripts/build_submission_package.py --output-dir results/<new> --install-pdf`.
 
-The proposed standalone BTS optics article has a [manuscript outline and ordered preparation tasks](docs/paper_bts/README.md), targeting JKPS with matching, sensitivity, operating margin and tolerance studies.
+The standalone BTS optics article has a [one-column LaTeX draft, outline and ordered preparation tasks](docs/paper_bts/README.md), targeting JKPS with matching, sensitivity, operating margin and tolerance studies. The first draft reports archived results and marks pending scientific analyses.
 
 ---
 

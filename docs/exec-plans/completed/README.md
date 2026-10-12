@@ -508,3 +508,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 161. [**Milestone 161 — Plan a standalone BTS optics paper**](161_bts_manuscript_outline.md)
     - Draft a JKPS-oriented manuscript outline and twelve ordered preparation tasks from the selected matching solution and hash-verified 550,000-sample optics campaign, with correction/transport work and optional MOGA requirements clearly marked as pending.
+
+162. [**Milestone 162 — Create the first BTS LaTeX manuscript draft**](162_bts_latex_draft.md)
+    - Write and compile an eight-page one-column BTS article draft with four exported archived-data tables, six audited references, provenance and explicit pending revisions; preserve all NKM files and scientific inputs.

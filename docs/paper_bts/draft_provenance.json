@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-13",
+  "status": "archived-results first draft; B01-B12 remain pending",
+  "source_commit": "13fe89bd969cdf7a9bdf4440fcff17407bf109ec",
+  "files_sha256": {
+    "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
+    "backups_20261009/production_statistical_01/optimization/config.json": "382e23dd1d4ed167e6cf321e40f5041e42c5909a0b5dbf1da9101ce4883f8ae2",
+    "results/journal_campaign_01/tolerances_seed42/publication_tolerances_summary.json": "620626291ee47d9a8d50b5372d54aaeabf640d1a64e0f846be246ea433e9da1b",
+    "results/journal_campaign_01/tolerances_seed123/publication_tolerances_summary.json": "d1f381f714e9d2c808b28b6d3ada90eca4781895a0955aa3bedffccd4006c974",
+    "results/journal_campaign_01/tolerances_seed777/publication_tolerances_summary.json": "353c1986e6330686d235ce3e29e622706fe04e0e5e88445f308fe8e0e1707644",
+    "results/journal_campaign_01/tolerances_seed2026_400k/publication_tolerances_summary.json": "fa3c0b8254836171ff6cab17d4e6bf3c85ec24c5023096c74cb4a2ee9209b296",
+    "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json": "5d11a050b8aa7ab813fff286b849fb7d93d02e4d04733e5f904c69e60860b589",
+    "backups_20261009/production_statistical_01/optimization/candidate_table.json": "398be628e1b017375bbbdf4c58d225e694ede6109bfda28733cdbe8419cee9d7",
+    "results/journal_campaign_01/error_budget.json": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146"
+  },
+  "selection": {
+    "optimization": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+    "pooled_analysis": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
+    "samples": 550000,
+    "physical_feasibility_failures": 5,
+    "invalid_evaluations": 0
+  },
+  "publication_export": "generated/archived_results.tex",
+  "publication_export_sha256": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
+  "draft_assets_sha256": {
+    "paper.tex": "d19f7e41a72f94a23065ed271a82d4d050477d0cfcdff4d46e743a66d5783a2b",
+    "paper.bib": "60905279d299cb5f2e793af1bf82641763e57da033d91122e05354bcbe2573f2",
+    "paper.pdf": "039dab2d02ddba41f15481be3115afe2ebf625338ab15655555fe9fc30c3ab7b"
+  },
+  "build": {
+    "layout": "one-column generic article working draft",
+    "pages": 8,
+    "engine": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
+    "passes": [
+      "pdflatex",
+      "bibtex",
+      "pdflatex",
+      "pdflatex"
+    ],
+    "final_log": "no LaTeX errors, warnings, overfull boxes or unresolved references/citations; no BibTeX warnings",
+    "auxiliary_directory": "/home/cspark/Work/projects/nkm-injection/results/bts_draft_l2y8KS"
+  }
+}

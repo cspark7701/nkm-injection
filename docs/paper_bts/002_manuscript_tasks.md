@@ -37,15 +37,17 @@ Confirm the provenance of the 21.789 m, nine-quadrupole AT model, magnet order, 
 
 **Acceptance:** exact element order and length are validated; both boundaries and coordinate systems are unambiguous. An AT/MAD-X comparison uses equivalent sequences and pass-method assumptions, or its non-equivalence is explicitly documented.
 
-## B03 — Justify beam, magnet and aperture constraints
+## B03 — Justify beam, magnet and aperture constraints [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 165).
 **Dependencies:** B02.
 
 Confirm booster emittance, vertical ratio/coupling, momentum spread, centroid and extraction Twiss. Separate the historical 100/10 nm rad case from the later author-sourced 7.67 nm rad horizontal design beam. Confirm family-specific gradient/power-supply limits, polarity, bore and vacuum clearances. Explain why the 60 m beta limit was chosen; relate it to beam size rather than label it a measured aperture.
 
 Use sigma_x² = beta_x epsilon_x + D_x² sigma_delta² (and the appropriate vertical/coupled covariance), including centroid and a declared beam coverage. Convert K [m^-2] to gradient G = K B rho [T/m] and check pole-tip field against the documented bore. Label assumptions, including distributions and error correlations, individually.
 
-**Deliverables:** beam/configuration and constraint tables with sources, an error-budget draft and permitted claim scope.
+**Deliverables:**
+- [`beam_and_constraints.md`](beam_and_constraints.md): Beam parameter matrix, envelope clearance proof, quadrupole pole-tip saturation audit, and error budget table.
 
 **Acceptance:** each constraint has a physical justification or an explicit parametric-study label. No inherited constraint emittance is silently described as the design booster beam.
 

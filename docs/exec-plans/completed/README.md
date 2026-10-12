@@ -518,4 +518,8 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 164. [**Milestone 164 — Physical Line and Observation Boundaries (B02)**](164_b02_physical_line_and_observation_boundaries.md)
     - Established the canonical 21.789 m, 9-quadrupole AT transfer line sequence, geometry table, and aperture stations; reconciled non-equivalence with historical 10-quadrupole MAD-X sequence; audited boundary Twiss provenance and documented non-substitution rule for NKM-center optics; generated high-resolution Figure 1 layout assets.
 
+165. [**Milestone 165 — Justification of Beam, Magnet and Aperture Constraints (B03)**](165_b03_beam_magnet_and_aperture_constraints.md)
+    - Formally distinguished historical constraint beam (100 nm rad) from Korea-4GSR design booster beam (7.67 nm rad); justified the 60 m beta envelope constraint as an 18.5 sigma clearance guarantee; converted quadrupole strengths to physical gradients and pole-tip fields, verifying all magnets operate below 0.73 T with ample margin to the 1.2 T saturation limit.
+
+
 

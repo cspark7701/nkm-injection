@@ -18,6 +18,8 @@ not independent validations of each other.
 
 ## 2. Ring (derived from the lattice, not assumed)
 
+Author input A2 identifies `K4GSR_HBIv4-1` as the design lattice used by Kim et al. (IPAC'25); it is not the latest KLS version. No independently verified file release date is available. All results refer to this supplied version.
+
 6D with RF and radiation pass methods from the source lattice. At the NKM centre: β_x = 16.27 m,
 α_x = −0.145, β_y = 5.60 m, α_y = −0.510, D_x = 0.33 mm. Tunes 68.179/23.260, chromaticities
 +6.02/+3.39, equilibrium ε_x = 61.6 pm·rad, σ_δ = 1.264e−3, σ_z = 3.63 mm, energy loss 1.10 MeV/turn,
@@ -26,6 +28,8 @@ orbit (δ_co = 9.6e−6, ct_co = 0.36 mm) is added to all generated particles. T
 no physical aperture elements; vertical stored emittance is taken as 10 % of ε_x (assumption).
 
 ## 3. Injection geometry and frames
+
+Author input A3 identifies the four-loop NKM as Dong-Eon Kim's preliminary design for this study, not the KLS baseline kicker. The published baseline uses a four-kicker bump and a 1 mm thin septum. This alternative scheme uses the study's assumed 2 mm blade at −16 mm. Loop powering is unspecified; series and independent-loop cases must be distinguished.
 
 AT ring coordinates (x, p_x, y, p_y, δ, ct), canonical momenta normalised by p₀.
 

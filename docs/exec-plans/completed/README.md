@@ -445,3 +445,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 140. [**Milestone 140 — Commit Message Format**](140_commit_message_format.md)
     - Reviewed recent local commits and adopted their imperative subject, explanatory body and status-prefixed Files section for future commit messages.
+
+141. [**Milestone 141 — Identify the lattice and preliminary NKM design (D1)**](141_d1_lattice_and_design_identity.md)
+    - Names the supplied IPAC 2025 design lattice, distinguishes the study NKM and septum from the KLS baseline, and narrows the title to the design version.

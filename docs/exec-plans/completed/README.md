@@ -505,3 +505,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 160. [**Milestone 160 — Convert the manuscript to PRAB formats (D15)**](160_prab_manuscript_formats.md)
     - Adopt REVTeX 4.2, compile the primary 28-page one-column draft and 14-page two-column preview from shared scientific text, document PhySH and PRAB submission metadata, and validate both isolated builds with 37 relevant tests.
+
+161. [**Milestone 161 — Plan a standalone BTS optics paper**](161_bts_manuscript_outline.md)
+    - Draft a JKPS-oriented manuscript outline and twelve ordered preparation tasks from the selected matching solution and hash-verified 550,000-sample optics campaign, with correction/transport work and optional MOGA requirements clearly marked as pending.

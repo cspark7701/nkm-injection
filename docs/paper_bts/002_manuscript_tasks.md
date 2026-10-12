@@ -23,13 +23,17 @@ Read relevant BTS matching, beam-envelope control and correction papers, includi
 
 **Acceptance:** Distinct BTS question stated; overlap with NKM paper disclosed; every numerical value has traceable evidence; older README/report inconsistencies reconciled; numerical and statistical criteria predeclared.
 
-## B02 — Establish the physical line and observation boundaries
+## B02 — Establish the physical line and observation boundaries [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 164).
 **Dependencies:** B01.
 
 Confirm the provenance of the 21.789 m, nine-quadrupole AT model, magnet order, bend/edge conventions and two aperture stations. Reconcile the preliminary ten-quadrupole `bts.madx` sequence. Obtain the source and location of the entrance and target Twiss/dispersion values; propagate any ring-derived target to the same BTS-exit boundary. Do not substitute NKM-centre optics without the intervening transport.
 
-**Deliverables:** versioned BTS lattice/config, geometry table, layout figure, `author_inputs.md` listing verified specifications and unresolved assumptions.
+**Deliverables:**
+- [`lattice_geometry.md`](lattice_geometry.md): Complete 36-element sequence table, geometry, aperture limits, and MAD-X vs AT reconciliation.
+- [`author_inputs.md`](author_inputs.md): Boundary Twiss provenance, verified hardware specs vs working assumptions, non-substitution rule for NKM-center optics.
+- [`figures/fig1_bts_layout.png`](figures/fig1_bts_layout.png) & [`figures/fig1_bts_layout.pdf`](figures/fig1_bts_layout.pdf): Multi-panel layout diagram with magnet blocks, baseline vs matched $\beta_{x,y}$, $\beta_{max} \le 60\text{ m}$ limit, and dispersion $D_x(s)$.
 
 **Acceptance:** exact element order and length are validated; both boundaries and coordinate systems are unambiguous. An AT/MAD-X comparison uses equivalent sequences and pass-method assumptions, or its non-equivalence is explicitly documented.
 

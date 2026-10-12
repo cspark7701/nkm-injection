@@ -515,3 +515,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 163. [**Milestone 163 — Fix scientific question, novelty, and evidence inventory (B01)**](163_b01_scientific_question_novelty_and_evidence_inventory.md)
     - Established article scope, distinct BTS research questions, NKM overlap disclosures, JKPS/DLSR literature comparisons, full evidence audit of optimization (`fe107589...`) and 4 tolerance runs (`62062629...`, `d1f381f7...`, `353c1986...`, `fa3c0b82...`), individual audits of all 5 physical feasibility failures across 550,000 samples, and a comprehensive claim ledger mapping 12 claims to verified artifacts.
 
+164. [**Milestone 164 — Physical Line and Observation Boundaries (B02)**](164_b02_physical_line_and_observation_boundaries.md)
+    - Established the canonical 21.789 m, 9-quadrupole AT transfer line sequence, geometry table, and aperture stations; reconciled non-equivalence with historical 10-quadrupole MAD-X sequence; audited boundary Twiss provenance and documented non-substitution rule for NKM-center optics; generated high-resolution Figure 1 layout assets.
+
+

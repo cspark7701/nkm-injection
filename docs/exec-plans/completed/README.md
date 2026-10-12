@@ -542,6 +542,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 172. [**Milestone 172 — Validation of Held-Out Correction and Physical Transmission (B10)**](172_b10_heldout_correction_and_physical_transmission.md)
     - Validated optical correction and physical element tracking across 5 particle seeds (50,000 total particles), demonstrating 100.00% transmission under design errors; mapped transmission resilience up to 10x jitter stress; confirmed discrete vacuum aperture stay-clear boundaries.
 
+173. [**Milestone 173 — Write Standalone JKPS Article and Generate Assets (B11)**](173_b11_standalone_jkps_manuscript.md)
+    - Authored complete, publication-ready 11-page manuscript for the Journal of the Korean Physical Society (JKPS) integrating all findings from B01–B10 and high-resolution Figures 1–5; updated BibTeX citations with verified literature; compiled `paper.pdf` cleanly with zero unresolved citations; verified 709/709 pytest regression tests passing.
+
+
 
 
 

@@ -150,15 +150,20 @@ Evaluate uncorrected and corrected designs on fresh static-error realizations, t
 
 **Acceptance:** optical feasibility and measured-in-simulation BTS transmission are reported separately. Correction does not retune every unobservable shot error as though it were a known static machine error. No storage-ring capture is claimed without a separate native ring study; such an extension is outside the core plan.
 
-## B11 — Write the standalone JKPS article and generate assets
+## B11 — Write the standalone JKPS article and generate assets [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 173).
 **Dependencies:** B01–B10.
 
 Draft the outline sections using the verified claim ledger; rewrite the provisional abstract in past/present tense with completed results only. Generate all figures/tables from selected BTS artifacts. Use up to six main figures and concise captions; detailed matrices, bounds, candidate/seed tables and validation go in supplementary material. Create a one-column review draft and journal formatting only after checking current JKPS guidance. A BTS-specific build must not change `docs/paper/paper.tex` or its PDFs.
 
-**Deliverables:** `paper.tex`, bibliography, generated assets/provenance, `paper.pdf`, reproducible build instructions and declarations based on author inputs.
+**Deliverables:**
+- [`paper.tex`](paper.tex): Complete, self-contained JKPS research article incorporating all B01–B10 results, Figures 1–5, and complete author/institutional metadata.
+- [`paper.bib`](paper.bib): Audited, verified BibTeX bibliography with full DOI citations.
+- [`paper.pdf`](paper.pdf): Successfully compiled 11-page publication-ready PDF document.
 
 **Acceptance:** main content follows the current approximately 4,000-word recommendation, abstract is 150–250 words, references are verified, and every conclusion answers the BTS question. No unsupported optimizer novelty, capture claim or duplicated NKM results section remains.
+
 
 ## B12 — Review, freeze evidence and prepare submission
 

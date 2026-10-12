@@ -548,6 +548,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 174. [**Milestone 174 — Review, Freeze Evidence, and Prepare Submission Readiness (B12)**](174_b12_freeze_evidence_and_submission_readiness.md)
     - Performed comprehensive manuscript review, quality assurance, and scope reconciliation; compiled complete 17-point verification matrix in `submission_checklist.md`; froze all cryptographic SHA-256 evidence digests in `draft_provenance.json`; successfully concluded the B01–B12 BTS manuscript task campaign.
 
+175. [**Milestone 175 — Automated Submission Bundle & Tarball Packaging (C01)**](175_c01_automated_submission_bundle.md)
+    - Created `scripts/package_bts_submission.py` to package LaTeX source files, verified bibliography, figure assets, and provenance digests into a standalone tarball; verified isolated extraction and successful compilation in a clean directory outside the git tree.
+
+
 
 
 

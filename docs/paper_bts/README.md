@@ -5,6 +5,10 @@ First manuscript draft, 2026-10-13. Proposed target: **Journal of the Korean Phy
 - [One-column LaTeX draft](paper.tex) and [compiled PDF](paper.pdf)
 - [Manuscript outline and campaign evidence](001_manuscript_outline.md)
 - [Ordered preparation tasks and acceptance criteria](002_manuscript_tasks.md)
+- [Article scope, question, and candidate claims](article_scope.md) (Task B01)
+- [Literature survey and regional/global comparison](literature_comparison.md) (Task B01)
+- [Scientific evidence inventory and failure audit](evidence_inventory.md) (Task B01)
+- [Claim evidence ledger](claim_evidence.csv) (Task B01)
 
 The proposed paper asks how nine quadrupoles can match the booster-to-storage-ring transfer line while preserving beam-envelope margin and tolerating specified errors. The existing deterministic and optics-tolerance campaigns provide starting evidence. Correction-knob analysis, physical transport validation and an independent design comparison are proposed new work.
 

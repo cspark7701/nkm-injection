@@ -511,3 +511,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 162. [**Milestone 162 — Create the first BTS LaTeX manuscript draft**](162_bts_latex_draft.md)
     - Write and compile an eight-page one-column BTS article draft with four exported archived-data tables, six audited references, provenance and explicit pending revisions; preserve all NKM files and scientific inputs.
+
+163. [**Milestone 163 — Fix scientific question, novelty, and evidence inventory (B01)**](163_b01_scientific_question_novelty_and_evidence_inventory.md)
+    - Established article scope, distinct BTS research questions, NKM overlap disclosures, JKPS/DLSR literature comparisons, full evidence audit of optimization (`fe107589...`) and 4 tolerance runs (`62062629...`, `d1f381f7...`, `353c1986...`, `fa3c0b82...`), individual audits of all 5 physical feasibility failures across 550,000 samples, and a comprehensive claim ledger mapping 12 claims to verified artifacts.
+

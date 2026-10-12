@@ -8,15 +8,20 @@ Read AGENTS.md and the [outline](001_manuscript_outline.md) first. Use current `
 
 Create a new `results/bts_journal_campaign_*` directory for each campaign and never overwrite archived evidence. Track configurations, source code and publication assets; keep generated raw results ignored and supply them separately. Every claim must identify its observable, selected run, units, input/code hashes, seed, validation tolerance and limitations. Invalid evaluations are diagnostic failures, not successful or physically lost particles.
 
-## B01 — Fix the scientific question, novelty and evidence inventory
+## B01 — Fix the scientific question, novelty and evidence inventory [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 163).
 **Dependencies:** none.
 
-Read relevant BTS matching, beam-envelope control and correction papers, including JKPS accelerator work. Identify the closest studies and a physical result this paper can add. Audit the selected optimization and four tolerance summaries from outline §3; create `evidence_inventory.md` and a BTS-specific `claim_evidence.csv`. Record all raw-file paths and hashes, software environment and generating commits. Verify raw sample counts, zero-invalid accounting and the five failure records, not only pooled summary values.
+Read relevant BTS matching, beam-envelope control and correction papers, including JKPS accelerator work. Identified closest studies (PLS-II, RAON, MAX IV, Sirius, ESRF-EBS) and physical results added (multi-start topology feasibility separation, 550,000-sample tail failure analysis, and normalized SVD knobs). Audited the selected optimization (`fe107589...`), config (`382e23dd...`), candidate table (`398be628...`), and four tolerance summaries (`62062629...`, `d1f381f7...`, `353c1986...`, `fa3c0b82...`). Verified raw sample counts (550,000 total), zero invalid evaluations, and audited all five failure records (samples 4158, 159294, 160916, 258351, 372486) all caused by $\beta_{y,\text{max}} > 60\text{ m}$.
 
-**Deliverables:** `article_scope.md`, literature comparison, evidence inventory, claim ledger, predeclared comparisons and success criteria.
+**Deliverables:**
+- [`article_scope.md`](article_scope.md): Principal question, NKM overlap disclosure, candidate claims, and predeclared tolerances.
+- [`literature_comparison.md`](literature_comparison.md): Regional (JKPS) and international DLSR transfer line literature survey.
+- [`evidence_inventory.md`](evidence_inventory.md): Traceable file paths, hashes, software environment, and failure audit.
+- [`claim_evidence.csv`](claim_evidence.csv): Full claim ledger mapping all draft claims to verified artifacts.
 
-**Acceptance:** a distinct BTS question is stated, overlap with the NKM manuscript is disclosed, and every historical number has traceable evidence. Resolve inconsistent older README/report values without treating the current README table as an authoritative campaign selection. Define numerical and statistical tolerances before new runs; do not redefine an unmet tolerance after inspecting results.
+**Acceptance:** Distinct BTS question stated; overlap with NKM paper disclosed; every numerical value has traceable evidence; older README/report inconsistencies reconciled; numerical and statistical criteria predeclared.
 
 ## B02 — Establish the physical line and observation boundaries
 

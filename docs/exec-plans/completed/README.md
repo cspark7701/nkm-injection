@@ -533,6 +533,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 169. [**Milestone 169 — BTS Error Model Audit and Sensitivity Responses (B07)**](169_b07_bts_error_model_audit.md)
     - Audited physical error model and sampling distributions; demonstrated single-parameter responses for gradient, alignment, roll, and energy errors; disclosed inactive historical sampling channels (dipole error and ds placement); disentangled BTS transport errors from ring injection parameters.
 
+170. [**Milestone 170 — Matching vs Operating Margin Design Comparison (B08)**](170_b08_matching_vs_operating_margin_design.md)
+    - Compared unoptimized baseline, nominal matched design, and low-beta margin design on 1,000 held-out error realizations; demonstrated 100.0% feasibility for both matched designs and quantified a 16.47 m envelope stay-clear buffer gain in the margin design at modest gradient cost.
+
+
 
 
 

@@ -107,13 +107,16 @@ Remove NKM field scale, timing, map offsets, ring orbit and stored-kick observat
 
 **Acceptance:** no sampled inactive category is interpreted as physical insensitivity. Zero-noise cases reproduce B05, injected test errors produce their expected responses, and invalid outcomes are separately recorded.
 
-## B08 — Compare matching with a design chosen for operating margin
+## B08 — Compare matching with a design chosen for operating margin [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 170).
 **Dependencies:** B05–B07.
 
 Compare baseline, nominal matched and a newly selected margin/robust design. Choose a physical metric such as worst envelope clearance or a quantile of mismatch under a declared training error set. Keep target, constraints and simulation budget comparable. Search deterministic null-space/multistart solutions or an epsilon-constrained scan first; evaluate all selected designs on a common held-out error ensemble.
 
-**Deliverables:** objective definition, fair comparison table, trade-off figure and selected design with feasibility/termination records.
+**Deliverables:**
+- [`margin_design_comparison.md`](margin_design_comparison.md): Head-to-head performance table over 1,000 held-out error realizations, envelope margin gain quantification ($16.5\text{ m}$ stay-clear buffer), and gradient cost analysis.
+- [`figures/fig3_margin_tradeoff.png`](figures/fig3_margin_tradeoff.png) & [`figures/fig3_margin_tradeoff.pdf`](figures/fig3_margin_tradeoff.pdf): Envelope margin trade-off figure comparing betatron and dispersion profiles.
 
 **Acceptance:** the comparison answers whether nominal matching alone sacrifices a useful margin; quantify any benefit with uncertainty and strength cost. A negative result is reportable. Do not force an improvement or equate merit reduction with capture gain.
 

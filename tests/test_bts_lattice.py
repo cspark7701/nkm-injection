@@ -5,6 +5,7 @@ Unit and Integration Tests for Milestone 2 BTS Lattice & Optics Validation
 from pathlib import Path
 import numpy as np
 import pytest
+import at
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -123,4 +124,60 @@ def test_canonical_optics_metrics_with_constants(bts_lat):
     assert res["mismatch_x"] >= 0.0
     assert res["mismatch_y"] >= 0.0
     assert res["target_beta_x"] == pytest.approx(DEFAULT_BTS_TARGET_TWISS.beta_x)
+
+
+def test_matrix_and_particle_tracking_envelope_consistency(bts_lat):
+    """Verify that linear transfer matrix propagation matches particle tracking within statistical tolerance."""
+    np.random.seed(42)
+    n_part = 10000
+    emit_x = 7.67e-9
+    emit_y = 0.767e-9
+
+    sig_x = np.array([
+        [DEFAULT_BTS_ENTRANCE_TWISS.beta_x * emit_x, -DEFAULT_BTS_ENTRANCE_TWISS.alpha_x * emit_x],
+        [-DEFAULT_BTS_ENTRANCE_TWISS.alpha_x * emit_x, ((1 + DEFAULT_BTS_ENTRANCE_TWISS.alpha_x**2) / DEFAULT_BTS_ENTRANCE_TWISS.beta_x) * emit_x]
+    ])
+    sig_y = np.array([
+        [DEFAULT_BTS_ENTRANCE_TWISS.beta_y * emit_y, -DEFAULT_BTS_ENTRANCE_TWISS.alpha_y * emit_y],
+        [-DEFAULT_BTS_ENTRANCE_TWISS.alpha_y * emit_y, ((1 + DEFAULT_BTS_ENTRANCE_TWISS.alpha_y**2) / DEFAULT_BTS_ENTRANCE_TWISS.beta_y) * emit_y]
+    ])
+
+    particles = np.zeros((6, n_part))
+    particles[0:2, :] = np.random.multivariate_normal([0, 0], sig_x, n_part).T
+    particles[2:4, :] = np.random.multivariate_normal([0, 0], sig_y, n_part).T
+
+    tracked_out, _, _ = bts_lat.track(particles.copy())
+    survived = ~np.isnan(tracked_out[0, :, 0, -1])
+    assert np.all(survived), "On-energy particles should have 100% transmission in unperturbed line"
+
+    cov_tracked_x = np.cov(tracked_out[0:2, survived, 0, -1])
+    cov_tracked_y = np.cov(tracked_out[2:4, survived, 0, -1])
+
+    m44, _ = at.find_m44(bts_lat, 0)
+    cov_matrix_x = m44[0:2, 0:2] @ sig_x @ m44[0:2, 0:2].T
+    cov_matrix_y = m44[2:4, 2:4] @ sig_y @ m44[2:4, 2:4].T
+
+    # Check that tracked beam sizes match matrix predictions within 3% statistical error
+    np.testing.assert_allclose(cov_tracked_x, cov_matrix_x, rtol=0.03, atol=1e-12)
+    np.testing.assert_allclose(cov_tracked_y, cov_matrix_y, rtol=0.03, atol=1e-12)
+
+
+def test_physical_aperture_station_loss_accounting(bts_lat):
+    """Verify that physical aperture stations catch large-amplitude particles at declared locations."""
+    # Launch divergent particles that pass station 1 but exceed downstream apertures
+    p = np.zeros((6, 3))
+    p[0, 0] = 0.010   # 10 mm (inside 19.35 mm station) -> survives
+    p[0, 1] = 0.025   # 25 mm (exceeds 19.35 mm station 1) -> lost at s=0
+    p[1, 2] = 0.010   # Large angle px = 10 mrad -> lost at station 2 (s=6.833 m)
+
+    rout, _, _ = bts_lat.track(p.copy(), refpts=range(len(bts_lat)+1))
+    nan_mask = np.isnan(rout[0, :, :, 0])
+
+    # Particle 0 survives
+    assert not np.any(nan_mask[0, :])
+    # Particle 1 lost at station 1 (s=0, element 1: ap_rect)
+    assert np.where(nan_mask[1, :])[0][0] == 2
+    # Particle 2 lost at station 2 (s=6.833 m, element 12: ap_rect2)
+    assert np.where(nan_mask[2, :])[0][0] == 13
+
 

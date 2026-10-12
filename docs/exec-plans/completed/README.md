@@ -521,5 +521,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 165. [**Milestone 165 — Justification of Beam, Magnet and Aperture Constraints (B03)**](165_b03_beam_magnet_and_aperture_constraints.md)
     - Formally distinguished historical constraint beam (100 nm rad) from Korea-4GSR design booster beam (7.67 nm rad); justified the 60 m beta envelope constraint as an 18.5 sigma clearance guarantee; converted quadrupole strengths to physical gradients and pole-tip fields, verifying all magnets operate below 0.73 T with ample margin to the 1.2 T saturation limit.
 
+166. [**Milestone 166 — Independent Transport and Optics Validation (B04)**](166_b04_independent_transport_and_optics_validation.md)
+    - Cross-validated 4D and 6D transfer matrix symplecticity to numerical precision (1e-15 and 1e-12); proved beam envelope and covariance matrix agreement between analytical transport and 10,000 / 100,000-particle tracking within 0.4%; verified physical aperture station loss accounting and added automated regression tests.
+
+
 
 

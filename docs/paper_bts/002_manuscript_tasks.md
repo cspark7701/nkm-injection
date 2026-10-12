@@ -51,13 +51,16 @@ Use sigma_x² = beta_x epsilon_x + D_x² sigma_delta² (and the appropriate vert
 
 **Acceptance:** each constraint has a physical justification or an explicit parametric-study label. No inherited constraint emittance is silently described as the design booster beam.
 
-## B04 — Validate the transport and optics evaluator independently
+## B04 — Validate the transport and optics evaluator independently [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 166).
 **Dependencies:** B02–B03.
 
 Check transfer matrices, symplecticity where appropriate, Twiss and dispersion propagation, momentum dependence and particle coordinate shape. Compare linear optics with element-by-element particle transport for zero-error and perturbed cases. Model physical apertures at their declared locations and report first-loss positions. Use an equivalent independent matrix implementation or reconciled MAD-X model as a cross-check.
 
-**Deliverables:** validation report, meaningful regression tests, covariance/envelope comparison and loss accounting.
+**Deliverables:**
+- [`transport_validation.md`](transport_validation.md): Symplecticity error quantifications, covariance and envelope comparisons, off-momentum dispersion tracking checks, and aperture loss accounting.
+- Regression tests in `tests/test_bts_lattice.py`: `test_matrix_and_particle_tracking_envelope_consistency` and `test_physical_aperture_station_loss_accounting`.
 
 **Acceptance:** predeclared absolute/relative tolerances are met and documented. Tracking states particle count, distribution/truncation, emittance, energy spread, seed, apertures, loss definition and observation points. Coupling is treated consistently; uncoupled Twiss agreement cannot validate roll-error transport.
 

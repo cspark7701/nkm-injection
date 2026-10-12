@@ -184,6 +184,10 @@
     "c4_aper_open_novert": {
       "path": "results/journal_campaign_02/c4_aperture_diag_open_novert/aperture_raw.json",
       "sha256": "a86b65e6e72010655f1488cd9ddc276e3038a04afda939d1407b201fca79ff13"
+    },
+    "round2_generality": {
+      "path": "results/journal_campaign_03/d7_generality/generality_scaling.json",
+      "sha256": "7e402b27dc30c260680362da46a7d37a9c4714a82c2c331a524e35cb3259aeaf"
     }
   }
 }

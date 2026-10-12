@@ -457,3 +457,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 144. [**Milestone 144 — Separate injection shot errors and source the beam budget (D4)**](144_d4_beam_and_error_budget.md)
     - Adds independent septum-strength, RF-phase and arrival-time terms, records the 7.67 nm rad design beam, and labels every unsupported error scale as a sensitivity assumption.
+
+145. [**Milestone 145 — Scale finite-length effects and narrow map claims (D7)**](145_d7_generality_and_map_scope.md)
+    - Adds length and strength scaling for two wire families and compares a sliced vector map with the 3-D field while distinguishing trajectory approximation from the historical vertical-sign input error.

@@ -62,6 +62,22 @@ class RevisionBuilder(bj.Builder):
     def _json(self, key):
         return self.load(key)
 
+    def fig_generality(self):
+        if "round2_generality" not in self.m["artifacts"]:
+            return
+        d=self.load("round2_generality")
+        fig,axes=plt.subplots(1,2,figsize=(7.4,2.9),layout="constrained")
+        for family,marker in ((1.,"o"),(1.25,"s")):
+            selected=[r for r in d["rows"] if r["transverse_family_scale"]==family]
+            for ax,key in zip(axes,("thin_minus_3d","sliced_minus_3d")):
+                ax.scatter([r["eta"] for r in selected],[r[key][1]*1e3 for r in selected],marker=marker,
+                           label=f"wire scale {family:g}")
+                ax.set_xlabel(r"$\eta=|K|L/(8w)$");ax.set_ylabel("momentum difference [mrad]")
+                ax.axhline(0,color=INK2,lw=.5)
+        axes[0].set_title("Thin map minus 3-D");axes[1].set_title("Sliced vector map minus 3-D");axes[0].legend()
+        self.save(fig,"fig9_generality",["round2_generality"],
+                  "deterministic centroids; length/strength scaling and 1.25 transverse wire family; w=kick-lobe FWHM")
+
     # ------------------------------------------------------------------ figure 1
     def fig_geometry(self):
         op = InjectionStudyConfig.from_dict(self.load("operating_point_3d"))
@@ -680,7 +696,7 @@ RevisionBuilder._paired = staticmethod(paired)
 STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_aperture": "fig_dynamic_aperture", "validation": "fig_model_validation",
          "mechanism": "fig_mechanism", "window": "fig_window", "acceptance": "fig_acceptance",
          "controls": "fig_controls_transparency", "robustness": "fig_robustness", "survival": "survival_tables",
-         "pulse": "pulse_macros"}
+         "pulse": "pulse_macros", "generality": "fig_generality"}
 
 
 def main(argv=None):

@@ -1,5 +1,5 @@
 {
-  "manifest": "docs/paper/revision_manifest.json",
+  "manifest": "docs/paper/revision_manifest_round2.json",
   "artifacts": {
     "backend_validation": {
       "path": "results/journal_campaign_01/backend_validation/backend_validation_summary.json",

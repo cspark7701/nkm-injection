@@ -19,8 +19,13 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 PAPER = REPO / "docs" / "paper"
-SUPPLEMENT = ["revision_manifest.json", "claim_evidence.csv", "scientific_review.md", "bibliography_audit.md",
-              "cover_letter.md", "generated/figure_provenance.csv", "generated/consumed_artifacts.json"]
+SUPPLEMENT = ["revision_manifest_round2.json", "revision_manifest.json", "claim_evidence.csv",
+              "round2_final_checks.md", "round2_reproduction.md", "round2_comparison_audit.md",
+              "bibliography_audit.md", "cover_letter.md", "generated/figure_provenance.csv",
+              "generated/consumed_artifacts.json"]
+if (PAPER / "reviews/author_response_round2.md").is_file():
+    SUPPLEMENT.append("reviews/author_response_round2.md")
+
 BAD_LOG = re.compile(r"^!|undefined|Overfull|Rerun to get", re.I | re.M)
 
 
@@ -98,8 +103,7 @@ def main(argv=None):
         "supplement": {r: sha256(sup / r) for r in SUPPLEMENT},
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "packages": pkgs,
                         "tex": subprocess.run(["pdflatex", "--version"], capture_output=True, text=True).stdout.splitlines()[0]},
-        "commands": ["python scripts/make_revision_manifest.py --require-all --output docs/paper/revision_manifest.json",
-                     "python scripts/build_revision_figures.py --manifest docs/paper/revision_manifest.json "
+        "commands": ["python scripts/build_revision_figures.py --manifest docs/paper/revision_manifest_round2.json "
                      "--output-dir <new> --install-dir docs/paper/generated",
                      f"python scripts/build_submission_package.py --output-dir <new>{' --install-pdf' if a.install_pdf else ''}"],
     }

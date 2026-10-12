@@ -26,7 +26,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 INPUTS = ("By.txt", "kickmap_file.txt", "K4GSR_HBIv4-1.mat")
-CODE_PATHS = ("src", "scripts", "config", "tests", "docs/paper", "pyproject.toml", "README.md", "environment.yml",
+CODE_PATHS = ("src", "scripts", "config", "tests", "docs/paper", "docs/exec-plans/completed", "pyproject.toml", "README.md", "environment.yml",
               "requirements-lock.txt")
 
 
@@ -51,7 +51,7 @@ def main(argv=None):
     copied = {}
     for key, rel in m["artifacts"].items():
         src = Path(rel) if Path(rel).is_absolute() else REPO / rel
-        if Path(rel).is_absolute():
+        if Path(rel).is_absolute() or '..' in Path(rel).parts:
             raise SystemExit(f"manifest path for {key} is absolute; bundle requires repository-relative paths")
         digest = sha256(src)
         if m.get("sha256", {}).get(key) not in (None, digest):
@@ -66,6 +66,8 @@ def main(argv=None):
     shutil.copy2(a.manifest, out / "campaign_manifest.json")
     commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True).stdout.strip()
     dirty = subprocess.run(["git", "status", "--porcelain", "--", *CODE_PATHS], cwd=REPO, capture_output=True, text=True).stdout
+    if dirty:
+        raise SystemExit("Commit the source and manuscript before freezing evidence; git archive uses HEAD")
     subprocess.run(["git", "archive", "--format=tar.gz", "-o", str(out / "code.tar.gz"), "HEAD", *CODE_PATHS], cwd=REPO, check=True)
     pkgs = {}
     for n in ("accelerator-toolbox", "numpy", "scipy", "matplotlib"):
@@ -83,7 +85,8 @@ repository-relative paths and the scientific inputs {", ".join(INPUTS)}). Hashes
 
 ```bash
 mkdir code && tar -xzf code.tar.gz -C code
-python -m pip install -e "code[dev]"
+python -m pip install -r code/requirements-lock.txt
+python -m pip install -e "code[dev,moga]"
 sha256sum -c SHA256SUMS
 OMP_NUM_THREADS=1 MPLBACKEND=Agg python code/scripts/{builder} \\
     --manifest campaign_manifest.json --repo-root evidence --output-dir rebuilt
@@ -98,9 +101,7 @@ recorded inside each artifact (`cli` fields) and in `code/docs/exec-plans/comple
         if f.is_file() and f.name != "SHA256SUMS":
             lines.append(f"{sha256(f)}  {f.relative_to(out).as_posix()}")
     (out / "SHA256SUMS").write_text("\n".join(lines) + "\n")
-    with tarfile.open(out.with_suffix(".tar.gz"), "w:gz") as tar:
-        tar.add(out, arcname=out.name)
-    result = {"builder": builder, "artifacts": len(m["artifacts"]), "files": len(lines), "commit": commit,
+    result = {"builder": builder, "artifacts": len(m["artifacts"]), "files": len(lines) + 1, "commit": commit,
               "uncommitted": bool(dirty),
               "archive": str(out.with_suffix(".tar.gz"))}
     if a.verify:
@@ -117,7 +118,15 @@ recorded inside each artifact (`cli` fields) and in `code/docs/exec-plans/comple
             new = (Path(tmp) / "rebuilt/tables/journal_macros.tex").read_text()
             ref = (code / "docs/paper/generated/journal_macros.tex").read_text()
             result["rebuild_macros_identical"] = new == ref
+            if new != ref:
+                raise SystemExit("Frozen evidence rebuild changed manuscript macros")
     (out / "bundle_summary.json").write_text(json.dumps(result, indent=2) + "\n")
+    # Include the verification outcome in the hash inventory and frozen archive.
+    lines=[f"{sha256(f)}  {f.relative_to(out).as_posix()}" for f in sorted(out.rglob("*"))
+           if f.is_file() and f.name!="SHA256SUMS"]
+    (out/"SHA256SUMS").write_text("\n".join(lines)+"\n")
+    with tarfile.open(out.with_suffix(".tar.gz"), "w:gz") as tar:
+        tar.add(out, arcname=out.name)
     print(json.dumps(result, indent=1))
 
 

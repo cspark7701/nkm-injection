@@ -487,3 +487,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 154. [**Milestone 154 — Reconcile the manuscript with final evidence and scope (D12)**](154_round2_manuscript_reconciliation.md)
     - Rewrite the abstract, comparison table, parameter table, mechanism interpretation, captions and conclusions around the final design-beam evidence. Separate 100 nm sensitivity studies, nominal survival, joint-error capture and held-out tuning. Add sourced system comparisons and conditional septum leakage estimates, clarify deterministic radiation and control-calibration limits, and retain the author-gated generic article format.
+
+155. [**Milestone 155 — Freeze the round-two evidence selection and source snapshot (D13)**](155_round2_evidence_snapshot.md)
+    - Select 205 hash-verified artifacts in a new campaign-03 manifest, refresh 17 current D claim rows while preserving historical claims, and package current verification and reproduction notes. Reject dirty source snapshots and changed rebuild macros; include the verification summary in the final inventory. This checkpoint prepares the committed source required for bundle verification; the bundle gate follows.

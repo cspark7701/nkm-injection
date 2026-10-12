@@ -64,15 +64,17 @@ Check transfer matrices, symplecticity where appropriate, Twiss and dispersion p
 
 **Acceptance:** predeclared absolute/relative tolerances are met and documented. Tracking states particle count, distribution/truncation, emittance, energy spread, seed, apertures, loss definition and observation points. Coupling is treated consistently; uncoupled Twiss agreement cannot validate roll-error transport.
 
-## B05 — Reproduce nominal matching and compare fair baselines
+## B05 — Reproduce nominal matching and compare fair baselines [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 167).
 **Dependencies:** B04.
 
 Reproduce the archived selected strengths and recompute its metrics with its frozen configuration. Run baseline and constrained least-squares/SLSQP designs using the same entrance beam and exit target. Include at least five independent outer seeds and all starts; record failed or infeasible starts, wall time and evaluation counts. Increase the search budget if candidate feasibility or selected observables remain unstable.
 
 Use dimensionless residuals. The historical normalizations are beta/0.05 m, alpha/0.01, D/0.002 m and D'/0.001. Distinguish numerical scaling from a physical tolerance. Report family bounds, active constraints, both dispersion residuals, peak beta, termination and independent feasibility; exact zero printed mismatch is finite precision, not proof of a global optimum.
 
-**Deliverables:** candidate tables, baseline/matched optics profiles, magnet settings and a reproducibility report.
+**Deliverables:**
+- [`nominal_matching_reproduction.md`](nominal_matching_reproduction.md): Exact numerical reproduction of nominal strengths, multi-start feasibility matrix over 5 seeds, discovery of low-beta topology, and baseline vs matched optics comparison.
 
 **Acceptance:** results are independently feasible and not selected only by optimizer success. The one-feasible-of-three historical outcome is preserved. Add configuration/iteration/start controls if required; the present CLI only exposes seed, tier and output, so a production tier is not a converged-search guarantee.
 

@@ -524,6 +524,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 166. [**Milestone 166 — Independent Transport and Optics Validation (B04)**](166_b04_independent_transport_and_optics_validation.md)
     - Cross-validated 4D and 6D transfer matrix symplecticity to numerical precision (1e-15 and 1e-12); proved beam envelope and covariance matrix agreement between analytical transport and 10,000 / 100,000-particle tracking within 0.4%; verified physical aperture station loss accounting and added automated regression tests.
 
+167. [**Milestone 167 — Nominal Matching Reproduction and Multi-Start Baselines (B05)**](167_b05_reproduce_nominal_matching_and_baselines.md)
+    - Recomputed and verified nominal matched quadrupole strengths to exact floating-point precision; conducted 5-seed multi-start optimization study showing that 4/15 starts violate physical envelope limits despite optimizer convergence; discovered alternative low-beta design topology (beta_x=29.65 m, beta_y=36.12 m).
+
+
 
 
 

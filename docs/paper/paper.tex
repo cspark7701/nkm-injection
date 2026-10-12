@@ -215,43 +215,65 @@ The controls (figure~\ref{fig:transp}, left) separate the cost of nonlinearity: 
 
 \subsection{Error budget}
 
-Table~\ref{tab:errors} lists the assumed errors. They are design hypotheses, not component specifications; static errors are drawn once per realization, the booster centroid, energy and NKM amplitude and timing errors represent shot-to-shot jitter. Timing jitter is represented as a field-scale change that gives the same kick change for the injected centroid; unlike an additive dipole kick it leaves the field zero on axis. With the matched BTS optics fixed, \TolN\ realizations give a median horizontal exit mismatch $M_x=\tfrac12\mathrm{Tr}(\Sigma_0^{-1}\Sigma)-1$ (zero for matched Twiss parameters; $\Sigma$, $\Sigma_0$ the normalised beam matrices at the BTS exit and its target) of $\TolMedianMx\times10^{-3}$ (95\,\% interval \TolMedianMxLo--\TolMedianMxHi$\times10^{-3}$), and \TolFailures\ exceed the 60\,m $\beta$ limit; this optics metric alone does not quantify capture loss.
+Table~\ref{tab:errors} defines the final untruncated Gaussian rms budget. Booster horizontal emittance 7.67\,nm\,rad and energy spread 0.106\,\% are design values~\cite{Lee2024}; extraction Twiss, bunch length and the 0.10 vertical-emittance ratio are assumptions. No public extraction-orbit or septum-current stability was supplied, so the corresponding errors remain sensitivity parameters. Small exit Twiss mismatch is not used as evidence of capture robustness.
 
 \begin{table}[htbp]
-\centering
-\caption{Historical rms errors (Gaussian, untruncated) of the campaign-02 ensembles. Values are assumptions, not measured specifications; the finalized campaign-03 budget is described below.}
+\centering\small
+\caption{Final rms error budget. S: static machine draw; J: shot draw. Unsourced entries are explicit sensitivity assumptions with the tested effect stated. Corrected-ring errors are a separate finite scenario population.}
 \label{tab:errors}
-\small
-\begin{tabular}{@{}lll@{}}
-\toprule
-Booster centroid jitter (shot-to-shot) & \BudJitX\,mm, \BudJitXp\,mrad & sensitivity assumption \\
-Booster $\beta$ mismatch, emittance, energy & \BudBetaMis\,\%, \BudEmit\,\%, \BudEnergy\,\% & sensitivity assumption \\
-Energy-spread variation & $\BudEspread\times10^{-4}$ & sensitivity assumption \\
-BTS quadrupole gradient, offset, roll & \BudQuadK\,\%, \BudQuadDx\,$\mu$m, \BudQuadRoll\,mrad & sensitivity assumption \\
-BTS dipole field & \BudDipB\,\% & sensitivity assumption \\
-Septum position & \BudSeptum\,mm & sensitivity assumption \\
-NKM amplitude, timing (as field scale), offset & \BudNkmScale\,\%, \BudNkmTiming\,$\mu$rad equiv., \BudNkmDx\,mm & sensitivity assumption \\
-Ring closed orbit at NKM & \BudRingCo\,mm & sensitivity assumption \\
-\bottomrule
+\begin{tabular}{@{}lp{3.3cm}cp{5.3cm}@{}}\toprule
+Term & RMS & Class & Source or reason \\\midrule
+Booster centroid $x/x'$ & 0.5 mm / 0.2 mrad & J & Extraction stability unavailable; scan scales 0--1 \\
+Booster beta mismatch & 5\% & S & Assumed extraction-optics sensitivity \\
+Emittance / mean energy & 10\% / 0.1\% & J & Assumed fluctuations about design beam \\
+Energy-spread variation & $10^{-4}$ absolute & J & Assumed variation of within-bunch spread \\
+BTS quadrupole gradient & 0.1\% & S & Assumed focusing error \\
+BTS quadrupole $x/y$ offset & 100 $\mu$m each & S & Assumed alignment error \\
+BTS quadrupole roll & 0.5 mrad & S & Assumed coupling error \\
+BTS dipole field & 0.05\% & S & Assumed rigidity/trajectory sensitivity \\
+Septum position & 0.1 mm & S & Assumed blade geometry error \\
+NKM / residual orbit offset & 0.2 mm each & S & Assumed relative alignment sensitivity \\
+Common NKM amplitude & 0.5\% & J & Assumed pulser fluctuation, not a measured specification \\
+Thin-septum strength & 0.1\% relative & J & Assumed; nominal bend 10 mrad~\cite{Hahn2024} \\
+RF phase & 0.001 rad & J & Assumed injection-phase sensitivity \\
+Arrival relative to NKM firing & 2 ns & J & Assumed peak-phase pulse timing \\\bottomrule
 \end{tabular}
 \end{table}
 
-For the final campaign the booster design values are $\varepsilon_x=7.67$\,nm\,rad and $\sigma_\delta=0.00106$~\cite{Lee2024}, with an assumed vertical ratio of 0.10. Extraction orbit jitter and septum current stability are not public. The final budget therefore parametrizes them and adds separate thin-septum strength jitter (0.1\,\% relative about the published 10\,mrad bend~\cite{Hahn2024}), RF phase (0.001\,rad) and arrival relative to NKM firing (2\,ns rms). These three rms values are explicit sensitivity assumptions. At the lattice RF frequency of 499.593\,MHz, phase shifts the injected longitudinal coordinate by $c\Delta\phi/(2\pi f_\mathrm{RF})$; the independent pulse-relative timing samples a 5.3\,$\mu$s half-sine at peak phase without another longitudinal-coordinate shift. The legacy equivalent transverse timing kick is disabled in the final budget. Alignment and strength values in table~\ref{tab:errors} test sensitivity rather than represent construction specifications; their roles and the retained unmodelled terms are recorded in the budget supplement.
+The published bump-kicker reproducibility is not treated as an NKM or septum specification. At the lattice RF frequency, phase error shifts the injected longitudinal coordinate by $c\Delta\phi/(2\pi f_\mathrm{RF})$. Independent arrival relative to NKM firing scales the 5.3\,$\mu$s half-sine field at peak phase and does not add another longitudinal displacement. The separate thin-septum error adds canonical momentum $(1+\delta)\,0.01\,\epsilon_\mathrm{sept}$ in radians. No equivalent transverse timing-kick term is added. Longitudinal quadrupole placement, supply quantization and a scalar ring-beta perturbation are not modelled and are not counted as applied errors.
 
 \subsection{Combined errors and tolerance curves}
 
-Two ensembles bound the treatment of static transfer-line errors. Without orbit correction, the static trajectory errors of the transfer line reach the septum; with ideal steering at the septum exit, the static trajectory of each perturbed line is removed and shot-dependent errors and uncorrected static optics, vertical orbit and kicker/septum offsets remain. Over \RobN\ realizations from three seeds (200 particles, 500 turns), the 3-D NKM captures \RobMean\,\% on average without correction (\RobMeanLo--\RobMeanHi\,\%, median \RobMedian\,\%) and \RobCMean\,\% with correction (\RobCMeanLo--\RobCMeanHi\,\%, median \RobCMedian\,\%), against \RobDipMean\ and \RobCDipMean\,\% for the dipole control on the same realizations (paired differences \RobNkmMinusDip\ and \RobCNkmMinusDip\,points, 95\,\% intervals \RobNkmMinusDipLo\ to \RobNkmMinusDipHi\ and \RobCNkmMinusDipLo\ to \RobCNkmMinusDipHi); the realization without errors captures \RobZeroErr\,\% (dipole \RobZeroErrDip\,\%) (figure~\ref{fig:robust}, left). The deficit with respect to the dipole thus grows from about two points without errors to about twenty with them: the NKM kick falls off on both sides of its extremum, so its angular window (section~\ref{sec:window}) is narrower than that of the uniform kick, and realizations whose transfer-line exit angle deviates by more than 0.2\,mrad lose most. Controlling for all other sampled errors (partial rank correlation), the booster angle jitter is the dominant driver for both kickers ($\rho=-0.45$ for the NKM and $-0.68$ for the dipole without correction, $-0.52$ and $-0.75$ with it); once the static offset is corrected, the booster position jitter also becomes significant ($\rho=-0.24$ for both).
+Three seeds (42, 123, 777) generate 150 joint machine/shot realizations, each with 200 Gaussian particles and 500 native turns. Each realization independently draws one of the ten corrected rings with replacement, plus the errors in table~\ref{tab:errors}. The bootstrap unit is the joint realization, conditional on that finite ring population; it is not an estimate over all possible commissioning errors or repeated shots on one machine. Intervals use 10\,000 percentile-bootstrap resamples, seed 1729.
 
-Scaling only the booster centroid jitter on paired realizations (figure~\ref{fig:robust}, centre) separates jitter from static errors. With correction, the mean capture is \JitCFullMean\,\% at the assumed jitter, \JitCHalfMean\,\% at half, \JitCQuarterMean\,\% at a quarter and \JitCZeroMean\,\% without jitter; below a quarter of the assumed amplitude (0.125\,mm, 0.05\,mrad) the jitter has a difference unresolved at the available precision. Position jitter alone gives \JitCXOnlyMean\,\% and angle jitter alone \JitCXpOnlyMean\,\%. Without correction, removing the jitter raises the mean only to \JitZeroMean\,\%, because the static transfer-line errors displace the exit centroid by 0.7\,mm rms, more than the position window. Even with correction and without jitter the mean stays below 80\,\% (median \JitCZeroMedian\,\%, \JitCZeroFracEighty\,\% of realizations above 80\,\%): the remaining loss comes from the combined static errors of table~\ref{tab:errors} (kicker, orbit and septum offsets, energy and dipole-field errors), none of which dominates. A mean capture of 80\,\% under this budget therefore needs, besides orbit correction and booster jitter of at most a quarter of the assumed value, either tighter static tolerances or a wider window, for example from sextupole optimisation for the injection DA. Without other errors, capture varies between \OffCapMin\ and \OffCapMax\,\% for NKM-to-orbit offsets within $\pm\OffRangeMm$\,mm, and from \EmitTwentyFiveCap\,\% at an injected emittance of 25\,nm\,rad to \EmitTwoHundredCap\,\% at 200\,nm\,rad.
+Ideal static steering transports the zero-input reference through the perturbed BTS, giving $(r_x,r_{p_x})$, then translates the bunch at the septum by $(x,p_x)\mapsto(x-r_x,p_x-r_{p_x})$. The other coordinates are unchanged. This removes no shot jitter, vertical trajectory error or optics distortion, and does not model a fitted orbit-correction system.
+
+The 3-D NKM mean is \FinalNkmMean\,\% (95\,\% interval \FinalNkmLo--\FinalNkmHi\,\%), median \FinalNkmMedian\,\%, tenth percentile \FinalNkmPten\,\%, and fraction of realizations at or above 80\,\% is \FinalNkmAboveEighty\,\%. The paired dipole mean is \FinalDipMean\,\% (\FinalDipLo--\FinalDipHi\,\%). The NKM-minus-dipole mean difference is \FinalControlDiff\ percentage points (\FinalControlDiffLo\ to \FinalControlDiffHi). These controls compare models on identical particles and errors; they are not separately optimized injection systems.
+
+The jitter scan retains the same 50 seed-42 realizations, particle seeds and ring identities while scaling only booster position and angle jitter. Table~\ref{tab:jitter} reports differences from zero jitter. Quarter jitter corresponds to 0.125\,mm and 0.05\,mrad; its paired mean difference is \FinalJitterQuarterDiff\ points, with interval \FinalJitterQuarterDiffLo\ to \FinalJitterQuarterDiffHi. The interval does not establish the predeclared one-percentage-point loss margin; the candidate jitter target remains precision-limited. Position-only and angle-only reference jitter are evaluated separately. Mean, median, tenth percentile and fraction above threshold remain distinct; no 80\,\% design specification follows from a nominal ideal-ring value.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Paired jitter sensitivity, 50 joint realizations per row. Capture summaries and the fraction of realizations at or above 80\,\% are percentages; differences from zero jitter and their paired 95\,\% bootstrap intervals are percentage points.}
+\label{tab:jitter}
+\begin{tabular}{@{}lrrrrrl@{}}\toprule
+Scale & Mean & Median & p10 & Fraction $\geq80\%$ & Difference & 95\% interval \\\midrule
+\FinalJitterRows
+\bottomrule\end{tabular}
+\end{table}
+
+Partial Spearman tests control the other sampled errors and ring-identity indicators. Their asymptotic two-sided t-test probabilities receive Holm adjustment across the sampled-error hypotheses. Scalar errors enter as magnitudes and vector errors as rms values. \FinalRankSummary\ These describe conditional associations, not causal error rankings; the complete coefficient and adjusted-probability table is included in the numerical evidence.
+
+For reduced capture-based tuning, each of the 50 seed-42 static machines receives 100 fresh training particles with shot fluctuations disabled. A single bounded coordinate sweep evaluates seven settings of $(x_\mathrm{inj},x'_\mathrm{inj},S)$: bounds $[-22,-18.2]$\,mm, $[3.5,6.5]$\,mrad and $[0.7,1.2]$, with steps 0.5\,mm, 0.3\,mrad and 0.05. Strict improvements are accepted and ties retain the current setting. The fixed seven-evaluation budget is the termination rule; settings remain feasible within those bounds. Independent held-out 200-particle samples then restore the joint shot errors at zero and quarter booster jitter. The tuned-minus-untuned gains are \FinalTuneZeroGain\ points (\FinalTuneZeroGainLo\ to \FinalTuneZeroGainHi) and \FinalTuneQuarterGain\ points (\FinalTuneQuarterGainLo\ to \FinalTuneQuarterGainHi), respectively, with paired 95\,\% realization-bootstrap intervals. The corresponding tuned means are \FinalTuneZeroMean\ and \FinalTuneQuarterMean\,\%; fractions of realizations above 80\,\% are \FinalTuneZeroAboveEighty\ and \FinalTuneQuarterAboveEighty\,\%.
+
+Training capture has one-percentage-point counting resolution. No BPM calibration, resolution, charge-monitor noise or actuator-error model is included, so this reduced ideal-observable search quantifies recovery without demonstrating operational beam-based feedback. Held-out results are never used to choose knobs, and the dipole control is not retuned.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig8_robustness.pdf}
-\caption{Left: capture per error realization for the 3-D NKM and the calibrated dipole (three seeds). Solid: ideal static orbit correction of the transfer line; dashed: no correction. Centre: mean and 10th-percentile capture with correction versus the booster-jitter scale on paired realizations (seed 42, 50 per level; band: bootstrap 95\,\% of the mean), the mean without correction (dotted) and position-only and angle-only jitter with correction. Right: capture without other errors versus the NKM-to-orbit offset (blue, lower axis) and the injected emittance (orange, upper axis).}
+\caption{Final design-beam robustness with the reference chamber. Left: empirical cumulative capture distributions for 150 paired joint-error draws, conditional on ten corrected rings. Centre: NKM mean and tenth percentile and dipole mean versus jitter scale (50 paired draws); shading is a 95\,\% realization-bootstrap interval of the NKM mean. Right: held-out tuned-minus-untuned mean capture at zero and quarter jitter, with paired 95\,\% intervals (50 machines, 100 training and 200 held-out particles each). Bootstrap count 10\,000, seed 1729. All tracking uses 500 native turns.}
 \label{fig:robust}
 \end{figure}
-
-Ideal static steering transports the zero-input reference through each perturbed BTS, giving $(r_x,r_{p_x})$, then translates every bunch particle by $(x,p_x)\mapsto(x-r_x,p_x-r_{p_x})$ at the septum exit. The other four coordinates are unchanged. Booster shot jitter, vertical offsets, optics distortion, and kicker, ring-orbit and septum errors remain. This ideal translation does not represent a fitted orbit-correction system. Each realization draws static and shot-dependent variables once, so the reported bootstrap describes their joint distribution, not repeated shots on fixed machines.
 
 \section{Pulsed-magnet considerations}
 \label{sec:pulse}
@@ -277,8 +299,6 @@ The sagitta ratio $\eta=|K|L/(8w)$ compares trajectory displacement with the hor
 Four results generalise beyond this design. First, the kick map is not a controlled description of a strongly nonlinear injection kicker: the self-deflection inside the magnet, with sagitta $|K|L/8$, shifts the matched angle and changes the error sensitivity in a sign-dependent way, and the magnet length is a design variable that trades nominal amplitude against tolerance. Second, the curl-free vertical kick defocuses the injected bunch wherever the horizontal kick gradient is non-zero and costs up to several points of capture, which favours placing the centroid at the extremum; tabulated maps should be checked for $\partial\Delta x'/\partial y=\partial\Delta y'/\partial x$. Third, the transparency of an aligned NKM is a symmetry property; the engineering quantities are the kicker-to-orbit alignment, the on-axis residual field and the pulse length. Fourth, with an angular window of order \WinAngleWidth\,mrad and a position window of about \WinPosWidth\,mm, the injected orbit at the septum, not the kick strength or the transfer-line optics, decides whether the window can be used: static transfer-line errors must be corrected, the booster jitter kept to a quarter of the assumed amplitude, and the remaining static offsets of kicker, orbit and septum budgeted together.
 
 The limitations are explicit. The ring is an ideal lattice; ring errors and apertures enter only as selected sensitivity scenarios. The filament model contains no iron, chamber or eddy-current fields and no pulse time dependence. The error budget is assumed. Capture is survival over 500 turns, checked to one damping time at the selected point. As at BESSY~II and SIRIUS~\cite{Gora2023,Velloso2023}, sextupole optimisation for the injection DA is expected to enlarge the window and was not attempted.
-
-The corrected quarter-minus-zero jitter difference is $\QuarterPairedDiff$ percentage points (95\,\% paired percentile-bootstrap interval $\QuarterPairedLo$ to $\QuarterPairedHi$; \QuarterPairs\ realizations, 10\,000 resamples, seed 1729). A declared one-percentage-point loss margin is not supported by this interval. Thus 0.125\,mm and 0.05\,mrad are conditional candidate targets, not a demonstrated joint error allocation. At quarter jitter, mean \QuarterMean\,\%, median \QuarterMedian\,\%, tenth percentile \QuarterPten\,\% and fraction above 80\,\% of \QuarterAboveEighty\,\% describe distinct observables. Partial-rank associations are tested with Holm correction over all sampled-error variables; these are model-conditioned associations, not causal rankings.
 
 \section{Conclusions}
 \label{sec:conclusions}

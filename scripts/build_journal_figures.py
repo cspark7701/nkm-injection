@@ -494,7 +494,7 @@ class Builder:
 
     def write_provenance(self):
         with open(self.out / "figure_provenance.csv", "w", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=["asset", "kind", "inputs", "sha256", "data"])
+            w = csv.DictWriter(f, fieldnames=["asset", "kind", "inputs", "sha256", "data"], lineterminator="\n")
             w.writeheader(); w.writerows(self.provenance)
         (self.out / "consumed_artifacts.json").write_text(json.dumps(
             {"manifest": self._rel(self.manifest_path), "artifacts": {k: {"path": self._rel(v[0]), "sha256": v[1]} for k, v in self.used.items()}},

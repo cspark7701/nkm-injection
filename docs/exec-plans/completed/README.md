@@ -481,3 +481,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 152. [**Milestone 152 — Validate chamber operating point and long-turn boundaries (D11)**](152_round2_operating_validation.md)
     - Replace provisional validation with native and affine backend comparisons, refine the connected operating window, and track the nominal point, two interpolated edge candidates and a degraded corrected ring for 4000 turns. Nominal survival falls from 97.0% at 500 turns to 96.1%; fresh edge samples qualify the interpolated 80% boundaries. Reconcile the pulse allowance and independent trajectory checks with the final window.
+
+153. [**Milestone 153 — Report final joint-error ensembles and held-out tuning (D8)**](153_round2_final_robustness.md)
+    - Complete nine paired ensembles and 50 bounded tuning studies with the design beam, declared chamber and ten corrected rings. The 150-draw NKM mean is 14.8%; quarter-minus-zero jitter is +2.19 points with a -1.51 to +6.12 interval, so the one-point loss margin is not established. Held-out tuning gains are 11.58 and 5.55 points at zero and quarter jitter, yielding means of 45.66% and 41.82%. Preserve the conditional scope and distinguish all capture summaries.

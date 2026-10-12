@@ -34,14 +34,15 @@ ring IDs across scales 0, 0.25, 0.5, 0.75 and 1 of the reference 0.5 mm / 0.2 mr
 booster centroid jitter. Position-only and angle-only cases retain one reference
 component and set the other to zero. All other sampled quantities remain fixed.
 The full-jitter result reuses the seed-42 combined ensemble. The analysis verifies
-these pairings before calculating differences from zero jitter.
+these pairings, including actual non-jitter draws and scientific settings, before calculating differences from zero jitter.
 
 Reported quantities are mean, median, tenth percentile and fraction of draws
 with capture at least 80%. They are not interchangeable. Mean intervals and
 paired differences use 10,000 realization bootstrap resamples, seed 1729.
-The predeclared equivalence margin is one percentage point. Partial Spearman
+The predeclared loss margin is one percentage point. Partial Spearman
 associations control the other sampled scalar errors, vector-error RMS values,
-and corrected-ring identity. Holm adjustment covers the sampled-error tests;
+and corrected-ring identity. Their two-sided probabilities use the asymptotic
+t approximation for partial rank correlations. Holm adjustment covers the sampled-error tests;
 ring-identity indicator variables are controls, not additional physics tests.
 These associations are conditional on the chosen model, not causal rankings.
 

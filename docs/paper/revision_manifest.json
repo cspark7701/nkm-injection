@@ -60,7 +60,12 @@
     "round2_validation": "results/journal_campaign_03/d11_validation/validation_summary.json",
     "round2_backend_contract": "results/journal_campaign_03/d11_validation/backend_contract.json",
     "round2_trajectory_final": "results/journal_campaign_03/d11_trajectory_final_edges.json",
-    "round2_lattice_parameters": "results/journal_campaign_03/d12_lattice_parameters_final.json"
+    "round2_lattice_parameters": "results/journal_campaign_03/d12_lattice_parameters_final.json",
+    "round2_robustness": "results/journal_campaign_03/d8_final_statistics.json",
+    "round2_tuning": "results/journal_campaign_03/d8_tuning/tuning_summary.json",
+    "round2_errors_42": "results/journal_campaign_03/d8_seed42/capture_robustness_raw.json",
+    "round2_errors_123": "results/journal_campaign_03/d8_seed123/capture_robustness_raw.json",
+    "round2_errors_777": "results/journal_campaign_03/d8_seed777/capture_robustness_raw.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -122,6 +127,11 @@
     "round2_validation": "41ed591fe6527b49b5540af89c3379696a09a3b4922576ceaad86b5e9286f757",
     "round2_backend_contract": "c529e763c2316dd75f6d4b2a1bf9fcfa17628dc8d041121293e38110eb6186d9",
     "round2_trajectory_final": "3db698b2b84544329f9d049532400f0d1f8849ece7e0a01a1660232699bcf725",
-    "round2_lattice_parameters": "e9947b5a4ba362b0f46aa9051a10388c2b601d524f1fd6e39852240262271b26"
+    "round2_lattice_parameters": "e9947b5a4ba362b0f46aa9051a10388c2b601d524f1fd6e39852240262271b26",
+    "round2_robustness": "dbac73c3ee2c83a527fa5cd4b011014ce6ba1098e22ebe9fbf05d5c16c917e3d",
+    "round2_tuning": "c58f6652c3ce608ef4c57f209e58ca12787fb500509f3d1a199ceba2c8629231",
+    "round2_errors_42": "1a8d5df2c7aa28e64f0113a0023258da0d566b3141778678f2c5e951fef7be96",
+    "round2_errors_123": "61f43e7c0989d619d94e46e531d5387b7490956bca9e70bcbafa42af59a1ab78",
+    "round2_errors_777": "69dde846d2fdd5db34d052dc17fcbd0ae65e36df9a66c465f656281b9d243608"
   }
 }

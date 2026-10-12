@@ -10,6 +10,23 @@ from run_capture_robustness import cluster_stats
 from analyze_capture_robustness import SCALARS,VECTORS,partial_spearman
 
 
+def verify_paired_jobs(reference, candidate):
+    """Require identical actual draws and settings except booster x/xp jitter."""
+    def indexed(spec):
+        result={}
+        for original in spec['jobs']:
+            if original['sample']['sample_id']<0:continue
+            job=dict(original)
+            job.pop('work_dir',None)
+            job.pop('checkpoint',None)
+            job['sample']={k:v for k,v in original['sample'].items()
+                           if k not in ('booster_x_m','booster_xp_rad')}
+            result[job['sample']['sample_id']]=job
+        return result
+    if indexed(reference)!=indexed(candidate):
+        raise ValueError('Jitter comparison changes actual non-jitter draws or scientific settings')
+
+
 def analyze(root):
     inputs={}
     def load(folder,name='capture_robustness_raw.json'):
@@ -22,9 +39,12 @@ def analyze(root):
     paired=paired_capture_difference({i:r['models']['dipole']['capture_fraction'] for i,r in enumerate(rows)},
                                     {i:r['models']['fieldmap_3d']['capture_fraction'] for i,r in enumerate(rows)})
     baseline=load('d8_jitter_0');reference=capture_by_id(baseline);jitter={}
+    baseline_jobs=load('d8_jitter_0','checkpoint_inputs.json')
     indexed={r['sample_id']:r for r in baseline['realizations'] if r['sample_id']>=0}
     for level in ('0','0.25','0.5','0.75','1','x_only','xp_only'):
         raw=combined[0] if level=='1' else load(f'd8_jitter_{level}')
+        folder='d8_seed42' if level=='1' else f'd8_jitter_{level}'
+        verify_paired_jobs(baseline_jobs,load(folder,'checkpoint_inputs.json'))
         if raw['cli']['seed']!=42 or raw['cli']['samples']!=50:raise ValueError('Unpaired ensemble settings')
         for r in raw['realizations']:
             if r['sample_id']<0:continue

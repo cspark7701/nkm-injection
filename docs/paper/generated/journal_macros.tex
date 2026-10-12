@@ -88,6 +88,9 @@
 \newcommand{\FinalBackendLinear}{100.0}
 \newcommand{\FinalBackendNative}{97.0}
 \newcommand{\FinalBackendTangentMax}{1.36\times10^{-14}}
+\newcommand{\FinalControlDiff}{-7.7}
+\newcommand{\FinalControlDiffHi}{-5.4}
+\newcommand{\FinalControlDiffLo}{-10.3}
 \newcommand{\FinalDampingXMs}{10.54}
 \newcommand{\FinalDampingYMs}{19.43}
 \newcommand{\FinalDampingZMs}{16.79}
@@ -95,8 +98,63 @@
 \newcommand{\FinalDegradedLongHi}{2.3}
 \newcommand{\FinalDegradedLongLo}{0.8}
 \newcommand{\FinalDegradedShort}{3.0}
+\newcommand{\FinalDipAboveEighty}{5.3}
+\newcommand{\FinalDipHi}{27.0}
+\newcommand{\FinalDipLo}{18.3}
+\newcommand{\FinalDipMean}{22.5}
+\newcommand{\FinalDipMedian}{7.8}
+\newcommand{\FinalDipPten}{0.0}
 \newcommand{\FinalInjectedBunchMm}{13.4}
 \newcommand{\FinalInjectedEmitNm}{7.67}
+\newcommand{\FinalJitterFullAboveEighty}{4.0}
+\newcommand{\FinalJitterFullDiff}{-14.3}
+\newcommand{\FinalJitterFullDiffHi}{-7.8}
+\newcommand{\FinalJitterFullDiffLo}{-21.3}
+\newcommand{\FinalJitterFullMean}{19.8}
+\newcommand{\FinalJitterFullMedian}{3.5}
+\newcommand{\FinalJitterFullPten}{0.0}
+\newcommand{\FinalJitterHalfAboveEighty}{4.0}
+\newcommand{\FinalJitterHalfDiff}{-4.7}
+\newcommand{\FinalJitterHalfDiffHi}{+0.0}
+\newcommand{\FinalJitterHalfDiffLo}{-9.6}
+\newcommand{\FinalJitterHalfMean}{29.4}
+\newcommand{\FinalJitterHalfMedian}{24.0}
+\newcommand{\FinalJitterHalfPten}{0.0}
+\newcommand{\FinalJitterQuarterAboveEighty}{6.0}
+\newcommand{\FinalJitterQuarterDiff}{+2.2}
+\newcommand{\FinalJitterQuarterDiffHi}{+6.1}
+\newcommand{\FinalJitterQuarterDiffLo}{-1.5}
+\newcommand{\FinalJitterQuarterMean}{36.3}
+\newcommand{\FinalJitterQuarterMedian}{31.5}
+\newcommand{\FinalJitterQuarterPten}{0.0}
+\newcommand{\FinalJitterRows}{0 & 34.1 & 28.2 & 0.0 & 4 & +0.0 & [+0.0, +0.0] \\
+0.25 & 36.3 & 31.5 & 0.0 & 6 & +2.2 & [-1.5, +6.1] \\
+0.5 & 29.4 & 24.0 & 0.0 & 4 & -4.7 & [-9.6, +0.0] \\
+0.75 & 22.9 & 7.0 & 0.0 & 4 & -11.2 & [-17.8, -5.2] \\
+1 & 19.8 & 3.5 & 0.0 & 4 & -14.3 & [-21.3, -7.8] \\
+x\_only & 30.8 & 21.5 & 0.0 & 6 & -3.3 & [-8.5, +1.5] \\
+xp\_only & 20.8 & 3.8 & 0.0 & 6 & -13.2 & [-19.6, -7.2] \\}
+\newcommand{\FinalJitterXonlyAboveEighty}{6.0}
+\newcommand{\FinalJitterXonlyDiff}{-3.3}
+\newcommand{\FinalJitterXonlyDiffHi}{+1.5}
+\newcommand{\FinalJitterXonlyDiffLo}{-8.5}
+\newcommand{\FinalJitterXonlyMean}{30.8}
+\newcommand{\FinalJitterXonlyMedian}{21.5}
+\newcommand{\FinalJitterXonlyPten}{0.0}
+\newcommand{\FinalJitterXponlyAboveEighty}{6.0}
+\newcommand{\FinalJitterXponlyDiff}{-13.2}
+\newcommand{\FinalJitterXponlyDiffHi}{-7.2}
+\newcommand{\FinalJitterXponlyDiffLo}{-19.6}
+\newcommand{\FinalJitterXponlyMean}{20.8}
+\newcommand{\FinalJitterXponlyMedian}{3.8}
+\newcommand{\FinalJitterXponlyPten}{0.0}
+\newcommand{\FinalJitterZeroAboveEighty}{4.0}
+\newcommand{\FinalJitterZeroDiff}{+0.0}
+\newcommand{\FinalJitterZeroDiffHi}{+0.0}
+\newcommand{\FinalJitterZeroDiffLo}{+0.0}
+\newcommand{\FinalJitterZeroMean}{34.1}
+\newcommand{\FinalJitterZeroMedian}{28.2}
+\newcommand{\FinalJitterZeroPten}{0.0}
 \newcommand{\FinalLateLoss}{0.9}
 \newcommand{\FinalLong}{96.1}
 \newcommand{\FinalLongHi}{97.1}
@@ -105,14 +163,54 @@
 \newcommand{\FinalLowerLongHi}{81.8}
 \newcommand{\FinalLowerLongLo}{76.8}
 \newcommand{\FinalLowerShort}{79.5}
+\newcommand{\FinalNkmAboveEighty}{2.7}
+\newcommand{\FinalNkmHi}{18.8}
+\newcommand{\FinalNkmLo}{11.2}
+\newcommand{\FinalNkmMean}{14.8}
+\newcommand{\FinalNkmMedian}{1.0}
+\newcommand{\FinalNkmPten}{0.0}
 \newcommand{\FinalPositionHi}{1.32}
 \newcommand{\FinalPositionLo}{-0.67}
 \newcommand{\FinalPositionWidth}{1.99}
 \newcommand{\FinalRFfreqMHz}{499.593}
 \newcommand{\FinalRFvoltageMV}{3.08}
+\newcommand{\FinalRankRows}{booster\_xp\_rad & -0.51 & 1.16e-09 & 2.2e-08 \\
+energy\_dp\_p & -0.15 & 0.109 & 1 \\
+rms\_quad\_dy\_m & -0.14 & 0.116 & 1 \\
+rms\_quad\_dx\_m & -0.13 & 0.143 & 1 \\
+septum\_x\_m & -0.12 & 0.183 & 1 \\
+nkm\_dx\_m & -0.10 & 0.281 & 1 \\
+booster\_x\_m & -0.09 & 0.323 & 1 \\
+nkm\_scale\_err & -0.05 & 0.613 & 1 \\
+rf\_phase\_rad & -0.03 & 0.773 & 1 \\
+rms\_quad\_roll\_rad & -0.03 & 0.776 & 1 \\
+rms\_quad\_k\_err & -0.02 & 0.797 & 1 \\
+dipole\_b\_err & -0.01 & 0.935 & 1 \\
+septum\_strength\_rel & -0.01 & 0.953 & 1 \\
+beta\_mismatch\_x & -0.00 & 0.995 & 1 \\
+arrival\_time\_s & +0.02 & 0.829 & 1 \\
+ring\_co\_x\_m & +0.03 & 0.714 & 1 \\
+espread\_abs & +0.05 & 0.577 & 1 \\
+emit\_rel & +0.05 & 0.562 & 1 \\
+beta\_mismatch\_y & +0.07 & 0.472 & 1 \\}
+\newcommand{\FinalRankSummary}{The smallest Holm-adjusted probabilities below 0.05 correspond to booster angle ($\rho=-0.51$, $p_\mathrm{Holm}=2.20\times10^{-8}$).}
 \newcommand{\FinalSourceElements}{3481}
 \newcommand{\FinalStoredBunchMm}{3.63}
 \newcommand{\FinalSynchTune}{3.44\times10^{-3}}
+\newcommand{\FinalTuneQuarterAboveEighty}{10.0}
+\newcommand{\FinalTuneQuarterGain}{+5.5}
+\newcommand{\FinalTuneQuarterGainHi}{+10.0}
+\newcommand{\FinalTuneQuarterGainLo}{+1.1}
+\newcommand{\FinalTuneQuarterMean}{41.8}
+\newcommand{\FinalTuneQuarterMedian}{47.5}
+\newcommand{\FinalTuneQuarterPten}{0.0}
+\newcommand{\FinalTuneZeroAboveEighty}{12.0}
+\newcommand{\FinalTuneZeroGain}{+11.6}
+\newcommand{\FinalTuneZeroGainHi}{+15.5}
+\newcommand{\FinalTuneZeroGainLo}{+7.8}
+\newcommand{\FinalTuneZeroMean}{45.7}
+\newcommand{\FinalTuneZeroMedian}{53.8}
+\newcommand{\FinalTuneZeroPten}{0.0}
 \newcommand{\FinalUpperLong}{84.7}
 \newcommand{\FinalUpperLongHi}{86.8}
 \newcommand{\FinalUpperLongLo}{82.3}

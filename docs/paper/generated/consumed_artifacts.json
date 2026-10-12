@@ -61,9 +61,9 @@
       "path": "results/journal_campaign_02/c7_transparency/transparency_analytic.json",
       "sha256": "b8a663ea40bfe6d1f06d617636848bb3e167b8b511eb8d6f671539438b188bb6"
     },
-    "c7_tracked": {
-      "path": "results/journal_campaign_02/c7_transparency/stored_beam_tracked.json",
-      "sha256": "7a520810b198f9dea80ba69f4a3387fe3589a0f630a3608da445507f6685a1a2"
+    "round2_stored_tracked": {
+      "path": "results/journal_campaign_03/d9_stored_beam_end_turns.json",
+      "sha256": "d797790bdd66116902f3def56429bb473ae522f00382b692bbae0e35bb46f1f9"
     },
     "c5_raw_42": {
       "path": "results/journal_campaign_02/c5_errors_seed42/capture_robustness_raw.json",
@@ -196,6 +196,10 @@
     "round2_ring_scenario": {
       "path": "results/journal_campaign_03/d5_selected_scenario/corrected_ring_summary.json",
       "sha256": "f18bf999a6819abdf0595d7b06920549f5dc19272315ce34df06248459dd1b9e"
+    },
+    "round2_transparency": {
+      "path": "results/journal_campaign_03/d9_transparency_resolved.json",
+      "sha256": "f393342005a823988935c6a22b69ce5a08db03f44e0c9c99601b4b7f4171f1b5"
     }
   }
 }

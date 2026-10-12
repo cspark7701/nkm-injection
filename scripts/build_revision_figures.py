@@ -62,6 +62,29 @@ class RevisionBuilder(bj.Builder):
     def _json(self, key):
         return self.load(key)
 
+    def transparency_sensitivities(self):
+        if not self.has("round2_transparency"):return
+        d=self.load("round2_transparency");rows=[]
+        for r in d["wire_sensitivity"]:
+            k=r["dipole_derivative_rad_per_m"];j=r["quadrupole_derivative_rad_per_m2"]
+            tolerance=["--" if v is None else f"{v*1e6:.2f}" for v in r["tolerance_x_y_m"]]
+            rows.append(f"{r['wire']+1} & ${r['axis']}$ & {k[0]:+.3f} & {k[1]:+.3f} & "
+                        f"{j[0][0]:+.1f} & {j[0][1]:+.1f} & {tolerance[0]} & {tolerance[1]} \\\\")
+        self.macro("WireSensitivityRows","\n".join(rows))
+        current=d["independent_loop_current_sensitivity"];rows=[]
+        for r in current:
+            k=r["dipole_derivative_rad_per_relative_current"];j=r["quadrupole_derivative_rad_per_m_per_relative_current"]
+            rows.append(f"{r['loop']+1} & {k[0]:+.4f} & {k[1]:+.4f} & {j[0][0]:+.3f} & "
+                        f"{j[0][1]:+.3f} & {r['single_loop_tolerance_relative']*1e4:.2f} \\\\")
+        self.macro("LoopSensitivityRows","\n".join(rows))
+        self.macro("WireTolMin",min(r["joint_single_error_tolerance_m"] for r in d["wire_sensitivity"])*1e6,"{:.2f}")
+        self.macro("WireTolMax",max(r["joint_single_error_tolerance_m"] for r in d["wire_sensitivity"])*1e6,"{:.2f}")
+        self.macro("LoopTolerance",tex_sci(min(r["single_loop_tolerance_relative"] for r in current),2))
+        for i,plane in enumerate(("X","Y")):
+            moment=d["beam_moments"][-1]["planes"][i]
+            self.macro(f"AlignedMoment{plane}",tex_sci(moment["emittance_ratio_after_single_pass"]-1,2))
+        self.macro("MomentGHOrder",d["beam_moments"][-1]["gh_order_per_axis"],"{:d}")
+
     def fig_generality(self):
         if "round2_generality" not in self.m["artifacts"]:
             return
@@ -344,6 +367,7 @@ class RevisionBuilder(bj.Builder):
     def fig_controls_transparency(self):
         val = self.load("c3_validate")
         tr = self.load("c7_analytic")
+        tracked_key="round2_stored_tracked" if self.has("round2_stored_tracked") else "c7_tracked"
         fig, axes = plt.subplots(1, 2, figsize=(7.4, 3.0), gridspec_kw={"width_ratios": [1, 1.2]}, layout="constrained")
         ax = axes[0]
         models = ["fieldmap_3d", "linear", "dipole", "off"]
@@ -373,12 +397,12 @@ class RevisionBuilder(bj.Builder):
         ax.plot(dx[1:], [r["exact"]["x"]["filamented_emittance_growth"] for r in rows[1:]], color=COL["fieldmap"], ls="--", label="$\\Delta\\varepsilon_x/\\varepsilon_x$ from the kick spread")
         rowsy = [r for r in tr["offset_response"] if r["dy_m"] > 0]
         ax.plot([r["dy_m"] * 1e3 for r in rowsy], [r["exact"]["y"]["amplitude_over_sigma"] for r in rowsy], color=COL["linear"], marker="^", label="vertical offset: $A_y/\\sigma_y$")
-        if self.has("c7_tracked"):
-            tk = self.load("c7_tracked")
+        if self.has(tracked_key):
+            tk = self.load(tracked_key)
             td = sorted({r["dx_m"] for r in tk["rows"] if r["dx_m"] > 0})
             ax.scatter([d * 1e3 for d in td], [np.mean([r["centroid_x_amplitude_over_sigma"] for r in tk["rows"] if r["dx_m"] == d])
                                                for d in td], marker="s", s=36, facecolors="none", edgecolors=INK, zorder=3,
-                       label=f"tracked $A_x/\\sigma_x$ ({tk['rows'][0]['turns']} turns)")
+                       label="tracked $A_x/\\sigma_x$ (turns 1--50)")
         ax.axhline(0.1, color=INK2, lw=0.8, ls=":")
         ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlabel("NKM–orbit offset [mm]"); ax.set_ylabel("stored-beam response")
         from matplotlib.ticker import FixedLocator, FixedFormatter, NullLocator
@@ -411,15 +435,15 @@ class RevisionBuilder(bj.Builder):
         self.macro("SigmaXum", tr["optics"]["sigma_x"] * 1e6, "{:.1f}")
         self.macro("EmitYRatio", float(tr["emit_y_assumption"].split("=")[1].split("emit_x")[0]), "{:g}")
         self.macro("CtrlDipoleAmp", abs(val["calibration_k0_k1_xref"][0]) * tr["optics"]["beta_x"] / tr["optics"]["sigma_x"], "{:.0f}")
-        if self.has("c7_tracked"):
-            tk = self.load("c7_tracked")
+        if self.has(tracked_key):
+            tk = self.load(tracked_key)
             for d, nm in ((0.2, "Two"), (0.5, "Five")):
                 rr = [r for r in tk["rows"] if abs(r["dx_m"] - d * 1e-3) < 1e-12]
                 if rr:
                     self.macro(f"Tracked{nm}Amp", np.mean([r["centroid_x_amplitude_over_sigma"] for r in rr]), "{:.2f}")
                     self.macro(f"Tracked{nm}EmitRatio", np.mean([r["emit_x_ratio_last"] for r in rr]), "{:.2f}")
             self.macro("TrackedTurns", tk["rows"][0]["turns"], "{:d}")
-        self.save(fig, "fig7_controls_transparency", ["c3_validate", "c7_analytic"] + (["c7_tracked"] if self.has("c7_tracked") else []),
+        self.save(fig, "fig7_controls_transparency", ["c3_validate", "c7_analytic"] + ([tracked_key] if self.has(tracked_key) else []),
                   "fresh bunches (4 x 500) at the selected point for the 3-D NKM and calibrated controls (left); stored-beam "
                   "response from the exact field with deterministic Gauss-Hermite averaging (right)")
 
@@ -728,7 +752,8 @@ RevisionBuilder._paired = staticmethod(paired)
 STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_aperture": "fig_dynamic_aperture", "validation": "fig_model_validation",
          "mechanism": "fig_mechanism", "window": "fig_window", "acceptance": "fig_acceptance",
          "controls": "fig_controls_transparency", "robustness": "fig_robustness", "survival": "survival_tables",
-         "pulse": "pulse_macros", "generality": "fig_generality", "corrected_ring": "fig_corrected_ring"}
+         "pulse": "pulse_macros", "generality": "fig_generality", "corrected_ring": "fig_corrected_ring",
+         "transparency_sensitivities": "transparency_sensitivities"}
 
 
 def main(argv=None):

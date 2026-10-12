@@ -15,7 +15,7 @@ Initial working tree: clean, HEAD `279a880`. Protected scientific inputs must re
 - D6: ideal-ring full 3 m IVU chamber-bracket and aperture scans running; corrected-ring extension follows D5.
 - D7: complete. Thirty single-centroid scaling cases, second wire family and physical vector-map comparison; 8 focused tests and clean 14-page build pass.
 - D8: pending final D5/D6 scenario.
-- D9: analytic wire/current sensitivities and paired native stored-beam validation running.
+- D9: complete. Both-plane wire/current sensitivities, 0.29–2.04 µm single-wire centroid limits, independent-loop relative limit 1.15e-4, finite-beam moment changes and 2 x 300-particle native tracking through 1000 turns. Amplitudes use ends of turns 1–50; emittance uses end of turn 1000. No tracked losses.
 - D10: complete. Native observations replace linear rotation. Peak-phase maximum under the historical window allowance is 5.84 µs; no-return maximum is 5.332 µs, with a compatible 5.3 µs example. Timing, train variation and hypothetical eddy-current estimates are consistent. 9 focused tests and clean 15-page build pass.
 - D11–D14: pending.
 

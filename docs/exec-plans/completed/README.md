@@ -466,3 +466,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 147. [**Milestone 147 — Reconcile pulse phase and native return-pass estimates (D10)**](147_d10_native_pulse_requirements.md)
     - Replaces illustrative linear-return coordinates with native observations, identifies the assumed residual allowance, and supplies a compatible half-sine example with timing, train and eddy-current estimates.
+
+148. [**Milestone 148 — Quantify two-plane transparency tolerances (D9)**](148_round2_transparency.md)
+    - Resolve wire and independent-loop sensitivities, finite-beam moment changes, and paired native stored-beam observations at ends of turns 1–50 and 1000. State symmetry as a centroid property and retain the assumed coupling ratio.

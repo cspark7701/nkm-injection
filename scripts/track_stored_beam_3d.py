@@ -49,7 +49,7 @@ def run(job):
     FilamentNKMKicker(replace(cfg, nkm_dx_m=job["dx_m"], closed_orbit_x_m=0.0), n_slices=job["n_slices"]).apply(kicked, 0.0)
     res = {}
     for lab, beam in (("ref", b), ("kicked", kicked)):
-        out, _, info = ring.ring_c.track(beam.copy(), nturns=job["turns"], refpts=[0], losses=True)
+        out, _, info = ring.ring_c.track(beam.copy(), nturns=job["turns"], refpts=[len(ring.ring_c)], losses=True)
         res[lab] = (np.asarray(out)[:, :, 0, :], int(np.sum(info["loss_map"]["islost"])))
     (r, lr), (k, lk) = res["ref"], res["kicked"]
     dcx = np.nanmean(k[0], axis=0) - np.nanmean(r[0], axis=0)
@@ -61,6 +61,9 @@ def run(job):
             "lost_ref": lr, "lost_kicked": lk,
             "centroid_x_amplitude_first50_m": float(np.max(np.abs(dcx[first]))),
             "centroid_y_amplitude_first50_m": float(np.max(np.abs(dcy[first]))),
+            "centroid_y_amplitude_over_sigma": float(np.max(np.abs(dcy[first])) / sigy),
+            "amplitude_observation_turns": [1, min(50, job["turns"])],
+            "emittance_observation_turn": job["turns"],
             "centroid_x_amplitude_over_sigma": float(np.max(np.abs(dcx[first])) / sigx),
             "centroid_x_last_turns_rms_m": float(np.sqrt(np.mean(dcx[-50:] ** 2))),
             "emit_x_ratio_last": rms_emit(k[0, :, -1], k[1, :, -1]) / rms_emit(r[0, :, -1], r[1, :, -1]),

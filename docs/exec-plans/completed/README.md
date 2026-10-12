@@ -554,6 +554,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 176. [**Milestone 176 — Interactive HTML Project Showcase Webpage (C02)**](176_c02_interactive_html_showcase.md)
     - Updated `docs/index.html` to integrate a dedicated BTS transfer line manuscript showcase section with responsive TOC navigation, executive findings comparison table, and direct asset download links in GitHub.io project style.
 
+177. [**Milestone 177 — Standalone One-Command BTS Reproduction Script (C03)**](177_c03_reproduction_script.md)
+    - Authored `scripts/reproduce_bts_paper.py` providing automated SHA-256 asset verification against `draft_provenance.json` and standalone LaTeX PDF compilation testing.
+
+
 
 
 

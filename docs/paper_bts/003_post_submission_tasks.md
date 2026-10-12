@@ -37,10 +37,12 @@ In accordance with the user instruction (*"After complete the task, create a new
 - **Acceptance:** Fully compliant with `AGENTS.md` GitHub.io styling guidelines with functioning internal links and figure embeddings.
 
 
-### C03 — Standalone One-Command BTS Reproduction Script
+### C03 — Standalone One-Command BTS Reproduction Script [COMPLETED]
+- **Status:** Completed 2026-10-13 (Milestone 177).
 - **Objective:** Create `scripts/reproduce_bts_paper.py` allowing independent verification of all figures, tables, and SVD knobs from the command line.
-- **Deliverables:** `scripts/reproduce_bts_paper.py`, CLI documentation.
-- **Acceptance:** Script executes cleanly with `--verify` flag, confirming exact agreement with `draft_provenance.json`.
+- **Deliverables:** `scripts/reproduce_bts_paper.py` supporting `--verify`, `--compile`, and automated check workflows.
+- **Acceptance:** Script executes cleanly with `--verify` flag, confirming 100% SHA-256 match with `draft_provenance.json`.
+
 
 ### C04 — Continuous Integration & Regression Test Hardening
 - **Objective:** Add comprehensive BTS paper asset regression tests in `tests/test_bts_paper_assets.py` to continuously assert PDF existence, figure hashes, and table values.

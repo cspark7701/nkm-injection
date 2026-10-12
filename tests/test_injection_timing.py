@@ -9,7 +9,7 @@ def test_separate_shot_terms_have_expected_units_and_momentum_scaling():
     sample={'septum_strength_rel':.001,'rf_phase_rad':.01,'arrival_time_s':2e-9}
     scale=apply_injection_shot_errors(beam,sample,rf_frequency_hz=5e8,pulse_duration_s=5.3e-6)
     assert np.allclose(beam[1],[1e-5,1.002e-5])
-    assert np.allclose(beam[5],C_M_S*(2e-9+.01/(2*np.pi*5e8)))
+    assert np.allclose(beam[5],C_M_S*.01/(2*np.pi*5e8))
     assert scale==pytest.approx(np.cos(np.pi*2e-9/5.3e-6))
 
 
@@ -17,6 +17,7 @@ def test_zero_and_outside_pulse_limits():
     beam=np.zeros((6,1));assert apply_injection_shot_errors(beam,{})==1.
     assert np.array_equal(beam,np.zeros((6,1)))
     assert apply_injection_shot_errors(beam,{'arrival_time_s':3e-6})==0.
+    assert np.array_equal(beam,np.zeros((6,1)))  # pulser-relative timing does not move the RF phase
 
 
 def test_new_stream_does_not_change_existing_samples():

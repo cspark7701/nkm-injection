@@ -469,3 +469,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 148. [**Milestone 148 — Quantify two-plane transparency tolerances (D9)**](148_round2_transparency.md)
     - Resolve wire and independent-loop sensitivities, finite-beam moment changes, and paired native stored-beam observations at ends of turns 1–50 and 1000. State symmetry as a centroid property and retain the assumed coupling ratio.
+
+149. [**Milestone 149 — Separate RF phase from pulse-relative timing (D4)**](149_round2_timing_audit.md)
+    - Correct the pre-campaign timing audit: the 2 ns pulse-relative error changes the NKM amplitude, while the RF-phase term alone shifts the bunch longitudinal coordinate. Preserve the earlier smoke run and make the assumption explicit before any final ensemble.

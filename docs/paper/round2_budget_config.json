@@ -9,5 +9,5 @@
   "septum_angle_rad": 0.01,
   "rf_frequency_hz": 499593472.8240743,
   "pulse_duration_s": 5.3e-6,
-  "status": "beam values sourced in author A4; new shot-error RMS values are parametric assumptions"
+  "status": "beam values sourced in author A4; new shot-error RMS values are parametric assumptions; arrival time is relative to NKM firing, while RF phase alone sets the bunch longitudinal shift"
 }

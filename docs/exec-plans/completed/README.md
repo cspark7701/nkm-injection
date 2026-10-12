@@ -460,3 +460,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 145. [**Milestone 145 — Scale finite-length effects and narrow map claims (D7)**](145_d7_generality_and_map_scope.md)
     - Adds length and strength scaling for two wire families and compares a sliced vector map with the 3-D field while distinguishing trajectory approximation from the historical vertical-sign input error.
+
+146. [**Milestone 146 — Quantify a corrected ring-error scenario (D5)**](146_d5_corrected_ring_scenario.md)
+    - Saves ten seeded girder and magnet error realizations, bounded SVD orbit and tune correction, actual residuals and native dynamic-aperture grids without claiming an as-built machine.

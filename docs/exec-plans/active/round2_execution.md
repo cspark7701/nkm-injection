@@ -11,12 +11,13 @@ Initial working tree: clean, HEAD `279a880`. Protected scientific inputs must re
 - D3: complete. Independent DOP853 reference, 8 cases, two-plane slice/span refinement and steering audit pass. Maximum momentum discrepancy 5.1e-10 rad; 11 focused tests and clean 13-page build pass.
 - D4: complete. Separate septum-strength, RF-phase and arrival-time terms added with independent reproducible sampling, documented units and explicit assumptions. Design beam and final budget saved in campaign 03. 64 focused tests and clean 13-page build pass.
 - Selected BTS config.json recovered from `evidence_bundle_test`, with matching recorded SHA-256; the complete feasible handoff is available.
-- D5: running ten seeded, staged SVD orbit/tune correction scenarios. The initial 20 µm uniform BPM target proved unattainable; its trial is preserved. Declared scenario RMS acceptance is 100 µm, half the assumed 200 µm residual-orbit scale, without an as-built specification claim.
+- D5: complete. Ten seeded staged SVD orbit/tune correction scenarios pass their declared gates; residuals and native DA grids saved. The initial unattainable 20 µm trial is preserved; selected scenario acceptance is 100 µm, half the assumed 200 µm residual-orbit scale. 9 focused tests and clean 15-page build pass.
 - D6: ideal-ring full 3 m IVU chamber-bracket and aperture scans running; corrected-ring extension follows D5.
 - D7: complete. Thirty single-centroid scaling cases, second wire family and physical vector-map comparison; 8 focused tests and clean 14-page build pass.
 - D8: pending final D5/D6 scenario.
 - D9: analytic wire/current sensitivities and paired native stored-beam validation running.
-- D10–D14: pending.
+- D10: native-centroid and consistent pulse estimates computed; manuscript integration pending.
+- D11–D14: pending.
 
 ## Verification
 

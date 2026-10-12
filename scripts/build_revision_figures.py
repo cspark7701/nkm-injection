@@ -78,6 +78,25 @@ class RevisionBuilder(bj.Builder):
         self.save(fig,"fig9_generality",["round2_generality"],
                   "deterministic centroids; length/strength scaling and 1.25 transverse wire family; w=kick-lobe FWHM")
 
+    def fig_corrected_ring(self):
+        if "round2_ring_scenario" not in self.m["artifacts"]:
+            return
+        d=self.load("round2_ring_scenario");rows=d["rows"]
+        fig,axes=plt.subplots(1,2,figsize=(7.4,2.8),layout="constrained")
+        for r in rows:
+            xs=np.array(r["da_x_m"])*1e3
+            axes[0].plot(xs,np.asarray(r["da_alive"],float),alpha=.4,lw=.8)
+        axes[0].set_xlabel("horizontal launch x [mm]");axes[0].set_ylabel("500-turn survival (single particle)")
+        x=[r["correction_after_tune"]["history"][-1]["rms_x_m"]*1e6 for r in rows]
+        y=[r["correction_after_tune"]["history"][-1]["rms_y_m"]*1e6 for r in rows]
+        axes[1].plot(range(1,len(rows)+1),x,"o-",label="horizontal");axes[1].plot(range(1,len(rows)+1),y,"s-",label="vertical")
+        axes[1].set_xlabel("ring-error seed index");axes[1].set_ylabel("BPM residual RMS [um]");axes[1].legend()
+        self.macro("ScenOrbitXmax",max(x),"{:.1f}");self.macro("ScenOrbitYmax",max(y),"{:.1f}")
+        self.macro("ScenTuneMax",tex_sci(max(abs(v) for r in rows for v in r["tune_residual"]),2))
+        self.macro("ScenSeeds",len(rows),"{:d}")
+        self.save(fig,"fig10_corrected_ring",["round2_ring_scenario"],
+                  "10 declared corrected-error seeds; deterministic DA particles and BPM residuals; no sampling interval")
+
     # ------------------------------------------------------------------ figure 1
     def fig_geometry(self):
         op = InjectionStudyConfig.from_dict(self.load("operating_point_3d"))
@@ -696,7 +715,7 @@ RevisionBuilder._paired = staticmethod(paired)
 STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_aperture": "fig_dynamic_aperture", "validation": "fig_model_validation",
          "mechanism": "fig_mechanism", "window": "fig_window", "acceptance": "fig_acceptance",
          "controls": "fig_controls_transparency", "robustness": "fig_robustness", "survival": "survival_tables",
-         "pulse": "pulse_macros", "generality": "fig_generality"}
+         "pulse": "pulse_macros", "generality": "fig_generality", "corrected_ring": "fig_corrected_ring"}
 
 
 def main(argv=None):

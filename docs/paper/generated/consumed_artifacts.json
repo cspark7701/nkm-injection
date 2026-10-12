@@ -188,6 +188,10 @@
     "round2_generality": {
       "path": "results/journal_campaign_03/d7_generality/generality_scaling.json",
       "sha256": "7e402b27dc30c260680362da46a7d37a9c4714a82c2c331a524e35cb3259aeaf"
+    },
+    "round2_ring_scenario": {
+      "path": "results/journal_campaign_03/d5_selected_scenario/corrected_ring_summary.json",
+      "sha256": "f18bf999a6819abdf0595d7b06920549f5dc19272315ce34df06248459dd1b9e"
     }
   }
 }

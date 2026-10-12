@@ -122,15 +122,18 @@ Compare baseline, nominal matched and a newly selected margin/robust design. Cho
 
 **Optional MOGA branch:** only for a substantive unresolved trade-off. Replace the archived dimensionally inconsistent dispersion objective with a stated dimensionless form, e.g. sqrt[(Delta D/s_D)² + (Delta D'/s_D')²]. Use a common hypervolume reference and objective normalization across seeds. Compare at least five seeds at 100×100 population/generation budget and a larger budget, preserving all infeasible results. These are proposed starting budgets, not convergence certificates. Validate finalists with the same BTS physics and held-out errors as the deterministic controls. Extend the driver to expose required budgets; `run_publication_moga.py --tier production` currently uses only 40×20 and ten-turn ideal-kicker finalist tracking and must not supply new physical BTS claims unmodified.
 
-## B09 — Qualify tolerance distributions and engineering requirements
+## B09 — Qualify tolerance distributions and engineering requirements [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 171).
 **Dependencies:** B07–B08.
 
 Reuse the 550,000 historical observations only for their frozen model and beam assumptions. Independently verify pooling compatibility and reproduce quantiles, exact failure intervals and per-seed prefix outcomes. For a new evaluator or design, generate independent ensembles rather than pooling incompatible data. Begin with three 50,000-sample seeds and 5,000 OAT samples per active category; increase sample count according to the predeclared precision and tail requirements. Twenty thousand bootstrap replicates at seed 1729 and 95% confidence provide continuity with the historical study; cross-check bootstrap endpoints with seeds 2718/31415 and distribution-free quantile intervals.
 
 Scan relevant error amplitudes, including correlations, to find conditional limits for mismatch, clearance and transmission. Report confidence intervals and zero-failure upper bounds. OAT rank depends on error amplitudes and is not a universal magnet priority. Historical 50k prefixes missed 1e-5; the 400k prefix passed, while rare-event precision remains a separate question.
 
-**Deliverables:** tolerance curves, uncertainty table, seed/prefix report and practical specification recommendations with explicit assumptions.
+**Deliverables:**
+- [`tolerance_distributions.md`](tolerance_distributions.md): Audited 550,000-sample uncertainty matrix, Clopper-Pearson exact failure interval ($[2.95 \times 10^{-6}, 2.12 \times 10^{-5}]$), prefix stability analysis, OAT ranking, and engineering specifications.
+- [`figures/fig4_tolerance_curves.png`](figures/fig4_tolerance_curves.png) & [`figures/fig4_tolerance_curves.pdf`](figures/fig4_tolerance_curves.pdf): Tolerance scaling curves and OAT sensitivity ranking chart.
 
 **Acceptance:** sample precision meets predeclared needs or its limitation is reported; invalid rates, denominators and exact physical criteria are explicit. Five optics-feasibility failures are not labeled five lost bunches or a measured machine failure rate.
 

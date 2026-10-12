@@ -536,6 +536,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 170. [**Milestone 170 — Matching vs Operating Margin Design Comparison (B08)**](170_b08_matching_vs_operating_margin_design.md)
     - Compared unoptimized baseline, nominal matched design, and low-beta margin design on 1,000 held-out error realizations; demonstrated 100.0% feasibility for both matched designs and quantified a 16.47 m envelope stay-clear buffer gain in the margin design at modest gradient cost.
 
+171. [**Milestone 171 — Qualification of Tolerance Distributions and Engineering Requirements (B09)**](171_b09_qualify_tolerance_distributions.md)
+    - Audited 550,000-sample historical tolerance dataset across 4 seeds; calculated Clopper-Pearson exact binomial confidence interval [2.95e-6, 2.12e-5] for the 5 rare tail failure cases (beta_y > 60 m); evaluated prefix convergence and established OAT hardware specifications.
+
+
 
 
 

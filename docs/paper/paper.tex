@@ -157,8 +157,19 @@ A separate selected corrected-ring scenario applies correlated 30\,$\mu$m girder
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig10_corrected_ring.pdf}
-\caption{Selected corrected-ring scenario, ten fixed seeds. Left: deterministic 500-turn native survival on a 0.5\,mm horizontal launch grid, with RF/radiation and the septum aperture. Right: horizontal and vertical BPM rms residuals after SVD orbit and bounded tune correction. Curves show seed variation, without a particle-sampling interval.}
+\caption{Selected corrected-ring scenario, ten fixed seeds. Left: deterministic 500-turn native survival on a 0.5\,mm horizontal launch grid, with RF/radiation and the reference chamber. Blue/white cells denote surviving/lost launches. First failed grid points are not exact stable edges. Right: horizontal and vertical BPM rms residuals after SVD orbit and bounded tune correction. Curves show seed variation, without a particle-sampling interval.}
 \label{fig:correctedring}
+\end{figure}
+
+The chamber reference uses arc half-width/height 12/9\,mm, centre-bend half-height 4.87\,mm, and an inscribed ellipse where the octagonal corners are unspecified. An assumed rectangular NKM straight has half-width/height 30/15\,mm. Nineteen identified ordinary straights receive 3\,m IVU segments; their assignment is a scenario, not a surveyed map. The reference open half-gap is 9\,mm; a 2.5\,mm closed magnetic half-gap is a stress case and does not account for a liner. The separate incoming transport retains its source lattice and septum creation cut; its chamber has not been surveyed for this alternative injection scheme.
+
+For the 7.67\,nm\,rad design booster beam, the reference chamber gives \ChamberNom\,\% capture at 500 turns (95\,\% particle Wilson interval \ChamberNomLo--\ChamberNomHi\,\%; two 500-particle bunches, seeds 1001/1002). The paired dipole gives \ChamberDipole\,\%; the NKM-minus-dipole difference is \ChamberDiff\ percentage points (95\,\% paired-particle bootstrap interval \ChamberDiffLo\ to \ChamberDiffHi; 10\,000 draws, seed 1729). Arc half-widths 10, 12 and 15\,mm give 81.7, 97.0 and 99.7\,\% at each tested half-height (4.87, 7.5, 9\,mm). Thus 10\,mm is the smallest tested width exceeding 80\,\% in this ideal-ring sample, while 12\,mm retains the reference result; neither is a continuous minimum or a machine tolerance. Across the ten corrected rings, mean capture is \ChamberRingMean\,\%, median \ChamberRingMedian\,\%, tenth percentile \ChamberRingPten\,\%, and range \ChamberRingMin--\ChamberRingMax\,\%. These are different descriptors of a finite scenario population.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{generated/figures/fig11_chamber.pdf}
+\caption{Declared chamber with the design booster beam, 500 native turns and two seeds of 500 particles per ring/profile/model. Left: ideal-ring capture versus arc half-apertures, with other region limits retained. Centre: ring losses per incident particle in 20\,m bins from the NKM centre; solid/dashed/dotted denote horizontal/vertical/dynamical losses. For elliptic apertures the larger normalized coordinate defines the plane. Right: capture for each corrected ring with open and closed IVUs. Points are conditional sample fractions; the loss histograms and finite ring-seed variation have no assigned confidence band.}
+\label{fig:chamber}
 \end{figure}
 
 \section{Stored-beam transparency}

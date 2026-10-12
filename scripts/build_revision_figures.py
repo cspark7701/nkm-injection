@@ -33,6 +33,10 @@ bj = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(bj)
 BLUES, COL, INK, INK2, MARK, tex_sci = bj.BLUES, bj.COL, bj.INK, bj.INK2, bj.MARK, bj.tex_sci
 
+_round2_spec = importlib.util.spec_from_file_location("round2_reporting", Path(__file__).resolve().parent / "round2_reporting.py")
+round2 = importlib.util.module_from_spec(_round2_spec)
+_round2_spec.loader.exec_module(round2)
+
 from nkm_injection.injection_study import InjectionStudyConfig, KickModelEvaluator, wilson_interval  # noqa: E402
 from nkm_injection.kickmap import NKMKickMap2D  # noqa: E402
 from nkm_injection.wire_field import FilamentNKMField  # noqa: E402
@@ -59,6 +63,11 @@ def crossings(x, y, level):
 
 
 class RevisionBuilder(bj.Builder):
+    def final_parameters(self): round2.parameters(self)
+    def final_window(self): round2.window(self)
+    def final_validation(self): round2.validation(self)
+    def final_robustness(self): round2.robustness(self)
+
     def _json(self, key):
         return self.load(key)
 
@@ -85,6 +94,60 @@ class RevisionBuilder(bj.Builder):
             self.macro(f"AlignedMoment{plane}",tex_sci(moment["emittance_ratio_after_single_pass"]-1,2))
         self.macro("MomentGHOrder",d["beam_moments"][-1]["gh_order_per_axis"],"{:d}")
 
+    def fig_chamber(self):
+        if not self.has("round2_chamber_ideal") or not self.has("round2_chamber_corrected"):return
+        ideal=self.load("round2_chamber_ideal");corrected=self.load("round2_chamber_corrected")
+        reference="reference_open_ellipse"
+        def select(data,profile,model="fieldmap_3d",ring=None):
+            return [r for r in data["rows"] if r["profile"]==profile and r["model"]==model
+                    and (ring is None or r["ring"]==ring)]
+        def aggregate(rows):return sum(r["captured"] for r in rows)/sum(r["n_particles"] for r in rows)
+        nominal=select(ideal,reference);n=sum(r["n_particles"] for r in nominal);k=sum(r["captured"] for r in nominal)
+        lo,hi=wilson(k,n)
+        for name,value in (("ChamberNom",k/n),("ChamberNomLo",lo),("ChamberNomHi",hi),
+                           ("ChamberDipole",aggregate(select(ideal,reference,"dipole")))):
+            self.macro(name,value*100,"{:.1f}")
+        def alive_by_id(rows):
+            return {(r["seed"],r.get("chunk",[0])[0]+i):float(value)
+                    for r in rows for i,value in enumerate(r["alive_mask"])}
+        a=alive_by_id(nominal);b=alive_by_id(select(ideal,reference,"dipole"))
+        if set(a)!=set(b):raise ValueError("Chamber controls have different particle IDs")
+        difference=np.array([a[key]-b[key] for key in sorted(a)])
+        rng=np.random.default_rng(1729)
+        boot=difference[rng.integers(0,len(difference),(10000,len(difference)))].mean(axis=1)
+        self.macro("ChamberDiff",100*difference.mean(),"{:+.1f}")
+        self.macro("ChamberDiffLo",100*np.quantile(boot,.025),"{:+.1f}")
+        self.macro("ChamberDiffHi",100*np.quantile(boot,.975),"{:+.1f}")
+        labels=sorted({r["ring"] for r in corrected["rows"]})
+        scenario=np.array([aggregate(select(corrected,reference,ring=label)) for label in labels])
+        for name,value in (("Mean",scenario.mean()),("Min",scenario.min()),("Max",scenario.max()),
+                           ("Median",np.median(scenario)),("Pten",np.quantile(scenario,.1))):
+            self.macro("ChamberRing"+name,value*100,"{:.1f}")
+        fig,axes=plt.subplots(1,3,figsize=(7.4,3.1),layout="constrained")
+        grid=np.zeros((3,3))
+        for ix,hx in enumerate((10,12,15)):
+            for iy,hy in enumerate((4.87,7.5,9)):
+                grid[iy,ix]=100*aggregate(select(ideal,f"scan_x{hx:g}_y{hy:g}"))
+        axes[0].imshow(grid,origin="lower",vmin=0,vmax=100,cmap="Blues",aspect="auto")
+        for iy in range(3):
+            for ix in range(3):axes[0].text(ix,iy,f"{grid[iy,ix]:.1f}",ha="center",va="center",color="white" if grid[iy,ix]>70 else INK)
+        axes[0].set_xticks(range(3),[10,12,15]);axes[0].set_yticks(range(3),[4.87,7.5,9])
+        axes[0].set_xlabel("arc half-width [mm]");axes[0].set_ylabel("arc half-height [mm]")
+        axes[0].set_title("Ideal ring: capture [%]")
+        for data,label,color in ((ideal,"ideal",COL["fieldmap"]),(corrected,"corrected seeds",COL["dipole"])):
+            rows=select(data,reference);denominator=sum(r["n_particles"] for r in rows)
+            for plane,style in (("x","-"),("y","--"),("dynamical",":")):
+                positions=[v["s_m"] for r in rows for v in r["ring_loss_records"] if v["plane"]==plane]
+                axes[1].hist(positions,bins=np.linspace(0,800,41),weights=np.full(len(positions),100/denominator),
+                             histtype="step",color=color,ls=style,label=label if plane=="x" else "_nolegend_")
+        axes[1].set_xlabel("s from NKM [m]");axes[1].set_ylabel("loss / incident particles [%]");axes[1].legend(fontsize=7)
+        axes[2].plot(range(1,11),scenario*100,"o-",label="open ellipse")
+        closed=[aggregate(select(corrected,"closed_ellipse",ring=label))*100 for label in labels]
+        axes[2].plot(range(1,11),closed,"s--",label="closed ellipse")
+        axes[2].set_xlabel("ring-error seed index");axes[2].set_ylabel("500-turn capture [%]");axes[2].legend(fontsize=7)
+        self.save(fig,"fig11_chamber",["round2_chamber_ideal","round2_chamber_corrected"],
+                  "2 seeds x 500 particles per ring/profile/model; nominal grid points and loss histograms; 10 corrected-ring scenarios")
+
     def fig_generality(self):
         if "round2_generality" not in self.m["artifacts"]:
             return
@@ -105,11 +168,22 @@ class RevisionBuilder(bj.Builder):
         if "round2_ring_scenario" not in self.m["artifacts"]:
             return
         d=self.load("round2_ring_scenario");rows=d["rows"]
+        da_rows=rows;keys=["round2_ring_scenario"]
+        if self.has("round2_chamber_da"):
+            acceptance=self.load("round2_chamber_da");keys.append("round2_chamber_da")
+            da_rows=[r for r in acceptance["rows"] if r["ring"]!="ideal"]
+            nominal=next(r for r in acceptance["rows"] if r["ring"]=="ideal")
+            for value,name in zip(nominal["first_unstable_negative_positive_m"],("Neg","Pos")):
+                self.macro("ChamberIdealDA"+name,value*1e3,"{:.1f}")
+            edges=[r["first_unstable_negative_positive_m"][0]*1e3 for r in da_rows]
+            self.macro("ChamberDAFirstMin",min(edges),"{:.1f}")
+            self.macro("ChamberDAFirstMax",max(edges),"{:.1f}")
         fig,axes=plt.subplots(1,2,figsize=(7.4,2.8),layout="constrained")
-        for r in rows:
-            xs=np.array(r["da_x_m"])*1e3
-            axes[0].plot(xs,np.asarray(r["da_alive"],float),alpha=.4,lw=.8)
-        axes[0].set_xlabel("horizontal launch x [mm]");axes[0].set_ylabel("500-turn survival (single particle)")
+        xs=np.array(da_rows[0]["da_x_m"])*1e3
+        axes[0].imshow(np.asarray([r["da_alive"] for r in da_rows],float),aspect="auto",cmap="Blues",vmin=0,vmax=1,
+                       extent=[xs[0]-.25,xs[-1]+.25,len(da_rows)+.5,.5])
+        axes[0].set_yticks(range(1,len(da_rows)+1),[str(r["seed"]) for r in rows])
+        axes[0].set_xlabel("horizontal launch x [mm]");axes[0].set_ylabel("ring-error seed")
         x=[r["correction_after_tune"]["history"][-1]["rms_x_m"]*1e6 for r in rows]
         y=[r["correction_after_tune"]["history"][-1]["rms_y_m"]*1e6 for r in rows]
         axes[1].plot(range(1,len(rows)+1),x,"o-",label="horizontal");axes[1].plot(range(1,len(rows)+1),y,"s-",label="vertical")
@@ -117,8 +191,8 @@ class RevisionBuilder(bj.Builder):
         self.macro("ScenOrbitXmax",max(x),"{:.1f}");self.macro("ScenOrbitYmax",max(y),"{:.1f}")
         self.macro("ScenTuneMax",tex_sci(max(abs(v) for r in rows for v in r["tune_residual"]),2))
         self.macro("ScenSeeds",len(rows),"{:d}")
-        self.save(fig,"fig10_corrected_ring",["round2_ring_scenario"],
-                  "10 declared corrected-error seeds; deterministic DA particles and BPM residuals; no sampling interval")
+        self.save(fig,"fig10_corrected_ring",keys,
+                  "10 declared corrected-error seeds; deterministic horizontal acceptance and BPM residuals; no sampling interval")
 
     # ------------------------------------------------------------------ figure 1
     def fig_geometry(self):
@@ -755,6 +829,9 @@ STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_apertur
          "pulse": "pulse_macros", "generality": "fig_generality", "corrected_ring": "fig_corrected_ring",
          "transparency_sensitivities": "transparency_sensitivities"}
 
+STEPS["chamber"]="fig_chamber"
+STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
+              "final_validation":"final_validation", "final_robustness":"final_robustness"})
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])

@@ -409,20 +409,24 @@ def track_injection(config: InjectionStudyConfig, ring: PreparedRing, kicker: Ki
     n_turns = int(n_turns or config.n_turns)
     beam = np.array(beam_at_septum, dtype=float, copy=True)
     n0 = beam.shape[1]
-    causes = {"septum_creation": 0, "outside_field_map": 0, "ring": 0}
+    causes = {"upstream": int(np.sum(~np.isfinite(beam[0]))),
+              "septum_creation": 0, "injection_segment": 0, "outside_field_map": 0, "ring": 0}
     blade_outer = config.septum_edge_x_m - config.septum_thickness_m
     bad = np.isfinite(beam[0]) & (beam[0] >= blade_outer)
     beam[:, bad] = np.nan
     causes["septum_creation"] = int(bad.sum())
+    before_segment = np.isfinite(beam[0])
     if backend == "element":
         beam = ring.inj_segment.track(beam, nturns=1)[0][:, :, 0, 0]
     else:
         m_inj, _ = ring.inj_segment.find_m66(orbit=np.zeros(6))
         live = np.isfinite(beam[0])
         beam[:, live] = m_inj @ beam[:, live]
+    causes["injection_segment"] = int(np.sum(before_segment & ~np.isfinite(beam[0])))
     _, outside = _apply_kick(beam, kicker, config.closed_orbit_x_m)
     causes["outside_field_map"] = int(outside.sum())
     first_loss_turn = np.full(n0, -1)
+    ring_loss_records = []
     if backend == "element":
         start_live = np.isfinite(beam[0])
         final = np.array(beam, copy=True)
@@ -431,8 +435,25 @@ def track_injection(config: InjectionStudyConfig, ring: PreparedRing, kicker: Ki
         first_loss_turn[lost] = np.asarray(info["loss_map"]["turn"])[lost]
         alive = start_live & ~lost & np.isfinite(final[0])
         loss_elem = np.asarray(info["loss_map"]["elem"])
-        causes["ring_septum_return"] = int(np.sum(lost & (loss_elem == ring.septum_index)))
-        causes["ring_elsewhere"] = int(np.sum(lost & (loss_elem != ring.septum_index)))
+        septum_elements=[i for i,e in enumerate(ring.ring_c) if e.FamName.startswith("NKMUPRING")]
+        at_septum=np.isin(loss_elem,septum_elements or [ring.septum_index])
+        causes["ring_septum_return"] = int(np.sum(lost & at_septum))
+        causes["ring_elsewhere"] = int(np.sum(lost & ~at_septum))
+        spos = np.concatenate(([0.], np.cumsum([e.Length for e in ring.ring_c])))
+        for particle in np.flatnonzero(lost):
+            index = int(loss_elem[particle])
+            coord = np.asarray(info["loss_map"]["coord"][particle])
+            element = ring.ring_c[index]
+            aperture = getattr(element, "RApertures", None)
+            ellipse = getattr(element, "EApertures", None)
+            plane = "dynamical"
+            if aperture is not None and (coord[2] < aperture[2] or coord[2] > aperture[3]): plane = "y"
+            elif aperture is not None and (coord[0] < aperture[0] or coord[0] > aperture[1]): plane = "x"
+            elif ellipse is not None:
+                plane = "x" if abs(coord[0]/ellipse[0]) >= abs(coord[2]/ellipse[1]) else "y"
+            ring_loss_records.append({"particle": int(particle), "turn": int(first_loss_turn[particle]),
+                                      "element": index, "family": element.FamName, "s_m": float(spos[index]),
+                                      "plane": plane})
     else:
         alive, first_loss_turn = _track_map(config, ring, beam, n_turns, first_loss_turn)
         final = None
@@ -441,6 +462,7 @@ def track_injection(config: InjectionStudyConfig, ring: PreparedRing, kicker: Ki
     return {"backend": backend, "kick_model": kicker.model, "n_particles": n0, "n_turns": n_turns,
             "captured": captured, "capture_fraction": captured / n0 if n0 else None,
             "loss_causes": causes, "first_loss_turn": first_loss_turn.tolist(),
+            "ring_loss_records": ring_loss_records,
             "alive_mask": alive.tolist(), "final_coordinates": None if final is None else np.asarray(final).tolist()}
 
 

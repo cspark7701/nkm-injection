@@ -472,3 +472,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 149. [**Milestone 149 — Separate RF phase from pulse-relative timing (D4)**](149_round2_timing_audit.md)
     - Correct the pre-campaign timing audit: the 2 ns pulse-relative error changes the NKM amplitude, while the RF-phase term alone shifts the bunch longitudinal coordinate. Preserve the earlier smoke run and make the assumption explicit before any final ensemble.
+
+150. [**Milestone 150 — Apply a declared chamber and report corrected-ring losses (D6)**](150_round2_chamber.md)
+    - Apply the author-sourced arc and centre-bend dimensions with declared NKM and IVU assumptions. Compare ideal and ten corrected rings, paired controls, aperture scans and chamber-limited acceptance; nominal capture is 97.0%, while corrected-ring capture ranges from 2.7% to 87.4%.

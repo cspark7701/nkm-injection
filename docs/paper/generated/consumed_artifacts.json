@@ -197,9 +197,21 @@
       "path": "results/journal_campaign_03/d5_selected_scenario/corrected_ring_summary.json",
       "sha256": "f18bf999a6819abdf0595d7b06920549f5dc19272315ce34df06248459dd1b9e"
     },
+    "round2_chamber_da": {
+      "path": "results/journal_campaign_03/d6_chamber_da.json",
+      "sha256": "a5672bb85481124efafc834b4491de8bf34f64bcf5e25621fbea254b58a3e2a4"
+    },
     "round2_transparency": {
       "path": "results/journal_campaign_03/d9_transparency_resolved.json",
       "sha256": "f393342005a823988935c6a22b69ce5a08db03f44e0c9c99601b4b7f4171f1b5"
+    },
+    "round2_chamber_ideal": {
+      "path": "results/journal_campaign_03/d6_chamber_full/chamber_summary.json",
+      "sha256": "4a2c525252521d3f0d53c690b2d9bd0543e0581d185701eedcdd9bde8269f50d"
+    },
+    "round2_chamber_corrected": {
+      "path": "results/journal_campaign_03/d6_corrected_chamber/chamber_summary.json",
+      "sha256": "7eafbce1c7a8987724f37e15b27f716e3c52dad8b373c51738055b95a29d3731"
     }
   }
 }

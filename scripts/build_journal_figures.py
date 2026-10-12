@@ -87,8 +87,10 @@ class Builder:
 
     def save(self, fig, name, keys, caption_data):
         for ext in ("pdf", "png"):
-            fig.savefig(self.out / "figures" / f"{name}.{ext}")
+            options={"metadata":{"CreationDate":None,"ModDate":None}} if ext=="pdf" else {}
+            fig.savefig(self.out / "figures" / f"{name}.{ext}",**options)
         plt.close(fig)
+        self.provenance=[row for row in self.provenance if row["asset"]!=f"figures/{name}.pdf"]
         self.provenance.append({"asset": f"figures/{name}.pdf", "kind": "figure", "inputs": ";".join(keys),
                                 "sha256": ";".join(self.used[k][1] for k in keys), "data": caption_data})
 

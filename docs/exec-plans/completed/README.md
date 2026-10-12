@@ -484,3 +484,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 153. [**Milestone 153 — Report final joint-error ensembles and held-out tuning (D8)**](153_round2_final_robustness.md)
     - Complete nine paired ensembles and 50 bounded tuning studies with the design beam, declared chamber and ten corrected rings. The 150-draw NKM mean is 14.8%; quarter-minus-zero jitter is +2.19 points with a -1.51 to +6.12 interval, so the one-point loss margin is not established. Held-out tuning gains are 11.58 and 5.55 points at zero and quarter jitter, yielding means of 45.66% and 41.82%. Preserve the conditional scope and distinguish all capture summaries.
+
+154. [**Milestone 154 — Reconcile the manuscript with final evidence and scope (D12)**](154_round2_manuscript_reconciliation.md)
+    - Rewrite the abstract, comparison table, parameter table, mechanism interpretation, captions and conclusions around the final design-beam evidence. Separate 100 nm sensitivity studies, nominal survival, joint-error capture and held-out tuning. Add sourced system comparisons and conditional septum leakage estimates, clarify deterministic radiation and control-calibration limits, and retain the author-gated generic article format.

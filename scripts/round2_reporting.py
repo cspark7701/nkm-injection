@@ -165,7 +165,7 @@ def robustness(builder):
             builder.macro('FinalTune'+name+quantity,result['tuned'][key]*100,'{:.1f}')
     rows=[]
     for level in ('0','0.25','0.5','0.75','1','x_only','xp_only'):
-        r=jitter[level];label=level.replace('_',r'\_')
+        r=jitter[level];label={'x_only':'position only','xp_only':'angle only'}.get(level,level)
         rows.append(f"{label} & {r['mean']*100:.1f} & {r['median']*100:.1f} & {r['p10']*100:.1f} & "
                     f"{r['fraction_ge_80pct']*100:.0f} & {r['mean_difference']*100:+.1f} & "
                     f"[{r['ci95'][0]*100:+.1f}, {r['ci95'][1]*100:+.1f}] \\\\")

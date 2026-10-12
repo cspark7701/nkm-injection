@@ -493,3 +493,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 156. [**Milestone 156 — Verify the frozen referee evidence bundle (D13)**](156_round2_evidence_verification.md)
     - Freeze results/journal_campaign_03/round2_evidence_bundle.tar.gz from committed source 9028978e8f4627efc18a21d6a58f625e7e4b4c2d. The local referee attachment contains 205 selected artifacts and 213 inventoried files; archive size is 15,215,692 bytes and SHA-256 is 0e07de5f2b49a9b9e6087af9f8b9969e9687b0aa537939b77b2325d1d8ec3f3d. No DOI or external upload is implied.
+
+157. [**Milestone 157 — Complete the round-two response and final validation (D14)**](157_round2_final_reconciliation.md)
+    - Add a new point-by-point response covering all ten R1B and fifteen R2b tasks, with direct evidence links, final numerical results and explicit claim restrictions. Preserve earlier reviews and the first-round response. The authorized D1-D14 revision is complete; journal selection and conversion remain the separate D15 step.

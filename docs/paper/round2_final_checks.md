@@ -1,7 +1,7 @@
 # Round-2 verification record and scope
 
 The completion records in `docs/exec-plans/completed/` report the executed checks
-for D1–D14. The final D14 record is authoritative for the full-suite result,
+for D1–D14. The [final D14 record](../exec-plans/completed/157_round2_final_reconciliation.md) is authoritative for the full-suite result,
 clean manuscript build and protected-input verification. Earlier scientific
 reviews and responses are preserved as historical assessments.
 

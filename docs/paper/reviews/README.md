@@ -28,3 +28,7 @@ author response. It records the status of every first-round task. Its new major 
 - beam-based injection tuning;
 - lattice identity;
 - generality.
+
+Round-2 revision response: [author_response_round2.md](author_response_round2.md).
+It maps all R1B and R2b tasks to the final evidence and explicit scope restrictions;
+D15 journal conversion remains author-gated. The first-round response is preserved.

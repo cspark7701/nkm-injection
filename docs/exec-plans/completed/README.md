@@ -475,3 +475,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 150. [**Milestone 150 — Apply a declared chamber and report corrected-ring losses (D6)**](150_round2_chamber.md)
     - Apply the author-sourced arc and centre-bend dimensions with declared NKM and IVU assumptions. Compare ideal and ten corrected rings, paired controls, aperture scans and chamber-limited acceptance; nominal capture is 97.0%, while corrected-ring capture ranges from 2.7% to 87.4%.
+
+151. [**Milestone 151 — Prepare checkpointed final ensembles and held-out tuning (D8)**](151_round2_final_campaign_driver.md)
+    - Add the gated campaign driver, paired jitter analysis and bounded seven-evaluation tuning search. Freeze realization inputs and source hashes for strict resume; pair corrected-ring and particle seeds, move the return septum consistently, and validate tuned knobs on held-out particles. This milestone completes implementation; the D8 numerical campaign is running and is not yet complete.

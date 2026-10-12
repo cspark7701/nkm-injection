@@ -7,8 +7,9 @@ tracked through the perturbed selected BTS (quadrupole gradient/offset/roll erro
 errors), placed at the septum (septum position error moves the blade and the injected centroid),
 kicked by the NKM (field scale, alignment, additive timing kick error) and tracked natively for
 n_turns around a ring with a closed-orbit offset at the NKM. All kick models of one realization
-see the identical beam (paired). Out of scope: quadrupole longitudinal placement, power-supply
-quantisation, ring optics errors (documented in physics_model.md section 7).
+see the identical beam (paired). Optional saved corrected-ring scenarios include distributed
+ring errors. Out of scope: quadrupole longitudinal placement, power-supply quantisation,
+and the independent scalar ring-beta error field.
 
 Energy errors are applied as a momentum offset of the tracked particles (chromatic tracking through
 the nominal-field BTS), not by rescaling magnet strengths. Units: m, rad, eV, dimensionless delta.
@@ -18,6 +19,7 @@ are not treated as independent error samples.
 import argparse
 import copy
 import datetime
+import hashlib
 import json
 import time
 from dataclasses import replace
@@ -38,6 +40,8 @@ from nkm_injection.bts_lattice import BTSConfig
 from nkm_injection.optics import compute_mismatch_metric
 from nkm_injection.steering import subtract_static_horizontal_reference
 from nkm_injection.injection_timing import apply_injection_shot_errors
+from nkm_injection.chamber import ChamberProfile, apply_chamber
+from nkm_injection.ring_error_scenario import refresh_prepared_ring
 from nkm_injection.stage_cli import add_source_argument, source_root, input_hashes
 
 REPO = Path(__file__).resolve().parent.parent
@@ -74,11 +78,15 @@ def parse_args(argv=None):
     p.add_argument("--septum-angle-mrad", type=float, default=10.)
     p.add_argument("--rf-frequency-hz", type=float, default=499593472.8240743)
     p.add_argument("--pulse-duration-us", type=float, default=5.3)
+    p.add_argument("--chamber-config", type=Path, default=None)
+    p.add_argument("--corrected-ring-dir", type=Path, default=None,
+                   help="D5 scenario ensemble; draw a saved corrected ring independently for each realization")
     p.add_argument("--bootstrap-count", type=int, default=10000)
     p.add_argument("--bootstrap-seed", type=int, default=1729)
     p.add_argument("--capture-threshold", type=float, default=0.9)
     p.add_argument("--workers", "-w", type=int, default=1)
     p.add_argument("--output-dir", type=Path, required=True)
+    p.add_argument("--resume", action="store_true", help="Resume only checkpoints with identical inputs and code")
     add_source_argument(p)
     return p.parse_args(argv)
 
@@ -105,6 +113,12 @@ def run_realization(job):
     cfg0 = InjectionStudyConfig.from_dict(job["config"])
     root = Path(job["repo_root"])
     ring = cached_ring(cfg0, root, Path(job["work_dir"]))
+    if job.get("corrected_ring_path") or job.get("chamber"):
+        import at
+        lattice=at.load_mat(job["corrected_ring_path"]) if job.get("corrected_ring_path") else ring.ring_c
+        if job.get("chamber"):
+            lattice,_=apply_chamber(lattice,ChamberProfile(**job["chamber"]),cfg0.septum_edge_x_m)
+        ring=refresh_prepared_ring(ring,lattice)
     kmap = NKMKickMap2D(root / cfg0.kickmap_path)
     s, extra = job["sample"], job["extra"]
     bts = BTSConfig.from_dict(job["bts_config"])
@@ -141,6 +155,11 @@ def run_realization(job):
                   nkm_dx_m=cfg0.nkm_dx_m + s["nkm_dx_m"],
                   kick_offset_rad=cfg0.kick_offset_rad + timing_add,
                   closed_orbit_x_m=cfg0.closed_orbit_x_m + s["ring_co_x_m"])
+    if s["septum_x_m"] != 0.0:
+        # Move the physical return aperture with the same blade displacement
+        # used for beam creation. Do not mutate the cached nominal lattice.
+        ring=replace(ring,ring_c=ring.ring_c.deepcopy())
+        ring.ring_c[ring.septum_index].RApertures[0]=cfg.septum_edge_x_m
     beam = injected_beam_at_septum(cfg, ring, job["beam_seed"], bts_exit_beam=exit_beam)
     timing_scale = apply_injection_shot_errors(beam, s,
         septum_angle_rad=job.get("septum_angle_mrad", 10.)*1e-3,
@@ -155,13 +174,16 @@ def run_realization(job):
     out = {"sample_id": s["sample_id"], "beam_seed": job["beam_seed"], "bts_exit": exit_mom, "bts_exit_mismatch": mism,
            "static_orbit_corrected_m_rad": static,
            "bts_lost": int(np.sum(~np.isfinite(exit_beam[0]))), "models": {}}
+    out["ring_error_seed"]=job.get("ring_error_seed")
     x_ref = cfg0.nkm_entry_x_m  # controls stay calibrated at the nominal point (no error knowledge)
     calib = job.get("calibration_3d")
     for model in job["models"]:
         if model == "fieldmap_3d":
             kicker = FilamentNKMKicker(cfg, n_slices=job.get("slices_3d", 640))
         elif model in ("dipole", "linear") and calib is not None:
-            kicker = CalibratedControl(model, *calib)
+            relative_scale=cfg.field_scale/cfg0.field_scale
+            kicker = CalibratedControl(model, calib[0]*relative_scale+cfg.kick_offset_rad,
+                                       calib[1]*relative_scale, calib[2])
         elif model == "fieldmap_thick":
             kicker = ThickNKMKicker(cfg, *load_1d_fieldmap(root / "By.txt"), n_slices=job.get("thick_slices", 160))
         else:
@@ -177,6 +199,11 @@ def run_realization(job):
                                                   "filamented_emittance_growth")}
         out["models"][model] = entry
     out["runtime_s"] = time.perf_counter() - t0
+    if job.get("checkpoint"):
+        path=Path(job["checkpoint"])
+        temporary=path.with_suffix(".tmp")
+        temporary.write_text(json.dumps(out, allow_nan=False)+"\n")
+        temporary.replace(path)
     return out
 
 
@@ -187,6 +214,7 @@ def cluster_stats(values, seed, count, threshold):
     k = int(np.sum(v >= threshold))
     return {"n_realizations": int(len(v)), "mean_capture": float(v.mean()), "median_capture": float(np.median(v)),
             "min_capture": float(v.min()), "p05_capture": float(np.quantile(v, 0.05)),
+            "p10_capture": float(np.quantile(v, 0.10)),
             "mean_ci95_cluster_bootstrap": [float(np.quantile(boot, 0.025)), float(np.quantile(boot, 0.975))],
             "fraction_realizations_above_threshold": k / len(v), "threshold": threshold,
             "fraction_above_wilson95": list(wilson_interval(k, len(v)))}
@@ -196,20 +224,26 @@ def main(argv=None):
     args = parse_args(argv)
     root = source_root(args, REPO)
     out = args.output_dir.resolve()
-    if out.exists() and any(out.iterdir()):
+    if out.exists() and any(out.iterdir()) and not args.resume:
         raise SystemExit("--output-dir must be new or empty")
     cfg = InjectionStudyConfig.load(args.study_config)
     cfg.validate()
     sel = load_optimization_handoff(args.optimization_summary)
     err = ErrorBudgetConfig.load(args.error_config)
     samples = [scale_sample(x, args.error_scale) for x in sample_error_ensemble(err, args.samples, args.seed)]
+    chamber=json.loads(args.chamber_config.read_text()) if args.chamber_config else None
+    ring_seeds=None
+    if args.corrected_ring_dir:
+        ring_summary=json.loads((args.corrected_ring_dir/"corrected_ring_summary.json").read_text())
+        if not ring_summary["passed"]:raise ValueError("D5 correction gate has not passed")
+        ring_seeds=ring_summary["seeds"]
     rng_extra = np.random.default_rng([args.seed, 9001])  # separate stream: emittance / energy-spread variation
     extras = [{"emit_rel": float(rng_extra.normal(0, err.emittance_rel_std * args.error_scale)),
                "espread_abs": float(rng_extra.normal(0, err.espread_std * args.error_scale))} for _ in samples]
     if args.include_zero_error:
         samples.insert(0, zero_sample(samples[0]))
         extras.insert(0, {"emit_rel": 0.0, "espread_abs": 0.0})
-    out.mkdir(parents=True)
+    out.mkdir(parents=True, exist_ok=True)
     work = out / "_lattice"
     cached_ring(cfg, root, work)
     base = {"config": cfg.to_dict(), "repo_root": str(root), "work_dir": str(work), "bts_config": sel.bts.to_dict(),
@@ -219,11 +253,46 @@ def main(argv=None):
             "calibration_3d": list(calibrate_controls(cfg, args.slices_3d)) if args.control_reference == "3d" else None,
             "septum_angle_mrad": args.septum_angle_mrad, "rf_frequency_hz": args.rf_frequency_hz,
             "pulse_duration_us": args.pulse_duration_us}
+    base["chamber"]=chamber
     jobs = [{**base, "sample": s, "extra": e, "beam_seed": int(args.seed * 100003 + max(s["sample_id"], -1) + 1)}
             for s, e in zip(samples, extras)]
+    if ring_seeds:
+        for job in jobs:
+            if job["sample"]["sample_id"]<0:continue  # zero-error reference uses the ideal ring
+            ring_rng=np.random.default_rng([args.seed,5505,job["sample"]["sample_id"]])
+            seed=int(ring_rng.choice(ring_seeds))
+            job["ring_error_seed"]=seed
+            job["corrected_ring_path"]=str(args.corrected_ring_dir/f"seed{seed}.mat")
+    # Completed realizations survive interruption. Reject stale checkpoints
+    # whenever an input, source module, or scientific option has changed.
+    paths=[args.study_config,args.error_config,args.optimization_summary,
+           args.optimization_summary.parent/"config.json",root/cfg.ring_source,root/cfg.kickmap_path]
+    if args.chamber_config:paths.append(args.chamber_config)
+    if ring_seeds:paths.extend(Path(j["corrected_ring_path"]) for j in jobs if "corrected_ring_path" in j)
+    paths.extend((REPO/"src/nkm_injection").glob("*.py"))
+    paths.append(Path(__file__))
+    signature={"jobs":jobs,"hashes":{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},
+               "analysis":{"bootstrap_seed":args.bootstrap_seed,"bootstrap_count":args.bootstrap_count,
+                           "capture_threshold":args.capture_threshold}}
+    spec=out/"checkpoint_inputs.json"
+    if spec.exists():
+        if json.loads(spec.read_text())!=signature:raise SystemExit("Checkpoint inputs or code changed; use a new output directory")
+    else:
+        if args.resume and any(out.glob("realization_*.json")):raise SystemExit("Missing checkpoint input specification")
+        spec.write_text(json.dumps(signature,indent=2,allow_nan=False)+"\n")
+    completed=[];pending=[]
+    for job in jobs:
+        checkpoint=out/f"realization_{job['sample']['sample_id']}.json"
+        job["checkpoint"]=str(checkpoint)
+        if args.resume and checkpoint.exists():completed.append(json.loads(checkpoint.read_text()))
+        else:pending.append(job)
+    if not pending and (out/"capture_robustness_raw.json").exists() and (out/"capture_robustness_summary.json").exists():
+        print(f"Validated completed ensemble -> {out}",flush=True)
+        return
     print(f"S7: {len(jobs)} realizations x {len(args.kicker_models)} models, workers={args.workers}", flush=True)
     t0 = time.time()
-    results = parallel_map(run_realization, jobs, n_workers=args.workers, desc="S7 capture robustness")
+    results = completed+parallel_map(run_realization, pending, n_workers=args.workers, desc="S7 capture robustness")
+    results.sort(key=lambda r:r["sample_id"])
     stats_by_model = {}
     for m in args.kicker_models:
         caps = [r["models"][m]["capture_fraction"] for r in results if r["sample_id"] >= 0]
@@ -252,6 +321,9 @@ def main(argv=None):
             "static_orbit_correction": "ideal steering at septum exit" if args.correct_static_orbit else None,
             "runtime_s": time.time() - t0, "out_of_scope_errors": ["quad_ds_std_m", "ps_quantization_std", "ring_beta_rel_std"],
             "resampling_unit": "error realization (cluster bootstrap); particle statistics within realizations"}
+    meta["chamber"]=chamber
+    meta["ring_population"]=ring_seeds
+    meta["ring_resampling_scope"]="joint draws conditional on this finite saved ring population" if ring_seeds else "ideal ring"
     zero = next((r for r in results if r["sample_id"] == -1), None)
     summary = {**meta, "statistics": stats_by_model, "paired_difference": paired,
                "zero_error_realization": None if zero is None else {m: zero["models"][m]["capture_fraction"] for m in args.kicker_models}}

@@ -45,20 +45,33 @@ def test_s7_cluster_statistics():
 A7 = _load("analyze_capture_robustness")
 
 
-def test_s7_and_analysis_end_to_end(tmp_path):
+def test_s7_and_analysis_end_to_end(tmp_path, monkeypatch):
     """Tiny real S7 run (2 realizations + zero-error, 8 particles, 3 turns) and its pooled analysis."""
     from nkm_injection.errors import ErrorBudgetConfig
     err = tmp_path / "err.json"
     ErrorBudgetConfig().save(err)
     out = tmp_path / "s7"
-    S7.main(["--study-config", str(ROOT / "config/injection_study_v1.json"),
+    argv=["--study-config", str(ROOT / "config/injection_study_v1.json"),
              "--optimization-summary", str(ROOT / "tests/fixtures/s7_optimization/bts_optimization_summary.json"),
              "--error-config", str(err), "--samples", "2", "--particles", "8", "--turns", "3",
              "--include-zero-error", "--bootstrap-count", "50", "--workers", "1", "--repo-root", str(ROOT),
-             "--output-dir", str(out)])
+             "--output-dir", str(out)]
+    S7.main(argv)
     summary = json.loads((out / "capture_robustness_summary.json").read_text())
     assert summary["statistics"]["fieldmap"]["n_realizations"] == 2
     assert summary["zero_error_realization"]["fieldmap"] is not None
+    def unexpected_rerun(job):
+        raise AssertionError("Completed realizations must be read from checkpoints")
+    monkeypatch.setattr(S7,"run_realization",unexpected_rerun)
+    S7.main(argv+["--resume"])
+    resumed=json.loads((out/"capture_robustness_summary.json").read_text())
+    assert resumed["statistics"]==summary["statistics"]
+    raw=json.loads((out/"capture_robustness_raw.json").read_text())
+    for row in raw["realizations"]:
+        for model in row["models"].values():
+            causes=model["loss_causes"]
+            assert model["captured"]+sum(causes[k] for k in
+                ("upstream","septum_creation","injection_segment","outside_field_map","ring"))==model["n"]
     res = tmp_path / "analysis.json"
     A7.main(["--raw", str(out / "capture_robustness_raw.json"), "--bootstrap-count", "50", "--stored-samples", "2000",
              "--repo-root", str(ROOT), "--output", str(res)])

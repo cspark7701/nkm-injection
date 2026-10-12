@@ -30,10 +30,12 @@ In accordance with the user instruction (*"After complete the task, create a new
 - **Acceptance:** The tarball extracts cleanly in an isolated directory and compiles to an identical PDF matching the frozen SHA-256 digest (`608,936` bytes, exit code 0).
 
 
-### C02 — Interactive HTML Project Showcase Webpage
-- **Objective:** Update and enhance `docs/index.html` (or create `docs/bts_showcase.html`) following GitHub.io project styling to present the BTS transfer-line results, layout, SVD knobs, and transmission curves.
-- **Deliverables:** `docs/bts_showcase.html` (or updated `docs/index.html`), associated CSS/visual assets.
+### C02 — Interactive HTML Project Showcase Webpage [COMPLETED]
+- **Status:** Completed 2026-10-13 (Milestone 176).
+- **Objective:** Update and enhance `docs/index.html` following GitHub.io project styling to present the BTS transfer-line results, layout, SVD knobs, and transmission curves.
+- **Deliverables:** Updated `docs/index.html` featuring a dedicated `#bts-manuscript` section with interactive TOC navigation, key findings comparison table, and direct asset download links.
 - **Acceptance:** Fully compliant with `AGENTS.md` GitHub.io styling guidelines with functioning internal links and figure embeddings.
+
 
 ### C03 — Standalone One-Command BTS Reproduction Script
 - **Objective:** Create `scripts/reproduce_bts_paper.py` allowing independent verification of all figures, tables, and SVD knobs from the command line.

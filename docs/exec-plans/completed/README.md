@@ -551,6 +551,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 175. [**Milestone 175 — Automated Submission Bundle & Tarball Packaging (C01)**](175_c01_automated_submission_bundle.md)
     - Created `scripts/package_bts_submission.py` to package LaTeX source files, verified bibliography, figure assets, and provenance digests into a standalone tarball; verified isolated extraction and successful compilation in a clean directory outside the git tree.
 
+176. [**Milestone 176 — Interactive HTML Project Showcase Webpage (C02)**](176_c02_interactive_html_showcase.md)
+    - Updated `docs/index.html` to integrate a dedicated BTS transfer line manuscript showcase section with responsive TOC navigation, executive findings comparison table, and direct asset download links in GitHub.io project style.
+
+
 
 
 

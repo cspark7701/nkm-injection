@@ -49,7 +49,8 @@
     "optimization_summary": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
     "round2_statistics": "results/journal_campaign_03/d2_existing_statistics.json",
     "round2_generality": "results/journal_campaign_03/d7_generality/generality_scaling.json",
-    "round2_ring_scenario": "results/journal_campaign_03/d5_selected_scenario/corrected_ring_summary.json"
+    "round2_ring_scenario": "results/journal_campaign_03/d5_selected_scenario/corrected_ring_summary.json",
+    "round2_pulse": "results/journal_campaign_03/d10_pulse.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -100,6 +101,7 @@
     "optimization_summary": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
     "round2_statistics": "b929bc71d1967fec6ae00558cada343203e48e0351469f87ed5e6b5e90f1c454",
     "round2_generality": "7e402b27dc30c260680362da46a7d37a9c4714a82c2c331a524e35cb3259aeaf",
-    "round2_ring_scenario": "f18bf999a6819abdf0595d7b06920549f5dc19272315ce34df06248459dd1b9e"
+    "round2_ring_scenario": "f18bf999a6819abdf0595d7b06920549f5dc19272315ce34df06248459dd1b9e",
+    "round2_pulse": "c9d7595ded81d769ac5e3dc1868e7e36993c31aac05686701ddd13dfb30d0166"
   }
 }

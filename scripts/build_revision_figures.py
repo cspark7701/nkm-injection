@@ -641,6 +641,19 @@ class RevisionBuilder(bj.Builder):
         sig = tr["optics"]["sigma_x"]
         self.macro("DipoleResidualRel", tex_sci(0.1 * sig / bx / peak, 1))
         self.macro("GradResidualRel", tex_sci(4 * np.pi * 1e-4 / bx / grad, 1))
+        if "round2_pulse" in self.m["artifacts"]:
+            d=self.load("round2_pulse")
+            self.macro("RevPeriodUs",d["revolution_period_s"]*1e6,"{:.3f}")
+            self.macro("ResidualAllowMrad",d["residual_kick_allowance_rad"]*1e3,"{:.3f}")
+            for row,name in zip(d["native_turns"],("One","Two","Three")):
+                self.macro(f"Turn{name}Xmm",row["coordinate"][0]*1e3,"{:.1f}")
+                self.macro(f"Turn{name}KickMrad",abs(row["straight_line_full_kick_rad"])*1e3,"{:.2f}")
+                if name in ("One","Two"):self.macro(f"ResidualTurn{name}",row["allowed_fraction"],"{:.2f}")
+            self.macro("PeakPhaseMaxPulseUs",d["peak_phase_maximum_duration_s"]*1e6,"{:.2f}")
+            self.macro("NoReturnMaxPulseUs",d["no_return_field_maximum_duration_s"]*1e6,"{:.2f}")
+            self.macro("EightUsResidual",d["eight_us_first_return_fraction"],"{:.2f}")
+            self.macro("TimingLossMin",tex_sci(min(r["relative_loss"] for r in d["timing"]),2))
+            self.macro("TimingLossMax",tex_sci(max(r["relative_loss"] for r in d["timing"]),2))
 
     # ------------------------------------------------------------------ campaign-01 quantities still quoted
     def legacy_macros(self):

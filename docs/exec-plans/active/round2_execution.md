@@ -16,7 +16,7 @@ Initial working tree: clean, HEAD `279a880`. Protected scientific inputs must re
 - D7: complete. Thirty single-centroid scaling cases, second wire family and physical vector-map comparison; 8 focused tests and clean 14-page build pass.
 - D8: pending final D5/D6 scenario.
 - D9: analytic wire/current sensitivities and paired native stored-beam validation running.
-- D10: native-centroid and consistent pulse estimates computed; manuscript integration pending.
+- D10: complete. Native observations replace linear rotation. Peak-phase maximum under the historical window allowance is 5.84 µs; no-return maximum is 5.332 µs, with a compatible 5.3 µs example. Timing, train variation and hypothetical eddy-current estimates are consistent. 9 focused tests and clean 15-page build pass.
 - D11–D14: pending.
 
 ## Verification

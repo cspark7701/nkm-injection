@@ -463,3 +463,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 146. [**Milestone 146 — Quantify a corrected ring-error scenario (D5)**](146_d5_corrected_ring_scenario.md)
     - Saves ten seeded girder and magnet error realizations, bounded SVD orbit and tune correction, actual residuals and native dynamic-aperture grids without claiming an as-built machine.
+
+147. [**Milestone 147 — Reconcile pulse phase and native return-pass estimates (D10)**](147_d10_native_pulse_requirements.md)
+    - Replaces illustrative linear-return coordinates with native observations, identifies the assumed residual allowance, and supplies a compatible half-sine example with timing, train and eddy-current estimates.

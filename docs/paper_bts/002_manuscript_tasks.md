@@ -78,15 +78,18 @@ Use dimensionless residuals. The historical normalizations are beta/0.05 m, alph
 
 **Acceptance:** results are independently feasible and not selected only by optimizer success. The one-feasible-of-three historical outcome is preserved. Add configuration/iteration/start controls if required; the present CLI only exposes seed, tier and output, so a production tier is not a converged-search guarantee.
 
-## B06 — Derive interpretable correction knobs
+## B06 — Derive interpretable correction knobs [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 168).
 **Dependencies:** B05.
 
 Form a Jacobian of exit beta, alpha and dispersion with respect to nine quadrupoles. Scale rows by declared optics tolerances and columns by meaningful allowed strength changes; state the dimensionless matrix definition. Check central finite differences over several step sizes, rank and singular values. Separate well-conditioned correction combinations from null-space freedoms and strength saturation.
 
 Test correction predictions with finite perturbations and nonlinear reevaluation. Quantify reachable target changes within the family bounds and the impact on envelope margin.
 
-**Deliverables:** normalized SVD figure, correction-knob table, finite-step validation and a correction algorithm/configuration.
+**Deliverables:**
+- [`correction_knobs.md`](correction_knobs.md): Dimensionless Jacobian formulation, condition number reconciliation ($\kappa = 57.78$), 6 orthogonal correction knobs, 3-mode null space analysis, and finite perturbation validation.
+- [`figures/fig2_svd_knobs.png`](figures/fig2_svd_knobs.png) & [`figures/fig2_svd_knobs.pdf`](figures/fig2_svd_knobs.pdf): Singular value spectrum and orthogonal knob participation heatmap.
 
 **Acceptance:** numerical rank is stable, condition numbers are dimensionally meaningful, and finite corrections reproduce claimed changes without constraint violation. Do not interpret the historical mixed-unit raw Jacobian condition number as a hardware tolerance.
 

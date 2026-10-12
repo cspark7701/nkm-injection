@@ -527,6 +527,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 167. [**Milestone 167 — Nominal Matching Reproduction and Multi-Start Baselines (B05)**](167_b05_reproduce_nominal_matching_and_baselines.md)
     - Recomputed and verified nominal matched quadrupole strengths to exact floating-point precision; conducted 5-seed multi-start optimization study showing that 4/15 starts violate physical envelope limits despite optimizer convergence; discovered alternative low-beta design topology (beta_x=29.65 m, beta_y=36.12 m).
 
+168. [**Milestone 168 — Interpretable Correction Knobs and Dimensionless SVD (B06)**](168_b06_interpretable_correction_knobs_and_svd.md)
+    - Formulated dimensionless normalized Jacobian sensitivity framework, reconciling the historical 1421.6 condition number artifact to a well-conditioned kappa=57.78; extracted 6 orthogonal tuning knobs and 3 null-space modes for envelope control; verified finite target corrections with nonlinear re-evaluation.
+
+
 
 
 

@@ -9,14 +9,21 @@ from nkm_injection.injection_study import InjectionStudyConfig,cached_ring,_appl
 from nkm_injection.wire_field import FilamentNKMKicker,FilamentGeometry
 from nkm_injection.sliced_vector_map import integrated_filament_kicks
 from nkm_injection.pulse_requirements import peak_phase_field_fraction,maximum_peak_phase_duration,thin_shell_diffusion_time
+from nkm_injection.chamber import ChamberProfile,apply_chamber
+from nkm_injection.ring_error_scenario import refresh_prepared_ring
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--study-config',type=Path,required=True)
     p.add_argument('--window-width-mrad',type=float,default=.74);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--chamber-config',type=Path)
     a=p.parse_args()
     if a.output.exists():raise SystemExit('Output exists')
     cfg=InjectionStudyConfig.load(a.study_config);ring=cached_ring(cfg,Path.cwd(),a.output.parent/'_lattice')
+    profile=json.loads(a.chamber_config.read_text()) if a.chamber_config else None
+    if profile:
+        chamber,_=apply_chamber(ring.ring_c,ChamberProfile(**profile),cfg.septum_edge_x_m)
+        ring=refresh_prepared_ring(ring,chamber)
     b=np.asarray(ring.orbit6)[:,None].copy();b[0]+=cfg.injection_x_m;b[1]+=cfg.injection_xp_rad
     b=ring.inj_segment.track(b,nturns=1)[0][:,:,0,0]
     _apply_kick(b,FilamentNKMKicker(cfg,n_slices=640),cfg.closed_orbit_x_m)
@@ -42,13 +49,14 @@ def main():
          'allowance_status':'assumed one tenth of conditional 500-turn angular window',
          'peak_phase_maximum_duration_s':min(r['maximum_peak_phase_duration_s'] for r in turns),
          'no_return_field_maximum_duration_s':2*revolution,'compatible_example_duration_s':duration,
+         'example_timing_margin_s':revolution-duration/2,
          'example_return_field_fractions':[float(peak_phase_field_fraction(i*revolution,duration)) for i in (1,2,3)],
          'eight_us_first_return_fraction':float(peak_phase_field_fraction(revolution,8e-6)),
          'timing':timing,'train':train,'eddy_shell_scenarios':shells,
          'timing_definition':'listed offsets are deterministic; rms=2 ns is a Gaussian draw in D4, not a hard bound',
          'scope':'native centroid observations plus analytic requirements; no time-dependent capture or measured chamber prediction',
          'particle_count':1,'distribution':'nominal centroid','energy_spread':0.,'initial_twiss':'not applicable',
-         'apertures':'study septum only','loss_definition':'native AT loss','observation':'end of turns 1,2,3 at NKM centre'}
+         'apertures':profile or 'study septum only','loss_definition':'native AT loss','observation':'end of turns 1,2,3 at NKM centre'}
     a.output.write_text(json.dumps(out,indent=2,allow_nan=False)+'\n');print(json.dumps({k:out[k] for k in
         ('peak_phase_maximum_duration_s','no_return_field_maximum_duration_s','example_return_field_fractions','eight_us_first_return_fraction')},indent=2))
 

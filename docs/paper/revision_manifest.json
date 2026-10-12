@@ -50,12 +50,17 @@
     "round2_statistics": "results/journal_campaign_03/d2_existing_statistics.json",
     "round2_generality": "results/journal_campaign_03/d7_generality/generality_scaling.json",
     "round2_ring_scenario": "results/journal_campaign_03/d5_selected_scenario/corrected_ring_summary.json",
-    "round2_pulse": "results/journal_campaign_03/d10_pulse.json",
+    "round2_pulse": "results/journal_campaign_03/d12_final_pulse.json",
     "round2_transparency": "results/journal_campaign_03/d9_transparency_resolved.json",
     "round2_stored_tracked": "results/journal_campaign_03/d9_stored_beam_end_turns.json",
     "round2_chamber_ideal": "results/journal_campaign_03/d6_chamber_full/chamber_summary.json",
     "round2_chamber_corrected": "results/journal_campaign_03/d6_corrected_chamber/chamber_summary.json",
-    "round2_chamber_da": "results/journal_campaign_03/d6_chamber_da.json"
+    "round2_chamber_da": "results/journal_campaign_03/d6_chamber_da.json",
+    "round2_window": "results/journal_campaign_03/d6_design_window/window_summary.json",
+    "round2_validation": "results/journal_campaign_03/d11_validation/validation_summary.json",
+    "round2_backend_contract": "results/journal_campaign_03/d11_validation/backend_contract.json",
+    "round2_trajectory_final": "results/journal_campaign_03/d11_trajectory_final_edges.json",
+    "round2_lattice_parameters": "results/journal_campaign_03/d12_lattice_parameters_final.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -107,11 +112,16 @@
     "round2_statistics": "b929bc71d1967fec6ae00558cada343203e48e0351469f87ed5e6b5e90f1c454",
     "round2_generality": "7e402b27dc30c260680362da46a7d37a9c4714a82c2c331a524e35cb3259aeaf",
     "round2_ring_scenario": "f18bf999a6819abdf0595d7b06920549f5dc19272315ce34df06248459dd1b9e",
-    "round2_pulse": "c9d7595ded81d769ac5e3dc1868e7e36993c31aac05686701ddd13dfb30d0166",
+    "round2_pulse": "a1f89a0865f34f668f48ca53a05b27e52180bac60e3ad707c4b509595182dc38",
     "round2_transparency": "f393342005a823988935c6a22b69ce5a08db03f44e0c9c99601b4b7f4171f1b5",
     "round2_stored_tracked": "d797790bdd66116902f3def56429bb473ae522f00382b692bbae0e35bb46f1f9",
     "round2_chamber_ideal": "4a2c525252521d3f0d53c690b2d9bd0543e0581d185701eedcdd9bde8269f50d",
     "round2_chamber_corrected": "7eafbce1c7a8987724f37e15b27f716e3c52dad8b373c51738055b95a29d3731",
-    "round2_chamber_da": "a5672bb85481124efafc834b4491de8bf34f64bcf5e25621fbea254b58a3e2a4"
+    "round2_chamber_da": "a5672bb85481124efafc834b4491de8bf34f64bcf5e25621fbea254b58a3e2a4",
+    "round2_window": "a2d02181125a9888161bd85b77862b4464d4fc286ca3fb6e6a3120534b13f8a7",
+    "round2_validation": "41ed591fe6527b49b5540af89c3379696a09a3b4922576ceaad86b5e9286f757",
+    "round2_backend_contract": "c529e763c2316dd75f6d4b2a1bf9fcfa17628dc8d041121293e38110eb6186d9",
+    "round2_trajectory_final": "3db698b2b84544329f9d049532400f0d1f8849ece7e0a01a1660232699bcf725",
+    "round2_lattice_parameters": "e9947b5a4ba362b0f46aa9051a10388c2b601d524f1fd6e39852240262271b26"
   }
 }

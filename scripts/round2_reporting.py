@@ -13,6 +13,7 @@ def scientific(value):
 def parameters(builder):
     if builder.has('round2_lattice_parameters'):
         d=builder.load('round2_lattice_parameters')
+        if 'source_elements' in d:builder.macro('FinalSourceElements',d['source_elements'],'{:d}')
         for key,name,scale,fmt in (('rf_frequency_hz','FinalRFfreqMHz',1e-6,'{:.3f}'),
                                    ('rf_voltage_V','FinalRFvoltageMV',1e-6,'{:.2f}'),
                                    ('bunch_length_m','FinalStoredBunchMm',1e3,'{:.2f}')):
@@ -79,6 +80,9 @@ def window(builder):
 def validation(builder):
     if not builder.has('round2_validation'):return
     data=builder.load('round2_validation');rows=data['rows']
+    if builder.has('round2_backend_contract'):
+        contract=builder.load('round2_backend_contract')
+        builder.macro('FinalBackendTangentMax',scientific(max(contract['absolute_one_turn_difference'])))
     def selected(case):return [r for r in rows if r['case']==case]
     def aggregate(case,turns):
         rs=selected(case);n=sum(r['n_particles'] for r in rs)
@@ -97,10 +101,17 @@ def validation(builder):
     axes[1].set_xlabel('turns');axes[1].set_ylabel('nominal survival [%]')
     for i,(case,label) in enumerate((('lower_edge','lower edge'),('upper_edge','upper edge'),('degraded_ring','ring 5501'))):
         a=aggregate(case,500);b=aggregate(case,4000)
-        axes[2].plot([i-.12,i+.12],[a[0]*100,b[0]*100],'o-',color='#1765a6')
+        axes[2].plot([i-.12,i+.12],[a[0]*100,b[0]*100],'-',color='#1765a6',lw=.8)
+        for x,value,marker,face,label in ((i-.12,a,'o','#1765a6','500 turns'),
+                                          (i+.12,b,'s','white','4000 turns')):
+            cap,ci,_,_=value
+            axes[2].errorbar(x,cap*100,yerr=[[(cap-ci[0])*100],[(ci[1]-cap)*100]],
+                            fmt=marker,color='#1765a6',markerfacecolor=face,capsize=2,
+                            label=label if i==0 else '_nolegend_')
         for value,name in ((a[0],'Short'),(b[0],'Long'),(b[1][0],'LongLo'),(b[1][1],'LongHi')):
             builder.macro('Final'+{'lower_edge':'Lower','upper_edge':'Upper','degraded_ring':'Degraded'}[case]+name,value*100,'{:.1f}')
     axes[2].set_xticks(range(3),['lower','upper','degraded']);axes[2].set_ylabel('500 to 4000 turns [%]')
+    axes[2].legend(loc='center left',fontsize=7)
     long=aggregate('nominal_native',4000);short=aggregate('nominal_native',500)
     for value,name in ((long[0],'FinalLong'),(long[1][0],'FinalLongLo'),(long[1][1],'FinalLongHi'),
                        (short[0]-long[0],'FinalLateLoss')):builder.macro(name,value*100,'{:.1f}')
@@ -164,5 +175,24 @@ def robustness(builder):
         label=r['variable'].replace('_',r'\_')
         rows.append(f"{label} & {r['partial_spearman_rho']:+.2f} & {r['p_value']:.3g} & {r['p_holm']:.3g} \\\\")
     builder.macro('FinalRankRows','\n'.join(rows))
+    names={'booster_x_m':'booster position', 'booster_xp_rad':'booster angle',
+           'energy_dp_p':'mean energy', 'beta_mismatch_x':'horizontal beta mismatch',
+           'beta_mismatch_y':'vertical beta mismatch', 'nkm_scale_err':'common NKM amplitude',
+           'nkm_dx_m':'NKM displacement', 'ring_co_x_m':'residual orbit',
+           'septum_x_m':'septum displacement', 'dipole_b_err':'BTS dipole field',
+           'septum_strength_rel':'septum strength', 'rf_phase_rad':'RF phase',
+           'arrival_time_s':'pulse-relative timing', 'emit_rel':'emittance variation',
+           'espread_abs':'energy-spread variation', 'rms_quad_k_err':'quadrupole strength rms',
+           'rms_quad_dx_m':'quadrupole horizontal-offset rms',
+           'rms_quad_dy_m':'quadrupole vertical-offset rms', 'rms_quad_roll_rad':'quadrupole roll rms'}
+    significant=sorted((r for r in data['partial_correlations'] if r['p_holm']<.05),key=lambda r:r['p_holm'])
+    if significant:
+        terms=[f"{names.get(r['variable'],r['variable'].replace('_',' '))} "
+               f"($\\rho={r['partial_spearman_rho']:+.2f}$, $p_\\mathrm{{Holm}}={scientific(r['p_holm'])}$)"
+               for r in significant[:5]]
+        summary='The smallest Holm-adjusted probabilities below 0.05 correspond to '+ '; '.join(terms)+'.'
+    else:
+        summary='No sampled-error magnitude passes the Holm-adjusted 0.05 threshold.'
+    builder.macro('FinalRankSummary',summary)
     builder.save(fig,'fig8_robustness',['round2_robustness','round2_tuning']+[f'round2_errors_{s}' for s in (42,123,777)],
                  '150 joint draws conditional on ten corrected rings; paired jitter has 50 draws; tuning gains use held-out particles and 95% realization bootstrap')

@@ -10,9 +10,11 @@ from nkm_injection.trajectory_reference import integrate_reference
 from nkm_injection.wire_field import FilamentNKMKicker
 
 
-def validate(config):
-    cases = [('nominal', 0., 0., 0., 0.), ('lower_window', -.00030, 0., 0., 0.),
-             ('upper_window', .00044, 0., 0., 0.), ('vertical_position', 0., .001, 0., 0.),
+def validate(config,edge_offsets_rad=(-.00030,.00044)):
+    if not np.isfinite(edge_offsets_rad).all() or not edge_offsets_rad[0]<0<edge_offsets_rad[1]:
+        raise ValueError('Window edges must bracket the nominal angle')
+    cases = [('nominal', 0., 0., 0., 0.), ('lower_window', edge_offsets_rad[0], 0., 0., 0.),
+             ('upper_window', edge_offsets_rad[1], 0., 0., 0.), ('vertical_position', 0., .001, 0., 0.),
              ('vertical_angle', 0., 0., .0002, 0.), ('vertical_both', 0., .001, .0002, 0.),
              ('delta_minus', 0., .001, .0002, -.002), ('delta_plus', 0., .001, .0002, .002)]
     rows = []
@@ -59,9 +61,11 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--study-config', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True)
+    p.add_argument('--edge-offsets-mrad',type=float,nargs=2,default=[-.30,.44])
     a=p.parse_args()
     if a.output.exists(): raise SystemExit('Output exists')
-    out=validate(InjectionStudyConfig.load(a.study_config))
+    out=validate(InjectionStudyConfig.load(a.study_config),np.asarray(a.edge_offsets_mrad)*1e-3)
+    out['edge_offsets_mrad']=a.edge_offsets_mrad
     out['config_sha256']=hashlib.sha256(a.study_config.read_bytes()).hexdigest()
     a.output.parent.mkdir(parents=True, exist_ok=True)
     a.output.write_text(json.dumps(out, indent=2, allow_nan=False)+'\n')

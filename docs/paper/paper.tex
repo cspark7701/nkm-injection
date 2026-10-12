@@ -50,7 +50,7 @@ The Korea Light Source (KLS) is a 4\,GeV, 28-cell hybrid multibend-achromat ring
 
 The supplied file \texttt{K4GSR\_HBIv4-1} is identified by the author as the lattice used by Kim \emph{et al.} at IPAC'25~\cite{Kim2025}. It is a design version, not the latest KLS lattice; its file identifier is retained because an independent release date was not supplied. Later lattice versions may change the nonlinear acceptance, so results here apply to this version.
 
-The KLS design lattice (file \texttt{K4GSR\_HBIv4-1}; circumference 799.30\,m, 3483 elements) is tracked with the Accelerator Toolbox~\cite{Terebilo2001,Rogers2017} in six dimensions with RF and radiation (table~\ref{tab:params}). The ring is re-ordered to start at the NKM centre, which is the kick and observation point. The synchrotron period is about 290 turns and the horizontal damping time about 3950 turns. Losses arise at the septum blade and from dynamical instability; chamber apertures and ring errors enter only in the sensitivity studies of section~\ref{sec:survival}. Figure~\ref{fig:da} shows the DA from native tracking over 500 turns: on momentum, particles with $x'=0$ are stable between $\DAxMinMm$ and $+\DAxMaxMm$\,mm.
+The KLS design lattice (file \texttt{K4GSR\_HBIv4-1}; source circumference 799.30\,m, \FinalSourceElements\ elements) is tracked with the Accelerator Toolbox~\cite{Terebilo2001,Rogers2017} in six dimensions with RF and radiation (table~\ref{tab:params}). The ring is re-ordered to start at the NKM centre, which is the kick and observation point. The synchrotron period is about 290 turns and the horizontal damping time about 3950 turns. Losses arise at the septum blade and from dynamical instability; chamber apertures and ring errors enter only in the sensitivity studies of section~\ref{sec:survival}. Figure~\ref{fig:da} shows the DA from native tracking over 500 turns: on momentum, particles with $x'=0$ are stable between $\DAxMinMm$ and $+\DAxMaxMm$\,mm.
 
 \begin{table}[htbp]
 \centering
@@ -95,7 +95,7 @@ The magnet is tracked in 640 drift--kick--drift slices over $\pm0.45$\,m in cano
 \label{fig:geom}
 \end{figure}
 
-An independent adaptive DOP853 integration of these stated paraxial equations checks the finite-slice map at the nominal point, the angular-window edges, nonzero vertical position and angle, and $\delta=\pm0.002$. With relative/absolute tolerances $2\times10^{-11}/2\times10^{-13}$, the maximum 640-slice discrepancies are $3.9\times10^{-11}$\,m in $x$, $4.0\times10^{-10}$\,rad in $p_x$, $2.9\times10^{-11}$\,m in $y$ and $5.1\times10^{-10}$\,rad in $p_y$. Refinement through 1280 slices and $\pm0.9$\,m spans is below one percent of a $0.1\sigma$ response in either plane. The field is exact for the filament geometry; tracking is a validated paraxial approximation.
+An independent adaptive DOP853 integration checks the stated paraxial equations at the nominal point, the final interpolated angular edges (offsets \ODEEdgeLoMrad/\ODEEdgeHiMrad\,mrad), nonzero vertical position and angle, and $\delta=\pm0.002$. Relative/absolute tolerances are $2\times10^{-11}/2\times10^{-13}$. Maximum 640-slice discrepancies are $\ODEMaxX$\,m in $x$, $\ODEMaxPx$\,rad in $p_x$, $\ODEMaxY$\,m in $y$ and $\ODEMaxPy$\,rad in $p_y$. Refinement through 1280 slices and $\pm0.9$\,m spans is below one percent of a $0.1\sigma$ response in either plane. The field is exact for the filament geometry; tracking is a validated paraxial approximation.
 
 \subsection{Injected beam, capture and controls}
 
@@ -120,23 +120,25 @@ The vertical field matters as much. Near the kick extremum the 3-D magnet defocu
 \section{Operating window}
 \label{sec:window}
 
-Model validation of the tracking backend is summarised in figure~\ref{fig:val}: a linear one-turn map without DA predicts \ProvCaptureMap\,\% where native tracking gives \ProvCaptureNative\,\% on identical bunches, so all results use native tracking; capture after 500 turns (\TurnConvShort\,\%) agrees with \TurnConvLongTurns\ turns (\TurnConvLong\,\%). Long-term survival at the final point is treated in section~\ref{sec:survival}.
+At the final point and reference chamber, the native ring captures \FinalBackendNative\,\% at 500 turns, versus \FinalBackendLinear\,\% for an affine element-map reference on identical particles. The reference retains element lengths and explicit aperture checks at physical boundaries, and linearizes about the six-dimensional closed orbit with RF and radiation. A small-perturbation one-turn check agrees within $\FinalBackendTangentMax$ in the corresponding metre/radian/dimensionless coordinates. It deliberately omits nonlinear dynamics; all capture conclusions use native tracking.
+
+Nominal native survival at 4000 turns is \FinalLong\,\% (95\,\% particle Wilson interval \FinalLongLo--\FinalLongHi\,\%), a loss of \FinalLateLoss\ percentage points after turn 500. The 500-turn prefix reproduces the paired chamber-study particle masks exactly. Fresh bunches at the interpolated lower and upper angular-edge candidates give \FinalLowerShort/\FinalUpperShort\,\% at 500 turns and \FinalLowerLong/\FinalUpperLong\,\% at 4000 turns (95\,\% intervals \FinalLowerLongLo--\FinalLowerLongHi\,\% and \FinalUpperLongLo--\FinalUpperLongHi\,\%). The degraded corrected ring 5501 gives \FinalDegradedShort\,\% at 500 turns and \FinalDegradedLong\,\% at 4000 turns (\FinalDegradedLongLo--\FinalDegradedLongHi\,\%). Thus the stated window remains a 500-turn conditional contour, not an infinite-time acceptance or a guaranteed 4000-turn 80\,\% contour.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{generated/figures/fig3_model_validation.pdf}
-\caption{Tracking-backend validation at a provisional point (campaign~01, thin kick map): capture after 500 turns for native element tracking and a linear one-turn map on identical 200-particle bunches (left) and turn convergence (right).}
+\includegraphics[width=\textwidth]{generated/figures/fig3_model_validation.pdf}
+\caption{Final-point validation with the 3-D NKM, design beam and reference chamber. Left: native and affine-element backends at 500 turns on the same two 500-particle bunches (seeds 1001/1002; 95\,\% particle Wilson bars). Centre: native nominal survival with turn count (same particles; Wilson band). Right: 500-to-4000-turn survival for interpolated lower/upper angular-edge candidates and corrected ring 5501, each with two fresh 500-particle bunches (seeds 2001/2002); circles/squares denote 500/4000 turns, with 95\,\% Wilson bars. Intervals are conditional on the selected models and ring, not machine-population uncertainty.}
 \label{fig:val}
 \end{figure}
 
-The matched-point grid (figure~\ref{fig:window}, left; \GridPoints\ points, \GridParticles\ particles each; \GridSkipped\ combinations have no inner matched root) shows a ridge of 90--92\,\% capture along which the matched centroid lies at the kick extremum. The selection rule, declared before the scan, is the largest 95\,\% lower bound; it selects $x_\mathrm{inj}=\OpXinjMm$\,mm, $S=\OpScale$, $x'_\mathrm{inj}=\OpXpMrad$\,mrad (centroid at \OpCentroidMm\,mm), with \OpGridCapture\,\% on the grid. Four fresh bunches not used for selection give \ValThreeD\,\% (\ValThreeDLo--\ValThreeDHi\,\%), so the selection is not biased by grid noise.
+The point $x_\mathrm{inj}=\OpXinjMm$\,mm, $S=\OpScale$, $x'_\mathrm{inj}=\OpXpMrad$\,mrad was selected by the largest particle-Wilson lower bound in a fixed matched-point grid using a 100/10\,nm\,rad sensitivity beam. Four fresh bunches gave \ValThreeD\,\% (\ValThreeDLo--\ValThreeDHi\,\%) for that beam and septum-only aperture. This independent sample reduces reuse of selection noise; it does not remove dependence on the searched grid or model. The design-beam/chamber studies retain these knobs without reselection and therefore test a conditional operating point rather than a new global optimum.
 
-We define the operating window by a capture threshold of \WinThreshold\,\%. Scanning the angle offset in steps of \WinAngleStep\,mrad (\WinAngleN\ particles per value), capture exceeds the threshold from \WinAngleLo\ to \WinAngleHi\,mrad (width \WinAngleWidth\,mrad; crossing uncertainty about $\pm$\WinAngleHiUnc\,mrad); the maximum, \WinAngleBestCapture\,\%, lies at \WinAngleBestOffset\,mrad, so zero exit angle is close to, but not exactly at, the capture optimum. In septum position the window extends from \WinPosLo\ to \WinPosHi\,mm. Figure~\ref{fig:accept} shows the single-particle acceptance in septum phase space with the injected-beam ellipses and the blade.
+We estimate the connected operating window above 80\,\% capture around that fixed point. Linear interpolation gives angle offsets from \FinalAngleLo\ to \FinalAngleHi\,mrad (width \FinalAngleWidth\,mrad), and position offsets span \FinalPositionLo\ to \FinalPositionHi\,mm (width \FinalPositionWidth\,mm). Each value uses seeds 1001/1002 and 500 particles per seed. A fixed 0.2\,mm/mrad grid is extended if a boundary remains above threshold, with a maximum offset of 3; crossing cells are refined once to 0.1 spacing and linearly interpolated. Grid resolution is not a confidence interval for a crossing. The long-turn edge checks use fresh particles and do not redefine the selected 500-turn window.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig5_operating_window.pdf}
-\caption{Operating window with the 3-D NKM. Left: capture at the matched angle versus $x_\mathrm{inj}$ and $S$ (one 200-particle bunch per point; dashes: no inner matched root; box: selected point). Centre and right: capture versus the offset of the septum-exit angle from the matched angle and of the septum-exit position, at the selected point (two 500-particle bunches per value; band: 95\,\% Wilson interval; dashed: \WinThreshold\,\% threshold).}
+\caption{Design-beam operating window with the reference chamber and fixed NKM settings. Left/right: capture versus septum-exit angle/position offset, 500 native turns, two 500-particle bunches (seeds 1001/1002) per point. Bands are conditional 95\,\% particle Wilson intervals; the dashed line marks 80\,\%. Crossing cells have 0.1\,mrad/mm spacing after refinement.}
 \label{fig:window}
 \end{figure}
 
@@ -202,11 +204,11 @@ Loop & $D_x$ & $D_y$ & $Q_n$ & $Q_s$ & Limit\\\midrule
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{generated/figures/fig7_controls_transparency.pdf}
-\caption{Left: capture of four fresh 500-particle bunches at the selected point for the 3-D NKM, the calibrated linearised and dipole controls and the kicker off (markers: bunches; bars: mean). Right: deterministic centroid amplitude and filamented emittance growth versus NKM-to-orbit offset. Open squares are the mean of two 300-particle tracked seeds, using maximum centroid differences over ends of turns 1--50; they are not 1000-turn amplitudes. Emittance ratios in the text use the end of turn 1000. No sampling interval is assigned to deterministic quadrature.}
+\caption{Left: 100/10\,nm\,rad sensitivity case with the septum aperture and no additional chamber; four fresh 500-particle bunches at the selected point for the 3-D NKM, the calibrated linearised and dipole controls and the kicker off (markers: bunches; bars: mean). The inset shows per-bunch NKM-minus-dipole differences (dots), their mean (square) and a paired-bunch bootstrap 95\,\% interval (10\,000 resamples, seed 1729; only four bunches). Right: deterministic centroid amplitude and filamented emittance growth versus NKM-to-orbit offset. Open squares are the mean of two 300-particle tracked seeds, using maximum centroid differences over ends of turns 1--50; they are not 1000-turn amplitudes. Emittance ratios in the text use the end of turn 1000. No sampling interval is assigned to deterministic quadrature.}
 \label{fig:transp}
 \end{figure}
 
-The controls (figure~\ref{fig:transp}, left) separate the cost of nonlinearity: the linearised and dipole kicks capture \ValLinear\ and \ValDipole\,\%, i.e.\ the NKM loses \ValDiffDipole\,$\pm$\,\ValDiffDipoleSe\ points against the dipole on identical particles; with the kicker off no particle survives.
+The controls (figure~\ref{fig:transp}, left) separate the cost of nonlinearity: the linearised and dipole kicks capture \ValLinear\ and \ValDipole\,\%, the paired NKM-minus-dipole difference is \ValDiffDipole\ points (95\,\% paired-bunch bootstrap interval \ValDiffDipoleLo\ to \ValDiffDipoleHi), conditional on this larger-emittance sample; with the kicker off no particle survives.
 
 \section{Robustness and tolerances}
 \label{sec:robust}

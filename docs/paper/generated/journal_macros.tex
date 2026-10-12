@@ -55,6 +55,9 @@
 \newcommand{\ChamberDiffHi}{+0.3}
 \newcommand{\ChamberDiffLo}{-0.9}
 \newcommand{\ChamberDipole}{97.3}
+\newcommand{\ChamberGridFifteen}{99.7}
+\newcommand{\ChamberGridTen}{81.7}
+\newcommand{\ChamberGridTwelve}{97.0}
 \newcommand{\ChamberIdealDANeg}{-11.0}
 \newcommand{\ChamberIdealDAPos}{12.5}
 \newcommand{\ChamberNom}{97.0}
@@ -78,6 +81,42 @@
 \newcommand{\EmitTwentyFiveCap}{98.9}
 \newcommand{\EmitTwoHundredCap}{81.1}
 \newcommand{\EmitYRatio}{0.1}
+\newcommand{\FinalAlphaC}{7.77\times10^{-5}}
+\newcommand{\FinalAngleHi}{0.24}
+\newcommand{\FinalAngleLo}{-0.52}
+\newcommand{\FinalAngleWidth}{0.76}
+\newcommand{\FinalBackendLinear}{100.0}
+\newcommand{\FinalBackendNative}{97.0}
+\newcommand{\FinalBackendTangentMax}{1.36\times10^{-14}}
+\newcommand{\FinalDampingXMs}{10.54}
+\newcommand{\FinalDampingYMs}{19.43}
+\newcommand{\FinalDampingZMs}{16.79}
+\newcommand{\FinalDegradedLong}{1.4}
+\newcommand{\FinalDegradedLongHi}{2.3}
+\newcommand{\FinalDegradedLongLo}{0.8}
+\newcommand{\FinalDegradedShort}{3.0}
+\newcommand{\FinalInjectedBunchMm}{13.4}
+\newcommand{\FinalInjectedEmitNm}{7.67}
+\newcommand{\FinalLateLoss}{0.9}
+\newcommand{\FinalLong}{96.1}
+\newcommand{\FinalLongHi}{97.1}
+\newcommand{\FinalLongLo}{94.7}
+\newcommand{\FinalLowerLong}{79.4}
+\newcommand{\FinalLowerLongHi}{81.8}
+\newcommand{\FinalLowerLongLo}{76.8}
+\newcommand{\FinalLowerShort}{79.5}
+\newcommand{\FinalPositionHi}{1.32}
+\newcommand{\FinalPositionLo}{-0.67}
+\newcommand{\FinalPositionWidth}{1.99}
+\newcommand{\FinalRFfreqMHz}{499.593}
+\newcommand{\FinalRFvoltageMV}{3.08}
+\newcommand{\FinalSourceElements}{3481}
+\newcommand{\FinalStoredBunchMm}{3.63}
+\newcommand{\FinalSynchTune}{3.44\times10^{-3}}
+\newcommand{\FinalUpperLong}{84.7}
+\newcommand{\FinalUpperLongHi}{86.8}
+\newcommand{\FinalUpperLongLo}{82.3}
+\newcommand{\FinalUpperShort}{85.0}
 \newcommand{\GradResidualRel}{$7\times10^{-5}$}
 \newcommand{\GridParticles}{200}
 \newcommand{\GridPoints}{27}
@@ -177,6 +216,20 @@
 \newcommand{\NKMCurrentA}{3000}
 \newcommand{\NKMLengthMm}{525}
 \newcommand{\NoReturnMaxPulseUs}{5.33}
+\newcommand{\ODEEdgeHiMrad}{0.241}
+\newcommand{\ODEEdgeLoMrad}{-0.517}
+\newcommand{\ODEMaxPx}{5.08\times10^{-10}}
+\newcommand{\ODEMaxPy}{5.06\times10^{-10}}
+\newcommand{\ODEMaxX}{3.26\times10^{-11}}
+\newcommand{\ODEMaxY}{2.90\times10^{-11}}
+\newcommand{\ODEValidationRows}{nominal & 0.0 & 0.0 & 0.0 & 0.024 & 0.137 & 0.000 & 0.000 \\
+lower angle & 0.0 & 0.0 & 0.0 & 0.011 & 0.508 & 0.000 & 0.000 \\
+upper angle & 0.0 & 0.0 & 0.0 & 0.033 & 0.139 & 0.000 & 0.000 \\
+vertical position & 1.0 & 0.0 & 0.0 & 0.025 & 0.226 & 0.027 & 0.500 \\
+vertical angle & 0.0 & 0.2 & 0.0 & 0.024 & 0.137 & 0.002 & 0.004 \\
+both vertical & 1.0 & 0.2 & 0.0 & 0.024 & 0.226 & 0.029 & 0.505 \\
+$\delta<0$ & 1.0 & 0.2 & -2.0 & 0.024 & 0.227 & 0.029 & 0.506 \\
+$\delta>0$ & 1.0 & 0.2 & 2.0 & 0.024 & 0.225 & 0.029 & 0.504 \\}
 \newcommand{\OffCapMax}{93.6}
 \newcommand{\OffCapMin}{87.0}
 \newcommand{\OffRangeMm}{0.6}
@@ -188,7 +241,7 @@
 \newcommand{\OpXpMrad}{4.853}
 \newcommand{\PeakKickMrad}{4.89}
 \newcommand{\PeakKickXmm}{-8.6}
-\newcommand{\PeakPhaseMaxPulseUs}{5.84}
+\newcommand{\PeakPhaseMaxPulseUs}{5.85}
 \newcommand{\ProvCaptureMap}{62}
 \newcommand{\ProvCaptureNative}{43}
 \newcommand{\QuarterAboveEighty}{56.00}
@@ -199,7 +252,7 @@
 \newcommand{\QuarterPairedLo}{-1.50}
 \newcommand{\QuarterPairs}{50}
 \newcommand{\QuarterPten}{38.35}
-\newcommand{\ResidualAllowMrad}{0.074}
+\newcommand{\ResidualAllowMrad}{0.076}
 \newcommand{\ResidualTurnOne}{0.14}
 \newcommand{\ResidualTurnTwo}{0.02}
 \newcommand{\RevPeriodUs}{2.666}
@@ -311,8 +364,12 @@
 \newcommand{\TurnTwoXmm}{6.2}
 \newcommand{\ValBunches}{4}
 \newcommand{\ValDiffDipole}{-4.1}
+\newcommand{\ValDiffDipoleHi}{-3.2}
+\newcommand{\ValDiffDipoleLo}{-4.7}
 \newcommand{\ValDiffDipoleSe}{0.5}
 \newcommand{\ValDiffLinear}{-4.8}
+\newcommand{\ValDiffLinearHi}{-4.1}
+\newcommand{\ValDiffLinearLo}{-5.3}
 \newcommand{\ValDiffLinearSe}{0.3}
 \newcommand{\ValDipole}{97.0}
 \newcommand{\ValDipoleHi}{97.7}

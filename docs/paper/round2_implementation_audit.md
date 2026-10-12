@@ -12,7 +12,7 @@ Reproduce with `.venv/bin/python scripts/validate_round2_trajectory.py --study-c
 
 ## Ideal static steering
 
-For a perturbed BTS map T_e and its zero-input reference r_e=T_e(0), the algorithm transports every particle and then applies (x,p_x,y,p_y,delta,ct) -> (x−r_e,x, p_x−r_e,px, y,p_y,delta,ct). Here `r_e,x` and `r_e,px` denote the first two components of the transported reference, not a fitted bunch centroid. This is an ideal downstream horizontal translation, not correction by actual BTS magnets. A lost reference now raises an explicit error.
+For a perturbed BTS map T_e and its zero-input reference r_e=T_e(0), the algorithm transports every particle and then applies `(x, p_x, y, p_y, delta, ct) -> (x - r_x, p_x - r_px, y, p_y, delta, ct)`. Here `r_x` and `r_px` denote the first two components of the transported reference, not a fitted bunch centroid. This is an ideal downstream horizontal translation, not correction by actual BTS magnets. A lost reference now raises an explicit error.
 
 The algorithm preserves shot-dependent booster position, angle and energy offsets, the beam covariance, vertical orbit offsets and static optics distortion. Kicker-to-orbit and septum offsets also remain. It does not remove the finite-sample bunch centroid or re-fit injection knobs. Small Twiss mismatch alone does not establish small capture loss.
 

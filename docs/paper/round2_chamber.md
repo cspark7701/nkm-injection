@@ -29,14 +29,14 @@ turns with RF and radiation. Injection is at x = −19.5 mm, angle = 4.852537856
 and NKM strength scale 0.85. The ideal NKM and calibrated dipole share particles.
 Losses include upstream transport, septum creation, injection transport, field
 domain and native ring losses. Ring loss records contain particle ID, zero-based
-turn, longitudinal position from the NKM centre, element and plane. For an ellipse,
+turn, element-entrance longitudinal position from the NKM centre, element and plane. For an ellipse,
 the plane label denotes the larger normalized transverse coordinate at loss.
 
 The ideal reference gives 970/1000 captured particles with the NKM and 973/1000
 with the paired dipole. Rectangle/ellipse and open/closed gaps give the same nominal
-counts. At arc half-widths 10, 12 and 15 mm, capture is respectively 81.7%, 97.0%
+counts. The aperture-size grid uses rectangular bounds. At arc half-widths 10, 12 and 15 mm, capture is respectively 81.7%, 97.0%
 and 99.7% for each tested arc half-height (4.87, 7.5, 9 mm). Thus 10 mm is the
-smallest **tested** width meeting 80% in this ideal-ring sample; 12 mm is the
+smallest **tested rectangular-grid** width meeting 80% in this ideal-ring sample; 12 mm is the
 smallest tested width retaining the reference 97%. Neither is an interpolated
 engineering minimum or a guarantee for corrected-error machines.
 

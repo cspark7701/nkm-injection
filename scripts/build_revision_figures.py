@@ -128,12 +128,14 @@ class RevisionBuilder(bj.Builder):
         for ix,hx in enumerate((10,12,15)):
             for iy,hy in enumerate((4.87,7.5,9)):
                 grid[iy,ix]=100*aggregate(select(ideal,f"scan_x{hx:g}_y{hy:g}"))
+        for i,name in enumerate(("Ten","Twelve","Fifteen")):
+            self.macro("ChamberGrid"+name,grid[-1,i],"{:.1f}")
         axes[0].imshow(grid,origin="lower",vmin=0,vmax=100,cmap="Blues",aspect="auto")
         for iy in range(3):
             for ix in range(3):axes[0].text(ix,iy,f"{grid[iy,ix]:.1f}",ha="center",va="center",color="white" if grid[iy,ix]>70 else INK)
         axes[0].set_xticks(range(3),[10,12,15]);axes[0].set_yticks(range(3),[4.87,7.5,9])
         axes[0].set_xlabel("arc half-width [mm]");axes[0].set_ylabel("arc half-height [mm]")
-        axes[0].set_title("Ideal ring: capture [%]")
+        axes[0].set_title("Rectangular scan [%]")
         for data,label,color in ((ideal,"ideal",COL["fieldmap"]),(corrected,"corrected seeds",COL["dipole"])):
             rows=select(data,reference);denominator=sum(r["n_particles"] for r in rows)
             for plane,style in (("x","-"),("y","--"),("dynamical",":")):
@@ -146,7 +148,7 @@ class RevisionBuilder(bj.Builder):
         axes[2].plot(range(1,11),closed,"s--",label="closed ellipse")
         axes[2].set_xlabel("ring-error seed index");axes[2].set_ylabel("500-turn capture [%]");axes[2].legend(fontsize=7)
         self.save(fig,"fig11_chamber",["round2_chamber_ideal","round2_chamber_corrected"],
-                  "2 seeds x 500 particles per ring/profile/model; nominal grid points and loss histograms; 10 corrected-ring scenarios")
+                  "2 seeds x 500 particles per ring/profile/model; ideal rectangular aperture grid; reference-ellipse loss histograms; 10 corrected-ring scenarios")
 
     def fig_generality(self):
         if "round2_generality" not in self.m["artifacts"]:
@@ -445,7 +447,7 @@ class RevisionBuilder(bj.Builder):
         fig, axes = plt.subplots(1, 2, figsize=(7.4, 3.0), gridspec_kw={"width_ratios": [1, 1.2]}, layout="constrained")
         ax = axes[0]
         models = ["fieldmap_3d", "linear", "dipole", "off"]
-        labels = {"fieldmap_3d": "NKM (3-D)", "linear": "linearised", "dipole": "dipole", "off": "off"}
+        labels = {"fieldmap_3d": "NKM (3-D)", "linear": "linear", "dipole": "dipole", "off": "off"}
         caps = {m: np.array([r["models"][m]["capture"] for r in val["rows"]]) for m in models}
         for i, m in enumerate(models):
             ax.scatter(np.full(len(caps[m]), i), caps[m] * 100, color=COL3[m], marker=MARK.get(m, "o") if m != "fieldmap_3d" else "o", s=26, zorder=3)
@@ -462,6 +464,19 @@ class RevisionBuilder(bj.Builder):
             d = caps["fieldmap_3d"] - caps[m]
             self.macro(f"ValDiff{nm}", d.mean() * 100, "{:+.1f}")
             self.macro(f"ValDiff{nm}Se", d.std(ddof=1) / np.sqrt(len(d)) * 100, "{:.1f}")
+            bootstrap=d[np.random.default_rng(1729).integers(0,len(d),(10000,len(d)))].mean(axis=1)*100
+            lo,hi=np.quantile(bootstrap,[.025,.975])
+            self.macro(f"ValDiff{nm}Lo",lo,"{:+.1f}")
+            self.macro(f"ValDiff{nm}Hi",hi,"{:+.1f}")
+            if m=="dipole":
+                inset=ax.inset_axes([.13,.24,.58,.33])
+                inset.scatter(np.arange(len(d)),d*100,color=COL3['fieldmap_3d'],s=10)
+                inset.errorbar(len(d)+.3,d.mean()*100,
+                               yerr=[[d.mean()*100-lo],[hi-d.mean()*100]],
+                               fmt='s',color=INK,capsize=3,markersize=3)
+                inset.axhline(0,color=INK2,lw=.5)
+                inset.set_xticks([]);inset.tick_params(labelsize=6)
+                inset.set_title('NKM − dipole [points]',fontsize=6)
         self.macro("ValBunches", len(val["rows"]), "{:d}")
         self.macro("ValParticles", val["rows"][0]["models"]["fieldmap_3d"]["n"], "{:d}")
         ax = axes[1]

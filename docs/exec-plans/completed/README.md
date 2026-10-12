@@ -478,3 +478,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 151. [**Milestone 151 — Prepare checkpointed final ensembles and held-out tuning (D8)**](151_round2_final_campaign_driver.md)
     - Add the gated campaign driver, paired jitter analysis and bounded seven-evaluation tuning search. Freeze realization inputs and source hashes for strict resume; pair corrected-ring and particle seeds, move the return septum consistently, and validate tuned knobs on held-out particles. This milestone completes implementation; the D8 numerical campaign is running and is not yet complete.
+
+152. [**Milestone 152 — Validate chamber operating point and long-turn boundaries (D11)**](152_round2_operating_validation.md)
+    - Replace provisional validation with native and affine backend comparisons, refine the connected operating window, and track the nominal point, two interpolated edge candidates and a degraded corrected ring for 4000 turns. Nominal survival falls from 97.0% at 500 turns to 96.1%; fresh edge samples qualify the interpolated 80% boundaries. Reconcile the pulse allowance and independent trajectory checks with the final window.

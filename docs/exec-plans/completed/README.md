@@ -539,6 +539,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 171. [**Milestone 171 — Qualification of Tolerance Distributions and Engineering Requirements (B09)**](171_b09_qualify_tolerance_distributions.md)
     - Audited 550,000-sample historical tolerance dataset across 4 seeds; calculated Clopper-Pearson exact binomial confidence interval [2.95e-6, 2.12e-5] for the 5 rare tail failure cases (beta_y > 60 m); evaluated prefix convergence and established OAT hardware specifications.
 
+172. [**Milestone 172 — Validation of Held-Out Correction and Physical Transmission (B10)**](172_b10_heldout_correction_and_physical_transmission.md)
+    - Validated optical correction and physical element tracking across 5 particle seeds (50,000 total particles), demonstrating 100.00% transmission under design errors; mapped transmission resilience up to 10x jitter stress; confirmed discrete vacuum aperture stay-clear boundaries.
+
+
 
 
 

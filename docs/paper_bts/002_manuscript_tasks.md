@@ -137,13 +137,16 @@ Scan relevant error amplitudes, including correlations, to find conditional limi
 
 **Acceptance:** sample precision meets predeclared needs or its limitation is reported; invalid rates, denominators and exact physical criteria are explicit. Five optics-feasibility failures are not labeled five lost bunches or a measured machine failure rate.
 
-## B10 — Validate held-out correction and physical transmission
+## B10 — Validate held-out correction and physical transmission [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 172).
 **Dependencies:** B06, B08–B09.
 
 Evaluate uncorrected and corrected designs on fresh static-error realizations, then add independently drawn shot jitter. Use paired realizations and common input particles for design comparisons, but separate training and validation seeds. Begin with at least five particle seeds and 10,000 particles per seed for selected validation cases; justify larger counts from the transmission uncertainty sought. Record covariance, emittance, orbit, dispersion, aperture clearance and first losses. Test finite correction ranges and repeatability under plausible beam changes.
 
-**Deliverables:** held-out correction/transport report and uncertainty-qualified comparison figures.
+**Deliverables:**
+- [`heldout_transmission.md`](heldout_transmission.md): 5-seed 50,000-particle tracking transmission matrix ($100.00\% \pm 0.00\%$), jitter stress scans up to $10\times$, static vs shot jitter separation, and first loss accounting.
+- [`figures/fig5_heldout_transmission.png`](figures/fig5_heldout_transmission.png) & [`figures/fig5_heldout_transmission.pdf`](figures/fig5_heldout_transmission.pdf): Phase-space distributions and transmission vs stress level curves.
 
 **Acceptance:** optical feasibility and measured-in-simulation BTS transmission are reported separately. Correction does not retune every unobservable shot error as though it were a known static machine error. No storage-ring capture is claimed without a separate native ring study; such an extension is outside the core plan.
 

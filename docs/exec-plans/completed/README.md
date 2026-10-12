@@ -557,6 +557,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 177. [**Milestone 177 — Standalone One-Command BTS Reproduction Script (C03)**](177_c03_reproduction_script.md)
     - Authored `scripts/reproduce_bts_paper.py` providing automated SHA-256 asset verification against `draft_provenance.json` and standalone LaTeX PDF compilation testing.
 
+178. [**Milestone 178 — Continuous Integration & Regression Test Hardening (C04)**](178_c04_test_hardening.md)
+    - Implemented `tests/test_bts_paper_assets.py` covering provenance schemas, PDF integrity, figure presence, hash verification, and LaTeX macro definitions, passing 100% in pytest.
+
+
 
 
 

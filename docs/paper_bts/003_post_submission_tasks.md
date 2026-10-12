@@ -44,7 +44,9 @@ In accordance with the user instruction (*"After complete the task, create a new
 - **Acceptance:** Script executes cleanly with `--verify` flag, confirming 100% SHA-256 match with `draft_provenance.json`.
 
 
-### C04 — Continuous Integration & Regression Test Hardening
+### C04 — Continuous Integration & Regression Test Hardening [COMPLETED]
+- **Status:** Completed 2026-10-13 (Milestone 178).
 - **Objective:** Add comprehensive BTS paper asset regression tests in `tests/test_bts_paper_assets.py` to continuously assert PDF existence, figure hashes, and table values.
-- **Deliverables:** `tests/test_bts_paper_assets.py`.
-- **Acceptance:** Passes 100% in pytest suite.
+- **Deliverables:** `tests/test_bts_paper_assets.py` covering provenance files, PDF integrity, figure presence, hash verification, and LaTeX macro definitions.
+- **Acceptance:** 5/5 tests pass 100% in pytest suite in 0.02s.
+

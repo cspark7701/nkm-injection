@@ -1,0 +1,9 @@
+# Round 2 existing evidence statistics
+
+The campaign-02 long-turn ensemble has 895 survivors among 1000 particles at 4000 turns, from seeds 1001 and 1002. The 95% particle Wilson interval is 87.45–91.25%, conditional on these two bunches. This ensemble is distinct from the four-bunch 500-turn operating-point validation. The duration uses `SurvTurns`; `SurvLong` is a percentage.
+
+The corrected quarter-minus-zero booster-jitter capture difference is +0.30 percentage points with paired percentile-bootstrap 95% interval −1.50 to +2.15 points (50 realization IDs, 10000 resamples, seed 1729). The negative-ID reference is excluded. A one-point engineering loss margin is declared for sensitivity and is not established by that interval. The 0.125 mm / 0.05 mrad pair is therefore a conditional candidate target. Quarter-jitter mean, median, p10 and fraction at or above 80% are 70.01%, 81.25%, 38.35% and 56%; these cannot be interchanged.
+
+The same paired analysis covers every scalar jitter level (0, 0.25, 0.5, 0.75, 1) and position-only and angle-only cases, with and without ideal static steering. Partial Spearman tests use a Holm family containing every nonconstant sampled-error variable, separately for the corrected and uncorrected ensembles. Only booster angle jitter remains significant at 5% in either family. These are model-conditioned associations, not causal attribution.
+
+Reproduction: `.venv/bin/python scripts/analyze_round2_existing_evidence.py --output results/journal_campaign_03/<new>.json`. Input paths and hashes, paired statistics and corrected p-values are saved in `results/journal_campaign_03/d2_existing_statistics.json` and selected by the manuscript manifest. Capture quantities in JSON are fractions; positions are m and angles rad. These results describe the historical 100 nm rad beam; D8 must recompute the design-emittance campaign before final claims.

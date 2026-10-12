@@ -153,6 +153,10 @@
       "path": "results/journal_campaign_02/c5c_errors_seed42/capture_robustness_summary.json",
       "sha256": "5c1127c2d083dd61b8727993c60797cdaf26318fbe5bf1288ab60b88257a1166"
     },
+    "round2_statistics": {
+      "path": "results/journal_campaign_03/d2_existing_statistics.json",
+      "sha256": "b929bc71d1967fec6ae00558cada343203e48e0351469f87ed5e6b5e90f1c454"
+    },
     "c4_particles": {
       "path": "results/journal_campaign_02/c4_survival/particles_raw.json",
       "sha256": "c99ead09e905779022cc76e448ec9769cd453b3a15e620b96c5b8b4d21d535cc"

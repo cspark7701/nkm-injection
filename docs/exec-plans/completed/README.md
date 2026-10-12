@@ -448,3 +448,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 141. [**Milestone 141 — Identify the lattice and preliminary NKM design (D1)**](141_d1_lattice_and_design_identity.md)
     - Names the supplied IPAC 2025 design lattice, distinguishes the study NKM and septum from the KLS baseline, and narrows the title to the design version.
+
+142. [**Milestone 142 — Repair survival reporting and paired jitter inference (D2)**](142_d2_existing_evidence_statistics.md)
+    - Fixes the survival duration, reports conditional Wilson uncertainty, analyzes all paired jitter levels and applies Holm correction to sampled-error partial correlations.

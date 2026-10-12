@@ -293,6 +293,11 @@ class RevisionBuilder(bj.Builder):
             self.macro(f"Surv{nm}", surv[min(tt, turns)] * 100, "{:.1f}")
         self.macro("SurvTurns", turns, "{:d}")
         self.macro("SurvN", n, "{:d}")
+        k = sum(r["captured"] for r in lt["rows"])
+        lo, hi = wilson(k, n)
+        self.macro("SurvLongLo", lo * 100, "{:.1f}")
+        self.macro("SurvLongHi", hi * 100, "{:.1f}")
+        self.macro("SurvSeeds", ", ".join(str(s) for s in sorted({r["seed"] for r in lt["rows"]})))
         late = np.sum(flt >= 500) / n * 100
         self.macro("SurvLateLossPct", late, "{:.1f}")
         self.macro("AccPoints", len(P), "{:d}")
@@ -513,6 +518,16 @@ class RevisionBuilder(bj.Builder):
 
     # ------------------------------------------------------------------ survival / sensitivity tables
     def survival_tables(self):
+        if "round2_statistics" in self.m["artifacts"]:
+            d2 = self.load("round2_statistics")
+            q = d2["paired_jitter"]["c6c_0.25"]
+            for key, name in (("mean_difference", "QuarterPairedDiff"), ("mean", "QuarterMean"),
+                              ("median", "QuarterMedian"), ("p10", "QuarterPten"),
+                              ("fraction_ge_80pct", "QuarterAboveEighty")):
+                self.macro(name, q[key] * 100, "{:.2f}")
+            self.macro("QuarterPairedLo", q["ci95"][0] * 100, "{:.2f}")
+            self.macro("QuarterPairedHi", q["ci95"][1] * 100, "{:.2f}")
+            self.macro("QuarterPairs", q["n_pairs"], "{:d}")
         pr = self.load("c4_particles"); ap = self.load("c4_aperture"); re = self.load("c4_ring_errors")
         s = next(iter(pr["summary"].values()))
         self.macro("BigN", s["n"], "{:d}"); self.macro("BigCap", s["capture"] * 100, "{:.1f}")

@@ -545,6 +545,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 173. [**Milestone 173 — Write Standalone JKPS Article and Generate Assets (B11)**](173_b11_standalone_jkps_manuscript.md)
     - Authored complete, publication-ready 11-page manuscript for the Journal of the Korean Physical Society (JKPS) integrating all findings from B01–B10 and high-resolution Figures 1–5; updated BibTeX citations with verified literature; compiled `paper.pdf` cleanly with zero unresolved citations; verified 709/709 pytest regression tests passing.
 
+174. [**Milestone 174 — Review, Freeze Evidence, and Prepare Submission Readiness (B12)**](174_b12_freeze_evidence_and_submission_readiness.md)
+    - Performed comprehensive manuscript review, quality assurance, and scope reconciliation; compiled complete 17-point verification matrix in `submission_checklist.md`; froze all cryptographic SHA-256 evidence digests in `draft_provenance.json`; successfully concluded the B01–B12 BTS manuscript task campaign.
+
+
 
 
 

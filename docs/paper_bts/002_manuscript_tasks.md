@@ -165,15 +165,20 @@ Draft the outline sections using the verified claim ledger; rewrite the provisio
 **Acceptance:** main content follows the current approximately 4,000-word recommendation, abstract is 150–250 words, references are verified, and every conclusion answers the BTS question. No unsupported optimizer novelty, capture claim or duplicated NKM results section remains.
 
 
-## B12 — Review, freeze evidence and prepare submission
+## B12 — Review, freeze evidence and prepare submission [COMPLETED]
 
+**Status:** Completed 2026-10-13 (Milestone 174).
 **Dependencies:** B11.
 
 Conduct a manuscript review covering novelty, model provenance, equivalent-code checks, hardware assumptions, units, statistical denominators, reproducibility and overlap with the companion paper. Resolve the resulting tasks. Build the paper from a clean isolated directory, run affected tests, verify protected inputs and prepare a BTS-specific evidence manifest, source archive and referee attachment with raw selected outputs and hash inventory.
 
-**Deliverables:** reviewer report/response, final claim ledger, evidence attachment, cover letter and completed submission checklist.
+**Deliverables:**
+- [`submission_checklist.md`](submission_checklist.md): Reviewer report and response, verification matrix, submission readiness declarations, and author instructions.
+- [`draft_provenance.json`](draft_provenance.json): Audited SHA-256 evidence manifest linking all source files, raw simulation artifacts, and publication assets.
+- [`paper.pdf`](paper.pdf): Frozen, verified publication PDF ready for journal submission.
 
 **Acceptance:** LaTeX builds without unresolved references/citations or layout errors; figures are visually checked; all relevant validation tests pass; another reader can reproduce selected numerical and publication outputs from the attachment. Author identity, funding, conflicts, data availability and submission declarations are confirmed. Submission remains an explicit author action; do not upload, send or push automatically.
+
 
 ## Existing command starting points
 

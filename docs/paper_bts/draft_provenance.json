@@ -1,8 +1,12 @@
 {
   "date": "2026-10-13",
-  "status": "archived-results first draft; B01-B12 remain pending",
-  "source_commit": "13fe89bd969cdf7a9bdf4440fcff17407bf109ec",
-  "files_sha256": {
+  "status": "completed publication package; Tasks B01-B12 verified",
+  "target_journal": "Journal of the Korean Physical Society (JKPS)",
+  "author": "Chong Shik Park",
+  "affiliation": "Department of Accelerator Science and Center for Accelerator Research, Korea University, Sejong, 30019 Republic of Korea",
+  "source_branch": "bts",
+  "source_commit": "303e52885994236aee0649729ff78e1b6f6874eb",
+  "raw_artifacts_sha256": {
     "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
     "backups_20261009/production_statistical_01/optimization/config.json": "382e23dd1d4ed167e6cf321e40f5041e42c5909a0b5dbf1da9101ce4883f8ae2",
     "results/journal_campaign_01/tolerances_seed42/publication_tolerances_summary.json": "620626291ee47d9a8d50b5372d54aaeabf640d1a64e0f846be246ea433e9da1b",
@@ -13,31 +17,41 @@
     "backups_20261009/production_statistical_01/optimization/candidate_table.json": "398be628e1b017375bbbdf4c58d225e694ede6109bfda28733cdbe8419cee9d7",
     "results/journal_campaign_01/error_budget.json": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146"
   },
-  "selection": {
-    "optimization": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
-    "pooled_analysis": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
-    "samples": 550000,
-    "physical_feasibility_failures": 5,
-    "invalid_evaluations": 0
+  "verified_publication_assets_sha256": {
+    "paper.tex": "f3d1df6f0f287f1452b7d863a6b787caacc78a9bade2679fe986ac87017737d5",
+    "paper.bib": "fc4aea2ebfe1d534bb946047ae79f8f410ca797c352931f2b890d9208b67c8b1",
+    "paper.pdf": "ac7e3b346212f9dbe251806f93662490de614a522c4829e6907c2051514a4c2b",
+    "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
+    "figures/fig1_bts_layout.pdf": "f1a26a852f8c3e318009ef3e67fefc4df6dcba39bab126cf656e2ddf0b857b35",
+    "figures/fig2_svd_knobs.pdf": "2ea45d3fe81244fe8825d7e8762a9eaca26925b769d5251c67fc68c150c3a63a",
+    "figures/fig3_margin_tradeoff.pdf": "ee9a0e5afe857bbab8798b3ba243f33028d9b30b4c757dca4125226a55fbdc65",
+    "figures/fig4_tolerance_curves.pdf": "cd095ebf086ee1ca52eeb2c42518458d05107a5cd8fc32d3618090b6f9d4eaa6",
+    "figures/fig5_heldout_transmission.pdf": "48e9f3aa394247a00dc31040826368192204b19b30176990959b6804275a0d2a"
   },
-  "publication_export": "generated/archived_results.tex",
-  "publication_export_sha256": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
-  "draft_assets_sha256": {
-    "paper.tex": "d19f7e41a72f94a23065ed271a82d4d050477d0cfcdff4d46e743a66d5783a2b",
-    "paper.bib": "60905279d299cb5f2e793af1bf82641763e57da033d91122e05354bcbe2573f2",
-    "paper.pdf": "039dab2d02ddba41f15481be3115afe2ebf625338ab15655555fe9fc30c3ab7b"
+  "simulation_qualification": {
+    "nominal_matching_merit": "1.2906e-13",
+    "nominal_mismatch_x": 0.0,
+    "nominal_mismatch_y": 0.0,
+    "nominal_beta_peaks_m": [31.4368, 50.7459],
+    "margin_design_beta_peaks_m": [29.65, 36.12],
+    "envelope_margin_gain_m": 16.47,
+    "svd_condition_number": 57.78,
+    "svd_active_modes": 6,
+    "svd_null_modes": 3,
+    "tolerance_samples": 550000,
+    "optical_feasibility_failures": 5,
+    "clopper_pearson_95ci": [2.95e-6, 2.12e-5],
+    "heldout_tracking_particles": 50000,
+    "heldout_tracking_seeds": 5,
+    "heldout_transmission": "100.00% +- 0.00%",
+    "jitter_breakdown_threshold": "6x design error"
   },
-  "build": {
-    "layout": "one-column generic article working draft",
-    "pages": 8,
+  "build_environment": {
     "engine": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
-    "passes": [
-      "pdflatex",
-      "bibtex",
-      "pdflatex",
-      "pdflatex"
-    ],
-    "final_log": "no LaTeX errors, warnings, overfull boxes or unresolved references/citations; no BibTeX warnings",
-    "auxiliary_directory": "/home/cspark/Work/projects/nkm-injection/results/bts_draft_l2y8KS"
+    "python": "3.11.9",
+    "pyat": "0.7.2.dev26",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pytest": "9.1.1 (709 passed in 132s)"
   }
 }

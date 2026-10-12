@@ -490,3 +490,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 155. [**Milestone 155 — Freeze the round-two evidence selection and source snapshot (D13)**](155_round2_evidence_snapshot.md)
     - Select 205 hash-verified artifacts in a new campaign-03 manifest, refresh 17 current D claim rows while preserving historical claims, and package current verification and reproduction notes. Reject dirty source snapshots and changed rebuild macros; include the verification summary in the final inventory. This checkpoint prepares the committed source required for bundle verification; the bundle gate follows.
+
+156. [**Milestone 156 — Verify the frozen referee evidence bundle (D13)**](156_round2_evidence_verification.md)
+    - Freeze results/journal_campaign_03/round2_evidence_bundle.tar.gz from committed source 9028978e8f4627efc18a21d6a58f625e7e4b4c2d. The local referee attachment contains 205 selected artifacts and 213 inventoried files; archive size is 15,215,692 bytes and SHA-256 is 0e07de5f2b49a9b9e6087af9f8b9969e9687b0aa537939b77b2325d1d8ec3f3d. No DOI or external upload is implied.

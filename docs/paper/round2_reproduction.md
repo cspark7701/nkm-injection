@@ -42,7 +42,7 @@ configuration byte-for-byte, writes the source archive and environment record,
 and rebuilds in a temporary directory using the archived source and copied
 evidence. Verification fails if the regenerated macros differ. The final
 `SHA256SUMS` includes the verification summary before the tarball is written.
-The D13 completion archive records the actual bundle location and outcome.
+The [D13 completion record](../exec-plans/completed/156_round2_evidence_verification.md) records the actual bundle location, archive hash and verification outcome.
 
 The bundle's `REBUILD.md` is the referee entry point. It explains installation,
 hash verification and regeneration without the author's ignored result folders.

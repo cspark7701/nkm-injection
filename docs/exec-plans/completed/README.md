@@ -496,3 +496,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 157. [**Milestone 157 — Complete the round-two response and final validation (D14)**](157_round2_final_reconciliation.md)
     - Add a new point-by-point response covering all ten R1B and fifteen R2b tasks, with direct evidence links, final numerical results and explicit claim restrictions. Preserve earlier reviews and the first-round response. The authorized D1-D14 revision is complete; journal selection and conversion remain the separate D15 step.
+
+158. [**Milestone 158 — Journal Recommendation After Round-Two Revision**](158_journal_recommendation_after_round2.md)
+    - Read the updated 19-page article and author inputs, checked journal scopes and related publications, and recommended PRAB followed by NIM A and JINST. Identified the missing Sun et al. comparison and preserved D15 as the author’s venue-selection step.

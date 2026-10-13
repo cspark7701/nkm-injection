@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "artifacts": [
+    {
+      "path": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+      "sha256": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
+      "bytes": 3200,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "backups_20261009/production_statistical_01/optimization/config.json",
+      "sha256": "382e23dd1d4ed167e6cf321e40f5041e42c5909a0b5dbf1da9101ce4883f8ae2",
+      "bytes": 4286,
+      "generating_commit": "f2ac6e27f60dd19d0dfbc74419df585b6f0a8748",
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "results/journal_campaign_01/tolerances_seed42/publication_tolerances_summary.json",
+      "sha256": "620626291ee47d9a8d50b5372d54aaeabf640d1a64e0f846be246ea433e9da1b",
+      "bytes": 74827952,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "results/journal_campaign_01/tolerances_seed123/publication_tolerances_summary.json",
+      "sha256": "d1f381f714e9d2c808b28b6d3ada90eca4781895a0955aa3bedffccd4006c974",
+      "bytes": 74827566,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "results/journal_campaign_01/tolerances_seed777/publication_tolerances_summary.json",
+      "sha256": "353c1986e6330686d235ce3e29e622706fe04e0e5e88445f308fe8e0e1707644",
+      "bytes": 74827778,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "results/journal_campaign_01/tolerances_seed2026_400k/publication_tolerances_summary.json",
+      "sha256": "fa3c0b8254836171ff6cab17d4e6bf3c85ec24c5023096c74cb4a2ee9209b296",
+      "bytes": 598918614,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
+      "sha256": "5d11a050b8aa7ab813fff286b849fb7d93d02e4d04733e5f904c69e60860b589",
+      "bytes": 23740,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "backups_20261009/production_statistical_01/optimization/candidate_table.json",
+      "sha256": "398be628e1b017375bbbdf4c58d225e694ede6109bfda28733cdbe8419cee9d7",
+      "bytes": 4330,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "results/journal_campaign_01/error_budget.json",
+      "sha256": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146",
+      "bytes": 565,
+      "generating_commit": null,
+      "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    }
+  ],
+  "claims": [
+    {
+      "id": "BC01",
+      "artifact": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+      "pointer": "/final_max_beta_y_m",
+      "expected": 50.74588752092669,
+      "interpretation": "Matched reference: peaks 31.4368/50.7459 m; matching precision is numerical.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC02",
+      "artifact": "backups_20261009/production_statistical_01/optimization/candidate_table.json",
+      "pointer": "/1/optimizer_success",
+      "expected": true,
+      "interpretation": "Nominal plus two random starts: feasible success, infeasible success, evaluation-budget failure; no volume estimate.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC03",
+      "artifact": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
+      "pointer": "/pooled/quantiles/mismatch_x/p50_ci",
+      "expected": [
+        0.0020740252840969475,
+        0.002098898171357444
+      ],
+      "interpretation": "Median interval uses order statistics, not pooled bootstrap.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC04",
+      "artifact": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
+      "pointer": "/pooled/failures/clopper_pearson",
+      "expected": [
+        2.95179981385505e-06,
+        2.1215020626606803e-05
+      ],
+      "interpretation": "Five optical-rule exceedances; exact asymmetric interval, not physical losses.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC05",
+      "artifact": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+      "pointer": "/sensitivity/condition_number",
+      "expected": 1421.6363944352995,
+      "interpretation": "1421.636 is a mixed-unit raw sensitivity condition number; achieved correction claims withdrawn until validated.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC06",
+      "artifact": "results/journal_campaign_01/tolerances_seed42/publication_tolerances_summary.json",
+      "pointer": "/sensitivity_ranking",
+      "expected": {
+        "Twiss Beta Mismatch (5%)": 0.00890374023485166,
+        "Quad Gradient Error (0.1%)": 0.0008611216939034984,
+        "Energy Error (0.1%)": 0.00010633573700367904,
+        "Quad Roll Error (0.5 mrad)": 3.6194177623460888e-09,
+        "Quad Alignment Offset (100 um)": 4.11226608321158e-17,
+        "Booster Centroid Jitter X (0.5 mm)": 0.0,
+        "Booster Centroid Jitter Xp (0.2 mrad)": 0.0,
+        "NKM Field Scale Jitter (0.5%)": 0.0,
+        "NKM Horizontal Alignment (200 um)": 0.0,
+        "Ring Closed-Orbit Error (200 um)": 0.0,
+        "Septum Position Error (100 um)": 0.0
+      },
+      "interpretation": "OAT mean absolute change of Mx+My: beta-only entrance error, gradient, energy; alpha fixed.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC07",
+      "artifact": "backups_20261009/production_statistical_01/optimization/config.json",
+      "pointer": "/bts_config/ang_b3",
+      "expected": -0.111701,
+      "interpretation": "Three main bends plus kicker and two septa; 36 elements, 21.789 m from model.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC08",
+      "artifact": "backups_20261009/production_statistical_01/optimization/config.json",
+      "pointer": "/target_config/init_beta_x",
+      "expected": 7.56,
+      "interpretation": "Configured entrance at m1; physical source unresolved.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC09",
+      "artifact": "backups_20261009/production_statistical_01/optimization/config.json",
+      "pointer": "/target_config/target_beta_x",
+      "expected": 2.336495,
+      "interpretation": "Configured parametric target at m4; not derived from ring NKM centre.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC10",
+      "artifact": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
+      "pointer": "/runs/seed42/prefix",
+      "expected": {
+        "sizes": [
+          25000,
+          50000
+        ],
+        "estimates": [
+          0.002081904162006598,
+          0.002102733925427036
+        ],
+        "absolute_change": 2.0829763420437963e-05,
+        "relative_change": 0.00990603859506748,
+        "target": 1e-05,
+        "status": "outside_tolerance"
+      },
+      "interpretation": "50k prefixes missed 1e-5 target; 400k passed; not tail convergence.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC11",
+      "artifact": "backups_20261009/production_statistical_01/optimization/config.json",
+      "pointer": "/constraint_config/quad_bounds",
+      "expected": {
+        "q11": {
+          "name": "q11",
+          "k_min": -2.5,
+          "k_max": 2.5,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q12": {
+          "name": "q12",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q13": {
+          "name": "q13",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q21": {
+          "name": "q21",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q22": {
+          "name": "q22",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q23": {
+          "name": "q23",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q31": {
+          "name": "q31",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q32": {
+          "name": "q32",
+          "k_min": -3.0,
+          "k_max": 3.0,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        },
+        "q33": {
+          "name": "q33",
+          "k_min": -2.5,
+          "k_max": 2.5,
+          "r_bore_m": 0.01935,
+          "b_pole_max_T": 1.2
+        }
+      },
+      "interpretation": "Family bounds and bore are modelling assumptions, not verified hardware.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    },
+    {
+      "id": "BC12",
+      "artifact": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+      "pointer": "/optimized_strengths_by_name_m_minus2",
+      "expected": {
+        "q11": -0.367525457731048,
+        "q12": -1.216432883896892,
+        "q13": 1.5860719268485328,
+        "q21": -1.0683734603410724,
+        "q22": 2.8231083729755677,
+        "q23": -2.490967743682553,
+        "q31": 2.0426777186320093,
+        "q32": -1.4342712971007086,
+        "q33": 0.3511146520138777
+      },
+      "interpretation": "Archived raw strengths retained; rounded settings require reevaluation.",
+      "manuscript_location": "Results / model; reconciled in final article"
+    }
+  ]
+}

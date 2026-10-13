@@ -529,3 +529,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 187. [**Milestone 187 — R1-BTS-01: Freeze BTS reviewer revision identity**](187_r1_bts_01.md)
     - Select the main-branch draft, preserve baseline asset hashes and reopen the B01 audit while distinguishing the later BTS article.
+
+188. [**Milestone 188 — R1-BTS-02: Correct BTS claims and artifact provenance**](188_r1_bts_02.md)
+    - Audit twelve BC claims with exact JSON pointers, repair restart, Jacobian, OAT, failure and boundary interpretations, and record artifact-specific metadata.

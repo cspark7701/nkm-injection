@@ -7,3 +7,9 @@ This response addresses the [2026-10-13 review](reviewer1_bts_20261013_main_repo
 Select the main-branch draft, preserve baseline asset hashes and reopen the B01 audit while distinguishing the later BTS article.
 
 Validation: Verified baseline hashes, branch identity and unchanged protected inputs, NKM files and prior reviews. See [milestone 187](../../exec-plans/completed/187_r1_bts_01.md).
+
+## R1-BTS-02 — Correct BTS claims and artifact provenance
+
+Audit twelve BC claims with exact JSON pointers, repair restart, Jacobian, OAT, failure and boundary interpretations, and record artifact-specific metadata.
+
+Validation: All nine selected artifact digests and twelve claim pointers verified; unresolved hardware and target provenance explicitly retained as assumptions. See [milestone 188](../../exec-plans/completed/188_r1_bts_02.md).

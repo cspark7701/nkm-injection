@@ -515,3 +515,5 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 163. [**Milestone 163 — Fix scientific question, novelty, and evidence inventory (B01)**](163_b01_scientific_question_novelty_and_evidence_inventory.md)
     - Established article scope, distinct BTS research questions, NKM overlap disclosures, JKPS/DLSR literature comparisons, full evidence audit of optimization (`fe107589...`) and 4 tolerance runs (`62062629...`, `d1f381f7...`, `353c1986...`, `fa3c0b82...`), individual audits of all 5 physical feasibility failures across 550,000 samples, and a comprehensive claim ledger mapping 12 claims to verified artifacts.
 
+164. [**Milestone 164 — Reconcile manuscript status through D15**](164_manuscript_status_reconciliation.md)
+    - Correct stale D15 status, link completed PRAB formatting and pending third-round scientific tasks, and record the separate BTS B01 completion with B02 next.

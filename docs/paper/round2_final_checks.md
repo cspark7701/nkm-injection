@@ -1,9 +1,16 @@
 # Round-2 verification record and scope
 
 The completion records in `docs/exec-plans/completed/` report the executed checks
-for D1–D14. The [final D14 record](../exec-plans/completed/157_round2_final_reconciliation.md) is authoritative for the full-suite result,
+for D1–D15. The [final D14 record](../exec-plans/completed/157_round2_final_reconciliation.md) is authoritative for the full-suite result,
 clean manuscript build and protected-input verification. Earlier scientific
 reviews and responses are preserved as historical assessments.
+
+[D15](../exec-plans/completed/160_prab_manuscript_formats.md) completed on
+2026-10-12 after the author selected PRAB. It records clean REVTeX 4.2 builds
+of the 28-page primary draft and 14-page two-column preview, plus 37 passing
+relevant tests. These were installed-asset builds; campaign-03 raw evidence was
+unavailable locally and the historical evidence-bundle verification was not
+repeated. See [current submission status](prab_submission.md).
 
 ## Numerical and statistical checks
 
@@ -44,4 +51,6 @@ a measured error budget, noisy beam-based feedback, arbitrary kicker-family
 universality, or time-dependent pulsed capture. Individual wire/current
 sensitivities are distinct from the whole-magnet errors in the joint ensembles.
 The incoming-line chamber and the actual IVU assignment remain assumptions or
-unavailable inputs. Journal conversion belongs to the later author-gated D15.
+unavailable inputs. D15 journal conversion is complete; the
+[eight third-round scientific tasks](reviews/reviewer1_round3_20261012_revision_tasks.md)
+remain pending.

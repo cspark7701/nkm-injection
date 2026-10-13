@@ -9,6 +9,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2](reviewer2_report.md), 2026-10-10 | Major revision | Included in the report |
 | [Reviewer 1, round 2](reviewer1_round2_20261011_report.md), 2026-10-11 | Focused major revision; do not accept the present version | [10 ordered tasks](reviewer1_round2_20261011_revision_tasks.md) |
 | [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
+| [Reviewer 1, round 3](reviewer1_round3_20261012_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](reviewer1_round3_20261012_revision_tasks.md) |
 
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
 Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
@@ -31,4 +32,14 @@ author response. It records the status of every first-round task. Its new major 
 
 Round-2 revision response: [author_response_round2.md](author_response_round2.md).
 It maps all R1B and R2b tasks to the final evidence and explicit scope restrictions;
-D15 journal conversion remains author-gated. The first-round response is preserved.
+D1–D15 are complete as of 2026-10-12. The author selected PRAB, and
+[D15](../../exec-plans/completed/160_prab_manuscript_formats.md) records the
+REVTeX 4.2 conversion, clean 28-page one-column and 14-page two-column builds,
+and 37 passing relevant tests. See [PRAB submission status](../prab_submission.md).
+The first-round response is preserved.
+
+The eight third-round scientific tasks remain pending. The
+[third-round audit](../../exec-plans/completed/159_reviewer1_round3_manuscript_report.md)
+recorded 48 hash-matching artifacts and 157 absent artifacts out of 205;
+D15 did not repeat the historical evidence-bundle verification. Round-2 completion
+does not establish submission readiness or scientific acceptance.

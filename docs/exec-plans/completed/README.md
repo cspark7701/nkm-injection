@@ -595,3 +595,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 209. [**Milestone 209 — Reviewer 2, Third-Round Report on the PRAB Manuscript**](209_reviewer2_round3_report.md)
     - Major revision focused on robustness: operating point not re-selected for the design beam, orbit-only ring correction stopped at 100 µm, NKM chamber enclosing its conductors; evidence bundle verified; tasks R2c-1 to R2c-9.
+
+210. [**Milestone 210 — Consolidated Round-3 Revision Plan**](210_consolidated_revision_plan_round3.md)
+    - Reconciled R1C-01–08 and R2c-1–9 into E1–E11 with author inputs B1–B5; one robustness rerun after fixing the NKM chamber, ring correction and design-beam operating point; synthesis and noninferiority wording on the rerun.

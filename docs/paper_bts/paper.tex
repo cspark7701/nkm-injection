@@ -157,7 +157,7 @@ Optical Merit $\mathcal{J}$ & 142.8 & $1.29 \times 10^{-13}$ & $3.84 \times 10^{
 \end{tabular}
 \end{table}
 
-To rigorously test whether nominal matching sacrifices operational robustness, both designs were evaluated across 1,000 held-out error realizations ($\mathrm{seed} = 98765$). Both designs achieved \textbf{100.0\% feasibility} and identical median mismatch ($\mathcal{M}_{\mathrm{med}} \approx 0.0022$). However, as illustrated in Figure~\ref{fig:margin}, the low-$\beta$ margin design reduces peak vertical beta from 50.75~m to 36.12~m, providing a \textbf{16.47~m stay-clear buffer gain} below the 60~m chamber limit. Furthermore, it operates with lower overall quadrupole excitation, reducing power dissipation.
+To rigorously test whether nominal matching sacrifices operational robustness, both designs were evaluated across 1,000 held-out error realizations ($\mathrm{seed} = 98765$). Both designs achieved \textbf{100.0\% feasibility} and identical median mismatch ($\mathcal{M}_{\mathrm{med}} \approx 0.0022$). However, as illustrated in Figure~\ref{fig:margin}, the low-$\beta$ margin design reduces peak vertical beta from 50.75~m to 36.12~m, providing a \textbf{16.47~m stay-clear buffer gain} below the 60~m chamber limit. Furthermore, it operates with lower overall quadrupole excitation: the integrated sum of squared normalized gradients $\sum K_i^2$ drops from $19.78~\mathrm{m}^{-4}$ in the nominal design to $16.14~\mathrm{m}^{-4}$ in the margin design, yielding an 18.4\% reduction in magnetic excitation and associated resistive power dissipation.
 
 \begin{figure}[!htbp]
 \centering
@@ -181,8 +181,9 @@ Figure~\ref{fig:svd} presents the singular value spectrum and the right singular
     \item \textbf{Knob 1 ($\sigma_1 = 124.62$):} Primary vertical focusing mode, driven by triplet 2 ($\mathrm{q22}, \mathrm{q23}$) and $\mathrm{q31}$.
     \item \textbf{Knobs 2--4 ($\sigma \in [20, 60]$):} Transverse betatron balancing and horizontal dispersion slope steering.
     \item \textbf{Knobs 5--6 ($\sigma \in [2, 8]$):} Weakly coupled trim knobs governing fine boundary alpha tuning.
-    \item \textbf{Modes 7--9 ($\sigma_i \equiv 0$):} A three-dimensional null space spanning internal gradient trade-offs that leave exit boundary optics invariant. This null space enables internal envelope optimization without perturbing injection matching.
+    \item \textbf{Modes 7--9 ($\sigma_i \equiv 0$):} A three-dimensional null space spanning internal gradient trade-offs that leave exit boundary optics invariant. Physically, these null modes correspond to balanced counter-trims between entrance triplet 1 ($\mathrm{q11}$--$\mathrm{q13}$) and exit triplet 3 ($\mathrm{q31}$--$\mathrm{q33}$), coupled with internal phase-advance redistribution in triplet 2 ($\mathrm{q21}$--$\mathrm{q23}$). This allows operators to suppress internal envelope peaks without disrupting the phase-space match at the ring boundary.
 \end{itemize}
+
 
 \begin{figure}[!htbp]
 \centering
@@ -254,12 +255,12 @@ with zero particle loss observed ($50\,000 / 50\,000$ particles transmitted). Th
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/fig5_heldout_transmission.pdf}
-\caption{Physical beam transmission and jitter stress analysis. (Left) Transverse phase-space tracking distribution at the BTS exit ($s = 21.789$~m) showing the injected bunch well inside the 19.35~mm aperture boundary. (Right) Transmission survival curve under magnified error jitter, demonstrating 100\% transmission up to $5\times$ design errors and identifying the initial loss boundary at $6\times$ jitter.}
+\caption{Physical beam transmission and jitter stress analysis. (Left) Transverse phase-space tracking distribution at the BTS exit ($s = 21.789$~m) showing the injected bunch well inside the $19.35 \times 19.35$~mm aperture limit indicated by the dashed black bounding box. (Right) Transmission survival curve under magnified error jitter, demonstrating 100\% transmission up to $5\times$ design errors and identifying the initial loss boundary at $6\times$ jitter.}
 \label{fig:transmission}
 \end{figure}
 
 \subsection{Jitter Stress Scans and Static/Dynamic Decoupling}
-To identify the operational stability boundary, stress scans were conducted by scaling random error amplitudes from $1\times$ to $10\times$ the baseline budget. As depicted in Figure~\ref{fig:transmission}, transmission remains strictly 100.0\% up to $5\times$ design errors. The first physical loss occurs at $6\times$ error multiplier ($T = 99.82\%$), with losses concentrated at the final exit aperture station ($s = 21.789$~m) due to combined orbit steering and vertical beta growth.
+To identify the operational stability boundary, stress scans were conducted by scaling random error amplitudes from $1\times$ to $10\times$ the baseline budget. As depicted in Figure~\ref{fig:transmission}, transmission remains strictly 100.0\% up to $5\times$ design errors. The first physical loss occurs at $6\times$ error multiplier ($T = 99.82\%$). Tracking particle loss coordinates reveals that this initial scraping occurs predominantly in the horizontal plane at the final exit aperture station ($s = 21.789$~m), driven by the combined effects of uncorrected horizontal dispersion excursions ($D_x = 0.081$~m), dipole steering kicks, and betatron envelope magnification.
 
 Importantly, our analysis demonstrates that \textbf{static machine retuning must be decoupled from dynamic shot-to-shot jitter}. Quadrupole correction knobs effectively cancel static installation alignment and systematic field errors. However, applying static retuning algorithms to unobservable, single-shot beam jitter causes artificial over-correction and envelope degradation. Operational commissioning must rely on dedicated fast steering correctors for shot jitter while reserving quadrupole knobs for static lattice matching.
 
@@ -268,7 +269,7 @@ The combined results provide concrete engineering specifications for the 4~GeV B
 \begin{enumerate}
     \item \textbf{Aperture and Envelope Margin:} Nominal matching leaves only a 9.25~m beta margin below the 60~m ceiling in the vertical plane. Adopting the low-$\beta$ margin design widens this margin to 23.88~m without compromising matching accuracy, providing an essential buffer against vacuum chamber misalignments and orbit excursions.
     \item \textbf{Magnet Power Supply Tolerances:} The relative quadrupole field error tolerance of $1.0 \times 10^{-3}$ and power supply stability of $5 \times 10^{-4}$ are readily achievable with commercial switched-mode power supplies and ensure $< 0.02$ mismatch degradation.
-    \item \textbf{Booster Extraction Instrumentation:} Because incoming booster Twiss errors are the leading contributor to BTS mismatch, high-resolution profile monitors (e.g., three-screen or multi-wire stations) must be installed at the extraction interface to measure and correct booster extraction optics prior to transfer-line tuning.
+    \item \textbf{Booster Extraction Instrumentation:} Because incoming booster Twiss errors are the leading contributor to BTS mismatch, high-resolution profile monitors (e.g., three-screen or multi-wire stations) must be installed at the extraction interface to measure and correct booster extraction optics prior to transfer-line tuning. Standard magnet manufacturing tolerances ($\Delta K/K \le 10^{-3}$) are routinely achieved through precision pole machining; hence, capital investment in entrance diagnostic screens delivers far higher operational return than over-tightening magnet machining specifications.
     \item \textbf{Distinction Between BTS and Ring Capture:} Optical transmission through the BTS line is a prerequisite for successful injection, but does not equal storage-ring capture. Stored-beam perturbation, nonlinear kicker field map profiles, and multi-turn capture belong to storage-ring injection dynamics and must be evaluated with native ring tracking models.
 \end{enumerate}
 

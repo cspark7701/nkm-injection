@@ -566,6 +566,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 180. [**Milestone 180 — Execution of All Peer Review Revision Tasks and Package Verification**](180_execute_peer_review_revisions.md)
     - Systematically executed and verified all 6 peer review revision tasks (R1–R6); updated Figure 1 caption with triplet labels and line styles; cited Courant–Snyder 1958 in mismatch parameter; recompiled publication PDF (`paper.pdf`, 12 pages, 612 KB); updated `draft_provenance.json` digests, rebuilt standalone submission bundle (`bts_jkps_submission.tar.gz`), and confirmed 100% test pass.
 
+181. [**Milestone 181 — Peer Review Round 2 Execution, Revision Tasks, and Submission Package Verification**](181_execute_peer_review_round2.md)
+    - Conducted independent second-round expert peer review (`reviewer_report_02.md`, Accept with Minor Editorial & Clarification Adjustments); resolved all 6 actionable revision tasks in `revision_tasks_round2.md`; quantified integrated gradient $\sum K_i^2$ reduction (18.4% power drop), detailed 3-mode null space physical mechanics, specified horizontal plane loss dominance at $6\times$ jitter, strengthened booster screen vs. magnet tolerance procurement recommendations, and clarified Figure 5 aperture bounding box; recompiled `paper.pdf` (12 pages, 613 KB); updated `draft_provenance.json`, regenerated `bts_jkps_submission.tar.gz`, verified tests, and authored point-by-point `author_response_to_reviewer_02.md`.
+
 
 
 

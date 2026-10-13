@@ -31,3 +31,9 @@ Validation: Validated 36-element order, 21.789 m length, K-to-gradient/pole-fiel
 Implement hard-edge affine transport, coupled covariance and fixed-geometry active errors; validate against AT particle maps and Gaussian transport.
 
 Validation: 13 tests pass; 40-step maps meet declared tolerances, isolated errors and first losses checked, and the missed default-step tolerance remains reported. See [milestone 191](../../exec-plans/completed/191_r1_bts_05.md).
+
+## R1-BTS-06 — Reproduce BTS matching and all search outcomes
+
+Replay all three historical starts and independently verify raw and rounded settings with optical, family-bound and model-clearance checks.
+
+Validation: Historical candidate values reproduced; 40-step and independent-map settings remain feasible, with explicit engineering tolerances and termination records. See [milestone 192](../../exec-plans/completed/192_r1_bts_06.md).

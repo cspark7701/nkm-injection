@@ -541,3 +541,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 191. [**Milestone 191 — R1-BTS-05: Validate independent BTS transport and active errors**](191_r1_bts_05.md)
     - Implement hard-edge affine transport, coupled covariance and fixed-geometry active errors; validate against AT particle maps and Gaussian transport.
+
+192. [**Milestone 192 — R1-BTS-06: Reproduce BTS matching and all search outcomes**](192_r1_bts_06.md)
+    - Replay all three historical starts and independently verify raw and rounded settings with optical, family-bound and model-clearance checks.

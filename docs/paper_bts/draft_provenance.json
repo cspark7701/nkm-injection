@@ -1,6 +1,6 @@
 {
   "date": "2026-10-13",
-  "status": "round2 scientific revision; author declarations and delivery pending",
+  "status": "R2-BTS-01\u201307 executed; R2-BTS-08 prepared with funding/acknowledgments, approval and delivery pending",
   "source_commit": "13fe89bd969cdf7a9bdf4440fcff17407bf109ec",
   "files_sha256": {
     "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
@@ -77,5 +77,6 @@
     "final_log": "no LaTeX errors, warnings, overfull boxes or unresolved references/citations; no BibTeX warnings",
     "auxiliary_directory": "/home/cspark/Work/projects/nkm-injection/results/bts_draft_l2y8KS"
   },
-  "round2_selected_campaign": "results/bts_journal_campaign_r2_20261013"
+  "round2_selected_campaign": "results/bts_journal_campaign_r2_20261013",
+  "round2_preparation_checkpoint": "23e052df655d99762092b2fdc734d4092f782412"
 }

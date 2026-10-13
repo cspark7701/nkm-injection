@@ -7,7 +7,7 @@ Round-two one-column article for prospective JKPS submission: [paper.tex](paper.
 - [Station mechanism](round2_station_mechanism.md), [clearance accuracy](round2_clearance_accuracy.md) and [interior extrema](round2_spatial_extrema.md)
 - [Frozen strategies/new machines](round2_strategy_comparison.md) and [inference/event definitions](round2_inference.md)
 - [Beam and boundaries](beam_and_boundaries.md), [literature verification](literature_comparison.md), [claim ledger](claim_evidence.csv) and [evidence manifest](evidence_manifest.json)
-- [Exact reproduction commands](round2_reproduction.md) and [submission checklist](submission_checklist.md)
+- [Exact reproduction commands](round2_reproduction.md), [execution status](round2_task_status.md), [author declarations](author_declarations_round2.md) and [submission checklist](submission_checklist.md)
 
 Original R1 campaign and all prior reports are preserved, including the restored older BTS-branch reviews. New comparisons use200 independently drawn machines with three shots each and2000 particles per shot,totalling10.8 million particle transports across nine combinations. All restrictions, bounds and errors remain labelled assumptions. Invalid preliminary shared-aperture runs are retained and excluded.
 

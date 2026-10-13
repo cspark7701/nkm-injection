@@ -583,3 +583,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 205. [**Milestone 205 — R2-BTS-07: Recast the BTS article around active restrictions**](205_r2_bts_07.md)
     - Integrates the physical mechanism, refined strategies and independent tests into a ten-page article with a three-page supplement, five figures and reconciled source-labelled evidence.
+
+206. [**Milestone 206 — R2-BTS-08: Prepare declarations and portable referee evidence**](206_r2_bts_08.md)
+    - Confirm no competing interests and verify portable evidence reproduction; funding, acknowledgments, scientific approval and external referee delivery remain pending author actions.

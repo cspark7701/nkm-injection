@@ -9,7 +9,7 @@
     "paper.bib": "60905279d299cb5f2e793af1bf82641763e57da033d91122e05354bcbe2573f2",
     "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4"
   },
-  "status": "round2 scientific revision; author declarations and delivery pending",
+  "status": "R2-BTS-01\u201307 executed; R2-BTS-08 prepared with funding/acknowledgments, approval and delivery pending",
   "final_source_checkpoint": "7eae106629f4fa9e7bc6f66ebd2b6b1db0fd2826",
   "final_assets_sha256": {
     "paper.tex": "0972a5e3a8deed3b622c4d9198f90540c8e634eba43743b4ef766b733ae675f9",
@@ -74,5 +74,6 @@
     "figures/optics.pdf": "2e02c852d453a592ec5b3dd89d61943cbd4906f8490f818d29271ee377a2fc80"
   },
   "round2_reviewed_commit": "17ea044",
-  "round2_identity": "round2_identity.json"
+  "round2_identity": "round2_identity.json",
+  "round2_preparation_checkpoint": "23e052df655d99762092b2fdc734d4092f782412"
 }

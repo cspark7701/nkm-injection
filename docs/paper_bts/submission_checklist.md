@@ -1,23 +1,23 @@
-# JKPS submission preparation — Reviewer 1 revision
+# JKPS submission preparation — BTS round2
 
-Checked [official journal guidance](https://link.springer.com/journal/40042/submission-guidelines) on2026-10-13. The guidance accepts mathematical LaTeX manuscripts and recommends the Springer template; no mandatory template conversion is asserted for this one-column working article. Recommended Research Article main-text length is4000 words, with at most6 figures and200-word captions, title at most20 words and abstract150–250 words. These are recommendations rather than strict page limits. Numbered citations and no PACS codes are used.
+[Official JKPS guidance](https://link.springer.com/journal/40042/submission-guidelines) checked2026-10-13: mathematical LaTeX is accepted and a Springer template is recommended. Research Article length/figure guidance is advisory rather than a strict page limit. The main text is approximately3391 extracted words before declarations, with five figures; the one-column draft has10 pages and the supplement3. No mandatory two-column conversion is inferred.
 
-## Prepared
+## Prepared and checked
 
-- One-column eight-page source/PDF, three figures and reconciled result tables.
-- Original review preserved, point-by-point response and17-claim evidence ledger.
-- Independent transport validation, exact historical statistical reconstruction and held-out frozen design comparison.
-- Selected raw-output attachment with relative-path reproduction commands, environment/source identities, per-artifact digests and stage-specific source snapshots.
-- Isolated LaTeX/BibTeX build without reference/layout warnings; all eight pages visually checked.
+- Revised article/supplement, preserved reports and point-by-point response.
+- Frozen original identity, new declared protocol and independent machine comparison.
+- Station mechanism, local/numerical accuracy, interior maxima, separate particle losses and finite block inference.
+-32 claim pointers and28 source/export artifact identities verified.
+-718 full tests and20 final relevant checks passed; isolated builds have no citation/layout warnings.
+- Source/evidence attachment with exact stage bytes, selected raw inputs, source metadata and portable fresh-output commands. Current attachment and extracted checks are recorded in the final validation record.
+- [Author confirmed no competing interests](author_declarations_round2.md); statement installed in the article.
 
-## Author actions still required
+## Pending author actions
 
-- Funding statement/grant identifiers: author will supply later.
-- Competing interests and acknowledgment confirmation; do not infer “none” from missing inputs.
-- Final scientific interpretation, contribution/assistance disclosure and article approval.
-- Provide the prepared attachment to the actual journal/referees or make a public deposit; no public accessibility is claimed for a local archive.
-- Recheck journal submission-interface declarations at submission. No submission or push performed.
+- Funding/grants: author will supply later.
+- Acknowledgments: author will supply later.
+- Scientific interpretation, contribution/AI-assistance disclosure and final article approval.
+- Actual reviewer/journal delivery or explicitly authorized public deposit, with final availability wording matching access. Local preparation does not establish external access.
+- Confirm declarations in the journal's actual submission interface when submitting.
 
-Thus R1-BTS-01–09 scientific work is executed; R1-BTS-10 manuscript/evidence/build work is prepared, with its author-confirmed-declaration and external-delivery criteria still pending. No acceptance recommendation is inferred from task completion. The conditional negative clearance result should be judged by an independent reviewer.
-
-Validation record:713 full repository tests passed;15 relevant checks also passed in the extracted attachment, alongside a fresh PDF build and outside-Git validation/matching/response execution. Final isolated comparison/statistical reconstruction results are recorded in milestone196.
+R2-BTS-01–07 are executed. R2-BTS-08 preparation is performed, but its author-input/approval/delivery acceptance conditions remain open. No push or journal submission performed. No acceptance probability or recommendation is inferred from these checks.

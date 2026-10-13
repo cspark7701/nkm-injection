@@ -43,3 +43,9 @@ Validation: Nine clearance and exact block intervals reconstruct independently; 
 Integrates the physical mechanism, refined strategies and independent tests into a ten-page article with a three-page supplement, five figures and reconciled source-labelled evidence.
 
 Validation: 718 full tests and 20 relevant checks pass; both isolated PDFs build without warnings; 32 claim pointers and 28 artifacts verify. Extracted accuracy results match exactly. See [milestone 205](../../exec-plans/completed/205_r2_bts_07.md).
+
+## R2-BTS-08 — Prepare declarations and portable referee evidence
+
+Author confirmed no competing interests; this statement is installed. Funding and acknowledgments remain author-deferred, with no fabricated grant or collaborator information. Final scientific approval and external referee delivery remain pending, so R2-BTS-08 is prepared rather than fully closed. Official JKPS guidance was rechecked and local availability is stated accurately.
+
+A portable source/evidence attachment supplies both campaigns, all prior reports, current article/supplement, exact generating-stage sources and retained invalid runs. The full comparison and accuracy checks reproduce exactly outside Git. All718 full tests,20 relevant checks and32 claim pointers pass; PDF builds and rendered pages are checked. Fresh source routing is explicit. See [milestone206](../../exec-plans/completed/206_r2_bts_08.md), [author declarations](../author_declarations_round2.md), [execution status](../round2_task_status.md) and [reproduction guide](../round2_reproduction.md). No public deposit or journal submission performed.

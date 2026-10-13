@@ -13,6 +13,20 @@ ROOT=Path(__file__).resolve().parents[1]
 PAPER=ROOT/'docs/paper_bts'
 
 
+def snapshot_bytes(commit,name,snapshot):
+    """Read supplied exact generating bytes outside Git, or resolve locally."""
+    supplied=ROOT/snapshot/name
+    if supplied.is_file():return supplied.read_bytes()
+    return subprocess.check_output(['git','show',commit+':'+name],cwd=ROOT)
+
+
+def packaging_checkpoint():
+    try:return subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,stderr=subprocess.DEVNULL,text=True).strip()
+    except (subprocess.CalledProcessError,FileNotFoundError):
+        identity=ROOT/'SOURCE_IDENTITY.json'
+        return json.loads(identity.read_text())['packaging_commit'] if identity.is_file() else 'exported source; see exact hashes'
+
+
 def build_pdf(output, source='paper'):
     output.mkdir(parents=True,exist_ok=False)
     for name in [source+'.tex','paper.bib']:shutil.copy2(PAPER/name,output/name)
@@ -50,7 +64,7 @@ def package_round2(output,campaign):
         target=bundle/'generating_source/round2'/stage
         for name,digest in configuration['environment']['source_sha256'].items():
             dest=target/name;dest.parent.mkdir(parents=True,exist_ok=True)
-            dest.write_bytes(subprocess.check_output(['git','show',commit+':'+name],cwd=ROOT))
+            dest.write_bytes(snapshot_bytes(commit,name,Path('generating_source/round2')/stage))
             if sha256(dest)!=digest:raise ValueError('Round2 generating source mismatch: '+stage+'/'+name)
     with (bundle/'REPRODUCE.md').open('a') as stream:
         stream.write('''
@@ -103,7 +117,7 @@ def package(output,campaign,write_archive=True):
         destination=bundle/'generating_source'/label
         for name in ['src/nkm_injection/bts_journal.py','scripts/run_bts_journal_revision.py','docs/paper_bts/journal_config.json']:
             target=destination/name;target.parent.mkdir(parents=True,exist_ok=True)
-            target.write_bytes(subprocess.check_output(['git','show',commit+':'+name],cwd=ROOT))
+            target.write_bytes(snapshot_bytes(commit,name,Path('generating_source')/label))
         candidates=list((campaign/('validation_02' if label=='validation' else label)).glob('*.json'))
         metadata=next(json.loads(path.read_text())['environment'] for path in candidates if 'environment' in json.loads(path.read_text()))
         for name,digest in metadata['source_sha256'].items():
@@ -113,7 +127,7 @@ def package(output,campaign,write_archive=True):
     stats=json.loads((campaign/'statistics_final/historical_statistics.json').read_text())
     for name,digest in stats['environment']['source_sha256'].items():
         if sha256(bundle/'generating_source/statistics'/name)!=digest:raise ValueError('Statistics generating source mismatch')
-    (bundle/'SOURCE_IDENTITY.json').write_text(json.dumps({'packaging_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'identity':'Exact source-file hashes and generating snapshots distinguish working source changes from commit checkpoints.'},indent=2)+'\n')
+    (bundle/'SOURCE_IDENTITY.json').write_text(json.dumps({'packaging_commit':packaging_checkpoint(),'identity':'Exact source-file hashes and generating snapshots distinguish working source changes from commit checkpoints.'},indent=2)+'\n')
     (bundle/'REPRODUCE.md').write_text('''# BTS referee attachment
 
 All paths are relative to this extracted root. Historical absolute paths are preserved solely as original metadata; the audit resolves selected data by relative artifact paths.

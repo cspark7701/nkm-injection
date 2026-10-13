@@ -18,9 +18,9 @@
     "results/journal_campaign_01/error_budget.json": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146"
   },
   "verified_publication_assets_sha256": {
-    "paper.tex": "1ad7f1209560d1826cbe71d14bdf0e6369ae01146ecff7bd90a98d6b4c14147d",
-    "paper.bib": "23ec340cbadfabb8d0f9ac8545ec5e14ce855ec24125ffcb6e5991e4dd078b2e",
-    "paper.pdf": "99f75a7d1a13cefc6ae7f9ecc7d63fd46a9ebac1b97c2a2280e0470b133f4bbd",
+    "paper.tex": "4aa91cc5218fbd8700144969a2f76ec6d3daf85337ac3859d24b4c5a5c0319df",
+    "paper.bib": "20b8c788da37563fe1b97aa2fc569121aeefb9e6a721ab7bbfe8bcd7d8d20905",
+    "paper.pdf": "538fdabeb2c7b291e74fcee3f42f6812145b349af46299777a5ddf0001cd3050",
     "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
 
 

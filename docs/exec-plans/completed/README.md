@@ -569,6 +569,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 181. [**Milestone 181 — Peer Review Round 2 Execution, Revision Tasks, and Submission Package Verification**](181_execute_peer_review_round2.md)
     - Conducted independent second-round expert peer review (`reviewer_report_02.md`, Accept with Minor Editorial & Clarification Adjustments); resolved all 6 actionable revision tasks in `revision_tasks_round2.md`; quantified integrated gradient $\sum K_i^2$ reduction (18.4% power drop), detailed 3-mode null space physical mechanics, specified horizontal plane loss dominance at $6\times$ jitter, strengthened booster screen vs. magnet tolerance procurement recommendations, and clarified Figure 5 aperture bounding box; recompiled `paper.pdf` (12 pages, 613 KB); updated `draft_provenance.json`, regenerated `bts_jkps_submission.tar.gz`, verified tests, and authored point-by-point `author_response_to_reviewer_02.md`.
 
+182. [**Milestone 182 — Peer Review Round 3 (Acceptance), Camera-Ready Polish, and Package Verification**](182_execute_peer_review_round3.md)
+    - Conducted independent third-round expert peer review (`reviewer_report_03.md`, Accept for Publication); resolved camera-ready polish items in `revision_tasks_round3.md`; rephrased paraxial coordinate vector in Section 2.1 eliminating 30.97 pt overfull `\hbox` (0 overfull boxes in log); added PLS-II transfer line citation (Kim et al., JKPS 2012, `Kim2012`) in Introduction; recompiled `paper.pdf` (12 pages, 614 KB); updated `draft_provenance.json` digests, rebuilt standalone submission bundle (`bts_jkps_submission.tar.gz`), passed all regression tests, and authored point-by-point `author_response_to_reviewer_03.md`.
+
 
 
 

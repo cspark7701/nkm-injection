@@ -42,7 +42,7 @@ def main():
         jobs=[{'config':config.to_dict(),'ring':ring,'seed':seed,'bts':sel.bts.to_dict(),
                'initial_twiss':sel.initial_twiss,'particles':a.particles,'turns':500,
                'model':'fieldmap_3d','calibration':calibration,'ring_label':'ideal','profile_label':label,
-               'chamber':asdict(profile),'chunk':(lo,min(a.particles,lo+100))}
+               'chamber':asdict(profile),'kicker_chamber':profile.kicker_kwargs(),'chunk':(lo,min(a.particles,lo+100))}
               for seed in (1001,1002) for lo in range(0,a.particles,100)]
         case=parallel_map(run_capture_case,jobs,n_workers=a.workers,desc=f'D6 window {label}')
         for r in case:r.update(axis=axis,offset_mm_or_mrad=offset)

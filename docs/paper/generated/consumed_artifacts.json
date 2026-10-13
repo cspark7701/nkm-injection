@@ -1,5 +1,5 @@
 {
-  "manifest": "docs/paper/revision_manifest_round2.json",
+  "manifest": "docs/paper/revision_manifest_round3.json",
   "artifacts": {
     "backend_validation": {
       "path": "results/journal_campaign_01/backend_validation/backend_validation_summary.json",
@@ -216,6 +216,14 @@
     "round2_chamber_corrected": {
       "path": "results/journal_campaign_03/d6_corrected_chamber/chamber_summary.json",
       "sha256": "7eafbce1c7a8987724f37e15b27f716e3c52dad8b373c51738055b95a29d3731"
+    },
+    "round3_aperture_normalisation": {
+      "path": "results/journal_campaign_04/e4_aperture_normalisation.json",
+      "sha256": "9e2227fe743c938c5c16678ef7667dc6da6d1be803caa9a41ce6e7332da13a59"
+    },
+    "round3_nkm_chamber_scan": {
+      "path": "results/journal_campaign_04/e4_nkm_chamber_scan/nkm_chamber_scan.json",
+      "sha256": "ef0bfc1e679070d81fddab27a8dcf98abcf0a887bb83704013d66dae428f8dcd"
     },
     "round2_lattice_parameters": {
       "path": "results/journal_campaign_03/d12_lattice_parameters_final.json",

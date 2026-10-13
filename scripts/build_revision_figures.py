@@ -215,6 +215,25 @@ class RevisionBuilder(bj.Builder):
         self.save(fig,"fig9_generality",keys,
                   "deterministic centroids; |dp|/|K| of thin and 1280-slice maps against the exact field; power-law fit; allowance 0.1 x angular window")
 
+    def round3_chamber(self):
+        """E4: normalised apertures of the declared chamber and capture versus the in-magnet NKM chamber height."""
+        if "round3_aperture_normalisation" in self.m["artifacts"]:
+            d=self.load("round3_aperture_normalisation");r=d["regions"]
+            self.macro("NkmChamberNormY",r["nkm_magnet_chamber"]["normalised_y"],"{:.2f}")
+            self.macro("NkmChamberNormX",r["nkm_magnet_chamber"]["normalised_x"],"{:.2f}")
+            self.macro("ArcNormY",r["regular_arc"]["normalised_y"],"{:.2f}")
+            self.macro("CentreNormY",r["centre_bend"]["normalised_y"],"{:.2f}")
+            self.macro("ClosedIvuNormY",d["closed_ivu_stress"]["normalised_y"],"{:.2f}")
+        if "round3_nkm_chamber_scan" in self.m["artifacts"]:
+            d=self.load("round3_nkm_chamber_scan")
+            names={"none":"None","3.0":"Three","3.4":"ThreeFour","3.8":"ThreeEight","4.3":"FourThree"}
+            for row in d["summary"]:
+                tag=names[row["profile"].split("nkm_y")[1]];model="Nkm" if row["model"]=="fieldmap_3d" else "Dip"
+                self.macro(f"ScanCap{model}{tag}",100*row["capture"],"{:.1f}")
+                self.macro(f"ScanCap{model}{tag}Lo",100*row["ci95"][0],"{:.1f}")
+                self.macro(f"ScanCap{model}{tag}Hi",100*row["ci95"][1],"{:.1f}")
+                if model=="Nkm": self.macro(f"ScanMagLoss{tag}",str(row["magnet_losses"]))
+
     def fig_corrected_ring(self):
         if "round2_ring_scenario" not in self.m["artifacts"]:
             return
@@ -894,6 +913,7 @@ STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_apertur
          "transparency_sensitivities": "transparency_sensitivities"}
 
 STEPS["chamber"]="fig_chamber"
+STEPS["round3_chamber"]="round3_chamber"
 STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
               "final_validation":"final_validation", "final_robustness":"final_robustness"})
 

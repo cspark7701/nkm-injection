@@ -177,13 +177,15 @@ def run_realization(job):
     out["ring_error_seed"]=job.get("ring_error_seed")
     x_ref = cfg0.nkm_entry_x_m  # controls stay calibrated at the nominal point (no error knowledge)
     calib = job.get("calibration_3d")
+    # Round 3: the flat in-magnet NKM chamber (None in round-2 chamber configurations) applies to both models.
+    kchamber = ChamberProfile(**job["chamber"]).kicker_kwargs() if job.get("chamber") else {}
     for model in job["models"]:
         if model == "fieldmap_3d":
-            kicker = FilamentNKMKicker(cfg, n_slices=job.get("slices_3d", 640))
+            kicker = FilamentNKMKicker(cfg, n_slices=job.get("slices_3d", 640), **kchamber)
         elif model in ("dipole", "linear") and calib is not None:
             relative_scale=cfg.field_scale/cfg0.field_scale
             kicker = CalibratedControl(model, calib[0]*relative_scale+cfg.kick_offset_rad,
-                                       calib[1]*relative_scale, calib[2])
+                                       calib[1]*relative_scale, calib[2], **kchamber)
         elif model == "fieldmap_thick":
             kicker = ThickNKMKicker(cfg, *load_1d_fieldmap(root / "By.txt"), n_slices=job.get("thick_slices", 160))
         else:

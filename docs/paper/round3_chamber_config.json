@@ -1,0 +1,12 @@
+{
+  "arc_half_x_m": 0.012,
+  "arc_half_y_m": 0.009,
+  "centre_bend_half_y_m": 0.00487,
+  "nkm_half_x_m": 0.03,
+  "nkm_half_y_m": 0.015,
+  "ivu_half_y_m": 0.009,
+  "ivu_count": 19,
+  "shape": "ellipse",
+  "nkm_magnet_half_x_m": 0.016,
+  "nkm_magnet_half_y_m": 0.0038
+}

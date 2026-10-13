@@ -24,7 +24,8 @@ def run_capture_case(job):
     lo,hi=job.get('chunk',(0,job['particles']))
     beam=beam[:,lo:hi]
     t=time.time();model=job['model']
-    kicker=FilamentNKMKicker(cfg,n_slices=640) if model=='fieldmap_3d' else CalibratedControl(model,*job['calibration'])
+    chamber=job.get('kicker_chamber') or {}
+    kicker=FilamentNKMKicker(cfg,n_slices=640,**chamber) if model=='fieldmap_3d' else CalibratedControl(model,*job['calibration'],**chamber)
     result=track_injection(cfg,ring,kicker,beam,'element',n_turns=job['turns'])
     result.pop('final_coordinates',None)
     row={'ring':job['ring_label'],'profile':job['profile_label'],'chamber':job['chamber'],'seed':seed,

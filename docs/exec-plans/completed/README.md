@@ -607,3 +607,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 213. [**Milestone 213 — E3: Normalised Finite-Length Approximation Error**](213_e3_normalised_scaling.md)
     - Thin-map |Δp_x|/|K| = 1.95 η^1.46 (3.4 % scatter, both families); sliced map < 2e-5 |K|; declared 0.1-window allowance reached at η* ≈ 0.036 (nominal 0.034 uses 91 %).
+
+214. [**Milestone 214 — E4: Feasible NKM Vacuum Chamber**](214_e4_nkm_chamber.md)
+    - Flat 16 x 3.8 mm in-magnet chamber below the wires (1.5 mm allowance, Sun et al.), applied on the injection pass and every turn; normalised vertical aperture 1.61 (tightest with open IVUs); ideal-ring design-beam capture unchanged at 97.0 % for 3.0-4.3 mm.

@@ -21,7 +21,7 @@ the slope p/(1+δ).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Optional, Tuple
 
 import numpy as np
 
@@ -135,7 +135,18 @@ class FilamentNKMKicker:
 
     def __init__(self, config, n_slices: int = 320, s_span_m: float = 0.45, conductor_radius_m: float = 1.0e-3,
                  domain_half_m: float = 0.05, geometry: FilamentGeometry = FilamentGeometry(),
-                 vertical_kick: bool = True):
+                 vertical_kick: bool = True, chamber_half_x_m: Optional[float] = None,
+                 chamber_half_y_m: Optional[float] = None):
+        """``chamber_half_x_m``/``chamber_half_y_m`` (m): optional flat rectangular vacuum chamber inside the magnet,
+        in the magnet frame, checked at every slice with |s| <= geometry.half_length_m. ``None`` keeps the
+        conductor-exclusion rule only (round-2 behaviour)."""
+        if (chamber_half_x_m is None) != (chamber_half_y_m is None):
+            raise ValueError("chamber_half_x_m and chamber_half_y_m must be given together")
+        if chamber_half_y_m is not None and not (0 < chamber_half_x_m and 0 < chamber_half_y_m):
+            raise ValueError("chamber half-apertures must be positive")
+        self.chamber_half_x_m = None if chamber_half_x_m is None else float(chamber_half_x_m)
+        self.chamber_half_y_m = None if chamber_half_y_m is None else float(chamber_half_y_m)
+        self.chamber_half_length_m = float(geometry.half_length_m)
         self.config = config
         self.vertical_kick = bool(vertical_kick)  # False: diagnostic only (suppresses dp_y inside the magnet)
         self.field = FilamentNKMField(geometry)
@@ -169,6 +180,8 @@ class FilamentNKMKicker:
             xm, ym = b[0] - dx, b[2]
             rmin = np.min(np.hypot(xm[:, None] - self.wires[None, :, 0], ym[:, None] - self.wires[None, :, 1]), axis=1)
             lost |= (rmin < self.conductor_radius_m) | (np.abs(xm) > self.domain_half_m) | (np.abs(ym) > self.domain_half_m)
+            if self.chamber_half_y_m is not None and abs(s) <= self.chamber_half_length_m:
+                lost |= (np.abs(xm) > self.chamber_half_x_m) | (np.abs(ym) > self.chamber_half_y_m)
             if gain != 0.0:
                 bx, by, bs = self.field(xm, ym, s)
                 pn = 1.0 / (1.0 + b[4])
@@ -195,14 +208,22 @@ class CalibratedControl:
     """Thin control kick at the NKM centre: ``dipole`` k0, ``linear`` k0 + k1 (x − x_ref) with the curl-free partner
     −k1 y, or ``off``. Calibrated to the finite-length NKM response of the nominal centroid (``calibrate_controls``)."""
 
-    def __init__(self, model, k0, k1, x_ref):
+    def __init__(self, model, k0, k1, x_ref, chamber_half_x_m=None, chamber_half_y_m=None):
+        """Optional ``chamber_half_x_m``/``chamber_half_y_m`` (m): the in-magnet NKM chamber, checked at the magnet
+        centre only (a thin control has no length), so paired controls see the same aperture as the 3-D NKM."""
         if model not in ("dipole", "linear", "off"):
             raise ValueError("model must be dipole, linear or off")
+        if (chamber_half_x_m is None) != (chamber_half_y_m is None):
+            raise ValueError("chamber_half_x_m and chamber_half_y_m must be given together")
         self.model, self.k0, self.k1, self.x_ref = model, float(k0), float(k1), float(x_ref)
+        self.chamber_half_x_m, self.chamber_half_y_m = chamber_half_x_m, chamber_half_y_m
         self.interpolation = "none"
 
     def in_domain(self, x, y):
-        return np.ones_like(np.asarray(x), dtype=bool)
+        x = np.asarray(x, float)
+        if self.chamber_half_y_m is None:
+            return np.ones_like(x, dtype=bool)
+        return (np.abs(x) <= self.chamber_half_x_m) & (np.abs(np.asarray(y, float)) <= self.chamber_half_y_m)
 
     def kicks(self, x, y):
         x, y = np.asarray(x, float), np.asarray(y, float)

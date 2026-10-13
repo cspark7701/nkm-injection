@@ -1,6 +1,6 @@
 {
   "date": "2026-10-13",
-  "status": "archived-results first draft; B01-B12 remain pending",
+  "status": "B01 audit reopened; reviewer 1 main-branch revisions in progress",
   "source_commit": "13fe89bd969cdf7a9bdf4440fcff17407bf109ec",
   "files_sha256": {
     "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
@@ -39,5 +39,6 @@
     ],
     "final_log": "no LaTeX errors, warnings, overfull boxes or unresolved references/citations; no BibTeX warnings",
     "auxiliary_directory": "/home/cspark/Work/projects/nkm-injection/results/bts_draft_l2y8KS"
-  }
+  },
+  "revision_selection": "revision_selection.json"
 }

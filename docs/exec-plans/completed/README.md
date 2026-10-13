@@ -526,3 +526,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 186. [**Milestone 186 — Resolve the main-branch review rebase conflicts**](186_main_rebase_conflict_resolution.md)
     - Complete both review commits on the updated main base, preserve corrected NKM manuscript status and separate BTS reviews, and verify links and protected inputs.
+
+187. [**Milestone 187 — R1-BTS-01: Freeze BTS reviewer revision identity**](187_r1_bts_01.md)
+    - Select the main-branch draft, preserve baseline asset hashes and reopen the B01 audit while distinguishing the later BTS article.

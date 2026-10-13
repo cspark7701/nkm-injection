@@ -1,0 +1,13 @@
+{
+  "revision_base_commit": "a695261785c474a90125cf81fb1e9c1daa5060be",
+  "revision_branch": "main",
+  "reviewed_commit": "bee78914caa16945ef63dba8bf5205c434d0415c",
+  "alternative_branch_not_selected": "bts@466fca5",
+  "baseline_assets": {
+    "paper.tex": "d19f7e41a72f94a23065ed271a82d4d050477d0cfcdff4d46e743a66d5783a2b",
+    "paper.pdf": "039dab2d02ddba41f15481be3115afe2ebf625338ab15655555fe9fc30c3ab7b",
+    "paper.bib": "60905279d299cb5f2e793af1bf82641763e57da033d91122e05354bcbe2573f2",
+    "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4"
+  },
+  "status": "revision in progress; not an acceptance decision"
+}

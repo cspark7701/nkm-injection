@@ -13,7 +13,7 @@ First manuscript draft, 2026-10-13. Proposed target: **Journal of the Korean Phy
 
 The proposed paper asks how nine quadrupoles can match the booster-to-storage-ring transfer line while preserving beam-envelope margin and tolerating specified errors. The existing deterministic and optics-tolerance campaigns provide starting evidence. Correction-knob analysis, physical transport validation and an independent design comparison are proposed new work.
 
-The NKM manuscript remains in [docs/paper/](../paper/). Its finite-length kicker, storage-ring capture and stored-beam transparency results are outside this paper's main scope. The draft contains archived matching and tolerance results, four data tables and explicit revision notes. The planned scientific tasks B01–B12 remain pending; the article is not submission-ready. No new simulation campaign was executed.
+The NKM manuscript remains in [docs/paper/](../paper/). Its finite-length kicker, storage-ring capture and stored-beam transparency results are outside this paper's main scope. The draft contains archived matching and tolerance results, four data tables and explicit revision notes. B01 was completed previously and its audit is reopened; B02–B12 were pending at the revision baseline; the article is not submission-ready. No new simulation campaign was executed.
 
 Use SI units internally: position and beta in m, angle in rad, energy in eV, quadrupole strength in m^-2, gradient in T/m; alpha, relative momentum offset and dispersion derivative are dimensionless. Save future numerical outputs under new `results/bts_journal_campaign_*` directories and select them through a separate BTS evidence manifest. Keep ignored raw outputs out of git.
 
@@ -40,3 +40,5 @@ cp "$bts_build_dir/paper.pdf" docs/paper_bts/paper.pdf
 ```
 
 Requires pdflatex, BibTeX and the standard packages listed in `paper.tex`. The installed publication values allow a clean document build without ignored campaign files. Numerical reproduction requires those raw files and is separate from PDF compilation. [draft_provenance.json](draft_provenance.json) records the selected source hashes and the exported table digest. Re-export values only after verifying a new evidence selection; do not mix configurations or edit numbers to improve the results.
+
+Reviewer 1 revisions are tracked in the [version identity](revision_identity.md) and [point-by-point response](reviews/author_response_main_20261013.md).

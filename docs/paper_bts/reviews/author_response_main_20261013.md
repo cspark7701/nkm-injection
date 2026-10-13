@@ -43,3 +43,9 @@ Validation: Historical candidate values reproduced; 40-step and independent-map 
 Define dimensionless row and actuator scaling, verify finite-difference convergence and local finite response, and withdraw unsupported practical correction claims.
 
 Validation: Six local finite checks pass within bounds; rank and null-space conventions are recorded without claiming operational decoupling. See [milestone 193](../../exec-plans/completed/193_r1_bts_07.md).
+
+## R1-BTS-08 — Evaluate frozen BTS designs on held-out machines
+
+Complete constrained low-beta design and paired physical-clearance/particle comparisons on 200 held-out machines with independent shots.
+
+Validation: Track 1.2 million particles per design, retain first-loss records and nonzero zero-loss bounds, and report paired machine-cluster uncertainty without claiming beta equals clearance. See [milestone 194](../../exec-plans/completed/194_r1_bts_08.md).

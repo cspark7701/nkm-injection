@@ -547,3 +547,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 193. [**Milestone 193 — R1-BTS-07: Normalize BTS response and withdraw operational knob claims**](193_r1_bts_07.md)
     - Define dimensionless row and actuator scaling, verify finite-difference convergence and local finite response, and withdraw unsupported practical correction claims.
+
+194. [**Milestone 194 — R1-BTS-08: Evaluate frozen BTS designs on held-out machines**](194_r1_bts_08.md)
+    - Complete constrained low-beta design and paired physical-clearance/particle comparisons on 200 held-out machines with independent shots.

@@ -151,13 +151,78 @@ def normalized_response(output,config):
     save(output/'normalized_response.json',result);return result
 
 
+def paired_interval(values, seed, count=10000):
+    """Percentile bootstrap of paired machine means, not independent particles."""
+    values=np.asarray(values);rng=np.random.default_rng(seed)
+    estimates=np.mean(values[rng.integers(0,len(values),(count,len(values)))],axis=1)
+    return {'mean':float(np.mean(values)),'ci95':np.quantile(estimates,[.025,.975]).tolist(),'n_machines':len(values),'method':'paired machine-cluster percentile bootstrap','bootstrap_count':count,'seed':seed}
+
+
+def comparison(output,config):
+    from scipy.optimize import minimize
+    from scipy.stats import beta as beta_dist
+    original=selected()
+    def residual(k):return np.array(optics_record(k)['raw_residuals_beta_alpha_dispersion'])/SCALES
+    def score(k):return optics_record(k)['peak_beta_m'][1]
+    res=minimize(score,original,method='SLSQP',bounds=list(zip(LOWER,UPPER)),constraints=[{'type':'eq','fun':residual},{'type':'ineq','fun':lambda k:60.-optics_record(k)['peak_beta_m'][0]}],options={'maxiter':200,'ftol':1e-8})
+    alternative=optics_record(res.x)
+    assert res.success and alternative['independently_feasible']
+    save(output/'margin_optimizer.json',{'environment':environment(),'objective':'minimize vertical peak beta sampled at element boundaries','nonlinear_constraints':'six exact optical residual equalities and beta_x <=60 m','bounds':list(zip(LOWER,UPPER)),'start':original,'termination':str(res.message),'success':bool(res.success),'iterations':res.nit,'alternative':alternative,'reference':optics_record(original)})
+    beam=JournalBeam(**config['beam']);nominal=lattice_for(original)
+    # Training/audit set is separate from the test and does not select/tune on it.
+    train_rng=np.random.default_rng(config['training_seed']);training=[]
+    for machine in range(60):
+        errors=draw_static(train_rng,nominal);values=[]
+        for k in [original,res.x]:values.append(clearance_profile(apply_static(lattice_for(k),errors),beam)['minimum_m'])
+        training.append(values)
+    save(output/'training.json',{'seed':config['training_seed'],'n_machines':60,'clearance_pairs_m':training,'policy':'Design optimized on nominal physics only; separate training audit frozen before test. No correction or per-shot retuning.'})
+    test_rng=np.random.default_rng(config['heldout_seed']);particle_rng=np.random.default_rng(config['particle_seed'])
+    machine_rows=[];first_losses=[{},{}];particle_lost=[0,0];particle_total=0;raw=[]
+    for machine in range(config['heldout_machines']):
+        errors=draw_static(test_rng,nominal)
+        lattices=[apply_static(lattice_for(k),errors) for k in [original,res.x]]
+        shots=[]
+        for shot in range(config['shots_per_machine']):
+            factors=1+test_rng.normal(0,.05,2)
+            dx,px,dp=test_rng.normal(0,[.0005,.0002,.001])
+            centroid=np.array([dx+.2762*dp,px-.0657*dp,0.,0.,dp])
+            cov=beam.covariance(factors)
+            particles=particle_rng.multivariate_normal(np.zeros(6),cov,config['particles_per_shot']).T
+            particles[:5]+=centroid[:,None]
+            values=[]
+            for design,lat in enumerate(lattices):
+                margin=clearance_profile(lat,beam,centroid,factors)
+                track=at.lattice_track(lat,np.array(particles,order='F'),nturns=1,refpts=np.arange(len(lat)+1))[0][:,:,:,0]
+                finite=np.isfinite(track[0]);lost=~finite[:,-1];nlost=int(lost.sum());particle_lost[design]+=nlost
+                for particle in np.flatnonzero(lost):
+                    first=int(np.flatnonzero(~finite[particle])[0])-1
+                    name=f'{first}:{lat[first].FamName}'
+                    first_losses[design][name]=first_losses[design].get(name,0)+1
+                survivors=track[:4,~lost,-1]
+                if not np.all(np.isfinite(survivors)):raise ValueError('Invalid surviving particle coordinates')
+                values.append({'clearance_m':margin['minimum_m'],'lost':nlost,'transmission':1-nlost/config['particles_per_shot'],'exit_centroid_xy_m':np.mean(survivors[[0,2]],axis=1).tolist(),'exit_rms_xy_m':np.std(survivors[[0,2]],axis=1,ddof=1).tolist()})
+            particle_total+=config['particles_per_shot'];shots.append(values)
+            raw.append({'machine':machine,'shot':shot,'beta_factors':factors,'centroid':centroid,'static_errors':errors,'design_results':values})
+        machine_rows.append({'machine':machine,'mean_clearance_m':[np.mean([s[d]['clearance_m'] for s in shots]) for d in [0,1]],'mean_transmission':[np.mean([s[d]['transmission'] for s in shots]) for d in [0,1]],'shots':shots})
+    paired=np.array([m['mean_clearance_m'] for m in machine_rows]);trans=np.array([m['mean_transmission'] for m in machine_rows])
+    ci=paired_interval(paired[:,1]-paired[:,0],config['bootstrap_seed'],config['bootstrap_count'])
+    loss_bound=[]
+    for k in particle_lost:
+        low=0. if k==0 else float(beta_dist.ppf(.025,k,particle_total-k+1));hi=1. if k==particle_total else float(beta_dist.ppf(.975,k+1,particle_total-k))
+        loss_bound.append({'lost':k,'total':particle_total,'conditional_particle_binomial_ci95':[low,hi],'interpretation':'Conditional descriptive interval; shared machine/shot effects prevent interpreting all particles as iid machine reliability.'})
+    result={'environment':environment(),'nominal':optics_record(original),'alternative':alternative,'optimizer_success':bool(res.success),'optimizer_termination':str(res.message),'training_seed':config['training_seed'],'heldout_seed':config['heldout_seed'],'particle_seed':config['particle_seed'],'design_frozen_before_heldout':True,'machines':config['heldout_machines'],'shots_per_machine':config['shots_per_machine'],'particles_per_shot':config['particles_per_shot'],'paired_clearance_difference_m':ci,'paired_transmission_difference':paired_interval(trans[:,1]-trans[:,0],config['bootstrap_seed']+1,config['bootstrap_count']),'mean_clearance_m':np.mean(paired,axis=0),'clearance_machine_quantiles_m':np.quantile(paired,[.05,.5,.95],axis=0),'loss_counts':loss_bound,'first_loss_counts':first_losses,'zero_loss_shot_upper95':float(1-.05**(1/config['heldout_machines'])),'zero_loss_shot_upper_note':'Only applicable when all independent machine blocks have no losses; one-sided bound for a block with any loss, not per-particle hardware reliability.','invalid_evaluations':0,'claim_scope':'No correction, continuous-chamber certification or storage-ring capture; frozen margin versus nominal under parametric station apertures.'}
+    save(output/'heldout.json',result);save(output/'raw_realizations.json',raw);save(output/'machine_results.json',machine_rows)
+    print('Comparison paired clearance [m]',ci)
+    return result
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--stage',choices=['validation','matching','response'],required=True)
+    parser.add_argument('--stage',choices=['validation','matching','response','comparison'],required=True)
     parser.add_argument('--output-dir',type=Path,required=True)
     args=parser.parse_args();args.output_dir.mkdir(parents=True,exist_ok=False)
     config=json.loads((PAPER/'journal_config.json').read_text());save(args.output_dir/'config.json',config)
-    result={'validation':validation,'matching':matching,'response':normalized_response}[args.stage](args.output_dir,config)
+    result={'validation':validation,'matching':matching,'response':normalized_response,'comparison':comparison}[args.stage](args.output_dir,config)
     print(json.dumps({k:v for k,v in result.items() if k not in ['environment','error_coverage']},default=serial))
 
 

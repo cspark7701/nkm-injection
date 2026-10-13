@@ -589,3 +589,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 
 
+
+183. [**Milestone 183 — Rebase BTS onto local main**](183_bts_rebase_to_main.md)
+    - Confirm local main is already an ancestor, execute the no-op BTS rebase without rewriting existing commits, record the operation on BTS and return the workspace to main.

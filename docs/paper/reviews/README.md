@@ -10,6 +10,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 1, round 2](reviewer1_round2_20261011_report.md), 2026-10-11 | Focused major revision; do not accept the present version | [10 ordered tasks](reviewer1_round2_20261011_revision_tasks.md) |
 | [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
 | [Reviewer 1, round 3](reviewer1_round3_20261012_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](reviewer1_round3_20261012_revision_tasks.md) |
+| [Reviewer 2, round 3](reviewer2_report_round3.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
 
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
 Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
@@ -43,3 +44,9 @@ The eight third-round scientific tasks remain pending. The
 recorded 48 hash-matching artifacts and 157 absent artifacts out of 205;
 D15 did not repeat the historical evidence-bundle verification. Round-2 completion
 does not establish submission readiness or scientific acceptance.
+
+The third-round Reviewer 2 report verifies all 205 round-2 artifacts and the evidence-bundle hash
+locally, so R1C-01 can be closed by documenting access. Its new points concern the robustness section:
+- an operating point not re-selected for the design beam (33 of 50 tuned machines moved toward the septum);
+- corrected rings that stop at a 100 µm orbit criterion without optics correction;
+- an assumed NKM chamber that encloses the magnet's own conductors.

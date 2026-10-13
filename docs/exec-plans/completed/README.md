@@ -592,3 +592,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 208. [**Milestone 208 — BTS entrance and exit phase-space distributions**](208_bts_phase_space_figures.md)
     - Adds reproducible particle clouds and native AT covariance ellipses in both planes, updates article interpretation and extends portable evidence.
+
+209. [**Milestone 209 — Reviewer 2, Third-Round Report on the PRAB Manuscript**](209_reviewer2_round3_report.md)
+    - Major revision focused on robustness: operating point not re-selected for the design beam, orbit-only ring correction stopped at 100 µm, NKM chamber enclosing its conductors; evidence bundle verified; tasks R2c-1 to R2c-9.

@@ -23,3 +23,7 @@ The following three rounds were recovered verbatim from local `bts` commit `466f
 | 3 | [Report 03](reviewer_report_03.md) | [Round 3 tasks](revision_tasks_round3.md) | [Response 03](author_response_to_reviewer_03.md) |
 
 The original branch milestones are `6878ba7` (first review), `05a645f` (first-round execution), `814c0c4` (second round), and `aff4ef7` (third round). References inside these historical documents to manuscript sections, provenance, tests and generated submission packages refer to their original branch versions. Restoring these records does not regenerate or import those assets.
+
+## Second assessment of the revised main-branch article
+
+[Reviewer 1 main-branch round-2 report](reviewer1_bts_20261013_main_round2_report.md), 2026-10-13, evaluates the revised eight-page *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `742b940`. Recommendation: **major revision; no acceptance in present form**. The [eight ordered R2-BTS tasks](reviewer1_bts_20261013_main_round2_revision_tasks.md) are open at review. This assessment credits the completed R1 revisions while requiring limiting-station analysis, clearance-scale validation, interior-extrema checks and a stronger physical design comparison. It is separate from the restored historical BTS-branch rounds.

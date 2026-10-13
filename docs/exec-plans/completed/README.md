@@ -559,3 +559,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 197. [**Milestone 197 — Restore BTS branch review history**](197_restore_bts_branch_reviews.md)
     - Recover three historical rounds of reports, revision tasks and author responses verbatim from local bts, preserving current reviews and documenting their manuscript scope.
+
+198. [**Milestone 198 — Second review of the revised BTS main-branch article**](198_bts_main_round2_review.md)
+    - Assess the revised eight-page article, independently reconstruct paired statistics and add a major-revision report with eight ordered tasks while preserving all previous reviews.

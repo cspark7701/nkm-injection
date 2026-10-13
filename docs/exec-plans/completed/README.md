@@ -517,3 +517,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 164. [**Milestone 164 — Reconcile manuscript status through D15**](164_manuscript_status_reconciliation.md)
     - Correct stale D15 status, link completed PRAB formatting and pending third-round scientific tasks, and record the separate BTS B01 completion with B02 next.
+
+184. [**Milestone 184 — Review the BTS manuscript on main**](184_bts_main_manuscript_review.md)
+    - Assess the version-identified eight-page BTS draft, verify selected hashes/failure records, recommend major revision and create ten ordered tasks while preserving prior reviews and distinguishing the later BTS-branch article.

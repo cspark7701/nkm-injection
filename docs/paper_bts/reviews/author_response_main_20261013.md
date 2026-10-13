@@ -13,3 +13,9 @@ Validation: Verified baseline hashes, branch identity and unchanged protected in
 Audit twelve BC claims with exact JSON pointers, repair restart, Jacobian, OAT, failure and boundary interpretations, and record artifact-specific metadata.
 
 Validation: All nine selected artifact digests and twelve claim pointers verified; unresolved hardware and target provenance explicitly retained as assumptions. See [milestone 188](../../exec-plans/completed/188_r1_bts_02.md).
+
+## R1-BTS-03 — Establish the BTS physical question and primary literature
+
+Replace unsupported regional and global comparisons with checked primary passages and define a paired physical-clearance design question.
+
+Validation: Verified SLS, Sirius, ESRF and MAX IV records; unverified PLS-II and RAON references and quantitative comparisons withdrawn. See [milestone 189](../../exec-plans/completed/189_r1_bts_03.md).

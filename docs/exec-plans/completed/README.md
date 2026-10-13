@@ -532,3 +532,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 188. [**Milestone 188 — R1-BTS-02: Correct BTS claims and artifact provenance**](188_r1_bts_02.md)
     - Audit twelve BC claims with exact JSON pointers, repair restart, Jacobian, OAT, failure and boundary interpretations, and record artifact-specific metadata.
+
+189. [**Milestone 189 — R1-BTS-03: Establish the BTS physical question and primary literature**](189_r1_bts_03.md)
+    - Replace unsupported regional and global comparisons with checked primary passages and define a paired physical-clearance design question.

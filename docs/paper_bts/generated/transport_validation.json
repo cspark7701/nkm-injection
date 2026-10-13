@@ -1,0 +1,118 @@
+{
+  "environment": {
+    "commit": "5af44fdd531917339f3b6fa776d4d312aded5e14",
+    "source_sha256": {
+      "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+      "scripts/run_bts_journal_revision.py": "91914c3dc1dc9fd5ad5101ea504fb1e4dfefd54af3c5e8bd0cbcd34318d6709c",
+      "docs/paper_bts/journal_config.json": "221ea94a8694e7d91d5aadda7351118141fa6f57747766af63b67f98011bddf2"
+    },
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pyat": "0.7.2.dev26+g4701d48c.d20260831"
+  },
+  "tolerances": {
+    "nominal_map_abs": 2e-06,
+    "perturbed_map_abs": 0.001,
+    "orbit_m": 2e-06,
+    "symplectic_max_abs": 1e-10,
+    "rms_relative": 0.02,
+    "twiss_beta_m": 1e-05,
+    "dispersion_abs": 2e-06,
+    "energy_linearization_x_m": 5e-06
+  },
+  "integration_step_convergence": {
+    "10": 4.053375046275676e-06,
+    "20": 2.531576042130723e-07,
+    "40": 1.5819562992902547e-08,
+    "80": 9.886349516818882e-10
+  },
+  "default_10_step_missed_map_tolerance": true,
+  "nominal_map_difference": 1.5819562992902547e-08,
+  "transverse_symplectic_error": 1.2212453270876722e-15,
+  "independent_exit_beta_m": [
+    2.3364941299058066,
+    4.256241745440117
+  ],
+  "independent_exit_dispersion": [
+    0.0808679688609173,
+    0.047472003495557004,
+    0.0,
+    0.0
+  ],
+  "error_coverage": [
+    {
+      "error": "gradient",
+      "map_max_abs_difference": 1.582222042273429e-08,
+      "orbit_max_abs_difference_m": 0.0,
+      "exit_orbit_xy_m": [
+        0.0,
+        0.0
+      ],
+      "coupling_block_norm": 0.0,
+      "change_of_covariance_norm": 4.302238433535071e-11
+    },
+    {
+      "error": "offset",
+      "map_max_abs_difference": 0.00013869271875802114,
+      "orbit_max_abs_difference_m": 8.196194543647495e-14,
+      "exit_orbit_xy_m": [
+        -5.83426264915482e-06,
+        0.0
+      ],
+      "coupling_block_norm": 0.0,
+      "change_of_covariance_norm": 0.0
+    },
+    {
+      "error": "roll",
+      "map_max_abs_difference": 1.581955277885072e-08,
+      "orbit_max_abs_difference_m": 0.0,
+      "exit_orbit_xy_m": [
+        0.0,
+        0.0
+      ],
+      "coupling_block_norm": 0.000301964007670923,
+      "change_of_covariance_norm": 3.648389044632859e-10
+    },
+    {
+      "error": "dipole",
+      "map_max_abs_difference": 0.0005355316204434524,
+      "orbit_max_abs_difference_m": 3.7440504255942253e-13,
+      "exit_orbit_xy_m": [
+        0.00023183719266252575,
+        0.0
+      ],
+      "coupling_block_norm": 0.0,
+      "change_of_covariance_norm": 0.0
+    }
+  ],
+  "tracking_seed": 71000,
+  "particles": 50000,
+  "rms_ratio_tracking_to_linear": [
+    0.9989597266475145,
+    1.0015517060877375
+  ],
+  "energy_cases": [
+    {
+      "delta": -0.001,
+      "exit_xy_m": [
+        -8.106033635710506e-05,
+        0.0
+      ],
+      "linear_x_m": -8.08679688609173e-05,
+      "linearization_error_x_m": -1.9236749618776507e-07
+    },
+    {
+      "delta": 0.001,
+      "exit_xy_m": [
+        8.067838517729584e-05,
+        0.0
+      ],
+      "linear_x_m": 8.08679688609173e-05,
+      "linearization_error_x_m": -1.8958368362146304e-07
+    }
+  ],
+  "first_loss_element_index": 1,
+  "invalid_evaluations": 0,
+  "all_checks_passed": true
+}

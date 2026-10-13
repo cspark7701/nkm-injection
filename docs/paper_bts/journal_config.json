@@ -472,5 +472,6 @@
       "length_m": 0.0,
       "pass_method": "IdentityPass"
     }
-  ]
+  ],
+  "integration_steps": 40
 }

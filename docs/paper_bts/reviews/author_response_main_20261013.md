@@ -25,3 +25,9 @@ Validation: Verified SLS, Sirius, ESRF and MAX IV records; unverified PLS-II and
 Freeze the source-labelled model, full design-beam covariance and assumed hardware limits; record actual aperture positions and legacy MAD-X non-equivalence.
 
 Validation: Validated 36-element order, 21.789 m length, K-to-gradient/pole-field conversion and geometry figure; physical target and continuous chamber remain parametric. See [milestone 190](../../exec-plans/completed/190_r1_bts_04.md).
+
+## R1-BTS-05 — Validate independent BTS transport and active errors
+
+Implement hard-edge affine transport, coupled covariance and fixed-geometry active errors; validate against AT particle maps and Gaussian transport.
+
+Validation: 13 tests pass; 40-step maps meet declared tolerances, isolated errors and first losses checked, and the missed default-step tolerance remains reported. See [milestone 191](../../exec-plans/completed/191_r1_bts_05.md).

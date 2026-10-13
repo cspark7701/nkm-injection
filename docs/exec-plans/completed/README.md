@@ -538,3 +538,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 190. [**Milestone 190 — R1-BTS-04: Specify BTS boundaries beam and model constraints**](190_r1_bts_04.md)
     - Freeze the source-labelled model, full design-beam covariance and assumed hardware limits; record actual aperture positions and legacy MAD-X non-equivalence.
+
+191. [**Milestone 191 — R1-BTS-05: Validate independent BTS transport and active errors**](191_r1_bts_05.md)
+    - Implement hard-edge affine transport, coupled covariance and fixed-geometry active errors; validate against AT particle maps and Gaussian transport.

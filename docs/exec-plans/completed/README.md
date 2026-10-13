@@ -577,3 +577,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 203. [**Milestone 203 — R2-BTS-05: Compare BTS clearance strategies on independent machines**](203_r2_bts_05.md)
     - Freezes nominal clearance settings and evaluates all nine regime/design combinations on new machines, demonstrating beneficial and adverse beta-reduction regimes.
+
+204. [**Milestone 204 — R2-BTS-06: Reconstruct BTS inference and define finite loss events**](204_r2_bts_06.md)
+    - Verifies all new paired intervals, separates clearance from transmission and defines sampled three-shot block losses with exact finite-sample uncertainty.

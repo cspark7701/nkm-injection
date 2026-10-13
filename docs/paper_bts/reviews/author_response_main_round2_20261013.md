@@ -31,3 +31,9 @@ Validation: Refined low-beta search converges in 34 iterations; 32-to-64 subdivi
 Freezes nominal clearance settings and evaluates all nine regime/design combinations on new machines, demonstrating beneficial and adverse beta-reduction regimes.
 
 Validation: 10.8 million particle transports complete; paired direct-clearance gains are 0.881 and 0.212 mm in hypothetical restrictions. Invalid aperture-alias runs are retained and a non-target-station regression passes. See [milestone 203](../../exec-plans/completed/203_r2_bts_05.md).
+
+## R2-BTS-06 — Reconstruct BTS inference and define finite loss events
+
+Verifies all new paired intervals, separates clearance from transmission and defines sampled three-shot block losses with exact finite-sample uncertainty.
+
+Validation: Nine clearance and exact block intervals reconstruct independently; the declared 0.1 mm scale and pointwise coverage are retained without extra post-inspection samples. See [milestone 204](../../exec-plans/completed/204_r2_bts_06.md).

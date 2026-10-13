@@ -560,6 +560,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 178. [**Milestone 178 — Continuous Integration & Regression Test Hardening (C04)**](178_c04_test_hardening.md)
     - Implemented `tests/test_bts_paper_assets.py` covering provenance schemas, PDF integrity, figure presence, hash verification, and LaTeX macro definitions, passing 100% in pytest.
 
+179. [**Milestone 179 — Expert Peer Review, Revision Tasks, and Manuscript Hardening**](179_peer_review_and_revision_hardening.md)
+    - Conducted comprehensive expert peer review for JKPS (`reviewer_report_01.md`, Minor Revisions recommendation); compiled and resolved 6 revision tasks in `reviews/`; refined `paper.tex` with continuous vacuum chamber details, uncorrected trajectory steering assumptions, chromatic broadening checks, and multi-start framing; recompiled `paper.pdf` (12 pages, zero errors); updated `draft_provenance.json` and authored formal point-by-point `author_response_to_reviewer_01.md`.
+
+
 
 
 

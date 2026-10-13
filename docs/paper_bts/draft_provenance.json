@@ -18,10 +18,11 @@
     "results/journal_campaign_01/error_budget.json": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146"
   },
   "verified_publication_assets_sha256": {
-    "paper.tex": "f3d1df6f0f287f1452b7d863a6b787caacc78a9bade2679fe986ac87017737d5",
+    "paper.tex": "93e0268fe86f464f01b61763539948a7705585a71790adf0b30bd4bf78b348af",
     "paper.bib": "fc4aea2ebfe1d534bb946047ae79f8f410ca797c352931f2b890d9208b67c8b1",
-    "paper.pdf": "ac7e3b346212f9dbe251806f93662490de614a522c4829e6907c2051514a4c2b",
+    "paper.pdf": "9cd65a466a174bd9688c4325ef2a9b778a2a794cddf8826f38419ca46ef346c4",
     "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
+
     "figures/fig1_bts_layout.pdf": "f1a26a852f8c3e318009ef3e67fefc4df6dcba39bab126cf656e2ddf0b857b35",
     "figures/fig2_svd_knobs.pdf": "2ea45d3fe81244fe8825d7e8762a9eaca26925b769d5251c67fc68c150c3a63a",
     "figures/fig3_margin_tradeoff.pdf": "ee9a0e5afe857bbab8798b3ba243f33028d9b30b4c757dca4125226a55fbdc65",

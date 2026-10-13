@@ -49,3 +49,9 @@ Validation: Six local finite checks pass within bounds; rank and null-space conv
 Complete constrained low-beta design and paired physical-clearance/particle comparisons on 200 held-out machines with independent shots.
 
 Validation: Track 1.2 million particles per design, retain first-loss records and nonzero zero-loss bounds, and report paired machine-cluster uncertainty without claiming beta equals clearance. See [milestone 194](../../exec-plans/completed/194_r1_bts_08.md).
+
+## R1-BTS-09 — Reconstruct BTS statistics and qualify tolerance claims
+
+Audit all 550000 historical observations and pooling fields, reconstruct quantile/failure intervals and preserve missed prefixes while separating new physical transport.
+
+Validation: 15 relevant tests pass; all five failure records, exact asymmetric intervals and order-statistic quantiles match; hardware tolerance and optional-stopping claims remain withdrawn. See [milestone 195](../../exec-plans/completed/195_r1_bts_09.md).

@@ -550,3 +550,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 194. [**Milestone 194 — R1-BTS-08: Evaluate frozen BTS designs on held-out machines**](194_r1_bts_08.md)
     - Complete constrained low-beta design and paired physical-clearance/particle comparisons on 200 held-out machines with independent shots.
+
+195. [**Milestone 195 — R1-BTS-09: Reconstruct BTS statistics and qualify tolerance claims**](195_r1_bts_09.md)
+    - Audit all 550000 historical observations and pooling fields, reconstruct quantile/failure intervals and preserve missed prefixes while separating new physical transport.

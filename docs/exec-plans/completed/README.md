@@ -556,3 +556,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 196. [**Milestone 196 — R1-BTS-10: Prepare the revised BTS article and referee evidence package**](196_r1_bts_10.md)
     - Prepare the eight-page article, seventeen-claim ledger, point-by-point response and portable raw-evidence package; author-confirmed declarations and actual submission delivery remain pending.
+
+197. [**Milestone 197 — Restore BTS branch review history**](197_restore_bts_branch_reviews.md)
+    - Recover three historical rounds of reports, revision tasks and author responses verbatim from local bts, preserving current reviews and documenting their manuscript scope.

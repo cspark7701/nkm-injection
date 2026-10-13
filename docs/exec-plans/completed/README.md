@@ -598,3 +598,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 210. [**Milestone 210 — Consolidated Round-3 Revision Plan**](210_consolidated_revision_plan_round3.md)
     - Reconciled R1C-01–08 and R2c-1–9 into E1–E11 with author inputs B1–B5; one robustness rerun after fixing the NKM chamber, ring correction and design-beam operating point; synthesis and noninferiority wording on the rerun.
+
+211. [**Milestone 211 — E1: Evidence Access and Re-verification**](211_e1_evidence_access.md)
+    - Round-2 bundle hash, 213-entry inventory and an isolated archived-source macro rebuild all verify; 205/205 manifest artifacts match; access route documented.

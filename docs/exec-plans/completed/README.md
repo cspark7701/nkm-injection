@@ -563,6 +563,10 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 179. [**Milestone 179 — Expert Peer Review, Revision Tasks, and Manuscript Hardening**](179_peer_review_and_revision_hardening.md)
     - Conducted comprehensive expert peer review for JKPS (`reviewer_report_01.md`, Minor Revisions recommendation); compiled and resolved 6 revision tasks in `reviews/`; refined `paper.tex` with continuous vacuum chamber details, uncorrected trajectory steering assumptions, chromatic broadening checks, and multi-start framing; recompiled `paper.pdf` (12 pages, zero errors); updated `draft_provenance.json` and authored formal point-by-point `author_response_to_reviewer_01.md`.
 
+180. [**Milestone 180 — Execution of All Peer Review Revision Tasks and Package Verification**](180_execute_peer_review_revisions.md)
+    - Systematically executed and verified all 6 peer review revision tasks (R1–R6); updated Figure 1 caption with triplet labels and line styles; cited Courant–Snyder 1958 in mismatch parameter; recompiled publication PDF (`paper.pdf`, 12 pages, 612 KB); updated `draft_provenance.json` digests, rebuilt standalone submission bundle (`bts_jkps_submission.tar.gz`), and confirmed 100% test pass.
+
+
 
 
 

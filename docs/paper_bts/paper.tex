@@ -55,9 +55,10 @@ Discrete physical apertures are positioned along the vacuum chamber: $19.35 \tim
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{figures/fig1_bts_layout.pdf}
-\caption{Mechanical layout and nominal optical functions of the 21.789~m BTS transfer line. (Top) Schematic element layout showing dipoles (blue), quadrupoles (red), and septa/kicker (gray). (Bottom) Evolution of horizontal betatron function $\beta_x$ (blue), vertical betatron function $\beta_y$ (red dashed), and horizontal dispersion $D_x$ (green dash-dotted) from booster extraction to storage-ring injection.}
+\caption{Mechanical layout and nominal optical functions of the 21.789~m BTS transfer line. (Top) Schematic element layout showing bending dipoles B1--B3 (blue), nine matching quadrupoles grouped into three triplets $\mathrm{q11}$--$\mathrm{q13}$, $\mathrm{q21}$--$\mathrm{q23}$, and $\mathrm{q31}$--$\mathrm{q33}$ (red), and septa/kicker stations (gray). (Bottom) Paraxial evolution of horizontal betatron function $\beta_x$ (solid blue), vertical betatron function $\beta_y$ (dashed red), and horizontal dispersion $D_x$ (dash-dotted green) from booster extraction ($s = 0.0$~m) to storage-ring injection ($s = 21.789$~m).}
 \label{fig:layout}
 \end{figure}
+
 
 \subsection{Boundary Twiss Parameters and Beam Parameters}
 The entrance boundary corresponds to the extraction point of the 4~GeV booster synchrotron, while the exit boundary represents the injection interface of the storage ring. Table~\ref{tab:boundary} summarizes the boundary Twiss parameters.
@@ -98,12 +99,13 @@ Optical matching seeks quadrupole strengths $\mathbf{K} \in \mathbb{R}^9$ that t
 r_i(\mathbf{K}) = \frac{O_i(\mathbf{K}) - O_{i,\mathrm{target}}}{s_i}, \qquad \mathcal{J}(\mathbf{K}) = \sum_{i=1}^6 r_i^2(\mathbf{K}),
 \label{eq:merit}
 \end{equation}
-with physical normalization scales $s = (0.05~\text{m}, 0.05~\text{m}, 0.01, 0.01, 0.002~\text{m}, 0.001)$. The optical mismatch in plane $u \in \{x, y\}$ is quantified by the trace of the normalized covariance matrix product:
+with physical normalization scales $s = (0.05~\text{m}, 0.05~\text{m}, 0.01, 0.01, 0.002~\text{m}, 0.001)$. The optical mismatch in plane $u \in \{x, y\}$ is quantified using the normalized Courant--Snyder mismatch parameter $\mathcal{M}_u$~\cite{Courant1958}, expressed via the trace of the normalized covariance matrix product:
 \begin{equation}
 T_u = \begin{pmatrix} \beta_u & -\alpha_u \\ -\alpha_u & \gamma_u \end{pmatrix}, \qquad \mathcal{M}_u = \frac{1}{2}\operatorname{Tr}\left(T_{u,\mathrm{target}}^{-1} T_{u,\mathrm{out}}\right) - 1.
 \label{eq:mismatch}
 \end{equation}
-For an exact optical match, $\mathcal{M}_u = 0$.
+For an exact optical match, $\mathcal{M}_u = 0$, while $\mathcal{M}_u > 0$ reflects phase-space distortion and effective emittance dilution upon injection.
+
 
 Quadrupole strengths are constrained by physical power supply and pole-tip saturation limits. Families $\mathrm{q11}$ and $\mathrm{q33}$ have bounds $[-2.5, 2.5]~\mathrm{m}^{-2}$ ($|G| \le 33.36$~T/m), while the remaining seven quadrupoles have bounds $[-3.0, 3.0]~\mathrm{m}^{-2}$ ($|G| \le 40.03$~T/m). Assuming a bore radius $r_0 = 18.25$~mm, the maximum pole-tip magnetic field is $B_{\mathrm{pole}} = G r_0 \le 0.73$~T, well below the 1.2~T iron saturation threshold. Physical envelope feasibility requires:
 \begin{equation}

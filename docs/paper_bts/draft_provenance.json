@@ -18,10 +18,11 @@
     "results/journal_campaign_01/error_budget.json": "6a1ce41f2f72e97a6b550f138469491a00d8c2883dd31ed453c98b97cb876146"
   },
   "verified_publication_assets_sha256": {
-    "paper.tex": "93e0268fe86f464f01b61763539948a7705585a71790adf0b30bd4bf78b348af",
-    "paper.bib": "fc4aea2ebfe1d534bb946047ae79f8f410ca797c352931f2b890d9208b67c8b1",
-    "paper.pdf": "9cd65a466a174bd9688c4325ef2a9b778a2a794cddf8826f38419ca46ef346c4",
+    "paper.tex": "f349da38ea75f87b6702ec61af3bce2b7653a18e990580b1802e23355d7fada6",
+    "paper.bib": "23ec340cbadfabb8d0f9ac8545ec5e14ce855ec24125ffcb6e5991e4dd078b2e",
+    "paper.pdf": "a7be08e82663ee7676c13a1d348a1dad1fb17df245cbf73f4db0914bb3e866a5",
     "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
+
 
     "figures/fig1_bts_layout.pdf": "f1a26a852f8c3e318009ef3e67fefc4df6dcba39bab126cf656e2ddf0b857b35",
     "figures/fig2_svd_knobs.pdf": "2ea45d3fe81244fe8825d7e8762a9eaca26925b769d5251c67fc68c150c3a63a",

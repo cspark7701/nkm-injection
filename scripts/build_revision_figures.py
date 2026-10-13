@@ -259,6 +259,34 @@ class RevisionBuilder(bj.Builder):
         self.macro("SeptumAllowG",sp["allowed_field_T"]*1e4,"{:.3f}")
         self.macro("SeptumReduction",sp["required_reduction_factor"],"{:.0f}")
 
+    def round3_operating_point(self):
+        """E6: operating point re-selected for the design beam on the corrected-ring population with the NKM chamber."""
+        if "round3_selection" not in self.m["artifacts"]:
+            return
+        d=self.load("round3_selection");cands={c["label"]:c for c in d["candidates"]}
+        self.macro("RThreeSigmaSeptumUm",1e6*d["sigma_x_septum_m"],"{:.0f}")
+        self.macro("RThreeClearSigma",d["clearance_sigma"],"{:g}")
+        self.macro("RThreeCandidates",str(len(d["candidates"])))
+        for blade,tag in (("2mm","Two"),("1mm","One")):
+            c=cands[d["selected"][blade]];cfg=c["config"]
+            self.macro(f"RThreeOp{tag}XinjMm",1e3*cfg["injection_x_m"],"{:.2f}")
+            self.macro(f"RThreeOp{tag}XpMrad",1e3*cfg["injection_xp_rad"],"{:.3f}")
+            self.macro(f"RThreeOp{tag}Scale",cfg["field_scale"],"{:.2f}")
+            self.macro(f"RThreeOp{tag}CentroidMm",1e3*c["centroid_m"],"{:.2f}")
+            self.macro(f"RThreeOp{tag}SelPten",100*c["p10"],"{:.1f}");self.macro(f"RThreeOp{tag}SelMean",100*c["mean"],"{:.1f}")
+        val=d["validation"]
+        for label,tag in (("round2","Old"),("selected_b2","Two"),("selected_b1","One")):
+            if label not in val:continue
+            v=val[label]
+            for model,m in (("fieldmap_3d","Nkm"),("dipole","Dip")):
+                if f"ideal|{model}" not in v:continue
+                rings=np.array([x for k,x in v.items() if k.endswith("|"+model) and not k.startswith("ideal")])
+                self.macro(f"RThreeVal{tag}{m}Ideal",100*v[f"ideal|{model}"],"{:.1f}")
+                self.macro(f"RThreeVal{tag}{m}RingMean",100*rings.mean(),"{:.1f}")
+                self.macro(f"RThreeVal{tag}{m}RingMin",100*rings.min(),"{:.1f}")
+                self.macro(f"RThreeVal{tag}{m}RingMax",100*rings.max(),"{:.1f}")
+                self.macro(f"RThreeVal{tag}{m}RingPten",100*np.quantile(rings,.1),"{:.1f}")
+
     def fig_corrected_ring(self):
         if "round2_ring_scenario" not in self.m["artifacts"]:
             return
@@ -982,6 +1010,7 @@ STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_apertur
 STEPS["chamber"]="fig_chamber"
 STEPS["round3_chamber"]="round3_chamber"
 STEPS["corrected_ring_round3"]="fig_corrected_ring_round3"
+STEPS["round3_operating_point"]="round3_operating_point"
 STEPS["round3_transparency"]="round3_transparency"
 STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
               "final_validation":"final_validation", "final_robustness":"final_robustness"})

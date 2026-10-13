@@ -230,7 +230,10 @@
     "round3_ring_lattice_5507": "results/journal_campaign_04/e5_corrected_ring/seed5507.mat",
     "round3_ring_lattice_5508": "results/journal_campaign_04/e5_corrected_ring/seed5508.mat",
     "round3_ring_lattice_5509": "results/journal_campaign_04/e5_corrected_ring/seed5509.mat",
-    "round3_ring_lattice_5510": "results/journal_campaign_04/e5_corrected_ring/seed5510.mat"
+    "round3_ring_lattice_5510": "results/journal_campaign_04/e5_corrected_ring/seed5510.mat",
+    "round3_selection": "results/journal_campaign_04/e6_operating_point/operating_point_selection.json",
+    "round3_operating_point": "results/journal_campaign_04/e6_operating_point/operating_point_selected_b2.json",
+    "round3_operating_point_b1": "results/journal_campaign_04/e6_operating_point/operating_point_selected_b1.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -462,6 +465,9 @@
     "round3_ring_lattice_5507": "4d89b258e6d51c2666efb6f3fedcd5e8d5df3e1295c880160a1ea6edf599d870",
     "round3_ring_lattice_5508": "6304a22b4a1ea9ae9b7da83bb7750c7301cedea406dc9db1e4355624354c418a",
     "round3_ring_lattice_5509": "5f5082fd686c6f56b2e3d7e3ea1fb50d88178dcdcbaf5555413afad8a3439fe4",
-    "round3_ring_lattice_5510": "c47e3aa7664f13ec811144888df17e7403552103c986fcef45c678c9725a8583"
+    "round3_ring_lattice_5510": "c47e3aa7664f13ec811144888df17e7403552103c986fcef45c678c9725a8583",
+    "round3_selection": "5c5478fa25f6b734fc85c733e23e115946b8f43924a8a2d477b01f0ddc4a0b78",
+    "round3_operating_point": "5084f5a1dd501eb265853e46179e83dab59728678af02196f34fe653f3a17458",
+    "round3_operating_point_b1": "0c2081cc7a5ee25d77fd9b8fac3954181fdf5eda8bba874d6b876bf2890dd1b6"
   }
 }

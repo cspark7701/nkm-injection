@@ -47,6 +47,8 @@ def main():
     p.add_argument('--workers',type=int,default=4)
     p.add_argument('--ring-scope',choices=('ideal','corrected','all'),default='all')
     p.add_argument('--chunk',type=int,default=100)
+    p.add_argument('--nkm-magnet-half-mm',type=float,nargs=2,default=None,
+                   help='round 3: flat in-magnet NKM chamber half-width and half-height (mm), applied to every profile')
     a=p.parse_args();out=a.output_dir
     if out.exists() and any(out.iterdir()) and not a.resume: raise SystemExit('Output must be new')
     out.mkdir(parents=True,exist_ok=True)
@@ -60,6 +62,9 @@ def main():
         for hy in (.00487,.0075,.009):
             profiles[f'scan_x{hx*1e3:g}_y{hy*1e3:g}']=ChamberProfile(arc_half_x_m=hx,arc_half_y_m=hy,
                 centre_bend_half_y_m=min(.00487,hy),ivu_half_y_m=hy)
+    if a.nkm_magnet_half_mm:
+        profiles={k:replace(v,nkm_magnet_half_x_m=a.nkm_magnet_half_mm[0]*1e-3,nkm_magnet_half_y_m=a.nkm_magnet_half_mm[1]*1e-3)
+                  for k,v in profiles.items()}
     lattice_files={'ideal':None}
     if a.corrected_dir:
         d=json.loads((a.corrected_dir/'corrected_ring_summary.json').read_text())
@@ -79,7 +84,7 @@ def main():
             jobs=[{'config':cfg.to_dict(),'ring':ring,'seed':seed,'bts':sel.bts.to_dict(),
                    'initial_twiss':sel.initial_twiss,'particles':a.particles,'turns':a.turns,
                    'model':model,'calibration':calibration,'ring_label':label,'profile_label':name,
-                   'chamber':asdict(profile),'chunk':(lo,min(a.particles,lo+a.chunk))}
+                   'chamber':asdict(profile),'kicker_chamber':profile.kicker_kwargs(),'chunk':(lo,min(a.particles,lo+a.chunk))}
                   for seed in (1001,1002) for model in ('fieldmap_3d','dipole') for lo in range(0,a.particles,a.chunk)]
             case=parallel_map(run_capture_case,jobs,n_workers=a.workers,desc=f'D6 {label} {name}')
             filename.write_text(json.dumps({'rows':case,'assignment':assignment},indent=2,allow_nan=False)+'\n');rows.extend(case)

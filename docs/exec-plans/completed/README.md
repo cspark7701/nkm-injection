@@ -616,3 +616,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 216. [**Milestone 216 — E5: Corrected Ring Population With Optics Correction**](216_e5_corrected_ring.md)
     - Same ten error draws with BPM references, converged orbit, beta-beat/dispersion and tune correction: beta-beat ≤ 2 %, NKM orbit ≤ 56 um, first unstable launch −11.0 to −9.5 mm; ring 5501 recovered (−7.5 → −10.5 mm); 70–80 um orbit floor set by the 120 correctors.
+
+217. [**Milestone 217 — E6: Operating Point Re-selected for the Design Beam**](217_e6_operating_point.md)
+    - Declared clearance/knob/objective rule over the corrected rings: x_inj −19.48 mm, S 0.95 (2 mm blade); ring mean 78.0 % vs 68.9 % at the round-2 point (p10 65.7 vs 43.3 %); gain from a 1.1 mm smaller injected amplitude; control-calibration defect fixed.

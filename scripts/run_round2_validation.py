@@ -23,7 +23,7 @@ def run_job(job):
                    booster_beam(job['initial_twiss'],cfg.injected_beam,job['particles'],job['seed']))
     beam=injected_beam_at_septum(cfg,ring,job['seed'],bts_exit_beam=beam)
     lo,hi=job['chunk'];beam=beam[:,lo:hi];start=time.time()
-    res=track_injection(cfg,ring,FilamentNKMKicker(cfg,n_slices=640),beam,'element',n_turns=job['turns'])
+    res=track_injection(cfg,ring,FilamentNKMKicker(cfg,n_slices=640,**(job.get('kicker_chamber') or {})),beam,'element',n_turns=job['turns'])
     res.pop('final_coordinates',None)
     # AT loss turns are zero-based. A loss at index t occurs during turn t+1.
     # The longest run therefore also supplies exact shorter survival counts.
@@ -69,7 +69,7 @@ def main():
     for case,backend,ring,config,turns in studies:
         file=out/f'{case}_{turns}.json'
         if file.exists() and a.resume:rows.extend(json.loads(file.read_text()));continue
-        jobs=[{'config':config.to_dict(),'ring':ring,'particles':a.particles,'seed':seed,'initial_twiss':sel.initial_twiss,
+        jobs=[{'config':config.to_dict(),'ring':ring,'particles':a.particles,'seed':seed,'initial_twiss':sel.initial_twiss,'kicker_chamber':profile.kicker_kwargs(),
                'bts':sel.bts.to_dict(),'turns':turns,'case':case,'backend_name':backend,
                'chunk':(lo,min(a.particles,lo+a.chunk))}
               for seed in ((1001,1002) if case.startswith('nominal') else (2001,2002))

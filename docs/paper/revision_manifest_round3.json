@@ -208,7 +208,8 @@
     "round2_window_case_position_-1.20": "results/journal_campaign_03/d6_design_window/position_-1.20.json",
     "round3_chamber_config": "docs/paper/round3_chamber_config.json",
     "round3_nkm_chamber_scan": "results/journal_campaign_04/e4_nkm_chamber_scan/nkm_chamber_scan.json",
-    "round3_aperture_normalisation": "results/journal_campaign_04/e4_aperture_normalisation.json"
+    "round3_aperture_normalisation": "results/journal_campaign_04/e4_aperture_normalisation.json",
+    "round3_transparency_mc": "results/journal_campaign_04/e9_transparency_mc.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -418,6 +419,7 @@
     "round2_window_case_position_-1.20": "83fbd87b1ebeb86c3079382c7a6dbac972f7317423ccfc0569679d83c7179bc3",
     "round3_chamber_config": "17f6787008e1462509a8c979ced8ca263fb13cf7fdb3887575261dd47c4d14e0",
     "round3_nkm_chamber_scan": "ef0bfc1e679070d81fddab27a8dcf98abcf0a887bb83704013d66dae428f8dcd",
-    "round3_aperture_normalisation": "9e2227fe743c938c5c16678ef7667dc6da6d1be803caa9a41ce6e7332da13a59"
+    "round3_aperture_normalisation": "9e2227fe743c938c5c16678ef7667dc6da6d1be803caa9a41ce6e7332da13a59",
+    "round3_transparency_mc": "43c764ee9a923a1e00f532d7aacca4e3d62241fbc5ccbc3846081bc02ffee1f2"
   }
 }

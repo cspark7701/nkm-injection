@@ -234,6 +234,31 @@ class RevisionBuilder(bj.Builder):
                 self.macro(f"ScanCap{model}{tag}Hi",100*row["ci95"][1],"{:.1f}")
                 if model=="Nkm": self.macro(f"ScanMagLoss{tag}",str(row["magnet_losses"]))
 
+    def round3_transparency(self):
+        """E9: simultaneous wire/current error Monte Carlo and the septum-leakage allowance."""
+        if "round3_transparency_mc" not in self.m["artifacts"]:
+            return
+        d=self.load("round3_transparency_mc")
+        names={10e-6:"Ten",25e-6:"TwentyFive",50e-6:"Fifty"}
+        for c in d["cases"]:
+            if c["loop_powering"]!="series":
+                continue
+            tag=names[round(c["sigma_wire_m"],7)]
+            self.macro(f"WireMC{tag}AxMedian",c["Ax_over_sigma"]["median"],"{:.1f}")
+            self.macro(f"WireMC{tag}AyMedian",c["Ay_over_sigma"]["median"],"{:.1f}")
+            self.macro(f"WireMC{tag}AxPninety",c["Ax_over_sigma"]["p90"],"{:.1f}")
+            self.macro(f"WireMC{tag}AyPninety",c["Ay_over_sigma"]["p90"],"{:.1f}")
+            self.macro(f"WireMC{tag}Below",100*c["fraction_both_below_0p1"],"{:.2f}")
+        worst=max(abs(c["Ay_over_sigma"]["median"]/next(b for b in d["cases"] if b["sigma_wire_m"]==c["sigma_wire_m"]
+                  and b["loop_powering"]=="series")["Ay_over_sigma"]["median"]-1) for c in d["cases"])
+        self.macro("WireMCCurrentEffectPct",100*worst,"{:.0f}")
+        self.macro("WireMCDraws",str(d["draws"]))
+        sp=d["septum"]
+        self.macro("SeptumBetaX",sp["beta_x_m"],"{:.1f}")
+        self.macro("SeptumAllowKickNrad",sp["allowed_kick_rad"]*1e9,"{:.0f}")
+        self.macro("SeptumAllowG",sp["allowed_field_T"]*1e4,"{:.3f}")
+        self.macro("SeptumReduction",sp["required_reduction_factor"],"{:.0f}")
+
     def fig_corrected_ring(self):
         if "round2_ring_scenario" not in self.m["artifacts"]:
             return
@@ -914,6 +939,7 @@ STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_apertur
 
 STEPS["chamber"]="fig_chamber"
 STEPS["round3_chamber"]="round3_chamber"
+STEPS["round3_transparency"]="round3_transparency"
 STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
               "final_validation":"final_validation", "final_robustness":"final_robustness"})
 

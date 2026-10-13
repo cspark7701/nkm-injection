@@ -18,6 +18,8 @@ ROUND3 = {
     "round3_chamber_config": "docs/paper/round3_chamber_config.json",
     "round3_nkm_chamber_scan": f"{C4}/e4_nkm_chamber_scan/nkm_chamber_scan.json",
     "round3_aperture_normalisation": f"{C4}/e4_aperture_normalisation.json",
+    # E9: simultaneous wire/current errors and septum leakage allowance
+    "round3_transparency_mc": f"{C4}/e9_transparency_mc.json",
     # E5: corrected ring population
     "round3_ring_summary": f"{C4}/e5_corrected_ring/corrected_ring_summary.json",
     **{f"round3_ring_{s}": f"{C4}/e5_corrected_ring/seed{s}.json" for s in range(5501, 5511)},

@@ -610,3 +610,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 214. [**Milestone 214 — E4: Feasible NKM Vacuum Chamber**](214_e4_nkm_chamber.md)
     - Flat 16 x 3.8 mm in-magnet chamber below the wires (1.5 mm allowance, Sun et al.), applied on the injection pass and every turn; normalised vertical aperture 1.61 (tightest with open IVUs); ideal-ring design-beam capture unchanged at 97.0 % for 3.0-4.3 mm.
+
+215. [**Milestone 215 — E9: Transparency Units, Simultaneous Construction Errors and Septum Leakage**](215_e9_transparency_tolerances.md)
+    - Aligned moments stated as Δε/ε; 10 um rms wire placement already gives median 2.6/4.8 sigma (x/y), so compensation is required; septum leakage must be ≲0.07 G at the stored orbit, 50x below the published bumped-orbit value.

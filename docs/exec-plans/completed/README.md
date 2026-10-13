@@ -565,3 +565,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 199. [**Milestone 199 — R2-BTS-01: Freeze BTS round-two evidence and physical protocol**](199_r2_bts_01.md)
     - Preserves the reviewed article and original campaign; corrects beta-versus-clearance attribution and declares independently seeded parametric comparisons.
+
+200. [**Milestone 200 — R2-BTS-02: Resolve the BTS limiting-station mechanism**](200_r2_bts_02.md)
+    - Reconstructs all original station clearances and shows that every exact shot tie is entrance-limited; exports variance decomposition and gain/loss heterogeneity.

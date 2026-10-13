@@ -1,0 +1,244 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pyat": "0.7.2.dev26+g4701d48c.d20260831",
+    "source_sha256": {
+      "src/nkm_injection/bts_round2.py": "c55ea758a0e7b3d503473eb57a97a4da07543fef9576bf8305bf4b56bc655f1c",
+      "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+      "scripts/run_bts_round2.py": "ff8b19affd9d29e32a4e9894158ac4e37abb51a9de7f5e025ed4347edb600b6a",
+      "docs/paper_bts/round2_protocol.json": "219b91e737ccbe289cde907bda3b4392770092adda8dec99150b73326195de87"
+    }
+  },
+  "units": "m and m^2",
+  "nominal": [
+    {
+      "stations": [
+        {
+          "index": 1,
+          "axis": 0,
+          "s_m": 0.0,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 5.7985199999999984e-08,
+          "dispersive_variance_m2": 8.571544398399999e-08,
+          "sigma_m": 0.0003790786778282313,
+          "clearance_m": 0.017454606610858844
+        },
+        {
+          "index": 1,
+          "axis": 1,
+          "s_m": 0.0,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 9.410323e-09,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 9.700681934792008e-05,
+          "clearance_m": 0.018864965903260398
+        },
+        {
+          "index": 12,
+          "axis": 0,
+          "s_m": 6.833000000000001,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 4.829584190419616e-08,
+          "dispersive_variance_m2": 1.9804877114957815e-07,
+          "sigma_m": 0.0004963311526126224,
+          "clearance_m": 0.027518344236936887
+        },
+        {
+          "index": 12,
+          "axis": 1,
+          "s_m": 6.833000000000001,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 2.2040561244186636e-08,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 0.00014846063870328267,
+          "clearance_m": 0.029257696806483584
+        },
+        {
+          "index": 22,
+          "axis": 0,
+          "s_m": 11.760999999999997,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 1.3911185504344166e-07,
+          "dispersive_variance_m2": 1.8562817613038028e-09,
+          "sigma_m": 0.0003754572369854461,
+          "clearance_m": 0.028122713815072767
+        },
+        {
+          "index": 22,
+          "axis": 1,
+          "s_m": 11.760999999999997,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 3.117907318094367e-08,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 0.00017657596999859202,
+          "clearance_m": 0.029117120150007038
+        },
+        {
+          "index": 34,
+          "axis": 0,
+          "s_m": 21.78899999999999,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 1.7920909976377525e-08,
+          "dispersive_variance_m2": 7.3479264564088055e-09,
+          "sigma_m": 0.00015896174518665278,
+          "clearance_m": 0.018555191274066737
+        },
+        {
+          "index": 34,
+          "axis": 1,
+          "s_m": 21.78899999999999,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 3.264537418752569e-09,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 5.7136130589606514e-05,
+          "clearance_m": 0.019064319347051967
+        }
+      ],
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ],
+      "downstream_minimum_m": 0.018555191274066737
+    },
+    {
+      "stations": [
+        {
+          "index": 1,
+          "axis": 0,
+          "s_m": 0.0,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 5.7985199999999984e-08,
+          "dispersive_variance_m2": 8.571544398399999e-08,
+          "sigma_m": 0.0003790786778282313,
+          "clearance_m": 0.017454606610858844
+        },
+        {
+          "index": 1,
+          "axis": 1,
+          "s_m": 0.0,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 9.410323e-09,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 9.700681934792008e-05,
+          "clearance_m": 0.018864965903260398
+        },
+        {
+          "index": 12,
+          "axis": 0,
+          "s_m": 6.833000000000001,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 5.193133082256032e-08,
+          "dispersive_variance_m2": 2.1524207037176046e-07,
+          "sigma_m": 0.000516888190225237,
+          "clearance_m": 0.027415559048873814
+        },
+        {
+          "index": 12,
+          "axis": 1,
+          "s_m": 6.833000000000001,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 1.4981225919886297e-08,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 0.00012239781828074508,
+          "clearance_m": 0.029388010908596274
+        },
+        {
+          "index": 22,
+          "axis": 0,
+          "s_m": 11.760999999999997,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 1.3828512190732426e-07,
+          "dispersive_variance_m2": 1.720844322376183e-09,
+          "sigma_m": 0.00037417371130225125,
+          "clearance_m": 0.028129131443488744
+        },
+        {
+          "index": 22,
+          "axis": 1,
+          "s_m": 11.760999999999997,
+          "aperture_halfwidth_m": 0.03,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 1.8472804320523e-08,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 0.00013591469501316993,
+          "clearance_m": 0.02932042652493415
+        },
+        {
+          "index": 34,
+          "axis": 0,
+          "s_m": 21.78899999999999,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 1.7920916632419655e-08,
+          "dispersive_variance_m2": 7.347932137647281e-09,
+          "sigma_m": 0.00015896178399246448,
+          "clearance_m": 0.018555191080037677
+        },
+        {
+          "index": 34,
+          "axis": 1,
+          "s_m": 21.78899999999999,
+          "aperture_halfwidth_m": 0.01935,
+          "centroid_m": 0.0,
+          "betatron_variance_m2": 3.264536838665394e-09,
+          "dispersive_variance_m2": 0.0,
+          "sigma_m": 5.7136125513245945e-05,
+          "clearance_m": 0.01906431937243377
+        }
+      ],
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ],
+      "downstream_minimum_m": 0.018555191080037677
+    }
+  ],
+  "active_frequencies": [
+    {
+      "[1, 0]": 449,
+      "[34, 0]": 103,
+      "[34, 1]": 48
+    },
+    {
+      "[1, 0]": 467,
+      "[34, 0]": 113,
+      "[34, 1]": 20
+    }
+  ],
+  "equal_shots": 406,
+  "equal_machines": 93,
+  "equal_shots_both_entrance": 406,
+  "paired_machine_mean_m": 1.4610261377789825e-05,
+  "paired_machine_sd_m": 0.00023630311601229124,
+  "paired_machine_quantiles_m": [
+    -0.0009228865224776549,
+    -0.00032236529898572,
+    0.0,
+    0.0004033793628686891,
+    0.001401027818021357
+  ],
+  "machine_gain_loss_tie_counts": [
+    54,
+    53,
+    93
+  ],
+  "downstream_diagnostic_paired_mean_m": 5.640216808157198e-05,
+  "scope": "Retrospective original-test audit, not a new holdout. Downstream-only results are secondary diagnostics."
+}

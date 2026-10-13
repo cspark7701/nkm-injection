@@ -535,3 +535,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 189. [**Milestone 189 — R1-BTS-03: Establish the BTS physical question and primary literature**](189_r1_bts_03.md)
     - Replace unsupported regional and global comparisons with checked primary passages and define a paired physical-clearance design question.
+
+190. [**Milestone 190 — R1-BTS-04: Specify BTS boundaries beam and model constraints**](190_r1_bts_04.md)
+    - Freeze the source-labelled model, full design-beam covariance and assumed hardware limits; record actual aperture positions and legacy MAD-X non-equivalence.

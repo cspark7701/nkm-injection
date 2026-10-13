@@ -1,0 +1,476 @@
+{
+  "schema_version": 1,
+  "bts_config": {
+    "energy_eV": 4000000000.0,
+    "l_kext": 0.31,
+    "l_sept_in": 1.0,
+    "l_b1": 1.4,
+    "l_b2": 1.4,
+    "l_b3": 1.4,
+    "l_sept_ex": 1.0,
+    "l_quad": 0.2,
+    "ang_kext": 0.0075,
+    "ang_sept_in": 0.0885,
+    "ang_b1": -0.111701,
+    "ang_b2": 0.176,
+    "ang_b3": -0.111701,
+    "ang_sept_ex": 0.0885,
+    "e1_kext": 0.0,
+    "e2_kext": 0.0,
+    "e1_sept_in": 0.0,
+    "e2_sept_in": 0.0885,
+    "e1_b1": 0.0,
+    "e2_b1": 0.0,
+    "e1_b2": 0.0,
+    "e2_b2": 0.0,
+    "e1_b3": 0.0,
+    "e2_b3": 0.0,
+    "e1_sept_ex": 0.0885,
+    "e2_sept_ex": 0.0,
+    "k_q11": 0.448572,
+    "k_q12": -1.026778,
+    "k_q13": 0.88764,
+    "k_q21": -1.066465,
+    "k_q22": 1.488384,
+    "k_q23": -0.669894,
+    "k_q31": 0.589886,
+    "k_q32": -1.168702,
+    "k_q33": 0.941655,
+    "ap1_limit": 0.01935,
+    "ap2_limit": 0.03,
+    "l_dr1": 1.845,
+    "l_dr2": 2.378,
+    "l_dr3": 1.573,
+    "l_dr4": 0.655,
+    "l_dr5": 2.7,
+    "l_dr_q11_12": 0.35,
+    "l_dr_q12_13": 0.35,
+    "l_dr_q21_22": 0.35,
+    "l_dr_q22_23": 0.35,
+    "l_dr_q31_32": 0.35,
+    "l_dr_q32_33": 0.35
+  },
+  "entrance_twiss": {
+    "beta": [
+      7.56,
+      12.269
+    ],
+    "alpha": [
+      1.5231,
+      -1.6547
+    ],
+    "dispersion": [
+      0.2762,
+      -0.0657,
+      0.0,
+      0.0
+    ]
+  },
+  "target_twiss": {
+    "beta": [
+      2.336495,
+      4.256241
+    ],
+    "alpha": [
+      -0.016335,
+      0.017772
+    ],
+    "dispersion": [
+      0.080868,
+      0.047472,
+      0.0,
+      0.0
+    ]
+  },
+  "beam": {
+    "emit_x_m_rad": 7.67e-09,
+    "emit_y_m_rad": 7.67e-10,
+    "sigma_delta": 0.00106,
+    "coverage_sigma": 5.0
+  },
+  "quadrupole_bounds_m_minus2": [
+    [
+      -2.5,
+      2.5
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -3.0,
+      3.0
+    ],
+    [
+      -2.5,
+      2.5
+    ]
+  ],
+  "bore_radius_assumed_m": 0.01935,
+  "pole_field_limit_assumed_T": 1.2,
+  "beta_ceiling_assumed_m": 60.0,
+  "boundary_status": "parametric entrance m1 and target m4; physical source unresolved",
+  "static_errors": {
+    "gradient_relative_std": 0.001,
+    "offset_xy_std_m": 0.0001,
+    "roll_std_rad": 0.0005,
+    "dipole_relative_std": 0.0005
+  },
+  "shot_errors": {
+    "beta_relative_std": 0.05,
+    "x_std_m": 0.0005,
+    "px_std_rad": 0.0002,
+    "delta_centroid_std": 0.001
+  },
+  "training_seed": 71001,
+  "heldout_seed": 71002,
+  "particle_seed": 71003,
+  "bootstrap_seed": 71004,
+  "heldout_machines": 200,
+  "shots_per_machine": 3,
+  "particles_per_shot": 2000,
+  "ci_level": 0.95,
+  "bootstrap_count": 10000,
+  "loss_definition": "first nonfinite x after each element; count at actual element index",
+  "observation_points": "all element exits; physical clearance at four model apertures only",
+  "geometry": [
+    {
+      "index": 0,
+      "name": "m1",
+      "s_in_m": 0.0,
+      "s_out_m": 0.0,
+      "length_m": 0.0,
+      "pass_method": "IdentityPass"
+    },
+    {
+      "index": 1,
+      "name": "ap_rect",
+      "s_in_m": 0.0,
+      "s_out_m": 0.0,
+      "length_m": 0.0,
+      "pass_method": "AperturePass",
+      "limits_m": [
+        -0.01935,
+        0.01935,
+        -0.01935,
+        0.01935
+      ]
+    },
+    {
+      "index": 2,
+      "name": "kext",
+      "s_in_m": 0.0,
+      "s_out_m": 0.31,
+      "length_m": 0.31,
+      "pass_method": "BndMPoleSymplectic4Pass",
+      "bend_rad": 0.0075
+    },
+    {
+      "index": 3,
+      "name": "sept_in",
+      "s_in_m": 0.31,
+      "s_out_m": 1.31,
+      "length_m": 1.0,
+      "pass_method": "BndMPoleSymplectic4Pass",
+      "bend_rad": 0.0885
+    },
+    {
+      "index": 4,
+      "name": "dr1",
+      "s_in_m": 1.31,
+      "s_out_m": 3.1550000000000002,
+      "length_m": 1.845,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 5,
+      "name": "q11",
+      "s_in_m": 3.1550000000000002,
+      "s_out_m": 3.3550000000000004,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 6,
+      "name": "dr_q11_12",
+      "s_in_m": 3.3550000000000004,
+      "s_out_m": 3.7050000000000005,
+      "length_m": 0.35,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 7,
+      "name": "q12",
+      "s_in_m": 3.7050000000000005,
+      "s_out_m": 3.9050000000000007,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 8,
+      "name": "dr_q12_13",
+      "s_in_m": 3.9050000000000007,
+      "s_out_m": 4.255000000000001,
+      "length_m": 0.35,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 9,
+      "name": "q13",
+      "s_in_m": 4.255000000000001,
+      "s_out_m": 4.455000000000001,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 10,
+      "name": "dr2",
+      "s_in_m": 4.455000000000001,
+      "s_out_m": 6.833000000000001,
+      "length_m": 2.378,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 11,
+      "name": "m2",
+      "s_in_m": 6.833000000000001,
+      "s_out_m": 6.833000000000001,
+      "length_m": 0.0,
+      "pass_method": "IdentityPass"
+    },
+    {
+      "index": 12,
+      "name": "ap_rect2",
+      "s_in_m": 6.833000000000001,
+      "s_out_m": 6.833000000000001,
+      "length_m": 0.0,
+      "pass_method": "AperturePass",
+      "limits_m": [
+        -0.03,
+        0.03,
+        -0.03,
+        0.03
+      ]
+    },
+    {
+      "index": 13,
+      "name": "b1",
+      "s_in_m": 6.833000000000001,
+      "s_out_m": 8.233,
+      "length_m": 1.4,
+      "pass_method": "BndMPoleSymplectic4Pass",
+      "bend_rad": -0.111701
+    },
+    {
+      "index": 14,
+      "name": "dr3",
+      "s_in_m": 8.233,
+      "s_out_m": 9.806000000000001,
+      "length_m": 1.573,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 15,
+      "name": "q21",
+      "s_in_m": 9.806000000000001,
+      "s_out_m": 10.006,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 16,
+      "name": "dr_q21_22",
+      "s_in_m": 10.006,
+      "s_out_m": 10.356,
+      "length_m": 0.35,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 17,
+      "name": "q22",
+      "s_in_m": 10.356,
+      "s_out_m": 10.556,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 18,
+      "name": "dr_q22_23",
+      "s_in_m": 10.556,
+      "s_out_m": 10.905999999999999,
+      "length_m": 0.35,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 19,
+      "name": "q23",
+      "s_in_m": 10.905999999999999,
+      "s_out_m": 11.105999999999998,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 20,
+      "name": "dr4",
+      "s_in_m": 11.105999999999998,
+      "s_out_m": 11.760999999999997,
+      "length_m": 0.655,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 21,
+      "name": "m3",
+      "s_in_m": 11.760999999999997,
+      "s_out_m": 11.760999999999997,
+      "length_m": 0.0,
+      "pass_method": "IdentityPass"
+    },
+    {
+      "index": 22,
+      "name": "ap_rect2",
+      "s_in_m": 11.760999999999997,
+      "s_out_m": 11.760999999999997,
+      "length_m": 0.0,
+      "pass_method": "AperturePass",
+      "limits_m": [
+        -0.03,
+        0.03,
+        -0.03,
+        0.03
+      ]
+    },
+    {
+      "index": 23,
+      "name": "b2",
+      "s_in_m": 11.760999999999997,
+      "s_out_m": 13.160999999999998,
+      "length_m": 1.4,
+      "pass_method": "BndMPoleSymplectic4Pass",
+      "bend_rad": 0.176
+    },
+    {
+      "index": 24,
+      "name": "dr4",
+      "s_in_m": 13.160999999999998,
+      "s_out_m": 13.815999999999997,
+      "length_m": 0.655,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 25,
+      "name": "q31",
+      "s_in_m": 13.815999999999997,
+      "s_out_m": 14.015999999999996,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 26,
+      "name": "dr_q31_32",
+      "s_in_m": 14.015999999999996,
+      "s_out_m": 14.365999999999996,
+      "length_m": 0.35,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 27,
+      "name": "q32",
+      "s_in_m": 14.365999999999996,
+      "s_out_m": 14.565999999999995,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 28,
+      "name": "dr_q32_33",
+      "s_in_m": 14.565999999999995,
+      "s_out_m": 14.915999999999995,
+      "length_m": 0.35,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 29,
+      "name": "q33",
+      "s_in_m": 14.915999999999995,
+      "s_out_m": 15.115999999999994,
+      "length_m": 0.2,
+      "pass_method": "StrMPoleSymplectic4Pass"
+    },
+    {
+      "index": 30,
+      "name": "dr3",
+      "s_in_m": 15.115999999999994,
+      "s_out_m": 16.688999999999993,
+      "length_m": 1.573,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 31,
+      "name": "b3",
+      "s_in_m": 16.688999999999993,
+      "s_out_m": 18.08899999999999,
+      "length_m": 1.4,
+      "pass_method": "BndMPoleSymplectic4Pass",
+      "bend_rad": -0.111701
+    },
+    {
+      "index": 32,
+      "name": "dr5",
+      "s_in_m": 18.08899999999999,
+      "s_out_m": 20.78899999999999,
+      "length_m": 2.7,
+      "pass_method": "DriftPass"
+    },
+    {
+      "index": 33,
+      "name": "sept_ex",
+      "s_in_m": 20.78899999999999,
+      "s_out_m": 21.78899999999999,
+      "length_m": 1.0,
+      "pass_method": "BndMPoleSymplectic4Pass",
+      "bend_rad": 0.0885
+    },
+    {
+      "index": 34,
+      "name": "ap_rect",
+      "s_in_m": 21.78899999999999,
+      "s_out_m": 21.78899999999999,
+      "length_m": 0.0,
+      "pass_method": "AperturePass",
+      "limits_m": [
+        -0.01935,
+        0.01935,
+        -0.01935,
+        0.01935
+      ]
+    },
+    {
+      "index": 35,
+      "name": "m4",
+      "s_in_m": 21.78899999999999,
+      "s_out_m": 21.78899999999999,
+      "length_m": 0.0,
+      "pass_method": "IdentityPass"
+    }
+  ]
+}

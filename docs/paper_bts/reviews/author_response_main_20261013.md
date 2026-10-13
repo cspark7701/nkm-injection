@@ -19,3 +19,9 @@ Validation: All nine selected artifact digests and twelve claim pointers verifie
 Replace unsupported regional and global comparisons with checked primary passages and define a paired physical-clearance design question.
 
 Validation: Verified SLS, Sirius, ESRF and MAX IV records; unverified PLS-II and RAON references and quantitative comparisons withdrawn. See [milestone 189](../../exec-plans/completed/189_r1_bts_03.md).
+
+## R1-BTS-04 — Specify BTS boundaries beam and model constraints
+
+Freeze the source-labelled model, full design-beam covariance and assumed hardware limits; record actual aperture positions and legacy MAD-X non-equivalence.
+
+Validation: Validated 36-element order, 21.789 m length, K-to-gradient/pole-field conversion and geometry figure; physical target and continuous chamber remain parametric. See [milestone 190](../../exec-plans/completed/190_r1_bts_04.md).

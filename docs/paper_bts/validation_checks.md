@@ -26,3 +26,14 @@ The full10.8-million-particle comparison repeated outside Git from the extracted
 Final local attachment:results/bts_round2_referee_attachment_20261013_complete_verified/bts_referee_attachment.tar.gz. Its digest is recorded alongside it in attachment_sha256.txt; SHA256.json inside the archive covers supplied source/evidence files. Final member-digest and outside-Git repack verification are recorded below. This is a locally accessible author/referee preparation artifact, not an external repository or delivered journal submission.
 
 Final verification:764 supplied member hashes verify; the extracted attachment audits all32 claim pointers and repackages successfully without Git using supplied exact stage snapshots. Final packaging includes milestone206 and the complete round2 response/status/declarations. Author-dependent conditions remain open.
+
+## Native Accelerator Toolbox figure update
+
+- Main optics and lattice figures use native pyAT `plot_linear`/`plot_synopt`.
+- Explicit transfer-line entrance optics; 64 subdivisions per finite element.
+- Both computed and rendered beta profiles checked against selected exact-map
+  records at absolute tolerance 1e-4 m; maximum difference 2.76e-11 m.
+- Fresh process rendering and isolated article/supplement builds succeeded.
+- Twenty BTS tests passed; evidence audit verified all 32 claims.
+- Statistical figures, scientific summary exports, campaigns, previous reviews
+  and protected inputs remain unchanged. Original attachments remain frozen.

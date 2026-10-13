@@ -586,3 +586,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 206. [**Milestone 206 — R2-BTS-08: Prepare declarations and portable referee evidence**](206_r2_bts_08.md)
     - Confirm no competing interests and verify portable evidence reproduction; funding, acknowledgments, scientific approval and external referee delivery remain pending author actions.
+
+207. [**Milestone 207 — Native Accelerator Toolbox BTS figures**](207_bts_native_at_figures.md)
+    - Draws main optics and lattice figures with native pyAT functions, verifies frozen-profile agreement and rebuilds the manuscript with refreshed asset identities.

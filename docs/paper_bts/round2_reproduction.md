@@ -23,3 +23,29 @@ The inference command defaults to reconstruction of the selected archived campai
 `python scripts/export_bts_round2_assets.py` explicitly regenerates selected numerical tables and figures from installed summary exports and the selected spatial records. It does not overwrite source physics inputs. Exact stage source snapshots distinguish the original stage bytes from later CLI additions. `round2_identity.json` identifies the pre-review article and full original campaign; invalid shared-aperture outputs are retained separately and excluded from evidence claims.
 
 No public deposition or submission is implied by local reproduction. Funding and acknowledgments remain author inputs; competing interests are author-confirmed as none. Final scientific approval and referee delivery remain pending.
+
+## Accelerator Toolbox figure rendering
+
+The main article optics and lattice sequence use native `at.plot.plot_linear`
+and `at.plot.plot_synopt`. Render only these assets into a new directory:
+
+```bash
+python scripts/export_bts_at_figures.py --output-dir results/new_at_figures
+```
+
+The renderer builds the frozen reference/refined designs, supplies the documented
+entrance Twiss parameters to `linopt2`, and subdivides every finite element 64
+times. It checks both the native optics and plotted curves against the selected
+independent-map profiles (absolute beta tolerance 0.0001 m, coordinate tolerance
+1e-10 m). `at_plot_validation.json` records input hashes, pyAT version and measured
+errors. The selected run agrees within 3e-11 m in beta. Native periodic-stability
+and noninteractive-display warnings are filtered specifically for this open
+transfer-line rendering; other warnings remain visible. Statistical and clearance
+figures remain Matplotlib plots because their inputs are campaign estimates.
+The historical supplement figures and all numerical campaign inputs are retained.
+
+To install a validated rendering, copy its two PDFs and validation JSON into
+`docs/paper_bts/figures/`, rebuild in new directories and refresh final asset hashes.
+The full `export_bts_round2_assets.py` also calls this renderer when regenerating
+all selected assets. Earlier frozen referee attachments preserve their original
+figures; a new attachment is required to distribute this revised rendering.

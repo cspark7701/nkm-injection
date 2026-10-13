@@ -5,11 +5,8 @@ import matplotlib.pyplot as plt
 P=Path('docs/paper_bts');R=Path('results/bts_journal_campaign_r2_20261013')
 c=json.loads((P/'generated/round2_comparison.json').read_text());d=json.loads((P/'generated/round2_designs.json').read_text());s=json.loads((P/'generated/round2_spatial.json').read_text());old=json.loads((P/'generated/round2_stations.json').read_text())
 plt.rcParams.update({'font.size':9,'pdf.fonttype':42})
-profiles=json.loads((R/'spatial/spatial_profiles.json').read_text())
-fig,ax=plt.subplots(2,1,figsize=(6.3,4.2),sharex=True)
-for label,profile in [('Reference',profiles['original'][0][-1]),('Refined low beta',profiles['refined'][-1])]:
- xy=np.array([[r['s_m'],*r['beta_m']] for r in profile['rows']]);ax[0].plot(xy[:,0],xy[:,1],label=label);ax[1].plot(xy[:,0],xy[:,2],label=label)
-ax[0].set_ylabel('Horizontal beta [m]');ax[1].set_ylabel('Vertical beta [m]');ax[1].set_xlabel('Path coordinate [m]');ax[0].legend();fig.tight_layout();fig.savefig(P/'figures/round2_optics.pdf');plt.close(fig)
+from export_bts_at_figures import export_figures
+export_figures(P/'figures')
 fig,ax=plt.subplots(1,2,figsize=(7,2.9))
 for label,rec in zip(['Reference','Old low beta'],old['nominal']):
  for axis,style in [(0,'-o'),(1,'--s')]:

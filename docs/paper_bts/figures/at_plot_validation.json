@@ -1,0 +1,25 @@
+{
+  "pyat_version": "0.7.2.dev26+g4701d48c.d20260831",
+  "subdivisions": 64,
+  "beta_absolute_tolerance_m": 0.0001,
+  "designs": {
+    "reference": {
+      "max_beta_difference_m": 2.758326900220709e-11,
+      "peak_beta_m": [
+        31.6290160075606,
+        51.269938584027635
+      ]
+    },
+    "low_beta": {
+      "max_beta_difference_m": 1.56035184772918e-11,
+      "peak_beta_m": [
+        33.794522204039104,
+        28.437053845070594
+      ]
+    }
+  },
+  "source_sha256": {
+    "results/bts_journal_campaign_r2_20261013/spatial/spatial_profiles.json": "739dfc50b0790b64a526ac7de58855fee9b804628b7bab13967c169154a9b331",
+    "docs/paper_bts/generated/round2_designs.json": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45"
+  }
+}

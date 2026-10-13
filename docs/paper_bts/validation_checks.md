@@ -10,3 +10,11 @@
 - Documentation:64 local links checked before this record, with further links checked in final completion. Prior reviewer reports, NKM manuscript and protected scientific inputs match pre-revision hashes.
 
 Original10-step map tolerance failure remains recorded; new numerical stages use validated40-step integration. The physical contribution is the unresolved clearance benefit of beta reduction under explicit assumptions. The final package is locally prepared, not publicly deposited. Funding, competing-interest/acknowledgment confirmation, final author approval and actual referee delivery remain pending. No push or submission performed.
+
+## Round2 execution
+
+Full repository suite:718 passed in137.23 seconds. The new lattice/covariance, uncensored probe, Gaussian quadrature and non-target aperture isolation checks pass. All600 original paired minima reconstruct; all nine fresh clearance/exact block intervals reconstruct independently. New tracking comprises10.8 million particle transports,200 machine blocks per case. Current isolated article and supplement build without unresolved references or layout warnings. Both main and supplementary rendered page sets were inspected, with final polish/recheck recorded in the completion archive. The first attachment copy verifies683 member digests and all five R2 exact generating-source snapshots; extracted accuracy/full comparison execution is tested separately.
+
+The malformed shared-aperture preliminary regime run and failed intermediate build/package directories are retained as diagnostics and excluded from selected evidence. Scientific source inputs and prior reviews retain their original hashes. No extra post-inspection statistics campaign is used.
+
+Final round2 polish:the main article has10 pages and five figures; supplement3 pages. Both build logs have no unresolved citations/references or layout warnings. All32 claim pointers and28 selected artifacts verify. The extracted accuracy audit reproduces the selected values exactly, and20 relevant tests pass after final CLI/packaging changes. Fresh spatial-to-design and design-to-comparison arguments prevent implicit routing to frozen upstream results. Full extracted comparison verification is completed with referee-preparation checks.

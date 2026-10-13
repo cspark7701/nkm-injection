@@ -135,11 +135,12 @@ def spatial(output):
     print(json.dumps(result,default=serial))
 
 
-def designs(output):
+def designs(output, spatial_file=None):
     from scipy.optimize import minimize
     protocol=json.loads((PAPER/'round2_protocol.json').read_text())
     reference=original()[0][0]
-    low=np.array(json.loads((PAPER/'generated/round2_spatial.json').read_text())['refined_low_beta']['strengths_m_minus2'])
+    spatial_file=spatial_file or PAPER/'generated/round2_spatial.json'
+    low=np.array(json.loads(spatial_file.read_text())['refined_low_beta']['strengths_m_minus2'])
     records={};sweep=[]
     for regime,restrictions in protocol['regimes'].items():
         def line(k):return set_regime(lattice_for(k),restrictions)
@@ -179,10 +180,10 @@ def designs(output):
     print('Frozen designs:',{r:{n:round(v['clearance']['minimum_m']*1000,4) for n,v in d['nominal'].items()} for r,d in records.items()})
 
 
-def comparison(output):
+def comparison(output, design_file=None):
     from scipy.stats import beta as beta_dist
     protocol=json.loads((PAPER/'round2_protocol.json').read_text())
-    frozen_path=ROOT/protocol['campaign']/'designs/designs.json'
+    frozen_path=design_file or ROOT/protocol['campaign']/'designs/designs.json'
     frozen=json.loads(frozen_path.read_text());static_rng=np.random.default_rng(protocol['new_static_seed']);shot_rng=np.random.default_rng(protocol['new_shot_seed']);particle_rng=np.random.default_rng(protocol['new_particle_seed'])
     beam=JournalBeam();raw=[];blocks=[];losses={};active={};moments=[]
     for regime,d in frozen['designs'].items():
@@ -234,9 +235,13 @@ def comparison(output):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--stage',choices=['stations','accuracy','spatial','designs','comparison'],required=True);parser.add_argument('--output-dir',type=Path,required=True)
+    parser.add_argument('--design-file',type=Path,help='Frozen designs JSON for comparison; defaults to selected original round2 campaign')
+    parser.add_argument('--spatial-file',type=Path,help='Refined spatial JSON for designs; defaults to selected summary')
     args=parser.parse_args();args.output_dir.mkdir(parents=True,exist_ok=False)
     save(args.output_dir/'configuration.json',{'stage':args.stage,'protocol':json.loads((PAPER/'round2_protocol.json').read_text()),'environment':environment()})
-    globals()[args.stage](args.output_dir)
+    if args.stage=='comparison':comparison(args.output_dir,args.design_file)
+    elif args.stage=='designs':designs(args.output_dir,args.spatial_file)
+    else:globals()[args.stage](args.output_dir)
 
 
 if __name__=='__main__':main()

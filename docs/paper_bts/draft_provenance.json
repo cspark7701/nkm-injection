@@ -1,6 +1,6 @@
 {
   "date": "2026-10-13",
-  "status": "scientific revisions and PDF prepared; author declarations and submission approval pending",
+  "status": "round2 scientific revision; author declarations and delivery pending",
   "source_commit": "13fe89bd969cdf7a9bdf4440fcff17407bf109ec",
   "files_sha256": {
     "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json": "fe10758922697a3d0ff6496f068706099c2089348811cd31f859cdcead1cf3cb",
@@ -17,30 +17,47 @@
     "optimization": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
     "pooled_analysis": "results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json",
     "samples": 550000,
-    "physical_feasibility_failures": 5,
-    "invalid_evaluations": 0
+    "invalid_evaluations": 0,
+    "optical_rule_failures": 5
   },
   "publication_export": "generated/archived_results.tex",
   "publication_export_sha256": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
   "revision_selection": "revision_selection.json",
   "final_revision_identity": "revision_selection.json",
   "current_assets_sha256": {
-    "paper.tex": "c1966ad65ac1d8fb78cb71bd8839e45c318e60470a437031a3fc655665eb69f3",
-    "paper.pdf": "161565288d9bf03eba55815980d1f60703e69720691b5d0b2dff725b3a418566",
-    "paper.bib": "ebfa36249d60cf878f605485b8e3a0ac9370dca1d813443b5a8ac5c908597162",
-    "journal_config.json": "221ea94a8694e7d91d5aadda7351118141fa6f57747766af63b67f98011bddf2",
-    "evidence_manifest.json": "4e79be542096a5bc16cb5440bfb543a4248002b78fadbd0bbe15f28ccd395dc8",
-    "claim_evidence.csv": "e1546b2bfa3fe5dfe1ce014709992bdbba64eadfa938572fbc29f4058d00bcca",
+    "paper.tex": "0972a5e3a8deed3b622c4d9198f90540c8e634eba43743b4ef766b733ae675f9",
+    "paper.pdf": "113bb8b32c81b31529f535f03187f54f7769412f8d3c28b133b91adb733bb267",
+    "paper.bib": "f2bfe5beb59526c81a9d628c97b22b9533a68892a1722bcaa2dce35991f55563",
+    "supplement.tex": "bdfef790ff7f9c433e83ca32d07b303751b8304f8229cfd3cc0b59cdde3c9a53",
+    "supplement.pdf": "e50311fdd42b12cc67de8eccafd724fcd33be704e1d9af1dfbde1d7257635dfe",
+    "evidence_manifest.json": "920604d6e3aa11685af5437af6b383905100693fca298b59ea04c496c9b24734",
+    "claim_evidence.csv": "3c2ea126e4f4178e5f617d8831f0ae84a459c0bd1f73f656c63284021850698d",
+    "round2_protocol.json": "219b91e737ccbe289cde907bda3b4392770092adda8dec99150b73326195de87",
     "generated/matching.json": "e7a589cb62360657281508bcfc79435fe93a20d9e7ee2fa70465df552c54b617",
+    "generated/round2_designs.json": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
     "generated/transport_validation.json": "6aa07d5da8b5f91a62ed5ab410fbd7b41c83d30384eeee240c48b08f22ca8a02",
     "generated/revision_results.tex": "595c1d5e13c57dcfe4aac2d8d308d00af58b3b0c45f8b5889903620e412e2942",
+    "generated/round2_comparison.json": "ddf0b39544b3dcb5663dc3c683e90f369d72105c4a0b16d27e58752488b4379b",
+    "generated/round2_loss_rows.tex": "c7b861cb39eb570532c8f0a8698fbe538d18d4b2f19a28413043e0387ace3c19",
     "generated/historical_statistics.json": "7c2029d170348e55aaf60f2fbf5c0b5772cff6ac265cbe8f09296bcf9ae79140",
     "generated/normalized_response.json": "8ae746396351d6d1ab3bc5926ca689f500839b6aab8318a2264c176d91a4ec12",
+    "generated/round2_stations.json": "882d9fb5b3fb8a512b4cf123debf716c4057adb4eda0e13c2d672c3d67a3f500",
     "generated/archived_results.tex": "dc233936ed4ac942236bfd34c024d61a24381f93531ec6231683adeb25a7e6c4",
+    "generated/round2_strategy_rows.tex": "9ac6e2c025a9c657589daebe8ae16d5ebd0ef30ff933459b8b31cb6fb6ae1441",
+    "generated/round2_station_rows.tex": "37c51f5ca52ac99a05b83c6b40affbc1a806b6cba56827de1c8e774c4beb56ff",
     "generated/heldout.json": "32b2260a7911194f7e71f0de4f87c24242c7d973d2d73d03fe7e443654f62a6f",
+    "generated/round2_accuracy.json": "490e1fd29b3887293a9502bc382805926e9cc7d1984cbce48d393355ef3d564c",
+    "generated/round2_spatial.json": "43e39fd240806fb89d0cc48ca0098d92f888dd3d762333c2be37d37e52c1a776",
+    "generated/round2_inference.json": "4401230aa8c8d2d9cb475717655ccf93bcd2adfadc55e551da6a8c267bb8e308",
+    "generated/round2_results.tex": "7677697a1022cdca6ba3aa5ab19a4234a0e48138405d3ca63d160d33187b542b",
+    "figures/round2_stations.pdf": "e36515a7cd86e91744ebf961c352ec79536e28da6bfde901062f00086e6a3f4d",
+    "figures/round2_sweep.pdf": "95bbc1906f6929402f0175251de2f0d23f0bcad325b04d2879d0b4e40006abcd",
+    "figures/round2_strategies.pdf": "8ce620f7020e4c21a17fddb0173c5104bcd3c43d13b70ce6107307258410cdd6",
+    "figures/round2_optics.pdf": "45bbf6c72a5dd5aec3537fb5a66a496727d3c1ff7bf8f0e95e372e0d66559907",
     "figures/layout.pdf": "9e192c4d9413fc19e5db3563f6c7efd1fbf73b82d7123a4bc65d2f5372d179b1",
     "figures/comparison.pdf": "7863da4d46cdd4ae3a050c0e1360008cfe4c06c49af380a61bee86bdfc71e662",
-    "figures/optics.pdf": "2e02c852d453a592ec5b3dd89d61943cbd4906f8490f818d29271ee377a2fc80"
+    "figures/optics.pdf": "2e02c852d453a592ec5b3dd89d61943cbd4906f8490f818d29271ee377a2fc80",
+    "generated/round2_components.json": "2524080d374ef6f7fbc242e3567dc33fe3ab855e18b1554822101c5db70dfb94"
   },
   "historical_draft_assets_sha256": {
     "paper.tex": "d19f7e41a72f94a23065ed271a82d4d050477d0cfcdff4d46e743a66d5783a2b",
@@ -59,5 +76,6 @@
     ],
     "final_log": "no LaTeX errors, warnings, overfull boxes or unresolved references/citations; no BibTeX warnings",
     "auxiliary_directory": "/home/cspark/Work/projects/nkm-injection/results/bts_draft_l2y8KS"
-  }
+  },
+  "round2_selected_campaign": "results/bts_journal_campaign_r2_20261013"
 }

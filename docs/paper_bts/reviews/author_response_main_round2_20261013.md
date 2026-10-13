@@ -37,3 +37,9 @@ Validation: 10.8 million particle transports complete; paired direct-clearance g
 Verifies all new paired intervals, separates clearance from transmission and defines sampled three-shot block losses with exact finite-sample uncertainty.
 
 Validation: Nine clearance and exact block intervals reconstruct independently; the declared 0.1 mm scale and pointwise coverage are retained without extra post-inspection samples. See [milestone 204](../../exec-plans/completed/204_r2_bts_06.md).
+
+## R2-BTS-07 — Recast the BTS article around active restrictions
+
+Integrates the physical mechanism, refined strategies and independent tests into a ten-page article with a three-page supplement, five figures and reconciled source-labelled evidence.
+
+Validation: 718 full tests and 20 relevant checks pass; both isolated PDFs build without warnings; 32 claim pointers and 28 artifacts verify. Extracted accuracy results match exactly. See [milestone 205](../../exec-plans/completed/205_r2_bts_07.md).

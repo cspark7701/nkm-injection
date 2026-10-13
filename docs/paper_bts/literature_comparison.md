@@ -12,3 +12,13 @@ Checked 2026-10-13. This replaces the unsupported B01 survey; it does not infer 
 The previously supplied PLS-II and two RAON title/page combinations have not been verified against primary passages and are omitted from the revised bibliography and all comparative claims. This is a withdrawal of unsupported comparisons, not an assertion that those studies do not exist. The originally cited Sirius/ESRF conference identifiers are replaced with the primary records above. No claim of full six-dimensional mismatch or 33% feasible volume remains.
 
 The contribution tested here is a conditional design choice: reducing vertical peak beta while maintaining the same exit target, then estimating paired clearance changes under frozen held-out errors. The analytical meaning and validity range of that comparison, including dispersion/centroid effects, distinguishes it from an optimizer demonstration. Shared upstream BTS assets with the NKM study are disclosed; capture and kicker transparency are excluded.
+
+## Round2 source verification and contribution
+
+The new comparison explicitly contrasts refined beta optimization with nominal direct-clearance optimization, keeping old and newly frozen tests distinct. The active-station analysis supplies the physical mechanism; no algorithm novelty or actual facility tolerance is claimed.
+
+Primary beam numbers were reverified against Lee et al., Table1:4 GeV,7.67 nm rad natural emittance and0.106% natural spread. The [original paper mirrored by INSPIRE](https://inspirehep.net/files/74b1a2721975b480d634b9772e634e0b) was checked; [JACoW TUPC12 metadata](https://proceedings.jacow.org/ipac2024/doi_per_institute/tupc12/index.html) establishes Nashville,19–24May2024 and pp.1025–1028. These numbers do not establish the model's entrance Twiss or vertical emittance.
+
+[ESRF's own EBS overview](https://www.esrf.fr/about/upgrade) identifies the linked technical report as2018. This establishes the bibliography year without inferring it from the2016 Orange Book mentioned in the PDF introduction. The selected report passages and limits remain as above.
+
+The exact-binomial reference is Clopper and Pearson,Biometrika26(4),404–413(1934),DOI10.1093/biomet/26.4.404. DOI-linked original-paper retrieval was unavailable through the browsing tool; the metadata is recorded with that limitation, while the intervals are independently reconstructed numerically. Wilson remains only the attribution for Wilson intervals in the historical supplement.

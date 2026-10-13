@@ -9,6 +9,7 @@
 \usepackage[hidelinks]{hyperref}
 \input{generated/archived_results.tex}
 \input{generated/revision_results.tex}
+\input{generated/round2_results.tex}
 \title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
@@ -18,28 +19,27 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Reducing intermediate beta functions is often used to improve transfer-line
-robustness, but its benefit depends on where apertures, dispersion and trajectory
-errors limit the beam. We compare two quadrupole settings for a parametric
-21.789 m, 4 GeV booster-to-storage-ring transfer line with nine independently
-adjustable quadrupoles. Both settings reach the same configured exit optics
-within declared tolerances. Constrained minimization reduces the vertical peak
-beta from 50.75 m to 28.18 m, yet the nominal minimum five-sigma projected
-clearance at four model aperture stations remains 17.45 mm because the fixed
-entrance is limiting. On 200 independent held-out static machines with three
-independent shots each, the paired mean clearance change is 0.0146 mm with a
-95\% machine-cluster bootstrap interval of $-0.0179$ to $+0.0483$ mm; no benefit
-is resolved at this precision. Independent hard-edge maps, coupled covariance
-propagation and particle tracking validate the local model. No losses are
-observed in 1.2 million tracked particles per setting, with nonzero uncertainty
-bounds reported. A separate audit retains the historical optical-feasibility
-statistics without interpreting them as physical loss. The comparison shows why
-beta reduction alone does not establish a clearance gain. The conclusions remain
-conditional on configured boundaries, discrete apertures and assumed errors,
-rather than measured hardware or storage-ring capture.
+Lower intermediate beta does not necessarily improve transfer-line clearance
+when dispersion, trajectory response or an immutable boundary controls the beam.
+For a parametric 21.789 m, 4 GeV booster-to-storage-ring line, we derive the fixed
+entrance ceiling on minimum five-sigma clearance and compare matched reference,
+low-beta and direct-clearance settings. Interior sampling corrects missed magnet
+extrema; refined optimization reduces vertical peak beta from 51.27 to 28.44 m.
+The original comparison has 406 of 600 paired shots limited by the entrance in
+both settings. A fresh 200-machine, three-shot ensemble finds no resolved
+baseline low-beta clearance benefit. At explicitly hypothetical horizontal and
+vertical restrictions, its paired changes are -0.152 and +0.073 mm, while direct
+nominal clearance optimization gives +0.881 and +0.212 mm with pointwise 95\%
+intervals excluding zero. Station decomposition explains the competition between
+beam size and trajectory response. Centred transport and nonlinear Gaussian
+quadrature check clearance accuracy below one micrometre in representative cases.
+Particle tracking is reported separately: larger mean clearance does not ensure
+smaller observed loss counts. These results provide a conditional design criterion
+based on the active restriction, without certifying hardware tolerances,
+continuous-chamber transmission or storage-ring capture.
 \end{abstract}
-\noindent\textbf{Keywords:} transfer-line optics; beam clearance; quadrupole matching;
-coupled transport; uncertainty
+\noindent\textbf{Keywords:} transfer-line optics; physical clearance; dispersion;
+quadrupole matching; uncertainty
 
 \section{Introduction}
 Diffraction-limited storage rings require control of the distribution delivered
@@ -58,15 +58,16 @@ MAX IV pulsed-sextupole injection addresses downstream ring capture~\cite{Leeman
 a different boundary from the one considered here. These primary studies do not
 establish the particular target or chamber dimensions of our model.
 
-We ask whether lowering vertical peak beta at a fixed exit match increases
-five-sigma projected clearance at the declared model apertures, and whether a
-benefit persists under frozen held-out machine errors and independent shot
-jitter. The result can be negative: a fixed entrance or a different limiting
-observable may prevent beta reduction from improving clearance. We use standard
-optimization, without algorithmic novelty claims. The BTS sequence, archived
-matched settings and simulation framework are shared with the companion NKM
-study. This article ends at the BTS exit; it reports neither nonlinear-kicker
-transparency nor storage-ring capture.
+We test when lowering vertical peak beta increases minimum projected clearance,
+and compare that strategy with direct nominal clearance optimization at a fixed
+exit match. A fixed entrance can cap the minimum regardless of downstream optics;
+an internal restriction instead exposes competition between betatron size,
+dispersion and trajectory sensitivity. We make that mechanism explicit and test
+it in independently seeded machine/shot ensembles. All restricted cases are
+parametric demonstrations, not measured chamber specifications. The BTS sequence,
+archived match and historical simulations are shared with the companion NKM
+study; this article ends at the BTS exit and claims no ring capture or kicker
+transparency. Standard optimization is used without algorithmic novelty claims.
 
 \section{Parametric model and physical observables}
 \subsection{Boundaries, coordinates and source limitations}
@@ -147,238 +148,263 @@ assumed 19.35 mm bore, the respective maxima are 33.356/40.028 T/m and
 0.645/0.775 T, below the assumed 1.2 T screening limit. This calculation
 checks model consistency, not magnet engineering feasibility.
 
-\section{Validation and study design}
-\subsection{Independent maps and active error coverage}
-We implement exact hard-edge thick-quadrupole and sector-bend maps with edge
-focusing, translations, roll rotations and fixed-geometry dipole perturbations,
-without AT optics/matrix calls. They are compared with central differences of
-AT particle tracking at every element boundary. The declared nominal maximum
-absolute map tolerance is $2\times10^{-6}$; transverse symplectic discrepancy
-must be below $10^{-10}$. The original 10-step integrator misses the map
-criterion ($4.05\times10^{-6}$). Increasing integration to 20, 40 and 80 steps
-gives $2.53\times10^{-7}$, $1.58\times10^{-8}$ and $9.89\times10^{-10}$.
-New studies use 40 steps; the original miss is retained in the evidence record.
-Independent exit beta/dispersion agree within $10^{-5}$ m and $2\times10^{-6}$,
-and transverse symplectic discrepancy is $1.22\times10^{-15}$.
+\section{Physical criterion, validation and comparison protocol}
+\subsection{Active restrictions and the entrance ceiling}
+The full minimum satisfies
+\[c_{\min}(K)=\min[c_{\rm entrance},c_{\rm downstream}(K)].\]
+Because the entrance precedes adjustable quadrupoles, its clearance is independent
+of $K$. Therefore $c_{\min}\le c_{\rm entrance}$, with equality whenever every
+downstream clearance exceeds that ceiling. The metric then saturates: lowering
+an intermediate beta cannot increase its nominal value. This is a sufficient
+condition for saturation, not a claim that downstream profiles are unchanged.
 
-Isolated gradient, translation, roll and dipole-field perturbations pass
-predeclared local map/orbit checks. Translations drive orbit even when
-uncoupled Twiss mismatch is insensitive; rolls generate coupling. Additional
-dipole curvature uses AT PolynomB[0], leaving reference bend geometry fixed.
-Energy jitter enters particle $\delta$ without also rescaling fields. Tracking
-at $\delta=\pm0.001$ differs from the nominal linear horizontal prediction by
-about 0.19 micrometres. For 50,000 design-beam particles, tracked/linear RMS
-ratios are 0.99896/1.00155, within the declared 2\% check. Intentional scraping
-verifies the first-loss element and surviving-coordinate accounting.
+At a single symmetric active station away from $\bar u=0$, the local sensitivity is
+\begin{equation}
+ \frac{\partial c_u}{\partial K_j}=
+ -\operatorname{sgn}(\bar u)\frac{\partial\bar u}{\partial K_j}
+ -\frac{5}{2\sigma_u}\frac{\partial\Sigma_{uu}}{\partial K_j}.
+\end{equation}
+Switching restrictions or crossing zero centroid makes this expression piecewise.
+In an uncoupled plane $\Sigma_{uu}=\epsilon_u\beta_u+D_u^2\sigma_\delta^2$;
+our coupled calculation retains the complete covariance. Reducing beta controls
+one size contribution, not necessarily dispersion or orbit sensitivity. We export
+these variances and centroids separately, adding variances rather than RMS sizes.
 
-These checks validate a local model. Nonlinear chromatic effects are retained
-in particle tracking but not the linear clearance estimate; no longitudinal
-6D-map symplectic certificate is inferred from a transverse check. Longitudinal
-magnet placement, supply quantization and downstream NKM/ring errors are
-outside the new error model. Their absence is not evidence of physical tolerance.
+\subsection{Accuracy and spatial observation resolution}
+Exact independent hard-edge maps are checked against AT tracking at every element
+boundary. The original ten-step integrator misses its $2\times10^{-6}$ nominal
+maximum-entry tolerance. Twenty/forty/eighty steps give discrepancies
+$2.53\times10^{-7}$, $1.58\times10^{-8}$ and $9.89\times10^{-10}$;
+new studies use forty. Transverse symplectic discrepancy is $1.22\times10^{-15}$,
+without a longitudinal six-dimensional certificate. Translations, rolls and
+fixed-geometry dipole-field perturbations are exercised independently. Momentum
+errors enter particle $\delta$ without double rescaling magnet fields.
 
-\subsection{Matching, alternative design and held-out protocol}
-Exit residuals for $(\beta_x,\beta_y,\alpha_x,\alpha_y,D_x,D'_x)$ are scaled by
-$(0.05\ \mathrm m,0.05\ \mathrm m,0.01,0.01,0.002\ \mathrm m,0.001)$.
-The historical search uses bounded least squares and conditional bounded SLSQP,
-then physical post-selection; it does not impose nonlinear beta constraints
-during those stages. A replay preserves the nominal start and two random
-uniform box starts (seed 42, budget 100). Raw and six-decimal settings are
-independently checked against the stated optical scales, family bounds and
-positive station clearance.
+The original affine error maps omit chromatic derivatives about displaced
+trajectories. Comparing all 600 original shots with AT Jacobians expanded about
+the actual centroid changes station clearances by up to 78.43 micrometres,
+but shifts the paired mean by only $-0.155$ micrometres. Eight reference and three
+alternative active-station classifications change. The original mean 14.61
+micrometres and interval $[-17.91,+48.32]$ become 14.45 and $[-17.88,+48.10]$;
+the unresolved-benefit conclusion persists. New comparisons use centred AT maps.
+Moment probes are uncensored by aperture limits, so propagated moments describe
+the incoming distribution rather than a survivor-biased subset.
 
-The alternative minimizes vertical peak beta sampled at element boundaries
-with six exact exit-residual equalities, horizontal peak beta $\le60$ m and
-identical K bounds. SLSQP converges in 67 iterations from the archived match
-(maximum 200, termination tolerance $10^{-8}$). It is a nominal low-beta
-strategy, not a direct optimizer of held-out clearance. A separate 60-machine
-training audit (seed 71001) precedes evaluation; no test results select or tune
-the design. No optical correction or per-shot retuning is performed.
+Representative simultaneous-error cases compare probe steps $10^{-6}$--$10^{-8}$
+and forty/eighty integration steps. Their clearance changes are below
+$5\times10^{-6}$ micrometres. Product Gauss--Hermite quadrature at orders three,
+five and seven propagates the unrestricted Gaussian through nonlinear AT;
+five/seven convergence is negligible on the checked cases. Centred-linear versus
+nonlinear-moment discrepancy is at most 0.606 micrometres on four original extreme
+or representative shots and \BtsNewMomentError\ micrometres on two new machines
+for every regime/design. These finite-case checks are smaller than the reported
+effect intervals and illustrative 0.1 mm decision scale; they are not universal
+error bounds or Gaussian loss-tail certificates. Intentional scraping verifies
+first-loss accounting. Detailed checks are supplied in the supplement/evidence.
 
-Held-out machines (seed 71002) have independent Gaussian quadrupole relative
-gradient errors 0.1\%, x/y offsets 100 micrometres, rolls 0.5 mrad and dipole
-relative fields 0.05\%. Each of 200 machines has three independent shots with
-5\% beta fluctuations in both planes (alpha fixed), horizontal centroid RMS
-0.5 mm, momentum-angle RMS 0.2 mrad and centroid momentum RMS 0.1\%.
-These are illustrative errors, not sourced engineering specifications.
-Shot covariance and dispersive centroid terms are included explicitly.
-Both designs receive the same latent errors and particle draws.
+Spatial observation is refined independently of integration steps. Exact maps
+sample each finite element at 8, 16, 32 and 64 subdivisions, applying bend edges
+only once. Original reference boundary peaks 31.44/50.75 m become 31.63/51.27 m;
+old low-beta peaks 33.58/28.18 m become 33.77/28.50 m. Reoptimizing vertical peak
+beta on sixteen subdivisions converges in 34 SLSQP iterations. The resulting
+64-subdivision peaks are 33.79/28.44 m; changes from 32 subdivisions are below
+0.00035 m. These are spatially converged sampled maxima, not exact analytical
+extrema or a global optimum. q32 remains at its assumed lower bound $-3$ m$^{-2}$.
 
-Each shot tracks 2,000 Gaussian particles (seed 71003), yielding 1.2 million
-per design. Loss is first nonfinite x after an element; surviving coordinates
-must be finite. All element exits are observed and first-loss indices retained.
-We estimate paired differences by resampling the 200 machine-average results,
-with 10,000 percentile-bootstrap replicates (seed 71004). Particles and shots
-sharing a machine are not treated as independent machines.
+\subsection{Frozen strategies and hypothetical restrictions}
+All settings share entrance/target optics, quadrupole bounds and beam assumptions.
+Six exit residuals are scaled by $(0.05\,\mathrm m,0.05\,\mathrm m,0.01,0.01,
+0.002\,\mathrm m,0.001)$. Nominal optimization imposes six residual equalities
+and horizontal peak beta $\le60$ m. Direct clearance uses a millimetre-scaled
+epigraph: maximize $t$ subject to $t\le c_u(s)$ at every station/plane.
+Two starts (reference and refined low beta) use 200-iteration budgets and
+$10^{-8}$ termination tolerance. All six searches converge; their iterations,
+settings, active bounds and independently checked feasibility are supplied.
+Exit residuals satisfy declared scales and horizontal screening is checked at
+64 subdivisions. Entrance-ceiling ties choose the smallest reference-setting
+change; their tiny numerical effects are not interpreted as physical gains.
+
+Three predeclared regimes keep entrance/exit limits unchanged: baseline;
+a horizontal 3 mm halfwidth only at m2 ($s=6.833$ m); and a vertical 1.5 mm
+halfwidth only at m3 ($s=11.761$ m). Other limits remain unchanged. These narrow
+internal restrictions are deliberate hypothetical stress cases, not surveyed
+hardware. A nominal halfwidth sweep of 1.5, 2, 3, 5 and 30 mm displays changes
+in the active restriction without using test outcomes for design selection.
+The legacy lattice shares an aperture object at its internal stations; the new
+driver detaches the selected station before editing its limit. An invalid initial
+run that inadvertently narrowed both stations is retained separately and excluded.
+
+Settings are frozen before a new independently seeded test. Static errors are
+independent Gaussian quadrupole relative gradients 0.1\%, x/y offsets 100
+micrometres, rolls 0.5 mrad and dipole relative fields 0.05\%. Each of 200
+machines has three independent shots with 5\% entrance beta fluctuations
+(alpha fixed), horizontal position RMS 0.5 mm, angle RMS 0.2 mrad and centroid
+momentum RMS 0.1\%. These error levels remain modelling assumptions. Static,
+shot and particle seeds are 82002, 82003 and 82004, respectively. Each shot has
+2,000 untruncated Gaussian particles with the complete design-beam covariance;
+all nine regime/strategy combinations receive common errors and particle draws.
+No optical correction or per-shot retuning is used. The total is 10.8 million
+particle transports, 1.2 million per combination, not 10.8 million machines.
+
+The primary contrast is alternative minus reference in machine-average minimum
+five-sigma clearance. Ten thousand paired machine-cluster bootstrap replicates
+(seed 82005) give pointwise descriptive 95\% percentile intervals. No simultaneous
+coverage claim is made across strategies/regimes. The predeclared useful-effect
+scale 0.1 mm is illustrative, not a hardware requirement. First loss is nonfinite
+$x$ after an element; all six coordinates of survivors must be finite. Element
+exit observations and first-loss indices are retained. Transmission is a separate
+observable. No additional samples were added after inspecting outcomes.
 
 \section{Results}
-\subsection{Nominal reproduction and local response}
-The historical three-start replay reproduces one feasible success, one
-infeasible success and one budget failure (Table~\ref{tab:starts}). The
-successful infeasible candidate illustrates why matching and feasibility are
-separate; the failed candidate is not another low-residual match. Three starts
-do not establish optimizer reliability, search topology or feasible volume.
+\subsection{Saturation and heterogeneous original outcomes}
+At zero error, both original settings have minimum clearance 17.455 mm at the
+entrance (Table~\ref{tab:stations}). The full station audit reconstructs all
+600 saved paired minima within $10^{-12}$ m. Every one of the 406 exact shot
+ties has the horizontal entrance active in both designs. The reference has
+449 entrance-x, 103 exit-x and 48 exit-y limiting shots; the old low-beta setting
+has 467, 113 and 20 (Fig.~\ref{fig:station}). Neither internal station limits
+that original ensemble.
 
 \begin{table}[htbp]\centering
-\caption{Historical replay outcomes. The initial start is nominal, not random.
-J is the scaled residual sum of squares. Feasibility is assessed after search.}\label{tab:starts}
-\begin{tabular}{lrrrr}\toprule
-Start & J & peak $\beta_x$ [m] & peak $\beta_y$ [m] & outcome\\\midrule
-Nominal & $1.29\times10^{-13}$ & 31.437 & 50.746 & feasible success\\
-Random 1 & $1.21\times10^{-12}$ & 25.329 & 62.556 & infeasible success\\
-Random 2 & 1284.86 & 69.921 & 65.043 & budget failure\\
-\bottomrule\end{tabular}\end{table}
+\caption{Original nominal station clearances [mm], before spatial reoptimization.
+R denotes reference and L the old low-beta setting. The entrance caps the full minimum.}
+\label{tab:stations}
+\input{generated/round2_station_rows.tex}\end{table}
 
-The archived raw/rounded strengths remain feasible at 40-step resolution and
-independent-map precision. Table~\ref{tab:strengths} supplies numerical values;
-decimal digits do not prescribe power-supply accuracy. Optical functions,
-dispersion and projected RMS sizes appear in Fig.~\ref{fig:optics}. Beta peaks
-reported here are element-boundary samples rather than continuous maxima.
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round2_stations.pdf}
+\caption{Original affine-model audit. Left: nominal station clearances for both
+settings and planes. Right: active-limit counts in 600 paired shots, exposing
+entrance saturation and exit switches. These retrospective data are separate
+from the new test and refined setting.}\label{fig:station}\end{figure}
+
+The 200 original machine averages include 54 gains, 53 losses and 93 exact ties.
+Difference standard deviation is 0.236 mm, with 5th/median/95th percentiles
+$-0.322/0/+0.403$ mm and range $-0.923$ to $+1.401$ mm. Its near-zero mean
+therefore conceals offsetting responses. Excluding the entrance gives a
+secondary downstream-only mean difference $+0.056$ mm; this diagnostic does
+not replace the original full-minimum estimand. Historical optical-rule failures,
+matching replay and local response diagnostics are retained in the supplement.
+
+\subsection{Aperture-dependent strategy outcomes on new machines}
+Figure~\ref{fig:refined} shows the spatially refined beta profiles.
+The fresh baseline low-beta change is \BtsNewBaselineMean\ mm with interval
+[\BtsNewBaselineLo, \BtsNewBaselineHi] mm, again unresolved. This does not prove
+exact equivalence or universal inferiority of low-beta design.
+
+\begin{figure}[htbp]\centering\includegraphics[width=.85\linewidth]{figures/round2_optics.pdf}
+\caption{Reference and refined low-beta profiles evaluated inside magnets with
+64 spatial subdivisions per finite element. The exit match remains fixed; the
+vertical improvement also changes horizontal transport.}\label{fig:refined}\end{figure}
 
 \begin{table}[htbp]\centering
-\caption{Reference and alternative settings [m$^{-2}$], with reference gradient
-[T/m] and assumed-bore pole field [T]. Negative K indicates defocusing in x.}\label{tab:strengths}
-\begin{tabular}{lrrrr}\toprule
-Quad & Reference K & Alternative K & Reference G & $|B_{\mathrm{pole}}|$\\\midrule
-q11 & -0.367525 & 0.060274 & -4.904 & 0.095 \\
-q12 & -1.216433 & -2.126974 & -16.230 & 0.314 \\
-q13 & 1.586072 & 1.869755 & 21.162 & 0.409 \\
-q21 & -1.068373 & 0.954499 & -14.255 & 0.276 \\
-q22 & 2.823108 & -0.258649 & 37.667 & 0.729 \\
-q23 & -2.490968 & -1.197779 & -33.236 & 0.643 \\
-q31 & 2.042678 & 2.817163 & 27.255 & 0.527 \\
-q32 & -1.434271 & -3.000000 & -19.137 & 0.370 \\
-q33 & 0.351115 & 0.901619 & 4.685 & 0.091 \\
-\bottomrule\end{tabular}\end{table}
+\caption{Frozen-strategy comparisons. Nominal minimum and new paired mean change
+are in mm; brackets give pointwise 95\% machine-cluster intervals. Restricted
+cases are hypothetical. The baseline clearance-setting change is numerical.}
+\label{tab:strategies}
+\input{generated/round2_strategy_rows.tex}\end{table}
 
-\begin{figure}[htbp]\centering\includegraphics[width=.85\linewidth]{figures/optics.pdf}
-\caption{Reference element-boundary beta, horizontal dispersion and projected
-RMS sizes for the design beam. The dotted beta line is the assumed optical
-screening ceiling, not a vacuum-chamber edge.}\label{fig:optics}\end{figure}
+At the horizontal restriction, low beta worsens the mean by 0.152 mm, while
+direct nominal clearance gains 0.881 mm (Table~\ref{tab:strategies}). Nominal
+horizontal betatron RMS changes from 0.220 to 0.230 mm in the direct design,
+but dispersive RMS decreases from 0.445 to 0.292 mm. On the held-out shots,
+mean absolute horizontal centroid decreases from 1.218 to 0.960 mm and mean
+five-RMS size decreases from 2.485 to 1.862 mm. Their combined changes explain
+the gain; minimizing vertical beta alone does not control either term.
 
-For local sensitivity diagnostics we normalize rows by the optical scales and
-columns by an assumed common $0.01$ m$^{-2}$ tuning increment:
-$A_{ij}=(\partial O_i/\partial K_j)\Delta K_j/\sigma_i$.
-Central steps $10^{-4},10^{-5},10^{-6}$ m$^{-2}$ converge; the six active modes
-and three-dimensional local null space have condition number
-\BtsResponseCondition. Six finite small-mode perturbations remain inside bounds
-and agree with linear predictions within 1\%. This differs from the archived
-mixed-unit condition number 1421.636. Neither Euclidean singular-vector
-orthogonality nor a local null space guarantees finite optical decoupling.
-Achieved commissioning correction claims are withdrawn: measurements, actuator
-calibration and estimation uncertainty have not been established.
+At the vertical restriction, low beta gains 0.073 mm and direct clearance gains
+0.212 mm. Low beta reduces mean five-RMS size from 0.885 to 0.681 mm, but
+increases mean absolute centroid from 0.230 to 0.360 mm; much of its nominal
+size benefit is offset by trajectory sensitivity. Direct clearance gives
+0.586 and 0.316 mm for these terms. The low-beta interval excludes zero but
+lies below the illustrative 0.1 mm useful-effect scale; direct gains exceed
+that scale in both restricted cases. These are outcomes for the selected finite
+searches and assumptions, not universal strategy dominance.
 
-\subsection{Beta reduction versus physical clearance}
-The alternative reduces vertical peak beta from 50.746 to \BtsAltPeakY\ m,
-while horizontal peak beta changes from 31.437 to \BtsAltPeakX\ m.
-At zero error, both have the same minimum projected station clearance,
-\BtsNominalMinimum\ mm, set by the fixed entrance. Thus a 22.57 m beta
-reduction produces no nominal minimum-clearance gain under these apertures.
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round2_strategies.pdf}
+\caption{New paired mean clearance changes with pointwise 95\% intervals for the
+200 independent machines. Dotted vertical lines indicate the declared illustrative
+$\pm0.1$ mm scale. Every regime includes the entrance and exit in its minimum.}
+\label{fig:strategies}\end{figure}
 
-Held-out mean clearances are \BtsNomClear\ mm (reference) and
-\BtsAltClear\ mm (alternative). The paired change is \BtsClearMean\ mm,
-95\% interval [\BtsClearLo, \BtsClearHi] mm (Fig.~\ref{fig:comparison}).
-The interval includes zero, so a clearance benefit is not resolved at this
-precision. This is not proof of exact equivalence or universal inferiority of
-low-beta matching. It is a conditional negative result for the selected metric,
-boundaries, aperture stations and error distributions.
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round2_sweep.pdf}
+\caption{Nominal clearance changes versus reference across halfwidth sweeps, with frozen settings. The adjusted
+plane is horizontal m2 or vertical m3; all other limits stay fixed. A wide
+restriction returns to the entrance ceiling. Hypothetical sweeps expose metric
+saturation; they are not a prediction of chamber dimensions.}\label{fig:sweep}\end{figure}
 
-\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/comparison.pdf}
-\caption{Left: vertical beta reduction at the fixed target. Right: paired changes
-in machine-average minimum five-sigma station clearance for 200 held-out
-machines. The bootstrap interval crosses zero despite the beta reduction.}
-\label{fig:comparison}\end{figure}
+\subsection{Physical particle loss is a separate outcome}
+\begin{table}[htbp]\centering
+\caption{Observed first losses in the new test: 1.2 million particles and 200
+three-shot machine blocks per row. A block is affected if any sampled particle
+is lost. Counts refer to model stations, not continuous-chamber or ring losses.}
+\label{tab:loss}
+\input{generated/round2_loss_rows.tex}\end{table}
 
-Both designs transmit every tracked particle through the model stations.
-There are no first-loss entries in this ensemble; a separate deliberate
-scraping validation verifies loss accounting. Zero observations do not imply
-zero loss probability. A descriptive particle-binomial calculation gives a
-two-sided 95\% upper loss bound of $3.0741\times10^{-6}$ conditional on an
-independence assumption. Shared machine/shot effects limit that interpretation.
-For independent machine blocks with no losses, the one-sided 95\% upper
-probability of a block with any loss is \BtsMachineLossUpper\% (200 blocks).
-Observed zero paired transmission change is therefore not quoted as
-``100\% $\pm$ 0\%'' certainty. Neither statement addresses unmodelled continuous
-restrictions or downstream capture.
+No baseline losses occur. For zero of 200 independent blocks, the one-sided
+95\% upper probability of an observed-loss block is 1.4867\%~\cite{Clopper1934}.
+The event consists of three sampled shots with 2,000 particles per shot; it
+is not the probability of any loss during indefinite operation. Shared machine
+and shot randomness prevents interpreting all particles as independent machine
+reliability trials. The supplement gives exact block intervals and separately
+labelled descriptive particle bounds.
 
-\subsection{Separate historical statistical audit}
-Reconstruction of all 550,000 historical observations confirms five optical-rule
-exceedances, no invalid evaluations, and compatible model/target/error inputs
-across four runs. The rule is $\beta_{x,\max}$ or $\beta_{y,\max}>60.01$ m,
-or $\mathcal M_x+\mathcal M_y>2.05$, where
-$\mathcal M_u=\tfrac12\mathrm{Tr}(\Sigma_{u,t}^{-1}\Sigma_{u,o})-1$
-uses unit-emittance transverse matrices. All five failures exceed vertical beta
-only (60.23--61.64 m); they are not physical losses.
-
-The descriptive optical-failure estimate is $5/550000=9.09\times10^{-6}$ with
-exact asymmetric 95\% limits $[2.95\times10^{-6},2.12\times10^{-5}]$; Wilson
-limits are $[3.8831\times10^{-6},2.1283\times10^{-5}]$~\cite{Wilson1927}.
-The pooled horizontal median \BtsMedianX\ has the order-statistic interval
-[\BtsMedianXLo, \BtsMedianXHi], not a pooled-bootstrap interval. Reconstructed
-median, 95th and 99th quantile intervals match the archived analysis.
-
-Three 50,000-sample median-prefix changes (20.830, 11.436 and
-10.567)$\times10^{-6}$ miss the $10^{-5}$ target; the 400,000 follow-up
-change $2.395\times10^{-6}$ passes. This is median stability, not rare-tail
-convergence. The follow-up stopping decision is not archived as predeclared;
-fixed-N intervals do not certify sequential coverage. Historical one-at-a-time
-sensitivity is mean absolute change of $\mathcal M_x+\mathcal M_y$, not J.
-Seed42 ranks beta-only entrance errors (0.00890374), gradients (0.000861122)
-and energy (0.000106336). Near-zero alignment/roll mismatch does not certify
-alignment/coupling tolerances. Historical and new-model data remain separate.
+The vertical restriction illustrates that a higher mean clearance need not
+produce fewer losses: reference/low-beta/direct settings lose 1/43/26 particles
+in 1/6/2 blocks (Table~\ref{tab:loss}). These few tail events do not establish a
+converged machine reliability ranking. In the stronger horizontal stress case,
+loss counts and affected blocks are lower for direct clearance than reference,
+and higher for low beta. Paired transmission intervals are supplied separately;
+clearance intervals must not be reused as loss-probability statements.
 
 \section{Discussion and conclusions}
-The completed comparison identifies a limitation of beta-only optimization:
-when a fixed boundary controls the selected physical clearance metric, lowering
-intermediate beta does not necessarily provide a useful margin. Dispersion and
-centroid response further prevent converting a beta difference into millimetres
-of clearance. The useful design decision is to optimize and validate the actual
-limiting observable rather than assume a low-beta setting is better.
+The physical criterion is the active restriction, not beta alone. A fixed
+entrance gives an immutable ceiling; an interior restriction exposes dispersion
+and trajectory response competing with betatron size. The paired tests provide
+three conditional regimes: unresolved baseline change, an adverse low-beta
+horizontal outcome, and a beneficial but modest vertical outcome. Direct nominal
+clearance settings improve the two restricted mean-clearance cases, while the
+particle study demonstrates that mean improvement is not tail reliability.
 
-This conclusion is deliberately bounded. The target and continuous chamber
-are not source-confirmed; four square stations and illustrative independent
-Gaussian errors are assumptions. Sampling precision cannot compensate for
-these physical uncertainties. The results do not specify construction tolerances,
-commissioning feedback or machine reliability. With confirmed chamber geometry,
-a different limiting station or target, the preferred design could change.
-A more precise paired interval would require more independent machines,
-not merely more particles in the same shots. A rare-failure campaign is not
-required to support the present unresolved-clearance result.
+This adds an observable-specific comparison to established transfer-line
+rematching and trajectory-control practice, rather than a new optimizer.
+Optimization should state the limiting station, retain full covariance and
+centroid response, verify interior extrema, and independently evaluate its
+chosen observable. Robust training-based optimization, operational correction
+and global search are not demonstrated. Source-confirmed chamber geometry,
+matching boundaries and error correlations could change the preferred setting.
 
-Independent maps, covariance, isolated perturbations, finite particle transport
-and historical reconstruction provide inspectable checks. Nominal matching,
-physical station transmission and storage-ring capture remain distinct. A final
-engineering application requires validated boundary/chamber specifications and
-measurement/calibration information beyond the present parametric study.
+All targets, continuous restrictions and hardware limits remain as described
+in Section 2. Independent-Gaussian errors and hypothetical restrictions are
+parametric assumptions. Numerical precision cannot resolve their physical
+uncertainty. This paper neither certifies real BTS transmission nor derives
+construction tolerances, downstream capture or NKM transparency. The original
+statistical campaign is archived separately; its optical-rule failures are not
+particle losses. The resulting design lesson is conditional and testable with
+confirmed engineering inputs or future measurements.
 
 \section*{Statements and Declarations}
 \paragraph{Funding.} Funding information will be supplied by the author before submission.
-\paragraph{Competing interests and acknowledgments.} Author confirmation is pending before submission.
-\paragraph{Author contribution.} Chong Shik Park is the corresponding author and
-is responsible for verifying the scientific interpretation, declarations and
-final article. Final author approval is pending.
-\paragraph{Generative assistance.} OpenAI Codex assisted with software changes,
-numerical execution, literature checking and manuscript drafting. This extends
-beyond copy editing; the author must validate and approve the final results.
-\paragraph{Data and code availability.} The prepared referee attachment contains
-selected raw observations, configurations, code snapshots, environment records,
-hashes and numerical rebuilding instructions. It has not been publicly deposited;
-the author must provide the attachment to reviewers. The companion NKM study
-shares upstream BTS assets, as disclosed above.
+\paragraph{Competing interests.} The author declares no competing interests.
+\paragraph{Acknowledgments.} Author-supplied acknowledgments are pending before submission.
+\paragraph{Author contribution.} Chong Shik Park is responsible for scientific
+interpretation and final article approval; final approval is pending.
+\paragraph{Generative assistance.} OpenAI Codex assisted with software,
+numerical execution, literature checking and manuscript drafting beyond copy
+editing. The author must validate and approve the final work.
+\paragraph{Data and code availability.} A local referee attachment supplies
+selected raw data, configurations, source snapshots, environment identities,
+hashes and reproduction commands. It has not been publicly deposited or sent
+to a journal; reviewer delivery and final availability wording remain author actions.
 
 \appendix
-\section{Evidence identity and numerical reproduction}
-The preserved reviewer report evaluates the early main-branch draft at
-\texttt{bee78914}. The revised asset identity, point-by-point response and
-artifact manifest are provided in the attachment and
-\texttt{docs/paper\_bts/revision\_selection.json}. Exact artifact-specific hashes
-and JSON pointers replace a global generating-commit claim; some historical
-generating revisions remain unestablished. The new driver supplies validation,
-matching, normalized-response and frozen-design stages. Historical statistics
-are independently reconstructed from supplied observations; regenerating those
-old random realizations is not asserted. All stage outputs use new directories.
-A fresh isolated LaTeX build supplies this one-column article and records layout
-checks. These technical checks are not a journal acceptance decision.
+\section{Evidence and supplementary material}
+The supplement preserves historical matching/optical statistics and reports
+block-loss inference and numerical limitations. Reviewed and original campaign
+identities, all previous reports, new frozen designs, station decompositions and
+point-by-point responses are included in the local attachment. Each numerical
+stage records source hashes and uses a fresh result directory. The first invalid
+shared-aperture run is retained as a failure record, not selected evidence.
+Technical validation does not imply journal acceptance.
 
 \bibliographystyle{unsrt}
 \bibliography{paper}

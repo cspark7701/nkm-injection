@@ -13,21 +13,61 @@ ROOT=Path(__file__).resolve().parents[1]
 PAPER=ROOT/'docs/paper_bts'
 
 
-def build_pdf(output):
+def build_pdf(output, source='paper'):
     output.mkdir(parents=True,exist_ok=False)
-    for name in ['paper.tex','paper.bib']:shutil.copy2(PAPER/name,output/name)
+    for name in [source+'.tex','paper.bib']:shutil.copy2(PAPER/name,output/name)
     for name in ['generated','figures']:shutil.copytree(PAPER/name,output/name)
-    commands=[['pdflatex','-interaction=nonstopmode','-halt-on-error','paper.tex'],['bibtex','paper'],['pdflatex','-interaction=nonstopmode','-halt-on-error','paper.tex'],['pdflatex','-interaction=nonstopmode','-halt-on-error','paper.tex']]
+    commands=[['pdflatex','-interaction=nonstopmode','-halt-on-error',source+'.tex'],['bibtex',source],['pdflatex','-interaction=nonstopmode','-halt-on-error',source+'.tex'],['pdflatex','-interaction=nonstopmode','-halt-on-error',source+'.tex']]
     for i,command in enumerate(commands):
         result=subprocess.run(command,cwd=output,text=True,capture_output=True)
         (output/f'build_{i}.txt').write_text(result.stdout+result.stderr)
         if result.returncode:raise RuntimeError(f'Build failed: {command}; see {output}')
-    log=(output/'paper.log').read_text()
+    log=(output/(source+'.log')).read_text()
     problems=[line for line in log.splitlines() if any(s in line for s in ['LaTeX Warning','Overfull','Underfull','undefined','Missing character'])]
     if problems:raise ValueError('Layout/reference warnings: '+repr(problems))
-    info=subprocess.check_output(['pdfinfo',str(output/'paper.pdf')],text=True)
+    info=subprocess.check_output(['pdfinfo',str(output/(source+'.pdf'))],text=True)
     (output/'pdfinfo.txt').write_text(info)
-    return output/'paper.pdf'
+    return output/(source+'.pdf')
+
+
+def package_round2(output,campaign):
+    """Extend a fresh R1 attachment with frozen R2 stages and failure records."""
+    package(output,ROOT/'results/bts_journal_campaign_r1_20261013',write_archive=False)
+    bundle=output/'attachment'
+    # Selected manifest artifacts already created some campaign directories.
+    # Existing files must be identical before merging the rest of the campaign.
+    destination=bundle/campaign.relative_to(ROOT)
+    for source in campaign.rglob('*'):
+        target=destination/source.relative_to(campaign)
+        if source.is_file() and target.exists() and sha256(source)!=sha256(target):
+            raise ValueError('Conflicting campaign copy: '+str(target))
+    shutil.copytree(campaign,destination,dirs_exist_ok=True)
+    for archive in (ROOT/'docs/exec-plans/completed').glob('*_r2_bts_*.md'):
+        shutil.copy2(archive,bundle/'docs/exec-plans/completed'/archive.name)
+    checkpoints={'stations':'3c323be','accuracy':'a3e5b82','spatial':'ede4628','designs':'7679c20','comparison':'7679c20'}
+    for stage,commit in checkpoints.items():
+        configuration=json.loads((campaign/stage/'configuration.json').read_text())
+        target=bundle/'generating_source/round2'/stage
+        for name,digest in configuration['environment']['source_sha256'].items():
+            dest=target/name;dest.parent.mkdir(parents=True,exist_ok=True)
+            dest.write_bytes(subprocess.check_output(['git','show',commit+':'+name],cwd=ROOT))
+            if sha256(dest)!=digest:raise ValueError('Round2 generating source mismatch: '+stage+'/'+name)
+    with (bundle/'REPRODUCE.md').open('a') as stream:
+        stream.write('''
+## Round-two evidence
+
+The selected round2 campaign and reviewed-article snapshot are included alongside
+the original R1 campaign. Read docs/paper_bts/round2_reproduction.md for all new
+stages, explicit fresh-design routing, inference reconstruction and supplement
+build. Current and exact stage source hashes are distinct. Invalid shared-aperture
+runs and their generating source are retained but excluded from selected claims.
+Use new output directories. A local attachment is not a public deposit.
+''')
+    files={str(path.relative_to(bundle)):sha256(path) for path in sorted(bundle.rglob('*')) if path.is_file() and path.name!='SHA256.json'}
+    (bundle/'SHA256.json').write_text(json.dumps(files,indent=2)+'\n')
+    archive=output/'bts_referee_attachment.tar.gz'
+    with tarfile.open(archive,'w:gz',compresslevel=3) as tar:tar.add(bundle,arcname='bts_referee_attachment')
+    (output/'attachment_sha256.txt').write_text(sha256(archive)+'  '+archive.name+'\n')
 
 
 def verify():
@@ -37,7 +77,7 @@ def verify():
     print('Final manuscript/asset hashes verified.')
 
 
-def package(output,campaign):
+def package(output,campaign,write_archive=True):
     verify();output.mkdir(parents=True,exist_ok=False);bundle=output/'attachment';bundle.mkdir()
     for name in ['pyproject.toml','README.md','AGENTS.md']:
         shutil.copy2(ROOT/name,bundle/name)
@@ -100,6 +140,7 @@ Manuscript publication hashes and selected artifact pointers are in docs/paper_b
 ''')
     files={str(path.relative_to(bundle)):sha256(path) for path in sorted(bundle.rglob('*')) if path.is_file()}
     (bundle/'SHA256.json').write_text(json.dumps(files,indent=2)+'\n')
+    if not write_archive:return bundle
     archive=output/'bts_referee_attachment.tar.gz'
     with tarfile.open(archive,'w:gz',compresslevel=3) as tar:tar.add(bundle,arcname='bts_referee_attachment')
     (output/'attachment_sha256.txt').write_text(sha256(archive)+'  '+archive.name+'\n')
@@ -109,13 +150,18 @@ Manuscript publication hashes and selected artifact pointers are in docs/paper_b
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--build-dir',type=Path);parser.add_argument('--package-dir',type=Path)
+    parser.add_argument('--supplement-build-dir',type=Path)
+    parser.add_argument('--round2-package-dir',type=Path)
+    parser.add_argument('--round2-campaign-dir',type=Path,default=ROOT/'results/bts_journal_campaign_r2_20261013')
     parser.add_argument('--campaign-dir',type=Path,default=ROOT/'results/bts_journal_campaign_r1_20261013')
     parser.add_argument('--verify',action='store_true')
     args=parser.parse_args()
     if args.verify:verify()
     if args.build_dir:print(build_pdf(args.build_dir))
+    if args.supplement_build_dir:print(build_pdf(args.supplement_build_dir,'supplement'))
     if args.package_dir:package(args.package_dir,args.campaign_dir.resolve())
-    if not (args.verify or args.build_dir or args.package_dir):parser.error('Select --verify, --build-dir or --package-dir')
+    if args.round2_package_dir:package_round2(args.round2_package_dir,args.round2_campaign_dir.resolve())
+    if not (args.verify or args.build_dir or args.package_dir or args.supplement_build_dir or args.round2_package_dir):parser.error('Select a verification, build or package operation')
 
 
 if __name__=='__main__':main()

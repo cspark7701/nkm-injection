@@ -98,6 +98,104 @@
       "bytes": 16540,
       "generating_commit": null,
       "provenance_note": "Selected numerical summary retains actual environment, source-file digests and stage output identity; do not infer a global generating commit."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/stations/station_realizations.json",
+      "sha256": "f713fc2711175ea210cc827e1c7e2b26a170f208d17512ceadbcbb080503aac1",
+      "bytes": 4223113,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/accuracy/accuracy_realizations.json",
+      "sha256": "cabfeb446a9d664023d8c5e1adeaaf2404d5d6effd654766d21996b99813c531",
+      "bytes": 7979551,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/spatial/spatial_profiles.json",
+      "sha256": "739dfc50b0790b64a526ac7de58855fee9b804628b7bab13967c169154a9b331",
+      "bytes": 1924949,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/designs/designs.json",
+      "sha256": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
+      "bytes": 53569,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/comparison/raw_realizations.json",
+      "sha256": "d7031135f4bc00f7ae8e4fe9e53d2c1f520510fa1ddfab3ee3a0dca51dab00d4",
+      "bytes": 21423295,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/comparison/machine_results.json",
+      "sha256": "7268755129d5638a7576c49f13c0a410c23c462d3e1e1f8322f1358f1d4f693c",
+      "bytes": 254133,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r2_20261013/inference/inference.json",
+      "sha256": "4401230aa8c8d2d9cb475717655ccf93bcd2adfadc55e551da6a8c267bb8e308",
+      "bytes": 5743,
+      "generating_commit": null,
+      "provenance_note": "Exact stage-source hashes/snapshots and configuration identify generation; see round2 campaign."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_stations.json",
+      "sha256": "882d9fb5b3fb8a512b4cf123debf716c4057adb4eda0e13c2d672c3d67a3f500",
+      "bytes": 7614,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary export, audited against preserved raw records."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_accuracy.json",
+      "sha256": "490e1fd29b3887293a9502bc382805926e9cc7d1984cbce48d393355ef3d564c",
+      "bytes": 19642,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary export, audited against preserved raw records."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_spatial.json",
+      "sha256": "43e39fd240806fb89d0cc48ca0098d92f888dd3d762333c2be37d37e52c1a776",
+      "bytes": 5205,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary export, audited against preserved raw records."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_designs.json",
+      "sha256": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
+      "bytes": 53569,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary export, audited against preserved raw records."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_comparison.json",
+      "sha256": "ddf0b39544b3dcb5663dc3c683e90f369d72105c4a0b16d27e58752488b4379b",
+      "bytes": 13807,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary export, audited against preserved raw records."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_inference.json",
+      "sha256": "4401230aa8c8d2d9cb475717655ccf93bcd2adfadc55e551da6a8c267bb8e308",
+      "bytes": 5743,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary export, audited against preserved raw records."
+    },
+    {
+      "path": "docs/paper_bts/generated/round2_components.json",
+      "sha256": "2524080d374ef6f7fbc242e3567dc33fe3ab855e18b1554822101c5db70dfb94",
+      "bytes": 1515,
+      "generating_commit": null,
+      "provenance_note": "Selected round2 summary; reconstructed from supplied raw station records."
     }
   ],
   "claims": [
@@ -421,6 +519,484 @@
       ],
       "interpretation": "Results4.3: all five historical optical-rule failures audited separately.",
       "manuscript_location": "Results4.3"
+    },
+    {
+      "id": "BRC01",
+      "artifact": "docs/paper_bts/generated/round2_stations.json",
+      "pointer": "/equal_shots_both_entrance",
+      "expected": 406
+    },
+    {
+      "id": "BRC02",
+      "artifact": "docs/paper_bts/generated/round2_stations.json",
+      "pointer": "/machine_gain_loss_tie_counts",
+      "expected": [
+        54,
+        53,
+        93
+      ]
+    },
+    {
+      "id": "BRC03",
+      "artifact": "docs/paper_bts/generated/round2_accuracy.json",
+      "pointer": "/paired_mean_model_shift_m",
+      "expected": -1.5533269241655868e-07
+    },
+    {
+      "id": "BRC04",
+      "artifact": "docs/paper_bts/generated/round2_accuracy.json",
+      "pointer": "/max_quadrature_clearance_error_m",
+      "expected": 6.056754780076057e-07
+    },
+    {
+      "id": "BRC05",
+      "artifact": "docs/paper_bts/generated/round2_spatial.json",
+      "pointer": "/refined_low_beta/profiles/3/peak_beta_m",
+      "expected": [
+        33.794522204042885,
+        28.43705384508607
+      ]
+    },
+    {
+      "id": "BRC06",
+      "artifact": "docs/paper_bts/generated/round2_designs.json",
+      "pointer": "/designs/horizontal_restriction/nominal/clearance/clearance/minimum_m",
+      "expected": 0.0011417355311582977
+    },
+    {
+      "id": "BRC07",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/results/horizontal_restriction/clearance/paired_difference",
+      "expected": {
+        "mean_m": 0.0008805524399885009,
+        "ci95_m": [
+          0.0008471785549359891,
+          0.0009135064212647049
+        ]
+      }
+    },
+    {
+      "id": "BRC08",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/results/vertical_restriction/clearance/paired_difference",
+      "expected": {
+        "mean_m": 0.00021227602382203016,
+        "ci95_m": [
+          0.00017383603815176234,
+          0.000250177153246558
+        ]
+      }
+    },
+    {
+      "id": "BRC09",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/results/horizontal_restriction/low_beta/paired_difference",
+      "expected": {
+        "mean_m": -0.00015222487300010166,
+        "ci95_m": [
+          -0.0001573955358407541,
+          -0.00014711147306306348
+        ]
+      }
+    },
+    {
+      "id": "BRC10",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/results/vertical_restriction/low_beta/paired_difference",
+      "expected": {
+        "mean_m": 7.328848855869635e-05,
+        "ci95_m": [
+          4.782800731526805e-05,
+          9.797124660177848e-05
+        ]
+      }
+    },
+    {
+      "id": "BRC11",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/results/baseline/low_beta/paired_difference",
+      "expected": {
+        "mean_m": 1.0342089064919943e-05,
+        "ci95_m": [
+          -1.5644257002854702e-05,
+          3.768584157626131e-05
+        ]
+      }
+    },
+    {
+      "id": "BRC12",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/max_centred_moment_error_m",
+      "expected": 6.858191321686136e-07
+    },
+    {
+      "id": "BRC13",
+      "artifact": "docs/paper_bts/generated/round2_inference.json",
+      "pointer": "/zero_loss_block_one_sided_upper95",
+      "expected": 0.014867039231272083
+    },
+    {
+      "id": "BRC14",
+      "artifact": "docs/paper_bts/generated/round2_comparison.json",
+      "pointer": "/results",
+      "expected": {
+        "baseline": {
+          "reference": {
+            "mean_clearance_m": 0.01689360356338011,
+            "paired_difference": {
+              "mean_m": 0.0,
+              "ci95_m": [
+                0.0,
+                0.0
+              ]
+            },
+            "paired_sd_m": 0.0,
+            "paired_quantiles_m": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "gain_loss_tie_counts": [
+              0,
+              0,
+              200
+            ],
+            "active_frequencies": {
+              "[1, 0]": 472,
+              "[34, 0]": 105,
+              "[34, 1]": 23
+            },
+            "lost_particles": 0,
+            "loss_blocks": 0,
+            "loss_block_ci95": [
+              0.0,
+              0.01827534035513624
+            ],
+            "zero_loss_block_upper95_one_sided": 0.014867039231272083
+          },
+          "low_beta": {
+            "mean_clearance_m": 0.01690394565244503,
+            "paired_difference": {
+              "mean_m": 1.0342089064919943e-05,
+              "ci95_m": [
+                -1.5644257002854702e-05,
+                3.768584157626131e-05
+              ]
+            },
+            "paired_sd_m": 0.00019535309933569098,
+            "paired_quantiles_m": [
+              -0.0008296574498819001,
+              -0.00023392181551640674,
+              0.0,
+              0.00035530727650195384,
+              0.0009726545771313946
+            ],
+            "gain_loss_tie_counts": [
+              51,
+              49,
+              100
+            ],
+            "active_frequencies": {
+              "[1, 0]": 474,
+              "[34, 0]": 116,
+              "[34, 1]": 10
+            },
+            "lost_particles": 0,
+            "loss_blocks": 0,
+            "loss_block_ci95": [
+              0.0,
+              0.01827534035513624
+            ],
+            "zero_loss_block_upper95_one_sided": 0.014867039231272083
+          },
+          "clearance": {
+            "mean_clearance_m": 0.01689360364964865,
+            "paired_difference": {
+              "mean_m": 8.626854432203235e-11,
+              "ci95_m": [
+                5.966904144654589e-11,
+                1.1446789178288716e-10
+              ]
+            },
+            "paired_sd_m": 1.9394776370711369e-10,
+            "paired_quantiles_m": [
+              -4.046092696996517e-10,
+              -6.5156928463760746e-12,
+              0.0,
+              5.241173928888229e-10,
+              8.969900065769476e-10
+            ],
+            "gain_loss_tie_counts": [
+              67,
+              11,
+              122
+            ],
+            "active_frequencies": {
+              "[1, 0]": 472,
+              "[34, 0]": 105,
+              "[34, 1]": 23
+            },
+            "lost_particles": 0,
+            "loss_blocks": 0,
+            "loss_block_ci95": [
+              0.0,
+              0.01827534035513624
+            ],
+            "zero_loss_block_upper95_one_sided": 0.014867039231272083
+          }
+        },
+        "horizontal_restriction": {
+          "reference": {
+            "mean_clearance_m": -0.0007027265995199122,
+            "paired_difference": {
+              "mean_m": 0.0,
+              "ci95_m": [
+                0.0,
+                0.0
+              ]
+            },
+            "paired_sd_m": 0.0,
+            "paired_quantiles_m": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "gain_loss_tie_counts": [
+              0,
+              0,
+              200
+            ],
+            "active_frequencies": {
+              "[12, 0]": 600
+            },
+            "lost_particles": 65798,
+            "loss_blocks": 155,
+            "loss_block_ci95": [
+              0.7107603940312353,
+              0.8308974528701734
+            ],
+            "zero_loss_block_upper95_one_sided": null
+          },
+          "low_beta": {
+            "mean_clearance_m": -0.0008549514725200138,
+            "paired_difference": {
+              "mean_m": -0.00015222487300010166,
+              "ci95_m": [
+                -0.0001573955358407541,
+                -0.00014711147306306348
+              ]
+            },
+            "paired_sd_m": 3.6946059331144796e-05,
+            "paired_quantiles_m": [
+              -0.0002811039318726502,
+              -0.00021846448941484302,
+              -0.00014973494131554792,
+              -9.993719272058201e-05,
+              -4.6259722057664126e-05
+            ],
+            "gain_loss_tie_counts": [
+              0,
+              200,
+              0
+            ],
+            "active_frequencies": {
+              "[12, 0]": 600
+            },
+            "lost_particles": 79736,
+            "loss_blocks": 163,
+            "loss_block_ci95": [
+              0.7541365375513216,
+              0.8662713398202384
+            ],
+            "zero_loss_block_upper95_one_sided": null
+          },
+          "clearance": {
+            "mean_clearance_m": 0.00017782584046858869,
+            "paired_difference": {
+              "mean_m": 0.0008805524399885009,
+              "ci95_m": [
+                0.0008471785549359891,
+                0.0009135064212647049
+              ]
+            },
+            "paired_sd_m": 0.00023697052355791377,
+            "paired_quantiles_m": [
+              7.843797472531668e-05,
+              0.0005445943612411853,
+              0.000873641242974712,
+              0.001312710047236673,
+              0.0017234632280809657
+            ],
+            "gain_loss_tie_counts": [
+              200,
+              0,
+              0
+            ],
+            "active_frequencies": {
+              "[12, 0]": 600
+            },
+            "lost_particles": 17200,
+            "loss_blocks": 72,
+            "loss_block_ci95": [
+              0.29350472089116675,
+              0.43071394601871726
+            ],
+            "zero_loss_block_upper95_one_sided": null
+          }
+        },
+        "vertical_restriction": {
+          "reference": {
+            "mean_clearance_m": 0.0003854635233654263,
+            "paired_difference": {
+              "mean_m": 0.0,
+              "ci95_m": [
+                0.0,
+                0.0
+              ]
+            },
+            "paired_sd_m": 0.0,
+            "paired_quantiles_m": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "gain_loss_tie_counts": [
+              0,
+              0,
+              200
+            ],
+            "active_frequencies": {
+              "[22, 1]": 600
+            },
+            "lost_particles": 1,
+            "loss_blocks": 1,
+            "loss_block_ci95": [
+              0.00012658102786701825,
+              0.02754189845720562
+            ],
+            "zero_loss_block_upper95_one_sided": null
+          },
+          "low_beta": {
+            "mean_clearance_m": 0.0004587520119241227,
+            "paired_difference": {
+              "mean_m": 7.328848855869635e-05,
+              "ci95_m": [
+                4.782800731526805e-05,
+                9.797124660177848e-05
+              ]
+            },
+            "paired_sd_m": 0.0001838764379981117,
+            "paired_quantiles_m": [
+              -0.0005258432035668316,
+              -0.0002551055949320486,
+              9.496063565760674e-05,
+              0.00033736110431679945,
+              0.0004700110170659993
+            ],
+            "gain_loss_tie_counts": [
+              136,
+              64,
+              0
+            ],
+            "active_frequencies": {
+              "[22, 1]": 600
+            },
+            "lost_particles": 43,
+            "loss_blocks": 6,
+            "loss_block_ci95": [
+              0.011087455672254772,
+              0.064150626705027
+            ],
+            "zero_loss_block_upper95_one_sided": null
+          },
+          "clearance": {
+            "mean_clearance_m": 0.0005977395471874564,
+            "paired_difference": {
+              "mean_m": 0.00021227602382203016,
+              "ci95_m": [
+                0.00017383603815176234,
+                0.000250177153246558
+              ]
+            },
+            "paired_sd_m": 0.00027066664874263695,
+            "paired_quantiles_m": [
+              -0.0006587080067484898,
+              -0.00026058712205087717,
+              0.00021962363202289478,
+              0.000626858781674444,
+              0.000847460256639298
+            ],
+            "gain_loss_tie_counts": [
+              161,
+              39,
+              0
+            ],
+            "active_frequencies": {
+              "[22, 1]": 600
+            },
+            "lost_particles": 26,
+            "loss_blocks": 2,
+            "loss_block_ci95": [
+              0.0012133490137360304,
+              0.035654668397239776
+            ],
+            "zero_loss_block_upper95_one_sided": null
+          }
+        }
+      }
+    },
+    {
+      "id": "BRC15",
+      "artifact": "docs/paper_bts/generated/round2_components.json",
+      "pointer": "",
+      "expected": {
+        "horizontal_restriction": {
+          "reference": {
+            "nominal_betatron_rms_m": 0.00021976314957053656,
+            "nominal_dispersive_rms_m": 0.00044502670838499926,
+            "mean_absolute_centroid_m": 0.0012176478744365083,
+            "mean_five_sigma_size_m": 0.002485078725083404
+          },
+          "low_beta": {
+            "nominal_betatron_rms_m": 0.00022784504686774594,
+            "nominal_dispersive_rms_m": 0.000463078709146412,
+            "mean_absolute_centroid_m": 0.0012709094058985244,
+            "mean_five_sigma_size_m": 0.0025840420666214895
+          },
+          "clearance": {
+            "nominal_betatron_rms_m": 0.00022970161233062207,
+            "nominal_dispersive_rms_m": 0.0002921695445098513,
+            "mean_absolute_centroid_m": 0.0009602617289694215,
+            "mean_five_sigma_size_m": 0.0018619124305619898
+          }
+        },
+        "vertical_restriction": {
+          "reference": {
+            "nominal_betatron_rms_m": 0.00017657596996206794,
+            "nominal_dispersive_rms_m": 0.0,
+            "mean_absolute_centroid_m": 0.00022990163618889033,
+            "mean_five_sigma_size_m": 0.0008846348404456835
+          },
+          "low_beta": {
+            "nominal_betatron_rms_m": 0.00013582566936661838,
+            "nominal_dispersive_rms_m": 0.0,
+            "mean_absolute_centroid_m": 0.00035997893138555576,
+            "mean_five_sigma_size_m": 0.0006812690566903216
+          },
+          "clearance": {
+            "nominal_betatron_rms_m": 0.00011694808264701105,
+            "nominal_dispersive_rms_m": 0.0,
+            "mean_absolute_centroid_m": 0.00031613799133903384,
+            "mean_five_sigma_size_m": 0.0005861224614735097
+          }
+        }
+      }
     }
   ]
 }

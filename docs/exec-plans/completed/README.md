@@ -580,3 +580,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 204. [**Milestone 204 — R2-BTS-06: Reconstruct BTS inference and define finite loss events**](204_r2_bts_06.md)
     - Verifies all new paired intervals, separates clearance from transmission and defines sampled three-shot block losses with exact finite-sample uncertainty.
+
+205. [**Milestone 205 — R2-BTS-07: Recast the BTS article around active restrictions**](205_r2_bts_07.md)
+    - Integrates the physical mechanism, refined strategies and independent tests into a ten-page article with a three-page supplement, five figures and reconciled source-labelled evidence.

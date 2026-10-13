@@ -27,3 +27,7 @@ The original branch milestones are `6878ba7` (first review), `05a645f` (first-ro
 ## Second assessment of the revised main-branch article
 
 [Reviewer 1 main-branch round-2 report](reviewer1_bts_20261013_main_round2_report.md), 2026-10-13, evaluates the revised eight-page *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `742b940`. Recommendation: **major revision; no acceptance in present form**. The [eight ordered R2-BTS tasks](reviewer1_bts_20261013_main_round2_revision_tasks.md) are open at review. This assessment credits the completed R1 revisions while requiring limiting-station analysis, clearance-scale validation, interior-extrema checks and a stronger physical design comparison. It is separate from the restored historical BTS-branch rounds.
+
+## Execution of main-branch round2
+
+[Point-by-point round2 response](author_response_main_round2_20261013.md) records R2-BTS-01–07 scientific/manuscript execution and R2-BTS-08 submission preparation. The [new reproduction guide](../round2_reproduction.md) distinguishes original and new independently seeded campaigns and retained invalid runs. Author confirmed no competing interests; funding and acknowledgments remain deferred. Final scientific approval and actual reviewer delivery remain pending. The open-at-review task register and every earlier report are preserved unchanged; their historical recommendations do not constitute current journal acceptance.

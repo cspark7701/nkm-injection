@@ -1,36 +1,23 @@
 # BTS optics manuscript
 
-Revised one-column article for a prospective JKPS Research Article. It reports a conditional negative result: lowering vertical peak beta does not resolve an increase in minimum five-sigma clearance at the selected model aperture stations.
+Round-two one-column article for prospective JKPS submission: [paper.tex](paper.tex), [paper.pdf](paper.pdf), [supplement.tex](supplement.tex) and [supplement.pdf](supplement.pdf). The article explains fixed-entrance saturation and compares reference, spatially refined low-beta and nominal direct-clearance settings under explicit hypothetical restrictions. Higher mean clearance remains distinct from smaller loss probability, real chamber transmission and ring capture.
 
-- [LaTeX manuscript](paper.tex) and [eight-page PDF](paper.pdf)
-- [Reviewer report, tasks and response](reviews/README.md)
-- [Version identity](revision_identity.md) and [frozen asset hashes](revision_selection.json)
-- [Source-labelled boundaries/beam](beam_and_boundaries.md) and [configuration](journal_config.json)
-- [Independent transport validation](transport_validation.md)
-- [Matching reproduction](nominal_matching_reproduction.md)
-- [Local normalized response and claim withdrawals](correction_knobs.md)
-- [Held-out physical comparison](heldout_comparison.md)
-- [Historical statistical reconstruction](tolerance_distributions.md)
-- [Evidence manifest](evidence_manifest.json), [claim ledger](claim_evidence.csv) and [discrepancy resolutions](discrepancy_resolution.md)
-- [Primary literature comparison](literature_comparison.md)
-- [Submission checklist](submission_checklist.md) and [validation record](validation_checks.md)
+- [Review history and current response](reviews/README.md)
+- [Frozen original identity](round2_identity.json) and [new protocol](round2_protocol.json)
+- [Station mechanism](round2_station_mechanism.md), [clearance accuracy](round2_clearance_accuracy.md) and [interior extrema](round2_spatial_extrema.md)
+- [Frozen strategies/new machines](round2_strategy_comparison.md) and [inference/event definitions](round2_inference.md)
+- [Beam and boundaries](beam_and_boundaries.md), [literature verification](literature_comparison.md), [claim ledger](claim_evidence.csv) and [evidence manifest](evidence_manifest.json)
+- [Exact reproduction commands](round2_reproduction.md) and [submission checklist](submission_checklist.md)
 
-R1-BTS-01–09 numerical/editorial revisions are executed. R1-BTS-10 article, evidence attachment and build are prepared; funding (author will update later), competing interests, acknowledgments, final author approval and actual referee delivery remain pending. Earlier B-task plans describe the original scope; the point-by-point reviewer response supersedes their draft-status statements for this selected revision. No operational correction, continuous-chamber certification, storage-ring capture or journal acceptance is claimed.
+Original R1 campaign and all prior reports are preserved, including the restored older BTS-branch reviews. New comparisons use200 independently drawn machines with three shots each and2000 particles per shot,totalling10.8 million particle transports across nine combinations. All restrictions, bounds and errors remain labelled assumptions. Invalid preliminary shared-aperture runs are retained and excluded.
 
-## Reproduce
+Funding and acknowledgments are author-deferred; competing interests are confirmed as none. Final scientific approval and actual referee delivery remain pending. R2-BTS-08 can only be fully closed after these author actions; local execution does not imply journal acceptance or submission.
 
-Use the recorded scientific environment and install the project package. Each output path must be new:
+To prepare a fresh portable attachment after asset verification:
 
 ```bash
-python scripts/audit_bts_evidence.py
-python scripts/audit_bts_statistics.py --output-dir results/new_bts/statistics
-python scripts/run_bts_journal_revision.py --stage validation --output-dir results/new_bts/validation
-python scripts/run_bts_journal_revision.py --stage matching --output-dir results/new_bts/matching
-python scripts/run_bts_journal_revision.py --stage response --output-dir results/new_bts/response
-python scripts/run_bts_journal_revision.py --stage comparison --output-dir results/new_bts/comparison
 python scripts/package_bts_revision.py --verify
-python scripts/package_bts_revision.py --build-dir results/new_bts/pdf
-python scripts/package_bts_revision.py --package-dir results/new_bts/referee_attachment
+python scripts/package_bts_revision.py --round2-package-dir results/new_round2_attachment
 ```
 
-The selected original campaign is `results/bts_journal_campaign_r1_20261013/`. Ignored raw results are supplied separately in the prepared attachment; portable commands resolve data relative to its extracted root. Historical observations are rebuilt statistically, not regenerated from an unverified historical generating revision. Hashes identify files, not physical validity. No original scientific sources or NKM manuscript files were changed.
+Never reuse an existing output directory. Use the scientific environment listed in the reproduction guide. The attachment is local, not a public deposit.

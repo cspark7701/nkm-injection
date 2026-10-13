@@ -1,0 +1,42 @@
+{
+  "horizontal_restriction": {
+    "reference": {
+      "nominal_betatron_rms_m": 0.00021976314957053656,
+      "nominal_dispersive_rms_m": 0.00044502670838499926,
+      "mean_absolute_centroid_m": 0.0012176478744365083,
+      "mean_five_sigma_size_m": 0.002485078725083404
+    },
+    "low_beta": {
+      "nominal_betatron_rms_m": 0.00022784504686774594,
+      "nominal_dispersive_rms_m": 0.000463078709146412,
+      "mean_absolute_centroid_m": 0.0012709094058985244,
+      "mean_five_sigma_size_m": 0.0025840420666214895
+    },
+    "clearance": {
+      "nominal_betatron_rms_m": 0.00022970161233062207,
+      "nominal_dispersive_rms_m": 0.0002921695445098513,
+      "mean_absolute_centroid_m": 0.0009602617289694215,
+      "mean_five_sigma_size_m": 0.0018619124305619898
+    }
+  },
+  "vertical_restriction": {
+    "reference": {
+      "nominal_betatron_rms_m": 0.00017657596996206794,
+      "nominal_dispersive_rms_m": 0.0,
+      "mean_absolute_centroid_m": 0.00022990163618889033,
+      "mean_five_sigma_size_m": 0.0008846348404456835
+    },
+    "low_beta": {
+      "nominal_betatron_rms_m": 0.00013582566936661838,
+      "nominal_dispersive_rms_m": 0.0,
+      "mean_absolute_centroid_m": 0.00035997893138555576,
+      "mean_five_sigma_size_m": 0.0006812690566903216
+    },
+    "clearance": {
+      "nominal_betatron_rms_m": 0.00011694808264701105,
+      "nominal_dispersive_rms_m": 0.0,
+      "mean_absolute_centroid_m": 0.00031613799133903384,
+      "mean_five_sigma_size_m": 0.0005861224614735097
+    }
+  }
+}

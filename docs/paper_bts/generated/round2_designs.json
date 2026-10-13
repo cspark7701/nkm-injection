@@ -1,0 +1,1721 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pyat": "0.7.2.dev26+g4701d48c.d20260831",
+    "source_sha256": {
+      "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
+      "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+      "scripts/run_bts_round2.py": "fb6f16b640e6fa92884324ff3b4910a5fa07ad1923238a9d3925209c2907ace2",
+      "docs/paper_bts/round2_protocol.json": "219b91e737ccbe289cde907bda3b4392770092adda8dec99150b73326195de87"
+    }
+  },
+  "protocol": {
+    "schema_version": 1,
+    "status": "declared before new design comparison",
+    "campaign": "results/bts_journal_campaign_r2_20261013",
+    "old_test_seed": 71002,
+    "new_static_seed": 82002,
+    "new_shot_seed": 82003,
+    "new_particle_seed": 82004,
+    "bootstrap_seed": 82005,
+    "machines": 200,
+    "shots_per_machine": 3,
+    "particles_per_shot": 2000,
+    "bootstrap_count": 10000,
+    "relevant_clearance_change_m": 0.0001,
+    "effect_scale_note": "0.1 mm is a declared illustrative decision scale, not a sourced hardware requirement.",
+    "spatial_subdivisions": [
+      8,
+      16,
+      32,
+      64
+    ],
+    "optimizer_maxiter": 200,
+    "optimizer_ftol": 1e-08,
+    "regimes": {
+      "baseline": {},
+      "horizontal_restriction": {
+        "12": [
+          0.003,
+          0.03
+        ]
+      },
+      "vertical_restriction": {
+        "22": [
+          0.03,
+          0.0015
+        ]
+      }
+    },
+    "sweep_halfwidths_m": [
+      0.0015,
+      0.002,
+      0.003,
+      0.005,
+      0.03
+    ],
+    "scope": "Hypothetical internal restrictions only; keep entrance and exit, target, beam and strength bounds unchanged. Nominal clearance optimization, frozen before new test. Original test is retrospective validation only."
+  },
+  "designs": {
+    "baseline": {
+      "restrictions_m": {},
+      "candidates": [
+        {
+          "start": "reference",
+          "strengths_m_minus2": [
+            -0.3675254036121946,
+            -1.2164328820018302,
+            1.5860718476327245,
+            -1.0683735362316054,
+            2.823108128640385,
+            -2.4909675012355708,
+            2.0426774931866984,
+            -1.4342712614223285,
+            0.35111474762866696
+          ],
+          "epigraph_clearance_mm": 17.454606610858843,
+          "success": true,
+          "feasible": true,
+          "iterations": 1,
+          "termination": "Optimization terminated successfully",
+          "normalized_residual": [
+            7.362110920894338e-11,
+            -2.327027459614328e-12,
+            -2.485164851684374e-11,
+            -5.755118603900655e-12,
+            1.0269562977782698e-11,
+            2.7131075164277263e-12
+          ]
+        },
+        {
+          "start": "low_beta",
+          "strengths_m_minus2": [
+            0.08203213047289715,
+            -2.152572915585476,
+            1.8741256773834847,
+            0.8895814613948778,
+            -0.11643596874043823,
+            -1.2725960965003535,
+            2.8188453515755585,
+            -2.9999999999999476,
+            0.8994163748035585
+          ],
+          "epigraph_clearance_mm": 17.454606610858843,
+          "success": true,
+          "feasible": true,
+          "iterations": 1,
+          "termination": "Optimization terminated successfully",
+          "normalized_residual": [
+            2.0579093984451902e-11,
+            -1.6697754290362354e-10,
+            -2.4191412761886966e-10,
+            -2.877156846103901e-10,
+            -1.0359768598533492e-10,
+            -3.747002708109903e-12
+          ]
+        }
+      ],
+      "nominal": {
+        "reference": {
+          "strengths_m_minus2": [
+            -0.367525457731048,
+            -1.216432883896892,
+            1.5860719268485328,
+            -1.0683734603410724,
+            2.8231083729755677,
+            -2.490967743682553,
+            2.0426777186320093,
+            -1.4342712971007086,
+            0.3511146520138777
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 4.829584190916202e-08,
+                "dispersive_variance_m2": 1.9804877117598718e-07,
+                "sigma_m": 0.0004963311526442292,
+                "clearance_m": 0.027518344236778854
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.204056124285558e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00014846063869879982,
+                "clearance_m": 0.029257696806506
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.391118551392415e-07,
+                "dispersive_variance_m2": 1.8562817483575194e-09,
+                "sigma_m": 0.00037545723709578305,
+                "clearance_m": 0.028122713814521083
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.1179073168045114e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00017657596996206794,
+                "clearance_m": 0.02911712015018966
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920910002450787e-08,
+                "dispersive_variance_m2": 7.347926478518238e-09,
+                "sigma_m": 0.00015896174533820717,
+                "clearance_m": 0.018555191273308964
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645374164697243e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713613056962927e-05,
+                "clearance_m": 0.019064319347151852
+              }
+            ],
+            "minimum_m": 0.017454606610858844,
+            "active": [
+              1,
+              0
+            ],
+            "downstream_minimum_m": 0.018555191273308964
+          },
+          "peak_beta_m": [
+            31.629016007565223,
+            51.26993858400035
+          ]
+        },
+        "low_beta": {
+          "strengths_m_minus2": [
+            0.08203213047289715,
+            -2.152572915585476,
+            1.8741256773834847,
+            0.8895814613948778,
+            -0.11643596874043823,
+            -1.2725960965003535,
+            2.8188453515755585,
+            -2.9999999999999476,
+            0.8994163748035585
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.191336538216534e-08,
+                "dispersive_variance_m2": 2.1444189086470725e-07,
+                "sigma_m": 0.0005160961695719826,
+                "clearance_m": 0.027419519152140085
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.4970777652565496e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.0001223551292450198,
+                "clearance_m": 0.0293882243537749
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.3835835826332124e-07,
+                "dispersive_variance_m2": 1.7137296416118713e-09,
+                "sigma_m": 0.0003742620577949802,
+                "clearance_m": 0.0281286897110251
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.844861245888993e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00013582566936661838,
+                "clearance_m": 0.029320871653166908
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920916667457633e-08,
+                "dispersive_variance_m2": 7.347932091029742e-09,
+                "sigma_m": 0.000158961783956042,
+                "clearance_m": 0.018555191080219788
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645368556282004e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713612566168799e-05,
+                "clearance_m": 0.01906431937169156
+              }
+            ],
+            "minimum_m": 0.017454606610858844,
+            "active": [
+              1,
+              0
+            ],
+            "downstream_minimum_m": 0.018555191080219788
+          },
+          "peak_beta_m": [
+            33.794522204042885,
+            28.43705384508607
+          ]
+        },
+        "clearance": {
+          "strengths_m_minus2": [
+            -0.3675254036121946,
+            -1.2164328820018302,
+            1.5860718476327245,
+            -1.0683735362316054,
+            2.823108128640385,
+            -2.4909675012355708,
+            2.0426774931866984,
+            -1.4342712614223285,
+            0.35111474762866696
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 4.8295843199449575e-08,
+                "dispersive_variance_m2": 1.9804877599225381e-07,
+                "sigma_m": 0.0004963311587959226,
+                "clearance_m": 0.027518344206020385
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.204056158754817e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00014846063985968864,
+                "clearance_m": 0.029257696800701557
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.3911187918127156e-07,
+                "dispersive_variance_m2": 1.856278695679593e-09,
+                "sigma_m": 0.0003754572650475033,
+                "clearance_m": 0.028122713674762483
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.1179070816154493e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00017657596330235466,
+                "clearance_m": 0.029117120183488224
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920916676101644e-08,
+                "dispersive_variance_m2": 7.347932137320173e-09,
+                "sigma_m": 0.00015896178412883337,
+                "clearance_m": 0.018555191079355833
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.264536844717119e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.7136125566204776e-05,
+                "clearance_m": 0.019064319372168976
+              }
+            ],
+            "minimum_m": 0.017454606610858844,
+            "active": [
+              1,
+              0
+            ],
+            "downstream_minimum_m": 0.018555191079355833
+          },
+          "peak_beta_m": [
+            31.62902363075537,
+            51.269934759418234
+          ]
+        }
+      },
+      "selected_start": "reference",
+      "objective": "maximize full minimum five-sigma nominal clearance with epigraph constraints",
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -2.5,
+          2.5
+        ]
+      ],
+      "exit_constraint": "six exact normalized residual equalities",
+      "peak_constraint": "horizontal beta <=60 m on 16 subdivisions, checked at64"
+    },
+    "horizontal_restriction": {
+      "restrictions_m": {
+        "12": [
+          0.003,
+          0.03
+        ]
+      },
+      "candidates": [
+        {
+          "start": "reference",
+          "strengths_m_minus2": [
+            -0.3662656254103378,
+            2.762223072729489,
+            -2.508657415364465,
+            -1.0094552284142766,
+            0.9811876051008146,
+            1.08631950606397,
+            -1.2665527938123788,
+            -0.9184669134386065,
+            1.715938218779708
+          ],
+          "epigraph_clearance_mm": 1.141735532005487,
+          "success": true,
+          "feasible": true,
+          "iterations": 53,
+          "termination": "Optimization terminated successfully",
+          "normalized_residual": [
+            -6.255440609947982e-11,
+            -4.791367302914296e-10,
+            -3.3876547400613077e-10,
+            -1.1522074960801376e-09,
+            6.328271240363392e-12,
+            5.6843418860808015e-11
+          ]
+        },
+        {
+          "start": "low_beta",
+          "strengths_m_minus2": [
+            -0.3662677766290966,
+            2.762225241830355,
+            -2.508657698138043,
+            -1.0094506494747768,
+            0.9811778807367403,
+            1.0863255942247165,
+            -1.2665572991638665,
+            -0.9184617503847232,
+            1.715936917983871
+          ],
+          "epigraph_clearance_mm": 1.1417355320066722,
+          "success": true,
+          "feasible": true,
+          "iterations": 50,
+          "termination": "Optimization terminated successfully",
+          "normalized_residual": [
+            -1.0015099860538612e-10,
+            -4.333422509716911e-10,
+            -9.548060259101376e-10,
+            -1.030318538819408e-09,
+            8.094913628298173e-11,
+            3.377853552422039e-11
+          ]
+        }
+      ],
+      "nominal": {
+        "reference": {
+          "strengths_m_minus2": [
+            -0.367525457731048,
+            -1.216432883896892,
+            1.5860719268485328,
+            -1.0683734603410724,
+            2.8231083729755677,
+            -2.490967743682553,
+            2.0426777186320093,
+            -1.4342712971007086,
+            0.3511146520138777
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.003,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 4.829584190916202e-08,
+                "dispersive_variance_m2": 1.9804877117598718e-07,
+                "sigma_m": 0.0004963311526442292,
+                "clearance_m": 0.0005183442367788539
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.204056124285558e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00014846063869879982,
+                "clearance_m": 0.029257696806506
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.391118551392415e-07,
+                "dispersive_variance_m2": 1.8562817483575194e-09,
+                "sigma_m": 0.00037545723709578305,
+                "clearance_m": 0.028122713814521083
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.1179073168045114e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00017657596996206794,
+                "clearance_m": 0.02911712015018966
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920910002450787e-08,
+                "dispersive_variance_m2": 7.347926478518238e-09,
+                "sigma_m": 0.00015896174533820717,
+                "clearance_m": 0.018555191273308964
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645374164697243e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713613056962927e-05,
+                "clearance_m": 0.019064319347151852
+              }
+            ],
+            "minimum_m": 0.0005183442367788539,
+            "active": [
+              12,
+              0
+            ],
+            "downstream_minimum_m": 0.0005183442367788539
+          },
+          "peak_beta_m": [
+            31.629016007565223,
+            51.26993858400035
+          ]
+        },
+        "low_beta": {
+          "strengths_m_minus2": [
+            0.08203213047289715,
+            -2.152572915585476,
+            1.8741256773834847,
+            0.8895814613948778,
+            -0.11643596874043823,
+            -1.2725960965003535,
+            2.8188453515755585,
+            -2.9999999999999476,
+            0.8994163748035585
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.003,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.191336538216534e-08,
+                "dispersive_variance_m2": 2.1444189086470725e-07,
+                "sigma_m": 0.0005160961695719826,
+                "clearance_m": 0.00041951915214008713
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.4970777652565496e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.0001223551292450198,
+                "clearance_m": 0.0293882243537749
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.3835835826332124e-07,
+                "dispersive_variance_m2": 1.7137296416118713e-09,
+                "sigma_m": 0.0003742620577949802,
+                "clearance_m": 0.0281286897110251
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.844861245888993e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00013582566936661838,
+                "clearance_m": 0.029320871653166908
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920916667457633e-08,
+                "dispersive_variance_m2": 7.347932091029742e-09,
+                "sigma_m": 0.000158961783956042,
+                "clearance_m": 0.018555191080219788
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645368556282004e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713612566168799e-05,
+                "clearance_m": 0.01906431937169156
+              }
+            ],
+            "minimum_m": 0.00041951915214008713,
+            "active": [
+              12,
+              0
+            ],
+            "downstream_minimum_m": 0.00041951915214008713
+          },
+          "peak_beta_m": [
+            33.794522204042885,
+            28.43705384508607
+          ]
+        },
+        "clearance": {
+          "strengths_m_minus2": [
+            -0.3662656254103378,
+            2.762223072729489,
+            -2.508657415364465,
+            -1.0094552284142766,
+            0.9811876051008146,
+            1.08631950606397,
+            -1.2665527938123788,
+            -0.9184669134386065,
+            1.715938218779708
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.003,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.2762830707287386e-08,
+                "dispersive_variance_m2": 8.536304273909399e-08,
+                "sigma_m": 0.00037165289376834046,
+                "clearance_m": 0.0011417355311582977
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.7153055708655295e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00016478184277600276,
+                "clearance_m": 0.029176090786119983
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.456308648047937e-07,
+                "dispersive_variance_m2": 2.33798877826002e-08,
+                "sigma_m": 0.0005186624649879669,
+                "clearance_m": 0.027406687675060163
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.4316351896977324e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00011965095861286412,
+                "clearance_m": 0.029401745206935677
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920916662109907e-08,
+                "dispersive_variance_m2": 7.347932108550933e-09,
+                "sigma_m": 0.00015896178399433256,
+                "clearance_m": 0.018555191080028337
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645368488106448e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.7136125602027344e-05,
+                "clearance_m": 0.019064319371989862
+              }
+            ],
+            "minimum_m": 0.0011417355311582977,
+            "active": [
+              12,
+              0
+            ],
+            "downstream_minimum_m": 0.0011417355311582977
+          },
+          "peak_beta_m": [
+            38.055689006899236,
+            45.533172527992676
+          ]
+        }
+      },
+      "selected_start": "reference",
+      "objective": "maximize full minimum five-sigma nominal clearance with epigraph constraints",
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -2.5,
+          2.5
+        ]
+      ],
+      "exit_constraint": "six exact normalized residual equalities",
+      "peak_constraint": "horizontal beta <=60 m on 16 subdivisions, checked at64"
+    },
+    "vertical_restriction": {
+      "restrictions_m": {
+        "22": [
+          0.03,
+          0.0015
+        ]
+      },
+      "candidates": [
+        {
+          "start": "reference",
+          "strengths_m_minus2": [
+            1.7435286592823964,
+            -0.9695097075655783,
+            -1.184771294467796,
+            1.361999575046782,
+            -0.05503031745909666,
+            -0.914864070531262,
+            2.3437137174607168,
+            -2.999999999999999,
+            0.9305471777286128
+          ],
+          "epigraph_clearance_mm": 0.9152595866626826,
+          "success": true,
+          "feasible": true,
+          "iterations": 92,
+          "termination": "Optimization terminated successfully",
+          "normalized_residual": [
+            -2.327027459614328e-12,
+            -5.467626351673971e-11,
+            7.977993266017336e-12,
+            -4.5684012128788254e-10,
+            3.665123760043798e-11,
+            1.5792922525292852e-11
+          ]
+        },
+        {
+          "start": "low_beta",
+          "strengths_m_minus2": [
+            1.7435301360854263,
+            -0.9695139026935613,
+            -1.1847685473113394,
+            1.361997153375976,
+            -0.05502529862758989,
+            -0.9148668370820547,
+            2.3437138912979263,
+            -3.0,
+            0.9305470675888853
+          ],
+          "epigraph_clearance_mm": 0.9152595866628708,
+          "success": true,
+          "feasible": true,
+          "iterations": 95,
+          "termination": "Optimization terminated successfully",
+          "normalized_residual": [
+            -9.121592370320286e-11,
+            -2.460254222569347e-10,
+            -5.44073813779633e-10,
+            -1.101076174681026e-09,
+            3.577693696854567e-11,
+            6.188105583504466e-11
+          ]
+        }
+      ],
+      "nominal": {
+        "reference": {
+          "strengths_m_minus2": [
+            -0.367525457731048,
+            -1.216432883896892,
+            1.5860719268485328,
+            -1.0683734603410724,
+            2.8231083729755677,
+            -2.490967743682553,
+            2.0426777186320093,
+            -1.4342712971007086,
+            0.3511146520138777
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 4.829584190916202e-08,
+                "dispersive_variance_m2": 1.9804877117598718e-07,
+                "sigma_m": 0.0004963311526442292,
+                "clearance_m": 0.027518344236778854
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.204056124285558e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00014846063869879982,
+                "clearance_m": 0.029257696806506
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.391118551392415e-07,
+                "dispersive_variance_m2": 1.8562817483575194e-09,
+                "sigma_m": 0.00037545723709578305,
+                "clearance_m": 0.028122713814521083
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.0015,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.1179073168045114e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00017657596996206794,
+                "clearance_m": 0.0006171201501896604
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920910002450787e-08,
+                "dispersive_variance_m2": 7.347926478518238e-09,
+                "sigma_m": 0.00015896174533820717,
+                "clearance_m": 0.018555191273308964
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645374164697243e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713613056962927e-05,
+                "clearance_m": 0.019064319347151852
+              }
+            ],
+            "minimum_m": 0.0006171201501896604,
+            "active": [
+              22,
+              1
+            ],
+            "downstream_minimum_m": 0.0006171201501896604
+          },
+          "peak_beta_m": [
+            31.629016007565223,
+            51.26993858400035
+          ]
+        },
+        "low_beta": {
+          "strengths_m_minus2": [
+            0.08203213047289715,
+            -2.152572915585476,
+            1.8741256773834847,
+            0.8895814613948778,
+            -0.11643596874043823,
+            -1.2725960965003535,
+            2.8188453515755585,
+            -2.9999999999999476,
+            0.8994163748035585
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.191336538216534e-08,
+                "dispersive_variance_m2": 2.1444189086470725e-07,
+                "sigma_m": 0.0005160961695719826,
+                "clearance_m": 0.027419519152140085
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.4970777652565496e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.0001223551292450198,
+                "clearance_m": 0.0293882243537749
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.3835835826332124e-07,
+                "dispersive_variance_m2": 1.7137296416118713e-09,
+                "sigma_m": 0.0003742620577949802,
+                "clearance_m": 0.0281286897110251
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.0015,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.844861245888993e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00013582566936661838,
+                "clearance_m": 0.0008208716531669082
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920916667457633e-08,
+                "dispersive_variance_m2": 7.347932091029742e-09,
+                "sigma_m": 0.000158961783956042,
+                "clearance_m": 0.018555191080219788
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.2645368556282004e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713612566168799e-05,
+                "clearance_m": 0.01906431937169156
+              }
+            ],
+            "minimum_m": 0.0008208716531669082,
+            "active": [
+              22,
+              1
+            ],
+            "downstream_minimum_m": 0.0008208716531669082
+          },
+          "peak_beta_m": [
+            33.794522204042885,
+            28.43705384508607
+          ]
+        },
+        "clearance": {
+          "strengths_m_minus2": [
+            1.7435301360854263,
+            -0.9695139026935613,
+            -1.1847685473113394,
+            1.361997153375976,
+            -0.05502529862758989,
+            -0.9148668370820547,
+            2.3437138912979263,
+            -3.0,
+            0.9305470675888853
+          ],
+          "clearance": {
+            "stations": [
+              {
+                "index": 1,
+                "axis": 0,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 5.7985199999999984e-08,
+                "dispersive_variance_m2": 8.571544398399999e-08,
+                "sigma_m": 0.0003790786778282313,
+                "clearance_m": 0.017454606610858844
+              },
+              {
+                "index": 1,
+                "axis": 1,
+                "s_m": 0.0,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 9.410323e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 9.700681934792008e-05,
+                "clearance_m": 0.018864965903260398
+              },
+              {
+                "index": 12,
+                "axis": 0,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 7.524958567507908e-08,
+                "dispersive_variance_m2": 1.2896200717759543e-07,
+                "sigma_m": 0.0004518977681430552,
+                "clearance_m": 0.027740511159284723
+              },
+              {
+                "index": 12,
+                "axis": 1,
+                "s_m": 6.833000000000001,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.3319219877110034e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00015270631904773957,
+                "clearance_m": 0.029236468404761302
+              },
+              {
+                "index": 22,
+                "axis": 0,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.03,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 2.166717230303402e-07,
+                "dispersive_variance_m2": 2.612043680653684e-09,
+                "sigma_m": 0.00046827744629759167,
+                "clearance_m": 0.02765861276851204
+              },
+              {
+                "index": 22,
+                "axis": 1,
+                "s_m": 11.760999999999997,
+                "aperture_halfwidth_m": 0.0015,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.3676854034812128e-08,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 0.00011694808264701105,
+                "clearance_m": 0.0009152595867649448
+              },
+              {
+                "index": 34,
+                "axis": 0,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 1.7920916635794824e-08,
+                "dispersive_variance_m2": 7.3479321024978296e-09,
+                "sigma_m": 0.00015896178389252134,
+                "clearance_m": 0.01855519108053739
+              },
+              {
+                "index": 34,
+                "axis": 1,
+                "s_m": 21.78899999999999,
+                "aperture_halfwidth_m": 0.01935,
+                "centroid_m": 0.0,
+                "betatron_variance_m2": 3.264536859287173e-09,
+                "dispersive_variance_m2": 0.0,
+                "sigma_m": 5.713612569370777e-05,
+                "clearance_m": 0.01906431937153146
+              }
+            ],
+            "minimum_m": 0.0009152595867649448,
+            "active": [
+              22,
+              1
+            ],
+            "downstream_minimum_m": 0.0009152595867649448
+          },
+          "peak_beta_m": [
+            33.80734951235794,
+            47.01596571028937
+          ]
+        }
+      },
+      "selected_start": "low_beta",
+      "objective": "maximize full minimum five-sigma nominal clearance with epigraph constraints",
+      "bounds": [
+        [
+          -2.5,
+          2.5
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -3.0,
+          3.0
+        ],
+        [
+          -2.5,
+          2.5
+        ]
+      ],
+      "exit_constraint": "six exact normalized residual equalities",
+      "peak_constraint": "horizontal beta <=60 m on 16 subdivisions, checked at64"
+    }
+  },
+  "nominal_sweep": [
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.0015,
+      "design": "reference",
+      "minimum_m": -0.0009816557632211461,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.0015,
+      "design": "low_beta",
+      "minimum_m": -0.001080480847859913,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.0015,
+      "design": "clearance",
+      "minimum_m": -0.0003582644688417023,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.002,
+      "design": "reference",
+      "minimum_m": -0.0004816557632211461,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.002,
+      "design": "low_beta",
+      "minimum_m": -0.0005804808478599129,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.002,
+      "design": "clearance",
+      "minimum_m": 0.00014173553115829772,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.003,
+      "design": "reference",
+      "minimum_m": 0.0005183442367788539,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.003,
+      "design": "low_beta",
+      "minimum_m": 0.00041951915214008713,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.003,
+      "design": "clearance",
+      "minimum_m": 0.0011417355311582977,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.005,
+      "design": "reference",
+      "minimum_m": 0.002518344236778854,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.005,
+      "design": "low_beta",
+      "minimum_m": 0.002419519152140087,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.005,
+      "design": "clearance",
+      "minimum_m": 0.0031417355311582976,
+      "active": [
+        12,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.03,
+      "design": "reference",
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.03,
+      "design": "low_beta",
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ]
+    },
+    {
+      "regime": "horizontal_restriction",
+      "halfwidth_m": 0.03,
+      "design": "clearance",
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.0015,
+      "design": "reference",
+      "minimum_m": 0.0006171201501896604,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.0015,
+      "design": "low_beta",
+      "minimum_m": 0.0008208716531669082,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.0015,
+      "design": "clearance",
+      "minimum_m": 0.0009152595867649448,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.002,
+      "design": "reference",
+      "minimum_m": 0.0011171201501896603,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.002,
+      "design": "low_beta",
+      "minimum_m": 0.001320871653166908,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.002,
+      "design": "clearance",
+      "minimum_m": 0.0014152595867649447,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.003,
+      "design": "reference",
+      "minimum_m": 0.0021171201501896603,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.003,
+      "design": "low_beta",
+      "minimum_m": 0.002320871653166908,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.003,
+      "design": "clearance",
+      "minimum_m": 0.0024152595867649447,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.005,
+      "design": "reference",
+      "minimum_m": 0.00411712015018966,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.005,
+      "design": "low_beta",
+      "minimum_m": 0.004320871653166908,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.005,
+      "design": "clearance",
+      "minimum_m": 0.004415259586764945,
+      "active": [
+        22,
+        1
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.03,
+      "design": "reference",
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.03,
+      "design": "low_beta",
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ]
+    },
+    {
+      "regime": "vertical_restriction",
+      "halfwidth_m": 0.03,
+      "design": "clearance",
+      "minimum_m": 0.017454606610858844,
+      "active": [
+        1,
+        0
+      ]
+    }
+  ],
+  "frozen_before_new_test": true,
+  "selection_policy": "nominal clearance only; no test used for selection. Finite two-start search, no global optimality."
+}

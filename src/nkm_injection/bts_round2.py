@@ -66,6 +66,9 @@ def set_regime(lattice, restrictions):
     for index,widths in restrictions.items():
         x,y=widths
         if min(x,y)<=0:raise ValueError('Positive aperture halfwidths required')
+        # Legacy lines reuse one aperture Element at both internal stations.
+        # A lattice deepcopy preserves this alias: detach the selected element.
+        result[int(index)]=deepcopy(result[int(index)])
         result[int(index)].Limits=np.array([-x,x,-y,y])
     return result
 

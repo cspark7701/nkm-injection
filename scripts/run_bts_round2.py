@@ -10,8 +10,8 @@ import subprocess
 import numpy as np
 import scipy
 import at
-from nkm_injection.bts_journal import JournalBeam,lattice_for,apply_static,TARGET,SCALES,LOWER,UPPER
-from nkm_injection.bts_round2 import station_record,quadrature_moments,spatial_profile,nominal_observables
+from nkm_injection.bts_journal import JournalBeam,lattice_for,apply_static,TARGET,SCALES,LOWER,UPPER,draw_static
+from nkm_injection.bts_round2 import station_record,quadrature_moments,spatial_profile,nominal_observables,set_regime
 
 ROOT=Path(__file__).resolve().parents[1];PAPER=ROOT/'docs/paper_bts'
 
@@ -135,8 +135,105 @@ def spatial(output):
     print(json.dumps(result,default=serial))
 
 
+def designs(output):
+    from scipy.optimize import minimize
+    protocol=json.loads((PAPER/'round2_protocol.json').read_text())
+    reference=original()[0][0]
+    low=np.array(json.loads((PAPER/'generated/round2_spatial.json').read_text())['refined_low_beta']['strengths_m_minus2'])
+    records={};sweep=[]
+    for regime,restrictions in protocol['regimes'].items():
+        def line(k):return set_regime(lattice_for(k),restrictions)
+        def eq(v):return (nominal_observables(lattice_for(v[:9]))-TARGET)/SCALES
+        def constraints(v):
+            station=station_record(line(v[:9]));clear=np.array([r['clearance_m'] for r in station['stations']])*1000-v[9]
+            peak=spatial_profile(lattice_for(v[:9]),16)['peak_beta_m'][0]
+            return np.r_[clear,60-peak]
+        candidates=[]
+        for label,start in [('reference',reference),('low_beta',low)]:
+            value=station_record(line(start))['minimum_m']*1000
+            res=minimize(lambda v:-v[9],np.r_[start,value],method='SLSQP',bounds=list(zip(LOWER,UPPER))+[(-100,100)],constraints=[{'type':'eq','fun':eq},{'type':'ineq','fun':constraints}],options={'maxiter':protocol['optimizer_maxiter'],'ftol':protocol['optimizer_ftol']})
+            feasible=bool(max(abs(eq(res.x)))<1e-3 and min(constraints(res.x))>-1e-5)
+            candidates.append({'start':label,'strengths_m_minus2':res.x[:9],'epigraph_clearance_mm':res.x[9],'success':bool(res.success),'feasible':feasible,'iterations':res.nit,'termination':str(res.message),'normalized_residual':eq(res.x)})
+        valid=[r for r in candidates if r['success'] and r['feasible']]
+        if not valid:raise ValueError('No feasible clearance search: '+regime)
+        best_value=max(r['epigraph_clearance_mm'] for r in valid)
+        # Entrance-ceiling ties are resolved by smallest change from reference.
+        best=min([r for r in valid if best_value-r['epigraph_clearance_mm']<1e-5],key=lambda r:np.linalg.norm(r['strengths_m_minus2']-reference))
+        settings={'reference':reference,'low_beta':low,'clearance':best['strengths_m_minus2']}
+        nominal={}
+        for name,k in settings.items():
+            record=station_record(line(k),method='centred');profile=spatial_profile(lattice_for(k),64)
+            assert profile['peak_beta_m'][0]<60.02
+            assert max(abs((nominal_observables(lattice_for(k))-TARGET)/SCALES))<1e-3
+            nominal[name]={'strengths_m_minus2':k,'clearance':record,'peak_beta_m':profile['peak_beta_m']}
+        records[regime]={'restrictions_m':restrictions,'candidates':candidates,'nominal':nominal,'selected_start':best['start'],'objective':'maximize full minimum five-sigma nominal clearance with epigraph constraints','bounds':list(zip(LOWER,UPPER)),'exit_constraint':'six exact normalized residual equalities','peak_constraint':'horizontal beta <=60 m on 16 subdivisions, checked at64'}
+        if regime!='baseline':
+            index=next(iter(restrictions));axis=0 if regime=='horizontal_restriction' else 1
+            for width in protocol['sweep_halfwidths_m']:
+                trial={index:list(restrictions[index])};trial[index][axis]=width
+                for name,k in settings.items():
+                    record=station_record(set_regime(lattice_for(k),trial),method='centred')
+                    sweep.append({'regime':regime,'halfwidth_m':width,'design':name,'minimum_m':record['minimum_m'],'active':record['active']})
+    result={'environment':environment(),'protocol':protocol,'designs':records,'nominal_sweep':sweep,'frozen_before_new_test':True,'selection_policy':'nominal clearance only; no test used for selection. Finite two-start search, no global optimality.'}
+    save(output/'designs.json',result)
+    print('Frozen designs:',{r:{n:round(v['clearance']['minimum_m']*1000,4) for n,v in d['nominal'].items()} for r,d in records.items()})
+
+
+def comparison(output):
+    from scipy.stats import beta as beta_dist
+    protocol=json.loads((PAPER/'round2_protocol.json').read_text())
+    frozen_path=ROOT/protocol['campaign']/'designs/designs.json'
+    frozen=json.loads(frozen_path.read_text());static_rng=np.random.default_rng(protocol['new_static_seed']);shot_rng=np.random.default_rng(protocol['new_shot_seed']);particle_rng=np.random.default_rng(protocol['new_particle_seed'])
+    beam=JournalBeam();raw=[];blocks=[];losses={};active={};moments=[]
+    for regime,d in frozen['designs'].items():
+        for name in d['nominal']:losses[(regime,name)]=0;active[(regime,name)]=Counter()
+    for machine in range(protocol['machines']):
+        reference=frozen['designs']['baseline']['nominal']['reference']['strengths_m_minus2']
+        errors=draw_static(static_rng,lattice_for(reference));lattices={}
+        for regime,d in frozen['designs'].items():
+            for name,v in d['nominal'].items():lattices[(regime,name)]=set_regime(apply_static(lattice_for(v['strengths_m_minus2']),errors),d['restrictions_m'])
+        shots=[]
+        for shot in range(protocol['shots_per_machine']):
+            factors=1+shot_rng.normal(0,.05,2);dx,px,dp=shot_rng.normal(0,[.0005,.0002,.001]);centroid=np.array([dx+.2762*dp,px-.0657*dp,0,0,dp])
+            particles=particle_rng.multivariate_normal(np.zeros(6),beam.covariance(factors),protocol['particles_per_shot']).T;particles[:5]+=centroid[:,None]
+            results={}
+            for (regime,name),lat in lattices.items():
+                rec=station_record(lat,beam,centroid,factors,method='centred');active[(regime,name)][str(rec['active'])]+=1
+                out=at.lattice_track(lat,np.array(particles,order='F'),nturns=1,refpts=np.arange(len(lat)+1))[0][:,:,:,0]
+                lost=~np.isfinite(out[0,:,-1]);nlost=int(lost.sum());losses[(regime,name)]+=nlost
+                if not np.all(np.isfinite(out[:,~lost,-1])):raise ValueError('Invalid surviving coordinates')
+                first=Counter()
+                for particle in np.flatnonzero(lost):first[str(int(np.flatnonzero(~np.isfinite(out[0,particle]))[0])-1)]+=1
+                results.setdefault(regime,{})[name]={'clearance_m':rec['minimum_m'],'active':rec['active'],'stations':rec['stations'],'lost':nlost,'first_losses':dict(first),'transmission':float(1-nlost/protocol['particles_per_shot'])}
+                if machine<2 and shot==0:
+                    m5,s5=quadrature_moments(lat,beam,centroid,factors,order=5);m7,s7=quadrature_moments(lat,beam,centroid,factors,order=7)
+                    bias=[];conv=[]
+                    for r in rec['stations']:
+                        i=r['index']+1;j=0 if r['axis']==0 else 2
+                        bias.append(abs(r['clearance_m']-(r['aperture_halfwidth_m']-abs(m7[i,j])-5*s7[i,j])))
+                        conv.append(abs(m7[i,j]-m5[i,j])+5*abs(s7[i,j]-s5[i,j]))
+                    moments.append({'machine':machine,'regime':regime,'design':name,'max_clearance_error_m':max(bias),'quadrature_convergence_m':max(conv)})
+            raw.append({'machine':machine,'shot':shot,'static_errors':errors,'beta_factors':factors,'centroid':centroid,'results':results});shots.append(results)
+        block={}
+        for regime,d in frozen['designs'].items():
+            block[regime]={name:{'mean_clearance_m':float(np.mean([s[regime][name]['clearance_m'] for s in shots])),'any_observed_loss':bool(any(s[regime][name]['lost'] for s in shots))} for name in d['nominal']}
+        blocks.append({'machine':machine,'results':block})
+        if (machine+1)%50==0:print('Completed machines',machine+1,flush=True)
+    summaries={}
+    for regime,d in frozen['designs'].items():
+        summaries[regime]={};base=np.array([b['results'][regime]['reference']['mean_clearance_m'] for b in blocks])
+        for name in d['nominal']:
+            values=np.array([b['results'][regime][name]['mean_clearance_m'] for b in blocks]);delta=values-base
+            n=protocol['machines'];k=sum(b['results'][regime][name]['any_observed_loss'] for b in blocks)
+            bounds=[0. if k==0 else beta_dist.ppf(.025,k,n-k+1),1. if k==n else beta_dist.ppf(.975,k+1,n-k)]
+            summaries[regime][name]={'mean_clearance_m':float(values.mean()),'paired_difference':interval(delta,protocol['bootstrap_seed']), 'paired_sd_m':float(delta.std(ddof=1)), 'paired_quantiles_m':np.quantile(delta,[0,.05,.5,.95,1]),'gain_loss_tie_counts':[int(sum(delta>0)),int(sum(delta<0)),int(sum(delta==0))], 'active_frequencies':dict(active[(regime,name)]),'lost_particles':losses[(regime,name)],'loss_blocks':k,'loss_block_ci95':bounds,'zero_loss_block_upper95_one_sided':float(1-.05**(1/n)) if k==0 else None}
+    result={'environment':environment(),'frozen_designs_sha256':hashlib.sha256(frozen_path.read_bytes()).hexdigest(),'protocol':protocol,'results':summaries,'moment_checks':moments,'max_centred_moment_error_m':max(m['max_clearance_error_m'] for m in moments),'invalid_evaluations':0,'interval_scope':'pointwise descriptive 95% paired machine-cluster intervals; no simultaneous coverage claim','loss_event':'At least one observed loss in a sampled three-shot block, 2000 particles per shot; not indefinite operation.'}
+    save(output/'raw_realizations.json',raw);save(output/'machine_results.json',blocks);save(output/'comparison.json',result)
+    print('Paired changes [mm]:',{r:{n:(v['paired_difference']['mean_m']*1000,np.array(v['paired_difference']['ci95_m'])*1000) for n,v in d.items()} for r,d in summaries.items()})
+
+
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--stage',choices=['stations','accuracy','spatial'],required=True);parser.add_argument('--output-dir',type=Path,required=True)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--stage',choices=['stations','accuracy','spatial','designs','comparison'],required=True);parser.add_argument('--output-dir',type=Path,required=True)
     args=parser.parse_args();args.output_dir.mkdir(parents=True,exist_ok=False)
     save(args.output_dir/'configuration.json',{'stage':args.stage,'protocol':json.loads((PAPER/'round2_protocol.json').read_text()),'environment':environment()})
     globals()[args.stage](args.output_dir)

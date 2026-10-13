@@ -25,3 +25,9 @@ Validation: Centred mean shift is -0.1553 micrometres; representative nonlinear-
 Measures interior maxima, preserves original boundary values and reoptimizes the low-beta alternative with a converged spatial observation mesh.
 
 Validation: Refined low-beta search converges in 34 iterations; 32-to-64 subdivision changes are below 0.00035 m; five regression tests pass. See [milestone 202](../../exec-plans/completed/202_r2_bts_04.md).
+
+## R2-BTS-05 — Compare BTS clearance strategies on independent machines
+
+Freezes nominal clearance settings and evaluates all nine regime/design combinations on new machines, demonstrating beneficial and adverse beta-reduction regimes.
+
+Validation: 10.8 million particle transports complete; paired direct-clearance gains are 0.881 and 0.212 mm in hypothetical restrictions. Invalid aperture-alias runs are retained and a non-target-station regression passes. See [milestone 203](../../exec-plans/completed/203_r2_bts_05.md).

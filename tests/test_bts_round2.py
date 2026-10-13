@@ -30,6 +30,7 @@ def test_hypothetical_restriction_leaves_original_geometry_unchanged():
     trial=set_regime(lattice,{'22':[.003,.0015]})
     np.testing.assert_allclose(trial[22].Limits,[-.003,.003,-.0015,.0015])
     np.testing.assert_allclose(lattice[22].Limits,[-.03,.03,-.03,.03])
+    np.testing.assert_allclose(trial[12].Limits,[-.03,.03,-.03,.03])
     assert sum(e.Length for e in trial)==sum(e.Length for e in lattice)
 
 

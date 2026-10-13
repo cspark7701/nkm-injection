@@ -574,3 +574,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 202. [**Milestone 202 — R2-BTS-04: Refine BTS beta extrema inside magnets**](202_r2_bts_04.md)
     - Measures interior maxima, preserves original boundary values and reoptimizes the low-beta alternative with a converged spatial observation mesh.
+
+203. [**Milestone 203 — R2-BTS-05: Compare BTS clearance strategies on independent machines**](203_r2_bts_05.md)
+    - Freezes nominal clearance settings and evaluates all nine regime/design combinations on new machines, demonstrating beneficial and adverse beta-reduction regimes.

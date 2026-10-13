@@ -601,3 +601,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 211. [**Milestone 211 — E1: Evidence Access and Re-verification**](211_e1_evidence_access.md)
     - Round-2 bundle hash, 213-entry inventory and an isolated archived-source macro rebuild all verify; 205/205 manifest artifacts match; access route documented.
+
+212. [**Milestone 212 — E2: Positioning Against Sun et al. (2020)**](212_e2_literature_positioning.md)
+    - Established tools (segmented tracking, finite conductors) credited to Sun et al.; contribution restated as a quantified thin-map error in an angle-cancelling, large-sagitta geometry; ALS row added; clean gated builds.

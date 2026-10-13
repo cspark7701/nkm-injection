@@ -6,10 +6,14 @@ Please consider “Finite-length and vertical effects in nonlinear-kicker inject
 into a Korea Light Source design lattice” for publication as a Research Article in Physical Review Accelerators and Beams.
 
 The manuscript studies a preliminary 0.525 m four-loop nonlinear kicker in the
-supplied 4 GeV KLS design lattice. It compares exact filament-field tracking,
-thin and sliced vector maps, and an independent adaptive trajectory solver. A
-sagitta-to-kick-width ratio organizes finite-length differences over two related
-wire families. The vertical-field sign is treated as an input consistency check,
+supplied 4 GeV KLS design lattice. Segmented tracking through nonlinear-kicker
+conductor fields is established (Sun et al., PRAB 23, 010702 (2020), for the ALS
+design). The contribution here is a quantified approximation-error result for an
+angle-cancelling geometry: the kicker removes a 4.85 mrad incoming angle within
+0.525 m, so a single thin map shifts the matched angle and the error response,
+while a sliced vector map does not. The sagitta-to-lobe-width ratio organizes the
+thin-map error over two related wire families. The ALS design sits at a much
+smaller sagitta, consistent with its published finding. The vertical-field sign is treated as an input consistency check,
 not as a limitation inherent to vector kick maps.
 
 The revised capture studies use the design booster beam, an explicitly declared

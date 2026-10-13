@@ -61,3 +61,9 @@ Zenodo DOI will be created at acceptance. No archive is described as existing be
 | Leemann2012 | Crossref DOI 10.1016/j.nima.2012.07.023 (NIM A 693, 117–129) | MAX IV single-dipole-kicker injection for commissioning, since pulsed-multipole commissioning is non-trivial |
 | Wu2003 | Crossref DOI 10.1103/PhysRevE.68.046502 (PRE 68, 046502) | Symplectic integration through s-dependent fields (insertion devices, fringe fields) |
 | Kim2025 | JACoW reference database: IPAC'25 MOPS089, pp. 789–792, DOI 10.18429/JACoW-IPAC2025-MOPS089; abstract on JACoW Indico | KLS (Korea-4GSR) lattice: 4 GeV, 28 HMBA cells, about 800 m, 62 pm. The formatted JACoW entry lists four authors; the original author string has five (two "J. Kim"), and five are cited |
+
+## Addition for round 3 (2026-10-13, task E2)
+
+| Key | Verified against | Supports |
+| :--- | :--- | :--- |
+| Sun2020 | Crossref DOI 10.1103/PhysRevAccelBeams.23.010702 (PRAB 23, 010702, 2020); full text read (CC BY 4.0) | Eight-conductor NLK optimisation for ALS and ALS-U. Sec. II: leapfrog drift–kick–drift tracking over many segments, with Runge–Kutta as the more accurate reference. Sec. III: an infinite-conductor model used in MOGA and validated by a finite 3-D Biot–Savart conductor model with return loops; fringe effects did not significantly affect efficiency. ALS prototype: 28 cm magnetic length, 32 × 11 mm aperture, conductors ≥ 7 mm high for an 11 mm chamber with 1.5 mm wall and conductor allowance; efficiency about 90 %, limited by the 274 nm rad booster beam; injection angle 0.08 mrad. |

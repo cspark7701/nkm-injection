@@ -75,3 +75,32 @@ The venue is undecided; the revision is venue-neutral.
 
 The manuscript keeps both, with the mechanism and the vertical effect presented as the physics results and the
 tolerance curves as the design guidance.
+
+## Round-3 positioning against Sun et al. (2020) (task E2)
+
+**What Sun et al. establish.**
+- An eight-conductor NLK of the same four-quadrant topology as the present NKM.
+- Segmented drift–kick–drift tracking through a Biot–Savart field, with Runge–Kutta integration as the reference.
+- A finite three-dimensional conductor model with return loops, which showed that fringe fields did not
+  significantly change ALS injection efficiency.
+- MOGA optimisation of conductor positions and injection conditions, with field tolerances near the axis.
+
+None of these tools is claimed as new here.
+
+**What differs.**
+
+| Quantity | ALS (Sun et al.) | This study |
+| :--- | :--- | :--- |
+| Kicker length | 0.28 m | 0.525 m |
+| Incoming angle | 0.08 mrad at the septum; nearly parallel injection | 4.85 mrad from a septum 2.26 m upstream, cancelled by the kicker |
+| Kick | ≈ 1 mrad (estimated from their published B_y ≈ 0.02–0.025 T over 0.28 m at 1.9 GeV) | 4.89 mrad peak |
+| Sagitta \|K\|L/8 | ≈ 0.04 mm | 0.32 mm, about 3 % of the 9.4 mm kick-lobe FWHM |
+
+The two questions also differ:
+- Sun et al. compare **field models** (infinite against finite conductors) along the tracked path.
+- The present study compares **trajectory approximations** (a single thin map against sliced maps and the 3-D
+  field) at fixed field.
+
+These are different approximations. The ALS finding and the present result are therefore consistent: a much smaller
+sagitta places the ALS design where a single thin map would also be adequate. The present contribution is the
+quantified thin-map error versus η (E3), the matched-angle shift and the sign-dependent error response at this η.

@@ -544,3 +544,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 192. [**Milestone 192 — R1-BTS-06: Reproduce BTS matching and all search outcomes**](192_r1_bts_06.md)
     - Replay all three historical starts and independently verify raw and rounded settings with optical, family-bound and model-clearance checks.
+
+193. [**Milestone 193 — R1-BTS-07: Normalize BTS response and withdraw operational knob claims**](193_r1_bts_07.md)
+    - Define dimensionless row and actuator scaling, verify finite-difference convergence and local finite response, and withdraw unsupported practical correction claims.

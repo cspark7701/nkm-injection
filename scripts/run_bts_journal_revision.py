@@ -129,13 +129,35 @@ def matching(output,config):
     return result
 
 
+def normalized_response(output,config):
+    strengths=selected();jacobians=[]
+    for step in [1e-4,1e-5,1e-6]:
+        jac=np.column_stack([(np.array(optics_record(strengths+np.eye(9)[j]*step)['raw_residuals_beta_alpha_dispersion'])-np.array(optics_record(strengths-np.eye(9)[j]*step)['raw_residuals_beta_alpha_dispersion']))/(2*step) for j in range(9)])
+        jacobians.append(jac)
+    strength_scales=np.full(9,.01)
+    response=jacobians[-1]/SCALES[:,None]*strength_scales[None,:]
+    u,s,vt=np.linalg.svd(response,full_matrices=True)
+    convergence=[np.linalg.norm(j-jacobians[-1])/np.linalg.norm(jacobians[-1]) for j in jacobians]
+    assert convergence[0]<1e-4 and convergence[1]<1e-5
+    checks=[]
+    for mode in range(6):
+        # Local finite perturbation only; no claimed operational correction.
+        dk=strength_scales*vt[mode]*.01
+        measured=(np.array(optics_record(strengths+dk)['raw_residuals_beta_alpha_dispersion'])-np.array(optics_record(strengths)['raw_residuals_beta_alpha_dispersion']))/SCALES
+        prediction=response@(dk/strength_scales)
+        checks.append({'mode':mode,'delta_k_m_minus2':dk,'actual_normalized_change':measured,'linear_prediction':prediction,'relative_error':np.linalg.norm(measured-prediction)/np.linalg.norm(prediction),'within_bounds':bool(np.all(strengths+dk>=LOWER)&np.all(strengths+dk<=UPPER))})
+    assert all(c['relative_error']<.01 and c['within_bounds'] for c in checks)
+    result={'environment':environment(),'row_order':['beta_x_m','beta_y_m','alpha_x','alpha_y','Dx_m','Dpx'],'row_scales':SCALES,'column_scales_m_minus2':strength_scales,'finite_difference_steps_m_minus2':[1e-4,1e-5,1e-6],'relative_jacobian_convergence':convergence,'response_matrix':response,'singular_values':s,'condition_number':s[0]/s[-1],'rank':int(np.sum(s>s[0]*1e-10)),'rank_relative_threshold':1e-10,'right_vectors':vt,'null_space_dimension':3,'null_vector_sign_convention':'SVD signs arbitrary; rows 6:9 of full Vt span the local null space','finite_local_checks':checks,'claim_withdrawal':'No achieved commissioning correction, practical decoupling, measured observability or static/shot retuning benefit is claimed. SVD is a local model diagnostic only.'}
+    save(output/'normalized_response.json',result);return result
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--stage',choices=['validation','matching'],required=True)
+    parser.add_argument('--stage',choices=['validation','matching','response'],required=True)
     parser.add_argument('--output-dir',type=Path,required=True)
     args=parser.parse_args();args.output_dir.mkdir(parents=True,exist_ok=False)
     config=json.loads((PAPER/'journal_config.json').read_text());save(args.output_dir/'config.json',config)
-    result={'validation':validation,'matching':matching}[args.stage](args.output_dir,config)
+    result={'validation':validation,'matching':matching,'response':normalized_response}[args.stage](args.output_dir,config)
     print(json.dumps({k:v for k,v in result.items() if k not in ['environment','error_coverage']},default=serial))
 
 

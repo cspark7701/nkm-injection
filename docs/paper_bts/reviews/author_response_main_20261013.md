@@ -37,3 +37,9 @@ Validation: 13 tests pass; 40-step maps meet declared tolerances, isolated error
 Replay all three historical starts and independently verify raw and rounded settings with optical, family-bound and model-clearance checks.
 
 Validation: Historical candidate values reproduced; 40-step and independent-map settings remain feasible, with explicit engineering tolerances and termination records. See [milestone 192](../../exec-plans/completed/192_r1_bts_06.md).
+
+## R1-BTS-07 — Normalize BTS response and withdraw operational knob claims
+
+Define dimensionless row and actuator scaling, verify finite-difference convergence and local finite response, and withdraw unsupported practical correction claims.
+
+Validation: Six local finite checks pass within bounds; rank and null-space conventions are recorded without claiming operational decoupling. See [milestone 193](../../exec-plans/completed/193_r1_bts_07.md).

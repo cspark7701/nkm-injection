@@ -67,3 +67,25 @@ def set_regime(lattice, restrictions):
         if min(x,y)<=0:raise ValueError('Positive aperture halfwidths required')
         result[int(index)].Limits=np.array([-x,x,-y,y])
     return result
+
+
+def quadrature_moments(lattice, beam, centroid, beta_factors=(1.,1.), order=5):
+    """Gaussian product quadrature of uncensored AT moments, in m and m^2.
+
+    Deterministic quadrature avoids random RMS uncertainty. Order convergence
+    must be checked; this is not a certification of Gaussian loss tails.
+    """
+    from numpy.polynomial.hermite import hermgauss
+    nodes,weights=hermgauss(order)
+    grid=np.array(np.meshgrid(*([nodes]*5),indexing='ij')).reshape(5,-1)
+    wgrid=np.array(np.meshgrid(*([weights/np.sqrt(np.pi)]*5),indexing='ij')).reshape(5,-1)
+    w=np.prod(wgrid,axis=0)
+    cov=beam.covariance(beta_factors)[:5,:5];e,v=np.linalg.eigh(cov)
+    transform=v@np.diag(np.sqrt(np.maximum(e,0)))
+    particles=np.zeros((6,order**5),order='F');particles[:5]=np.asarray(centroid)[:,None]+transform@(np.sqrt(2)*grid)
+    out=at.lattice_track(unrestricted(lattice),particles,nturns=1,refpts=np.arange(len(lattice)+1))[0][:5,:,:,0]
+    if not np.all(np.isfinite(out)):raise ValueError('Invalid quadrature coordinates')
+    mean=np.einsum('j,ijk->ki',w,out)
+    deviations=out-mean.T[:,None,:]
+    variance=np.einsum('j,ijk->ki',w,deviations**2)
+    return mean,np.sqrt(np.maximum(variance,0))

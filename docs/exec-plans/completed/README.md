@@ -568,3 +568,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 200. [**Milestone 200 — R2-BTS-02: Resolve the BTS limiting-station mechanism**](200_r2_bts_02.md)
     - Reconstructs all original station clearances and shows that every exact shot tie is entrance-limited; exports variance decomposition and gain/loss heterogeneity.
+
+201. [**Milestone 201 — R2-BTS-03: Validate BTS clearance at actual shot centroids**](201_r2_bts_03.md)
+    - Compares affine and centred transport across all original shots, measures the paired model shift and checks nonlinear Gaussian moments with converged quadrature.

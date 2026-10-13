@@ -13,3 +13,9 @@ Validation: Reviewed assets and scientific inputs match their frozen hashes; pro
 Reconstructs all original station clearances and shows that every exact shot tie is entrance-limited; exports variance decomposition and gain/loss heterogeneity.
 
 Validation: All 600 paired minima match within 1e-12 m; three new covariance, probe-censoring and aperture-isolation tests pass. See [milestone 200](../../exec-plans/completed/200_r2_bts_02.md).
+
+## R2-BTS-03 — Validate BTS clearance at actual shot centroids
+
+Compares affine and centred transport across all original shots, measures the paired model shift and checks nonlinear Gaussian moments with converged quadrature.
+
+Validation: Centred mean shift is -0.1553 micrometres; representative nonlinear-moment discrepancy is at most 0.606 micrometres; four regression tests pass. See [milestone 201](../../exec-plans/completed/201_r2_bts_03.md).

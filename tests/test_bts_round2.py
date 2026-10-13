@@ -31,3 +31,16 @@ def test_hypothetical_restriction_leaves_original_geometry_unchanged():
     np.testing.assert_allclose(trial[22].Limits,[-.003,.003,-.0015,.0015])
     np.testing.assert_allclose(lattice[22].Limits,[-.03,.03,-.03,.03])
     assert sum(e.Length for e in trial)==sum(e.Length for e in lattice)
+
+
+def test_gaussian_quadrature_reproduces_drift_moments():
+    import at
+    from nkm_injection.bts_round2 import quadrature_moments
+    beam=JournalBeam();centre=np.array([.002,.0001,0,0,.001])
+    lat=at.Lattice([at.Drift('d',2.)],energy=4e9)
+    mean,sigma=quadrature_moments(lat,beam,centre,order=5)
+    # Exact drift tracks x -> x + L px/(1+delta) at leading order;
+    # entrance moments are exact Gaussian quadrature identities.
+    np.testing.assert_allclose(mean[0],centre,atol=1e-16)
+    np.testing.assert_allclose(sigma[0],np.sqrt(np.diag(beam.covariance())[:5]),rtol=1e-10)
+    assert np.all(np.isfinite(mean)) and np.all(np.isfinite(sigma))

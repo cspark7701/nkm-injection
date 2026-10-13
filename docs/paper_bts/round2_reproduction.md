@@ -49,3 +49,29 @@ To install a validated rendering, copy its two PDFs and validation JSON into
 The full `export_bts_round2_assets.py` also calls this renderer when regenerating
 all selected assets. Earlier frozen referee attachments preserve their original
 figures; a new attachment is required to distribute this revised rendering.
+
+## Nominal phase-space distributions
+
+```bash
+python scripts/export_bts_phase_space.py --output-dir results/new_phase_space --particles 20000 --seed 83001
+```
+
+The selected run is `results/bts_phase_space_20261013_final/`. It contains
+`particles.npz` (initial/final AT coordinates and geometric slopes), summary,
+configuration/source hashes, exact generating script and the figure. The
+installed summary is `generated/phase_space.json`. Tracking uses both frozen
+baseline settings, the complete JournalBeam covariance, zero static errors and
+zero shot jitter. All original aperture stations remain active. Slopes use
+normalized longitudinal momentum, rather than labelling canonical momenta as
+angles. Native `at.plot.plot_sigma` draws the two-RMS sample covariance ellipses;
+Matplotlib draws the individual particle clouds with common scales by plane.
+
+Both settings retain all 20,000 particles. The maximum tracked-versus-independent
+linear-map RMS relative difference is 8.56e-5 (declared tolerance 0.02). A second
+fresh-process run reproduces all arrays and scientific summaries exactly.
+This diagnostic illustrates the nominal boundary match; it adds no machines
+to the independent robustness campaign and does not change its estimates.
+Copy the validated PDF to `figures/phase_space.pdf` and summary to
+`generated/phase_space.json`, then rebuild and refresh final asset hashes.
+The evidence manifest includes all raw diagnostic inputs/outputs needed in
+a fresh portable attachment. Earlier attachments and reviews are retained.

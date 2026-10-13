@@ -196,6 +196,34 @@
       "bytes": 1515,
       "generating_commit": null,
       "provenance_note": "Selected round2 summary; reconstructed from supplied raw station records."
+    },
+    {
+      "path": "results/bts_phase_space_20261013_final/summary.json",
+      "sha256": "da270de09e40312681ca5d533737bfe203ebd2b043b27be7473032edeec85df6",
+      "bytes": 4822,
+      "generating_commit": null,
+      "provenance_note": "Nominal phase-space diagnostic; exact generating script and source hashes supplied separately from frozen error campaign."
+    },
+    {
+      "path": "results/bts_phase_space_20261013_final/particles.npz",
+      "sha256": "8c1c47c8f4bf687056f777ea044b152734a2a6bce23d644d9a879f541bc67719",
+      "bytes": 5290918,
+      "generating_commit": null,
+      "provenance_note": "Nominal phase-space diagnostic; exact generating script and source hashes supplied separately from frozen error campaign."
+    },
+    {
+      "path": "results/bts_phase_space_20261013_final/configuration.json",
+      "sha256": "4e97d7a15e56514c275ac4c92c214b392db45d4e60e365397317b8af7d74d289",
+      "bytes": 696,
+      "generating_commit": null,
+      "provenance_note": "Nominal phase-space diagnostic; exact generating script and source hashes supplied separately from frozen error campaign."
+    },
+    {
+      "path": "results/bts_phase_space_20261013_final/generating_script.py",
+      "sha256": "db8dbec048b3e9565154e5607ac60114e644a8924284f0a1e2c762d8a5dd1e3e",
+      "bytes": 6314,
+      "generating_commit": null,
+      "provenance_note": "Nominal phase-space diagnostic; exact generating script and source hashes supplied separately from frozen error campaign."
     }
   ],
   "claims": [
@@ -997,6 +1025,30 @@
           }
         }
       }
+    },
+    {
+      "id": "BPS01",
+      "artifact": "results/bts_phase_space_20261013_final/summary.json",
+      "pointer": "/particles",
+      "expected": 20000
+    },
+    {
+      "id": "BPS02",
+      "artifact": "results/bts_phase_space_20261013_final/summary.json",
+      "pointer": "/designs/reference/lost_particles",
+      "expected": 0
+    },
+    {
+      "id": "BPS03",
+      "artifact": "results/bts_phase_space_20261013_final/summary.json",
+      "pointer": "/designs/low_beta/lost_particles",
+      "expected": 0
+    },
+    {
+      "id": "BPS04",
+      "artifact": "results/bts_phase_space_20261013_final/summary.json",
+      "pointer": "/designs/low_beta/max_rms_relative_error",
+      "expected": 8.551602916107015e-05
     }
   ]
 }

@@ -37,3 +37,15 @@ Final verification:764 supplied member hashes verify; the extracted attachment a
 - Twenty BTS tests passed; evidence audit verified all 32 claims.
 - Statistical figures, scientific summary exports, campaigns, previous reviews
   and protected inputs remain unchanged. Original attachments remain frozen.
+
+## Entrance/exit phase-space diagnostic
+
+Nominal shared Gaussian sample: 20,000 particles, seed 83001, 4 GeV, configured
+entrance optics and full dispersion/energy spread. Observations m1/m4, all four
+aperture stations active, 40 integration steps. Both designs have zero sampled
+losses (nonfinite exit coordinates). Canonical AT momenta are converted to
+geometric slopes. Native AT covariance ellipses are sample-centred and displayed
+in mm/mrad on common row scales. Tracked RMS agrees with independent transport
+of the same sample within 8.56e-5 relative (tolerance 0.02). Fresh-process repeat
+produces identical arrays and summaries. This nominal diagnostic does not
+change any selected robustness result or establish chamber transmission.

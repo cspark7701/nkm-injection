@@ -25,13 +25,13 @@
   "revision_selection": "revision_selection.json",
   "final_revision_identity": "revision_selection.json",
   "current_assets_sha256": {
-    "paper.tex": "bafd3c26a55a5ce9ef77a976c731722998534ac224d4eacb5a4bf5da7cd1d473",
-    "paper.pdf": "31bd94de9469785f381c831d9783f07bcf2d8ed9f2f166a0de507c99fc2b0c84",
+    "paper.tex": "e1a449809091c95001bb7c920443dc2dba2f113f4a5830158f81c571f3001c52",
+    "paper.pdf": "fe35db8574e70120e626f6379400b7d23e4fc9596467a6d3c2044b43ce020e51",
     "paper.bib": "f2bfe5beb59526c81a9d628c97b22b9533a68892a1722bcaa2dce35991f55563",
     "supplement.tex": "bdfef790ff7f9c433e83ca32d07b303751b8304f8229cfd3cc0b59cdde3c9a53",
     "supplement.pdf": "4013de68c018d7b73fbe9a90e3b262f9fa6c27906a60c7f1b86880d669d04d67",
-    "evidence_manifest.json": "920604d6e3aa11685af5437af6b383905100693fca298b59ea04c496c9b24734",
-    "claim_evidence.csv": "3c2ea126e4f4178e5f617d8831f0ae84a459c0bd1f73f656c63284021850698d",
+    "evidence_manifest.json": "35dd956e95f6c63eb303688806b18bddb45b31182692535bf8a6fac0c6f74478",
+    "claim_evidence.csv": "e8516b2dcddef8003eaaac0dd281bc34b4dd82a59ac466e109b7d22e1b764b24",
     "round2_protocol.json": "219b91e737ccbe289cde907bda3b4392770092adda8dec99150b73326195de87",
     "generated/matching.json": "e7a589cb62360657281508bcfc79435fe93a20d9e7ee2fa70465df552c54b617",
     "generated/round2_designs.json": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
@@ -58,7 +58,9 @@
     "figures/comparison.pdf": "7863da4d46cdd4ae3a050c0e1360008cfe4c06c49af380a61bee86bdfc71e662",
     "figures/optics.pdf": "2e02c852d453a592ec5b3dd89d61943cbd4906f8490f818d29271ee377a2fc80",
     "generated/round2_components.json": "2524080d374ef6f7fbc242e3567dc33fe3ab855e18b1554822101c5db70dfb94",
-    "figures/at_plot_validation.json": "24a8e7e6c4c730c64819cef84a724382815c6f108209c59d7a15f68d22498f43"
+    "figures/at_plot_validation.json": "24a8e7e6c4c730c64819cef84a724382815c6f108209c59d7a15f68d22498f43",
+    "figures/phase_space.pdf": "899e9873e7924e44e3e8c37fed8bf9bf5d39f33441ad47249f23ac149690cedd",
+    "generated/phase_space.json": "da270de09e40312681ca5d533737bfe203ebd2b043b27be7473032edeec85df6"
   },
   "historical_draft_assets_sha256": {
     "paper.tex": "d19f7e41a72f94a23065ed271a82d4d050477d0cfcdff4d46e743a66d5783a2b",
@@ -80,5 +82,6 @@
   },
   "round2_selected_campaign": "results/bts_journal_campaign_r2_20261013",
   "round2_preparation_checkpoint": "23e052df655d99762092b2fdc734d4092f782412",
-  "at_plot_rendering": "revision_selection.json#/at_plot_rendering"
+  "at_plot_rendering": "revision_selection.json#/at_plot_rendering",
+  "phase_space_diagnostic": "revision_selection.json#/phase_space_diagnostic"
 }

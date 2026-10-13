@@ -21,3 +21,9 @@ python scripts/package_bts_revision.py --round2-package-dir results/new_round2_a
 ```
 
 Never reuse an existing output directory. Use the scientific environment listed in the reproduction guide. The attachment is local, not a public deposit.
+
+The [entrance/exit phase-space figure](figures/phase_space.pdf) compares the
+shared initial beam with reference and refined low-beta exits in both planes.
+It uses 20,000 nominal particles, seed 83001, and native AT covariance ellipses;
+[reproduction details](round2_reproduction.md#nominal-phase-space-distributions)
+identify the new diagnostic independently of the error campaign.

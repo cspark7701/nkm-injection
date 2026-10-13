@@ -1,6 +1,6 @@
 # JKPS submission preparation — BTS round2
 
-[Official JKPS guidance](https://link.springer.com/journal/40042/submission-guidelines) checked2026-10-13: mathematical LaTeX is accepted and a Springer template is recommended. Research Article length/figure guidance is advisory rather than a strict page limit. The main text is approximately3391 extracted words before declarations, with five figures; the one-column draft has10 pages and the supplement3. No mandatory two-column conversion is inferred.
+[Official JKPS guidance](https://link.springer.com/journal/40042/submission-guidelines) checked2026-10-13: mathematical LaTeX is accepted and a Springer template is recommended. Research Article length/figure guidance is advisory rather than a strict page limit. The main text is approximately 3828 extracted words before declarations, with six figures; the one-column draft has 12 pages and the supplement3. No mandatory two-column conversion is inferred.
 
 ## Prepared and checked
 

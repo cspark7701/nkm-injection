@@ -589,3 +589,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 207. [**Milestone 207 — Native Accelerator Toolbox BTS figures**](207_bts_native_at_figures.md)
     - Draws main optics and lattice figures with native pyAT functions, verifies frozen-profile agreement and rebuilds the manuscript with refreshed asset identities.
+
+208. [**Milestone 208 — BTS entrance and exit phase-space distributions**](208_bts_phase_space_figures.md)
+    - Adds reproducible particle clouds and native AT covariance ellipses in both planes, updates article interpretation and extends portable evidence.

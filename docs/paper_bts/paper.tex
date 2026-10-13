@@ -286,6 +286,43 @@ secondary downstream-only mean difference $+0.056$ mm; this diagnostic does
 not replace the original full-minimum estimand. Historical optical-rule failures,
 matching replay and local response diagnostics are retained in the supplement.
 
+\subsection{Entrance and exit phase-space distributions}
+Figure~\ref{fig:phase-space} provides a nominal particle-level view of the
+configured boundary match. A shared sample of 20\,000 particles from the full
+Gaussian entrance covariance is tracked once through each frozen baseline
+setting at 4 GeV, with seed 83001 and 40 integration steps per magnet.
+No static machine errors or shot jitter are applied. Observations are made
+before the first element at m1 and after the last element at m4; all four
+configured aperture stations remain active. A particle is counted as lost if
+any exit coordinate is nonfinite. All 20\,000 particles survive in both settings;
+this finite nominal demonstration is separate from the error-ensemble loss
+study and does not establish real chamber transmission or ring capture.
+
+For these plots, AT canonical momenta are converted to geometric slopes,
+$x'=p_x/p_s$ and $y'=p_y/p_s$, where
+$p_s=\sqrt{(1+\delta)^2-p_x^2-p_y^2}$ in units of reference momentum.
+Horizontal projections include momentum spread and dispersion, rather than
+representing betatron emittance alone. The tilted entrance clouds rotate and
+change their projected sizes during transport. The reference and refined
+low-beta exit clouds are nearly coincident, consistently with their common
+boundary match; reducing an interior vertical beta peak does not imply a
+smaller vertical beam at the fixed exit. Tracked transverse RMS values agree
+with independent linear transport of the same sample to within 0.009\% in
+this nominal case. The clouds illustrate transport and boundary matching,
+not a fitted gain in brightness or a new robustness estimate.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{figures/phase_space.pdf}
+\caption{Nominal transverse phase-space distributions: $x$--$x'$ (top) and
+$y$--$y'$ (bottom), at the shared entrance (left), reference exit (centre)
+and refined low-beta exit (right). Positions are in mm and geometric slopes
+in mrad; axes share scales within each row. Blue points show all 20\,000
+tracked particles per panel. Black curves, drawn with Accelerator Toolbox's
+covariance plotting function, are sample-centred two-RMS covariance ellipses;
+they are not aperture boundaries. Seed 83001; no machine errors or shot jitter.
+Both settings have zero sampled losses at the configured stations.}
+\label{fig:phase-space}\end{figure}
+
 \subsection{Aperture-dependent strategy outcomes on new machines}
 Figure~\ref{fig:refined} shows the spatially refined beta profiles.
 The fresh baseline low-beta change is \BtsNewBaselineMean\ mm with interval
@@ -367,6 +404,11 @@ horizontal outcome, and a beneficial but modest vertical outcome. Direct nominal
 clearance settings improve the two restricted mean-clearance cases, while the
 particle study demonstrates that mean improvement is not tail reliability.
 
+The nominal phase-space comparison complements these tests: a fixed exit
+match produces similar exit clouds even when interior beta profiles differ.
+The projected horizontal distribution includes dispersion and energy spread,
+so its ellipse area is not a direct measure of betatron emittance.
+
 This adds an observable-specific comparison to established transfer-line
 rematching and trajectory-control practice, rather than a new optimizer.
 Optimization should state the limiting station, retain full covariance and
@@ -403,7 +445,9 @@ to a journal; reviewer delivery and final availability wording remain author act
 The supplement preserves historical matching/optical statistics and reports
 block-loss inference and numerical limitations. Reviewed and original campaign
 identities, all previous reports, new frozen designs, station decompositions and
-point-by-point responses are included in the local attachment. Each numerical
+point-by-point responses are included in the local attachment. The separate
+nominal phase-space diagnostic supplies initial and final particle coordinates,
+geometric slopes, seed and generating-source identity. Each numerical
 stage records source hashes and uses a fresh result directory. The first invalid
 shared-aperture run is retained as a failure record, not selected evidence.
 Technical validation does not imply journal acceptance.

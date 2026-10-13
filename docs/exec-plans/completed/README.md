@@ -523,3 +523,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 185. [**Milestone 185 — Move BTS reviews into the BTS manuscript directory**](185_bts_review_directory.md)
     - Move the BTS report and revision register into their dedicated review directory, repair links and separate the BTS and NKM review indexes while preserving review content and scientific inputs.
+
+186. [**Milestone 186 — Resolve the main-branch review rebase conflicts**](186_main_rebase_conflict_resolution.md)
+    - Complete both review commits on the updated main base, preserve corrected NKM manuscript status and separate BTS reviews, and verify links and protected inputs.

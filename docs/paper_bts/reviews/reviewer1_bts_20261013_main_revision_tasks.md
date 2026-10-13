@@ -2,7 +2,7 @@
 
 Date: 2026-10-13. Applies to the eight-page BTS draft on `main`, reviewed at `bee78914caa16945ef63dba8bf5205c434d0415c`. See the [report and manuscript hashes](reviewer1_bts_20261013_main_report.md). This register does not assess or supersede the later `bts` manuscript's reviews.
 
-All tasks below are **open**. Their B-task mappings refer to the existing [BTS preparation plan](../../paper_bts/002_manuscript_tasks.md); mapping is not proof of completion. New analysis must be evaluated in the actual revision selected for review. Do not overwrite earlier review reports or regenerate protected scientific inputs. Save new runs separately and archive each executed revision under its next unique milestone number.
+All tasks below are **open**. Their B-task mappings refer to the existing [BTS preparation plan](../002_manuscript_tasks.md); mapping is not proof of completion. New analysis must be evaluated in the actual revision selected for review. Do not overwrite earlier review reports or regenerate protected scientific inputs. Save new runs separately and archive each executed revision under its next unique milestone number.
 
 ## Ordered overview
 

@@ -5,6 +5,7 @@ First manuscript draft, 2026-10-13. Proposed target: **Journal of the Korean Phy
 - [One-column LaTeX draft](paper.tex) and [compiled PDF](paper.pdf)
 - [Manuscript outline and campaign evidence](001_manuscript_outline.md)
 - [Ordered preparation tasks and acceptance criteria](002_manuscript_tasks.md)
+- [Reviewer reports and revision tasks](reviews/README.md)
 - [Article scope, question, and candidate claims](article_scope.md) (Task B01)
 - [Literature survey and regional/global comparison](literature_comparison.md) (Task B01)
 - [Scientific evidence inventory and failure audit](evidence_inventory.md) (Task B01)

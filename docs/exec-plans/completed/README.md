@@ -520,3 +520,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 184. [**Milestone 184 — Review the BTS manuscript on main**](184_bts_main_manuscript_review.md)
     - Assess the version-identified eight-page BTS draft, verify selected hashes/failure records, recommend major revision and create ten ordered tasks while preserving prior reviews and distinguishing the later BTS-branch article.
+
+185. [**Milestone 185 — Move BTS reviews into the BTS manuscript directory**](185_bts_review_directory.md)
+    - Move the BTS report and revision register into their dedicated review directory, repair links and separate the BTS and NKM review indexes while preserving review content and scientific inputs.

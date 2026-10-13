@@ -151,20 +151,69 @@ class RevisionBuilder(bj.Builder):
                   "2 seeds x 500 particles per ring/profile/model; ideal rectangular aperture grid; reference-ellipse loss histograms; 10 corrected-ring scenarios")
 
     def fig_generality(self):
+        """Thin- and sliced-map exit-momentum errors against the exact field, normalised by the peak kick |K|.
+
+        The horizontal thin-map error is fitted as |dp_x|/|K| = A eta^b over all configurations. The declared accuracy
+        allowance is one tenth of the 80 % angular-window width (same convention as the pulse allowance); eta* is the
+        fitted eta at which the thin-map error at the nominal kick reaches that allowance."""
         if "round2_generality" not in self.m["artifacts"]:
             return
-        d=self.load("round2_generality")
+        d=self.load("round2_generality");rows=d["rows"]
+        eta=np.array([r["eta"] for r in rows]);K=np.array([abs(r["peak_kick_rad"]) for r in rows])
+        fam=np.array([r["transverse_family_scale"] for r in rows])
+        err={key:{plane:np.array([abs(r[key][i]) for r in rows])/K for plane,i in (("x",1),("y",3))}
+             for key in ("thin_minus_3d","sliced_minus_3d")}
+        fits={}
+        for plane in ("x","y"):
+            b,a=np.polyfit(np.log(eta),np.log(err["thin_minus_3d"][plane]),1)
+            res=np.log(err["thin_minus_3d"][plane])-(a+b*np.log(eta))
+            fits[plane]=(np.exp(a),b,res)
+        nominal=[i for i,r in enumerate(rows) if r["transverse_family_scale"]==1.0 and abs(r["length_m"]-0.525)<1e-9
+                 and r["strength_scale"]==1.0][0]
+        allow=None
+        if "round2_window" in self.m["artifacts"]:
+            lo,hi=round2.window_bounds(self.load("round2_window")["rows"],"angle");allow=0.1*(hi-lo)*1e-3
         fig,axes=plt.subplots(1,2,figsize=(7.4,2.9),layout="constrained")
-        for family,marker in ((1.,"o"),(1.25,"s")):
-            selected=[r for r in d["rows"] if r["transverse_family_scale"]==family]
-            for ax,key in zip(axes,("thin_minus_3d","sliced_minus_3d")):
-                ax.scatter([r["eta"] for r in selected],[r[key][1]*1e3 for r in selected],marker=marker,
-                           label=f"wire scale {family:g}")
-                ax.set_xlabel(r"$\eta=|K|L/(8w)$");ax.set_ylabel("momentum difference [mrad]")
-                ax.axhline(0,color=INK2,lw=.5)
-        axes[0].set_title("Thin map minus 3-D");axes[1].set_title("Sliced vector map minus 3-D");axes[0].legend()
-        self.save(fig,"fig9_generality",["round2_generality"],
-                  "deterministic centroids; length/strength scaling and 1.25 transverse wire family; w=kick-lobe FWHM")
+        grid=np.geomspace(eta.min(),eta.max(),50)
+        for ax,plane,label in zip(axes,("x","y"),(r"$|\Delta p_x|/|K|$",r"$|\Delta p_y|/|K|$")):
+            for family,marker in ((1.,"o"),(1.25,"s")):
+                sel=fam==family
+                ax.scatter(eta[sel],err["thin_minus_3d"][plane][sel],marker=marker,color=COL["fieldmap"],s=18,
+                           label=f"thin map, wire scale {family:g}")
+                ax.scatter(eta[sel],err["sliced_minus_3d"][plane][sel],marker=marker,facecolors="none",
+                           edgecolors=INK2,s=18,label=f"sliced map, wire scale {family:g}")
+            A,b,_=fits[plane]
+            ax.plot(grid,A*grid**b,color=COL["fieldmap"],lw=1,ls="--",label=rf"fit ${A:.2f}\,\eta^{{{b:.2f}}}$")
+            ax.set_xscale("log");ax.set_yscale("log");ax.set_xlabel(r"$\eta=|K|L/(8w)$");ax.set_ylabel(label)
+        if allow is not None:
+            axes[0].axhline(allow/K[nominal],color=INK2,lw=.8,ls=":",label="allowance at nominal $K$")
+            axes[0].axvline(eta[nominal],color=INK2,lw=.6,ls="-.")
+        axes[0].set_title("horizontal",fontsize=8);axes[1].set_title(r"vertical ($y=1$ mm, $y'=0.2$ mrad scaled)",fontsize=8)
+        h0,l0=axes[0].get_legend_handles_labels();h1,l1=axes[1].get_legend_handles_labels()
+        axes[1].legend(h0+h1[-1:],l0[:-2]+["horizontal "+l0[-2],l0[-1],"vertical "+l1[-1]],fontsize=5.5,
+                       loc="center",ncol=2,frameon=True)
+        A,b,res=fits["x"]
+        self.macro("GenExpX",b,"{:.2f}");self.macro("GenPrefX",A,"{:.2f}")
+        self.macro("GenScatterX",100*res.std(),"{:.1f}");self.macro("GenScatterMaxX",100*np.abs(res).max(),"{:.0f}")
+        for family,name in ((1.,"One"),(1.25,"Two")):
+            sel=fam==family;bf,_=np.polyfit(np.log(eta[sel]),np.log(err["thin_minus_3d"]["x"][sel]),1)
+            self.macro(f"GenExpFamily{name}",bf,"{:.2f}")
+        Ay,by,resy=fits["y"]
+        self.macro("GenExpY",by,"{:.2f}");self.macro("GenScatterY",100*resy.std(),"{:.0f}")
+        self.macro("GenSlicedMax",tex_sci(float(max(err["sliced_minus_3d"]["x"].max(),err["sliced_minus_3d"]["y"].max()))))
+        self.macro("GenNomEta",eta[nominal],"{:.3f}")
+        self.macro("GenNomThinDpx",abs(rows[nominal]["thin_minus_3d"][1])*1e3,"{:.3f}")
+        self.macro("GenNomThinDpy",abs(rows[nominal]["thin_minus_3d"][3])*1e3,"{:.3f}")
+        self.macro("GenNomW",rows[nominal]["lobe_fwhm_m"]*1e3,"{:.1f}")
+        self.macro("GenEtaMin",eta.min(),"{:.3f}");self.macro("GenEtaMax",eta.max(),"{:.3f}")
+        self.macro("GenConfigs",str(len(rows)))
+        if allow is not None:
+            self.macro("GenAllowMrad",allow*1e3,"{:.3f}")
+            self.macro("GenAllowFraction",100*abs(rows[nominal]["thin_minus_3d"][1])/allow,"{:.0f}")
+            self.macro("GenEtaStar",float(np.exp(np.log(allow/K[nominal]/A)/b)),"{:.3f}")
+        keys=["round2_generality"]+(["round2_window"] if allow is not None else [])
+        self.save(fig,"fig9_generality",keys,
+                  "deterministic centroids; |dp|/|K| of thin and 1280-slice maps against the exact field; power-law fit; allowance 0.1 x angular window")
 
     def fig_corrected_ring(self):
         if "round2_ring_scenario" not in self.m["artifacts"]:

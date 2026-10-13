@@ -604,3 +604,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 212. [**Milestone 212 — E2: Positioning Against Sun et al. (2020)**](212_e2_literature_positioning.md)
     - Established tools (segmented tracking, finite conductors) credited to Sun et al.; contribution restated as a quantified thin-map error in an angle-cancelling, large-sagitta geometry; ALS row added; clean gated builds.
+
+213. [**Milestone 213 — E3: Normalised Finite-Length Approximation Error**](213_e3_normalised_scaling.md)
+    - Thin-map |Δp_x|/|K| = 1.95 η^1.46 (3.4 % scatter, both families); sliced map < 2e-5 |K|; declared 0.1-window allowance reached at η* ≈ 0.036 (nominal 0.034 uses 91 %).

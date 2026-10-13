@@ -225,6 +225,10 @@
       "path": "results/journal_campaign_04/e4_nkm_chamber_scan/nkm_chamber_scan.json",
       "sha256": "ef0bfc1e679070d81fddab27a8dcf98abcf0a887bb83704013d66dae428f8dcd"
     },
+    "round3_ring_summary": {
+      "path": "results/journal_campaign_04/e5_corrected_ring/corrected_ring_summary.json",
+      "sha256": "0b1cffc02fa321c749704e60e93f83a2b49ff9f474451ee52fd40a9daeef2abc"
+    },
     "round3_transparency_mc": {
       "path": "results/journal_campaign_04/e9_transparency_mc.json",
       "sha256": "43c764ee9a923a1e00f532d7aacca4e3d62241fbc5ccbc3846081bc02ffee1f2"

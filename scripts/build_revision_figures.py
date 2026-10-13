@@ -273,6 +273,8 @@ class RevisionBuilder(bj.Builder):
             edges=[r["first_unstable_negative_positive_m"][0]*1e3 for r in da_rows]
             self.macro("ChamberDAFirstMin",min(edges),"{:.1f}")
             self.macro("ChamberDAFirstMax",max(edges),"{:.1f}")
+        if "round3_ring_summary" in self.m["artifacts"]:
+            return  # round 3 replaces the figure (fig_corrected_ring_round3); the ideal-ring macros above are kept
         fig,axes=plt.subplots(1,2,figsize=(7.4,2.8),layout="constrained")
         xs=np.array(da_rows[0]["da_x_m"])*1e3
         axes[0].imshow(np.asarray([r["da_alive"] for r in da_rows],float),aspect="auto",cmap="Blues",vmin=0,vmax=1,
@@ -288,6 +290,46 @@ class RevisionBuilder(bj.Builder):
         self.macro("ScenSeeds",len(rows),"{:d}")
         self.save(fig,"fig10_corrected_ring",keys,
                   "10 declared corrected-error seeds; deterministic horizontal acceptance and BPM residuals; no sampling interval")
+
+    def fig_corrected_ring_round3(self):
+        """E5: ring population with BPM references, converged orbit, beta-beat/dispersion and tune correction."""
+        if "round3_ring_summary" not in self.m["artifacts"]:
+            return
+        d=self.load("round3_ring_summary");rows=sorted(d["rows"],key=lambda r:r["seed"])
+        seeds=[r["seed"] for r in rows];keys=["round3_ring_summary"]
+        old={}
+        if self.has("round2_ring_scenario"):  # same septum-only DA grid, round-2 correction (orbit only)
+            for r in self.load("round2_ring_scenario")["rows"]:
+                xs=np.asarray(r["da_x_m"]);alive=np.asarray(r["da_alive"],bool)
+                lost=xs[(xs<0)&~alive];old[f"seed{r['seed']}"]=float(lost.max()) if len(lost) else np.nan
+            keys.append("round2_ring_scenario")
+        fig,axes=plt.subplots(1,3,figsize=(7.4,2.6),layout="constrained");i=np.arange(1,len(rows)+1)
+        new_edge=[1e3*r["first_unstable_negative_m"] for r in rows]
+        if old:axes[0].plot(i,[1e3*old[f"seed{s}"] for s in seeds],"s--",color=INK2,ms=4,label="round 2")
+        axes[0].plot(i,new_edge,"o-",color=COL["fieldmap"],label="round 3")
+        axes[0].set_ylabel("first unstable $x$ [mm]");axes[0].legend(fontsize=6)
+        for k,(m,lab) in enumerate((("o","before"),("s","after"))):
+            key="optics_before" if k==0 else "optics_after"
+            axes[1].plot(i,[100*max(r[key]["beta_beat_rms"]) for r in rows],m+"-",label=lab,ms=4)
+        axes[1].set_ylabel(r"rms $\beta$-beat, larger plane [%]");axes[1].legend(fontsize=6)
+        axes[2].plot(i,[1e6*r["orbit_rms_relative_to_references_m"][0] for r in rows],"o-",label="x, rel. quadrupoles",ms=4)
+        axes[2].plot(i,[1e6*r["orbit_rms_relative_to_references_m"][1] for r in rows],"s-",label="y, rel. quadrupoles",ms=4)
+        axes[2].set_ylabel(r"BPM orbit rms [$\mu$m]");axes[2].legend(fontsize=6)
+        for ax in axes:ax.set_xticks(i,[str(s)[-2:] for s in seeds]);ax.set_xlabel("ring seed (55xx)")
+        beat_before=[max(r["optics_before"]["beta_beat_rms"]) for r in rows]
+        beat_after=[max(r["optics_after"]["beta_beat_rms"]) for r in rows]
+        self.macro("RThreeBeatBeforeMin",100*min(beat_before),"{:.1f}");self.macro("RThreeBeatBeforeMax",100*max(beat_before),"{:.1f}")
+        self.macro("RThreeBeatAfterMax",100*max(beat_after),"{:.1f}")
+        self.macro("RThreeDispMax",1e3*max(r["optics_after"]["dispersion_rms_m"] for r in rows),"{:.1f}")
+        ox=[1e6*r["orbit_rms_relative_to_references_m"][0] for r in rows];oy=[1e6*r["orbit_rms_relative_to_references_m"][1] for r in rows]
+        self.macro("RThreeOrbitXmin",min(ox),"{:.0f}");self.macro("RThreeOrbitXmax",max(ox),"{:.0f}")
+        self.macro("RThreeOrbitYmin",min(oy),"{:.0f}");self.macro("RThreeOrbitYmax",max(oy),"{:.0f}")
+        self.macro("RThreeTuneMax",tex_sci(max(abs(v) for r in rows for v in r["tune_residual"]),2))
+        self.macro("RThreeDAMin",min(new_edge),"{:.1f}");self.macro("RThreeDAMax",max(new_edge),"{:.1f}")
+        self.macro("RThreeBBA",1e6*d["bba_residual_m"],"{:.0f}")
+        self.macro("RThreeNkmOrbitMax",1e6*max(abs(r["closed_orbit_at_nkm_m"][0]) for r in rows),"{:.0f}")
+        self.save(fig,"fig10_corrected_ring",keys,
+                  "10 corrected-error seeds (round 3: BPM references, converged orbit, beta/dispersion and tune correction); deterministic; no sampling interval")
 
     # ------------------------------------------------------------------ figure 1
     def fig_geometry(self):
@@ -939,6 +981,7 @@ STEPS = {"legacy": "legacy_macros", "geometry": "fig_geometry", "dynamic_apertur
 
 STEPS["chamber"]="fig_chamber"
 STEPS["round3_chamber"]="round3_chamber"
+STEPS["corrected_ring_round3"]="fig_corrected_ring_round3"
 STEPS["round3_transparency"]="round3_transparency"
 STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
               "final_validation":"final_validation", "final_robustness":"final_robustness"})

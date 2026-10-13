@@ -613,3 +613,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 215. [**Milestone 215 — E9: Transparency Units, Simultaneous Construction Errors and Septum Leakage**](215_e9_transparency_tolerances.md)
     - Aligned moments stated as Δε/ε; 10 um rms wire placement already gives median 2.6/4.8 sigma (x/y), so compensation is required; septum leakage must be ≲0.07 G at the stored orbit, 50x below the published bumped-orbit value.
+
+216. [**Milestone 216 — E5: Corrected Ring Population With Optics Correction**](216_e5_corrected_ring.md)
+    - Same ten error draws with BPM references, converged orbit, beta-beat/dispersion and tune correction: beta-beat ≤ 2 %, NKM orbit ≤ 56 um, first unstable launch −11.0 to −9.5 mm; ring 5501 recovered (−7.5 → −10.5 mm); 70–80 um orbit floor set by the 120 correctors.

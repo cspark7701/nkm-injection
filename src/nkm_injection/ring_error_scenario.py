@@ -140,3 +140,94 @@ def correct_tunes(ring, families, target, tolerance=1e-5, max_iterations=30, max
             'step_bound_m_minus2':max_shift_m2,'tolerance':tolerance,
             'termination':'tolerance' if history[-1]['max_residual']<tolerance else 'iteration or line-search limit',
             'feasible':bool(history[-1]['max_residual']<tolerance)}
+
+
+# ----------------------------------------------------------------------------------------------------------------
+# Round 3 (E5): BPMs referenced to quadrupole centres, converged orbit correction and optics (beta/dispersion)
+# correction with individual quadrupole gradients. Units: m, rad, m^-2.
+
+def bpm_reference_offsets(ring, errors, bpms, bba_residual_m=0.0, seed=0):
+    """(2*nBPM,) x then y offsets (m) of each BPM's reference: the nearest quadrupole centre along s.
+
+    Models beam-based alignment of every BPM to its adjacent quadrupole, with an additional Gaussian residual
+    ``bba_residual_m`` per plane (seeded by ``seed``). Uses the per-magnet shifts recorded by ``apply_errors``."""
+    s=ring.get_s_pos(range(len(ring)));circ=ring.circumference
+    quads=[m for m in errors['magnets'] if isinstance(ring[m['index']],at.Quadrupole)]
+    if not quads: raise ValueError('No quadrupole errors recorded')
+    qs=np.array([s[m['index']] for m in quads]);off=np.array([[m['dx_m'],m['dy_m']] for m in quads])
+    ref=[]
+    for b in bpms:
+        d=np.abs(qs-s[b]);d=np.minimum(d,circ-d);ref.append(off[int(np.argmin(d))])
+    ref=np.asarray(ref)+np.random.default_rng([int(seed),7707]).normal(0,bba_residual_m,(len(bpms),2))
+    return np.concatenate([ref[:,0],ref[:,1]])
+
+
+def correct_orbit_converged(ring, bpms, correctors, response, offsets=None, config=RingErrorScenario(),
+                            max_iterations=25, relative_improvement=0.01):
+    """Truncated-SVD orbit correction relative to the BPM references, iterated until the larger plane rms improves by
+    less than ``relative_improvement`` per iteration (or ``max_iterations``). Corrector angles bounded."""
+    offsets=np.zeros(2*len(bpms)) if offsets is None else np.asarray(offsets)
+    u,sv,vh=svd(response,full_matrices=False);keep=sv>config.svd_relative_cutoff*sv[0]
+    inverse=(vh[keep].T/sv[keep])@u[:,keep].T;history=[];n=len(bpms)
+    for iteration in range(max_iterations+1):
+        reading=bpm_orbit(ring,bpms)-offsets
+        rms=(float(np.sqrt(np.mean(reading[:n]**2))),float(np.sqrt(np.mean(reading[n:]**2))))
+        history.append({'iteration':iteration,'rms_x_m':rms[0],'rms_y_m':rms[1],'max_abs_m':float(np.max(np.abs(reading)))})
+        if iteration>0 and max(history[-2]['rms_x_m'],history[-2]['rms_y_m'])-max(rms)<relative_improvement*max(history[-2]['rms_x_m'],history[-2]['rms_y_m']):
+            break
+        if iteration==max_iterations: break
+        delta=-inverse@reading
+        for j,index in enumerate(correctors):
+            e=ring[index];e.KickAngle=np.clip(e.KickAngle+np.array([delta[j],delta[len(correctors)+j]]),
+                                               -config.max_corrector_rad,config.max_corrector_rad)
+    kicks=np.array([ring[i].KickAngle for i in correctors])
+    return {'history':history,'retained':int(keep.sum()),'max_abs_corrector_rad':float(np.max(np.abs(kicks))),
+            'bound_rad':config.max_corrector_rad,'saturated':bool(np.any(np.abs(kicks)>=config.max_corrector_rad*(1-1e-9))),
+            'termination':'improvement below %.0f%%'%(100*relative_improvement) if len(history)<=max_iterations else 'iteration limit',
+            'reference':'BPM readings relative to adjacent-quadrupole references'}
+
+
+def optics_observables(ring, bpms, beta0, disp0, dispersion_weight=10.0):
+    """Relative beta-beat in x and y and weighted horizontal dispersion error (m) at the BPMs."""
+    _,_,l=ring.get_optics(refpts=bpms)
+    return np.concatenate([(l.beta[:,0]-beta0[:,0])/beta0[:,0],(l.beta[:,1]-beta0[:,1])/beta0[:,1],
+                           dispersion_weight*(l.dispersion[:,0]-disp0)])
+
+
+def correct_optics(ring, bpms, quads, beta0, disp0, iterations=3, step_m2=1e-4, svd_relative_cutoff=1e-2,
+                   max_relative_change=0.01, dispersion_weight=10.0):
+    """Gauss-Newton beta-beat/dispersion correction with individual quadrupole gradient changes.
+
+    The Jacobian is built once (forward differences, ``step_m2`` per quadrupole) on the linear lattice and reused;
+    each step is truncated by SVD, bounded to ``max_relative_change`` of each gradient, and accepted only if the rms
+    observable decreases (otherwise halved, up to four times)."""
+    k0=np.array([ring[i].PolynomB[1] for i in quads],float)
+    def set_k(k):
+        for i,v in zip(quads,k): ring[i].PolynomB[1]=v
+    def rms_beat():
+        _,_,l=ring.get_optics(refpts=bpms)
+        return (float(np.std((l.beta[:,0]-beta0[:,0])/beta0[:,0])),float(np.std((l.beta[:,1]-beta0[:,1])/beta0[:,1])),
+                float(np.sqrt(np.mean((l.dispersion[:,0]-disp0)**2))))
+    base=optics_observables(ring,bpms,beta0,disp0,dispersion_weight);jac=np.empty((len(base),len(quads)))
+    for j in range(len(quads)):
+        k=k0.copy();k[j]+=step_m2;set_k(k)
+        jac[:,j]=(optics_observables(ring,bpms,beta0,disp0,dispersion_weight)-base)/step_m2
+    set_k(k0)
+    u,sv,vh=svd(jac,full_matrices=False);keep=sv>svd_relative_cutoff*sv[0]
+    pinv=(vh[keep].T/sv[keep])@u[:,keep].T
+    history=[{'iteration':0,'beta_beat_rms':rms_beat()[:2],'dispersion_rms_m':rms_beat()[2]}];k=k0.copy()
+    for it in range(1,iterations+1):
+        obs=optics_observables(ring,bpms,beta0,disp0,dispersion_weight);current=float(np.sqrt(np.mean(obs**2)))
+        step=-pinv@obs;limit=max_relative_change*np.maximum(np.abs(k0),1e-3)
+        step=np.clip(step,-limit,limit);accepted=False
+        for factor in (1.,.5,.25,.125,.0625):
+            set_k(k+factor*step)
+            try: trial=float(np.sqrt(np.mean(optics_observables(ring,bpms,beta0,disp0,dispersion_weight)**2)))
+            except (ValueError,RuntimeError,np.linalg.LinAlgError): trial=np.inf
+            if np.isfinite(trial) and trial<current: k=k+factor*step;accepted=True;break
+        set_k(k)
+        b=rms_beat();history.append({'iteration':it,'beta_beat_rms':b[:2],'dispersion_rms_m':b[2],'accepted':accepted})
+        if not accepted: break
+    return {'history':history,'retained':int(keep.sum()),'quadrupoles':len(quads),
+            'max_relative_gradient_change':float(np.max(np.abs(k-k0)/np.maximum(np.abs(k0),1e-12))),
+            'method':'Gauss-Newton on BPM beta-beat and weighted dispersion; individual quadrupole gradients'}

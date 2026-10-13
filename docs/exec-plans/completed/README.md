@@ -562,3 +562,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 198. [**Milestone 198 — Second review of the revised BTS main-branch article**](198_bts_main_round2_review.md)
     - Assess the revised eight-page article, independently reconstruct paired statistics and add a major-revision report with eight ordered tasks while preserving all previous reviews.
+
+199. [**Milestone 199 — R2-BTS-01: Freeze BTS round-two evidence and physical protocol**](199_r2_bts_01.md)
+    - Preserves the reviewed article and original campaign; corrects beta-versus-clearance attribution and declares independently seeded parametric comparisons.

@@ -1,0 +1,5 @@
+# Round-2 contribution and evidence scope
+
+The original comparison optimized vertical peak beta, not clearance. It found no resolved mean minimum-station-clearance benefit. Round2 tests the physical mechanism: fixed entrance saturation, competing downstream dispersion/orbit restrictions, interior beta extrema, and direct clearance versus beta-based design under identical target and strength bounds.
+
+The reviewed version and original campaign are frozen in round2_identity.json and an ignored results copy. Original results remain distinct from retrospective station/accuracy audits. New independently seeded validation is declared in round2_protocol.json before new design selection. Nominal optimization is used; the earlier training audit did not tune either design. Hypothetical aperture restrictions remain parametric, not verified chamber dimensions. The illustrative 0.1 mm decision scale is not a hardware specification. No ring capture, machine reliability, practical correction or global-optimum claim is introduced.

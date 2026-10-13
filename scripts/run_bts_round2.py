@@ -10,8 +10,8 @@ import subprocess
 import numpy as np
 import scipy
 import at
-from nkm_injection.bts_journal import JournalBeam,lattice_for,apply_static
-from nkm_injection.bts_round2 import station_record,quadrature_moments
+from nkm_injection.bts_journal import JournalBeam,lattice_for,apply_static,TARGET,SCALES,LOWER,UPPER
+from nkm_injection.bts_round2 import station_record,quadrature_moments,spatial_profile,nominal_observables
 
 ROOT=Path(__file__).resolve().parents[1];PAPER=ROOT/'docs/paper_bts'
 
@@ -113,8 +113,30 @@ def accuracy(output):
     print(json.dumps({k:v for k,v in result.items() if k not in ['environment','quadrature_cases']},default=serial))
 
 
+def spatial(output):
+    from scipy.optimize import minimize
+    strengths,_=original();profiles=[]
+    for k in strengths:
+        profiles.append([spatial_profile(lattice_for(k),n) for n in [1,8,16,32,64]])
+    def residual(k):return (nominal_observables(lattice_for(k))-TARGET)/SCALES
+    cache={}
+    def peaks(k):
+        key=tuple(k)
+        if key not in cache:cache[key]=spatial_profile(lattice_for(k),16)['peak_beta_m']
+        return np.array(cache[key])
+    res=minimize(lambda k:peaks(k)[1],strengths[1],method='SLSQP',bounds=list(zip(LOWER,UPPER)),constraints=[{'type':'eq','fun':residual},{'type':'ineq','fun':lambda k:60-peaks(k)[0]}],options={'maxiter':200,'ftol':1e-8})
+    final=[spatial_profile(lattice_for(res.x),n) for n in [8,16,32,64]]
+    assert res.success and max(abs(residual(res.x)))<1e-3
+    assert max(abs(np.array(final[-1]['peak_beta_m'])-final[-2]['peak_beta_m']))<.02
+    result={'environment':environment(),'original_profiles':[{str(p['subdivisions']):{k:v for k,v in p.items() if k not in ['rows','exit_map']} for p in ps} for ps in profiles],
+            'refined_low_beta':{'strengths_m_minus2':res.x,'success':bool(res.success),'iterations':res.nit,'termination':str(res.message),'normalized_residual':residual(res.x),'bounds':list(zip(LOWER,UPPER)),'active_bounds':[int(i) for i in np.flatnonzero(np.minimum(res.x-LOWER,UPPER-res.x)<1e-6)],'profiles':[{k:v for k,v in p.items() if k not in ['rows','exit_map']} for p in final]},
+            'objective':'vertical peak beta on 16 subdivisions per finite element; verified at 32/64','limits':'finite sampled maxima, not analytic global optimization','peak_convergence_tolerance_m':.02}
+    save(output/'spatial_profiles.json',{'original':profiles,'refined':final});save(output/'spatial.json',result)
+    print(json.dumps(result,default=serial))
+
+
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--stage',choices=['stations','accuracy'],required=True);parser.add_argument('--output-dir',type=Path,required=True)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--stage',choices=['stations','accuracy','spatial'],required=True);parser.add_argument('--output-dir',type=Path,required=True)
     args=parser.parse_args();args.output_dir.mkdir(parents=True,exist_ok=False)
     save(args.output_dir/'configuration.json',{'stage':args.stage,'protocol':json.loads((PAPER/'round2_protocol.json').read_text()),'environment':environment()})
     globals()[args.stage](args.output_dir)

@@ -571,3 +571,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 201. [**Milestone 201 — R2-BTS-03: Validate BTS clearance at actual shot centroids**](201_r2_bts_03.md)
     - Compares affine and centred transport across all original shots, measures the paired model shift and checks nonlinear Gaussian moments with converged quadrature.
+
+202. [**Milestone 202 — R2-BTS-04: Refine BTS beta extrema inside magnets**](202_r2_bts_04.md)
+    - Measures interior maxima, preserves original boundary values and reoptimizes the low-beta alternative with a converged spatial observation mesh.

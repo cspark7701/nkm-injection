@@ -44,3 +44,13 @@ def test_gaussian_quadrature_reproduces_drift_moments():
     np.testing.assert_allclose(mean[0],centre,atol=1e-16)
     np.testing.assert_allclose(sigma[0],np.sqrt(np.diag(beam.covariance())[:5]),rtol=1e-10)
     assert np.all(np.isfinite(mean)) and np.all(np.isfinite(sigma))
+
+
+def test_spatial_subdivision_preserves_total_map_with_bend_edges():
+    from nkm_injection.bts_round2 import spatial_profile
+    from nkm_injection.bts_journal import independent_maps
+    lat=lattice_for(BTSConfig().quad_strengths_list)
+    profile=spatial_profile(lat,8)
+    np.testing.assert_allclose(profile['exit_map'],independent_maps(lat)[0][-1],atol=1e-12)
+    assert profile['rows'][-1]['s_m']==pytest.approx(21.789)
+    assert np.all(np.array(profile['peak_beta_m'])>=spatial_profile(lat,1)['peak_beta_m'])

@@ -6,7 +6,8 @@ Centred AT Jacobians include the actual shot centroid for new predictions.
 from copy import deepcopy
 import numpy as np
 import at
-from .bts_journal import JournalBeam, independent_maps
+from .bts_journal import JournalBeam, independent_maps,independent_element_map
+from .optics import DEFAULT_BTS_ENTRANCE_TWISS
 
 
 def unrestricted(lattice):
@@ -89,3 +90,39 @@ def quadrature_moments(lattice, beam, centroid, beta_factors=(1.,1.), order=5):
     deviations=out-mean.T[:,None,:]
     variance=np.einsum('j,ijk->ki',w,deviations**2)
     return mean,np.sqrt(np.maximum(variance,0))
+
+
+def nominal_observables(lattice):
+    """Exit beta [m], alpha [1], Dx [m], Dpx [1] from exact nominal maps."""
+    m=independent_maps(lattice)[0][-1];tw=DEFAULT_BTS_ENTRANCE_TWISS
+    values=[]
+    for i,b,a in [(0,tw.beta_x,tw.alpha_x),(2,tw.beta_y,tw.alpha_y)]:
+        initial=np.array([[b,-a],[-a,(1+a*a)/b]])
+        final=m[i:i+2,i:i+2]@initial@m[i:i+2,i:i+2].T
+        values.append((final[0,0],-final[0,1]))
+    disp=m@np.array([tw.disp_x,tw.disp_px,0.,0.,1.])
+    return np.array([values[0][0],values[1][0],values[0][1],values[1][1],disp[0],disp[1]])
+
+
+def spatial_profile(lattice, subdivisions=16):
+    """Sample exact nominal hard-edge maps inside every finite-length element.
+
+    Magnet edges are applied only to the first/last slice. This changes the
+    observation mesh, rather than the original lattice or AT integrator.
+    """
+    if not isinstance(subdivisions,int) or subdivisions<1:raise ValueError('Positive integer subdivisions required')
+    tw=DEFAULT_BTS_ENTRANCE_TWISS
+    initial=np.zeros((4,4))
+    for i,b,a in [(0,tw.beta_x,tw.alpha_x),(2,tw.beta_y,tw.alpha_y)]:initial[i:i+2,i:i+2]=[[b,-a],[-a,(1+a*a)/b]]
+    m=np.eye(5);s=0.;rows=[]
+    for index,elem in enumerate(lattice):
+        pieces=elem.divide(np.full(subdivisions,1/subdivisions)) if elem.Length else [elem]
+        for piece in pieces:
+            if hasattr(piece,'BendingAngle'):
+                for key in ['EntranceAngle','ExitAngle']:
+                    if not hasattr(piece,key):setattr(piece,key,0.)
+            e,_=independent_element_map(piece);m=e@m;s+=piece.Length
+            cov=m[:4,:4]@initial@m[:4,:4].T
+            rows.append({'s_m':s,'index':index,'beta_m':[float(cov[0,0]),float(cov[2,2])]})
+    beta=np.array([r['beta_m'] for r in rows]);peaks=beta.max(0)
+    return {'subdivisions':subdivisions,'peak_beta_m':peaks.tolist(),'peak_s_m':[rows[int(np.argmax(beta[:,j]))]['s_m'] for j in [0,1]],'rows':rows,'exit_map':m.tolist()}

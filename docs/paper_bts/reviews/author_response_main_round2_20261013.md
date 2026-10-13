@@ -19,3 +19,9 @@ Validation: All 600 paired minima match within 1e-12 m; three new covariance, pr
 Compares affine and centred transport across all original shots, measures the paired model shift and checks nonlinear Gaussian moments with converged quadrature.
 
 Validation: Centred mean shift is -0.1553 micrometres; representative nonlinear-moment discrepancy is at most 0.606 micrometres; four regression tests pass. See [milestone 201](../../exec-plans/completed/201_r2_bts_03.md).
+
+## R2-BTS-04 — Refine BTS beta extrema inside magnets
+
+Measures interior maxima, preserves original boundary values and reoptimizes the low-beta alternative with a converged spatial observation mesh.
+
+Validation: Refined low-beta search converges in 34 iterations; 32-to-64 subdivision changes are below 0.00035 m; five regression tests pass. See [milestone 202](../../exec-plans/completed/202_r2_bts_04.md).

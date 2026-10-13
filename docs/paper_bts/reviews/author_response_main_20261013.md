@@ -55,3 +55,27 @@ Validation: Track 1.2 million particles per design, retain first-loss records an
 Audit all 550000 historical observations and pooling fields, reconstruct quantile/failure intervals and preserve missed prefixes while separating new physical transport.
 
 Validation: 15 relevant tests pass; all five failure records, exact asymmetric intervals and order-statistic quantiles match; hardware tolerance and optional-stopping claims remain withdrawn. See [milestone 195](../../exec-plans/completed/195_r1_bts_09.md).
+
+## Report comments and manuscript locations
+
+| Referee point | Resolution and evidence | Revised manuscript |
+| :--- | :--- | :--- |
+| M1 contribution | [Completed paired design comparison](../heldout_comparison.md): no resolved clearance benefit despite lower beta | Introduction, Results4.2, Discussion |
+| M2 boundary/hardware | [Source-labelled beam and boundaries](../beam_and_boundaries.md); ring target, chamber and hardware assumptions remain explicitly parametric | Model2.1–2.2, Table1, Figure1 |
+| M3 active transport | [Independent map/covariance/particle validation](../transport_validation.md), with integration miss retained | Methods3.1–3.2 |
+| M4 evidence corrections | [Seventeen-claim ledger](../claim_evidence.csv), [discrepancy resolutions](../discrepancy_resolution.md) and exact-key/digest checker | Model, Results4.1/4.3, appendix |
+| M5 literature | [Verified primary comparisons](../literature_comparison.md); unverified PLS-II/RAON entries withdrawn; MAX IV title corrected; undated ESRF report cited by actual title | Introduction and bibliography |
+| M6 correction/margin | [Normalized local response](../correction_knobs.md), practical knob claims withdrawn; frozen-design alternative replaces operational correction claims | Results4.1–4.2 |
+| M7 statistics | [All-observation statistical reconstruction](../tolerance_distributions.md), actual thresholds, asymmetric intervals and missed prefixes retained | Results4.3 |
+| M8 reproducibility | Isolated eight-page PDF, selected raw-output attachment, exact source snapshots and portable commands; author declarations/delivery pending | Declarations and appendix |
+| §4 presentation |202-word abstract, three figures, concise one-column source, numbered references and checked JKPS guidance | [Submission checklist](../submission_checklist.md) |
+
+R1-BTS-10 author-confirmed funding, competing interests/acknowledgments, final approval and actual referee delivery remain pending. The author explicitly deferred funding. They are not fabricated or described as complete. Scientific work and publication preparation do not imply journal acceptance.
+
+The full comparison and all-observation statistical audit were reproduced from the extracted attachment with identical selected values. [Final checks](../validation_checks.md) record the suite, links, hashes and layout evidence.
+
+## R1-BTS-10 — Prepare the revised BTS article and referee evidence package
+
+Prepare the eight-page article, seventeen-claim ledger, point-by-point response and portable raw-evidence package; author-confirmed declarations and actual submission delivery remain pending.
+
+Validation: 713 repository tests and 15 isolated checks pass; extracted comparison/statistics reproduce exactly, fresh PDF has no warnings, layout/links/hashes verified and protected inputs unchanged. See [milestone 196](../../exec-plans/completed/196_r1_bts_10.md).

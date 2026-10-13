@@ -4,6 +4,9 @@ from __future__ import annotations
 import argparse
 import gc
 import json
+import platform
+import subprocess
+import scipy
 from pathlib import Path
 import numpy as np
 from analyze_tolerance_replicates import describe, failure_bounds
@@ -46,7 +49,11 @@ def reconstruct(output):
     arrays={name:np.concatenate(values) for name,values in pooled.items()}
     n=len(arrays['mismatch_x']);k=len(failures)
     assert n==550000 and k==5
-    result={'source_identity':'artifact digests checked; artifact-specific generating commits may be unavailable','pool_compatibility':'all frozen BTS, entrance/target, error, constraint and unit fields equal; downstream NKM fields not interpreted as BTS response','n_samples':n,'invalid':0,'rule':'beta_x or beta_y >60.01 m OR Mx+My >2.05','failure_bounds':failure_bounds(k,n),'quantiles':describe(arrays,.95),'runs':runs,'all_failure_records':failures,'distribution':'Independent Gaussian draws in the generating error sampler; entrance beta only, alpha held fixed. No truncation/correlation model established for historical budget.','followup_policy':'The 400k run is a follow-up to the earlier runs; a predeclared adaptive stopping policy is not archived. Intervals are descriptive fixed-N calculations and do not certify optional-stopping coverage.','scope':'Historical optics-only feasibility; no physical loss or certified engineering tolerances. New-model heldout transport remains separate.'}
+    try:
+        checkpoint=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,stderr=subprocess.DEVNULL).strip()
+    except (subprocess.CalledProcessError,FileNotFoundError):checkpoint='exported source; see file digests'
+    environment={'commit':checkpoint,'python':platform.python_version(),'numpy':np.__version__,'scipy':scipy.__version__,'source_sha256':{name:sha256(ROOT/name) for name in ['scripts/audit_bts_statistics.py','scripts/analyze_tolerance_replicates.py']}}
+    result={'environment':environment,'source_identity':'artifact digests checked; artifact-specific generating commits may be unavailable','pool_compatibility':'all frozen BTS, entrance/target, error, constraint and unit fields equal; downstream NKM fields not interpreted as BTS response','n_samples':n,'invalid':0,'rule':'beta_x or beta_y >60.01 m OR Mx+My >2.05','failure_bounds':failure_bounds(k,n),'quantiles':describe(arrays,.95),'runs':runs,'all_failure_records':failures,'distribution':'Independent Gaussian draws in the generating error sampler; entrance beta only, alpha held fixed. No truncation/correlation model established for historical budget.','followup_policy':'The 400k run is a follow-up to the earlier runs; a predeclared adaptive stopping policy is not archived. Intervals are descriptive fixed-N calculations and do not certify optional-stopping coverage.','scope':'Historical optics-only feasibility; no physical loss or certified engineering tolerances. New-model heldout transport remains separate.'}
     expected=json.loads((ROOT/'results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json').read_text())['pooled']
     for name in arrays:
         for key in ['p50','p50_ci','p95','p95_ci','p99','p99_ci']:

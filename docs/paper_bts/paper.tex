@@ -1,447 +1,384 @@
-% One-column working draft for a proposed JKPS Research Article.
-% Journal template conversion and scientific tasks B01--B12 remain pending.
+% Main-branch revision addressing Reviewer 1, 2026-10-13.
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=25mm]{geometry}
-\usepackage{amsmath,amssymb}
-\usepackage{booktabs,tabularx}
+\usepackage{amsmath,amssymb,booktabs,graphicx}
 \usepackage[nopatch=footnote]{microtype}
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
-\usepackage{setspace}
-\setstretch{1.1}
-\newcommand{\draftnote}[1]{\par\smallskip\noindent\textit{Draft revision: #1}\par\smallskip}
 \input{generated/archived_results.tex}
-\title{Constrained optical matching and error sensitivity of a booster-to-storage-ring transfer line}
+\input{generated/revision_results.tex}
+\title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
 \small Korea University, Sejong, 30019 Republic of Korea\\
-\small \texttt{kuphy@korea.ac.kr}}
+\small Corresponding author: \texttt{kuphy@korea.ac.kr}}
 \date{October 13, 2026}
 \begin{document}
 \maketitle
-\noindent\textbf{Working draft for Journal of the Korean Physical Society.}
-This version reports archived simulation results. Italic revision notes identify
-analyses and author inputs still needed; they are not completed findings.
-
 \begin{abstract}
-Optical matching in a booster-to-storage-ring transfer line must deliver a
-specified phase-space distribution while controlling the beam envelope. We
-examine a 4 GeV transfer-line model with nine independently adjustable
-quadrupoles, using normalized optical residuals and bounded numerical searches
-followed by physical feasibility checks. For the archived exit target, the
-selected solution matches both transverse planes to floating-point precision,
-with peak horizontal and vertical beta functions of 31.44 m and 50.75 m,
-respectively, below the imposed 60 m ceiling. Four fixed-optics error ensembles
-containing 550,000 realizations give a median horizontal mismatch of 0.002086,
-with a 95\% interval of 0.002074--0.002099. Five realizations violate the implemented
-optical feasibility criteria, corresponding to a probability estimate of
-$9.09\times10^{-6}$ with an exact 95\% interval of
-$2.95\times10^{-6}$--$2.12\times10^{-5}$. The historical sensitivity ranking places
-input beta errors ahead of quadrupole gradient and energy errors under the
-assumed budget. These results characterize an implemented optics model rather
-than physical beam loss or storage-ring capture. They establish a matched
-reference and quantify statistical precision, while identifying the boundary,
-error-coverage and transport validation needed to turn the model into practical
-operating tolerances.
+Reducing intermediate beta functions is often used to improve transfer-line
+robustness, but its benefit depends on where apertures, dispersion and trajectory
+errors limit the beam. We compare two quadrupole settings for a parametric
+21.789 m, 4 GeV booster-to-storage-ring transfer line with nine independently
+adjustable quadrupoles. Both settings reach the same configured exit optics
+within declared tolerances. Constrained minimization reduces the vertical peak
+beta from 50.75 m to 28.18 m, yet the nominal minimum five-sigma projected
+clearance at four model aperture stations remains 17.45 mm because the fixed
+entrance is limiting. On 200 independent held-out static machines with three
+independent shots each, the paired mean clearance change is 0.0146 mm with a
+95\% machine-cluster bootstrap interval of $-0.0179$ to $+0.0483$ mm; no benefit
+is resolved at this precision. Independent hard-edge maps, coupled covariance
+propagation and particle tracking validate the local model. No losses are
+observed in 1.2 million tracked particles per setting, with nonzero uncertainty
+bounds reported. A separate audit retains the historical optical-feasibility
+statistics without interpreting them as physical loss. The comparison shows why
+beta reduction alone does not establish a clearance gain. The conclusions remain
+conditional on configured boundaries, discrete apertures and assumed errors,
+rather than measured hardware or storage-ring capture.
 \end{abstract}
-\noindent\textbf{Keywords:} transfer-line optics; quadrupole matching; beam transport;
-error sensitivity; accelerator simulation
+\noindent\textbf{Keywords:} transfer-line optics; beam clearance; quadrupole matching;
+coupled transport; uncertainty
 
 \section{Introduction}
-Low-emittance storage rings require careful control of the beam distribution
-presented to their injection region. The design of diffraction-limited rings
-involves strong focusing and limited nonlinear acceptance~\cite{Hettel2014}.
-The Korea Light Source design provides a relevant 4 GeV setting for this
-problem~\cite{Kim2025}; booster injection and ramping have also been studied for
-the Korea-4GSR project~\cite{Lee2024}. A booster-to-storage-ring (BTS) line must
-transport the extracted beam to a declared boundary with suitable transverse
-optics and dispersion. Its performance depends on both the nominal match and
-the response to errors in the incoming beam and magnets.
+Diffraction-limited storage rings require control of the distribution delivered
+to their injection region~\cite{Hettel2014}. Korea-4GSR provides a relevant
+4 GeV design context~\cite{Kim2025,Lee2024}, but a numerically matched exit
+ellipse is only one part of transport feasibility. An intermediate beta maximum
+is neither a physical aperture nor a trajectory-error tolerance. Dispersion,
+centroid displacement, coupling and the location of restrictions also matter.
 
-A small exit mismatch does not alone establish a useful transfer-line design.
-Large beta functions elsewhere in the line can reduce aperture margin, while
-sensitive quadrupole combinations can make a nominal solution difficult to
-maintain. Moreover, the significance of any reported tolerance depends on which
-errors actually act in the evaluator and which observables define failure.
-Matching, transmission through the BTS and capture in the storage ring are
-separate quantities.
+Published transfer-line studies illustrate this distinction. SLS 2.0 separates
+quadrupole-scan beam characterization from position/angle control and identifies
+septum restrictions~\cite{Kallestrup2025}. ESRF--EBS rematching includes off-axis
+injection-quadrupole fields and mechanical constraints~\cite{ESRF2018}. Sirius
+studies distinguish injector stages and incoming beam-size effects~\cite{Resende2022}.
+MAX IV pulsed-sextupole injection addresses downstream ring capture~\cite{Leemann2012},
+a different boundary from the one considered here. These primary studies do not
+establish the particular target or chamber dimensions of our model.
 
-This draft examines the deterministic matching and fixed-optics tolerance
-campaign archived in the nkm-injection repository. The central question is
-whether its nine-quadrupole model reaches a specified exit target within the
-configured limits, and what the existing error ensemble establishes about that
-solution. We report the selected configuration, its statistical uncertainty and
-the limits of the implemented model. Nonlinear-kicker field effects, stored-beam
-transparency and multiturn storage-ring capture belong to the companion NKM
-study and are outside the present results.
+We ask whether lowering vertical peak beta at a fixed exit match increases
+five-sigma projected clearance at the declared model apertures, and whether a
+benefit persists under frozen held-out machine errors and independent shot
+jitter. The result can be negative: a fixed entrance or a different limiting
+observable may prevent beta reduction from improving clearance. We use standard
+optimization, without algorithmic novelty claims. The BTS sequence, archived
+matched settings and simulation framework are shared with the companion NKM
+study. This article ends at the BTS exit; it reports neither nonlinear-kicker
+transparency nor storage-ring capture.
 
-Published transfer-line work emphasizes physical observables and diagnostics.
-The SLS 2.0 line separates beam characterization from trajectory control~\cite{Kallestrup2025};
-ESRF--EBS rematching includes off-axis injection-quadrupole fields and mechanical
-constraints~\cite{ESRF2018}. Sirius studies distinguish transfer efficiency from
-ring injection and incoming beam-size effects~\cite{Resende2022}. Pulsed-multipole
-injection at MAX IV concerns the downstream capture scheme~\cite{Leemann2012},
-which is outside this article. These studies do not supply the boundary values
-of the present model.
+\section{Parametric model and physical observables}
+\subsection{Boundaries, coordinates and source limitations}
+The Accelerator Toolbox (AT)/pyAT model~\cite{Terebilo2001,Rogers2017} contains
+36 elements over 21.789 m, from marker m1 to marker m4 downstream of sept\_ex.
+It has nine 0.2 m quadrupoles in three triplets, three main bends, an extraction
+kicker and two model septa (Fig.~\ref{fig:layout}). Local coordinates are
+$(x,p_x,y,p_y,\delta,ct)$ with positions/path length in m, normalized canonical
+momenta approximately angles in rad, and $\delta=\Delta p/p_0$ dimensionless.
+The six design bend angles are $+7.5,+88.5,-111.701,+176,-111.701,+88.5$ mrad;
+reference geometry is held fixed when fields or particle momenta change.
 
-Our physical question is whether an alternative quadrupole setting, matched to
-the same parametric exit target, increases five-sigma clearance at the declared
-aperture stations when dispersion and centroid errors are included. We evaluate
-a frozen design on held-out static machines and independent shot jitter. This
-conditional design comparison makes no claim of algorithm novelty, operational
-feedback or measured hardware tolerances.
+\begin{figure}[htbp]
+\centering\includegraphics[width=\linewidth]{figures/layout.pdf}
+\caption{Configured BTS element sequence. Red blocks are quadrupoles, blue blocks
+are bending elements and grey blocks are drifts. Dotted lines mark the four
+model aperture stations. The path coordinate follows the reference trajectory;
+this is not a surveyed mechanical layout.}\label{fig:layout}
+\end{figure}
 
-\section{Transfer-line model and boundary conditions}
-\subsection{Lattice and coordinates}
-The model is constructed with Accelerator Toolbox and its Python interface,
-pyAT~\cite{Terebilo2001,Rogers2017}. Its nominal energy is 4 GeV and its length
-is 21.789 m. Nine 0.2 m quadrupoles are arranged in three triplets, named
-q11--q13, q21--q23 and q31--q33. The sequence also contains an extraction kicker,
-two septum elements and three bending magnets. The nominal bending angles in
-sequence are $+7.500$, $+88.500$, $-111.701$, $+176.000$, $-111.701$ and
-$+88.500$ mrad; magnet lengths and edge angles are part of the archived
-configuration.
+\begin{table}[htbp]\centering
+\caption{Configured entrance and exit targets. Their physical source at these
+boundaries is unresolved; the exit is not the NKM-centre ring optics.}\label{tab:boundary}
+\begin{tabular}{lrr}\toprule
+Observable & m1 entrance & m4 target\\\midrule
+$\beta_x,\beta_y$ [m] & 7.560000, 12.269000 & 2.336495, 4.256241\\
+$\alpha_x,\alpha_y$ [1] & 1.523100, $-1.654700$ & $-0.016335$, 0.017772\\
+$D_x$ [m], $D'_x$ [1] & 0.276200, $-0.065700$ & 0.080868, 0.047472\\
+\bottomrule\end{tabular}\end{table}
 
-Positions are expressed in metres and normalized quadrupole strengths
-$K=G/(B\rho)$ in $\mathrm{m}^{-2}$, where $G$ is the magnetic gradient in T/m and
-$B\rho$ is the magnetic rigidity in T\,m. Particle tracking uses AT coordinates
-$(x,p_x,y,p_y,\delta,ct)$, where $p_x$ and $p_y$ are normalized canonical momenta
-and $\delta$ is the relative momentum deviation. Linear transverse optical
-quantities use the corresponding paraxial convention. The dispersion derivative
-$D'_x$ is dimensionless.
+Entrance and target functions (Table~\ref{tab:boundary}) are inherited configured
+values, treated as parametric. No transport from m4 to a ring matching point is
+established. Quadrupole family bounds, bore radius, pole-field limit, the 60 m
+beta screening ceiling and square aperture limits are modelling assumptions,
+not verified hardware specifications. The legacy MAD-X line has ten active
+quadrupoles, different drift/bend/edge definitions and an unused additional
+quadrupole definition. It is not an equivalent independent lattice; our
+independent validation implements the identical AT sequence analytically.
 
-The line configuration places square aperture elements with half-widths 19.35 mm
-at its ends and 30 mm at two interior locations. These are model apertures;
-continuous vacuum-chamber geometry and measured clearances have not been
-established for the present article. The preliminary MAD-X file has ten
-quadrupoles and cannot serve as an independent equivalent-lattice validation
-without reconciling its sequence.
+Aperture elements have half-widths 19.35 mm in both planes at $s=0$ and
+21.789 m, and 30 mm at 6.833 and 11.761 m. The continuous chamber and septum
+channel restrictions between them are unknown. Station transmission therefore
+cannot certify machine transmission; no conservative bound for the unknown
+chamber is claimed.
 
-\subsection{Entrance and exit optics}
-Table~\ref{tab:boundary} gives the boundary values used in the archived matching
-configuration. The target is treated here as a declared BTS-exit target. It
-must not be identified with the storage-ring optics at the NKM centre, since
-those values and the intervening transport differ.
-
-\begin{table}[!htbp]
-\centering
-\caption{Archived entrance optics and declared exit target. Beta and dispersion
-are in m; alpha and dispersion derivative are dimensionless. The physical
-provenance of the target boundary remains to be confirmed.}
-\label{tab:boundary}
-\begin{tabular}{lrr}
-\toprule Quantity & Entrance & Exit target\\\midrule
-$\beta_x$ [m] & 7.560000 & 2.336495\\
-$\alpha_x$ [1] & 1.523100 & $-0.016335$\\
-$\beta_y$ [m] & 12.269000 & 4.256241\\
-$\alpha_y$ [1] & $-1.654700$ & 0.017772\\
-$D_x$ [m] & 0.276200 & 0.080868\\
-$D'_x$ [1] & $-0.065700$ & 0.047472\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The historical constraint configuration assumes horizontal and vertical
-emittances of 100 and 10 nm\,rad and a relative energy spread of 0.0011. These
-are sensitivity-study inputs. Later author documentation identifies a
-7.67 nm\,rad horizontal design booster emittance; the archived ensembles are
-not relabelled as simulations of that beam. A design-beam transmission study
-requires a consistent specification of emittance, coupling, momentum spread,
-centroid, distribution and extraction optics.
-
-\draftnote{B02--B04: confirm the source and observation point of the boundary
-optics, reconcile AT and MAD-X geometry, provide a sourced layout figure and
-validate transport independently. Establish the main beam specification and
-physical chamber before reporting design-beam transmission.}
-
-\section{Matching and uncertainty methods}
-\subsection{Normalized matching and feasibility selection}
-For a quadrupole vector $\mathbf K$ and exit observables
-$\mathbf O=(\beta_x,\beta_y,\alpha_x,\alpha_y,D_x,D'_x)$, the implemented objective is
+\subsection{Beam covariance and clearance}
+The new study uses the booster horizontal design input $\epsilon_x=7.67$ nm rad
+and $\sigma_\delta=0.106\%$~\cite{Lee2024}. The vertical input
+$\epsilon_y=0.767$ nm rad is an assumed 10\% ratio. Betatron coordinates and
+momentum are independent untruncated Gaussians before dispersion is added;
+initial transverse coupling is zero and $ct=0$ for this RF-free single pass.
+The transverse blocks of the complete covariance are
 \begin{equation}
- r_i(\mathbf K)=\frac{O_i(\mathbf K)-O_{i,\mathrm{target}}}{s_i},
- \qquad J(\mathbf K)=\sum_{i=1}^{6}r_i^2.
- \label{eq:merit}
+ \Sigma_{u,\mathrm{bet}}=\epsilon_u
+ \begin{pmatrix}\beta_u&-\alpha_u\\-\alpha_u&(1+\alpha_u^2)/\beta_u\end{pmatrix},
+ \qquad \Sigma_0=\Sigma_{\mathrm{bet}}+\sigma_\delta^2\mathbf d\mathbf d^{\mathsf T},
 \end{equation}
-The normalization scales are 0.05 m for each beta residual, 0.01 for each alpha
-residual, 0.002 m for dispersion and 0.001 for its derivative. These make
-$J$ dimensionless; they are numerical scales rather than demonstrated operating
-tolerances.
+where $\mathbf d=(D_x,D'_x,D_y,D'_y,1,0)^{\mathsf T}$. Rolls can generate
+coupling downstream. Full covariance transport, $\Sigma_s=M_s\Sigma_0M_s^{\mathsf T}$,
+retains that coupling and momentum correlation. A local affine map gives the
+centroid $\bar{\mathbf z}_s=M_s\bar{\mathbf z}_0+\mathbf b_s$.
 
-The archived workflow first uses bounded least squares. When its result is
-successful and away from the strength bounds, SLSQP refines the same scalar
-merit. The configured budget is 100 for the least-squares maximum function
-evaluations and SLSQP maximum iterations. The current SLSQP call supplies
-strength bounds but no nonlinear constraint functions. Other physical criteria
-are evaluated separately, and the final selection prioritizes feasible
-candidates. This distinction matters when comparing the procedure with a
-fully constrained search.
-
-The outer random seed is 42. The first of three starts uses nominal settings;
-two additional starts are sampled within the family bounds. q11 and q33 have
-bounds $[-2.5,2.5]$ m$^{-2}$, while the other families use $[-3,3]$ m$^{-2}$.
-The archived constraint configuration also specifies a 60 m beta ceiling,
-1.5 m dispersion ceiling, a 1.2 T pole-tip field limit and beam-envelope and
-injection-geometry criteria. Their interpretation as hardware specifications
-requires source confirmation. Successful optimizer termination and physical
-feasibility are recorded separately.
-
-For uncoupled Twiss comparison, let
+For each aperture plane with lower/upper edges $a_-,a_+$, we define
 \begin{equation}
- T_u=\begin{pmatrix}\beta_u&-\alpha_u\\-\alpha_u&
- (1+\alpha_u^2)/\beta_u\end{pmatrix},\qquad
- \mathcal M_u=\tfrac12\operatorname{Tr}
- (T_{u,\mathrm{target}}^{-1}T_{u,\mathrm{out}})-1,
- \label{eq:mismatch}
+ c_u(s)=\min[a_+-\bar u(s),\bar u(s)-a_-]-5\sqrt{\Sigma_{uu}(s)},\qquad
+ c_{\min}=\min_{s\in\mathrm{stations},u\in\{x,y\}}c_u(s).
+ \label{eq:clearance}
 \end{equation}
-where $u=x,y$. The matrices are normalized to equal emittance;
-$\mathcal M_u$ is dimensionless and vanishes for a matched plane.
+Five sigma is a declared projected coverage metric, not complete containment of
+an unbounded Gaussian. Beta reduction in m must not be called a clearance
+increase in m. Historical optics-only ensembles use a separate conservative
+100/10 nm rad, 0.11\% beam configuration and are not pooled with this study.
 
-\subsection{Archived tolerance ensemble}
-Three independent runs use 50,000 realizations each with seeds 42, 123 and 777;
-a follow-up uses 400,000 realizations with seed 2026. All select the same
-optimization and error-budget hashes. The quadrupole settings remain fixed
-while errors are sampled. The analysis contains no capture callback and no
-particle-through-aperture transmission measurement. Its optical failure
-criterion is
-\begin{equation}
- \max(\beta_{x,\max},\beta_{y,\max})>60.01~\mathrm m
- \quad\text{or}\quad \mathcal M_x+\mathcal M_y>2.05,
- \label{eq:failure}
-\end{equation}
-including the stored 0.01 m beta and 0.05 mismatch allowances. This definition
-is less extensive than the nominal design's full feasibility checks.
+At 4 GeV the rigidity is approximately 13.34256 T m. For $K$ in m$^{-2}$,
+$G=K(B\rho)$ in T/m and $B_{\mathrm{pole}}=|G|r$ in T. Assumed bounds are
+$|K|\le2.5$ for q11/q33 and $|K|\le3$ for the other quadrupoles. With the
+assumed 19.35 mm bore, the respective maxima are 33.356/40.028 T/m and
+0.645/0.775 T, below the assumed 1.2 T screening limit. This calculation
+checks model consistency, not magnet engineering feasibility.
 
-Quantile intervals are calculated from order statistics using a binomial
-coverage construction. Median bootstrap checks use 20,000 replicates, with
-resampling seeds 1729, 2718 and 31415. For $k$ failures in $N$ independent
-realizations, the two-sided exact 95\% interval is obtained from beta-distribution
-quantiles at 0.025 and 0.975 with parameters $(k,N-k+1)$ and $(k+1,N-k)$,
-respectively, with endpoint conventions for $k=0$ or $k=N$. Wilson score
-intervals provide a cross-check~\cite{Wilson1927}. These intervals describe
-sampling uncertainty conditional on the chosen model and budget, not uncertainty
-in the physical assumptions.
+\section{Validation and study design}
+\subsection{Independent maps and active error coverage}
+We implement exact hard-edge thick-quadrupole and sector-bend maps with edge
+focusing, translations, roll rotations and fixed-geometry dipole perturbations,
+without AT optics/matrix calls. They are compared with central differences of
+AT particle tracking at every element boundary. The declared nominal maximum
+absolute map tolerance is $2\times10^{-6}$; transverse symplectic discrepancy
+must be below $10^{-10}$. The original 10-step integrator misses the map
+criterion ($4.05\times10^{-6}$). Increasing integration to 20, 40 and 80 steps
+gives $2.53\times10^{-7}$, $1.58\times10^{-8}$ and $9.89\times10^{-10}$.
+New studies use 40 steps; the original miss is retained in the evidence record.
+Independent exit beta/dispersion agree within $10^{-5}$ m and $2\times10^{-6}$,
+and transverse symplectic discrepancy is $1.22\times10^{-15}$.
 
-\subsection{Error coverage}
-The historical budget includes relative quadrupole-gradient errors with
-standard deviation $10^{-3}$, relative energy errors of $10^{-3}$, input beta
-errors of 5\%, quadrupole offsets of 100 $\mu$m and rolls of 0.5 mrad.
-The coverage audit reports effects on the optics from gradient, energy, beta
-and roll terms, with an offset contribution to peak beta through the implemented
-approximation. Dipole-strength errors, input centroid jitter and longitudinal
-placement errors do not affect the reported optical metrics in that evaluator.
-The same driver also computes an NKM stored-kick diagnostic; this diagnostic is
-excluded from the BTS results.
+Isolated gradient, translation, roll and dipole-field perturbations pass
+predeclared local map/orbit checks. Translations drive orbit even when
+uncoupled Twiss mismatch is insensitive; rolls generate coupling. Additional
+dipole curvature uses AT PolynomB[0], leaving reference bend geometry fixed.
+Energy jitter enters particle $\delta$ without also rescaling fields. Tracking
+at $\delta=\pm0.001$ differs from the nominal linear horizontal prediction by
+about 0.19 micrometres. For 50,000 design-beam particles, tracked/linear RMS
+ratios are 0.99896/1.00155, within the declared 2\% check. Intentional scraping
+verifies the first-loss element and surviving-coordinate accounting.
 
-Consequently, an inactive error cannot be assigned a generous physical tolerance
-from a zero numerical response. Coupled transport and orbit-dependent clearance
-need explicit validation, particularly for roll and alignment errors.
-\draftnote{B07: generate a machine-readable perturbation coverage audit and
-implement the missing physical responses needed for BTS transport claims.
-Document distributions, correlations and sources for each error amplitude.}
+These checks validate a local model. Nonlinear chromatic effects are retained
+in particle tracking but not the linear clearance estimate; no longitudinal
+6D-map symplectic certificate is inferred from a transverse check. Longitudinal
+magnet placement, supply quantization and downstream NKM/ring errors are
+outside the new error model. Their absence is not evidence of physical tolerance.
 
-\section{Matched design and archived performance}
-\subsection{Selected quadrupole settings}
-The archived search finds one feasible candidate among three starts, with the
-termination message ``Optimization terminated successfully.'' Its final merit
-is $\BtsMerit\times10^{-13}$, and both mismatch values print as zero at
-floating-point precision. The horizontal dispersion residual is
-$\BtsDispResidual\times10^{-11}$ m. This is a numerical match to the declared
-target, not evidence of a global optimum or an experimentally realized setting.
-Table~\ref{tab:strengths} reports the selected strengths.
+\subsection{Matching, alternative design and held-out protocol}
+Exit residuals for $(\beta_x,\beta_y,\alpha_x,\alpha_y,D_x,D'_x)$ are scaled by
+$(0.05\ \mathrm m,0.05\ \mathrm m,0.01,0.01,0.002\ \mathrm m,0.001)$.
+The historical search uses bounded least squares and conditional bounded SLSQP,
+then physical post-selection; it does not impose nonlinear beta constraints
+during those stages. A replay preserves the nominal start and two random
+uniform box starts (seed 42, budget 100). Raw and six-decimal settings are
+independently checked against the stated optical scales, family bounds and
+positive station clearance.
 
-\begin{table}[!htbp]
-\centering
-\caption{Nominal and selected quadrupole strengths, and family bounds,
-all in m$^{-2}$. Values are exported from the selected archived summary and
-configuration. Rounded settings have not been independently revalidated here.}
-\label{tab:strengths}
-\begin{tabular}{lrrc}
-\toprule Family & Nominal $K$ & Selected $K$ & Bounds\\\midrule
-\BtsStrengthRows
-\bottomrule
-\end{tabular}
-\end{table}
+The alternative minimizes vertical peak beta sampled at element boundaries
+with six exact exit-residual equalities, horizontal peak beta $\le60$ m and
+identical K bounds. SLSQP converges in 67 iterations from the archived match
+(maximum 200, termination tolerance $10^{-8}$). It is a nominal low-beta
+strategy, not a direct optimizer of held-out clearance. A separate 60-machine
+training audit (seed 71001) precedes evaluation; no test results select or tune
+the design. No optical correction or per-shot retuning is performed.
 
-The selected peak beta functions are $\BtsPeakX$ m horizontally and
-$\BtsPeakY$ m vertically. Relative to the configured 60 m ceiling, the
-vertical plane has the smaller beta margin. That margin is not itself a
-physical clearance: for an uncoupled beam, the rms horizontal size obeys
-\begin{equation}
- \sigma_x^2(s)=\beta_x(s)\varepsilon_x+D_x^2(s)\sigma_\delta^2.
- \label{eq:envelope}
-\end{equation}
-A chamber check must also include the centroid orbit, vertical or coupled
-covariance, a declared beam-coverage factor and the aperture shape.
+Held-out machines (seed 71002) have independent Gaussian quadrupole relative
+gradient errors 0.1\%, x/y offsets 100 micrometres, rolls 0.5 mrad and dipole
+relative fields 0.05\%. Each of 200 machines has three independent shots with
+5\% beta fluctuations in both planes (alpha fixed), horizontal centroid RMS
+0.5 mm, momentum-angle RMS 0.2 mrad and centroid momentum RMS 0.1\%.
+These are illustrative errors, not sourced engineering specifications.
+Shot covariance and dispersive centroid terms are included explicitly.
+Both designs receive the same latent errors and particle draws.
 
-\draftnote{B05 and B08: recompute baseline and matched optics from the same
-frozen configuration; compare a design chosen for envelope or error margin
-using equal physical assumptions. Add optics/dispersion and clearance profiles.
-No new robust design or nominal transmission gain has yet been established.}
+Each shot tracks 2,000 Gaussian particles (seed 71003), yielding 1.2 million
+per design. Loss is first nonfinite x after an element; surviving coordinates
+must be finite. All element exits are observed and first-loss indices retained.
+We estimate paired differences by resampling the 200 machine-average results,
+with 10,000 percentile-bootstrap replicates (seed 71004). Particles and shots
+sharing a machine are not treated as independent machines.
 
-\subsection{Tolerance distributions}
-All 550,000 requested evaluations in the selected historical ensemble are
-numerically valid. Table~\ref{tab:quantiles} gives pooled mismatch and peak-beta
-quantiles, omitting the stored-kick observable. The median horizontal mismatch
-is $\BtsMedianX$, with a 95\% interval
-$[\BtsMedianXLo,\BtsMedianXHi]$. Its upper tail is appreciably larger than its
-median, so a single central estimate does not describe every realization.
+\section{Results}
+\subsection{Nominal reproduction and local response}
+The historical three-start replay reproduces one feasible success, one
+infeasible success and one budget failure (Table~\ref{tab:starts}). The
+successful infeasible candidate illustrates why matching and feasibility are
+separate; the failed candidate is not another low-residual match. Three starts
+do not establish optimizer reliability, search topology or feasible volume.
 
-\begin{table}[!htbp]
-\centering\small
-\caption{Pooled fixed-optics results from 550,000 archived realizations.
-The interval is the 95\% order-statistic interval for the median. Mismatch is
-dimensionless. These metrics do not measure particle transmission.}
-\label{tab:quantiles}
-\begin{tabular}{lrrrr}
-\toprule Observable & Median & Median interval & p95 & p99\\\midrule
-\BtsQuantileRows
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{table}[htbp]\centering
+\caption{Historical replay outcomes. The initial start is nominal, not random.
+J is the scaled residual sum of squares. Feasibility is assessed after search.}\label{tab:starts}
+\begin{tabular}{lrrrr}\toprule
+Start & J & peak $\beta_x$ [m] & peak $\beta_y$ [m] & outcome\\\midrule
+Nominal & $1.29\times10^{-13}$ & 31.437 & 50.746 & feasible success\\
+Random 1 & $1.21\times10^{-12}$ & 25.329 & 62.556 & infeasible success\\
+Random 2 & 1284.86 & 69.921 & 65.043 & budget failure\\
+\bottomrule\end{tabular}\end{table}
 
-Five realizations fail the optical criteria in Eq.~\eqref{eq:failure}, giving
-$\hat p=5/550000=9.09\times10^{-6}$ and an exact 95\% interval of
-$[2.95\times10^{-6},2.12\times10^{-5}]$. The small count leaves considerable
-relative uncertainty in this probability. It must not be interpreted as
-five lost bunches, an accelerator reliability specification, or a measurement
-of ring injection efficiency.
+The archived raw/rounded strengths remain feasible at 40-step resolution and
+independent-map precision. Table~\ref{tab:strengths} supplies numerical values;
+decimal digits do not prescribe power-supply accuracy. Optical functions,
+dispersion and projected RMS sizes appear in Fig.~\ref{fig:optics}. Beta peaks
+reported here are element-boundary samples rather than continuous maxima.
 
-\section{Error sensitivity and statistical precision}
-\subsection{Independent seeds and prefix checks}
-Table~\ref{tab:seeds} records the independent runs and their predeclared absolute
-median-stability target of $10^{-5}$. The 50,000-sample runs compare prefixes
-of 25,000 and 50,000 samples; the follow-up compares 200,000 and 400,000.
-All three smaller runs miss the target. The follow-up meets it with an
-absolute change of $2.395\times10^{-6}$.
+\begin{table}[htbp]\centering
+\caption{Reference and alternative settings [m$^{-2}$], with reference gradient
+[T/m] and assumed-bore pole field [T]. Negative K indicates defocusing in x.}\label{tab:strengths}
+\begin{tabular}{lrrrr}\toprule
+Quad & Reference K & Alternative K & Reference G & $|B_{\mathrm{pole}}|$\\\midrule
+q11 & -0.367525 & 0.060274 & -4.904 & 0.095 \\
+q12 & -1.216433 & -2.126974 & -16.230 & 0.314 \\
+q13 & 1.586072 & 1.869755 & 21.162 & 0.409 \\
+q21 & -1.068373 & 0.954499 & -14.255 & 0.276 \\
+q22 & 2.823108 & -0.258649 & 37.667 & 0.729 \\
+q23 & -2.490968 & -1.197779 & -33.236 & 0.643 \\
+q31 & 2.042678 & 2.817163 & 27.255 & 0.527 \\
+q32 & -1.434271 & -3.000000 & -19.137 & 0.370 \\
+q33 & 0.351115 & 0.901619 & 4.685 & 0.091 \\
+\bottomrule\end{tabular}\end{table}
 
-\begin{table}[!htbp]
-\centering\small
-\caption{Per-run sample counts, optical failure counts, median horizontal
-mismatch and prefix changes. ``Met'' refers only to the $10^{-5}$ absolute
-median-stability target, not to convergence of rare failures or tail quantiles.}
-\label{tab:seeds}
-\begin{tabular}{rrrrrc}
-\toprule Seed & Samples & Failures & Median $\mathcal M_x$ & Prefix change & Target\\\midrule
-\BtsSeedRows
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{figure}[htbp]\centering\includegraphics[width=.85\linewidth]{figures/optics.pdf}
+\caption{Reference element-boundary beta, horizontal dispersion and projected
+RMS sizes for the design beam. The dotted beta line is the assumed optical
+screening ceiling, not a vacuum-chamber edge.}\label{fig:optics}\end{figure}
 
-A passing median-prefix check does not certify every statistic. The pooled
-median interval has a half-width of about $1.24\times10^{-5}$, while the
-failure-probability interval remains broad relative to its estimate. Sampling
-precision must therefore be assessed separately for central mismatch, extreme
-envelopes and rare feasibility failures. Increasing bootstrap count cannot
-replace independent physical realizations or correct an incomplete error model.
+For local sensitivity diagnostics we normalize rows by the optical scales and
+columns by an assumed common $0.01$ m$^{-2}$ tuning increment:
+$A_{ij}=(\partial O_i/\partial K_j)\Delta K_j/\sigma_i$.
+Central steps $10^{-4},10^{-5},10^{-6}$ m$^{-2}$ converge; the six active modes
+and three-dimensional local null space have condition number
+\BtsResponseCondition. Six finite small-mode perturbations remain inside bounds
+and agree with linear predictions within 1\%. This differs from the archived
+mixed-unit condition number 1421.636. Neither Euclidean singular-vector
+orthogonality nor a local null space guarantees finite optical decoupling.
+Achieved commissioning correction claims are withdrawn: measurements, actuator
+calibration and estimation uncertainty have not been established.
 
-\subsection{Sensitivity interpretation and correction analysis}
-Under the historical budget, the one-at-a-time ranking places input beta
-mismatch first, followed by quadrupole-gradient and energy errors. This ordering
-is conditional on the specified error amplitudes and the scalar merit.
-It does not rank errors absent from the optical evaluator, nor does it determine
-an optimal hardware specification independently of beam and aperture assumptions.
+\subsection{Beta reduction versus physical clearance}
+The alternative reduces vertical peak beta from 50.746 to \BtsAltPeakY\ m,
+while horizontal peak beta changes from 31.437 to \BtsAltPeakX\ m.
+At zero error, both have the same minimum projected station clearance,
+\BtsNominalMinimum\ mm, set by the fixed entrance. Thus a 22.57 m beta
+reduction produces no nominal minimum-clearance gain under these apertures.
 
-An interpretable correction study should use a dimensionless response matrix,
-\begin{equation}
- A_{ij}=\frac{\Delta K_{j,\mathrm{ref}}}{s_i}
- \frac{\partial O_i}{\partial K_j},\qquad A=U\Sigma V^{\mathsf T},
- \label{eq:svd}
-\end{equation}
-where $s_i$ are declared optical scales and $\Delta K_{j,\mathrm{ref}}$ are
-meaningful strength-change scales. Its singular vectors can identify correction
-combinations and weakly observable freedoms, but finite-step reevaluation and
-constraint checks are needed before treating them as usable knobs. The raw
-mixed-unit Jacobian condition number is not used as a tolerance result here.
+Held-out mean clearances are \BtsNomClear\ mm (reference) and
+\BtsAltClear\ mm (alternative). The paired change is \BtsClearMean\ mm,
+95\% interval [\BtsClearLo, \BtsClearHi] mm (Fig.~\ref{fig:comparison}).
+The interval includes zero, so a clearance benefit is not resolved at this
+precision. This is not proof of exact equivalence or universal inferiority of
+low-beta matching. It is a conditional negative result for the selected metric,
+boundaries, aperture stations and error distributions.
 
-\draftnote{B06, B09 and B10: validate finite-difference steps and singular rank,
-measure finite correction range, scan relevant error amplitudes, and compare
-uncorrected/corrected transport on held-out static errors with independent shot
-jitter. Add sensitivity and correction figures only from completed analyses.}
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/comparison.pdf}
+\caption{Left: vertical beta reduction at the fixed target. Right: paired changes
+in machine-average minimum five-sigma station clearance for 200 held-out
+machines. The bootstrap interval crosses zero despite the beta reduction.}
+\label{fig:comparison}\end{figure}
 
-\section{Discussion}
-The archived solution demonstrates that the chosen linear BTS model can meet
-its declared optical target with peak beta below the configured ceiling.
-The error ensemble provides a reproducible conditional characterization of
-mismatch and envelope fluctuations. Its principal practical message is that
-input optics must be controlled alongside magnet settings; a nominally exact
-match does not remove sensitivity to the extracted beam.
+Both designs transmit every tracked particle through the model stations.
+There are no first-loss entries in this ensemble; a separate deliberate
+scraping validation verifies loss accounting. Zero observations do not imply
+zero loss probability. A descriptive particle-binomial calculation gives a
+two-sided 95\% upper loss bound of $3.0741\times10^{-6}$ conditional on an
+independence assumption. Shared machine/shot effects limit that interpretation.
+For independent machine blocks with no losses, the one-sided 95\% upper
+probability of a block with any loss is \BtsMachineLossUpper\% (200 blocks).
+Observed zero paired transmission change is therefore not quoted as
+``100\% $\pm$ 0\%'' certainty. Neither statement addresses unmodelled continuous
+restrictions or downstream capture.
 
-Several limits prevent direct translation to commissioning requirements.
-The target boundary and lattice provenance need source confirmation; the
-historical beam emittance differs from the later design specification; and
-some sampled errors have no effect on the reported optical quantities.
-The nominal feasibility validator and the ensemble optical-failure rule also
-test different sets of conditions. Physical transmission requires explicit
-particles and apertures, including orbit and coupling effects, rather than a
-beta threshold alone.
+\subsection{Separate historical statistical audit}
+Reconstruction of all 550,000 historical observations confirms five optical-rule
+exceedances, no invalid evaluations, and compatible model/target/error inputs
+across four runs. The rule is $\beta_{x,\max}$ or $\beta_{y,\max}>60.01$ m,
+or $\mathcal M_x+\mathcal M_y>2.05$, where
+$\mathcal M_u=\tfrac12\mathrm{Tr}(\Sigma_{u,t}^{-1}\Sigma_{u,o})-1$
+uses unit-emittance transverse matrices. All five failures exceed vertical beta
+only (60.23--61.64 m); they are not physical losses.
 
-The archived multi-objective study is not used to support the present results.
-Its dispersion objective combines $D_x$ in metres with dimensionless $D'_x$,
-and its legacy finalist procedure does not establish physical BTS transmission.
-A future trade-off study should normalize both residuals consistently and
-compare physically validated designs under common constraints and held-out
-errors. It need not use a genetic algorithm if deterministic searches expose
-the relevant margin trade-off.
+The descriptive optical-failure estimate is $5/550000=9.09\times10^{-6}$ with
+exact asymmetric 95\% limits $[2.95\times10^{-6},2.12\times10^{-5}]$; Wilson
+limits are $[3.8831\times10^{-6},2.1283\times10^{-5}]$~\cite{Wilson1927}.
+The pooled horizontal median \BtsMedianX\ has the order-statistic interval
+[\BtsMedianXLo, \BtsMedianXHi], not a pooled-bootstrap interval. Reconstructed
+median, 95th and 99th quantile intervals match the archived analysis.
 
-\draftnote{B08--B10: replace these prospective points with a quantified physical
-design and correction comparison before claiming the planned article's additional
-contribution. B01--B12 remain pending; this first draft does not complete them.}
+Three 50,000-sample median-prefix changes (20.830, 11.436 and
+10.567)$\times10^{-6}$ miss the $10^{-5}$ target; the 400,000 follow-up
+change $2.395\times10^{-6}$ passes. This is median stability, not rare-tail
+convergence. The follow-up stopping decision is not archived as predeclared;
+fixed-N intervals do not certify sequential coverage. Historical one-at-a-time
+sensitivity is mean absolute change of $\mathcal M_x+\mathcal M_y$, not J.
+Seed42 ranks beta-only entrance errors (0.00890374), gradients (0.000861122)
+and energy (0.000106336). Near-zero alignment/roll mismatch does not certify
+alignment/coupling tolerances. Historical and new-model data remain separate.
 
-\section{Conclusions}
-For the archived 4 GeV nine-quadrupole BTS model, the selected bounded-search
-solution matches the declared exit optics to floating-point precision and has
-peak beta functions of 31.44 and 50.75 m. Under the implemented fixed-optics
-error budget, 550,000 realizations yield a median horizontal mismatch of
-0.002086 and five optical feasibility failures. The larger follow-up meets the
-specified median-prefix target, while rare-failure uncertainty remains distinct.
-These findings establish a reference for further transport and correction
-studies. They do not establish physical beam transmission, hardware tolerances
-or storage-ring capture. A source-confirmed boundary model, active-error audit
-and held-out margin/correction comparison are needed to substantiate the final
-BTS article's engineering conclusions.
+\section{Discussion and conclusions}
+The completed comparison identifies a limitation of beta-only optimization:
+when a fixed boundary controls the selected physical clearance metric, lowering
+intermediate beta does not necessarily provide a useful margin. Dispersion and
+centroid response further prevent converting a beta difference into millimetres
+of clearance. The useful design decision is to optimize and validate the actual
+limiting observable rather than assume a low-beta setting is better.
 
-\section*{Statements and declarations}
-\paragraph{Author contributions.}
-\draftnote{Author to confirm contributions and final authorship.}
-\paragraph{Funding and competing interests.}
-\draftnote{Author to supply funding/grant information and confirm the competing-interest declaration.}
-\paragraph{Acknowledgments and generative assistance.}
-This working draft was prepared with OpenAI Codex assistance. Scientific claims
-are limited to the selected archived artifacts; the author must verify the text
-and approve the final assistance disclosure and acknowledgments.
-\paragraph{Data and code availability.}
-The model and analysis code are maintained in the nkm-injection repository
-(\url{https://github.com/cspark7701/nkm-injection}). The selected simulation
-outputs are ignored by version control and are not supplied by the repository
-alone. A local provenance record accompanies this draft. No permanent public
-archive or BTS referee attachment is claimed to exist.
-\draftnote{B12: provide the selected raw-output attachment, source/environment
-snapshot and independently verified rebuild instructions before submission.}
+This conclusion is deliberately bounded. The target and continuous chamber
+are not source-confirmed; four square stations and illustrative independent
+Gaussian errors are assumptions. Sampling precision cannot compensate for
+these physical uncertainties. The results do not specify construction tolerances,
+commissioning feedback or machine reliability. With confirmed chamber geometry,
+a different limiting station or target, the preferred design could change.
+A more precise paired interval would require more independent machines,
+not merely more particles in the same shots. A rare-failure campaign is not
+required to support the present unresolved-clearance result.
+
+Independent maps, covariance, isolated perturbations, finite particle transport
+and historical reconstruction provide inspectable checks. Nominal matching,
+physical station transmission and storage-ring capture remain distinct. A final
+engineering application requires validated boundary/chamber specifications and
+measurement/calibration information beyond the present parametric study.
+
+\section*{Statements and Declarations}
+\paragraph{Funding.} Funding information will be supplied by the author before submission.
+\paragraph{Competing interests and acknowledgments.} Author confirmation is pending before submission.
+\paragraph{Author contribution.} Chong Shik Park is the corresponding author and
+is responsible for verifying the scientific interpretation, declarations and
+final article. Final author approval is pending.
+\paragraph{Generative assistance.} OpenAI Codex assisted with software changes,
+numerical execution, literature checking and manuscript drafting. This extends
+beyond copy editing; the author must validate and approve the final results.
+\paragraph{Data and code availability.} The prepared referee attachment contains
+selected raw observations, configurations, code snapshots, environment records,
+hashes and numerical rebuilding instructions. It has not been publicly deposited;
+the author must provide the attachment to reviewers. The companion NKM study
+shares upstream BTS assets, as disclosed above.
 
 \appendix
-\section{Draft evidence selection and unfinished assets}
-The nominal solution is selected from
-\path{backups_20261009/production_statistical_01/optimization/}; its summary and
-adjacent configuration match the hashes recorded in the outline. The tolerance
-selection is
-\path{results/journal_campaign_01/followup_analysis/tolerance_replicates_with_400k.json}.
-All four raw-summary hashes were checked when preparing the publication values.
-The exported tables are installed in \path{generated/archived_results.tex};
-\path{draft_provenance.json} records the source paths, digests and source commit.
-The current PDF can be compiled from these installed publication files without
-access to the ignored raw ensembles, but such compilation does not rerun or
-independently validate their physics.
-
-The six planned main figures are not inserted as simulated or measured results.
-The layout, optics/envelope profiles, normalized correction responses, margin
-trade-off, active-error scans and held-out correction/distribution plots remain
-assigned to B02--B10 in \path{002_manuscript_tasks.md}. The bibliography below
-contains six entries selected from the existing audited reference list; the
-closest BTS literature comparison remains B01 work. This generic one-column
-article format is for drafting; final JKPS formatting is a B11 deliverable.
+\section{Evidence identity and numerical reproduction}
+The preserved reviewer report evaluates the early main-branch draft at
+\texttt{bee78914}. The revised asset identity, point-by-point response and
+artifact manifest are provided in the attachment and
+\texttt{docs/paper\_bts/revision\_selection.json}. Exact artifact-specific hashes
+and JSON pointers replace a global generating-commit claim; some historical
+generating revisions remain unestablished. The new driver supplies validation,
+matching, normalized-response and frozen-design stages. Historical statistics
+are independently reconstructed from supplied observations; regenerating those
+old random realizations is not asserted. All stage outputs use new directories.
+A fresh isolated LaTeX build supplies this one-column article and records layout
+checks. These technical checks are not a journal acceptance decision.
 
 \bibliographystyle{unsrt}
 \bibliography{paper}

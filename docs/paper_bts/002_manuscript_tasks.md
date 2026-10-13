@@ -1,3 +1,5 @@
+> Current selected revision: see [Reviewer 1 response](reviews/author_response_main_20261013.md). The execution described there supersedes draft-status claims below; original deliverable requirements are preserved. B01 historical audit was corrected, operational correction claims withdrawn, and the completed low-beta comparison gives no resolved clearance benefit. Author submission declarations remain pending.
+
 # Ordered tasks for the BTS journal paper
 
 Created 2026-10-13. All tasks below are **pending**. Creating this outline and plan does not execute any simulation or complete any scientific task. Execute tasks in numerical order except for the explicitly optional MOGA branch.

@@ -553,3 +553,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 195. [**Milestone 195 — R1-BTS-09: Reconstruct BTS statistics and qualify tolerance claims**](195_r1_bts_09.md)
     - Audit all 550000 historical observations and pooling fields, reconstruct quantile/failure intervals and preserve missed prefixes while separating new physical transport.
+
+196. [**Milestone 196 — R1-BTS-10: Prepare the revised BTS article and referee evidence package**](196_r1_bts_10.md)
+    - Prepare the eight-page article, seventeen-claim ledger, point-by-point response and portable raw-evidence package; author-confirmed declarations and actual submission delivery remain pending.

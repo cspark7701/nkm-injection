@@ -28,8 +28,13 @@ def save(path,data):path.write_text(json.dumps(data,indent=2,default=serial,allo
 
 
 def environment():
+    try:
+        commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,stderr=subprocess.DEVNULL).strip()
+    except (subprocess.CalledProcessError,FileNotFoundError):
+        identity=ROOT/'SOURCE_IDENTITY.json'
+        commit=json.loads(identity.read_text())['packaging_commit'] if identity.exists() else 'exported-source; see recorded file hashes'
     files=['src/nkm_injection/bts_journal.py','scripts/run_bts_journal_revision.py','docs/paper_bts/journal_config.json']
-    return {'commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+    return {'commit':commit,
             'source_sha256':{n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in files},
             'python':platform.python_version(),'numpy':np.__version__,'scipy':scipy.__version__,'pyat':at.__version__}
 
@@ -223,7 +228,7 @@ def main():
     args=parser.parse_args();args.output_dir.mkdir(parents=True,exist_ok=False)
     config=json.loads((PAPER/'journal_config.json').read_text());save(args.output_dir/'config.json',config)
     result={'validation':validation,'matching':matching,'response':normalized_response,'comparison':comparison}[args.stage](args.output_dir,config)
-    print(json.dumps({k:v for k,v in result.items() if k not in ['environment','error_coverage']},default=serial))
+    print(json.dumps({'stage':args.stage,'output_dir':str(args.output_dir),'status':'completed; see saved numerical records'},sort_keys=True))
 
 
 if __name__=='__main__':main()

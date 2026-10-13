@@ -1,4 +1,14 @@
 {
+  "environment": {
+    "commit": "7eae106629f4fa9e7bc6f66ebd2b6b1db0fd2826",
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "source_sha256": {
+      "scripts/audit_bts_statistics.py": "deda36a241e79c72ccdd52da6cf235a2ec2ec23c19b1fa90bcf3d3eb6825a8a7",
+      "scripts/analyze_tolerance_replicates.py": "6acbd42a80604c36172d8181d006b894aa4cbc1271555250b90692589c108a85"
+    }
+  },
   "source_identity": "artifact digests checked; artifact-specific generating commits may be unavailable",
   "pool_compatibility": "all frozen BTS, entrance/target, error, constraint and unit fields equal; downstream NKM fields not interpreted as BTS response",
   "n_samples": 550000,

@@ -63,6 +63,41 @@
       "bytes": 565,
       "generating_commit": null,
       "provenance_note": "Config records generating commit; other artifacts require their own generation record."
+    },
+    {
+      "path": "docs/paper_bts/generated/heldout.json",
+      "sha256": "32b2260a7911194f7e71f0de4f87c24242c7d973d2d73d03fe7e443654f62a6f",
+      "bytes": 26636,
+      "generating_commit": null,
+      "provenance_note": "Selected numerical summary retains actual environment, source-file digests and stage output identity; do not infer a global generating commit."
+    },
+    {
+      "path": "docs/paper_bts/generated/heldout.json",
+      "sha256": "32b2260a7911194f7e71f0de4f87c24242c7d973d2d73d03fe7e443654f62a6f",
+      "bytes": 26636,
+      "generating_commit": null,
+      "provenance_note": "Selected numerical summary retains actual environment, source-file digests and stage output identity; do not infer a global generating commit."
+    },
+    {
+      "path": "docs/paper_bts/generated/normalized_response.json",
+      "sha256": "8ae746396351d6d1ab3bc5926ca689f500839b6aab8318a2264c176d91a4ec12",
+      "bytes": 10791,
+      "generating_commit": null,
+      "provenance_note": "Selected numerical summary retains actual environment, source-file digests and stage output identity; do not infer a global generating commit."
+    },
+    {
+      "path": "docs/paper_bts/generated/transport_validation.json",
+      "sha256": "6aa07d5da8b5f91a62ed5ab410fbd7b41c83d30384eeee240c48b08f22ca8a02",
+      "bytes": 3236,
+      "generating_commit": null,
+      "provenance_note": "Selected numerical summary retains actual environment, source-file digests and stage output identity; do not infer a global generating commit."
+    },
+    {
+      "path": "docs/paper_bts/generated/historical_statistics.json",
+      "sha256": "7c2029d170348e55aaf60f2fbf5c0b5772cff6ac265cbe8f09296bcf9ae79140",
+      "bytes": 16540,
+      "generating_commit": null,
+      "provenance_note": "Selected numerical summary retains actual environment, source-file digests and stage output identity; do not infer a global generating commit."
     }
   ],
   "claims": [
@@ -72,7 +107,7 @@
       "pointer": "/final_max_beta_y_m",
       "expected": 50.74588752092669,
       "interpretation": "Matched reference: peaks 31.4368/50.7459 m; matching precision is numerical.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.1/Table2"
     },
     {
       "id": "BC02",
@@ -80,7 +115,7 @@
       "pointer": "/1/optimizer_success",
       "expected": true,
       "interpretation": "Nominal plus two random starts: feasible success, infeasible success, evaluation-budget failure; no volume estimate.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.1/Table2"
     },
     {
       "id": "BC03",
@@ -91,7 +126,7 @@
         0.002098898171357444
       ],
       "interpretation": "Median interval uses order statistics, not pooled bootstrap.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.3"
     },
     {
       "id": "BC04",
@@ -102,15 +137,15 @@
         2.1215020626606803e-05
       ],
       "interpretation": "Five optical-rule exceedances; exact asymmetric interval, not physical losses.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.3"
     },
     {
       "id": "BC05",
       "artifact": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
       "pointer": "/sensitivity/condition_number",
       "expected": 1421.6363944352995,
-      "interpretation": "1421.636 is a mixed-unit raw sensitivity condition number; achieved correction claims withdrawn until validated.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "interpretation": "Archived mixed-unit condition number; new normalized response is local only and operational correction claims are withdrawn.",
+      "manuscript_location": "Results4.1"
     },
     {
       "id": "BC06",
@@ -130,7 +165,7 @@
         "Septum Position Error (100 um)": 0.0
       },
       "interpretation": "OAT mean absolute change of Mx+My: beta-only entrance error, gradient, energy; alpha fixed.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.3"
     },
     {
       "id": "BC07",
@@ -138,7 +173,7 @@
       "pointer": "/bts_config/ang_b3",
       "expected": -0.111701,
       "interpretation": "Three main bends plus kicker and two septa; 36 elements, 21.789 m from model.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Model2.1/Figure1"
     },
     {
       "id": "BC08",
@@ -146,7 +181,7 @@
       "pointer": "/target_config/init_beta_x",
       "expected": 7.56,
       "interpretation": "Configured entrance at m1; physical source unresolved.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Model2.1/Table1"
     },
     {
       "id": "BC09",
@@ -154,7 +189,7 @@
       "pointer": "/target_config/target_beta_x",
       "expected": 2.336495,
       "interpretation": "Configured parametric target at m4; not derived from ring NKM centre.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Model2.1/Table1"
     },
     {
       "id": "BC10",
@@ -175,7 +210,7 @@
         "status": "outside_tolerance"
       },
       "interpretation": "50k prefixes missed 1e-5 target; 400k passed; not tail convergence.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.3"
     },
     {
       "id": "BC11",
@@ -247,7 +282,7 @@
         }
       },
       "interpretation": "Family bounds and bore are modelling assumptions, not verified hardware.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Model2.2"
     },
     {
       "id": "BC12",
@@ -265,7 +300,127 @@
         "q33": 0.3511146520138777
       },
       "interpretation": "Archived raw strengths retained; rounded settings require reevaluation.",
-      "manuscript_location": "Results / model; reconciled in final article"
+      "manuscript_location": "Results4.1/Table3"
+    },
+    {
+      "id": "BC13",
+      "artifact": "docs/paper_bts/generated/heldout.json",
+      "pointer": "/paired_clearance_difference_m",
+      "expected": {
+        "mean": 1.461026137778985e-05,
+        "ci95": [
+          -1.7907184740676875e-05,
+          4.8323169222907976e-05
+        ],
+        "n_machines": 200,
+        "method": "paired machine-cluster percentile bootstrap",
+        "bootstrap_count": 10000,
+        "seed": 71004
+      },
+      "interpretation": "Results4.2: beta reduction does not resolve physical-clearance benefit at the chosen precision.",
+      "manuscript_location": "Results4.2"
+    },
+    {
+      "id": "BC14",
+      "artifact": "docs/paper_bts/generated/heldout.json",
+      "pointer": "/loss_counts",
+      "expected": [
+        {
+          "lost": 0,
+          "total": 1200000,
+          "conditional_particle_binomial_ci95": [
+            0.0,
+            3.0740614868249175e-06
+          ],
+          "interpretation": "Conditional descriptive interval; shared machine/shot effects prevent interpreting all particles as iid machine reliability."
+        },
+        {
+          "lost": 0,
+          "total": 1200000,
+          "conditional_particle_binomial_ci95": [
+            0.0,
+            3.0740614868249175e-06
+          ],
+          "interpretation": "Conditional descriptive interval; shared machine/shot effects prevent interpreting all particles as iid machine reliability."
+        }
+      ],
+      "interpretation": "Results4.2: zero observed losses with nonzero conditional uncertainty; no hardware reliability claim.",
+      "manuscript_location": "Results4.2"
+    },
+    {
+      "id": "BC15",
+      "artifact": "docs/paper_bts/generated/normalized_response.json",
+      "pointer": "/condition_number",
+      "expected": 57.78074156318767,
+      "interpretation": "Results4.1: explicitly scaled local response, not commissioned knobs.",
+      "manuscript_location": "Results4.1"
+    },
+    {
+      "id": "BC16",
+      "artifact": "docs/paper_bts/generated/transport_validation.json",
+      "pointer": "/integration_step_convergence",
+      "expected": {
+        "10": 4.053375046275676e-06,
+        "20": 2.531576042130723e-07,
+        "40": 1.5819562992902547e-08,
+        "80": 9.886349516818882e-10
+      },
+      "interpretation": "Methods3.1: recorded initial tolerance miss and integration convergence.",
+      "manuscript_location": "Methods3.1"
+    },
+    {
+      "id": "BC17",
+      "artifact": "docs/paper_bts/generated/historical_statistics.json",
+      "pointer": "/all_failure_records",
+      "expected": [
+        {
+          "seed": 123,
+          "sample_id": 4158,
+          "mx": 0.00010566333087069779,
+          "my": 0.11256342481932635,
+          "bx_max_m": 31.783023589074677,
+          "by_max_m": 60.229551952380696,
+          "failure_mode": "beta_exceeded"
+        },
+        {
+          "seed": 2026,
+          "sample_id": 159294,
+          "mx": 0.020645895352521704,
+          "my": 0.15099731923687787,
+          "bx_max_m": 26.61515147048709,
+          "by_max_m": 61.638781975500706,
+          "failure_mode": "beta_exceeded"
+        },
+        {
+          "seed": 2026,
+          "sample_id": 160916,
+          "mx": 0.0018482201816221178,
+          "my": 0.18014059335504573,
+          "bx_max_m": 32.0950467571283,
+          "by_max_m": 61.60879129406267,
+          "failure_mode": "beta_exceeded"
+        },
+        {
+          "seed": 2026,
+          "sample_id": 258351,
+          "mx": 0.002018223617684667,
+          "my": 0.14265503576928706,
+          "bx_max_m": 29.611721178734374,
+          "by_max_m": 60.60402002233292,
+          "failure_mode": "beta_exceeded"
+        },
+        {
+          "seed": 2026,
+          "sample_id": 372486,
+          "mx": 0.00017953587375596491,
+          "my": 0.11420409107364948,
+          "bx_max_m": 31.83492477655265,
+          "by_max_m": 60.26000817668665,
+          "failure_mode": "beta_exceeded"
+        }
+      ],
+      "interpretation": "Results4.3: all five historical optical-rule failures audited separately.",
+      "manuscript_location": "Results4.3"
     }
   ]
 }

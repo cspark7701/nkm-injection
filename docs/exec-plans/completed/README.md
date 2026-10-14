@@ -631,3 +631,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 221. [**Milestone 221 — E8: Physical Synthesis and Manuscript Rewrite**](221_e8_synthesis.md)
     - Hierarchy table; ring errors cost NKM and dipole alike (chromaticity/beta-beat), the on-axis DA margin does not organize capture, and the NKM-specific loss is injection angle errors on a 0.44 mrad window; abstract, discussion and conclusions rewritten; noninferiority wording.
+
+222. [**Milestone 222 — E11: Final Reconciliation of the Round-3 Revision**](222_e11_final_reconciliation.md)
+    - Round-3 response, claim rows E0–E11, cover letter; clean 30/15-page PRAB builds and 6-page supplement; 730 tests pass; round-3 bundle (e65a86c0…) verified by byte-identical archived-source rebuild.

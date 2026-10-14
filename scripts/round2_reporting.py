@@ -135,7 +135,7 @@ def robustness(builder):
                          [100*jitter[q]['mean_ci95'][1] for q in levels],color=colors['fieldmap_3d'],alpha=.15)
     axes[1].plot(x,[100*jitter[q]['p10'] for q in levels],'s--',color=colors['fieldmap_3d'],label='NKM p10')
     axes[1].plot(x,[100*jitter[q]['dipole']['mean_capture'] for q in levels],'o-',color=colors['dipole'],label='dipole mean')
-    axes[1].set_xlabel('booster jitter / reference');axes[1].set_ylabel('capture [%]');axes[1].legend(fontsize=7)
+    axes[1].set_xlabel('booster jitter / reference');axes[1].set_ylabel('capture [%]');axes[1].legend(fontsize=7,loc='lower left',bbox_to_anchor=(0.0,0.06))
     for i,level in enumerate(('0.0','0.25')):
         result=tuning['statistics'][level];gain=result['paired_gain']*100;ci=np.array(result['gain_ci95'])*100
         axes[2].errorbar(i,gain,yerr=[[gain-ci[0]],[ci[1]-gain]],fmt='o',color=colors['fieldmap_3d'],capsize=4)
@@ -163,6 +163,19 @@ def robustness(builder):
         for key,quantity in (('mean_capture','Mean'),('median_capture','Median'),('p10_capture','Pten'),
                              ('fraction_realizations_above_threshold','AboveEighty')):
             builder.macro('FinalTune'+name+quantity,result['tuned'][key]*100,'{:.1f}')
+    if 'ring_population' in data:  # round 3 (E7): ring-level uncertainty and dependence on single rings
+        for model,prefix in (('fieldmap_3d','FinalNkm'),('dipole','FinalDip')):
+            pop=data['ring_population'][model]
+            for value,name in zip(pop['ring_cluster_ci95'],('RingLo','RingHi')):builder.macro(prefix+name,value*100,'{:.1f}')
+            loo=list(pop['leave_one_ring_out'].values())
+            builder.macro(prefix+'LooMin',min(loo)*100,'{:.1f}');builder.macro(prefix+'LooMax',max(loo)*100,'{:.1f}')
+            per=list(pop['per_ring_mean'].values())
+            builder.macro(prefix+'PerRingMin',min(per)*100,'{:.1f}');builder.macro(prefix+'PerRingMax',max(per)*100,'{:.1f}')
+    if 'boundary_fraction' in tuning:  # round 3 (E7): matched-knob search diagnostics
+        for key,name in (('any','Any'),('x_inj','Xinj'),('angle_trim','Trim'),('field_scale','Scale')):
+            builder.macro('FinalTuneBoundary'+name,100*tuning['boundary_fraction'][key],'{:.0f}')
+        evals=np.asarray(tuning['evaluations_per_machine'])
+        builder.macro('FinalTuneEvalsMedian',float(np.median(evals)),'{:.0f}');builder.macro('FinalTuneEvalsMax',float(evals.max()),'{:.0f}')
     rows=[]
     for level in ('0','0.25','0.5','0.75','1','x_only','xp_only'):
         r=jitter[level];label={'x_only':'position only','xp_only':'angle only'}.get(level,level)

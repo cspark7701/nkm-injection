@@ -258,24 +258,24 @@
       "sha256": "c529e763c2316dd75f6d4b2a1bf9fcfa17628dc8d041121293e38110eb6186d9"
     },
     "round2_robustness": {
-      "path": "results/journal_campaign_03/d8_final_statistics.json",
-      "sha256": "dbac73c3ee2c83a527fa5cd4b011014ce6ba1098e22ebe9fbf05d5c16c917e3d"
+      "path": "results/journal_campaign_04/e7_final_statistics.json",
+      "sha256": "b8a51bc2a2e4920ab7ffd65ed70361b952884eedf3156cfb39f8aca5b323a3b0"
     },
     "round2_tuning": {
-      "path": "results/journal_campaign_03/d8_tuning/tuning_summary.json",
-      "sha256": "c58f6652c3ce608ef4c57f209e58ca12787fb500509f3d1a199ceba2c8629231"
+      "path": "results/journal_campaign_04/e7_tuning/tuning_summary.json",
+      "sha256": "65747e73d2c217697f676718c581c55e39bda3b55d197e7603cf4b798e53d154"
     },
     "round2_errors_42": {
-      "path": "results/journal_campaign_03/d8_seed42/capture_robustness_raw.json",
-      "sha256": "1a8d5df2c7aa28e64f0113a0023258da0d566b3141778678f2c5e951fef7be96"
+      "path": "results/journal_campaign_04/e7_seed42/capture_robustness_raw.json",
+      "sha256": "8fedf10736196e47af88a91c63033a8ea956759d55fdf76d2c597bade9a7e269"
     },
     "round2_errors_123": {
-      "path": "results/journal_campaign_03/d8_seed123/capture_robustness_raw.json",
-      "sha256": "61f43e7c0989d619d94e46e531d5387b7490956bca9e70bcbafa42af59a1ab78"
+      "path": "results/journal_campaign_04/e7_seed123/capture_robustness_raw.json",
+      "sha256": "1e133e1df43b207175518d62b86f0947843aab42edf442fece1dd1324b366ed8"
     },
     "round2_errors_777": {
-      "path": "results/journal_campaign_03/d8_seed777/capture_robustness_raw.json",
-      "sha256": "69dde846d2fdd5db34d052dc17fcbd0ae65e36df9a66c465f656281b9d243608"
+      "path": "results/journal_campaign_04/e7_seed777/capture_robustness_raw.json",
+      "sha256": "e3e7a020d311b72f6a3a56d388ade905692ccf74651311eb89141c89043b39db"
     }
   }
 }

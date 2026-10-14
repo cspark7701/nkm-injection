@@ -27,23 +27,42 @@ def verify_paired_jobs(reference, candidate):
         raise ValueError('Jitter comparison changes actual non-jitter draws or scientific settings')
 
 
-def analyze(root):
+def ring_population_statistics(rows, seed=1729, count=10000):
+    """Ring-level view of the joint draws (round 3): per-ring means, a two-stage ring-cluster bootstrap of the pooled
+    mean (resample ring identities, weight their realizations) and leave-one-ring-out means, for both models."""
+    out={}
+    for model in ('fieldmap_3d','dipole'):
+        by={}
+        for r in rows:by.setdefault(str(r['ring_error_seed']),[]).append(r['models'][model]['capture_fraction'])
+        rings=sorted(by);rng=np.random.default_rng(seed);boot=[]
+        for _ in range(count):
+            pick=rng.integers(0,len(rings),len(rings))
+            values=np.concatenate([by[rings[i]] for i in pick]);boot.append(values.mean())
+        allv=np.concatenate([by[k] for k in rings])
+        out[model]={'per_ring_mean':{k:float(np.mean(v)) for k,v in by.items()},
+                    'per_ring_count':{k:len(v) for k,v in by.items()},
+                    'mean':float(allv.mean()),'ring_cluster_ci95':np.quantile(boot,[.025,.975]).tolist(),
+                    'leave_one_ring_out':{k:float(np.concatenate([by[j] for j in rings if j!=k]).mean()) for k in rings}}
+    return out
+
+
+def analyze(root,prefix='d8'):
     inputs={}
     def load(folder,name='capture_robustness_raw.json'):
         path=root/folder/name;payload=path.read_bytes();inputs[str(path)]=hashlib.sha256(payload).hexdigest()
         return json.loads(payload)
-    combined=[load(f'd8_seed{seed}') for seed in (42,123,777)]
+    combined=[load(f'{prefix}_seed{seed}') for seed in (42,123,777)]
     rows=[r for d in combined for r in d['realizations'] if r['sample_id']>=0]
     pooled={model:cluster_stats([r['models'][model]['capture_fraction'] for r in rows],1729,10000,.8)
             for model in ('fieldmap_3d','dipole')}
     paired=paired_capture_difference({i:r['models']['dipole']['capture_fraction'] for i,r in enumerate(rows)},
                                     {i:r['models']['fieldmap_3d']['capture_fraction'] for i,r in enumerate(rows)})
-    baseline=load('d8_jitter_0');reference=capture_by_id(baseline);jitter={}
-    baseline_jobs=load('d8_jitter_0','checkpoint_inputs.json')
+    baseline=load(f'{prefix}_jitter_0');reference=capture_by_id(baseline);jitter={}
+    baseline_jobs=load(f'{prefix}_jitter_0','checkpoint_inputs.json')
     indexed={r['sample_id']:r for r in baseline['realizations'] if r['sample_id']>=0}
     for level in ('0','0.25','0.5','0.75','1','x_only','xp_only'):
-        raw=combined[0] if level=='1' else load(f'd8_jitter_{level}')
-        folder='d8_seed42' if level=='1' else f'd8_jitter_{level}'
+        raw=combined[0] if level=='1' else load(f'{prefix}_jitter_{level}')
+        folder=f'{prefix}_seed42' if level=='1' else f'{prefix}_jitter_{level}'
         verify_paired_jobs(baseline_jobs,load(folder,'checkpoint_inputs.json'))
         if raw['cli']['seed']!=42 or raw['cli']['samples']!=50:raise ValueError('Unpaired ensemble settings')
         for r in raw['realizations']:
@@ -61,7 +80,7 @@ def analyze(root):
     feature_rows=[];captures=[];ring_counts={}
     scalar=SCALARS+('septum_strength_rel','rf_phase_rad','arrival_time_s')
     for seed,raw in zip((42,123,777),combined):
-        spec=load(f'd8_seed{seed}','checkpoint_inputs.json')
+        spec=load(f'{prefix}_seed{seed}','checkpoint_inputs.json')
         jobs={j['sample']['sample_id']:j for j in spec['jobs']}
         for r in raw['realizations']:
             if r['sample_id']<0:continue
@@ -76,19 +95,22 @@ def analyze(root):
               if np.ptp([r[key] for r in feature_rows])>0}
     correlations=[r for r in partial_spearman(features,captures) if not r['variable'].startswith('ring_indicator_')]
     for row,q in zip(correlations,holm_adjust([r['p_value'] for r in correlations])):row['p_holm']=float(q)
-    return {'pooled':pooled,'nkm_minus_dipole':paired,'paired_jitter':jitter,'partial_correlations':correlations,
+    population=ring_population_statistics(rows)
+    return {'pooled':pooled,'nkm_minus_dipole':paired,'ring_population':population,'paired_jitter':jitter,'partial_correlations':correlations,
             'ring_draw_counts':ring_counts,'inputs_sha256':inputs,
             'ranking_scope':'partial ranks control other sampled magnitudes and saved ring identity; Holm family is sampled errors',
             'statistical_unit':'joint realization, conditional on the finite population of ten corrected rings',
             'bootstrap':{'seed':1729,'count':10000},'declared_loss_margin':.01,
+            'margin_test':'one-sided noninferiority: lower 95% bound of the paired difference above -0.01',
             'units':'capture fractions; paired differences in capture fraction, not percent'}
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--campaign',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--prefix',default='d8',help="ensemble folder prefix: d8 (round 2) or e7 (round 3)");a=p.parse_args()
     if a.output.exists():raise SystemExit('Output exists')
-    a.output.write_text(json.dumps(analyze(a.campaign),indent=2,allow_nan=False)+'\n')
+    a.output.write_text(json.dumps(analyze(a.campaign,a.prefix),indent=2,allow_nan=False)+'\n')
 
 
 if __name__=='__main__':main()

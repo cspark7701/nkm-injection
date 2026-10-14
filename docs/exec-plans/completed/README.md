@@ -634,3 +634,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 222. [**Milestone 222 — E11: Final Reconciliation of the Round-3 Revision**](222_e11_final_reconciliation.md)
     - Round-3 response, claim rows E0–E11, cover letter; clean 30/15-page PRAB builds and 6-page supplement; 730 tests pass; round-3 bundle (e65a86c0…) verified by byte-identical archived-source rebuild.
+
+223. [**Milestone 223 — Reviewer 2, Round-4 Report**](223_reviewer2_round4_report.md)
+    - Major revision of limited scope: booster jitter costs NKM and dipole alike, so the 28-point NKM-specific gap arises at zero jitter; ablation, paired wider-window points and a pulse section at the selected point requested (R2d-1 to R2d-7).

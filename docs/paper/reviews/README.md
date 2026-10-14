@@ -11,6 +11,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
 | [Reviewer 1, round 3](reviewer1_round3_20261012_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](reviewer1_round3_20261012_revision_tasks.md) |
 | [Reviewer 2, round 3](reviewer2_report_round3.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
+| [Reviewer 2, round 4](reviewer2_report_round4.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
 
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
 Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
@@ -52,3 +53,9 @@ locally, so R1C-01 can be closed by documenting access. Its new points concern t
 - an operating point not re-selected for the design beam (33 of 50 tuned machines moved toward the septum);
 - corrected rings that stop at a 100 µm orbit criterion without optics correction;
 - an assumed NKM chamber that encloses the magnet's own conductors.
+
+The fourth-round Reviewer 2 report accepts the round-3 answers and the finite-length core. It finds, from the
+campaign-04 per-realization records, that booster jitter costs the NKM and the dipole the same ~20 points, so the
+~28-point NKM-specific gap exists at zero jitter and is not "chiefly the booster angle jitter". It asks for a paired
+error-class ablation, a paired test of wider-window operating points, and a pulse section recomputed at the selected
+point (it still uses the round-2 point).

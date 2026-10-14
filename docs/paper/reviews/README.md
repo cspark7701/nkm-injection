@@ -15,6 +15,7 @@ recommendations and scientific tasks remain distinct from software checks.
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
 Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
 Round 3: [consolidated_revision_plan_round3.md](consolidated_revision_plan_round3.md) (tasks E1–E11, author inputs B1–B5).
+Round-3 response: [author_response_round3.md](author_response_round3.md) (E1–E11 complete; milestones 211–222).
 
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding

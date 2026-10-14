@@ -16,17 +16,19 @@ thin-map error over two related wire families. The ALS design sits at a much
 smaller sagitta, consistent with its published finding. The vertical-field sign is treated as an input consistency check,
 not as a limitation inherent to vector kick maps.
 
-The revised capture studies use the design booster beam, an explicitly declared
-chamber and ten corrected-error rings. They distinguish nominal finite-turn
-survival from a joint machine/shot distribution, report paired jitter differences
-and quantify reduced capture-based tuning on held-out particles. Two-plane wire
-and current tolerances distinguish ideal centroid cancellation from finite-beam
-moment changes. Pulse, chamber and septum estimates restrict the interpretation
-to a simulation study, without a commissioned-efficiency or system-transparency
-claim.
+The capture studies use the design booster beam, a declared chamber with a flat
+vacuum chamber inside the magnet, ten orbit-, optics- and tune-corrected rings and an
+operating point selected on them. Nominal capture is 98.4 % on the ideal ring and
+78.0 % on average over the corrected rings. Under the assumed joint machine and shot
+errors it falls to 16.1 %, against 44.1 % for an equally strong uniform kick; the
+analysis attributes the difference to injection angle errors acting on the kicker's
+narrow angular window. Transparency is shown to require compensation of the static
+residual of a realistically built magnet, and septum leakage must be held near
+0.07 G at the stored orbit. These are conditional simulation results, without a
+commissioned-efficiency or system-transparency claim.
 
-A point-by-point response to two rounds of pre-submission assessment documents
-the changes. The numerical
+A point-by-point response to three rounds of pre-submission assessment documents
+the changes, with a Supplemental Material for detailed tables and methods. The numerical
 claims are linked to hashed artifacts and a frozen local evidence bundle prepared
 as a referee attachment, including committed source and verified figure/macro
 rebuild instructions. The code repository is
@@ -45,7 +47,6 @@ Korea University, Sejong 30019, Republic of Korea
 ---
 
 Author checks before sending: confirm exclusive submission, authorship,
-affiliation and funding; complete the outstanding third-round scientific review
-revisions; and supply the frozen evidence bundle. D15 targets PRAB using REVTeX
+affiliation and funding; and supply the frozen round-3 evidence bundle. D15 targets PRAB using REVTeX
 4.2, with a one-column primary draft and a separate two-column preview. No letter
 or submission has been sent by this workflow.

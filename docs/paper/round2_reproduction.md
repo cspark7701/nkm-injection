@@ -112,3 +112,34 @@ Environment: Python 3.11.9, pyAT 0.7.2.dev26+g4701d48c, NumPy 2.4.6, SciPy 1.17.
 
 Campaign 03 stays frozen as the round-2 evidence. Round-3 reruns are written to
 `results/journal_campaign_04/` and receive their own manifest and bundle (E11).
+
+## Round 3 (campaign 04)
+
+The active selection is `revision_manifest_round3.json`, written by
+`scripts/make_round3_manifest.py`. It carries:
+- the round-2 entries unchanged (campaign 03 stays frozen);
+- the campaign-04 artifacts;
+- re-pointers of the round-2 builder keys (window, validation, chamber, robustness, tuning, error and jitter
+  ensembles) to the campaign-04 reruns.
+
+```bash
+python scripts/make_round3_manifest.py --require-all --output docs/paper/revision_manifest_round3.json
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg python scripts/build_revision_figures.py \
+  --manifest docs/paper/revision_manifest_round3.json --output-dir results/<new> --install-dir docs/paper/generated
+python scripts/build_submission_package.py --output-dir results/<new> --install-pdf
+python scripts/build_submission_package.py --layout two-column --output-dir results/<new2> --install-pdf
+python scripts/build_evidence_bundle.py --manifest docs/paper/revision_manifest_round3.json --builder revision \
+  --verify --output-dir results/journal_campaign_04/round3_evidence_bundle
+```
+
+The submission package also compiles `supplement.tex` (Supplemental Material) under the same log gate.
+
+The numerical round-3 studies are rerun with these drivers, in this order:
+1. `run_round3_nkm_chamber.py` and `analyze_round3_chamber.py` (E4);
+2. `run_round3_corrected_ring.py` (E5);
+3. `run_round3_operating_point.py` and `run_round3_point_studies.py` (E6);
+4. `run_round3_campaign.py` (E7);
+5. `analyze_round3_transparency.py` (E9) and `analyze_round3_synthesis.py` (E8).
+
+Their method notes are `round3_*.md`. The round-3 bundle location, archive hash and verification outcome are
+recorded in milestone 222.

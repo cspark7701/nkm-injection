@@ -267,6 +267,13 @@ class RevisionBuilder(bj.Builder):
         self.macro("RThreeSigmaSeptumUm",1e6*d["sigma_x_septum_m"],"{:.0f}")
         self.macro("RThreeClearSigma",d["clearance_sigma"],"{:g}")
         self.macro("RThreeCandidates",str(len(d["candidates"])))
+        reference_scale=InjectionStudyConfig.from_dict(self.load("operating_point_3d")).field_scale
+        self.macro("RThreeScaleRatio",cands[d["selected"]["2mm"]]["config"]["field_scale"]/reference_scale,"{:.2f}")
+        if self.has("round3_reference_window"):  # round-2 point, same chamber model except the in-magnet chamber
+            ref=self.load("round3_reference_window")["rows"]
+            for axis,name in (("angle","Angle"),("position","Position")):
+                lo,hi=round2.window_bounds(ref,axis);self.macro(f"RThreeRef{name}Width",hi-lo,"{:.2f}")
+
         for blade,tag in (("2mm","Two"),("1mm","One")):
             c=cands[d["selected"][blade]];cfg=c["config"]
             self.macro(f"RThreeOp{tag}XinjMm",1e3*cfg["injection_x_m"],"{:.2f}")

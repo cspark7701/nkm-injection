@@ -45,3 +45,29 @@ kept in the artifact. The NKM rows are unaffected.
 **Follow-up at the selected point** (`scripts/run_round3_point_studies.py`): the window, angular-edge offsets, the
 independent trajectory check, 500/4000-turn validation and the chamber study are rerun at the new point, so that the
 manuscript uses a single operating point.
+
+## Follow-up studies at the selected point (completed)
+
+Run with `scripts/run_round3_point_studies.py`. All of them include the in-magnet NKM chamber.
+
+| Study | Selected point | Round-2 point |
+| :--- | :--- | :--- |
+| Angular window at 80 % | −0.32 to +0.12 mrad (width 0.44) | 0.76 mrad |
+| Position window at 80 % | −1.87 to +0.53 mm (width 2.40) | 1.99 mm |
+| Nominal native capture, 500 / 4000 turns | 98.4 % / 97.8 % | 97.0 % / 96.1 % |
+| Affine element-map reference, 500 turns | 99.5 % | 100 % |
+| Angular-edge candidates, 4000 turns | 82.1 % / 80.3 % | 79.4 % / 84.7 % |
+| Lowest-capture corrected ring (5501), 500 / 4000 turns | 32.1 % / 27.5 % | 3.0 % / 1.4 % (round-2 ring) |
+| Chamber study: ideal ring, NKM / dipole | 98.4 % / 100 % | 97.0 % / 97.3 % |
+| Chamber study: corrected rings, mean / p10 / min | 78.0 / 65.7 / 31.0 % | 61.7 / 52.3 / 2.7 % (round-2 rings) |
+| Rectangular arc scan, 10 / 12 / 15 mm half-width | 92.7 / 98.5 / 99.4 % | 81.7 / 97.0 / 99.7 % |
+
+The selected point trades angular width (0.44 against 0.76 mrad) for position width (2.40 against 1.99 mm). Its
+declared accuracy allowance (one tenth of the angular window) falls to 0.044 mrad. The nominal thin-map error,
+0.069 mrad, is now 155 % of it, and η* is 0.025. At this point a single thin map is therefore not adequate.
+
+**Dipole validation, recomputed** with the control calibrated at the selected point: 100 % on the ideal ring, ring
+mean 82.2 % (p10 68.8 %). The superseded rows are kept in the artifact.
+
+**Not yet updated.** The robustness section (joint-error ensembles, jitter, tuning) still reports the round-2
+population and point until the E7 rerun.

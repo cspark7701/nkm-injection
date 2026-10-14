@@ -619,3 +619,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 217. [**Milestone 217 — E6: Operating Point Re-selected for the Design Beam**](217_e6_operating_point.md)
     - Declared clearance/knob/objective rule over the corrected rings: x_inj −19.48 mm, S 0.95 (2 mm blade); ring mean 78.0 % vs 68.9 % at the round-2 point (p10 65.7 vs 43.3 %); gain from a 1.1 mm smaller injected amplitude; control-calibration defect fixed.
+
+218. [**Milestone 218 — E6 Follow-up: Window, Validation and Chamber Study at the Selected Point**](218_e6_point_studies.md)
+    - Selected point: windows 0.44 mrad / 2.40 mm, nominal 98.4/97.8 % (500/4000 turns), corrected-ring mean 78.0 % (p10 65.7 %); thin map no longer within the accuracy allowance (155 %); robustness section awaits E7.

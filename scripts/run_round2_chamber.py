@@ -76,6 +76,9 @@ def main():
     for label,source in lattice_files.items():
         for name,profile in profiles.items():
             if label!='ideal' and name.startswith('scan_'):continue
+            # Round 3: corrected rings use the elliptic open/closed profiles only (the rectangles bracket octagon corners
+            # and are evaluated on the ideal ring); this halves the corrected-ring cost.
+            if a.nkm_magnet_half_mm and label!='ideal' and name.endswith('_rectangle'):continue
             filename=out/f'{label}_{name}.json'
             if filename.exists() and a.resume:rows.extend(json.loads(filename.read_text())['rows']);continue
             lattice=base.ring_c if source is None else at.load_mat(source)

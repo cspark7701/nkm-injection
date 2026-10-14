@@ -40,6 +40,8 @@ def referenced_figures(tex: str):
 def stage_sources(dest: Path):
     tex = (PAPER / "paper.tex").read_text()
     files = ["paper.tex", "paper_twocolumn.tex", "paper.bib", "generated/journal_macros.tex"] + referenced_figures(tex)
+    if (PAPER / "supplement.tex").is_file():  # round 3: Supplemental Material shares macros and figures
+        files += ["supplement.tex"] + [f for f in referenced_figures((PAPER / "supplement.tex").read_text()) if f not in files]
     for rel in files:
         src = PAPER / rel
         if not src.is_file():
@@ -78,6 +80,23 @@ def compile_paper(src: Path, tex_name: str = "paper.tex"):
     return int(pages.group(1)) if pages else None
 
 
+def compile_supplement(src: Path):
+    """pdflatex twice (three if labels move) for supplement.tex, under the same log gate; returns pages."""
+    run = lambda *c: subprocess.run(c, cwd=src, capture_output=True, text=True)
+    for i in range(3):
+        r = run("pdflatex", "-interaction=nonstopmode", "-halt-on-error", "supplement.tex")
+        log = (src / "supplement.log").read_text(errors="replace")
+        if r.returncode != 0:
+            raise SystemExit("supplement LaTeX build failed:\n" + r.stdout[-4000:])
+        if i >= 1 and "Rerun to get" not in log:
+            break
+    bad = BAD_LOG.findall(log)
+    if bad:
+        raise SystemExit(f"Supplement LaTeX build not clean: {sorted(set(bad))}")
+    pages = re.search(r"Output written on supplement\.pdf \((\d+) pages", log)
+    return int(pages.group(1)) if pages else None
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--output-dir", type=Path, required=True)
@@ -96,11 +115,14 @@ def main(argv=None):
     pdf_name = f"{stem}.pdf"
     pages = compile_paper(src, tex_name)
     files.append(f"{stem}.bbl")
+    supplement_pages = compile_supplement(src) if "supplement.tex" in files else None
     archive = out / "nkm_article_submission_source.tar.gz"
     with tarfile.open(archive, "w:gz") as tar:
         for rel in files:
             tar.add(src / rel, arcname=f"nkm_article_submission/{rel}")
     shutil.copy2(src / pdf_name, out / pdf_name)
+    if supplement_pages is not None:
+        shutil.copy2(src / "supplement.pdf", out / "supplement.pdf")
     sup = out / "supplement"
     for rel in SUPPLEMENT:
         (sup / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -115,8 +137,8 @@ def main(argv=None):
     record = {
         "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(git("status", "--porcelain", "--", "docs/paper", "scripts", "src")),
         "journal": "PRAB", "layout": a.layout, "entry_point": tex_name,
-        "pages": pages, "sources": {r: sha256(src / r) for r in files},
-        "outputs": {f.name: sha256(f) for f in (archive, out / pdf_name)},
+        "pages": pages, "supplement_pages": supplement_pages, "sources": {r: sha256(src / r) for r in files},
+        "outputs": {f.name: sha256(f) for f in (archive, out / pdf_name, out / "supplement.pdf") if f.is_file()},
         "supplement": {r: sha256(sup / r) for r in SUPPLEMENT},
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "packages": pkgs,
                         "tex": subprocess.run(["pdflatex", "--version"], capture_output=True, text=True).stdout.splitlines()[0]},
@@ -127,7 +149,9 @@ def main(argv=None):
     (out / "package_manifest.json").write_text(json.dumps(record, indent=2) + "\n")
     if a.install_pdf:
         shutil.copy2(src / pdf_name, PAPER / pdf_name)
-    print(json.dumps({"pages": pages, "files": len(files), "archive": str(archive), "pdf_sha256": record["outputs"][pdf_name]}, indent=1))
+        if supplement_pages is not None and a.layout == "one-column":
+            shutil.copy2(src / "supplement.pdf", PAPER / "supplement.pdf")
+    print(json.dumps({"pages": pages, "supplement_pages": supplement_pages, "files": len(files), "archive": str(archive), "pdf_sha256": record["outputs"][pdf_name]}, indent=1))
 
 
 if __name__ == "__main__":

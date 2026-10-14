@@ -72,3 +72,10 @@ def test_native_aps_control_notice_keeps_real_bibliography_warnings():
     assert BSP.bibliography_warnings(notice) == []
     warning = "Warning--I didn't find a database entry for missing"
     assert BSP.bibliography_warnings(notice + "\n" + warning) == [warning]
+
+
+def test_supplement_is_staged_with_its_figures(tmp_path):
+    files = BSP.stage_sources(tmp_path)
+    assert "supplement.tex" in files
+    supplement_figures = BSP.referenced_figures((BSP.PAPER / "supplement.tex").read_text())
+    assert supplement_figures and all(f in files and (tmp_path / f).is_file() for f in supplement_figures)

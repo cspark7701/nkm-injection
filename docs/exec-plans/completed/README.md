@@ -622,3 +622,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 218. [**Milestone 218 — E6 Follow-up: Window, Validation and Chamber Study at the Selected Point**](218_e6_point_studies.md)
     - Selected point: windows 0.44 mrad / 2.40 mm, nominal 98.4/97.8 % (500/4000 turns), corrected-ring mean 78.0 % (p10 65.7 %); thin map no longer within the accuracy allowance (155 %); robustness section awaits E7.
+
+219. [**Milestone 219 — E10: Supplemental Material and Presentation Fixes**](219_e10_supplement_presentation.md)
+    - Supplement (trajectory table, wire/loop tables, 100 nm sensitivity case, statistical methods with noninferiority wording, procedures); first-unstable-launch definition; open-IVU gap justified; both layouts build clean.

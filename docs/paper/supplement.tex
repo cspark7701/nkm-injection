@@ -1,0 +1,155 @@
+% Supplemental Material for "Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light
+% Source design lattice". Shares the generated macros and figures with paper.tex.
+\documentclass[aps,prab,preprint,amsmath,amssymb,floatfix,longbibliography]{revtex4-2}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\input{generated/journal_macros.tex}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thesection}{S\arabic{section}}
+
+\begin{document}
+\title{Supplemental Material: Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light Source design lattice}
+\author{Chong Shik Park}
+\affiliation{Department of Accelerator Science and Center for Accelerator Research, Korea University, Sejong 30019, Republic of Korea}
+\date{October 13, 2026}
+\maketitle
+
+This supplement collects detailed tables, a larger-emittance sensitivity case and procedural definitions that support
+the main article. Numbers are generated from the same evidence manifest as the article.
+
+\section{Independent trajectory check}
+\label{sec:s-trajectory}
+
+An adaptive DOP853 integration of the stated paraxial equations, in the same filament field, is compared with the
+640-slice drift--kick--drift map at the nominal point, at the interpolated angular-window edges (offsets
+\ODEEdgeLoMrad/\ODEEdgeHiMrad\,mrad), with nonzero vertical position and angle, and at $\delta=\pm0.002$.
+Relative/absolute solver tolerances are $2\times10^{-11}/2\times10^{-13}$. Table~\ref{tab:s-ode} lists the
+discrepancies; slice and span checks through 1280 slices and $\pm0.9$\,m stay below one percent of a $0.1\sigma$
+response in either plane.
+
+\begin{table}[!tbp]
+\centering\small
+\caption{Independent trajectory check. Launch $y$ is in mm, $y'$ in mrad and $\delta$ in $10^{-3}$; absolute coordinate
+discrepancies are nm for positions and nrad for canonical momenta. Deterministic solver comparisons, without sampling
+intervals.}
+\label{tab:s-ode}
+\begin{tabular}{@{}lrrrrrrr@{}}\toprule
+Case & $y$ & $y'$ & $\delta$ & $|\Delta x|$ & $|\Delta p_x|$ & $|\Delta y|$ & $|\Delta p_y|$ \\\midrule
+\ODEValidationRows
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Wire-position and loop-current sensitivities}
+\label{sec:s-wires}
+
+Tables~\ref{tab:s-wiretol} and \ref{tab:s-looptol} give the first-order on-axis dipole and quadrupole sensitivities of
+the ideal geometry to each wire coordinate and to each loop current, and the single-error limits for a stored-beam
+centroid amplitude of $0.1\sigma$ in each plane. The main article reports the simultaneous-error consequence.
+
+\begin{table}[!tbp]
+\centering\footnotesize
+\caption{On-axis wire sensitivity. Wire numbers follow the four quadrant loops, inner then outer wire. $u$ is the
+displaced coordinate. Dipole derivatives $D_{x,y}=\partial K_{x,y}/\partial u$ are in rad/m; $Q_n=\partial J_{xx}/\partial u$
+and $Q_s=\partial J_{xy}/\partial u$ are in rad/m$^2$, with $J=\partial(K_x,K_y)/\partial(x,y)$, $J_{yy}=-J_{xx}$ and
+$J_{yx}=J_{xy}$ to numerical precision. $t_x,t_y$ are single-error $0.1\sigma$ limits in $\mu$m. A dash indicates no
+resolved first-order dipole sensitivity; higher orders remain. Deterministic central differences, step 0.1\,$\mu$m.}
+\label{tab:s-wiretol}
+\begin{tabular}{rrrrrrrr}\toprule
+Wire & $u$ & $D_x$ & $D_y$ & $Q_n$ & $Q_s$ & $t_x$ & $t_y$\\\midrule
+\WireSensitivityRows
+\bottomrule\end{tabular}
+\end{table}
+
+\begin{table}[!tbp]
+\centering\small
+\caption{Independent-loop relative-current sensitivity. Dipole derivatives are in rad per relative current; normal and
+skew quadrupole derivatives in rad/m per relative current. The final column is the joint two-plane $0.1\sigma$
+single-loop limit in units of $10^{-4}$. Deterministic derivatives with relative-current step $10^{-5}$.}
+\label{tab:s-looptol}
+\begin{tabular}{rrrrrr}\toprule
+Loop & $D_x$ & $D_y$ & $Q_n$ & $Q_s$ & Limit\\\midrule
+\LoopSensitivityRows
+\bottomrule\end{tabular}
+\end{table}
+
+\section{Larger-emittance sensitivity case}
+\label{sec:s-largebeam}
+
+Before the design booster beam was supplied, the studies used a 100/10\,nm\,rad beam with rms energy spread 0.0011, the
+septum aperture and no additional chamber profile. For \SurvN\ particles (seeds \SurvSeeds), \SurvShort\,\% survive
+500 turns and \SurvLong\,\% survive \SurvTurns\ turns (95\,\% particle Wilson interval \SurvLongLo--\SurvLongHi\,\%);
+the late loss is \SurvLateLossPct\ percentage points (Fig.~\ref{fig:s-accept}). A separate \BigN-particle sample gives
+\BigCap\,\% (\BigLo--\BigHi\,\%) at 500 turns. In that case the paired vertical-kick diagnostic gives \AperDiagRef\,\%
+with the NKM vertical kick and \AperDiagOpenNoVert\,\% when it is suppressed; a uniform 5\,mm vertical half-aperture
+reduces capture with or without that kick (to \AperDiagXopen\ and \AperDiagNoVert\,\%), which supports a role for
+transverse transfer in the ring without identifying a unique coupling resonance. These numbers belong to the
+larger-emittance case and are not design-beam results.
+
+\begin{figure}[!tbp]
+\centering
+\includegraphics[width=\textwidth]{generated/figures/fig6_acceptance_survival.pdf}
+\caption{Larger-emittance sensitivity case without the additional chamber profile. Left: deterministic 500-turn
+single-particle survival in septum phase space ($\delta=0$, \AccPoints\ launches), with 100/10\,nm\,rad beam ellipses
+at one and two rms widths. Right: survival of \SurvN\ particles, seeds \SurvSeeds, through \SurvTurns\ native turns;
+the final 95\,\% Wilson interval is stated in the text.}
+\label{fig:s-accept}
+\end{figure}
+
+\section{Statistical methods}
+\label{sec:s-stats}
+
+\emph{Particle intervals.} Capture of a fixed bunch is a binomial fraction; its 95\,\% interval is the Wilson score
+interval over the pooled particles of the stated seeds. It describes particle sampling for fixed models, ring and
+settings only.
+
+\emph{Realization intervals.} Joint machine/shot ensembles are summarized by their mean, median, tenth percentile and
+fraction of realizations at or above 80\,\%. Intervals of the mean are percentile bootstraps over joint realizations
+(10\,000 resamples, seed 1729). Because each realization draws one of ten corrected rings with replacement, a second,
+ring-cluster bootstrap resamples the ten ring identities and weights their realizations; together with the
+leave-one-ring-out means it shows how much the result depends on the finite ring population.
+
+\emph{Paired differences.} Comparisons between models, jitter levels or tuned and untuned settings use the same
+particles and error draws; the paired difference is bootstrapped over realizations (10\,000 resamples, seed 1729).
+
+\emph{Acceptable-loss test.} Whether a jitter level costs less than one percentage point is a one-sided
+noninferiority question: the lower 95\,\% bootstrap endpoint of the paired difference must lie above $-1$ percentage
+point. The one-point value is the declared analysis margin of the robustness analysis; it is not a design
+specification, and an interval that crosses it is reported as inconclusive rather than as equivalence.
+
+\emph{Associations.} Partial Spearman rank correlations control the other sampled error magnitudes and the ring
+identity; two-sided probabilities from the asymptotic $t$ statistic are Holm-adjusted over the sampled-error
+hypotheses. They describe associations within the sampled model, not causal error rankings.
+
+\section{Procedures}
+\label{sec:s-procedures}
+
+\emph{Corrected rings.} Each of ten error draws (seeds 5501--5510) is commissioned in ten steps of increasing error
+amplitude. BPM readings are referenced to the adjacent quadrupole centre with a 10\,$\mu$m rms residual; the orbit is
+corrected with the 120 corrector pairs by truncated SVD (cutoff $10^{-3}$ of the largest singular value, $\pm1$\,mrad
+bound) until the rms improves by less than 1\,\% per iteration. The $\beta$-beat and horizontal dispersion at the BPMs
+are then fitted with the 344 individual quadrupole gradients (Gauss--Newton on a fixed forward-difference Jacobian,
+SVD cutoff $10^{-2}$, changes bounded to 1\,\% per step, three accepted steps), followed by bounded Q11/Q12 tune
+correction and a final orbit correction. No skew correctors exist; coupling is not corrected.
+
+\emph{Operating point.} Candidates place $x_\mathrm{inj}$ at the 3$\sigma_x$ septum-clearance limit and 0.25, 0.5 and
+1.0\,mm further out, with $S=0.80$--1.00 and the inner matched root of the 3-D magnet; each is scored by the tenth
+percentile, then the mean, of capture over the corrected rings (100 particles per ring, no injection errors), for
+2\,mm and 1\,mm blades. The selected points are validated on fresh 2$\times$500-particle bunches; the paired dipole
+control is calibrated to the 3-D centroid response at each validated point.
+
+\emph{Window.} Capture is evaluated on a fixed 0.2\,mm/mrad grid of septum-exit offsets about the selected point,
+extended while a boundary remains above 80\,\% (maximum offset 3), with crossing cells refined once to 0.1 and linearly
+interpolated. Two 500-particle bunches (seeds 1001/1002) per value.
+
+\emph{Tuning.} For each of 50 static machines, capture of 100 fresh training particles (all shot errors zero) is
+maximized over $x_\mathrm{inj}$ (bounded above by the clearance limit, 1.5\,mm range), an angle trim of
+$\pm0.5$\,mrad about the re-matched angle of the current $(x_\mathrm{inj},S)$, and $S$ (0.75--1.05), by repeated
+strict-improvement coordinate sweeps (steps 0.25\,mm, 0.1\,mrad, 0.025; at most four sweeps). Held-out validation
+restores the joint shot errors on the paired 200-particle samples at zero and quarter booster jitter. The fraction of
+machines whose optimum lies on a bound is reported.
+
+\end{document}

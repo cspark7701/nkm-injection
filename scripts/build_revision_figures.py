@@ -74,11 +74,18 @@ class RevisionBuilder(bj.Builder):
     def transparency_sensitivities(self):
         if not self.has("round2_transparency"):return
         d=self.load("round2_transparency");rows=[]
-        for r in d["wire_sensitivity"]:
+        def num(v,floor,digits):
+            """Unresolved (below a column-relative floor) entries print as 0; small values in scientific notation."""
+            if abs(v)<floor:return "0"
+            return f"{v:+.{digits}f}" if abs(v)>=10**(-digits) else tex_sci(v,2)
+        ws=d["wire_sensitivity"]
+        dmax=max(abs(v) for r in ws for v in r["dipole_derivative_rad_per_m"])
+        qmax=max(abs(v) for r in ws for row in r["quadrupole_derivative_rad_per_m2"] for v in row)
+        for r in ws:
             k=r["dipole_derivative_rad_per_m"];j=r["quadrupole_derivative_rad_per_m2"]
             tolerance=["--" if v is None else f"{v*1e6:.2f}" for v in r["tolerance_x_y_m"]]
-            rows.append(f"{r['wire']+1} & ${r['axis']}$ & {k[0]:+.3f} & {k[1]:+.3f} & "
-                        f"{j[0][0]:+.1f} & {j[0][1]:+.1f} & {tolerance[0]} & {tolerance[1]} \\\\")
+            rows.append(f"{r['wire']+1} & ${r['axis']}$ & {num(k[0],1e-6*dmax,3)} & {num(k[1],1e-6*dmax,3)} & "
+                        f"{num(j[0][0],1e-6*qmax,1)} & {num(j[0][1],1e-6*qmax,1)} & {tolerance[0]} & {tolerance[1]} \\\\")
         self.macro("WireSensitivityRows","\n".join(rows))
         current=d["independent_loop_current_sensitivity"];rows=[]
         for r in current:

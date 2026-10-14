@@ -628,3 +628,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 220. [**Milestone 220 — E7: The Single Robustness Rerun**](220_e7_robustness_rerun.md)
     - At the E6 point on E5 rings with the chamber: NKM joint mean 16.1 % (ring-cluster [10.9, 21.5]) vs dipole 44.1 %; zero jitter 40.1 %; quarter jitter now costs 5.7 points; matched tuning +11.9 points; booster angle the only significant driver.
+
+221. [**Milestone 221 — E8: Physical Synthesis and Manuscript Rewrite**](221_e8_synthesis.md)
+    - Hierarchy table; ring errors cost NKM and dipole alike (chromaticity/beta-beat), the on-axis DA margin does not organize capture, and the NKM-specific loss is injection angle errors on a 0.44 mrad window; abstract, discussion and conclusions rewritten; noninferiority wording.

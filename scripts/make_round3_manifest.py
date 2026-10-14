@@ -29,6 +29,8 @@ ROUND3 = {
     "round3_operating_point": f"{C4}/e6_operating_point/operating_point_selected_b2.json",
     "round3_operating_point_b1": f"{C4}/e6_operating_point/operating_point_selected_b1.json",
     "round3_reference_window": "results/journal_campaign_03/d6_design_window/window_summary.json",
+    # E8: physical synthesis (DA margin and ring-level correlates)
+    "round3_synthesis": f"{C4}/e8_synthesis.json",
 }
 
 # Round-2 builder keys re-pointed to the campaign-04 reruns, so the round-2 reporting code serves round 3. Applied only

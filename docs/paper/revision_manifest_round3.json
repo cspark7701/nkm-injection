@@ -234,7 +234,8 @@
     "round3_selection": "results/journal_campaign_04/e6_operating_point/operating_point_selection.json",
     "round3_operating_point": "results/journal_campaign_04/e6_operating_point/operating_point_selected_b2.json",
     "round3_operating_point_b1": "results/journal_campaign_04/e6_operating_point/operating_point_selected_b1.json",
-    "round3_reference_window": "results/journal_campaign_03/d6_design_window/window_summary.json"
+    "round3_reference_window": "results/journal_campaign_03/d6_design_window/window_summary.json",
+    "round3_synthesis": "results/journal_campaign_04/e8_synthesis.json"
   },
   "sha256": {
     "backend_validation": "ee72453d6e261bcf6eaa03fee9eae2d8facf8b258953857416873fc1dcdff2e0",
@@ -470,6 +471,7 @@
     "round3_selection": "7c018cb0b5bacfafa84f937f0eef2f7a3fc29f3d71bec598ef6a272b27baf420",
     "round3_operating_point": "5084f5a1dd501eb265853e46179e83dab59728678af02196f34fe653f3a17458",
     "round3_operating_point_b1": "0c2081cc7a5ee25d77fd9b8fac3954181fdf5eda8bba874d6b876bf2890dd1b6",
-    "round3_reference_window": "a2d02181125a9888161bd85b77862b4464d4fc286ca3fb6e6a3120534b13f8a7"
+    "round3_reference_window": "a2d02181125a9888161bd85b77862b4464d4fc286ca3fb6e6a3120534b13f8a7",
+    "round3_synthesis": "d6519d81823fb824cd05301bd781b81faebe1b1a52aa50c67bf27d49fdc6ddf1"
   }
 }

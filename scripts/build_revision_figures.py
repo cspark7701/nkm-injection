@@ -301,6 +301,35 @@ class RevisionBuilder(bj.Builder):
                 self.macro(f"RThreeVal{tag}{m}RingMax",100*rings.max(),"{:.1f}")
                 self.macro(f"RThreeVal{tag}{m}RingPten",100*np.quantile(rings,.1),"{:.1f}")
 
+    def round3_synthesis(self):
+        """E8: capture hierarchy from nominal to joint errors, and what organizes the losses."""
+        if "round3_synthesis" not in self.m["artifacts"] or "round3_selection" not in self.m["artifacts"]:
+            return
+        syn=self.load("round3_synthesis");sel=self.load("round3_selection");rob=self.load("round2_robustness")
+        tun=self.load("round2_tuning");val=self.load("round2_validation")
+        self.macro("SynMarginRho",syn["spearman_margin_capture"],"{:+.2f}")
+        self.macro("SynPoints",str(syn["n_points"]))
+        for key,name in (("chrom_x","Chrom"),("beta_beat_rms","Beat"),("da_neg_m","DA")):
+            for model,m in (("nkm","Nkm"),("dipole","Dip")):
+                c=syn["ring_level"]["spearman"][f"{model}|{key}"]
+                self.macro(f"Syn{name}Rho{m}",c["rho"],"{:+.2f}");self.macro(f"Syn{name}P{m}",c["p"],"{:.2f}")
+        v=sel["validation"]["selected_b2"]
+        def ring_mean(model):return 100*np.mean([x for k,x in v.items() if k.endswith("|"+model) and not k.startswith("ideal")])
+        native=[r for r in val["rows"] if r["case"]=="nominal_native"]
+        n=sum(r["n_particles"] for r in native)
+        long=100*sum(r["survival_counts"]["4000"] for r in native)/n;short=100*sum(r["survival_counts"]["500"] for r in native)/n
+        jit=rob["paired_jitter"]
+        rows=[("Ideal ring, no errors, 500 turns",short,100*v["ideal|dipole"]),
+              ("Ideal ring, no errors, 4000 turns",long,None),
+              ("Corrected rings, no injection errors",ring_mean("fieldmap_3d"),ring_mean("dipole")),
+              ("Joint errors, no booster jitter",100*jit["0"]["mean"],100*jit["0"]["dipole"]["mean_capture"]),
+              ("Joint errors, quarter booster jitter",100*jit["0.25"]["mean"],100*jit["0.25"]["dipole"]["mean_capture"]),
+              ("Joint errors, full budget (150 draws)",100*rob["pooled"]["fieldmap_3d"]["mean_capture"],100*rob["pooled"]["dipole"]["mean_capture"]),
+              ("Joint errors, no booster jitter, tuned",100*tun["statistics"]["0.0"]["tuned"]["mean_capture"],None)]
+        self.macro("SynHierarchyRows","\n".join(f"{label} & {a:.1f} & {'---' if b is None else f'{b:.1f}'} \\\\" for label,a,b in rows))
+        self.macro("SynZeroJitterDip",100*jit["0"]["dipole"]["mean_capture"],"{:.1f}")
+        self.macro("SynRingNkm",ring_mean("fieldmap_3d"),"{:.1f}");self.macro("SynRingDip",ring_mean("dipole"),"{:.1f}")
+
     def fig_corrected_ring(self):
         if "round2_ring_scenario" not in self.m["artifacts"]:
             return
@@ -1025,6 +1054,7 @@ STEPS["chamber"]="fig_chamber"
 STEPS["round3_chamber"]="round3_chamber"
 STEPS["corrected_ring_round3"]="fig_corrected_ring_round3"
 STEPS["round3_operating_point"]="round3_operating_point"
+STEPS["round3_synthesis"]="round3_synthesis"
 STEPS["round3_transparency"]="round3_transparency"
 STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
               "final_validation":"final_validation", "final_robustness":"final_robustness"})

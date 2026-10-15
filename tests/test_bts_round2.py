@@ -54,4 +54,7 @@ def test_spatial_subdivision_preserves_total_map_with_bend_edges():
     profile=spatial_profile(lat,8)
     np.testing.assert_allclose(profile['exit_map'],independent_maps(lat)[0][-1],atol=1e-12)
     assert profile['rows'][-1]['s_m']==pytest.approx(21.789)
-    assert np.all(np.array(profile['peak_beta_m'])>=spatial_profile(lat,1)['peak_beta_m'])
+    # The finer mesh contains every element boundary, so its peak cannot be lower; when the
+    # peak sits on a boundary both values agree only to rounding (different matrix products).
+    coarse=np.array(spatial_profile(lat,1)['peak_beta_m'])
+    assert np.all(np.array(profile['peak_beta_m'])>=coarse*(1-1e-12))

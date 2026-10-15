@@ -661,3 +661,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 231. [**Milestone 231 — R2B-07: Re-Framed BTS Article and Records**](231_r2b_07_article_reframing.md)
     - New title, abstract, introduction and conclusions around septum loss and jitter transfer; KLS naming; claim ledger BR3-01–13, final asset hashes, reproduction guide and Reviewer 2 response; 743 tests pass.
+
+232. [**Milestone 232 — BTS Spatial-Subdivision Test Tolerance**](232_bts_spatial_test_tolerance.md)
+    - Platform-dependent exact comparison of mathematically equal boundary peak betas replaced by a 1e-12 relative tolerance.

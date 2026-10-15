@@ -65,7 +65,7 @@ def model_from_protocol(overrides=None):
              'kicker_half': tuple(a['kicker_half_m']), 'dipole_half': tuple(a['dipole_half_m']),
              'septum_in_half': tuple(a['septum_in_half_m']), 'septum_ex_blade': a['septum_ex_blade_m'],
              'septum_ex_outer': a['septum_ex_outer_m'], 'septum_ex_half_y': a['septum_ex_half_y_m'],
-             'slices_quad': a['slices_quad'], 'slices_bend': a['slices_bend']}
+             'observe_quad': a['observation_subdivisions']['quadrupole'], 'observe_bend': a['observation_subdivisions']['bend']}
     model.update(overrides or {})
     return model
 
@@ -83,24 +83,27 @@ def apertures(output):
     result = {'environment': environment(), 'model': model, 'units': 'm', 'designs': {}, 'sweeps': []}
     result['sagitta_m'] = r3.bend_sagitta(lattice_for(settings()['reference']))
     for name, k in settings().items():
-        line = r3.elementwise_lattice(k, model=model)
-        record = r3.clearance_and_loss(line, np.zeros(5), beam.covariance())
+        line = r3.aperture_lattice(k, model=model)
+        record = r3.clearance_and_loss(r3.observation_copy(line, model), np.zeros(5), beam.covariance())
+        entrances = r3.clearance_and_loss(line, np.zeros(5), beam.covariance())
         families = {}
         for row in record['rows']:
             key = row['name'] + ('_x' if row['plane'] == 0 else '_y')
             families[key] = min(families.get(key, np.inf), row['clearance_m'])
-        interior = {k_: v for k_, v in families.items() if not k_.startswith(('sept', 'blade', 'kext'))}
+        interior = {k_: v for k_, v in families.items() if not k_.startswith(('sept', 'blade', 'kext', 'm4', 'ap_rect'))}
         result['designs'][name] = {'strengths_m_minus2': k, 'minimum_m': record['minimum_m'], 'active': record['active'],
                                    'family_minimum_m': families, 'interior_minimum_m': min(interior.values()),
                                    'interior_active': min(interior, key=interior.get), 'profile': record['rows'],
-                                   'apertures': r3.aperture_table(line)}
+                                   'apertures': r3.aperture_table(line), 'entrance_minimum_m': entrances['minimum_m'],
+                                   'entrance_active': entrances['active'], 'elements': len(line)}
     for key, values in PROTOCOL['aperture_sweeps'].items():
         for v in values:
             override = {'dipole_half_gap_m': {'dipole_half': (model['dipole_half'][0], v)},
                         'septum_in_half_x_m': {'septum_in_half': (v, model['septum_in_half'][1])},
                         'septum_ex_blade_m': {'septum_ex_blade': v}}[key]
             for name, k in settings().items():
-                record = r3.clearance_and_loss(r3.elementwise_lattice(k, model=model_from_protocol(override)), np.zeros(5), beam.covariance())
+                record = r3.clearance_and_loss(r3.observation_copy(r3.aperture_lattice(k, model=model_from_protocol(override))),
+                                               np.zeros(5), beam.covariance())
                 result['sweeps'].append({'parameter': key, 'value_m': v, 'design': name, 'minimum_m': record['minimum_m'],
                                          'active': record['active']})
     save(output / 'apertures.json', result)
@@ -128,7 +131,7 @@ def _tradeoff(k):
     """Shot-averaged blade loss and exit jitter of a matched setting (error-free line)."""
     lat = lattice_for(k)
     mux, muy = r3.phase_advance(lat)
-    loss = r3.shot_averaged_loss(r3.elementwise_lattice(k, model=model_from_protocol(), correctors=False))
+    loss = r3.shot_averaged_loss(r3.aperture_lattice(k, model=model_from_protocol()))
     jit = r3.jitter_transfer(mux)
     peaks = spatial_profile(lat, 16)['peak_beta_m']
     return {'strengths_m_minus2': k, 'mu_x_deg': np.degrees(mux), 'mu_y_deg': np.degrees(muy),
@@ -177,24 +180,16 @@ def _machine(job):
     errors = draw_static(static_rng, lattice_for(next(iter(designs.values()))))
     errors['roll'] = errors['roll'] * error_scale.get('roll', 1.0)
     lines = {}
-    layouts = {'declared': {}, 'amended': {'corrector_before': r3.AMENDED_CORRECTORS, 'monitor_before': r3.AMENDED_MONITORS}}
     for name, k in designs.items():
-        built = {}
-        for layout, kwargs in layouts.items():
-            nominal = r3.elementwise_lattice(k, None, model, **kwargs)
-            response = r3.response_matrix(nominal)
-            # Same BPM error draw per monitor position for both layouts (the extra monitor is drawn last).
-            draws = np.random.default_rng([seeds['bpm'], machine, list(designs).index(name)]).normal(
-                0, PROTOCOL['steering']['bpm_error_m'], (12, 2))
-            bpm_errors = draws[:len(response[1])]
-            built[layout] = (r3.elementwise_lattice(k, errors, model, **kwargs), response, bpm_errors)
+        machine_line = r3.aperture_lattice(k, errors, model)
+        response = r3.response_matrix(r3.aperture_lattice(k, None, model))
+        bpm_errors = np.random.default_rng([seeds['bpm'], machine, list(designs).index(name)]).normal(
+            0, PROTOCOL['steering']['bpm_error_m'], len(response[1]))
         for variant in variants:
             if variant == 'uncorrected':
-                line, response, _ = built['declared']
-                lines[(name, variant)] = (line, np.zeros(2 * len(response[2])))
+                lines[(name, variant)] = (machine_line, np.zeros(response[2]))
             else:
-                line, response, bpm_errors = built['declared' if variant == 'corrected' else 'amended']
-                lines[(name, variant)] = r3.correct_trajectory(line, response, bpm_errors, PROTOCOL['steering'])
+                lines[(name, variant)] = r3.correct_trajectory(machine_line, response, bpm_errors, PROTOCOL['steering'])
     shot_rows = []
     table = {key: r3.aperture_table(line) for key, (line, _) in lines.items()}
     for shot in range(shots):
@@ -276,7 +271,7 @@ def steering(output, workers):
             entry['predicted_loss_max_particles'] = entry['predicted_loss_max_mean'] * config['machines'] * config['shots_per_machine'] * particles
     # Corrected minus uncorrected, per design, paired by machine.
     effect = {}
-    for variant in ('corrected', 'amended'):
+    for variant in ('corrected',):
         for name in designs:
             a = np.array([np.mean([s['results'][name][variant]['clearance_m'] for s in m['shots']]) for m in raw])
             b = np.array([np.mean([s['results'][name]['uncorrected']['clearance_m'] for s in m['shots']]) for m in raw])
@@ -290,7 +285,7 @@ def steering(output, workers):
 
 
 def _robust_objective(k):
-    loss = r3.shot_averaged_loss(r3.elementwise_lattice(k, model=model_from_protocol(), correctors=False))
+    loss = r3.shot_averaged_loss(r3.aperture_lattice(k, model=model_from_protocol()))
     return float(np.log10(max(loss['loss_lower'], 1e-300)))
 
 
@@ -378,7 +373,7 @@ def exit_stage(output, phase_file):
     evaluated = []
     for r in feasible:
         k = np.array(r['strengths_m_minus2'])
-        loss = r3.shot_averaged_loss(r3.elementwise_lattice(k, model=model_from_protocol(), correctors=False))
+        loss = r3.shot_averaged_loss(r3.aperture_lattice(k, model=model_from_protocol()))
         m = independent_maps(lattice_for(k))[0][-1]
         jit = m @ r3.entrance_jitter_covariance() @ m.T
         evaluated.append({'strengths_m_minus2': k, 'mu_x_deg': r['mu_x_deg'], 'peak_beta_m': r['peak_beta_m'],
@@ -402,8 +397,8 @@ def sensitivity(output, workers, robust_file):
     rows = []
     for roll in config['roll_rad']:
         for energy in config['energy_jitter']:
-            raw = campaign(designs, ['amended'], config, False, workers, {'roll': roll / 5e-4}, {'delta': energy})
-            summary = summarise(raw, designs, ['amended'], 'reference', 93005, False)['amended']
+            raw = campaign(designs, ['corrected'], config, False, workers, {'roll': roll / 5e-4}, {'delta': energy})
+            summary = summarise(raw, designs, ['corrected'], 'reference', 93005, False)['corrected']
             rows.append({'roll_rad': roll, 'energy_jitter': energy,
                          'designs': {n: {'predicted_loss_max_mean': e['predicted_loss_max_mean'], 'mean_clearance_m': e['mean_clearance_m'],
                                          'paired_clearance_vs_reference_m': e['paired_vs_reference_m'],

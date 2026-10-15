@@ -5,11 +5,11 @@
     "scipy": "1.17.1",
     "pyat": "0.7.2.dev26+g4701d48c.d20260831",
     "source_sha256": {
-      "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+      "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
       "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
       "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
-      "scripts/run_bts_round3.py": "e1b67910100fdb312228a519b0f7ff9bc46656364d44a4e8274241cb3424983f",
-      "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+      "scripts/run_bts_round3.py": "440f6e604ff40d0b5d2b19cc0c0b94e3d8520c55e4e6384b7c41cfa4cd579077",
+      "docs/paper_bts/round3_protocol.json": "40b3dead2439d4577f51130ab9b91afc40d8bbed292116ce68ed349f91d4d757"
     }
   },
   "protocol": {
@@ -28,14 +28,13 @@
     ],
     "variants": [
       "uncorrected",
-      "corrected",
-      "amended"
+      "corrected"
     ]
   },
   "summary": {
     "uncorrected": {
       "reference": {
-        "mean_clearance_m": 0.0005843553434630148,
+        "mean_clearance_m": 0.0005843553435482262,
         "paired_vs_reference_m": {
           "mean": 0.0,
           "ci95": [
@@ -43,75 +42,75 @@
             0.0
           ]
         },
-        "predicted_loss_max_mean": 0.10041675437851556,
-        "predicted_loss_union_mean": 0.12327384937277656,
+        "predicted_loss_max_mean": 0.10039280842569977,
+        "predicted_loss_union_mean": 0.10580237892613262,
         "active": {
-          "blade_exit_x": 278,
+          "m4_x": 278,
           "sept_ex_x": 317,
-          "blade_exit_y": 5
+          "m4_y": 5
         },
         "exit_centroid_rms_m_rad": [
-          0.0011972452759126595,
-          0.00036441071372527773
+          0.001197245275890935,
+          0.00036441071372283633
         ],
         "kick_rms_rad": 0.0,
-        "lost_particles": 120968,
+        "lost_particles": 120914,
         "loss_blocks": 74,
         "first_loss_families": {
-          "sept_ex": 120968
+          "sept_ex": 120914
         },
         "machine_loss_per_shot_mean": {
-          "mean": 201.61333333333334,
+          "mean": 201.5233333333333,
           "ci95": [
-            139.518125,
-            269.08004166666666
+            139.49683333333334,
+            269.00775
           ]
         },
-        "machine_predicted_max_per_shot": 0.10041675437851555,
-        "observed_loss_fraction": 0.10080666666666667,
-        "predicted_loss_max_particles": 120500.10525421867
+        "machine_predicted_max_per_shot": 0.10039280842569977,
+        "observed_loss_fraction": 0.10076166666666667,
+        "predicted_loss_max_particles": 120471.37011083972
       },
       "low_beta": {
-        "mean_clearance_m": 0.0005556845357834997,
+        "mean_clearance_m": 0.0005556845358825861,
         "paired_vs_reference_m": {
-          "mean": -2.8670807679515193e-05,
+          "mean": -2.8670807665640034e-05,
           "ci95": [
-            -9.969526986416633e-05,
-            3.901698177291544e-05
+            -9.969526985875877e-05,
+            3.901698178407123e-05
           ]
         },
-        "predicted_loss_max_mean": 0.10013834633998166,
-        "predicted_loss_union_mean": 0.13358800452996575,
+        "predicted_loss_max_mean": 0.10013037787762055,
+        "predicted_loss_union_mean": 0.10468575303071283,
         "active": {
-          "blade_exit_x": 278,
+          "m4_x": 278,
           "sept_ex_x": 320,
-          "blade_exit_y": 2
+          "m4_y": 2
         },
         "exit_centroid_rms_m_rad": [
-          0.0012037802328519912,
-          0.00037513703011053033
+          0.0012037802328293643,
+          0.0003751370301078092
         ],
         "kick_rms_rad": 0.0,
-        "lost_particles": 120079,
+        "lost_particles": 120051,
         "loss_blocks": 79,
         "first_loss_families": {
-          "sept_ex": 120079
+          "sept_ex": 120051
         },
         "machine_loss_per_shot_mean": {
-          "mean": 200.13166666666663,
+          "mean": 200.085,
           "ci95": [
-            140.22833333333332,
-            266.0239166666666
+            140.21174999999997,
+            265.9334999999999
           ]
         },
-        "machine_predicted_max_per_shot": 0.10013834633998166,
-        "observed_loss_fraction": 0.10006583333333334,
-        "predicted_loss_max_particles": 120166.01560797798
+        "machine_predicted_max_per_shot": 0.10013037787762055,
+        "observed_loss_fraction": 0.1000425,
+        "predicted_loss_max_particles": 120156.45345314467
       }
     },
     "corrected": {
       "reference": {
-        "mean_clearance_m": 0.00046874812795803,
+        "mean_clearance_m": 0.0005243005635308559,
         "paired_vs_reference_m": {
           "mean": 0.0,
           "ci95": [
@@ -119,175 +118,85 @@
             0.0
           ]
         },
-        "predicted_loss_max_mean": 0.023803461230120906,
-        "predicted_loss_union_mean": 0.035695870090971485,
+        "predicted_loss_max_mean": 0.016782267430836714,
+        "predicted_loss_union_mean": 0.01712258897009624,
         "active": {
-          "blade_exit_x": 313,
-          "sept_ex_x": 287
-        },
-        "exit_centroid_rms_m_rad": [
-          0.0006910556415340162,
-          0.0005352066888863644
-        ],
-        "kick_rms_rad": 0.00022798817672042647,
-        "lost_particles": 28649,
-        "loss_blocks": 54,
-        "first_loss_families": {
-          "sept_ex": 28649
-        },
-        "machine_loss_per_shot_mean": {
-          "mean": 47.74833333333333,
-          "ci95": [
-            28.88975,
-            69.72029166666667
-          ]
-        },
-        "machine_predicted_max_per_shot": 0.023803461230120906,
-        "observed_loss_fraction": 0.023874166666666665,
-        "predicted_loss_max_particles": 28564.153476145086
-      },
-      "low_beta": {
-        "mean_clearance_m": 0.00045318775750800735,
-        "paired_vs_reference_m": {
-          "mean": -1.556037045002272e-05,
-          "ci95": [
-            -6.0859449250552694e-05,
-            2.9333877595688335e-05
-          ]
-        },
-        "predicted_loss_max_mean": 0.024362196953403085,
-        "predicted_loss_union_mean": 0.03511811940743901,
-        "active": {
-          "blade_exit_x": 285,
-          "sept_ex_x": 315
-        },
-        "exit_centroid_rms_m_rad": [
-          0.0006770860511739477,
-          0.0005398364468031996
-        ],
-        "kick_rms_rad": 0.00023650082506171738,
-        "lost_particles": 29227,
-        "loss_blocks": 54,
-        "first_loss_families": {
-          "sept_ex": 29227
-        },
-        "machine_loss_per_shot_mean": {
-          "mean": 48.71166666666667,
-          "ci95": [
-            28.354666666666667,
-            72.34395833333332
-          ]
-        },
-        "machine_predicted_max_per_shot": 0.024362196953403085,
-        "observed_loss_fraction": 0.024355833333333334,
-        "predicted_loss_max_particles": 29234.6363440837
-      }
-    },
-    "amended": {
-      "reference": {
-        "mean_clearance_m": 0.0005282934468856645,
-        "paired_vs_reference_m": {
-          "mean": 0.0,
-          "ci95": [
-            0.0,
-            0.0
-          ]
-        },
-        "predicted_loss_max_mean": 0.016082027595613623,
-        "predicted_loss_union_mean": 0.023908149469858652,
-        "active": {
-          "blade_exit_x": 291,
+          "m4_x": 291,
           "sept_ex_x": 309
         },
         "exit_centroid_rms_m_rad": [
-          0.0006833937958010512,
-          0.0003371455532458251
+          0.0006837389756963805,
+          0.00036710146796014415
         ],
-        "kick_rms_rad": 8.887666290977497e-05,
-        "lost_particles": 19175,
-        "loss_blocks": 49,
+        "kick_rms_rad": 0.00020435721662993543,
+        "lost_particles": 20100,
+        "loss_blocks": 47,
         "first_loss_families": {
-          "sept_ex": 19175
+          "sept_ex": 20100
         },
         "machine_loss_per_shot_mean": {
-          "mean": 31.958333333333336,
+          "mean": 33.5,
           "ci95": [
-            17.672791666666665,
-            48.59337500000001
+            18.776,
+            50.56908333333333
           ]
         },
-        "machine_predicted_max_per_shot": 0.016082027595613623,
-        "observed_loss_fraction": 0.015979166666666666,
-        "predicted_loss_max_particles": 19298.43311473635
+        "machine_predicted_max_per_shot": 0.016782267430836714,
+        "observed_loss_fraction": 0.01675,
+        "predicted_loss_max_particles": 20138.720917004055
       },
       "low_beta": {
-        "mean_clearance_m": 0.0005229242823403204,
+        "mean_clearance_m": 0.0005230191164854263,
         "paired_vs_reference_m": {
-          "mean": -5.369164545344054e-06,
+          "mean": -1.2814470454295111e-06,
           "ci95": [
-            -1.3268827074312753e-05,
-            2.7659326966027004e-06
+            -9.286508220946693e-06,
+            6.579148442706498e-06
           ]
         },
-        "predicted_loss_max_mean": 0.01567185407453378,
-        "predicted_loss_union_mean": 0.021201433959619913,
+        "predicted_loss_max_mean": 0.014653405023997342,
+        "predicted_loss_union_mean": 0.015221646177194816,
         "active": {
-          "blade_exit_x": 284,
+          "m4_x": 284,
           "sept_ex_x": 316
         },
         "exit_centroid_rms_m_rad": [
-          0.000673134973820264,
-          0.0003460761661973453
+          0.0006757053798534579,
+          0.00038281156634392493
         ],
-        "kick_rms_rad": 8.968751167950151e-05,
-        "lost_particles": 18752,
-        "loss_blocks": 42,
+        "kick_rms_rad": 0.00019760896456155053,
+        "lost_particles": 17588,
+        "loss_blocks": 44,
         "first_loss_families": {
-          "sept_ex": 18752
+          "sept_ex": 17588
         },
         "machine_loss_per_shot_mean": {
-          "mean": 31.25333333333333,
+          "mean": 29.31333333333333,
           "ci95": [
-            16.899749999999997,
-            48.126875000000005
+            15.982791666666666,
+            44.511958333333304
           ]
         },
-        "machine_predicted_max_per_shot": 0.01567185407453378,
-        "observed_loss_fraction": 0.015626666666666667,
-        "predicted_loss_max_particles": 18806.224889440535
+        "machine_predicted_max_per_shot": 0.014653405023997342,
+        "observed_loss_fraction": 0.014656666666666667,
+        "predicted_loss_max_particles": 17584.08602879681
       }
     }
   },
   "corrected_minus_uncorrected_m": {
     "corrected": {
       "reference": {
-        "mean": -0.00011560721550498486,
+        "mean": -6.005478001737028e-05,
         "ci95": [
-          -0.00024343919568376343,
-          1.045160979999638e-05
+          -0.00018858107911132738,
+          6.606298972647899e-05
         ]
       },
       "low_beta": {
-        "mean": -0.00010249677827549237,
+        "mean": -3.266541939715976e-05,
         "ci95": [
-          -0.00023121958056006927,
-          2.2977010631464188e-05
-        ]
-      }
-    },
-    "amended": {
-      "reference": {
-        "mean": -5.60618965773503e-05,
-        "ci95": [
-          -0.00018434067906743747,
-          6.982146801804475e-05
-        ]
-      },
-      "low_beta": {
-        "mean": -3.276025344317917e-05,
-        "ci95": [
-          -0.00016393209605684882,
-          9.711416490562894e-05
+          -0.00016450452296403617,
+          9.722290763241645e-05
         ]
       }
     }

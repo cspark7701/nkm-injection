@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "status": "declared before the round-3 campaigns (Reviewer 2 tasks R2B-01 to R2B-06)",
-  "campaign": "results/bts_journal_campaign_r3_20261015",
+  "status": "declared before the round-3 campaigns; revised 2026-10-15 (revision 2) so that the BTS lattice is not changed",
+  "campaign": "results/bts_journal_campaign_r3b_20261015",
   "aperture_model": {
     "source": "Only the exit-septum blade distance (1.478 mm, +x side) follows the companion NKM geometry; all other dimensions are declared assumptions.",
     "pipe_radius_m": 0.01935,
@@ -22,9 +22,12 @@
     "septum_ex_outer_m": 0.0085,
     "septum_ex_half_y_m": 0.005,
     "dipole_chambers": "curved, following the reference arc",
-    "slices_quad": 4,
-    "slices_bend": 8,
-    "integration_steps_per_slice": 10
+    "lattice": "the unchanged 36-element BTS sequence; apertures are attributes of existing elements (checked at element entrances, the blade also at m4); legacy aperture elements kept",
+    "observation_subdivisions": {
+      "quadrupole": 4,
+      "bend": 8,
+      "use": "observation-only copy for interior envelopes in the nominal profile; never used for tracking"
+    }
   },
   "aperture_sweeps": {
     "dipole_half_gap_m": [
@@ -43,32 +46,6 @@
       0.002,
       0.003
     ]
-  },
-  "steering": {
-    "correctors_before": [
-      "q11",
-      "q21",
-      "q31",
-      "sept_ex"
-    ],
-    "monitors_after": [
-      "q11",
-      "q12",
-      "q13",
-      "q21",
-      "q22",
-      "q23",
-      "q31",
-      "q32",
-      "q33",
-      "end"
-    ],
-    "bpm_error_m": 5e-05,
-    "end_weight": 3.0,
-    "kick_limit_rad": 0.001,
-    "tikhonov": 0.001,
-    "iterations": 2,
-    "response": "error-free model line of each design, finite-difference kicks 1e-5 rad"
   },
   "errors": {
     "static": "independent Gaussian: gradient 0.1 %, x/y offsets 100 um, rolls 0.5 mrad, dipole fields 0.05 % (round-2 levels)",
@@ -90,8 +67,7 @@
     ],
     "variants": [
       "uncorrected",
-      "corrected",
-      "amended"
+      "corrected"
     ]
   },
   "robust_design": {
@@ -115,7 +91,7 @@
       "low_beta",
       "robust"
     ],
-    "variant": "amended"
+    "variant": "corrected"
   },
   "sensitivity": {
     "roll_rad": [
@@ -172,35 +148,78 @@
     "solver": "bounded least squares on the scaled exit residuals, tolerance 1e-4"
   },
   "scope": "Parametric apertures except the companion-derived blade; independent Gaussian errors; no ring capture.",
-  "steering_amendment": {
-    "date": "2026-10-15",
-    "after": "first steering run (results/bts_journal_campaign_r3_20261015/steering)",
-    "reason": "The declared layout (correctors before q11, q21, q31, sept_ex; monitors after each quadrupole and at the end) corrects the exit position but not the exit angle: corrected exit-angle rms grew from 0.364 to 0.535 mrad because the last corrector, 1 m upstream of the exit, trades position for angle.",
-    "amended_layout": {
-      "correctors_before": [
-        "q11",
-        "q21",
-        "q31",
-        "b3",
-        "sept_ex"
-      ],
-      "monitors_after": [
-        "q11",
-        "q12",
-        "q13",
-        "q21",
-        "q22",
-        "q23",
-        "q31",
-        "q32",
-        "q33",
-        "end"
-      ],
-      "monitors_before": [
-        "sept_ex"
-      ],
-      "weights": "end and septum-entrance monitors 3, others 1"
-    },
-    "reporting": "The declared layout is reported alongside, on identical machines (same seeds). The test and sensitivity campaigns use the amended layout, declared here before they run."
+  "superseded_campaign": "results/bts_journal_campaign_r3_20261015",
+  "superseded_steering": {
+    "layouts": [
+      {
+        "correctors_before": [
+          "q11",
+          "q21",
+          "q31",
+          "sept_ex"
+        ],
+        "monitors_after": [
+          "q11",
+          "q12",
+          "q13",
+          "q21",
+          "q22",
+          "q23",
+          "q31",
+          "q32",
+          "q33",
+          "end"
+        ],
+        "bpm_error_m": 5e-05,
+        "end_weight": 3.0,
+        "kick_limit_rad": 0.001,
+        "tikhonov": 0.001,
+        "iterations": 2,
+        "response": "error-free model line of each design, finite-difference kicks 1e-5 rad"
+      },
+      {
+        "date": "2026-10-15",
+        "after": "first steering run (results/bts_journal_campaign_r3_20261015/steering)",
+        "reason": "The declared layout (correctors before q11, q21, q31, sept_ex; monitors after each quadrupole and at the end) corrects the exit position but not the exit angle: corrected exit-angle rms grew from 0.364 to 0.535 mrad because the last corrector, 1 m upstream of the exit, trades position for angle.",
+        "amended_layout": {
+          "correctors_before": [
+            "q11",
+            "q21",
+            "q31",
+            "b3",
+            "sept_ex"
+          ],
+          "monitors_after": [
+            "q11",
+            "q12",
+            "q13",
+            "q21",
+            "q22",
+            "q23",
+            "q31",
+            "q32",
+            "q33",
+            "end"
+          ],
+          "monitors_before": [
+            "sept_ex"
+          ],
+          "weights": "end and septum-entrance monitors 3, others 1"
+        },
+        "reporting": "The declared layout is reported alongside, on identical machines (same seeds). The test and sensitivity campaigns use the amended layout, declared here before they run."
+      }
+    ],
+    "reason": "Author instruction (2026-10-15): the BTS lattice must not be changed, so no corrector or monitor elements may be added. Results with added correctors remain in the superseded campaign directory and are not used."
+  },
+  "steering": {
+    "knobs": "horizontal field trims (PolynomB[0], fixed geometry) of the existing dipoles kext, sept_in, b1, b2, b3, sept_ex",
+    "monitors": "horizontal readings at existing element boundaries: each quadrupole exit, the injection-septum entrance and the line end (last two weighted 3)",
+    "vertical": "no vertical knob exists; the vertical plane is not corrected",
+    "bpm_error_m": 5e-05,
+    "end_weight": 3.0,
+    "kick_limit_rad": 0.001,
+    "tikhonov": 0.001,
+    "iterations": 2,
+    "response": "error-free model line of each design, finite-difference trims 1e-5 rad"
   }
 }

@@ -6,12 +6,19 @@ installed. Every stage writes a new directory and refuses an existing one. Its `
 - the environment;
 - SHA-256 of the round-3 sources.
 
-The protocol (`round3_protocol.json`) was declared before the campaigns. Its `steering_amendment` entry records the
-one post-hoc change (the corrector/monitor layout) and was written before the test and sensitivity campaigns ran.
+The protocol (`round3_protocol.json`) was declared before the campaigns and revised once (revision 2, 2026-10-15) at
+the author's instruction that the BTS lattice must not be changed. All stages were then rerun in
+`results/bts_journal_campaign_r3b_20261015`:
+- on the unchanged 36-element line, with apertures as attributes of existing elements and no slicing;
+- with steering by horizontal field trims of the six existing dipoles, read at existing element boundaries;
+- with no vertical correction.
+
+The earlier campaign with added corrector elements (`results/bts_journal_campaign_r3_20261015`) is superseded; its
+layouts are recorded under `superseded_steering` in the protocol and are not used in the article.
 
 ```bash
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
-C=results/bts_journal_campaign_r3_20261015
+C=results/bts_journal_campaign_r3b_20261015
 python scripts/run_bts_round3.py --stage apertures   --output-dir $C/apertures
 python scripts/run_bts_round3.py --stage phase       --output-dir $C/phase --workers 8
 python scripts/run_bts_round3.py --stage steering    --output-dir $C/steering --workers 8
@@ -30,26 +37,24 @@ python -m pytest tests/test_bts_round3.py -q
 | :--- | :--- | :--- |
 | apertures | R2B-01 | `apertures/apertures.json` |
 | phase | R2B-04/05 | `phase/phase.json` (349 configured and 115 dispersion-free solutions) |
-| steering | R2B-03 | `steering/steering.json`, `raw_machines.json` (three variants) |
+| steering | R2B-03 | `steering/steering.json`, `raw_machines.json` (uncorrected and dipole-trim steering) |
 | robust | R2B-04 | `robust/robust.json` (frozen settings) |
 | test | R2B-04 | `test/test.json`, `raw_machines.json` |
 | exit | R2B-05 | `exit/exit.json` |
 | sensitivity | R2B-06 | `sensitivity/sensitivity.json` |
 
-**Retained runs.**
-- `steering_declared_only/`: the first steering run with the declared layout, retained as the evidence for the
-  amendment.
-- In the rerun, BPM-error draws are seeded per design. The declared variant therefore uses different BPM draws from
-  the first run: reference loss 2.39 % in both runs (identical draws), low beta 2.44 % in the rerun against 2.12 % in the first run. This
-  spread is a BPM-draw effect within the declared layout and does not affect the amended results.
+**Retained runs.** `results/bts_journal_campaign_r3_20261015/` (added correctors, including
+`steering_declared_only/`) is kept on disk as a superseded record. The apertures stage of the new campaign was rerun
+once after fixing the interior-minimum exclusion of the end marker m4; the other stage outputs are first runs.
 
 **Selected results** (installed by the exporter in `generated/round3_*`; claims BR3-01 to BR3-13 in
 `claim_evidence.csv` and `evidence_manifest.json`, verified by `audit_bts_evidence.py`):
 - **Active restriction:** the injection-septum channel at the blade, 0.648 mm, for every quadrupole setting.
-- **Steering:** loss 10.08 % → 2.39 % (declared) → 1.60 % (amended).
+- **Steering** (dipole trims): loss 10.08 % → 1.68 % for the reference (1.47 % for low beta). The Gaussian
+  prediction agrees with tracking within 0.4 %.
 - **Reachable μx:** 200.2–232.0°; the loss-based setting sits at 200.2°.
-- **Fresh test** (tracked loss): reference 2.32 %, low beta 2.15 %, loss-based 0.66 %. Loss-based minus reference:
-  −1.66 [−2.42, −0.99] percentage points.
+- **Fresh test** (tracked loss): reference 2.30 %, low beta 2.27 %, loss-based 0.69 %. Loss-based minus reference:
+  −1.61 [−2.33, −0.96] percentage points.
 - **Dispersion-free exit:** feasible; μx 187.7–214.2°; best predicted loss 4.1×10⁻⁵.
 - **Sensitivity:** the roll level has no effect, the energy jitter little, and the ranking is unchanged.
 

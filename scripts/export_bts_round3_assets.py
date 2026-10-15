@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 P = ROOT / 'docs/paper_bts'
-CAMPAIGN = ROOT / 'results/bts_journal_campaign_r3_20261015'
+CAMPAIGN = ROOT / 'results/bts_journal_campaign_r3b_20261015'
 plt.rcParams.update({'font.size': 9, 'pdf.fonttype': 42, 'svg.hashsalt': 'bts-r3', 'pdf.compression': 6})
 COLORS = {'reference': '#1f5fa8', 'low_beta': '#d1495b', 'robust': '#2a9d55'}
 LABELS = {'reference': 'Reference', 'low_beta': 'Refined low beta', 'robust': 'Loss-based'}
@@ -58,7 +58,7 @@ def apertures():
     fam = ref['family_minimum_m']
     blade = {s['value_m']: s['minimum_m'] for s in a['sweeps'] if s['parameter'] == 'septum_ex_blade_m' and s['design'] == 'reference'}
     macros('apertures', {
-        'MinMm': f"{1e3 * ref['minimum_m']:.3f}", 'BladeMm': f"{1e3 * fam['blade_exit_x']:.3f}",
+        'MinMm': f"{1e3 * ref['minimum_m']:.3f}", 'BladeMm': f"{1e3 * fam['m4_x']:.3f}",
         'SeptInYMm': f"{1e3 * fam['sept_in_y']:.2f}", 'SeptInXMm': f"{1e3 * fam['sept_in_x']:.2f}",
         'InteriorRefMm': f"{1e3 * ref['interior_minimum_m']:.2f}", 'InteriorLowMm': f"{1e3 * low['interior_minimum_m']:.2f}",
         'SagittaBTwoMm': f"{1e3 * a['sagitta_m']['b2']:.1f}", 'SagittaBOneMm': f"{1e3 * a['sagitta_m']['b1']:.1f}",
@@ -85,9 +85,9 @@ def apertures():
 def steering():
     st = load('steering', 'steering.json')
     (P / 'generated/round3_steering.json').write_text(json.dumps(st, indent=2) + '\n')
-    names = {'uncorrected': 'none', 'corrected': 'declared', 'amended': 'amended'}
+    names = {'uncorrected': 'none', 'corrected': 'dipole trims'}
     rows = []
-    for variant in ('uncorrected', 'corrected', 'amended'):
+    for variant in ('uncorrected', 'corrected'):
         for name in ('reference', 'low_beta'):
             e = st['summary'][variant][name]
             rows.append(f"{SHORT[name]} & {names[variant]} & {1e3 * e['mean_clearance_m']:.3f} & {100 * e['observed_loss_fraction']:.2f} & "
@@ -99,7 +99,7 @@ def steering():
     s, eff = st['summary'], st['corrected_minus_uncorrected_m']
     vals = {}
     for name, key in (('reference', 'Ref'), ('low_beta', 'Low')):
-        for variant, v in (('uncorrected', 'Unc'), ('corrected', 'Cor'), ('amended', 'Amd')):
+        for variant, v in (('uncorrected', 'Unc'), ('corrected', 'Cor')):
             e = s[variant][name]
             vals[f'{key}{v}LostPct'] = f"{100 * e['observed_loss_fraction']:.2f}"
             vals[f'{key}{v}PredPct'] = f"{100 * e['predicted_loss_max_mean']:.2f}"
@@ -107,12 +107,9 @@ def steering():
             vals[f'{key}{v}ExitXpUrad'] = f"{1e6 * e['exit_centroid_rms_m_rad'][1]:.0f}"
             vals[f'{key}{v}Clear'] = f"{1e3 * e['mean_clearance_m']:.3f}"
             vals[f'{key}{v}Blocks'] = str(e['loss_blocks'])
-        for variant, v in (('corrected', 'Cor'), ('amended', 'Amd')):
+        for variant, v in (('corrected', 'Cor'),):
             vals[f'{key}{v}KickUrad'] = f"{1e6 * s[variant][name]['kick_rms_rad']:.0f}"
             vals[f'{key}{v}ClearGain'] = f"{1e3 * eff[variant][name]['mean']:+.3f}"
-    first = json.loads((CAMPAIGN / 'steering_declared_only/steering.json').read_text())['summary']['corrected']['reference']
-    vals['FirstRunCorExitXpUrad'] = f"{1e6 * first['exit_centroid_rms_m_rad'][1]:.0f}"
-    vals['FirstRunCorLostPct'] = f"{100 * first['observed_loss_fraction']:.2f}"
     worst = max(abs(e['observed_loss_fraction'] - e['predicted_loss_max_mean']) / e['predicted_loss_max_mean']
                 for v in s.values() for e in v.values())
     vals['PredAgreePct'] = f"{100 * worst:.1f}"
@@ -126,7 +123,7 @@ def design():
                                                                'mu_x_range_deg': v['mu_x_range_deg']} for k, v in pools.items()},
                'robust': strip(rb, []), 'test': strip(te, [])}
     (P / 'generated/round3_design.json').write_text(json.dumps(summary, indent=2) + '\n')
-    t = te['summary']['amended']
+    t = te['summary']['corrected']
     d = rb['designs']
     pair = te['paired_loss_fraction_vs_reference']
     rows = []
@@ -232,7 +229,7 @@ def sensitivity():
     full, half = loss[(5e-4, 1e-3)], loss[(5e-4, 5e-4)]
     ratios = [full[n]['predicted_loss_max_mean'] / full['robust']['predicted_loss_max_mean'] for n in ('reference',)]
     te = json.loads((CAMPAIGN / 'test/raw_machines.json').read_text())
-    per = np.array([np.mean([s['results']['reference']['amended']['lost'] for s in m['shots']]) for m in te])
+    per = np.array([np.mean([s['results']['reference']['corrected']['lost'] for s in m['shots']]) for m in te])
     macros('sensitivity', {'RollEffectPct': f"{100 * roll_effect:.3f}",
                            'EnergyRefFull': f"{100 * full['reference']['predicted_loss_max_mean']:.2f}",
                            'EnergyRefHalf': f"{100 * half['reference']['predicted_loss_max_mean']:.2f}",

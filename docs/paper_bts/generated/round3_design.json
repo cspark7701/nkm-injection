@@ -5,11 +5,11 @@
     "scipy": "1.17.1",
     "pyat": "0.7.2.dev26+g4701d48c.d20260831",
     "source_sha256": {
-      "src/nkm_injection/bts_round3.py": "8a90b9fa3f0db695ca42912a6b923f67a26ac58b0210e348ffa1cb67b813908b",
+      "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
       "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
       "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
-      "scripts/run_bts_round3.py": "29626a9312fcf436b8c7aa029504429b6e643d48d1b93d8aed17ce3d7945d86f",
-      "docs/paper_bts/round3_protocol.json": "237933bf15cec8d2286c43a8eadd445ac80231a4dfa5fa9fe8d5ba028b9a2b33"
+      "scripts/run_bts_round3.py": "3fc5bf5780cda6d1eb72afc27eafeafc02703b7f9468ce62145df679e5f3b697",
+      "docs/paper_bts/round3_protocol.json": "40b3dead2439d4577f51130ab9b91afc40d8bbed292116ce68ed349f91d4d757"
     }
   },
   "pools": {
@@ -37,11 +37,11 @@
       "scipy": "1.17.1",
       "pyat": "0.7.2.dev26+g4701d48c.d20260831",
       "source_sha256": {
-        "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+        "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
         "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
         "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
-        "scripts/run_bts_round3.py": "e1b67910100fdb312228a519b0f7ff9bc46656364d44a4e8274241cb3424983f",
-        "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+        "scripts/run_bts_round3.py": "3fc5bf5780cda6d1eb72afc27eafeafc02703b7f9468ce62145df679e5f3b697",
+        "docs/paper_bts/round3_protocol.json": "40b3dead2439d4577f51130ab9b91afc40d8bbed292116ce68ed349f91d4d757"
       }
     },
     "objective": "minimize log10 of the largest shot-averaged Gaussian loss probability over all apertures (beam plus linearly transported entrance jitter), error-free line",
@@ -87,62 +87,62 @@
       {
         "start": "reference",
         "strengths_m_minus2": [
-          -1.2107859125281608,
-          -0.4441227886995222,
-          1.4455181919920268,
-          0.9998199098034115,
-          -0.5188833467684396,
-          -1.1285279113794904,
-          0.3451785417736177,
-          2.511575320688876,
-          -2.161379938451446
+          -1.205736181576522,
+          -0.4464384733777308,
+          1.4433020353292378,
+          1.010457811054842,
+          -0.5317037069500029,
+          -1.1288359716129588,
+          0.3581480912524706,
+          2.493746425856531,
+          -2.1516324302847796
         ],
-        "objective_log10": -2.1242914236551784,
+        "objective_log10": -2.124110687522851,
         "success": false,
         "feasible": false,
         "iterations": 200,
         "termination": "Iteration limit reached",
-        "mu_x_deg": 206.91066832575774
+        "mu_x_deg": 206.91351503652984
       },
       {
         "start": "low_beta",
         "strengths_m_minus2": [
-          -0.9435794509794018,
-          -0.4067073556117567,
-          1.204816335931042,
-          1.3252342036063947,
-          -0.5632932581594209,
-          -1.5734943561324035,
-          2.085051352105537,
-          -0.6321570038963483,
-          -0.3987959471957212
+          -0.9432225325588247,
+          -0.40658267932792724,
+          1.2043323863320974,
+          1.3278528149741653,
+          -0.5688491151786481,
+          -1.570524068115209,
+          2.0827510737044737,
+          -0.6270778267606286,
+          -0.40149079431447493
         ],
-        "objective_log10": -2.060590139990399,
+        "objective_log10": -2.0606264537065324,
         "success": false,
         "feasible": false,
         "iterations": 200,
         "termination": "Iteration limit reached",
-        "mu_x_deg": 208.12108994903198
+        "mu_x_deg": 208.12050168474545
       },
       {
         "start": "pool_best",
         "strengths_m_minus2": [
-          -2.383267083506331,
-          -0.8126921778828969,
-          2.2972434852302848,
-          1.5423989866343928,
-          -1.6658874894531246,
-          -1.383931347093662,
-          1.6578130752022,
-          0.687067372813529,
-          -1.2290616735664714
+          -2.383334972078101,
+          -0.812660515639704,
+          2.2972581409408717,
+          1.5424794534833517,
+          -1.6662264269433342,
+          -1.3836708451534876,
+          1.657931831289969,
+          0.6867479411016683,
+          -1.2288283020864221
         ],
-        "objective_log10": -2.5742701996878434,
+        "objective_log10": -2.574270256623443,
         "success": false,
         "feasible": true,
         "iterations": 200,
         "termination": "Iteration limit reached",
-        "mu_x_deg": 200.1690582133135
+        "mu_x_deg": 200.1690574207972
       }
     ],
     "selected_start": "pool_best",
@@ -161,12 +161,12 @@
         ],
         "mu_x_deg": 211.75313837352985,
         "mu_y_deg": 93.45855892230159,
-        "loss_max": 0.012793157329105288,
-        "loss_union": 0.03837814424826802,
+        "loss_max": 0.01279315732669233,
+        "loss_union": 0.013064260309086211,
         "active": [
-          "blade_exit",
+          "m4",
           0,
-          21.789000000000023
+          21.78899999999999
         ],
         "exit_jitter_x_m": 0.0006426910461313736,
         "exit_jitter_xp_rad": 0.0003266497286849209,
@@ -189,12 +189,12 @@
         ],
         "mu_x_deg": 210.75226272822133,
         "mu_y_deg": 102.30461404480666,
-        "loss_max": 0.011600673980108896,
-        "loss_union": 0.03346470715307709,
+        "loss_max": 0.011600673977655811,
+        "loss_union": 0.011794743368444629,
         "active": [
-          "blade_exit",
+          "m4",
           0,
-          21.789000000000023
+          21.78899999999999
         ],
         "exit_jitter_x_m": 0.0006313681166411423,
         "exit_jitter_xp_rad": 0.00033064281014227745,
@@ -205,30 +205,30 @@
       },
       "robust": {
         "strengths_m_minus2": [
-          -2.383267083506331,
-          -0.8126921778828969,
-          2.2972434852302848,
-          1.5423989866343928,
-          -1.6658874894531246,
-          -1.383931347093662,
-          1.6578130752022,
-          0.687067372813529,
-          -1.2290616735664714
+          -2.383334972078101,
+          -0.812660515639704,
+          2.2972581409408717,
+          1.5424794534833517,
+          -1.6662264269433342,
+          -1.3836708451534876,
+          1.657931831289969,
+          0.6867479411016683,
+          -1.2288283020864221
         ],
-        "mu_x_deg": 200.1690582133135,
-        "mu_y_deg": 241.44253367749485,
-        "loss_max": 0.00266519997371009,
-        "loss_union": 0.005119982275219108,
+        "mu_x_deg": 200.1690574207972,
+        "mu_y_deg": 241.44305413199424,
+        "loss_max": 0.002665199624304892,
+        "loss_union": 0.002669739930321651,
         "active": [
-          "blade_exit",
+          "m4",
           0,
-          21.789000000000023
+          21.78899999999999
         ],
-        "exit_jitter_x_m": 0.0005060626554104007,
-        "exit_jitter_xp_rad": 0.00036751301094826495,
+        "exit_jitter_x_m": 0.0005060626458061959,
+        "exit_jitter_xp_rad": 0.0003675130133178679,
         "peak_beta_m": [
-          36.6400204164127,
-          48.11717150793299
+          36.639526318660174,
+          48.12117215587678
         ]
       }
     },
@@ -241,11 +241,11 @@
       "scipy": "1.17.1",
       "pyat": "0.7.2.dev26+g4701d48c.d20260831",
       "source_sha256": {
-        "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+        "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
         "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
         "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
-        "scripts/run_bts_round3.py": "e1b67910100fdb312228a519b0f7ff9bc46656364d44a4e8274241cb3424983f",
-        "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+        "scripts/run_bts_round3.py": "3fc5bf5780cda6d1eb72afc27eafeafc02703b7f9468ce62145df679e5f3b697",
+        "docs/paper_bts/round3_protocol.json": "40b3dead2439d4577f51130ab9b91afc40d8bbed292116ce68ed349f91d4d757"
       }
     },
     "protocol": {
@@ -263,13 +263,13 @@
         "low_beta",
         "robust"
       ],
-      "variant": "amended"
+      "variant": "corrected"
     },
-    "frozen_sha256": "3bc9ba2d15943590fdb339a74d63b0da5b3e57835de40c34de69e69ac8c18c6e",
+    "frozen_sha256": "fd51acadb7bdc6f6df2367ab4866457ac3fac0b70c21e55daf7bd6440d2c2486",
     "summary": {
-      "amended": {
+      "corrected": {
         "reference": {
-          "mean_clearance_m": 0.0005085854826907399,
+          "mean_clearance_m": 0.000511942356468311,
           "paired_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -277,104 +277,104 @@
               0.0
             ]
           },
-          "predicted_loss_max_mean": 0.02341582601946309,
-          "predicted_loss_union_mean": 0.03116487041109114,
+          "predicted_loss_max_mean": 0.023071720134919975,
+          "predicted_loss_union_mean": 0.023323270192661436,
           "active": {
-            "blade_exit_x": 270,
-            "sept_ex_x": 330
+            "sept_ex_x": 323,
+            "m4_x": 277
           },
           "exit_centroid_rms_m_rad": [
-            0.0006742008384861717,
-            0.0003371064657819145
+            0.0006758083368912141,
+            0.0003641950906086707
           ],
-          "kick_rms_rad": 8.606762274358233e-05,
-          "lost_particles": 27879,
-          "loss_blocks": 59,
+          "kick_rms_rad": 0.00020539326378444305,
+          "lost_particles": 27603,
+          "loss_blocks": 57,
           "first_loss_families": {
-            "sept_ex": 27879
+            "sept_ex": 27603
           },
           "machine_loss_per_shot_mean": {
-            "mean": 46.465,
+            "mean": 46.005,
             "ci95": [
-              27.069875,
-              68.36083333333332
+              27.38666666666667,
+              66.75895833333331
             ]
           },
-          "machine_predicted_max_per_shot": 0.023415826019463095,
-          "observed_loss_fraction": 0.0232325,
-          "predicted_loss_max_particles": 28098.99122335571
+          "machine_predicted_max_per_shot": 0.02307172013491997,
+          "observed_loss_fraction": 0.0230025,
+          "predicted_loss_max_particles": 27686.06416190397
         },
         "low_beta": {
-          "mean_clearance_m": 0.0005090800223793246,
+          "mean_clearance_m": 0.0005013826786460145,
           "paired_vs_reference_m": {
-            "mean": 4.945396885847658e-07,
+            "mean": -1.0559677822296518e-05,
             "ci95": [
-              -7.159563180692631e-06,
-              8.212413504942598e-06
+              -1.8649117690097997e-05,
+              -2.3598044047819284e-06
             ]
           },
-          "predicted_loss_max_mean": 0.021649670866969117,
-          "predicted_loss_union_mean": 0.028622155755286077,
+          "predicted_loss_max_mean": 0.022767791518690354,
+          "predicted_loss_union_mean": 0.022906779805672288,
           "active": {
-            "sept_ex_x": 331,
-            "blade_exit_x": 269
+            "sept_ex_x": 325,
+            "m4_x": 275
           },
           "exit_centroid_rms_m_rad": [
-            0.000664815961360121,
-            0.00034540272918049064
+            0.0006677856961009729,
+            0.0003871459054257083
           ],
-          "kick_rms_rad": 8.601385316846412e-05,
-          "lost_particles": 25848,
+          "kick_rms_rad": 0.00022051731940731905,
+          "lost_particles": 27217,
           "loss_blocks": 55,
           "first_loss_families": {
-            "sept_ex": 25848
+            "sept_ex": 27217
           },
           "machine_loss_per_shot_mean": {
-            "mean": 43.08,
+            "mean": 45.36166666666667,
             "ci95": [
-              24.493083333333328,
-              64.26566666666668
+              26.499833333333335,
+              66.66225
             ]
           },
-          "machine_predicted_max_per_shot": 0.021649670866969117,
-          "observed_loss_fraction": 0.02154,
-          "predicted_loss_max_particles": 25979.60504036294
+          "machine_predicted_max_per_shot": 0.02276779151869035,
+          "observed_loss_fraction": 0.022680833333333334,
+          "predicted_loss_max_particles": 27321.349822428423
         },
         "robust": {
-          "mean_clearance_m": 0.0004960012083926078,
+          "mean_clearance_m": 0.0004951163199771653,
           "paired_vs_reference_m": {
-            "mean": -1.258427429813205e-05,
+            "mean": -1.6826036491145695e-05,
             "ci95": [
-              -2.9883915270812423e-05,
-              4.9004596208544474e-06
+              -3.487592853629041e-05,
+              1.306418503822374e-06
             ]
           },
-          "predicted_loss_max_mean": 0.006636528284781477,
-          "predicted_loss_union_mean": 0.009265804876685626,
+          "predicted_loss_max_mean": 0.00690899170374544,
+          "predicted_loss_union_mean": 0.006909711298451433,
           "active": {
-            "sept_ex_x": 324,
-            "blade_exit_x": 276
+            "m4_x": 273,
+            "sept_ex_x": 327
           },
           "exit_centroid_rms_m_rad": [
-            0.0005360777816451457,
-            0.00038524268328240103
+            0.0005351016657768683,
+            0.0004135801105822822
           ],
-          "kick_rms_rad": 9.242360136333484e-05,
-          "lost_particles": 7955,
-          "loss_blocks": 32,
+          "kick_rms_rad": 0.00024181462787680765,
+          "lost_particles": 8285,
+          "loss_blocks": 29,
           "first_loss_families": {
-            "sept_ex": 7955
+            "sept_ex": 8285
           },
           "machine_loss_per_shot_mean": {
-            "mean": 13.258333333333333,
+            "mean": 13.808333333333332,
             "ci95": [
-              5.156583333333334,
-              23.433416666666673
+              5.1081666666666665,
+              25.255458333333326
             ]
           },
-          "machine_predicted_max_per_shot": 0.006636528284781478,
-          "observed_loss_fraction": 0.006629166666666667,
-          "predicted_loss_max_particles": 7963.833941737773
+          "machine_predicted_max_per_shot": 0.006908991703745439,
+          "observed_loss_fraction": 0.006904166666666667,
+          "predicted_loss_max_particles": 8290.790044494528
         }
       }
     },
@@ -387,17 +387,17 @@
         ]
       },
       "low_beta": {
-        "mean": -0.0016924999999999996,
+        "mean": -0.00032166666666666585,
         "ci95": [
-          -0.003788333333333333,
-          0.00024339583333333255
+          -0.002285020833333333,
+          0.0016983333333333338
         ]
       },
       "robust": {
-        "mean": -0.016603333333333335,
+        "mean": -0.016098333333333333,
         "ci95": [
-          -0.0241719375,
-          -0.009862479166666665
+          -0.0233318125,
+          -0.009623145833333338
         ]
       }
     },

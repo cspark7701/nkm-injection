@@ -226,53 +226,53 @@
       "provenance_note": "Nominal phase-space diagnostic; exact generating script and source hashes supplied separately from frozen error campaign."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/apertures/apertures.json",
-      "sha256": "ded1a76c3b3d29754e6ffc6dade79917d2ebf01c7b8a4a49e9b07386b4c04743",
-      "bytes": 166313,
+      "path": "results/bts_journal_campaign_r3b_20261015/apertures/apertures.json",
+      "sha256": "3451371f311af08802b1fcd7c294e7a1598e3608a43d8abfadd4a04cc6b10c78",
+      "bytes": 141704,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
-      "sha256": "e333fde54e0a6a5e168b10a02c7e57c7c1ee39229b30b3eb1de0a8408d9affe3",
-      "bytes": 8638,
+      "path": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
+      "sha256": "9ba44d2acae0d3027da4b20680375eae96707c1220a84af339096beee194b169",
+      "bytes": 5948,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/phase/phase.json",
-      "sha256": "c81c27d723406153fc7daf7d0f6373c19c18e345955c83dbbc65dfbc0684abd6",
-      "bytes": 408234,
+      "path": "results/bts_journal_campaign_r3b_20261015/phase/phase.json",
+      "sha256": "b8b6384cf89c7722f15edf41f33eb277351d8acbe2f02cc58648f476d329a5ba",
+      "bytes": 405236,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/robust/robust.json",
-      "sha256": "3bc9ba2d15943590fdb339a74d63b0da5b3e57835de40c34de69e69ac8c18c6e",
-      "bytes": 5167,
+      "path": "results/bts_journal_campaign_r3b_20261015/robust/robust.json",
+      "sha256": "fd51acadb7bdc6f6df2367ab4866457ac3fac0b70c21e55daf7bd6440d2c2486",
+      "bytes": 5150,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/test/test.json",
-      "sha256": "34e03b345fa38667730ca8a2e7d1aea81c6ed8e4bb1f91b086c9796b52775e5d",
-      "bytes": 4971,
+      "path": "results/bts_journal_campaign_r3b_20261015/test/test.json",
+      "sha256": "cf20f0e32fbc25dd1f517b132113677872f5540548e7bcfb0dd28df301ad4a58",
+      "bytes": 4981,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/exit/exit.json",
-      "sha256": "239006d95c08e5bfc517f5a8ae5173006c97f27116fef3bab115c5216fd26b8d",
-      "bytes": 78722,
+      "path": "results/bts_journal_campaign_r3b_20261015/exit/exit.json",
+      "sha256": "7b3aa92ddfc7b4faf6895b9aebadb3da8b5fc5b6d01134ea81d454ebee13655a",
+      "bytes": 77676,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     },
     {
-      "path": "results/bts_journal_campaign_r3_20261015/sensitivity/sensitivity.json",
-      "sha256": "bda134653a8e5a21076a70eb547328b3c0d38942173dd2c34449cda31254fdff",
-      "bytes": 11716,
+      "path": "results/bts_journal_campaign_r3b_20261015/sensitivity/sensitivity.json",
+      "sha256": "2dc34130d5a4ac14c667a9f963cc78b56f0613a3c2c16ba4fc98905db88c4f46",
+      "bytes": 11564,
       "generating_commit": null,
-      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+      "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
     }
   ],
   "claims": [
@@ -1101,81 +1101,81 @@
     },
     {
       "id": "BR3-01",
-      "artifact": "results/bts_journal_campaign_r3_20261015/apertures/apertures.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/apertures/apertures.json",
       "pointer": "/designs/reference/minimum_m",
-      "expected": 0.000648371479019744
+      "expected": 0.0006483714808245566
     },
     {
       "id": "BR3-02",
-      "artifact": "results/bts_journal_campaign_r3_20261015/apertures/apertures.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/apertures/apertures.json",
       "pointer": "/designs/reference/interior_minimum_m",
-      "expected": 0.009117120150189659
+      "expected": 0.009117120150007709
     },
     {
       "id": "BR3-03",
-      "artifact": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
       "pointer": "/summary/uncorrected/reference/observed_loss_fraction",
-      "expected": 0.10080666666666667
+      "expected": 0.10076166666666667
     },
     {
       "id": "BR3-04",
-      "artifact": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
-      "pointer": "/summary/amended/reference/observed_loss_fraction",
-      "expected": 0.015979166666666666
+      "artifact": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
+      "pointer": "/summary/corrected/reference/observed_loss_fraction",
+      "expected": 0.01675
     },
     {
       "id": "BR3-05",
-      "artifact": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
       "pointer": "/summary/corrected/reference/exit_centroid_rms_m_rad/1",
-      "expected": 0.0005352066888863644
+      "expected": 0.00036710146796014415
     },
     {
       "id": "BR3-06",
-      "artifact": "results/bts_journal_campaign_r3_20261015/phase/phase.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/phase/phase.json",
       "pointer": "/pools/configured/solutions",
       "expected": 349
     },
     {
       "id": "BR3-07",
-      "artifact": "results/bts_journal_campaign_r3_20261015/phase/phase.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/phase/phase.json",
       "pointer": "/pools/configured/mu_x_range_deg/0",
       "expected": 200.2204007529857
     },
     {
       "id": "BR3-08",
-      "artifact": "results/bts_journal_campaign_r3_20261015/robust/robust.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/robust/robust.json",
       "pointer": "/designs/robust/loss_max",
-      "expected": 0.00266519997371009
+      "expected": 0.002665199624304892
     },
     {
       "id": "BR3-09",
-      "artifact": "results/bts_journal_campaign_r3_20261015/test/test.json",
-      "pointer": "/summary/amended/robust/observed_loss_fraction",
-      "expected": 0.006629166666666667
+      "artifact": "results/bts_journal_campaign_r3b_20261015/test/test.json",
+      "pointer": "/summary/corrected/robust/observed_loss_fraction",
+      "expected": 0.006904166666666667
     },
     {
       "id": "BR3-10",
-      "artifact": "results/bts_journal_campaign_r3_20261015/test/test.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/test/test.json",
       "pointer": "/paired_loss_fraction_vs_reference/robust/mean",
-      "expected": -0.016603333333333335
+      "expected": -0.016098333333333333
     },
     {
       "id": "BR3-11",
-      "artifact": "results/bts_journal_campaign_r3_20261015/exit/exit.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/exit/exit.json",
       "pointer": "/dispersion_free_best/loss_max",
-      "expected": 4.0719615911744235e-05
+      "expected": 4.071961589125998e-05
     },
     {
       "id": "BR3-12",
-      "artifact": "results/bts_journal_campaign_r3_20261015/exit/exit.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/exit/exit.json",
       "pointer": "/dispersion_free_pool/within_60m",
       "expected": 115
     },
     {
       "id": "BR3-13",
-      "artifact": "results/bts_journal_campaign_r3_20261015/sensitivity/sensitivity.json",
+      "artifact": "results/bts_journal_campaign_r3b_20261015/sensitivity/sensitivity.json",
       "pointer": "/rows/5/designs/reference/predicted_loss_max_mean",
-      "expected": 0.014676716638868896
+      "expected": 0.013367607460627358
     }
   ]
 }

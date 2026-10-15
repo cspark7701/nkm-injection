@@ -5,11 +5,11 @@
     "scipy": "1.17.1",
     "pyat": "0.7.2.dev26+g4701d48c.d20260831",
     "source_sha256": {
-      "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+      "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
       "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
       "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
-      "scripts/run_bts_round3.py": "81b549b2d819d0346f8556ee56c1d976d7d28a0db7edf8469ef5db2e79c67d56",
-      "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+      "scripts/run_bts_round3.py": "3fc5bf5780cda6d1eb72afc27eafeafc02703b7f9468ce62145df679e5f3b697",
+      "docs/paper_bts/round3_protocol.json": "40b3dead2439d4577f51130ab9b91afc40d8bbed292116ce68ed349f91d4d757"
     }
   },
   "budget": {
@@ -38,11 +38,11 @@
       31.424923540512374,
       48.23982279642445
     ],
-    "loss_max": 4.0719615911744235e-05,
+    "loss_max": 4.071961589125998e-05,
     "active": [
-      "blade_exit",
+      "m4",
       0,
-      21.789000000000023
+      21.78899999999999
     ],
     "exit_jitter_x_m": 0.0003504145601393359,
     "exit_jitter_xp_rad": 0.00039400952651294036

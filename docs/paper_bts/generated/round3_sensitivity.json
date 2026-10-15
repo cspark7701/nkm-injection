@@ -5,11 +5,11 @@
     "scipy": "1.17.1",
     "pyat": "0.7.2.dev26+g4701d48c.d20260831",
     "source_sha256": {
-      "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+      "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
       "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
       "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
-      "scripts/run_bts_round3.py": "81b549b2d819d0346f8556ee56c1d976d7d28a0db7edf8469ef5db2e79c67d56",
-      "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+      "scripts/run_bts_round3.py": "3fc5bf5780cda6d1eb72afc27eafeafc02703b7f9468ce62145df679e5f3b697",
+      "docs/paper_bts/round3_protocol.json": "40b3dead2439d4577f51130ab9b91afc40d8bbed292116ce68ed349f91d4d757"
     }
   },
   "protocol": {
@@ -35,8 +35,8 @@
       "energy_jitter": 0.0005,
       "designs": {
         "reference": {
-          "predicted_loss_max_mean": 0.014363566084571922,
-          "mean_clearance_m": 0.000516417812651536,
+          "predicted_loss_max_mean": 0.013153020720716942,
+          "mean_clearance_m": 0.0005186612239692639,
           "paired_clearance_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -45,50 +45,50 @@
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006531418473526503,
-            0.00033493646888010405
+            0.0006490586224578191,
+            0.00035809827735971386
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 282,
+            "sept_ex_x": 318
           }
         },
         "low_beta": {
-          "predicted_loss_max_mean": 0.013377547013728282,
-          "mean_clearance_m": 0.000511571868797892,
+          "predicted_loss_max_mean": 0.01198155416768522,
+          "mean_clearance_m": 0.0005173918732597368,
           "paired_clearance_vs_reference_m": {
-            "mean": -4.845943853644151e-06,
+            "mean": -1.2693507095270725e-06,
             "ci95": [
-              -1.3382572085914712e-05,
-              3.631119213552936e-06
+              -1.040752714936881e-05,
+              7.735965830671746e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006417041276973319,
-            0.0003379191558079572
+            0.0006414184830539966,
+            0.0003591387858347528
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         },
         "robust": {
-          "predicted_loss_max_mean": 0.001784734876062799,
-          "mean_clearance_m": 0.0005106196574966515,
+          "predicted_loss_max_mean": 0.002331663983713191,
+          "mean_clearance_m": 0.0005035882789078703,
           "paired_clearance_vs_reference_m": {
-            "mean": -5.79815515488452e-06,
+            "mean": -1.507294506139366e-05,
             "ci95": [
-              -2.2889198029243506e-05,
-              1.1452728048305143e-05
+              -3.119872039478306e-05,
+              1.3310575885504195e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0005085030873245549,
-            0.0003739662490339534
+            0.0005153166774092317,
+            0.0004114676943872291
           ],
           "active": {
-            "blade_exit_x": 289,
-            "sept_ex_x": 311
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         }
       }
@@ -98,8 +98,8 @@
       "energy_jitter": 0.001,
       "designs": {
         "reference": {
-          "predicted_loss_max_mean": 0.014675853526441698,
-          "mean_clearance_m": 0.0005147177354853451,
+          "predicted_loss_max_mean": 0.013367340112163353,
+          "mean_clearance_m": 0.0005169615769858419,
           "paired_clearance_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -108,50 +108,50 @@
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006574225992927087,
-            0.0003379638805003639
+            0.0006532482226091351,
+            0.0003601363147021454
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 282,
+            "sept_ex_x": 318
           }
         },
         "low_beta": {
-          "predicted_loss_max_mean": 0.013799737111032384,
-          "mean_clearance_m": 0.0005098873570512609,
+          "predicted_loss_max_mean": 0.01239448098410696,
+          "mean_clearance_m": 0.0005156992101621075,
           "paired_clearance_vs_reference_m": {
-            "mean": -4.8303784340842026e-06,
+            "mean": -1.2623668237344295e-06,
             "ci95": [
-              -1.3358014863545687e-05,
-              3.6596651052849256e-06
+              -1.0365498130948424e-05,
+              7.763106412180071e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006462756774922495,
-            0.00034097752616574765
+            0.0006461208160547849,
+            0.00036183577416709075
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         },
         "robust": {
-          "predicted_loss_max_mean": 0.0017572557271269133,
-          "mean_clearance_m": 0.0005086839000180801,
+          "predicted_loss_max_mean": 0.0023793519246213353,
+          "mean_clearance_m": 0.000501662347049423,
           "paired_clearance_vs_reference_m": {
-            "mean": -6.033835467264915e-06,
+            "mean": -1.5299229936418837e-05,
             "ci95": [
-              -2.3164903678031894e-05,
-              1.1273972710281076e-05
+              -3.1403290652486085e-05,
+              1.094653878706433e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0005138552630630185,
-            0.0003767754930447747
+            0.0005205385033159514,
+            0.0004137787491824525
           ],
           "active": {
-            "blade_exit_x": 289,
-            "sept_ex_x": 311
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         }
       }
@@ -161,8 +161,8 @@
       "energy_jitter": 0.0005,
       "designs": {
         "reference": {
-          "predicted_loss_max_mean": 0.014363684054601793,
-          "mean_clearance_m": 0.0005164158209570153,
+          "predicted_loss_max_mean": 0.013153061853198741,
+          "mean_clearance_m": 0.0005186593392761387,
           "paired_clearance_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -171,50 +171,50 @@
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006531419911077192,
-            0.00033493649674681375
+            0.0006490587760067339,
+            0.000358098284733974
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 282,
+            "sept_ex_x": 318
           }
         },
         "low_beta": {
-          "predicted_loss_max_mean": 0.01337782742650632,
-          "mean_clearance_m": 0.0005115703090632959,
+          "predicted_loss_max_mean": 0.011981864084100442,
+          "mean_clearance_m": 0.0005173905781511726,
           "paired_clearance_vs_reference_m": {
-            "mean": -4.8455118937192295e-06,
+            "mean": -1.2687611249661152e-06,
             "ci95": [
-              -1.3382065129644355e-05,
-              3.63122095582522e-06
+              -1.0406871138312302e-05,
+              7.736179866758372e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006417046586077012,
-            0.00033791920369395553
+            0.0006414188774200507,
+            0.0003591400157914749
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         },
         "robust": {
-          "predicted_loss_max_mean": 0.0017846707521188554,
-          "mean_clearance_m": 0.0005106188282229774,
+          "predicted_loss_max_mean": 0.0023316733773208293,
+          "mean_clearance_m": 0.0005035869465068945,
           "paired_clearance_vs_reference_m": {
-            "mean": -5.7969927340377224e-06,
+            "mean": -1.5072392769244224e-05,
             "ci95": [
-              -2.2888102871755414e-05,
-              1.1453851952154459e-05
+              -3.119760075886296e-05,
+              1.3315318276461424e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0005085030414475684,
-            0.0003739662568216058
+            0.0005153176670019852,
+            0.0004114699581457427
           ],
           "active": {
-            "blade_exit_x": 289,
-            "sept_ex_x": 311
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         }
       }
@@ -224,8 +224,8 @@
       "energy_jitter": 0.001,
       "designs": {
         "reference": {
-          "predicted_loss_max_mean": 0.01467596873007424,
-          "mean_clearance_m": 0.0005147157506131844,
+          "predicted_loss_max_mean": 0.013367372437312355,
+          "mean_clearance_m": 0.0005169596847777397,
           "paired_clearance_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -234,50 +234,50 @@
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006574227422058778,
-            0.00033796390833160496
+            0.0006532483720148595,
+            0.00036013633683578235
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 282,
+            "sept_ex_x": 318
           }
         },
         "low_beta": {
-          "predicted_loss_max_mean": 0.01379999940655633,
-          "mean_clearance_m": 0.0005098857802565305,
+          "predicted_loss_max_mean": 0.012394757940756184,
+          "mean_clearance_m": 0.000515697892203243,
           "paired_clearance_vs_reference_m": {
-            "mean": -4.829970356653877e-06,
+            "mean": -1.2617925744966911e-06,
             "ci95": [
-              -1.3357534147855171e-05,
-              3.659768214645977e-06
+              -1.0364781194024092e-05,
+              7.763269915633704e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006462762235581446,
-            0.000340977574643386
+            0.0006461211965800129,
+            0.00036183696349172963
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         },
         "robust": {
-          "predicted_loss_max_mean": 0.0017571949626030258,
-          "mean_clearance_m": 0.0005086830516918571,
+          "predicted_loss_max_mean": 0.0023793655279004153,
+          "mean_clearance_m": 0.0005016610020631674,
           "paired_clearance_vs_reference_m": {
-            "mean": -6.032698921327181e-06,
+            "mean": -1.5298682714572357e-05,
             "ci95": [
-              -2.3164012104204094e-05,
-              1.1275157657048432e-05
+              -3.140305277561655e-05,
+              1.0938395114045549e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0005138552079178879,
-            0.0003767754995715294
+            0.0005205394971365221,
+            0.00041378107925720236
           ],
           "active": {
-            "blade_exit_x": 289,
-            "sept_ex_x": 311
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         }
       }
@@ -287,8 +287,8 @@
       "energy_jitter": 0.0005,
       "designs": {
         "reference": {
-          "predicted_loss_max_mean": 0.014364460919873175,
-          "mean_clearance_m": 0.0005164020799524962,
+          "predicted_loss_max_mean": 0.013153358977585159,
+          "mean_clearance_m": 0.0005186460134390701,
           "paired_clearance_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -297,50 +297,50 @@
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006531430438761134,
-            0.0003349366961683142
+            0.0006490598517979997,
+            0.0003580984248458459
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 282,
+            "sept_ex_x": 318
           }
         },
         "low_beta": {
-          "predicted_loss_max_mean": 0.013379744805200927,
-          "mean_clearance_m": 0.0005115596620269744,
+          "predicted_loss_max_mean": 0.011984051561138935,
+          "mean_clearance_m": 0.0005173808049948424,
           "paired_clearance_vs_reference_m": {
-            "mean": -4.842417925521815e-06,
+            "mean": -1.265208444227694e-06,
             "ci95": [
-              -1.3378543629983253e-05,
-              3.6318363145215854e-06
+              -1.0401467229634467e-05,
+              7.739980134013346e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006417077645368557,
-            0.00033791950288623634
+            0.00064142172275686,
+            0.0003591438205638579
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         },
         "robust": {
-          "predicted_loss_max_mean": 0.0017841873257599058,
-          "mean_clearance_m": 0.000510613662839726,
+          "predicted_loss_max_mean": 0.00233164422472332,
+          "mean_clearance_m": 0.0005035803537008175,
           "paired_clearance_vs_reference_m": {
-            "mean": -5.788417112770189e-06,
+            "mean": -1.5065659738252634e-05,
             "ci95": [
-              -2.2879927225533267e-05,
-              1.1461252778301608e-05
+              -3.1189259273926e-05,
+              1.33824143237091e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0005085025647582375,
-            0.00037396632357956163
+            0.0005153202646172052,
+            0.00041147676743933525
           ],
           "active": {
-            "blade_exit_x": 289,
-            "sept_ex_x": 311
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         }
       }
@@ -350,8 +350,8 @@
       "energy_jitter": 0.001,
       "designs": {
         "reference": {
-          "predicted_loss_max_mean": 0.014676716638868896,
-          "mean_clearance_m": 0.0005147020596258129,
+          "predicted_loss_max_mean": 0.013367607460627358,
+          "mean_clearance_m": 0.0005169463635332716,
           "paired_clearance_vs_reference_m": {
             "mean": 0.0,
             "ci95": [
@@ -360,50 +360,50 @@
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0006574237826363313,
-            0.0003379641069587419
+            0.0006532494230964796,
+            0.00036013652175722265
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 282,
+            "sept_ex_x": 318
           }
         },
         "low_beta": {
-          "predicted_loss_max_mean": 0.013801786820387338,
-          "mean_clearance_m": 0.0005098750194925174,
+          "predicted_loss_max_mean": 0.01239673321365485,
+          "mean_clearance_m": 0.0005156879943132705,
           "paired_clearance_vs_reference_m": {
-            "mean": -4.82704013329545e-06,
+            "mean": -1.2583692200011173e-06,
             "ci95": [
-              -1.3354196772630587e-05,
-              3.662123883231306e-06
+              -1.0360317258938602e-05,
+              7.76355391086277e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.000646279423816561,
-            0.00034097787722897047
+            0.0006461240389219426,
+            0.00036184064097950736
           ],
           "active": {
-            "blade_exit_x": 286,
-            "sept_ex_x": 314
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         },
         "robust": {
-          "predicted_loss_max_mean": 0.0017567374324147197,
-          "mean_clearance_m": 0.0005086777518913587,
+          "predicted_loss_max_mean": 0.0023793833516845705,
+          "mean_clearance_m": 0.0005016542913763906,
           "paired_clearance_vs_reference_m": {
-            "mean": -6.024307734454213e-06,
+            "mean": -1.529207215688102e-05,
             "ci95": [
-              -2.315770960015037e-05,
-              1.1284014847834497e-05
+              -3.1397481535416275e-05,
+              1.095020244982139e-06
             ]
           },
           "exit_centroid_rms_m_rad": [
-            0.0005138546565229482,
-            0.00037677555658425615
+            0.000520542062649032,
+            0.0004137880825777508
           ],
           "active": {
-            "blade_exit_x": 289,
-            "sept_ex_x": 311
+            "m4_x": 280,
+            "sept_ex_x": 320
           }
         }
       }

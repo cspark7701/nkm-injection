@@ -61,3 +61,7 @@ Seven tasks, R2B-01 to R2B-07, are included in the report.
 
 The four-station study moved to the supplement. Funding, acknowledgments, final approval, the availability wording
 and referee delivery remain author actions. The Reviewer 2 report is preserved unchanged.
+
+At the author's instruction the BTS lattice is not changed: the round-3 study was rerun (milestone 234) without
+added corrector or monitor elements. Steering now uses horizontal trims of the existing dipoles, and the
+added-corrector campaign is superseded.

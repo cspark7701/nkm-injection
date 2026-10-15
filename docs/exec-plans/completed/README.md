@@ -667,3 +667,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 233. [**Milestone 233 — BTS Article Title Reverted**](233_bts_title_reverted.md)
     - Title restored to "Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line" at the user's request.
+
+234. [**Milestone 234 — BTS Round 3 on the Unchanged Lattice**](234_bts_unchanged_lattice_rerun.md)
+    - Added correctors removed at the author's instruction; steering by trims of the existing dipoles; all round-3 stages rerun (steered loss 1.68 %, fresh-test loss-based 0.69 % vs 2.30 %); records reconciled; 743 tests pass.

@@ -9,7 +9,7 @@ import pytest
 from nkm_injection.bts_journal import JournalBeam, QUADS, lattice_for
 from nkm_injection.bts_round2 import station_record
 from nkm_injection.bts_round3 import (APERTURE_MODEL, aperture_table, boundary_clearances, clearance_and_loss,
-                                      elementwise_lattice)
+                                      aperture_lattice, observation_copy)
 
 ROOT = Path(__file__).resolve().parents[1]
 DESIGNS = json.loads((ROOT / 'docs/paper_bts/generated/round2_designs.json').read_text())['designs']
@@ -43,32 +43,36 @@ def _track_end(line, particle):
     return at.lattice_track(line, p, nturns=1)[0][:, 0, 0, 0]
 
 
-def test_elementwise_line_preserves_transport():
-    """Slicing, correctors at zero and markers leave the single-pass map unchanged (R2B-01)."""
+def test_aperture_line_is_the_unchanged_bts_lattice():
+    """No element is added, removed or sliced, and transport is unchanged (R2B-01, author instruction)."""
     particle = np.array([2e-4, 1e-5, -1e-4, 2e-5, 1e-3, 0.0])
     original = lattice_for(REFERENCE)
-    sliced = elementwise_lattice(REFERENCE)
-    np.testing.assert_allclose(_track_end(sliced, particle), _track_end(original, particle), atol=1e-10)
+    line = aperture_lattice(REFERENCE)
+    assert [e.FamName for e in line] == [e.FamName for e in original]
+    assert [type(e) for e in line] == [type(e) for e in original]
+    np.testing.assert_allclose(_track_end(line, particle), _track_end(original, particle), atol=1e-15)
 
 
-def test_every_magnet_slice_has_an_aperture():
-    line = elementwise_lattice(REFERENCE)
+def test_every_magnet_has_an_aperture_and_the_end_carries_the_blade():
+    line = aperture_lattice(REFERENCE)
     for e in line:
-        if e.FamName in QUADS + ('b1', 'b2', 'b3', 'sept_in', 'sept_ex', 'kext'):
+        if e.FamName in QUADS + ('b1', 'b2', 'b3', 'sept_in', 'sept_ex', 'kext') or (e.Length > 0):
             assert hasattr(e, 'RApertures') or hasattr(e, 'EApertures'), e.FamName
+    m4 = next(e for e in line if e.FamName == 'm4')
+    assert m4.RApertures[1] == pytest.approx(APERTURE_MODEL['septum_ex_blade'])
     names = {r['name'] for r in aperture_table(line)}
-    assert {'q11', 'b2', 'sept_ex', 'blade_exit'} <= names
+    assert {'q11', 'b2', 'sept_ex', 'm4'} <= names
 
 
 def test_blade_is_active_and_independent_of_quadrupoles():
     beam = JournalBeam()
     low = np.array(json.loads((ROOT / 'docs/paper_bts/generated/round2_spatial.json').read_text())
                    ['refined_low_beta']['strengths_m_minus2'])
-    results = [clearance_and_loss(elementwise_lattice(k), np.zeros(5), beam.covariance()) for k in (REFERENCE, low)]
+    results = [clearance_and_loss(observation_copy(aperture_lattice(k)), np.zeros(5), beam.covariance()) for k in (REFERENCE, low)]
     for r in results:
         assert r['active'][0] == 'sept_ex' and r['active'][1] == 0
     assert results[0]['minimum_m'] == pytest.approx(results[1]['minimum_m'], abs=1e-9)
-    blade = next(x for x in results[0]['rows'] if x['name'] == 'blade_exit' and x['plane'] == 0)
+    blade = next(x for x in results[0]['rows'] if x['name'] == 'm4' and x['plane'] == 0)
     assert blade['clearance_m'] == pytest.approx(APERTURE_MODEL['septum_ex_blade'] - 5 * blade['sigma_m'], abs=1e-9)
 
 
@@ -76,9 +80,9 @@ def test_gaussian_loss_probability_and_particle_loss_agree():
     """A beam pushed onto the blade loses the analytic Gaussian tail fraction in tracking."""
     from scipy.stats import norm
     beam = JournalBeam()
-    line = elementwise_lattice(REFERENCE)
+    line = aperture_lattice(REFERENCE)
     record = clearance_and_loss(line, np.zeros(5), beam.covariance())
-    blade = next(x for x in record['rows'] if x['name'] == 'blade_exit' and x['plane'] == 0)
+    blade = next(x for x in record['rows'] if x['name'] == 'm4' and x['plane'] == 0)
     assert blade['loss_probability'] == pytest.approx(norm.sf(APERTURE_MODEL['septum_ex_blade'] / blade['sigma_m'])
                                                       + norm.cdf(-0.0085 / blade['sigma_m']), rel=1e-9)
     rng = np.random.default_rng(5)
@@ -93,34 +97,37 @@ def test_gaussian_loss_probability_and_particle_loss_agree():
     assert observed <= pred['loss_union'] + 4 * np.sqrt(pred['loss_union'] / 20000) + 1e-4
 
 
-def test_amended_steering_controls_exit_position_and_angle():
-    """Correction with the model response removes most of the static exit offset and angle (R2B-03)."""
+def test_dipole_trim_steering_controls_exit_position_and_angle():
+    """Horizontal trims of the existing dipoles remove most of the static exit offset and angle (R2B-03)."""
     from nkm_injection.bts_journal import draw_static
-    from nkm_injection.bts_round3 import (AMENDED_CORRECTORS, AMENDED_MONITORS, correct_trajectory, orbit_at,
-                                          response_matrix)
-    kwargs = {'corrector_before': AMENDED_CORRECTORS, 'monitor_before': AMENDED_MONITORS}
-    response = response_matrix(elementwise_lattice(REFERENCE, **kwargs))
+    from nkm_injection.bts_round3 import correct_trajectory, response_matrix
+    response = response_matrix(aperture_lattice(REFERENCE))
     before, after = [], []
     for m in range(6):
         errors = draw_static(np.random.default_rng([7, m]), lattice_for(REFERENCE))
-        machine = elementwise_lattice(REFERENCE, errors, **kwargs)
-        bpm = np.random.default_rng([8, m]).normal(0, 5e-5, (len(response[1]), 2))
-        line, kicks = correct_trajectory(machine, response, bpm)
-        assert np.all(np.abs(kicks) <= 1e-3 + 1e-15)
-        for target, lat in ((before, machine), (after, line)):
-            p = np.zeros((6, 1), order='F')
-            target.append(at.lattice_track(lat, p, nturns=1, refpts=[len(lat)])[0][:2, 0, 0, 0])
+        machine = aperture_lattice(REFERENCE, errors)
+        bpm = np.random.default_rng([8, m]).normal(0, 5e-5, len(response[1]))
+        line, trims = correct_trajectory(machine, response, bpm)
+        assert len(line) == len(machine) and np.all(np.abs(trims) <= 1e-3 + 1e-15)
+        from nkm_injection.bts_round3 import orbit_at
+        before.append([orbit_at(machine, [len(machine)])[0, 0], _track_end(_strip(machine), np.zeros(6))[1]])
+        after.append([orbit_at(line, [len(line)])[0, 0], _track_end(_strip(line), np.zeros(6))[1]])
     before, after = np.array(before), np.array(after)
     assert np.sqrt(np.mean(after[:, 0] ** 2)) < 0.25 * np.sqrt(np.mean(before[:, 0] ** 2))
-    assert np.sqrt(np.mean(after[:, 1] ** 2)) < 2e-4
+    assert np.sqrt(np.mean(after[:, 1] ** 2)) < 4e-4
 
 
-def test_zero_kick_correctors_do_not_change_the_line():
-    from nkm_injection.bts_round3 import AMENDED_CORRECTORS, AMENDED_MONITORS
+def _strip(line):
+    from nkm_injection.bts_round3 import _unrestricted
+    return _unrestricted(line)
+
+
+def test_zero_trims_do_not_change_the_line():
+    from nkm_injection.bts_round3 import apply_trims, trim_indices
     particle = np.array([3e-4, -2e-5, 1e-4, 1e-5, -1e-3, 0.0])
-    plain = elementwise_lattice(REFERENCE, correctors=False)
-    amended = elementwise_lattice(REFERENCE, corrector_before=AMENDED_CORRECTORS, monitor_before=AMENDED_MONITORS)
-    np.testing.assert_allclose(_track_end(amended, particle), _track_end(plain, particle), atol=1e-12)
+    line = aperture_lattice(REFERENCE)
+    assert len(trim_indices(line)) == 6
+    np.testing.assert_allclose(_track_end(apply_trims(line, np.zeros(6)), particle), _track_end(line, particle), atol=0)
 
 
 def test_jitter_transfer_depends_only_on_phase_advance():
@@ -142,10 +149,10 @@ def test_shot_averaged_loss_equals_average_over_shots():
     """Gaussian beam with a Gaussian centroid: summed-covariance tail equals the mean per-shot tail."""
     from nkm_injection.bts_round3 import entrance_jitter_covariance, shot_averaged_loss
     beam = JournalBeam()
-    line = elementwise_lattice(REFERENCE, correctors=False)
+    line = aperture_lattice(REFERENCE)
     table = aperture_table(line)
     averaged = shot_averaged_loss(line)
-    blade = lambda r: next(x for x in r['rows'] if x['name'] == 'blade_exit' and x['plane'] == 0)['loss_probability']
+    blade = lambda r: next(x for x in r['rows'] if x['name'] == 'm4' and x['plane'] == 0)['loss_probability']
     rng = np.random.default_rng(11)
     shots = rng.multivariate_normal(np.zeros(5), entrance_jitter_covariance(), 400)
     mean = np.mean([blade(clearance_and_loss(line, c, beam.covariance(), table=table)) for c in shots])
@@ -164,8 +171,8 @@ def test_dispersion_free_exit_setting_is_matched_and_reduces_blade_loss():
     np.testing.assert_allclose(observed[4:], 0.0, atol=2e-6)
     assert EXIT_TWISS['disp_x'] == TARGET[4] and EXIT_TWISS['disp_px'] == TARGET[5]
     assert np.degrees(phase_advance(lattice_for(k))[0]) < 190
-    free = shot_averaged_loss(elementwise_lattice(k, correctors=False))['loss_lower']
-    configured = shot_averaged_loss(elementwise_lattice(REFERENCE, correctors=False))['loss_lower']
+    free = shot_averaged_loss(aperture_lattice(k))['loss_lower']
+    configured = shot_averaged_loss(aperture_lattice(REFERENCE))['loss_lower']
     assert free < 0.01 * configured
 
 
@@ -175,14 +182,14 @@ def test_roll_errors_do_not_change_horizontal_blade_loss():
     beam = JournalBeam()
     errors = draw_static(np.random.default_rng([93001, 0]), lattice_for(REFERENCE))
     probs = []
-    line = elementwise_lattice(REFERENCE, errors)
+    line = aperture_lattice(REFERENCE, errors)
     exit_x = clearance_and_loss(line, np.zeros(5), beam.covariance())['exit_centroid'][0]
     # Entrance offset placing the exit centroid about 0.3 mm inside the blade (exit x ~ -0.92 per mm at m1).
     centroid = np.array([-(1.18e-3 - exit_x) / 0.918, 0, 0, 0, 0])
     for scale in (0.2, 1.0):
         e = dict(errors, roll=errors['roll'] * scale)
-        r = clearance_and_loss(elementwise_lattice(REFERENCE, e), centroid, beam.covariance())
-        probs.append(next(x for x in r['rows'] if x['name'] == 'blade_exit' and x['plane'] == 0))
+        r = clearance_and_loss(aperture_lattice(REFERENCE, e), centroid, beam.covariance())
+        probs.append(next(x for x in r['rows'] if x['name'] == 'm4' and x['plane'] == 0))
     assert probs[0]['sigma_m'] == pytest.approx(probs[1]['sigma_m'], rel=1e-4)
     assert probs[0]['loss_probability'] > 1e-3
     assert probs[0]['loss_probability'] == pytest.approx(probs[1]['loss_probability'], rel=0.05)

@@ -33,10 +33,10 @@ the quadrupole settings. What the optics do control is where booster shot jitter
 arrives: with matched ends the exit jitter depends only on the horizontal phase
 advance, which exchanges position jitter at the blade for angle jitter at the
 injection kicker. After trajectory correction, which reduces the loss from 10\% to
-1.6\%, this jitter sets the remaining blade loss. A Gaussian loss model agrees with
+1.7\%, this jitter sets the remaining blade loss. A Gaussian loss model agrees with
 tracking within 1\% and serves as a design objective. Matched solutions reach only a
 200--232 degree phase-advance interval; a setting at its edge cuts the tracked loss on
-fresh machines from 2.32 to 0.66\% at 13\% more exit-angle jitter, whereas lowering the
+fresh machines from 2.30 to 0.69\% at 13\% more exit-angle jitter, whereas lowering the
 vertical peak beta by 45\% gives no resolved change, and the mean minimum clearance
 used earlier cannot see either result. A dispersion-free exit is feasible, widens the
 reachable interval and lowers the predicted loss a further 65-fold. Aperture
@@ -159,14 +159,16 @@ assumed 19.35 mm bore, the respective maxima are 33.356/40.028 T/m and
 checks model consistency, not magnet engineering feasibility.
 
 \subsection{Element-wise restrictions}\label{sec:apertures}
-Every element carries its own aperture (Table~\ref{tab:apertures}); magnets are
-sliced (four slices per quadrupole, eight per bend or septum) so that interior
-envelopes are checked. The only restriction with a source is the injection-septum
+Every element of the unchanged 36-element line carries its own aperture
+(Table~\ref{tab:apertures}); no element is added, removed or subdivided, and AT
+checks each aperture at the element entrance. Interior envelopes are sampled for the
+nominal profile on an observation-only copy (four subdivisions per quadrupole, eight
+per bend or septum), which is never tracked. The only restriction with a source is the injection-septum
 blade. In the companion NKM study the injected beam leaves the septum at
 $x=-19.478$ mm, with the stored-beam edge at $-16$ mm and a 2 mm blade, i.e.
 1.478 mm from the blade's outer face, chosen there as three rms sizes plus 1 mm.
-We place the blade at $x=+1.478$ mm along the whole injection septum and at the
-line end, on the side facing the stored beam. All other dimensions are declared
+We place the blade at $x=+1.478$ mm in the injection septum and at the line end
+(marker m4), on the side facing the stored beam. All other dimensions are declared
 assumptions and are swept. Bend chambers are taken as curved: the sagitta of the
 reference arc over its chord is \BtsRThreeSagittaBTwoMm\ mm in b2 and
 \BtsRThreeSagittaBOneMm\ mm in b1/b3, so a straight chamber would need that much
@@ -189,17 +191,18 @@ carried by the entrance dispersion. These levels are modelling assumptions,
 identical to the earlier revision and to the booster jitter of the companion NKM
 study; their sensitivity is examined in Section~\ref{sec:sensitivity}.
 
-Static trajectory errors are corrected as in commissioning. Combined horizontal
-and vertical thin correctors are placed before q11, q21, q31 and the injection
-septum, and monitors after each quadrupole and at the line end. Each machine's
-monitor readings of the zero-input trajectory include a static 50 micrometre rms
-error (offset and calibration residual). The kicks minimise the weighted readings
-(end monitor weight 3) with the response of the error-free model line,
-Tikhonov-regularised and limited to $\pm1$ mrad, in two passes. The correction
-uses no knowledge of the actual errors and does not act on shot jitter. After the first run this
-declared layout was amended, with a corrector before b3 and a monitor at the
-injection-septum entrance (Section~\ref{sec:steering-results}); both layouts are
-reported. Every machine is evaluated uncorrected and corrected on identical particles.
+Static trajectory errors are corrected without changing the line: no corrector or
+monitor element is added. The horizontal knobs are field trims of the six existing
+dipoles (kext, sept\_in, b1--b3 and sept\_ex), applied as additional fixed-geometry
+dipole fields like the dipole errors. Horizontal readings are taken at existing
+element boundaries, after each quadrupole, at the injection-septum entrance and at
+the line end, with a static 50 micrometre rms reading error (offset and calibration
+residual). The trims minimise the weighted readings (septum entrance and end weighted
+3) with the response of the error-free model line, Tikhonov-regularised and limited
+to $\pm1$ mrad of kick, in two passes. The correction uses no knowledge of the actual
+errors and does not act on shot jitter. The line has no vertical knob, so the vertical
+plane is not corrected. Every machine is evaluated uncorrected and corrected on
+identical particles.
 
 \section{Physical criterion, validation and comparison protocol}
 \subsection{Active restrictions and boundary-fixed clearances}
@@ -346,23 +349,16 @@ only where clearances exceed 9 mm. Design beam, no errors.}\label{fig:profile}\e
 
 \subsection{Trajectory correction}\label{sec:steering-results}
 Table~\ref{tab:steering} compares the uncorrected and corrected lines on 200
-machines with three shots of 2\,000 particles each (seeds 91001--91004); every
-setting and steering variant sees the same machines, shots and particles.
-Without correction the static errors displace the exit centroid by 1.2 mm rms,
-and \BtsRThreeRefUncLostPct\% of the particles are lost, almost all on the blade.
-The declared correction layout (correctors before q11, q21, q31 and the septum)
-reduces the exit position spread to \BtsRThreeRefCorExitXUm\ micrometres and the
-loss to \BtsRThreeRefCorLostPct\%, but its last corrector, 1 m upstream of the
-exit, buys position with angle: the exit-angle spread grows from
-\BtsRThreeRefUncExitXpUrad\ to \BtsRThreeRefCorExitXpUrad\ microradians. We therefore
-amended the layout after this first run, adding a corrector before b3 and a monitor
-at the septum entrance so that position and angle at the septum are both measured
-and steered; the amendment is recorded in the protocol and the declared layout is
-reported alongside. With it the exit spreads are \BtsRThreeRefAmdExitXUm\ micrometres
-and \BtsRThreeRefAmdExitXpUrad\ microradians, the loss falls to
-\BtsRThreeRefAmdLostPct\% (\BtsRThreeLowAmdLostPct\% for the low-beta setting),
-and the rms kick is \BtsRThreeRefAmdKickUrad\ microradians. All later results use
-the amended layout.
+machines with three shots of 2\,000 particles each (seeds 91001--91004); both
+settings and both variants see the same machines, shots and particles. Without
+correction the static errors displace the exit centroid by 1.2 mm rms, and
+\BtsRThreeRefUncLostPct\% of the particles are lost, almost all on the blade. With
+the dipole trims the exit position spread falls to \BtsRThreeRefCorExitXUm\
+micrometres and the angle spread to \BtsRThreeRefCorExitXpUrad\ microradians, and
+the loss to \BtsRThreeRefCorLostPct\% (\BtsRThreeLowCorLostPct\% for the low-beta
+setting); the rms trim is \BtsRThreeRefCorKickUrad\ microradians. Two trims close
+to the exit, b3 and the injection septum, steer both position and angle at the
+septum. The uncorrected vertical orbit stays far inside the vertical restrictions.
 
 \begin{table}[htbp]\centering
 \caption{Steering on 200 machines (3 shots, 2\,000 particles each). $\bar c_{\min}$
@@ -373,10 +369,10 @@ $x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
 {\small\input{generated/round3_steering_rows.tex}}\end{table}
 
 Two observations matter for the design question. First, after correction the exit
-centroid spread, about 0.68 mm and 0.34 mrad, is that of the booster jitter alone,
+centroid spread, about 0.68 mm and 0.37 mrad, is mainly that of the booster jitter,
 and it sets the remaining blade loss. Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
-largest mean clearance (\BtsRThreeRefUncClear\ mm against \BtsRThreeRefAmdClear\ mm)
+largest mean clearance (\BtsRThreeRefUncClear\ mm against \BtsRThreeRefCorClear\ mm)
 and six times the loss, because a static offset away from the one-sided blade raises
 the mean while offsets towards it are lost. The Gaussian loss prediction, by
 contrast, agrees with the tracked loss within \BtsRThreePredAgreePct\% (relative) in
@@ -502,13 +498,13 @@ peak beta, the usual design heuristic, therefore changes only clearances of seve
 millimetres and, on fresh steered machines, leaves the loss unchanged.
 
 The quadrupoles act on the loss through the trajectory. Static errors are removed by
-correction, provided the steering controls angle as well as position at the septum:
-a layout that corrected position alone traded it for exit-angle error. What remains
+field trims of the existing dipoles, without adding any element to the line; the two
+trims nearest the exit steer both position and angle at the septum. What remains
 is booster shot jitter, and for matched ends its arrival at the exit depends only on
 the horizontal phase advance. The line chooses whether the jitter appears as
 position at the blade or as angle at the injection kicker, but it cannot remove it.
 For the configured exit, matched solutions reach only a 32 degree interval of phase
-advance, and the best setting in it reduces the blade loss 3.5-fold at 13\% more
+advance, and the best setting in it reduces the blade loss 3.3-fold at 13\% more
 angle jitter. A dispersion-free exit widens the interval and lowers the predicted loss
 much further, again at the cost of angle jitter. The choice between blade loss and
 injection-angle jitter belongs to the injection design as a whole: for the companion
@@ -524,8 +520,8 @@ within 1\%, is smooth, and can be optimised directly. The phase-advance view als
 gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
 booster jitter lands, and compare with the restriction and the kicker acceptance.
 
-All aperture dimensions except the blade position, the corrector and monitor layout,
-the steering amendment and the error levels are declared assumptions; sweeps and a
+All aperture dimensions except the blade position, the choice of dipole trims and
+monitor points for steering, and the error levels are declared assumptions; sweeps and a
 sensitivity study bound their influence on these conclusions. The loss is heavy-tailed
 over machines and its population mean varies between independently seeded
 populations, while the ranking of settings does not. The dispersion-free results are
@@ -552,9 +548,9 @@ to a journal; reviewer delivery and final availability wording remain author act
 \section{Evidence and supplementary material}
 The round-three study (element-wise apertures, steering, phase-advance pools,
 loss-based setting, fresh test, exit target and sensitivity) is in
-results/bts\_journal\_campaign\_r3\_20261015, one directory per stage, each with
-its configuration, source hashes and the protocol declared before the campaigns
-(round3\_protocol.json, including the recorded steering amendment). The supplement
+\url{results/bts_journal_campaign_r3b_20261015}, one directory per stage, each with
+its configuration, source hashes and the protocol (round3\_protocol.json, which also
+records the superseded corrector layouts). The supplement
 preserves the four-station study, historical matching/optical statistics,
 block-loss inference and numerical limitations. Reviewed and original campaign
 identities, all previous reports, new frozen designs, station decompositions and

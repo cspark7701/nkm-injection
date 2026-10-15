@@ -70,16 +70,15 @@ APERTURE_MODEL = {
     'septum_ex_blade': 0.001478,     # exit septum: blade (+x side) distance from the beam axis
     'septum_ex_outer': 0.0085,       # exit septum: outer channel wall (-x side)
     'septum_ex_half_y': 0.005,       # exit septum: vertical half-gap
-    'slices_quad': 4, 'slices_bend': 8,
+    'observe_quad': 4, 'observe_bend': 8,   # observation-only subdivisions for interior envelopes
 }
 
-# Corrector and monitor layout for trajectory correction (R2B-03), declared.
-CORRECTOR_BEFORE = ('q11', 'q21', 'q31', 'sept_ex')
-# Amended layout (after the declared one was found not to control the exit angle):
-# a corrector before b3 and a monitor at the injection-septum entrance.
-AMENDED_CORRECTORS = ('q11', 'q21', 'q31', 'b3', 'sept_ex')
-AMENDED_MONITORS = ('sept_ex',)
-MONITOR_AFTER = QUADS + ('end',)
+# Steering uses only existing magnets: horizontal field trims of the six dipoles
+# (PolynomB[0], fixed geometry, as for dipole field errors). Readings are taken
+# at existing element boundaries: each quadrupole exit, the injection-septum
+# entrance and the line end. No element is added; there is no vertical knob.
+TRIM_DIPOLES = BENDS
+MONITOR_AFTER = QUADS
 
 
 def bend_sagitta(lattice):
@@ -107,49 +106,48 @@ def _limits(name, model):
     return 'ellipse', [r, r]
 
 
-def elementwise_lattice(strengths, errors=None, model=None, correctors=True, integration_steps=10,
-                        corrector_before=None, monitor_before=()):
-    """Build the BTS line with an aperture on every element, sliced magnets and correctors.
+def aperture_lattice(strengths, errors=None, model=None):
+    """The unchanged 36-element BTS line with an aperture attribute on every element.
 
-    Static errors are applied before slicing so AT keeps misalignments on the
-    magnet ends. The four legacy aperture markers are removed; an aperture
-    element at the end carries the exit-septum limits. Correctors are zero-length
-    AT ``Corrector`` elements (KickAngle [rad]) named ``hcv_<family>``; monitors
-    are markers ``bpm_<family>`` after each quadrupole and ``bpm_end``.
+    No element is added, removed or sliced. Static errors are applied as in
+    ``apply_static``. Drifts and quadrupoles get round apertures, the kicker,
+    septa and bends rectangular ones, and the end marker m4 carries the
+    injection-septum limits so that the blade is also checked at the line end.
+    The four legacy aperture elements are kept with their original limits.
+    AT checks these apertures at each element entrance.
     """
     model = {**APERTURE_MODEL, **(model or {})}
-    corrector_before = CORRECTOR_BEFORE if corrector_before is None else tuple(corrector_before)
-    base = lattice_for(np.asarray(strengths, dtype=float))
+    lat = lattice_for(np.asarray(strengths, dtype=float))
     if errors is not None:
-        apply_static(base, errors)
-    elements = []
-    for elem in base:
+        apply_static(lat, errors)
+    for elem in lat:
         if isinstance(elem, at.Aperture):
             continue
-        if elem.FamName in monitor_before:
-            elements.append(at.Marker('bpm_pre_' + elem.FamName))
-        if correctors and elem.FamName in corrector_before:
-            elements.append(at.Corrector('hcv_' + elem.FamName, 0.0, [0.0, 0.0]))
+        if elem.FamName == 'm4':
+            elem.RApertures = np.array(_limits('sept_ex', model)[1], dtype=float)
+            continue
+        if elem.Length == 0:
+            continue
+        kind, lim = _limits(elem.FamName, model)
+        setattr(elem, 'RApertures' if kind == 'rect' else 'EApertures', np.array(lim, dtype=float))
+    return lat
+
+
+def observation_copy(lattice, model=None):
+    """Observation-only copy with magnets subdivided, to sample interior envelopes.
+
+    Used solely to evaluate clearances inside magnets; tracking and losses use
+    the unchanged line. Pieces inherit the element's aperture attributes.
+    """
+    model = {**APERTURE_MODEL, **(model or {})}
+    pieces = []
+    for elem in lattice:
         if elem.Length > 0 and not isinstance(elem, at.Drift):
-            n = model['slices_quad'] if elem.FamName in QUADS else model['slices_bend']
-            pieces = elem.divide(np.full(n, 1.0 / n))
+            n = model['observe_quad'] if elem.FamName in QUADS else model['observe_bend']
+            pieces.extend(elem.divide(np.full(n, 1.0 / n)))
         else:
-            pieces = [elem]
-        for piece in pieces:
-            if hasattr(piece, 'NumIntSteps'):
-                piece.NumIntSteps = integration_steps
-            kind, lim = _limits(elem.FamName, model)
-            if elem.Length > 0 or kind == 'rect':
-                if kind == 'rect':
-                    piece.RApertures = np.array(lim, dtype=float)
-                else:
-                    piece.EApertures = np.array(lim, dtype=float)
-            elements.append(piece)
-        if elem.FamName in QUADS:
-            elements.append(at.Marker('bpm_' + elem.FamName))
-    elements.append(at.Aperture('blade_exit', _limits('blade_exit', model)[1]))
-    elements.append(at.Marker('bpm_end'))
-    return at.Lattice(elements, energy=base.energy, name='bts_elementwise')
+            pieces.append(elem.deepcopy())
+    return at.Lattice(pieces, energy=lattice.energy, name='bts_observation')
 
 
 def aperture_table(lattice):
@@ -309,8 +307,25 @@ def shot_averaged_loss(lattice, beam=None, jitter=None, coverage=5.0):
 STEERING = {'bpm_error_m': 5e-5, 'end_weight': 3.0, 'kick_limit_rad': 1e-3, 'tikhonov': 1e-3, 'iterations': 2}
 
 
-def _indices(lattice, prefix):
-    return [i for i, e in enumerate(lattice) if e.FamName.startswith(prefix)]
+def monitor_refpts(lattice):
+    """Existing element boundaries used as horizontal monitors: quadrupole exits,
+    injection-septum entrance and line end (weighted ends last two)."""
+    names = [e.FamName for e in lattice]
+    points = [i + 1 for i, n in enumerate(names) if n in MONITOR_AFTER]
+    return points + [names.index('sept_ex'), len(lattice)]
+
+
+def trim_indices(lattice):
+    return [i for i, e in enumerate(lattice) if e.FamName in TRIM_DIPOLES]
+
+
+def apply_trims(lattice, trims):
+    """Copy of ``lattice`` with horizontal dipole field trims; ``trims`` [rad] are the added kicks."""
+    line = deepcopy(lattice)
+    for i, t in zip(trim_indices(line), trims):
+        line[i].PolynomB = np.array(line[i].PolynomB, dtype=float)
+        line[i].PolynomB[0] = line[i].PolynomB[0] - t / line[i].Length
+    return line
 
 
 def orbit_at(lattice, refpts, centroid=None):
@@ -323,49 +338,37 @@ def orbit_at(lattice, refpts, centroid=None):
 
 
 def response_matrix(lattice, step=1e-5):
-    """BPM (x, y) response [m/rad] to each corrector's (h, v) kick, from the model line."""
-    bpms, cors = _indices(lattice, 'bpm_'), _indices(lattice, 'hcv_')
-    base = orbit_at(lattice, bpms).ravel()
+    """Horizontal monitor response [m/rad] to each dipole trim, from the error-free model line."""
+    monitors, n = monitor_refpts(lattice), len(trim_indices(lattice))
+    base = orbit_at(lattice, monitors)[:, 0]
     columns = []
-    for plane in (0, 1):
-        for c in cors:
-            trial = deepcopy(lattice)
-            kick = np.zeros(2)
-            kick[plane] = step
-            trial[c].KickAngle = kick
-            columns.append((orbit_at(trial, bpms).ravel() - base) / step)
-    return np.array(columns).T, bpms, cors
-
-
-def line_names(lattice):
-    return [e.FamName for e in lattice]
+    for k in range(n):
+        trims = np.zeros(n)
+        trims[k] = step
+        columns.append((orbit_at(apply_trims(lattice, trims), monitors)[:, 0] - base) / step)
+    return np.array(columns).T, monitors, n
 
 
 def correct_trajectory(lattice, model_response, bpm_errors, settings=None):
-    """Steer a static machine with its correctors; returns the corrected line and the kicks [rad].
+    """Steer a static machine horizontally with dipole field trims; returns the steered line and trims [rad].
 
-    Readings are the zero-input trajectory at the BPMs plus static BPM errors
-    (offset and calibration residual). Weighted, Tikhonov-regularised least
-    squares with the model response, ``iterations`` passes, kicks clipped to
-    the declared limit. Shot jitter is not corrected.
+    Readings are the zero-input horizontal trajectory at the monitor points plus
+    static reading errors. Weighted (septum entrance and end ``end_weight``),
+    Tikhonov-regularised least squares with the model response, ``iterations``
+    passes, trims clipped to the declared limit. Shot jitter and the vertical
+    plane are not corrected.
     """
     settings = {**STEERING, **(settings or {})}
-    matrix, bpms, cors = model_response
-    weights = np.ones((len(bpms), 2))
-    weights[-1] = settings['end_weight']
-    for n, i in enumerate(bpms):
-        if line_names(lattice)[i].startswith('bpm_pre_'):
-            weights[n] = settings['end_weight']
-    w = weights.ravel()
-    line = deepcopy(lattice)
-    kicks = np.zeros(2 * len(cors))
+    matrix, monitors, n = model_response
+    w = np.ones(len(monitors))
+    w[-2:] = settings['end_weight']
+    trims = np.zeros(n)
+    line = lattice
     for _ in range(settings['iterations']):
-        reading = orbit_at(line, bpms).ravel() + np.asarray(bpm_errors).ravel()
+        reading = orbit_at(line, monitors)[:, 0] + np.asarray(bpm_errors)[:len(monitors)]
         a = matrix * w[:, None]
         reg = settings['tikhonov'] * np.linalg.norm(a, 2)
-        delta = np.linalg.lstsq(np.vstack([a, reg * np.eye(a.shape[1])]),
-                                np.concatenate([-w * reading, np.zeros(a.shape[1])]), rcond=None)[0]
-        kicks = np.clip(kicks + delta, -settings['kick_limit_rad'], settings['kick_limit_rad'])
-        for n, c in enumerate(cors):
-            line[c].KickAngle = np.array([kicks[n], kicks[len(cors) + n]])
-    return line, kicks
+        delta = np.linalg.lstsq(np.vstack([a, reg * np.eye(n)]), np.concatenate([-w * reading, np.zeros(n)]), rcond=None)[0]
+        trims = np.clip(trims + delta, -settings['kick_limit_rad'], settings['kick_limit_rad'])
+        line = apply_trims(lattice, trims)
+    return line, trims

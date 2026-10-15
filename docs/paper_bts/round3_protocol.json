@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "declared before the round-3 campaigns (Reviewer 2 tasks R2B-01 to R2B-06)",
+  "campaign": "results/bts_journal_campaign_r3_20261015",
+  "aperture_model": {
+    "source": "Only the exit-septum blade distance (1.478 mm, +x side) follows the companion NKM geometry; all other dimensions are declared assumptions.",
+    "pipe_radius_m": 0.01935, "quad_bore_radius_m": 0.01935,
+    "kicker_half_m": [0.015, 0.010], "dipole_half_m": [0.030, 0.010],
+    "septum_in_half_m": [0.0075, 0.005],
+    "septum_ex_blade_m": 0.001478, "septum_ex_outer_m": 0.0085, "septum_ex_half_y_m": 0.005,
+    "dipole_chambers": "curved, following the reference arc",
+    "slices_quad": 4, "slices_bend": 8, "integration_steps_per_slice": 10
+  },
+  "aperture_sweeps": {
+    "dipole_half_gap_m": [0.0075, 0.010, 0.0125],
+    "septum_in_half_x_m": [0.005, 0.0075, 0.010],
+    "septum_ex_blade_m": [0.001, 0.001478, 0.002, 0.003]
+  },
+  "steering": {
+    "correctors_before": ["q11", "q21", "q31", "sept_ex"],
+    "monitors_after": ["q11", "q12", "q13", "q21", "q22", "q23", "q31", "q32", "q33", "end"],
+    "bpm_error_m": 5e-5, "end_weight": 3.0, "kick_limit_rad": 0.001, "tikhonov": 0.001, "iterations": 2,
+    "response": "error-free model line of each design, finite-difference kicks 1e-5 rad"
+  },
+  "errors": {
+    "static": "independent Gaussian: gradient 0.1 %, x/y offsets 100 um, rolls 0.5 mrad, dipole fields 0.05 % (round-2 levels)",
+    "shot": "entrance beta factors 5 %, x 0.5 mm, x' 0.2 mrad, centroid momentum 0.1 % (round-2 levels)"
+  },
+  "steering_campaign": {"machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
+                        "static_seed": 91001, "shot_seed": 91002, "particle_seed": 91003, "bpm_seed": 91004,
+                        "bootstrap_seed": 91005, "bootstrap_count": 10000,
+                        "designs": ["reference", "low_beta"], "variants": ["uncorrected", "corrected"]},
+  "robust_design": {"objective": "minimize log10 of the largest shot-averaged Gaussian loss probability over all apertures (beam plus linearly transported entrance jitter), error-free line",
+                    "constraints": "six exit-match equalities (round-2 scales) and horizontal peak beta <= 60 m on 16 subdivisions; round-2 K bounds",
+                    "starts": "reference, refined low beta and the 349-solution multistart pool member of lowest objective",
+                    "frozen_before_test": true},
+  "test_campaign": {"machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
+                    "static_seed": 92001, "shot_seed": 92002, "particle_seed": 92003, "bpm_seed": 92004,
+                    "bootstrap_seed": 92005, "bootstrap_count": 10000,
+                    "designs": ["reference", "low_beta", "robust"], "variant": "corrected"},
+  "sensitivity": {"roll_rad": [0.0001, 0.0002, 0.0005], "energy_jitter": [0.0005, 0.001],
+                  "machines": 200, "shots_per_machine": 3, "static_seed": 93001, "shot_seed": 93002, "bpm_seed": 93004,
+                  "observable": "analytic Gaussian loss and five-sigma clearance only (no particle tracking)"},
+  "loss_estimate": "per shot: largest single-aperture Gaussian loss probability (lower bound) and union bound (upper); validated against tracked losses",
+  "exit_targets": {"configured": [2.336495, 4.256241, -0.016335, 0.017772, 0.080868, 0.047472],
+                   "dispersion_free": [2.336495, 4.256241, -0.016335, 0.017772, 0.0, 0.0]},
+  "multistart": {"starts_per_seed": 60, "seeds": [1, 2, 3, 4, 5, 6], "dispersion_free_seeds": [11, 12, 13], "dispersion_free_starts_per_seed": 40,
+                 "solver": "bounded least squares on the scaled exit residuals, tolerance 1e-4"},
+  "scope": "Parametric apertures except the companion-derived blade; independent Gaussian errors; no ring capture."
+}

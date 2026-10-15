@@ -643,3 +643,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 225. [**Milestone 225 — R2B-02: Boundary-Fixed End-Station Clearances**](225_r2b_02_boundary_clearances.md)
     - Analytic proof and test that the BTS end-station clearances are independent of the quadrupole settings; Section 3.1 and abstract rewritten.
+
+226. [**Milestone 226 — R2B-01: Element-Wise Aperture Model**](226_r2b_01_elementwise_apertures.md)
+    - Apertures on every element with the companion-derived septum blade; the blade channel (0.648 mm) is active and independent of the quadrupoles, interior margins ≥ 9 mm; four-station study moved to the supplement.

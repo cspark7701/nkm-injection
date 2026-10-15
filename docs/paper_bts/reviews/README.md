@@ -50,8 +50,7 @@ Seven tasks, R2B-01 to R2B-07, are included in the report.
 ## Execution of the Reviewer 2 report
 
 [Point-by-point response to Reviewer 2](author_response_reviewer2_20261015.md) records R2B-01 to R2B-07 (milestones
-225–231). The article is re-framed as *Septum loss and jitter transfer in a matched booster-to-storage-ring transfer
-line*:
+225–231). The article keeps its title, *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line*, and is re-framed around:
 - element-wise apertures with the companion septum blade;
 - trajectory correction, with a recorded layout amendment;
 - jitter transfer through the horizontal phase advance;

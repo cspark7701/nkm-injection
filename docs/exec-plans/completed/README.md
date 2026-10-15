@@ -664,3 +664,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 232. [**Milestone 232 — BTS Spatial-Subdivision Test Tolerance**](232_bts_spatial_test_tolerance.md)
     - Platform-dependent exact comparison of mathematically equal boundary peak betas replaced by a 1e-12 relative tolerance.
+
+233. [**Milestone 233 — BTS Article Title Reverted**](233_bts_title_reverted.md)
+    - Title restored to "Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line" at the user's request.

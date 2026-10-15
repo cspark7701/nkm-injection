@@ -12,8 +12,7 @@ not a journal decision.
 
 ## Summary of the revision
 
-The article is re-framed around the reviewer's central point. Revised title: *Septum loss and jitter transfer in a
-matched booster-to-storage-ring transfer line*. Its findings:
+The article is re-framed around the reviewer's central point; its title, *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line*, is kept. Its findings:
 - **Active restriction.** With element-wise apertures and the companion septum geometry, the injection-septum blade
   is the active restriction. Its nominal clearance is independent of the quadrupoles.
 - **Jitter transfer.** With matched ends, the quadrupoles act on the exit jitter only through the horizontal phase

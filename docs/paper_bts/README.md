@@ -1,7 +1,6 @@
 # BTS optics manuscript
 
-Round-three one-column article for prospective JKPS submission, *Septum loss and jitter transfer in a matched
-booster-to-storage-ring transfer line*: [paper.tex](paper.tex), [paper.pdf](paper.pdf),
+Round-three one-column article for prospective JKPS submission, *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line*: [paper.tex](paper.tex), [paper.pdf](paper.pdf),
 [supplement.tex](supplement.tex) and [supplement.pdf](supplement.pdf). It responds to the
 [Reviewer 2 report](reviews/reviewer2_bts_20261015_main_report.md); see the
 [response](reviews/author_response_reviewer2_20261015.md), the [round-3 protocol](round3_protocol.json) and the

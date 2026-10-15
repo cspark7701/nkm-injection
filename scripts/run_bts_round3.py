@@ -373,12 +373,25 @@ def exit_stage(output, phase_file):
                          'exit_jitter_xp_rad': float(np.sqrt(jit_d[1, 1])),
                          'beam_divergence_rad': float(np.sqrt(beam.emit_x_m_rad * gamma + (dp * beam.sigma_delta) ** 2)),
                          'blade_loss_at_exit': float(norm.sf(blade / np.sqrt(sigma_beam ** 2 + jit_d[0, 0])))})
-    save(output / 'exit.json', {'environment': environment(), 'budget': budget, 'companion_identity': 'm4 target equals the companion NKM injected_beam (beta_x 2.336495 m, D 80.868 mm, D\' 47.472 mrad)',
+    # Full element-wise shot-averaged loss for every dispersion-free solution (beam and jitter, error-free line).
+    from nkm_injection.bts_journal import independent_maps
+    evaluated = []
+    for r in feasible:
+        k = np.array(r['strengths_m_minus2'])
+        loss = r3.shot_averaged_loss(r3.elementwise_lattice(k, model=model_from_protocol(), correctors=False))
+        m = independent_maps(lattice_for(k))[0][-1]
+        jit = m @ r3.entrance_jitter_covariance() @ m.T
+        evaluated.append({'strengths_m_minus2': k, 'mu_x_deg': r['mu_x_deg'], 'peak_beta_m': r['peak_beta_m'],
+                          'loss_max': loss['loss_lower'], 'active': loss['active'],
+                          'exit_jitter_x_m': float(np.sqrt(jit[0, 0])), 'exit_jitter_xp_rad': float(np.sqrt(jit[1, 1]))})
+    best_free = min(evaluated, key=lambda r: r['loss_max'])
+    save(output / 'exit.json', {'environment': environment(), 'budget': budget, 'dispersion_free_evaluated': evaluated,
+                                'dispersion_free_best': best_free, 'companion_identity': 'm4 target equals the companion NKM injected_beam (beta_x 2.336495 m, D 80.868 mm, D\' 47.472 mrad)',
                                 'dispersion_free_pool': {'solutions': len(free), 'within_60m': len(feasible),
                                                          'mu_x_range_deg': [min(r['mu_x_deg'] for r in feasible), max(r['mu_x_deg'] for r in feasible)] if feasible else None,
                                                          'min_peak_beta_m': min(max(r['peak_beta_m']) for r in free) if free else None},
                                 'extremes': rows})
-    print(json.dumps(budget), json.dumps(rows))
+    print(json.dumps(budget), {k: v for k, v in best_free.items() if k != 'strengths_m_minus2'})
 
 
 # --------------------------------------------------------------------------- sensitivity (R2B-06)

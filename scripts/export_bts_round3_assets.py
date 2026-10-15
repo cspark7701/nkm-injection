@@ -192,7 +192,27 @@ def design():
     plt.close(fig)
 
 
-STEPS = {'apertures': apertures, 'steering': steering, 'design': design}
+def exit_target():
+    e = load('exit', 'exit.json')
+    summary = strip(e, ['dispersion_free_evaluated'])
+    summary['dispersion_free_best'] = e['dispersion_free_best']
+    (P / 'generated/round3_exit.json').write_text(json.dumps(summary, indent=2) + '\n')
+    b, best = e['budget'], e['dispersion_free_best']
+    robust = json.loads((CAMPAIGN / 'robust/robust.json').read_text())['designs']['robust']
+    pool = e['dispersion_free_pool']
+    macros('exit', {
+        'BetDivUrad': f"{1e6 * b['betatron_divergence_rad']:.0f}", 'DispDivUrad': f"{1e6 * b['dispersive_divergence_rad']:.0f}",
+        'TotDivUrad': f"{1e6 * b['total_divergence_rad']:.0f}", 'EJitAngUrad': f"{1e6 * b['energy_jitter_angle_rad']:.0f}",
+        'EJitPosUm': f"{1e6 * b['energy_jitter_position_m']:.0f}", 'BetSizeUm': f"{1e6 * b['betatron_size_m']:.0f}",
+        'DispSizeUm': f"{1e6 * b['dispersive_size_m']:.0f}",
+        'FreeWithin': str(pool['within_60m']), 'FreeMinPeak': f"{pool['min_peak_beta_m']:.1f}",
+        'FreeBestMu': f"{best['mu_x_deg']:.1f}", 'FreeBestLoss': f"{best['loss_max']:.1e}".replace('e-0', '\\times10^{-') + '}',
+        'FreeBestJxUm': f"{1e6 * best['exit_jitter_x_m']:.0f}", 'FreeBestJxpUrad': f"{1e6 * best['exit_jitter_xp_rad']:.0f}",
+        'FreeBestPeakX': f"{best['peak_beta_m'][0]:.1f}", 'FreeBestPeakY': f"{best['peak_beta_m'][1]:.1f}",
+        'FreeGainFactor': f"{robust['loss_max'] / best['loss_max']:.0f}"})
+
+
+STEPS = {'apertures': apertures, 'steering': steering, 'design': design, 'exit': exit_target}
 
 
 def main():

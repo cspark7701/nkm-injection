@@ -13,6 +13,7 @@
 \input{generated/round3_apertures.tex}
 \input{generated/round3_steering.tex}
 \input{generated/round3_design.tex}
+\input{generated/round3_exit.tex}
 \title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
@@ -93,8 +94,10 @@ this is not a surveyed mechanical layout.}\label{fig:layout}
 \end{figure}
 
 \begin{table}[htbp]\centering
-\caption{Configured entrance and exit targets. Their physical source at these
-boundaries is unresolved; the exit is not the NKM-centre ring optics.}\label{tab:boundary}
+\caption{Configured entrance and exit targets. The exit values are the injected
+beam at the injection-septum exit used by the companion NKM study; their derivation
+from the ring optics is not documented in the source. A dispersion-free exit is
+examined in Section~\ref{sec:exit}.}\label{tab:boundary}
 \begin{tabular}{lrr}\toprule
 Observable & m1 entrance & m4 target\\\midrule
 $\beta_x,\beta_y$ [m] & 7.560000, 12.269000 & 2.336495, 4.256241\\
@@ -103,8 +106,11 @@ $D_x$ [m], $D'_x$ [1] & 0.276200, $-0.065700$ & 0.080868, 0.047472\\
 \bottomrule\end{tabular}\end{table}
 
 Entrance and target functions (Table~\ref{tab:boundary}) are inherited configured
-values, treated as parametric. No transport from m4 to a ring matching point is
-established. Quadrupole family bounds, bore radius, pole-field limit, the 60 m
+values. The exit m4 is the injection-septum exit: the companion NKM study uses
+exactly these values as its injected beam and transports it 2.26 m to the kicker.
+The nonzero exit dispersion (80.9 mm, 47.5 mrad) is inherited from the configuration,
+not derived from the ring, whose dispersion at the injection kicker is about 0.3 mm;
+we therefore also examine a dispersion-free exit. Quadrupole family bounds, bore radius, pole-field limit, the 60 m
 beta screening ceiling and square aperture limits are modelling assumptions,
 not verified hardware specifications. The legacy MAD-X line has ten active
 quadrupoles, different drift/bend/edge definitions and an unused additional
@@ -424,6 +430,38 @@ differs slightly). Right: predicted shot-averaged blade loss of
 every matched solution (grey) and of the three settings (circles), with the tracked
 loss on steered test machines (crosses), which also include static residuals.}
 \label{fig:jitter}\end{figure}
+
+\subsection{Exit target and dispersion}\label{sec:exit}
+At m4 the configured target gives the injected beam an rms divergence of
+\BtsRThreeTotDivUrad\ microradians: \BtsRThreeBetDivUrad\ from the betatron
+emittance and \BtsRThreeDispDivUrad\ from $D'_x\sigma_\delta$. The 0.1\% shot
+energy jitter adds a centroid angle of \BtsRThreeEJitAngUrad\ microradians and a
+position of \BtsRThreeEJitPosUm\ micrometres rms. Both terms are fixed by the
+target, the same for every matched setting, and absent for a dispersion-free exit.
+
+Matching the same Twiss functions with $D_x=D'_x=0$ at m4 is feasible within the
+strength bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\
+bounded random starts keep both peak betas below 60 m (smallest larger peak
+\BtsRThreeFreeMinPeak\ m). The dispersion-free target also widens the reachable
+phase advance to \BtsRThreeFreeMuMin--\BtsRThreeFreeMuMax\ degrees
+(Fig.~\ref{fig:jitter}), which includes phases where booster jitter falls mainly on
+the exit angle. The best of these solutions ($\mu_x=\BtsRThreeFreeBestMu$ degrees,
+peak betas \BtsRThreeFreeBestPeakX/\BtsRThreeFreeBestPeakY\ m) has a shot-averaged
+blade loss of $\BtsRThreeFreeBestLoss$, \BtsRThreeFreeGainFactor\ times below the
+loss-based setting with the configured target. Its exit jitter is
+\BtsRThreeFreeBestJxUm\ micrometres and \BtsRThreeFreeBestJxpUrad\ microradians,
+and the beam divergence falls to \BtsRThreeBetDivUrad\ microradians. These numbers
+are analytic, from the same Gaussian model whose predictions agreed with tracking
+within 1\% above; the dispersion-free settings were not tracked on test machines.
+
+The exit target is thus the BTS design quantity with the largest leverage on
+injection. Removing the exit dispersion lowers the injected beam's divergence by a
+quarter and lets the line put booster jitter where the septum blade does not see
+it, but the angle jitter, \BtsRThreeFreeBestJxpUrad\ microradians against
+\BtsRThreeRefJxpUrad\ for the reference, then arrives at the injection kicker. In the
+companion study the kicker's 80\% angular acceptance is 0.44 mrad, and booster angle
+jitter is the only significant driver of capture among the sampled errors; whether the trade favours the blade or the
+kicker must be decided with the ring, not within the line.
 
 \section{Discussion and conclusions}
 The physical criterion is the active restriction, not beta alone. A fixed

@@ -652,3 +652,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 228. [**Milestone 228 — R2B-04: Jitter Transfer and Loss-Based Setting**](228_r2b_04_loss_based_design.md)
     - Matched ends make exit jitter a function of μx only; reachable μx 200–232°; the loss-based setting at 200.2° cuts tracked loss on fresh steered machines from 2.32 % to 0.66 % (−1.66 [−2.42, −0.99] pp) at +13 % exit-angle jitter, while mean clearance sees nothing.
+
+229. [**Milestone 229 — R2B-05: Exit Target and Dispersion-Free Exit**](229_r2b_05_exit_target.md)
+    - m4 equals the companion injected beam; divergence 76 µrad (50 dispersive); a dispersion-free exit is feasible (115/120 starts, peaks < 60 m), widens μx to 188–214° and cuts predicted blade loss 65-fold at higher exit-angle jitter.

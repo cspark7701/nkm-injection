@@ -1,0 +1,94 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pyat": "0.7.2.dev26+g4701d48c.d20260831",
+    "source_sha256": {
+      "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+      "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
+      "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+      "scripts/run_bts_round3.py": "81b549b2d819d0346f8556ee56c1d976d7d28a0db7edf8469ef5db2e79c67d56",
+      "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+    }
+  },
+  "budget": {
+    "betatron_divergence_rad": 5.7302449637342334e-05,
+    "dispersive_divergence_rad": 5.032032e-05,
+    "betatron_size_m": 0.0001338690279713721,
+    "dispersive_size_m": 8.572007999999999e-05,
+    "energy_jitter_angle_rad": 4.7472e-05,
+    "energy_jitter_position_m": 8.0868e-05,
+    "total_divergence_rad": 7.626077195611485e-05
+  },
+  "dispersion_free_best": {
+    "strengths_m_minus2": [
+      -2.0558985382091133,
+      -0.9450040825907311,
+      1.7278752480135529,
+      2.580575429580905,
+      -2.9280531881913507,
+      -0.6765096850818927,
+      0.3675073815424941,
+      1.8756591271452165,
+      -1.349489523855651
+    ],
+    "mu_x_deg": 187.6687067657562,
+    "peak_beta_m": [
+      31.424923540512374,
+      48.23982279642445
+    ],
+    "loss_max": 4.0719615911744235e-05,
+    "active": [
+      "blade_exit",
+      0,
+      21.789000000000023
+    ],
+    "exit_jitter_x_m": 0.0003504145601393359,
+    "exit_jitter_xp_rad": 0.00039400952651294036
+  },
+  "companion_identity": "m4 target equals the companion NKM injected_beam (beta_x 2.336495 m, D 80.868 mm, D' 47.472 mrad)",
+  "dispersion_free_pool": {
+    "solutions": 115,
+    "within_60m": 115,
+    "mu_x_range_deg": [
+      187.6687067657562,
+      214.18321131803998
+    ],
+    "min_peak_beta_m": 26.27449388158557
+  },
+  "extremes": [
+    {
+      "target": "configured",
+      "mu_x_deg": 200.2204007529857,
+      "exit_jitter_x_m": 0.0005066848414652845,
+      "exit_jitter_xp_rad": 0.0003673593686537049,
+      "beam_divergence_rad": 7.626077195611485e-05,
+      "blade_loss_at_exit": 0.0026909238463759706
+    },
+    {
+      "target": "configured",
+      "mu_x_deg": 232.01906991636787,
+      "exit_jitter_x_m": 0.0008368398842013854,
+      "exit_jitter_xp_rad": 0.00023193432150382808,
+      "beam_divergence_rad": 7.626077195611485e-05,
+      "blade_loss_at_exit": 0.04135789884358965
+    },
+    {
+      "target": "dispersion_free",
+      "mu_x_deg": 187.6687067657562,
+      "exit_jitter_x_m": 0.00035041456013952744,
+      "exit_jitter_xp_rad": 0.00039400952651274303,
+      "beam_divergence_rad": 5.7302449637342334e-05,
+      "blade_loss_at_exit": 4.0719618087812866e-05
+    },
+    {
+      "target": "dispersion_free",
+      "mu_x_deg": 214.18321131803998,
+      "exit_jitter_x_m": 0.0006647434190526285,
+      "exit_jitter_xp_rad": 0.0003130463849279245,
+      "beam_divergence_rad": 5.7302449637342334e-05,
+      "blade_loss_at_exit": 0.01464152995890258
+    }
+  ]
+}

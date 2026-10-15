@@ -150,3 +150,20 @@ def test_shot_averaged_loss_equals_average_over_shots():
     shots = rng.multivariate_normal(np.zeros(5), entrance_jitter_covariance(), 400)
     mean = np.mean([blade(clearance_and_loss(line, c, beam.covariance(), table=table)) for c in shots])
     assert mean == pytest.approx(blade(averaged), rel=0.15)
+
+
+def test_dispersion_free_exit_setting_is_matched_and_reduces_blade_loss():
+    """The selected dispersion-free solution matches D = D' = 0 with the same Twiss and lowers the blade loss (R2B-05)."""
+    from nkm_injection.bts_journal import TARGET
+    from nkm_injection.bts_round2 import nominal_observables
+    from nkm_injection.bts_round3 import EXIT_TWISS, phase_advance, shot_averaged_loss
+    exit_data = json.loads((ROOT / 'docs/paper_bts/generated/round3_exit.json').read_text())
+    k = np.array(exit_data['dispersion_free_best']['strengths_m_minus2'])
+    observed = nominal_observables(lattice_for(k))
+    np.testing.assert_allclose(observed[:4], TARGET[:4], atol=5e-5)
+    np.testing.assert_allclose(observed[4:], 0.0, atol=2e-6)
+    assert EXIT_TWISS['disp_x'] == TARGET[4] and EXIT_TWISS['disp_px'] == TARGET[5]
+    assert np.degrees(phase_advance(lattice_for(k))[0]) < 190
+    free = shot_averaged_loss(elementwise_lattice(k, correctors=False))['loss_lower']
+    configured = shot_averaged_loss(elementwise_lattice(REFERENCE, correctors=False))['loss_lower']
+    assert free < 0.01 * configured

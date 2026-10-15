@@ -12,6 +12,7 @@
 \input{generated/round2_results.tex}
 \input{generated/round3_apertures.tex}
 \input{generated/round3_steering.tex}
+\input{generated/round3_design.tex}
 \title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
@@ -223,6 +224,45 @@ our coupled calculation retains the complete covariance. Reducing beta controls
 one size contribution, not necessarily dispersion or orbit sensitivity. We export
 these variances and centroids separately, adding variances rather than RMS sizes.
 
+\subsection{Jitter transfer between matched ends}\label{sec:jitter}
+Because both ends are matched, the horizontal transfer matrix from m1 to m4 is
+\begin{equation}
+ M_x=B_4R(\mu_x)B_1^{-1},\qquad
+ B=\begin{pmatrix}\sqrt\beta&0\\-\alpha/\sqrt\beta&1/\sqrt\beta\end{pmatrix},
+ \label{eq:transfer}
+\end{equation}
+with $R(\mu_x)$ a rotation by the horizontal phase advance and $B_{1,4}$ the
+boundary Twiss values of Table~\ref{tab:boundary}. A shot centroid at m1 with
+covariance $J$ (position 0.5 mm, angle 0.2 mrad) therefore reaches the exit with
+covariance $M_xJM_x^{\mathsf T}$ plus the momentum term $\sigma_{\delta,j}^2\mathbf d_4
+\mathbf d_4^{\mathsf T}$, which is the same for every matched setting. The
+quadrupoles influence the exit jitter only through $\mu_x$. Over a full period the
+exit position spread ranges from 0.26 to 0.95 mm and the angle spread from 0.12 to
+0.41 mrad, in opposite phase (Fig.~\ref{fig:jitter}, left): a matched line can move
+booster jitter between position, which the septum blade sees, and angle, which the
+injection kicker sees, but cannot remove it. Steered static errors add a small
+residual (Section~\ref{sec:steering-results}).
+
+\subsection{Loss-based observable and design}\label{sec:loss}
+For a Gaussian projection with centroid $\bar u$ and rms size $\sigma$ at an
+aperture with edges $a_\pm$, the lost fraction is
+\begin{equation}
+ P=\Phi\!\left(\frac{a_--\bar u}{\sigma}\right)+\Phi\!\left(\frac{\bar u-a_+}{\sigma}\right),
+ \label{eq:loss}
+\end{equation}
+with $\Phi$ the standard normal distribution function. Per shot, the line loss is
+bracketed by the largest single-aperture $P$ and the union bound; we report the
+former as the prediction. When the centroid is itself Gaussian, as for linearly
+transported jitter, the shot-averaged lost fraction is Eq.~(\ref{eq:loss}) with the
+summed covariance of beam and jitter. This makes a smooth, loss-relevant objective.
+The loss-based setting minimises the logarithm of the largest shot-averaged $P$ on
+the error-free line, subject to the six exit equalities, horizontal peak beta
+$\le60$ m (16 subdivisions, checked at 64) and the strength bounds, with SLSQP
+(200 iterations, tolerance $10^{-10}$) from the reference, the refined low-beta
+setting and the best member of a bounded multistart pool. The setting is frozen
+before a fresh test on 200 steered machines (seeds 92001--92004), evaluated with
+tracked particles.
+
 \subsection{Accuracy and spatial observation resolution}
 Exact independent hard-edge maps are checked against AT tracking at every element
 boundary. The original ten-step integrator misses its $2\times10^{-6}$ nominal
@@ -334,6 +374,56 @@ the mean while offsets towards it are lost. The Gaussian loss prediction, by
 contrast, agrees with the tracked loss within \BtsRThreePredAgreePct\% (relative) in
 every row. The reference and low-beta settings are indistinguishable in every
 column.
+
+\subsection{Reachable phase advance and the loss-based setting}\label{sec:design}
+Bounded least-squares matching from \BtsRThreePoolStarts\ random starts finds
+\BtsRThreePoolSolutions\ matched settings within the strength bounds. Their horizontal
+phase advance spans only \BtsRThreeMuMin--\BtsRThreeMuMax\ degrees: the exit match,
+with its dispersion targets and the bend layout, pins $\mu_x$ to an interval in
+which booster jitter falls largely on the exit position. The reference
+(\BtsRThreeRefMu\ degrees) and low-beta (\BtsRThreeLowMu\ degrees) settings lie near
+its middle. Within the interval the predicted shot-averaged blade loss varies by more
+than a factor of ten (Fig.~\ref{fig:jitter}, right) and decreases monotonically
+towards the lower edge.
+
+The loss-based search ends at that edge, $\mu_x=\BtsRThreeRobustMu$ degrees. All three
+SLSQP starts reach the 200-iteration limit; only the start from the best pool member
+is feasible, and it improves that member by \BtsRThreePoolBestGainPct\%. The setting
+is therefore a feasible point at the boundary of the reachable interval, not a
+certified optimum. Its predicted shot-averaged loss is \BtsRThreeRobustShotPct\%
+against \BtsRThreeRefShotPct\% for the reference, because its exit position jitter is
+\BtsRThreeRobustJxUm\ instead of \BtsRThreeRefJxUm\ micrometres (Table~\ref{tab:design}).
+
+\begin{table}[htbp]\centering
+\caption{Frozen settings and their fresh test (200 steered machines, 3 shots,
+2\,000 particles each). $\mu_x$: horizontal phase advance; $\hat\beta$: larger peak
+beta; $\sigma_{x,j}$, $\sigma_{x',j}$: exit jitter from Eq.~(\ref{eq:transfer});
+$\bar P$: shot-averaged loss on the error-free line; Lost and Pred.: tracked and
+predicted loss on the test machines; Blocks: machines with any loss.}\label{tab:design}
+{\small\input{generated/round3_design_rows.tex}}\end{table}
+
+On the fresh machines the tracked loss is \BtsRThreeTestRefPct\%, \BtsRThreeTestLowPct\%
+and \BtsRThreeTestRobustPct\% for the reference, low-beta and loss-based settings,
+each within 1\% of its prediction. The loss-based setting changes the loss by
+\BtsRThreeTestRobustDiff\ percentage points against the reference (pointwise 95\%
+machine-cluster interval [\BtsRThreeTestRobustDiffLo, \BtsRThreeTestRobustDiffHi]),
+a factor of \BtsRThreeLossRatio; low beta changes it by \BtsRThreeTestLowDiff\
+[\BtsRThreeTestLowDiffLo, \BtsRThreeTestLowDiffHi], unresolved. Its mean minimum
+clearance changes by only \BtsRThreeTestRobustClear\ mm
+[\BtsRThreeTestRobustClearLo, \BtsRThreeTestRobustClearHi], also unresolved: the
+quantity used in the earlier revision cannot see this loss reduction. The price is
+an exit angle jitter larger by \BtsRThreeAnglePenaltyPct\%
+(\BtsRThreeRobustJxpUrad\ against \BtsRThreeRefJxpUrad\ microradians), which the
+injection kicker must accept.
+
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
+\caption{Left: rms exit position (solid, mm) and angle (dashed, mrad) jitter from
+Eq.~(\ref{eq:transfer}) versus horizontal phase advance, with the reachable intervals
+for the configured exit (blue) and a dispersion-free exit (orange; its momentum term
+differs slightly). Right: predicted shot-averaged blade loss of
+every matched solution (grey) and of the three settings (circles), with the tracked
+loss on steered test machines (crosses), which also include static residuals.}
+\label{fig:jitter}\end{figure}
 
 \section{Discussion and conclusions}
 The physical criterion is the active restriction, not beta alone. A fixed

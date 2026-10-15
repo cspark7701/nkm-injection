@@ -121,3 +121,32 @@ def test_zero_kick_correctors_do_not_change_the_line():
     plain = elementwise_lattice(REFERENCE, correctors=False)
     amended = elementwise_lattice(REFERENCE, corrector_before=AMENDED_CORRECTORS, monitor_before=AMENDED_MONITORS)
     np.testing.assert_allclose(_track_end(amended, particle), _track_end(plain, particle), atol=1e-12)
+
+
+def test_jitter_transfer_depends_only_on_phase_advance():
+    """For matched settings the exit jitter from maps equals the rotation formula of Eq. (transfer) (R2B-04)."""
+    from nkm_injection.bts_journal import independent_maps
+    from nkm_injection.bts_round3 import entrance_jitter_covariance, jitter_transfer, phase_advance
+    low = np.array(json.loads((ROOT / 'docs/paper_bts/generated/round2_spatial.json').read_text())
+                   ['refined_low_beta']['strengths_m_minus2'])
+    robust = np.array(json.loads((ROOT / 'docs/paper_bts/generated/round3_design.json').read_text())
+                      ['robust']['designs']['robust']['strengths_m_minus2'])
+    for k in (REFERENCE, low, robust):
+        lat = lattice_for(k)
+        m = independent_maps(lat)[0][-1]
+        maps = (m @ entrance_jitter_covariance() @ m.T)[:2, :2]
+        np.testing.assert_allclose(jitter_transfer(phase_advance(lat)[0]), maps, rtol=2e-4, atol=1e-14)
+
+
+def test_shot_averaged_loss_equals_average_over_shots():
+    """Gaussian beam with a Gaussian centroid: summed-covariance tail equals the mean per-shot tail."""
+    from nkm_injection.bts_round3 import entrance_jitter_covariance, shot_averaged_loss
+    beam = JournalBeam()
+    line = elementwise_lattice(REFERENCE, correctors=False)
+    table = aperture_table(line)
+    averaged = shot_averaged_loss(line)
+    blade = lambda r: next(x for x in r['rows'] if x['name'] == 'blade_exit' and x['plane'] == 0)['loss_probability']
+    rng = np.random.default_rng(11)
+    shots = rng.multivariate_normal(np.zeros(5), entrance_jitter_covariance(), 400)
+    mean = np.mean([blade(clearance_and_loss(line, c, beam.covariance(), table=table)) for c in shots])
+    assert mean == pytest.approx(blade(averaged), rel=0.15)

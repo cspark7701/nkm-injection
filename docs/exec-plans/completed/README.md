@@ -649,3 +649,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 227. [**Milestone 227 — R2B-03: Trajectory Correction**](227_r2b_03_trajectory_correction.md)
     - Steering cuts BTS loss from 10 % to 1.6 % (amended layout controlling exit angle; declared layout reported too); the residual is booster jitter; Gaussian loss prediction matches tracking within 0.6 %.
+
+228. [**Milestone 228 — R2B-04: Jitter Transfer and Loss-Based Setting**](228_r2b_04_loss_based_design.md)
+    - Matched ends make exit jitter a function of μx only; reachable μx 200–232°; the loss-based setting at 200.2° cuts tracked loss on fresh steered machines from 2.32 % to 0.66 % (−1.66 [−2.42, −0.99] pp) at +13 % exit-angle jitter, while mean clearance sees nothing.

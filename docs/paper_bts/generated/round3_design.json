@@ -1,0 +1,406 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pyat": "0.7.2.dev26+g4701d48c.d20260831",
+    "source_sha256": {
+      "src/nkm_injection/bts_round3.py": "8a90b9fa3f0db695ca42912a6b923f67a26ac58b0210e348ffa1cb67b813908b",
+      "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
+      "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+      "scripts/run_bts_round3.py": "29626a9312fcf436b8c7aa029504429b6e643d48d1b93d8aed17ce3d7945d86f",
+      "docs/paper_bts/round3_protocol.json": "237933bf15cec8d2286c43a8eadd445ac80231a4dfa5fa9fe8d5ba028b9a2b33"
+    }
+  },
+  "pools": {
+    "configured": {
+      "starts": 360,
+      "solutions": 349,
+      "mu_x_range_deg": [
+        200.2204007529857,
+        232.01906991636787
+      ]
+    },
+    "dispersion_free": {
+      "starts": 120,
+      "solutions": 115,
+      "mu_x_range_deg": [
+        187.6687067657562,
+        214.18321131803998
+      ]
+    }
+  },
+  "robust": {
+    "environment": {
+      "python": "3.11.9",
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "pyat": "0.7.2.dev26+g4701d48c.d20260831",
+      "source_sha256": {
+        "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+        "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
+        "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+        "scripts/run_bts_round3.py": "e1b67910100fdb312228a519b0f7ff9bc46656364d44a4e8274241cb3424983f",
+        "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+      }
+    },
+    "objective": "minimize log10 of the largest shot-averaged Gaussian loss probability over all apertures (beam plus linearly transported entrance jitter), error-free line",
+    "bounds": [
+      [
+        -2.5,
+        2.5
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -2.5,
+        2.5
+      ]
+    ],
+    "candidates": [
+      {
+        "start": "reference",
+        "strengths_m_minus2": [
+          -1.2107859125281608,
+          -0.4441227886995222,
+          1.4455181919920268,
+          0.9998199098034115,
+          -0.5188833467684396,
+          -1.1285279113794904,
+          0.3451785417736177,
+          2.511575320688876,
+          -2.161379938451446
+        ],
+        "objective_log10": -2.1242914236551784,
+        "success": false,
+        "feasible": false,
+        "iterations": 200,
+        "termination": "Iteration limit reached",
+        "mu_x_deg": 206.91066832575774
+      },
+      {
+        "start": "low_beta",
+        "strengths_m_minus2": [
+          -0.9435794509794018,
+          -0.4067073556117567,
+          1.204816335931042,
+          1.3252342036063947,
+          -0.5632932581594209,
+          -1.5734943561324035,
+          2.085051352105537,
+          -0.6321570038963483,
+          -0.3987959471957212
+        ],
+        "objective_log10": -2.060590139990399,
+        "success": false,
+        "feasible": false,
+        "iterations": 200,
+        "termination": "Iteration limit reached",
+        "mu_x_deg": 208.12108994903198
+      },
+      {
+        "start": "pool_best",
+        "strengths_m_minus2": [
+          -2.383267083506331,
+          -0.8126921778828969,
+          2.2972434852302848,
+          1.5423989866343928,
+          -1.6658874894531246,
+          -1.383931347093662,
+          1.6578130752022,
+          0.687067372813529,
+          -1.2290616735664714
+        ],
+        "objective_log10": -2.5742701996878434,
+        "success": false,
+        "feasible": true,
+        "iterations": 200,
+        "termination": "Iteration limit reached",
+        "mu_x_deg": 200.1690582133135
+      }
+    ],
+    "selected_start": "pool_best",
+    "designs": {
+      "reference": {
+        "strengths_m_minus2": [
+          -0.367525457731048,
+          -1.216432883896892,
+          1.5860719268485328,
+          -1.0683734603410724,
+          2.8231083729755677,
+          -2.490967743682553,
+          2.0426777186320093,
+          -1.4342712971007086,
+          0.3511146520138777
+        ],
+        "mu_x_deg": 211.75313837352985,
+        "mu_y_deg": 93.45855892230159,
+        "loss_max": 0.012793157329105288,
+        "loss_union": 0.03837814424826802,
+        "active": [
+          "blade_exit",
+          0,
+          21.789000000000023
+        ],
+        "exit_jitter_x_m": 0.0006426910461313736,
+        "exit_jitter_xp_rad": 0.0003266497286849209,
+        "peak_beta_m": [
+          31.627776043766975,
+          51.26983845946021
+        ]
+      },
+      "low_beta": {
+        "strengths_m_minus2": [
+          0.08203213047289715,
+          -2.152572915585476,
+          1.8741256773834847,
+          0.8895814613948778,
+          -0.11643596874043823,
+          -1.2725960965003535,
+          2.8188453515755585,
+          -2.9999999999999476,
+          0.8994163748035585
+        ],
+        "mu_x_deg": 210.75226272822133,
+        "mu_y_deg": 102.30461404480666,
+        "loss_max": 0.011600673980108896,
+        "loss_union": 0.03346470715307709,
+        "active": [
+          "blade_exit",
+          0,
+          21.789000000000023
+        ],
+        "exit_jitter_x_m": 0.0006313681166411423,
+        "exit_jitter_xp_rad": 0.00033064281014227745,
+        "peak_beta_m": [
+          33.79137440812861,
+          28.436689019506108
+        ]
+      },
+      "robust": {
+        "strengths_m_minus2": [
+          -2.383267083506331,
+          -0.8126921778828969,
+          2.2972434852302848,
+          1.5423989866343928,
+          -1.6658874894531246,
+          -1.383931347093662,
+          1.6578130752022,
+          0.687067372813529,
+          -1.2290616735664714
+        ],
+        "mu_x_deg": 200.1690582133135,
+        "mu_y_deg": 241.44253367749485,
+        "loss_max": 0.00266519997371009,
+        "loss_union": 0.005119982275219108,
+        "active": [
+          "blade_exit",
+          0,
+          21.789000000000023
+        ],
+        "exit_jitter_x_m": 0.0005060626554104007,
+        "exit_jitter_xp_rad": 0.00036751301094826495,
+        "peak_beta_m": [
+          36.6400204164127,
+          48.11717150793299
+        ]
+      }
+    },
+    "frozen_before_test": true
+  },
+  "test": {
+    "environment": {
+      "python": "3.11.9",
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "pyat": "0.7.2.dev26+g4701d48c.d20260831",
+      "source_sha256": {
+        "src/nkm_injection/bts_round3.py": "5b10222d6fa7e68824a752a6ebe2328bc77872e85f020f7bbd02db48b2ceec29",
+        "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
+        "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+        "scripts/run_bts_round3.py": "e1b67910100fdb312228a519b0f7ff9bc46656364d44a4e8274241cb3424983f",
+        "docs/paper_bts/round3_protocol.json": "5e261434f2bdaf0f845e5b56d341d148911b6194ab8ebc09c94d932dc6fde3f4"
+      }
+    },
+    "protocol": {
+      "machines": 200,
+      "shots_per_machine": 3,
+      "particles_per_shot": 2000,
+      "static_seed": 92001,
+      "shot_seed": 92002,
+      "particle_seed": 92003,
+      "bpm_seed": 92004,
+      "bootstrap_seed": 92005,
+      "bootstrap_count": 10000,
+      "designs": [
+        "reference",
+        "low_beta",
+        "robust"
+      ],
+      "variant": "amended"
+    },
+    "frozen_sha256": "3bc9ba2d15943590fdb339a74d63b0da5b3e57835de40c34de69e69ac8c18c6e",
+    "summary": {
+      "amended": {
+        "reference": {
+          "mean_clearance_m": 0.0005085854826907399,
+          "paired_vs_reference_m": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "predicted_loss_max_mean": 0.02341582601946309,
+          "predicted_loss_union_mean": 0.03116487041109114,
+          "active": {
+            "blade_exit_x": 270,
+            "sept_ex_x": 330
+          },
+          "exit_centroid_rms_m_rad": [
+            0.0006742008384861717,
+            0.0003371064657819145
+          ],
+          "kick_rms_rad": 8.606762274358233e-05,
+          "lost_particles": 27879,
+          "loss_blocks": 59,
+          "first_loss_families": {
+            "sept_ex": 27879
+          },
+          "machine_loss_per_shot_mean": {
+            "mean": 46.465,
+            "ci95": [
+              27.069875,
+              68.36083333333332
+            ]
+          },
+          "machine_predicted_max_per_shot": 0.023415826019463095,
+          "observed_loss_fraction": 0.0232325,
+          "predicted_loss_max_particles": 28098.99122335571
+        },
+        "low_beta": {
+          "mean_clearance_m": 0.0005090800223793246,
+          "paired_vs_reference_m": {
+            "mean": 4.945396885847658e-07,
+            "ci95": [
+              -7.159563180692631e-06,
+              8.212413504942598e-06
+            ]
+          },
+          "predicted_loss_max_mean": 0.021649670866969117,
+          "predicted_loss_union_mean": 0.028622155755286077,
+          "active": {
+            "sept_ex_x": 331,
+            "blade_exit_x": 269
+          },
+          "exit_centroid_rms_m_rad": [
+            0.000664815961360121,
+            0.00034540272918049064
+          ],
+          "kick_rms_rad": 8.601385316846412e-05,
+          "lost_particles": 25848,
+          "loss_blocks": 55,
+          "first_loss_families": {
+            "sept_ex": 25848
+          },
+          "machine_loss_per_shot_mean": {
+            "mean": 43.08,
+            "ci95": [
+              24.493083333333328,
+              64.26566666666668
+            ]
+          },
+          "machine_predicted_max_per_shot": 0.021649670866969117,
+          "observed_loss_fraction": 0.02154,
+          "predicted_loss_max_particles": 25979.60504036294
+        },
+        "robust": {
+          "mean_clearance_m": 0.0004960012083926078,
+          "paired_vs_reference_m": {
+            "mean": -1.258427429813205e-05,
+            "ci95": [
+              -2.9883915270812423e-05,
+              4.9004596208544474e-06
+            ]
+          },
+          "predicted_loss_max_mean": 0.006636528284781477,
+          "predicted_loss_union_mean": 0.009265804876685626,
+          "active": {
+            "sept_ex_x": 324,
+            "blade_exit_x": 276
+          },
+          "exit_centroid_rms_m_rad": [
+            0.0005360777816451457,
+            0.00038524268328240103
+          ],
+          "kick_rms_rad": 9.242360136333484e-05,
+          "lost_particles": 7955,
+          "loss_blocks": 32,
+          "first_loss_families": {
+            "sept_ex": 7955
+          },
+          "machine_loss_per_shot_mean": {
+            "mean": 13.258333333333333,
+            "ci95": [
+              5.156583333333334,
+              23.433416666666673
+            ]
+          },
+          "machine_predicted_max_per_shot": 0.006636528284781478,
+          "observed_loss_fraction": 0.006629166666666667,
+          "predicted_loss_max_particles": 7963.833941737773
+        }
+      }
+    },
+    "paired_loss_fraction_vs_reference": {
+      "reference": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "low_beta": {
+        "mean": -0.0016924999999999996,
+        "ci95": [
+          -0.003788333333333333,
+          0.00024339583333333255
+        ]
+      },
+      "robust": {
+        "mean": -0.016603333333333335,
+        "ci95": [
+          -0.0241719375,
+          -0.009862479166666665
+        ]
+      }
+    },
+    "interval_scope": "pointwise 95 % machine-cluster percentile bootstrap"
+  }
+}

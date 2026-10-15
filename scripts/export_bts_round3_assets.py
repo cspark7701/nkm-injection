@@ -119,7 +119,80 @@ def steering():
     macros('steering', vals)
 
 
-STEPS = {'apertures': apertures, 'steering': steering}
+def design():
+    ph, rb, te = load('phase', 'phase.json'), load('robust', 'robust.json'), load('test', 'test.json')
+    pools = ph['pools']
+    summary = {'environment': ph['environment'], 'pools': {k: {'starts': v['starts'], 'solutions': v['solutions'],
+                                                               'mu_x_range_deg': v['mu_x_range_deg']} for k, v in pools.items()},
+               'robust': strip(rb, []), 'test': strip(te, [])}
+    (P / 'generated/round3_design.json').write_text(json.dumps(summary, indent=2) + '\n')
+    t = te['summary']['amended']
+    d = rb['designs']
+    pair = te['paired_loss_fraction_vs_reference']
+    rows = []
+    for name in ('reference', 'low_beta', 'robust'):
+        e = t[name]
+        rows.append(f"{SHORT[name]} & {d[name]['mu_x_deg']:.1f} & {max(d[name]['peak_beta_m']):.1f} & {1e3 * d[name]['exit_jitter_x_m']:.3f} & "
+                    f"{1e3 * d[name]['exit_jitter_xp_rad']:.3f} & {100 * d[name]['loss_max']:.2f} & {100 * e['observed_loss_fraction']:.2f} & "
+                    f"{100 * e['predicted_loss_max_mean']:.2f} & {e['loss_blocks']} \\\\")
+    (P / 'generated/round3_design_rows.tex').write_text(
+        '\\begin{tabular}{lrrrrrrrr}\\toprule\nSetting & $\\mu_x$ [deg] & $\\hat\\beta$ [m] & $\\sigma_{x,j}$ [mm] & $\\sigma_{x'"'"',j}$ [mrad] & '
+        '$\\bar P$ [\\%] & Lost [\\%] & Pred. [\\%] & Blocks \\\\\\midrule\n' + '\n'.join(rows) + '\n\\bottomrule\\end{tabular}\n')
+    cand = {c['start']: c for c in rb['candidates']}
+    vals = {'PoolStarts': str(pools['configured']['starts']), 'PoolSolutions': str(pools['configured']['solutions']),
+            'MuMin': f"{pools['configured']['mu_x_range_deg'][0]:.1f}", 'MuMax': f"{pools['configured']['mu_x_range_deg'][1]:.1f}",
+            'FreeSolutions': str(pools['dispersion_free']['solutions']), 'FreeStarts': str(pools['dispersion_free']['starts']),
+            'FreeMuMin': f"{pools['dispersion_free']['mu_x_range_deg'][0]:.1f}", 'FreeMuMax': f"{pools['dispersion_free']['mu_x_range_deg'][1]:.1f}",
+            'RobustMu': f"{d['robust']['mu_x_deg']:.1f}", 'RefMu': f"{d['reference']['mu_x_deg']:.1f}", 'LowMu': f"{d['low_beta']['mu_x_deg']:.1f}",
+            'RobustShotPct': f"{100 * d['robust']['loss_max']:.2f}", 'RefShotPct': f"{100 * d['reference']['loss_max']:.2f}",
+            'LowShotPct': f"{100 * d['low_beta']['loss_max']:.2f}",
+            'RobustJxUm': f"{1e6 * d['robust']['exit_jitter_x_m']:.0f}", 'RefJxUm': f"{1e6 * d['reference']['exit_jitter_x_m']:.0f}",
+            'RobustJxpUrad': f"{1e6 * d['robust']['exit_jitter_xp_rad']:.0f}", 'RefJxpUrad': f"{1e6 * d['reference']['exit_jitter_xp_rad']:.0f}",
+            'TestRefPct': f"{100 * t['reference']['observed_loss_fraction']:.2f}", 'TestLowPct': f"{100 * t['low_beta']['observed_loss_fraction']:.2f}",
+            'TestRobustPct': f"{100 * t['robust']['observed_loss_fraction']:.2f}",
+            'TestRobustDiff': f"{100 * pair['robust']['mean']:+.2f}", 'TestRobustDiffLo': f"{100 * pair['robust']['ci95'][0]:+.2f}",
+            'TestRobustDiffHi': f"{100 * pair['robust']['ci95'][1]:+.2f}",
+            'TestLowDiff': f"{100 * pair['low_beta']['mean']:+.2f}", 'TestLowDiffLo': f"{100 * pair['low_beta']['ci95'][0]:+.2f}",
+            'TestLowDiffHi': f"{100 * pair['low_beta']['ci95'][1]:+.2f}",
+            'TestRobustClear': f"{1e3 * t['robust']['paired_vs_reference_m']['mean']:+.3f}",
+            'TestRobustClearLo': f"{1e3 * t['robust']['paired_vs_reference_m']['ci95'][0]:+.3f}",
+            'TestRobustClearHi': f"{1e3 * t['robust']['paired_vs_reference_m']['ci95'][1]:+.3f}",
+            'TestRobustBlocks': str(t['robust']['loss_blocks']), 'TestRefBlocks': str(t['reference']['loss_blocks']),
+            'PoolBestGainPct': f"{100 * (1 - d['robust']['loss_max'] / min(r['loss_max'] for r in pools['configured']['rows'])):.1f}",
+            'RobustIter': str(cand['pool_best']['iterations']),
+            'AnglePenaltyPct': f"{100 * (d['robust']['exit_jitter_xp_rad'] / d['reference']['exit_jitter_xp_rad'] - 1):.0f}",
+            'LossRatio': f"{t['reference']['observed_loss_fraction'] / t['robust']['observed_loss_fraction']:.1f}"}
+    macros('design', vals)
+    fig, ax = plt.subplots(1, 2, figsize=(7, 2.9))
+    curve = ph['analytic_curve']
+    mu = np.array([c['mu_x_deg'] for c in curve])
+    sx = np.array([1e3 * c['exit_jitter_x_m'] for c in curve])
+    sxp = np.array([1e3 * c['exit_jitter_xp_rad'] for c in curve])
+    ax[0].plot(mu, sx, color='0.2', label='$\\sigma_{x}$ [mm]')
+    ax[0].plot(mu, sxp, color='0.2', ls='--', label="$\\sigma_{x'}$ [mrad]")
+    for key, color, label in (('configured', '#1f5fa8', 'reachable, configured exit'), ('dispersion_free', '#e9a03b', 'reachable, $D=D'"'"'=0$')):
+        lo, hi = pools[key]['mu_x_range_deg']
+        ax[0].axvspan(lo, hi, color=color, alpha=.25 if key == 'configured' else .18, label=label)
+    ax[0].set(xlim=(150, 260), xlabel='Horizontal phase advance m1$\\to$m4 [deg]', ylabel='Exit jitter (rms)')
+    ax[0].legend(fontsize=6.5, loc='upper left')
+    rows = pools['configured']['rows']
+    ax[1].semilogy([r['mu_x_deg'] for r in rows], [100 * r['loss_max'] for r in rows], '.', color='0.6', ms=3, label='matched solutions (jitter only)')
+    for name in ('reference', 'low_beta', 'robust'):
+        ax[1].semilogy(d[name]['mu_x_deg'], 100 * d[name]['loss_max'], 'o', color=COLORS[name], label=LABELS[name])
+        ax[1].semilogy(d[name]['mu_x_deg'], 100 * t[name]['observed_loss_fraction'], 'x', color=COLORS[name], ms=7)
+    ax[1].plot([], [], 'x', color='0.3', label='tracked, steered test machines')
+    ax[1].set(xlabel='Horizontal phase advance m1$\\to$m4 [deg]', ylabel='Blade loss per shot [%]')
+    ax[1].set_yticks([0.3, 1, 3], ['0.3', '1', '3'])
+    ax[1].yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax[1].legend(fontsize=6.5, loc='lower right')
+    for a in ax:
+        a.grid(alpha=.3)
+    fig.tight_layout()
+    fig.savefig(P / 'figures/round3_jitter_transfer.pdf', metadata={'CreationDate': None, 'ModDate': None})
+    plt.close(fig)
+
+
+STEPS = {'apertures': apertures, 'steering': steering, 'design': design}
 
 
 def main():

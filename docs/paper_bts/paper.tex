@@ -1,4 +1,4 @@
-% Main-branch revision addressing Reviewer 1, 2026-10-13.
+% Main-branch revision addressing Reviewer 1 (2026-10-13) and Reviewer 2 (2026-10-15).
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -15,64 +15,63 @@
 \input{generated/round3_design.tex}
 \input{generated/round3_exit.tex}
 \input{generated/round3_sensitivity.tex}
-\title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
+\title{Septum loss and jitter transfer in a matched booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
 \small Korea University, Sejong, 30019 Republic of Korea\\
 \small Corresponding author: \texttt{kuphy@korea.ac.kr}}
-\date{October 13, 2026}
+\date{October 15, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-Lower intermediate beta does not necessarily improve transfer-line clearance
-when dispersion, trajectory response or an immutable boundary controls the beam.
-For a parametric 21.789 m, 4 GeV booster-to-storage-ring line, we derive the fixed
-entrance ceiling on minimum five-sigma clearance and compare matched reference,
-low-beta and direct-clearance settings. Interior sampling corrects missed magnet
-extrema; refined optimization reduces vertical peak beta from 51.27 to 28.44 m.
-With restrictions only at the line's ends, where the optics are fixed by the
-boundary match, the nominal minimum clearance is analytically independent of the
-quadrupole settings. At explicitly hypothetical horizontal and
-vertical restrictions, its paired changes are -0.152 and +0.073 mm, while direct
-nominal clearance optimization gives +0.881 and +0.212 mm with pointwise 95\%
-intervals excluding zero. Station decomposition explains the competition between
-beam size and trajectory response. Centred transport and nonlinear Gaussian
-quadrature check clearance accuracy below one micrometre in representative cases.
-Particle tracking is reported separately: larger mean clearance does not ensure
-smaller observed loss counts. These results provide a conditional design criterion
-based on the active restriction, without certifying hardware tolerances,
-continuous-chamber transmission or storage-ring capture.
+In a booster-to-storage-ring transfer line whose ends are matched to fixed optics,
+the quadrupoles cannot change the beam size at the line's ends. We show for a
+21.8 m, 4 GeV line of the Korea Light Source design that the limiting restriction is
+the injection-septum blade, 1.48 mm from the injected beam in the geometry of a
+companion nonlinear-kicker study, and that its nominal clearance is independent of
+the quadrupole settings. What the optics do control is where booster shot jitter
+arrives: with matched ends the exit jitter depends only on the horizontal phase
+advance, which exchanges position jitter at the blade for angle jitter at the
+injection kicker. After trajectory correction, which reduces the loss from 10\% to
+1.6\%, this jitter sets the remaining blade loss. A Gaussian loss model agrees with
+tracking within 1\% and serves as a design objective. Matched solutions reach only a
+200--232 degree phase-advance interval; a setting at its edge cuts the tracked loss on
+fresh machines from 2.32 to 0.66\% at 13\% more exit-angle jitter, whereas lowering the
+vertical peak beta by 45\% gives no resolved change, and the mean minimum clearance
+used earlier cannot see either result. A dispersion-free exit is feasible, widens the
+reachable interval and lowers the predicted loss a further 65-fold. Aperture
+dimensions other than the blade, and the error levels, are declared assumptions.
 \end{abstract}
-\noindent\textbf{Keywords:} transfer-line optics; physical clearance; dispersion;
-quadrupole matching; uncertainty
+\noindent\textbf{Keywords:} transfer line; injection septum; beam loss; betatron phase
+advance; booster jitter; trajectory correction
 
 \section{Introduction}
 Diffraction-limited storage rings require control of the distribution delivered
-to their injection region~\cite{Hettel2014}. Korea-4GSR provides a relevant
-4 GeV design context~\cite{Kim2025,Lee2024}, but a numerically matched exit
-ellipse is only one part of transport feasibility. An intermediate beta maximum
-is neither a physical aperture nor a trajectory-error tolerance. Dispersion,
-centroid displacement, coupling and the location of restrictions also matter.
+to their injection region~\cite{Hettel2014}. The Korea Light Source (KLS) design
+provides a 4 GeV context~\cite{Kim2025,Lee2024}. A booster-to-storage-ring (BTS)
+line must deliver the booster beam through the injection septum, whose blade sits
+millimetres from the injected beam, with stable position and angle at the injection
+point. Published transfer-line studies treat these as distinct tasks. SLS 2.0
+separates quadrupole-scan beam characterisation from position and angle control and
+identifies septum restrictions~\cite{Kallestrup2025}. ESRF--EBS rematching includes
+injection-region fields and mechanical constraints~\cite{ESRF2018}. Sirius studies
+distinguish injector stages and incoming beam-size effects~\cite{Resende2022}, and
+MAX IV pulsed-sextupole injection addresses ring capture~\cite{Leemann2012}.
 
-Published transfer-line studies illustrate this distinction. SLS 2.0 separates
-quadrupole-scan beam characterization from position/angle control and identifies
-septum restrictions~\cite{Kallestrup2025}. ESRF--EBS rematching includes off-axis
-injection-quadrupole fields and mechanical constraints~\cite{ESRF2018}. Sirius
-studies distinguish injector stages and incoming beam-size effects~\cite{Resende2022}.
-MAX IV pulsed-sextupole injection addresses downstream ring capture~\cite{Leemann2012},
-a different boundary from the one considered here. These primary studies do not
-establish the particular target or chamber dimensions of our model.
-
-We test when lowering vertical peak beta increases minimum projected clearance,
-and compare that strategy with direct nominal clearance optimization at a fixed
-exit match. A fixed entrance can cap the minimum regardless of downstream optics;
-an internal restriction instead exposes competition between betatron size,
-dispersion and trajectory sensitivity. We make that mechanism explicit and test
-it in independently seeded machine/shot ensembles. All restricted cases are
-parametric demonstrations, not measured chamber specifications. The BTS sequence,
-archived match and historical simulations are shared with the companion NKM
-study; this article ends at the BTS exit and claims no ring capture or kicker
-transparency. Standard optimization is used without algorithmic novelty claims.
+A common design heuristic is to lower the peak beta functions inside the line to
+gain aperture margin. We ask what the quadrupoles can actually change at the
+restriction that limits the line. Two facts organise the answer. First, the optics
+at both ends are fixed by the boundary match, so every restriction outside the
+quadrupole section, including the septa, has a nominal clearance that no quadrupole
+setting changes. Second, the same boundary match reduces the transfer of booster
+jitter to a single parameter, the horizontal phase advance, which decides whether
+the jitter arrives at the septum blade as position or at the injection kicker as
+angle. We model the line with element-wise apertures and the blade geometry of a
+companion nonlinear-kicker (NKM) study, correct its trajectory as in commissioning,
+use a Gaussian loss probability validated by tracking as the design observable, and
+test the resulting settings on independently seeded machines. The article ends at
+the line exit and claims no ring capture or kicker transparency. Standard
+optimisation is used without algorithmic novelty claims.
 
 \section{Parametric model and physical observables}
 \subsection{Boundaries, coordinates and source limitations}
@@ -89,8 +88,8 @@ reference geometry is held fixed when fields or particle momenta change.
 \centering\includegraphics[width=\linewidth]{figures/layout.pdf}
 \caption{Configured BTS element sequence drawn with Accelerator Toolbox synoptic
 plotting. Red symbols are quadrupoles and blue blocks are dipoles;
-blank intervals are drifts. Dotted lines mark the four
-model aperture stations. The path coordinate follows the reference trajectory;
+blank intervals are drifts. Dotted lines mark the markers
+m1--m4 of the earlier four-station aperture model. The path coordinate follows the reference trajectory;
 this is not a surveyed mechanical layout.}\label{fig:layout}
 \end{figure}
 
@@ -197,8 +196,10 @@ monitor readings of the zero-input trajectory include a static 50 micrometre rms
 error (offset and calibration residual). The kicks minimise the weighted readings
 (end monitor weight 3) with the response of the error-free model line,
 Tikhonov-regularised and limited to $\pm1$ mrad, in two passes. The correction
-uses no knowledge of the actual errors and does not act on shot jitter. Every
-machine is evaluated uncorrected and corrected on identical particles.
+uses no knowledge of the actual errors and does not act on shot jitter. After the first run this
+declared layout was amended, with a corrector before b3 and a monitor at the
+injection-septum entrance (Section~\ref{sec:steering-results}); both layouts are
+reported. Every machine is evaluated uncorrected and corrected on identical particles.
 
 \section{Physical criterion, validation and comparison protocol}
 \subsection{Active restrictions and boundary-fixed clearances}
@@ -493,35 +494,44 @@ each (seeds 93001--93004; analytic, not tracked).}\label{tab:sensitivity}
 {\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
 
 \section{Discussion and conclusions}
-The physical criterion is the active restriction, not beta alone. A fixed
-entrance gives an immutable ceiling; an interior restriction exposes dispersion
-and trajectory response competing with betatron size. The paired tests provide
-three conditional regimes: unresolved baseline change, an adverse low-beta
-horizontal outcome, and a beneficial but modest vertical outcome. Direct nominal
-clearance settings improve the two restricted mean-clearance cases, while the
-particle study demonstrates that mean improvement is not tail reliability.
+In a BTS line matched at both ends, the beam size at the ends is fixed and so is the
+nominal clearance of every restriction outside the quadrupole section. With the
+companion blade geometry the injection septum is that restriction, and it limits the
+line by an order of magnitude more than any interior aperture. Lowering the interior
+peak beta, the usual design heuristic, therefore changes only clearances of several
+millimetres and, on fresh steered machines, leaves the loss unchanged.
 
-The nominal phase-space comparison complements these tests: a fixed exit
-match produces similar exit clouds even when interior beta profiles differ.
-The projected horizontal distribution includes dispersion and energy spread,
-so its ellipse area is not a direct measure of betatron emittance.
+The quadrupoles act on the loss through the trajectory. Static errors are removed by
+correction, provided the steering controls angle as well as position at the septum:
+a layout that corrected position alone traded it for exit-angle error. What remains
+is booster shot jitter, and for matched ends its arrival at the exit depends only on
+the horizontal phase advance. The line chooses whether the jitter appears as
+position at the blade or as angle at the injection kicker, but it cannot remove it.
+For the configured exit, matched solutions reach only a 32 degree interval of phase
+advance, and the best setting in it reduces the blade loss 3.5-fold at 13\% more
+angle jitter. A dispersion-free exit widens the interval and lowers the predicted loss
+much further, again at the cost of angle jitter. The choice between blade loss and
+injection-angle jitter belongs to the injection design as a whole: for the companion
+kicker, whose 80\% angular acceptance is 0.44 mrad, exit-angle jitter of 0.33--0.39
+mrad is of the same order, so the trade must be evaluated with ring capture, and the
+booster's angle stability bounds what either choice can achieve.
 
-This adds an observable-specific comparison to established transfer-line
-rematching and trajectory-control practice, rather than a new optimizer.
-Optimization should state the limiting station, retain full covariance and
-centroid response, verify interior extrema, and independently evaluate its
-chosen observable. Robust training-based optimization, operational correction
-and global search are not demonstrated. Source-confirmed chamber geometry,
-matching boundaries and error correlations could change the preferred setting.
+Two methodological points carry over. The mean minimum five-sigma clearance used in
+the earlier revision does not rank settings by loss: it rewards static offsets away
+from a one-sided restriction and is blind to the jitter tail. A Gaussian loss
+probability from the propagated centroid and covariance agrees with tracked losses
+within 1\%, is smooth, and can be optimised directly. The phase-advance view also
+gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
+booster jitter lands, and compare with the restriction and the kicker acceptance.
 
-All targets, continuous restrictions and hardware limits remain as described
-in Section 2. Independent-Gaussian errors and hypothetical restrictions are
-parametric assumptions. Numerical precision cannot resolve their physical
-uncertainty. This paper neither certifies real BTS transmission nor derives
-construction tolerances, downstream capture or NKM transparency. The original
-statistical campaign is archived separately; its optical-rule failures are not
-particle losses. The resulting design lesson is conditional and testable with
-confirmed engineering inputs or future measurements.
+All aperture dimensions except the blade position, the corrector and monitor layout,
+the steering amendment and the error levels are declared assumptions; sweeps and a
+sensitivity study bound their influence on these conclusions. The loss is heavy-tailed
+over machines and its population mean varies between independently seeded
+populations, while the ranking of settings does not. The dispersion-free results are
+analytic. This paper neither certifies real transmission nor derives construction
+tolerances, ring capture or kicker transparency; the earlier four-station analysis and
+historical statistics are preserved in the supplement.
 
 \section*{Statements and Declarations}
 \paragraph{Funding.} Funding information will be supplied by the author before submission.
@@ -529,9 +539,10 @@ confirmed engineering inputs or future measurements.
 \paragraph{Acknowledgments.} Author-supplied acknowledgments are pending before submission.
 \paragraph{Author contribution.} Chong Shik Park is responsible for scientific
 interpretation and final article approval; final approval is pending.
-\paragraph{Generative assistance.} OpenAI Codex assisted with software,
-numerical execution, literature checking and manuscript drafting beyond copy
-editing. The author must validate and approve the final work.
+\paragraph{Generative assistance.} Generative AI assistance (OpenAI Codex and
+Anthropic Claude through Claude Code) was used for software, numerical execution,
+literature checking and manuscript drafting beyond copy editing, as in the companion
+NKM study. The author must validate and approve the final work.
 \paragraph{Data and code availability.} A local referee attachment supplies
 selected raw data, configurations, source snapshots, environment identities,
 hashes and reproduction commands. It has not been publicly deposited or sent
@@ -539,7 +550,12 @@ to a journal; reviewer delivery and final availability wording remain author act
 
 \appendix
 \section{Evidence and supplementary material}
-The supplement preserves historical matching/optical statistics and reports
+The round-three study (element-wise apertures, steering, phase-advance pools,
+loss-based setting, fresh test, exit target and sensitivity) is in
+results/bts\_journal\_campaign\_r3\_20261015, one directory per stage, each with
+its configuration, source hashes and the protocol declared before the campaigns
+(round3\_protocol.json, including the recorded steering amendment). The supplement
+preserves the four-station study, historical matching/optical statistics,
 block-loss inference and numerical limitations. Reviewed and original campaign
 identities, all previous reports, new frozen designs, station decompositions and
 point-by-point responses are included in the local attachment. The separate

@@ -658,3 +658,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 230. [**Milestone 230 — R2B-06: Error-Level Sensitivity**](230_r2b_06_error_sensitivity.md)
     - Roll level (0.1–0.5 mrad) has no effect on the horizontal blade loss and energy jitter (0.05–0.1 %) little; the ranking is unchanged; the loss is heavy-tailed over machines (top 5 of 200 carry 39 %).
+
+231. [**Milestone 231 — R2B-07: Re-Framed BTS Article and Records**](231_r2b_07_article_reframing.md)
+    - New title, abstract, introduction and conclusions around septum loss and jitter transfer; KLS naming; claim ledger BR3-01–13, final asset hashes, reproduction guide and Reviewer 2 response; 743 tests pass.

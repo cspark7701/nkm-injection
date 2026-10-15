@@ -224,6 +224,55 @@
       "bytes": 6314,
       "generating_commit": null,
       "provenance_note": "Nominal phase-space diagnostic; exact generating script and source hashes supplied separately from frozen error campaign."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/apertures/apertures.json",
+      "sha256": "ded1a76c3b3d29754e6ffc6dade79917d2ebf01c7b8a4a49e9b07386b4c04743",
+      "bytes": 166313,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
+      "sha256": "e333fde54e0a6a5e168b10a02c7e57c7c1ee39229b30b3eb1de0a8408d9affe3",
+      "bytes": 8638,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/phase/phase.json",
+      "sha256": "c81c27d723406153fc7daf7d0f6373c19c18e345955c83dbbc65dfbc0684abd6",
+      "bytes": 408234,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/robust/robust.json",
+      "sha256": "3bc9ba2d15943590fdb339a74d63b0da5b3e57835de40c34de69e69ac8c18c6e",
+      "bytes": 5167,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/test/test.json",
+      "sha256": "34e03b345fa38667730ca8a2e7d1aea81c6ed8e4bb1f91b086c9796b52775e5d",
+      "bytes": 4971,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/exit/exit.json",
+      "sha256": "239006d95c08e5bfc517f5a8ae5173006c97f27116fef3bab115c5216fd26b8d",
+      "bytes": 78722,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_journal_campaign_r3_20261015/sensitivity/sensitivity.json",
+      "sha256": "bda134653a8e5a21076a70eb547328b3c0d38942173dd2c34449cda31254fdff",
+      "bytes": 11716,
+      "generating_commit": null,
+      "provenance_note": "Round-3 stage output; configuration.json in the same directory records source hashes and protocol."
     }
   ],
   "claims": [
@@ -1049,6 +1098,84 @@
       "artifact": "results/bts_phase_space_20261013_final/summary.json",
       "pointer": "/designs/low_beta/max_rms_relative_error",
       "expected": 8.551602916107015e-05
+    },
+    {
+      "id": "BR3-01",
+      "artifact": "results/bts_journal_campaign_r3_20261015/apertures/apertures.json",
+      "pointer": "/designs/reference/minimum_m",
+      "expected": 0.000648371479019744
+    },
+    {
+      "id": "BR3-02",
+      "artifact": "results/bts_journal_campaign_r3_20261015/apertures/apertures.json",
+      "pointer": "/designs/reference/interior_minimum_m",
+      "expected": 0.009117120150189659
+    },
+    {
+      "id": "BR3-03",
+      "artifact": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
+      "pointer": "/summary/uncorrected/reference/observed_loss_fraction",
+      "expected": 0.10080666666666667
+    },
+    {
+      "id": "BR3-04",
+      "artifact": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
+      "pointer": "/summary/amended/reference/observed_loss_fraction",
+      "expected": 0.015979166666666666
+    },
+    {
+      "id": "BR3-05",
+      "artifact": "results/bts_journal_campaign_r3_20261015/steering/steering.json",
+      "pointer": "/summary/corrected/reference/exit_centroid_rms_m_rad/1",
+      "expected": 0.0005352066888863644
+    },
+    {
+      "id": "BR3-06",
+      "artifact": "results/bts_journal_campaign_r3_20261015/phase/phase.json",
+      "pointer": "/pools/configured/solutions",
+      "expected": 349
+    },
+    {
+      "id": "BR3-07",
+      "artifact": "results/bts_journal_campaign_r3_20261015/phase/phase.json",
+      "pointer": "/pools/configured/mu_x_range_deg/0",
+      "expected": 200.2204007529857
+    },
+    {
+      "id": "BR3-08",
+      "artifact": "results/bts_journal_campaign_r3_20261015/robust/robust.json",
+      "pointer": "/designs/robust/loss_max",
+      "expected": 0.00266519997371009
+    },
+    {
+      "id": "BR3-09",
+      "artifact": "results/bts_journal_campaign_r3_20261015/test/test.json",
+      "pointer": "/summary/amended/robust/observed_loss_fraction",
+      "expected": 0.006629166666666667
+    },
+    {
+      "id": "BR3-10",
+      "artifact": "results/bts_journal_campaign_r3_20261015/test/test.json",
+      "pointer": "/paired_loss_fraction_vs_reference/robust/mean",
+      "expected": -0.016603333333333335
+    },
+    {
+      "id": "BR3-11",
+      "artifact": "results/bts_journal_campaign_r3_20261015/exit/exit.json",
+      "pointer": "/dispersion_free_best/loss_max",
+      "expected": 4.0719615911744235e-05
+    },
+    {
+      "id": "BR3-12",
+      "artifact": "results/bts_journal_campaign_r3_20261015/exit/exit.json",
+      "pointer": "/dispersion_free_pool/within_60m",
+      "expected": 115
+    },
+    {
+      "id": "BR3-13",
+      "artifact": "results/bts_journal_campaign_r3_20261015/sensitivity/sensitivity.json",
+      "pointer": "/rows/5/designs/reference/predicted_loss_max_mean",
+      "expected": 0.014676716638868896
     }
   ]
 }

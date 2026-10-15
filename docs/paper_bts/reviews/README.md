@@ -46,3 +46,19 @@ model of the line:
 - mean clearance is not a loss-relevant objective.
 
 Seven tasks, R2B-01 to R2B-07, are included in the report.
+
+## Execution of the Reviewer 2 report
+
+[Point-by-point response to Reviewer 2](author_response_reviewer2_20261015.md) records R2B-01 to R2B-07 (milestones
+225–231). The article is re-framed as *Septum loss and jitter transfer in a matched booster-to-storage-ring transfer
+line*:
+- element-wise apertures with the companion septum blade;
+- trajectory correction, with a recorded layout amendment;
+- jitter transfer through the horizontal phase advance;
+- a tracking-validated Gaussian loss observable;
+- a loss-based setting tested on fresh machines;
+- a dispersion-free exit;
+- an error-level sensitivity study.
+
+The four-station study moved to the supplement. Funding, acknowledgments, final approval, the availability wording
+and referee delivery remain author actions. The Reviewer 2 report is preserved unchanged.

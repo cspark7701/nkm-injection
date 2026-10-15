@@ -1,6 +1,24 @@
 # BTS optics manuscript
 
-Round-two one-column article for prospective JKPS submission: [paper.tex](paper.tex), [paper.pdf](paper.pdf), [supplement.tex](supplement.tex) and [supplement.pdf](supplement.pdf). The article explains fixed-entrance saturation and compares reference, spatially refined low-beta and nominal direct-clearance settings under explicit hypothetical restrictions. Higher mean clearance remains distinct from smaller loss probability, real chamber transmission and ring capture.
+Round-three one-column article for prospective JKPS submission, *Septum loss and jitter transfer in a matched
+booster-to-storage-ring transfer line*: [paper.tex](paper.tex), [paper.pdf](paper.pdf),
+[supplement.tex](supplement.tex) and [supplement.pdf](supplement.pdf). It responds to the
+[Reviewer 2 report](reviews/reviewer2_bts_20261015_main_report.md); see the
+[response](reviews/author_response_reviewer2_20261015.md), the [round-3 protocol](round3_protocol.json) and the
+[round-3 reproduction guide](round3_reproduction.md).
+
+**Findings.**
+- With element-wise apertures, the injection-septum blade limits the line, with a nominal clearance independent of
+  the quadrupoles.
+- With matched ends, booster jitter reaches the exit through the horizontal phase advance alone.
+- Steering, a Gaussian loss observable validated by tracking, a loss-based setting tested on fresh machines and a
+  dispersion-free exit complete the study.
+
+The earlier round-two article (four-station model, hypothetical restrictions) is preserved in the supplement and the
+records below.
+
+## Round-two records
+The round-two article explained fixed-entrance saturation and compares reference, spatially refined low-beta and nominal direct-clearance settings under explicit hypothetical restrictions. Higher mean clearance remains distinct from smaller loss probability, real chamber transmission and ring capture.
 
 - [Review history and current response](reviews/README.md)
 - [Frozen original identity](round2_identity.json) and [new protocol](round2_protocol.json)

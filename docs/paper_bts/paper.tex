@@ -25,9 +25,9 @@ For a parametric 21.789 m, 4 GeV booster-to-storage-ring line, we derive the fix
 entrance ceiling on minimum five-sigma clearance and compare matched reference,
 low-beta and direct-clearance settings. Interior sampling corrects missed magnet
 extrema; refined optimization reduces vertical peak beta from 51.27 to 28.44 m.
-The original comparison has 406 of 600 paired shots limited by the entrance in
-both settings. A fresh 200-machine, three-shot ensemble finds no resolved
-baseline low-beta clearance benefit. At explicitly hypothetical horizontal and
+With restrictions only at the line's ends, where the optics are fixed by the
+boundary match, the nominal minimum clearance is analytically independent of the
+quadrupole settings. At explicitly hypothetical horizontal and
 vertical restrictions, its paired changes are -0.152 and +0.073 mm, while direct
 nominal clearance optimization gives +0.881 and +0.212 mm with pointwise 95\%
 intervals excluding zero. Station decomposition explains the competition between
@@ -150,14 +150,22 @@ assumed 19.35 mm bore, the respective maxima are 33.356/40.028 T/m and
 checks model consistency, not magnet engineering feasibility.
 
 \section{Physical criterion, validation and comparison protocol}
-\subsection{Active restrictions and the entrance ceiling}
-The full minimum satisfies
-\[c_{\min}(K)=\min[c_{\rm entrance},c_{\rm downstream}(K)].\]
-Because the entrance precedes adjustable quadrupoles, its clearance is independent
-of $K$. Therefore $c_{\min}\le c_{\rm entrance}$, with equality whenever every
-downstream clearance exceeds that ceiling. The metric then saturates: lowering
-an intermediate beta cannot increase its nominal value. This is a sufficient
-condition for saturation, not a claim that downstream profiles are unchanged.
+\subsection{Active restrictions and boundary-fixed clearances}
+The two end stations sit where the optics are fixed by boundary data: the entrance
+Twiss functions and dispersion are inputs, and every admissible setting matches the
+exit to its target. For a centred nominal beam the clearance there is therefore
+$c_u=a-5\sqrt{\epsilon_u\beta_u+D_u^2\sigma_\delta^2}$ with the boundary values of
+Table~\ref{tab:boundary}, for every quadrupole setting $K$ that satisfies the match.
+With $a=19.35$ mm this gives 17.455/18.865 mm at the entrance and 18.555/19.064 mm
+at the exit ($x$/$y$), exactly the values found numerically for both settings
+(Table~\ref{tab:stations}). The two interior stations have 30 mm halfwidths and could
+limit only if a five-sigma size exceeded about 12.5 mm, which no matched setting
+approaches. In this four-station model the nominal minimum clearance is thus
+analytically independent of $K$: the ``saturation'' of the minimum is a consequence
+of placing restrictions only where the optics are fixed, not a finding about the
+optics. Under errors, the only $K$-dependent part of the end-station clearances is
+the response of the centroid at the exit to errors and jitter. Element-wise
+restrictions are therefore required for a physical comparison.
 
 At a single symmetric active station away from $\bar u=0$, the local sensitivity is
 \begin{equation}
@@ -259,7 +267,8 @@ observable. No additional samples were added after inspecting outcomes.
 \section{Results}
 \subsection{Saturation and heterogeneous original outcomes}
 At zero error, both original settings have minimum clearance 17.455 mm at the
-entrance (Table~\ref{tab:stations}). The full station audit reconstructs all
+entrance (Table~\ref{tab:stations}), the analytic boundary value of
+Section~3.1. The full station audit reconstructs all
 600 saved paired minima within $10^{-12}$ m. Every one of the 406 exact shot
 ties has the horizontal entrance active in both designs. The reference has
 449 entrance-x, 103 exit-x and 48 exit-y limiting shots; the old low-beta setting

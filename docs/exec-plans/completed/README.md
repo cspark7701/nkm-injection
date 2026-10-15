@@ -640,3 +640,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 224. [**Milestone 224 — Reviewer 2 Report on the BTS Manuscript**](224_reviewer2_bts_report.md)
     - Major revision: nominal end clearances are analytically K-independent, positive results rest on hypothetical m2/m3 restrictions, the exit septum blade and element apertures are missing, no trajectory correction, and mean clearance is not loss-relevant (R2B-01 to R2B-07).
+
+225. [**Milestone 225 — R2B-02: Boundary-Fixed End-Station Clearances**](225_r2b_02_boundary_clearances.md)
+    - Analytic proof and test that the BTS end-station clearances are independent of the quadrupole settings; Section 3.1 and abstract rewritten.

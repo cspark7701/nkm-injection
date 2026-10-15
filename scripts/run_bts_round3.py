@@ -174,21 +174,27 @@ def _machine(job):
     static_rng = np.random.default_rng([seeds['static'], machine])
     shot_rng = np.random.default_rng([seeds['shot'], machine])
     particle_rng = np.random.default_rng([seeds['particle'], machine]) if track else None
-    bpm_rng = np.random.default_rng([seeds['bpm'], machine])
     errors = draw_static(static_rng, lattice_for(next(iter(designs.values()))))
     errors['roll'] = errors['roll'] * error_scale.get('roll', 1.0)
     lines = {}
+    layouts = {'declared': {}, 'amended': {'corrector_before': r3.AMENDED_CORRECTORS, 'monitor_before': r3.AMENDED_MONITORS}}
     for name, k in designs.items():
-        machine_line = r3.elementwise_lattice(k, errors, model)
-        nominal = r3.elementwise_lattice(k, None, model)
-        response = r3.response_matrix(nominal)
-        bpm_errors = bpm_rng.normal(0, PROTOCOL['steering']['bpm_error_m'], (len(response[1]), 2))
+        built = {}
+        for layout, kwargs in layouts.items():
+            nominal = r3.elementwise_lattice(k, None, model, **kwargs)
+            response = r3.response_matrix(nominal)
+            # Same BPM error draw per monitor position for both layouts (the extra monitor is drawn last).
+            draws = np.random.default_rng([seeds['bpm'], machine, list(designs).index(name)]).normal(
+                0, PROTOCOL['steering']['bpm_error_m'], (12, 2))
+            bpm_errors = draws[:len(response[1])]
+            built[layout] = (r3.elementwise_lattice(k, errors, model, **kwargs), response, bpm_errors)
         for variant in variants:
-            if variant == 'corrected':
-                line, kicks = r3.correct_trajectory(machine_line, response, bpm_errors, PROTOCOL['steering'])
+            if variant == 'uncorrected':
+                line, response, _ = built['declared']
+                lines[(name, variant)] = (line, np.zeros(2 * len(response[2])))
             else:
-                line, kicks = machine_line, np.zeros(2 * len(response[2]))
-            lines[(name, variant)] = (line, kicks)
+                line, response, bpm_errors = built['declared' if variant == 'corrected' else 'amended']
+                lines[(name, variant)] = r3.correct_trajectory(line, response, bpm_errors, PROTOCOL['steering'])
     shot_rows = []
     table = {key: r3.aperture_table(line) for key, (line, _) in lines.items()}
     for shot in range(shots):
@@ -270,10 +276,11 @@ def steering(output, workers):
             entry['predicted_loss_max_particles'] = entry['predicted_loss_max_mean'] * config['machines'] * config['shots_per_machine'] * particles
     # Corrected minus uncorrected, per design, paired by machine.
     effect = {}
-    for name in designs:
-        a = np.array([np.mean([s['results'][name]['corrected']['clearance_m'] for s in m['shots']]) for m in raw])
-        b = np.array([np.mean([s['results'][name]['uncorrected']['clearance_m'] for s in m['shots']]) for m in raw])
-        effect[name] = interval(a - b, config['bootstrap_seed'])
+    for variant in ('corrected', 'amended'):
+        for name in designs:
+            a = np.array([np.mean([s['results'][name][variant]['clearance_m'] for s in m['shots']]) for m in raw])
+            b = np.array([np.mean([s['results'][name]['uncorrected']['clearance_m'] for s in m['shots']]) for m in raw])
+            effect.setdefault(variant, {})[name] = interval(a - b, config['bootstrap_seed'])
     save(output / 'raw_machines.json', raw)
     save(output / 'steering.json', {'environment': environment(), 'protocol': config, 'summary': summary,
                                     'corrected_minus_uncorrected_m': effect,
@@ -323,9 +330,10 @@ def test(output, workers, robust_file):
         entry['observed_loss_fraction'] = entry['lost_particles'] / n
         entry['predicted_loss_max_particles'] = entry['predicted_loss_max_mean'] * n
     paired = {}
+    variant = config['variant']
     for name in designs:
-        a = np.array([np.mean([s['results'][name]['corrected']['lost'] for s in m['shots']]) for m in raw])
-        b = np.array([np.mean([s['results']['reference']['corrected']['lost'] for s in m['shots']]) for m in raw])
+        a = np.array([np.mean([s['results'][name][variant]['lost'] for s in m['shots']]) for m in raw])
+        b = np.array([np.mean([s['results']['reference'][variant]['lost'] for s in m['shots']]) for m in raw])
         paired[name] = interval((a - b) / config['particles_per_shot'], config['bootstrap_seed'])
     save(output / 'raw_machines.json', raw)
     save(output / 'test.json', {'environment': environment(), 'protocol': config, 'frozen_sha256': hashlib.sha256(robust_file.read_bytes()).hexdigest(),
@@ -381,8 +389,8 @@ def sensitivity(output, workers, robust_file):
     rows = []
     for roll in config['roll_rad']:
         for energy in config['energy_jitter']:
-            raw = campaign(designs, ['corrected'], config, False, workers, {'roll': roll / 5e-4}, {'delta': energy})
-            summary = summarise(raw, designs, ['corrected'], 'reference', 93005, False)['corrected']
+            raw = campaign(designs, ['amended'], config, False, workers, {'roll': roll / 5e-4}, {'delta': energy})
+            summary = summarise(raw, designs, ['amended'], 'reference', 93005, False)['amended']
             rows.append({'roll_rad': roll, 'energy_jitter': energy,
                          'designs': {n: {'predicted_loss_max_mean': e['predicted_loss_max_mean'], 'mean_clearance_m': e['mean_clearance_m'],
                                          'paired_clearance_vs_reference_m': e['paired_vs_reference_m'],

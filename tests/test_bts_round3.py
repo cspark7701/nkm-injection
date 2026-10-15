@@ -91,3 +91,33 @@ def test_gaussian_loss_probability_and_particle_loss_agree():
     observed = np.mean(~np.isfinite(out[0]))
     assert pred['loss_lower'] <= observed + 4 * np.sqrt(pred['loss_union'] / 20000) + 1e-4
     assert observed <= pred['loss_union'] + 4 * np.sqrt(pred['loss_union'] / 20000) + 1e-4
+
+
+def test_amended_steering_controls_exit_position_and_angle():
+    """Correction with the model response removes most of the static exit offset and angle (R2B-03)."""
+    from nkm_injection.bts_journal import draw_static
+    from nkm_injection.bts_round3 import (AMENDED_CORRECTORS, AMENDED_MONITORS, correct_trajectory, orbit_at,
+                                          response_matrix)
+    kwargs = {'corrector_before': AMENDED_CORRECTORS, 'monitor_before': AMENDED_MONITORS}
+    response = response_matrix(elementwise_lattice(REFERENCE, **kwargs))
+    before, after = [], []
+    for m in range(6):
+        errors = draw_static(np.random.default_rng([7, m]), lattice_for(REFERENCE))
+        machine = elementwise_lattice(REFERENCE, errors, **kwargs)
+        bpm = np.random.default_rng([8, m]).normal(0, 5e-5, (len(response[1]), 2))
+        line, kicks = correct_trajectory(machine, response, bpm)
+        assert np.all(np.abs(kicks) <= 1e-3 + 1e-15)
+        for target, lat in ((before, machine), (after, line)):
+            p = np.zeros((6, 1), order='F')
+            target.append(at.lattice_track(lat, p, nturns=1, refpts=[len(lat)])[0][:2, 0, 0, 0])
+    before, after = np.array(before), np.array(after)
+    assert np.sqrt(np.mean(after[:, 0] ** 2)) < 0.25 * np.sqrt(np.mean(before[:, 0] ** 2))
+    assert np.sqrt(np.mean(after[:, 1] ** 2)) < 2e-4
+
+
+def test_zero_kick_correctors_do_not_change_the_line():
+    from nkm_injection.bts_round3 import AMENDED_CORRECTORS, AMENDED_MONITORS
+    particle = np.array([3e-4, -2e-5, 1e-4, 1e-5, -1e-3, 0.0])
+    plain = elementwise_lattice(REFERENCE, correctors=False)
+    amended = elementwise_lattice(REFERENCE, corrector_before=AMENDED_CORRECTORS, monitor_before=AMENDED_MONITORS)
+    np.testing.assert_allclose(_track_end(amended, particle), _track_end(plain, particle), atol=1e-12)

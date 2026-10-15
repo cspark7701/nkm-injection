@@ -11,6 +11,7 @@
 \input{generated/revision_results.tex}
 \input{generated/round2_results.tex}
 \input{generated/round3_apertures.tex}
+\input{generated/round3_steering.tex}
 \title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
@@ -172,6 +173,25 @@ the blade distance on the $+x$ side and the outer wall is at $-8.5$ mm). Only th
 blade position follows a source; all other values are assumptions.}\label{tab:apertures}
 \input{generated/round3_aperture_rows.tex}\end{table}
 
+\subsection{Errors, jitter and trajectory correction}\label{sec:steering}
+Static machine errors are independent Gaussian quadrupole gradient errors
+(0.1\% rms), $x/y$ offsets (100 micrometres), rolls (0.5 mrad) and dipole field
+errors (0.05\%). Each shot adds booster jitter at m1: entrance beta factors
+(5\%), centroid position 0.5 mm, angle 0.2 mrad and momentum 0.1\%, the latter
+carried by the entrance dispersion. These levels are modelling assumptions,
+identical to the earlier revision and to the booster jitter of the companion NKM
+study; their sensitivity is examined in the results.
+
+Static trajectory errors are corrected as in commissioning. Combined horizontal
+and vertical thin correctors are placed before q11, q21, q31 and the injection
+septum, and monitors after each quadrupole and at the line end. Each machine's
+monitor readings of the zero-input trajectory include a static 50 micrometre rms
+error (offset and calibration residual). The kicks minimise the weighted readings
+(end monitor weight 3) with the response of the error-free model line,
+Tikhonov-regularised and limited to $\pm1$ mrad, in two passes. The correction
+uses no knowledge of the actual errors and does not act on shot jitter. Every
+machine is evaluated uncorrected and corrected on identical particles.
+
 \section{Physical criterion, validation and comparison protocol}
 \subsection{Active restrictions and boundary-fixed clearances}
 The two end stations sit where the optics are fixed by boundary data: the entrance
@@ -275,6 +295,45 @@ vertical improvement also changes horizontal transport.}\label{fig:refined}\end{
 (logarithmic scale), horizontal (top) and vertical (bottom), for the reference and
 refined low-beta settings. The two settings coincide at both septa; they differ
 only where clearances exceed 9 mm. Design beam, no errors.}\label{fig:profile}\end{figure}
+
+\subsection{Trajectory correction}\label{sec:steering-results}
+Table~\ref{tab:steering} compares the uncorrected and corrected lines on 200
+machines with three shots of 2\,000 particles each (seeds 91001--91004); every
+setting and steering variant sees the same machines, shots and particles.
+Without correction the static errors displace the exit centroid by 1.2 mm rms,
+and \BtsRThreeRefUncLostPct\% of the particles are lost, almost all on the blade.
+The declared correction layout (correctors before q11, q21, q31 and the septum)
+reduces the exit position spread to \BtsRThreeRefCorExitXUm\ micrometres and the
+loss to \BtsRThreeRefCorLostPct\%, but its last corrector, 1 m upstream of the
+exit, buys position with angle: the exit-angle spread grows from
+\BtsRThreeRefUncExitXpUrad\ to \BtsRThreeRefCorExitXpUrad\ microradians. We therefore
+amended the layout after this first run, adding a corrector before b3 and a monitor
+at the septum entrance so that position and angle at the septum are both measured
+and steered; the amendment is recorded in the protocol and the declared layout is
+reported alongside. With it the exit spreads are \BtsRThreeRefAmdExitXUm\ micrometres
+and \BtsRThreeRefAmdExitXpUrad\ microradians, the loss falls to
+\BtsRThreeRefAmdLostPct\% (\BtsRThreeLowAmdLostPct\% for the low-beta setting),
+and the rms kick is \BtsRThreeRefAmdKickUrad\ microradians. All later results use
+the amended layout.
+
+\begin{table}[htbp]\centering
+\caption{Steering on 200 machines (3 shots, 2\,000 particles each). $\bar c_{\min}$
+is the mean minimum five-sigma clearance, Lost the tracked particle-loss fraction,
+Predicted the mean Gaussian loss probability of the most loss-prone aperture,
+Blocks the number of machines with any observed loss, and $x_{\rm rms}$,
+$x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
+{\small\input{generated/round3_steering_rows.tex}}\end{table}
+
+Two observations matter for the design question. First, after correction the exit
+centroid spread, about 0.68 mm and 0.34 mrad, is that of the booster jitter alone,
+and it sets the remaining blade loss. Second, the mean
+minimum clearance does not rank the variants by loss: the uncorrected line has the
+largest mean clearance (\BtsRThreeRefUncClear\ mm against \BtsRThreeRefAmdClear\ mm)
+and six times the loss, because a static offset away from the one-sided blade raises
+the mean while offsets towards it are lost. The Gaussian loss prediction, by
+contrast, agrees with the tracked loss within \BtsRThreePredAgreePct\% (relative) in
+every row. The reference and low-beta settings are indistinguishable in every
+column.
 
 \section{Discussion and conclusions}
 The physical criterion is the active restriction, not beta alone. A fixed

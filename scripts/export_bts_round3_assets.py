@@ -20,6 +20,7 @@ CAMPAIGN = ROOT / 'results/bts_journal_campaign_r3_20261015'
 plt.rcParams.update({'font.size': 9, 'pdf.fonttype': 42, 'svg.hashsalt': 'bts-r3', 'pdf.compression': 6})
 COLORS = {'reference': '#1f5fa8', 'low_beta': '#d1495b', 'robust': '#2a9d55'}
 LABELS = {'reference': 'Reference', 'low_beta': 'Refined low beta', 'robust': 'Loss-based'}
+SHORT = {'reference': 'Ref.', 'low_beta': 'Low beta', 'robust': 'Loss-based'}
 
 
 def load(stage, name):
@@ -81,7 +82,44 @@ def apertures():
     plt.close(fig)
 
 
-STEPS = {'apertures': apertures}
+def steering():
+    st = load('steering', 'steering.json')
+    (P / 'generated/round3_steering.json').write_text(json.dumps(st, indent=2) + '\n')
+    names = {'uncorrected': 'none', 'corrected': 'declared', 'amended': 'amended'}
+    rows = []
+    for variant in ('uncorrected', 'corrected', 'amended'):
+        for name in ('reference', 'low_beta'):
+            e = st['summary'][variant][name]
+            rows.append(f"{SHORT[name]} & {names[variant]} & {1e3 * e['mean_clearance_m']:.3f} & {100 * e['observed_loss_fraction']:.2f} & "
+                        f"{100 * e['predicted_loss_max_mean']:.2f} & {e['loss_blocks']} & {1e3 * e['exit_centroid_rms_m_rad'][0]:.2f} & "
+                        f"{1e3 * e['exit_centroid_rms_m_rad'][1]:.2f} \\\\")
+    (P / 'generated/round3_steering_rows.tex').write_text(
+        '\\begin{tabular}{llrrrrrr}\\toprule\nSetting & Steering & $\\bar c_{\\min}$ [mm] & Lost [\\%] & Predicted [\\%] & Blocks & '
+        '$x_{\\rm rms}$ [mm] & $x'"'"'_{\\rm rms}$ [mrad] \\\\\\midrule\n' + '\n'.join(rows) + '\n\\bottomrule\\end{tabular}\n')
+    s, eff = st['summary'], st['corrected_minus_uncorrected_m']
+    vals = {}
+    for name, key in (('reference', 'Ref'), ('low_beta', 'Low')):
+        for variant, v in (('uncorrected', 'Unc'), ('corrected', 'Cor'), ('amended', 'Amd')):
+            e = s[variant][name]
+            vals[f'{key}{v}LostPct'] = f"{100 * e['observed_loss_fraction']:.2f}"
+            vals[f'{key}{v}PredPct'] = f"{100 * e['predicted_loss_max_mean']:.2f}"
+            vals[f'{key}{v}ExitXUm'] = f"{1e6 * e['exit_centroid_rms_m_rad'][0]:.0f}"
+            vals[f'{key}{v}ExitXpUrad'] = f"{1e6 * e['exit_centroid_rms_m_rad'][1]:.0f}"
+            vals[f'{key}{v}Clear'] = f"{1e3 * e['mean_clearance_m']:.3f}"
+            vals[f'{key}{v}Blocks'] = str(e['loss_blocks'])
+        for variant, v in (('corrected', 'Cor'), ('amended', 'Amd')):
+            vals[f'{key}{v}KickUrad'] = f"{1e6 * s[variant][name]['kick_rms_rad']:.0f}"
+            vals[f'{key}{v}ClearGain'] = f"{1e3 * eff[variant][name]['mean']:+.3f}"
+    first = json.loads((CAMPAIGN / 'steering_declared_only/steering.json').read_text())['summary']['corrected']['reference']
+    vals['FirstRunCorExitXpUrad'] = f"{1e6 * first['exit_centroid_rms_m_rad'][1]:.0f}"
+    vals['FirstRunCorLostPct'] = f"{100 * first['observed_loss_fraction']:.2f}"
+    worst = max(abs(e['observed_loss_fraction'] - e['predicted_loss_max_mean']) / e['predicted_loss_max_mean']
+                for v in s.values() for e in v.values())
+    vals['PredAgreePct'] = f"{100 * worst:.1f}"
+    macros('steering', vals)
+
+
+STEPS = {'apertures': apertures, 'steering': steering}
 
 
 def main():

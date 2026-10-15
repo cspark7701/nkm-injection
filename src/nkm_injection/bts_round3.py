@@ -75,6 +75,10 @@ APERTURE_MODEL = {
 
 # Corrector and monitor layout for trajectory correction (R2B-03), declared.
 CORRECTOR_BEFORE = ('q11', 'q21', 'q31', 'sept_ex')
+# Amended layout (after the declared one was found not to control the exit angle):
+# a corrector before b3 and a monitor at the injection-septum entrance.
+AMENDED_CORRECTORS = ('q11', 'q21', 'q31', 'b3', 'sept_ex')
+AMENDED_MONITORS = ('sept_ex',)
 MONITOR_AFTER = QUADS + ('end',)
 
 
@@ -103,7 +107,8 @@ def _limits(name, model):
     return 'ellipse', [r, r]
 
 
-def elementwise_lattice(strengths, errors=None, model=None, correctors=True, integration_steps=10):
+def elementwise_lattice(strengths, errors=None, model=None, correctors=True, integration_steps=10,
+                        corrector_before=None, monitor_before=()):
     """Build the BTS line with an aperture on every element, sliced magnets and correctors.
 
     Static errors are applied before slicing so AT keeps misalignments on the
@@ -113,6 +118,7 @@ def elementwise_lattice(strengths, errors=None, model=None, correctors=True, int
     are markers ``bpm_<family>`` after each quadrupole and ``bpm_end``.
     """
     model = {**APERTURE_MODEL, **(model or {})}
+    corrector_before = CORRECTOR_BEFORE if corrector_before is None else tuple(corrector_before)
     base = lattice_for(np.asarray(strengths, dtype=float))
     if errors is not None:
         apply_static(base, errors)
@@ -120,7 +126,9 @@ def elementwise_lattice(strengths, errors=None, model=None, correctors=True, int
     for elem in base:
         if isinstance(elem, at.Aperture):
             continue
-        if correctors and elem.FamName in CORRECTOR_BEFORE:
+        if elem.FamName in monitor_before:
+            elements.append(at.Marker('bpm_pre_' + elem.FamName))
+        if correctors and elem.FamName in corrector_before:
             elements.append(at.Corrector('hcv_' + elem.FamName, 0.0, [0.0, 0.0]))
         if elem.Length > 0 and not isinstance(elem, at.Drift):
             n = model['slices_quad'] if elem.FamName in QUADS else model['slices_bend']
@@ -329,6 +337,10 @@ def response_matrix(lattice, step=1e-5):
     return np.array(columns).T, bpms, cors
 
 
+def line_names(lattice):
+    return [e.FamName for e in lattice]
+
+
 def correct_trajectory(lattice, model_response, bpm_errors, settings=None):
     """Steer a static machine with its correctors; returns the corrected line and the kicks [rad].
 
@@ -341,6 +353,9 @@ def correct_trajectory(lattice, model_response, bpm_errors, settings=None):
     matrix, bpms, cors = model_response
     weights = np.ones((len(bpms), 2))
     weights[-1] = settings['end_weight']
+    for n, i in enumerate(bpms):
+        if line_names(lattice)[i].startswith('bpm_pre_'):
+            weights[n] = settings['end_weight']
     w = weights.ravel()
     line = deepcopy(lattice)
     kicks = np.zeros(2 * len(cors))

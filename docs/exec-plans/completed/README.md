@@ -646,3 +646,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 226. [**Milestone 226 — R2B-01: Element-Wise Aperture Model**](226_r2b_01_elementwise_apertures.md)
     - Apertures on every element with the companion-derived septum blade; the blade channel (0.648 mm) is active and independent of the quadrupoles, interior margins ≥ 9 mm; four-station study moved to the supplement.
+
+227. [**Milestone 227 — R2B-03: Trajectory Correction**](227_r2b_03_trajectory_correction.md)
+    - Steering cuts BTS loss from 10 % to 1.6 % (amended layout controlling exit angle; declared layout reported too); the residual is booster jitter; Gaussian loss prediction matches tracking within 0.6 %.

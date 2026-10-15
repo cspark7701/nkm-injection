@@ -637,3 +637,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 223. [**Milestone 223 — Reviewer 2, Round-4 Report**](223_reviewer2_round4_report.md)
     - Major revision of limited scope: booster jitter costs NKM and dipole alike, so the 28-point NKM-specific gap arises at zero jitter; ablation, paired wider-window points and a pulse section at the selected point requested (R2d-1 to R2d-7).
+
+224. [**Milestone 224 — Reviewer 2 Report on the BTS Manuscript**](224_reviewer2_bts_report.md)
+    - Major revision: nominal end clearances are analytically K-independent, positive results rest on hypothetical m2/m3 restrictions, the exit septum blade and element apertures are missing, no trajectory correction, and mean clearance is not loss-relevant (R2B-01 to R2B-07).

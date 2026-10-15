@@ -31,3 +31,18 @@ The original branch milestones are `6878ba7` (first review), `05a645f` (first-ro
 ## Execution of main-branch round2
 
 [Point-by-point round2 response](author_response_main_round2_20261013.md) records R2-BTS-01–07 scientific/manuscript execution and R2-BTS-08 submission preparation. The [new reproduction guide](../round2_reproduction.md) distinguishes original and new independently seeded campaigns and retained invalid runs. Author confirmed no competing interests; funding and acknowledgments remain deferred. Final scientific approval and actual reviewer delivery remain pending. The open-at-review task register and every earlier report are preserved unchanged; their historical recommendations do not constitute current journal acceptance.
+
+## Reviewer 2 assessment of the revised main-branch article
+
+[Reviewer 2 main-branch report](reviewer2_bts_20261015_main_report.md), 2026-10-15, evaluates the twelve-page
+*Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `82598dc`, after
+reading both Reviewer 1 rounds, the responses and the historical reports. Recommendation: **major revision; no
+acceptance in present form**. It accepts the numerical validation and inference. Its objections concern the physical
+model of the line:
+- the nominal end-station clearances are analytically independent of the quadrupoles;
+- the positive results rest on hypothetical m2/m3 restrictions, while quadrupole bores, dipole gaps, septum channels
+  and the exit septum blade (about 1.5 mm from the beam in the companion geometry) are absent;
+- trajectory correction is missing;
+- mean clearance is not a loss-relevant objective.
+
+Seven tasks, R2B-01 to R2B-07, are included in the report.

@@ -212,7 +212,36 @@ def exit_target():
         'FreeGainFactor': f"{robust['loss_max'] / best['loss_max']:.0f}"})
 
 
-STEPS = {'apertures': apertures, 'steering': steering, 'design': design, 'exit': exit_target}
+def sensitivity():
+    se = load('sensitivity', 'sensitivity.json')
+    (P / 'generated/round3_sensitivity.json').write_text(json.dumps(se, indent=2) + '\n')
+    rows = []
+    for r in se['rows']:
+        d = r['designs']
+        rows.append(f"{1e3 * r['roll_rad']:.1f} & {100 * r['energy_jitter']:.2f} & " +
+                    ' & '.join(f"{100 * d[n]['predicted_loss_max_mean']:.2f}" for n in ('reference', 'low_beta', 'robust')) + ' & ' +
+                    ' & '.join(f"{1e3 * d[n]['mean_clearance_m']:.3f}" for n in ('reference', 'robust')) + ' \\\\')
+    (P / 'generated/round3_sensitivity_rows.tex').write_text(
+        '\\begin{tabular}{rrrrrrr}\\toprule\nRoll & $\\sigma_{\\delta,j}$ & \\multicolumn{3}{c}{Predicted loss [\\%]} & '
+        '\\multicolumn{2}{c}{$\\bar c_{\\min}$ [mm]}\\\\\n{}[mrad] & [\\%] & Ref. & Low beta & Loss-based & Ref. & Loss-based \\\\\\midrule\n'
+        + '\n'.join(rows) + '\n\\bottomrule\\end{tabular}\n')
+    loss = {(r['roll_rad'], r['energy_jitter']): r['designs'] for r in se['rows']}
+    roll_effect = max(abs(loss[(a, e)][n]['predicted_loss_max_mean'] - loss[(b, e)][n]['predicted_loss_max_mean'])
+                      for a in se['protocol']['roll_rad'] for b in se['protocol']['roll_rad']
+                      for e in se['protocol']['energy_jitter'] for n in ('reference', 'low_beta', 'robust'))
+    full, half = loss[(5e-4, 1e-3)], loss[(5e-4, 5e-4)]
+    ratios = [full[n]['predicted_loss_max_mean'] / full['robust']['predicted_loss_max_mean'] for n in ('reference',)]
+    te = json.loads((CAMPAIGN / 'test/raw_machines.json').read_text())
+    per = np.array([np.mean([s['results']['reference']['amended']['lost'] for s in m['shots']]) for m in te])
+    macros('sensitivity', {'RollEffectPct': f"{100 * roll_effect:.3f}",
+                           'EnergyRefFull': f"{100 * full['reference']['predicted_loss_max_mean']:.2f}",
+                           'EnergyRefHalf': f"{100 * half['reference']['predicted_loss_max_mean']:.2f}",
+                           'SensRatio': f"{ratios[0]:.1f}",
+                           'TopFiveSharePct': f"{100 * np.sort(per)[-5:].sum() / per.sum():.0f}",
+                           'WorstMachinePct': f"{100 * per.max() / 2000:.0f}"})
+
+
+STEPS = {'apertures': apertures, 'steering': steering, 'design': design, 'exit': exit_target, 'sensitivity': sensitivity}
 
 
 def main():

@@ -167,3 +167,22 @@ def test_dispersion_free_exit_setting_is_matched_and_reduces_blade_loss():
     free = shot_averaged_loss(elementwise_lattice(k, correctors=False))['loss_lower']
     configured = shot_averaged_loss(elementwise_lattice(REFERENCE, correctors=False))['loss_lower']
     assert free < 0.01 * configured
+
+
+def test_roll_errors_do_not_change_horizontal_blade_loss():
+    """Quadrupole rolls couple into y only; the horizontal blade probability is unchanged (R2B-06)."""
+    from nkm_injection.bts_journal import draw_static
+    beam = JournalBeam()
+    errors = draw_static(np.random.default_rng([93001, 0]), lattice_for(REFERENCE))
+    probs = []
+    line = elementwise_lattice(REFERENCE, errors)
+    exit_x = clearance_and_loss(line, np.zeros(5), beam.covariance())['exit_centroid'][0]
+    # Entrance offset placing the exit centroid about 0.3 mm inside the blade (exit x ~ -0.92 per mm at m1).
+    centroid = np.array([-(1.18e-3 - exit_x) / 0.918, 0, 0, 0, 0])
+    for scale in (0.2, 1.0):
+        e = dict(errors, roll=errors['roll'] * scale)
+        r = clearance_and_loss(elementwise_lattice(REFERENCE, e), centroid, beam.covariance())
+        probs.append(next(x for x in r['rows'] if x['name'] == 'blade_exit' and x['plane'] == 0))
+    assert probs[0]['sigma_m'] == pytest.approx(probs[1]['sigma_m'], rel=1e-4)
+    assert probs[0]['loss_probability'] > 1e-3
+    assert probs[0]['loss_probability'] == pytest.approx(probs[1]['loss_probability'], rel=0.05)

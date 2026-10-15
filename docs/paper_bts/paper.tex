@@ -14,6 +14,7 @@
 \input{generated/round3_steering.tex}
 \input{generated/round3_design.tex}
 \input{generated/round3_exit.tex}
+\input{generated/round3_sensitivity.tex}
 \title{Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line}
 \author{Chong Shik Park\\[3pt]
 \small Department of Accelerator Science and Center for Accelerator Research,\\
@@ -187,7 +188,7 @@ errors (0.05\%). Each shot adds booster jitter at m1: entrance beta factors
 (5\%), centroid position 0.5 mm, angle 0.2 mrad and momentum 0.1\%, the latter
 carried by the entrance dispersion. These levels are modelling assumptions,
 identical to the earlier revision and to the booster jitter of the companion NKM
-study; their sensitivity is examined in the results.
+study; their sensitivity is examined in Section~\ref{sec:sensitivity}.
 
 Static trajectory errors are corrected as in commissioning. Combined horizontal
 and vertical thin correctors are placed before q11, q21, q31 and the injection
@@ -420,7 +421,12 @@ clearance changes by only \BtsRThreeTestRobustClear\ mm
 quantity used in the earlier revision cannot see this loss reduction. The price is
 an exit angle jitter larger by \BtsRThreeAnglePenaltyPct\%
 (\BtsRThreeRobustJxpUrad\ against \BtsRThreeRefJxpUrad\ microradians), which the
-injection kicker must accept.
+injection kicker must accept. The loss is concentrated in shots whose entrance jitter
+is two to three standard deviations: the five worst of the 200 reference test machines
+contribute \BtsRThreeTopFiveSharePct\% of its loss, the worst losing
+\BtsRThreeWorstMachinePct\% per shot on average. The machine-cluster intervals
+account for this heavy tail, and the population mean differs between independently
+seeded populations (Section~\ref{sec:sensitivity}).
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
 \caption{Left: rms exit position (solid, mm) and angle (dashed, mrad) jitter from
@@ -462,6 +468,29 @@ it, but the angle jitter, \BtsRThreeFreeBestJxpUrad\ microradians against
 companion study the kicker's 80\% angular acceptance is 0.44 mrad, and booster angle
 jitter is the only significant driver of capture among the sampled errors; whether the trade favours the blade or the
 kicker must be decided with the ring, not within the line.
+
+\subsection{Sensitivity to the assumed error levels}\label{sec:sensitivity}
+The 0.5 mrad rms quadrupole roll is large for a transfer line, and 0.1\% rms shot
+energy jitter is at the high end of booster performance. Table~\ref{tab:sensitivity}
+repeats the steered evaluation with rolls of 0.1, 0.2 and 0.5 mrad and energy jitter
+of 0.05 and 0.1\% on another 200 independently seeded machines (analytic loss and
+clearance, no particle tracking). The roll level changes the predicted loss by at most
+\BtsRThreeRollEffectPct\ percentage points: rolls couple a small part of the
+horizontal motion into the vertical plane, whose restrictions keep several
+millimetres of clearance, and leave the horizontal blade loss unchanged. Halving the
+energy jitter lowers the reference loss from \BtsRThreeEnergyRefFull\% to
+\BtsRThreeEnergyRefHalf\%, because its 81 micrometre exit contribution is small
+compared with the betatron jitter. The ranking of the settings is the same at every
+level. On this population the loss-based setting is \BtsRThreeSensRatio\ times below
+the reference, against \BtsRThreeLossRatio\ on the tracked test population: the
+size of the gain depends on the sampled machines, as expected for a heavy-tailed
+loss, while its sign does not.
+
+\begin{table}[htbp]\centering
+\caption{Sensitivity of the steered line to the roll and energy-jitter levels: mean
+predicted loss and mean minimum five-sigma clearance on 200 machines with three shots
+each (seeds 93001--93004; analytic, not tracked).}\label{tab:sensitivity}
+{\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
 
 \section{Discussion and conclusions}
 The physical criterion is the active restriction, not beta alone. A fixed

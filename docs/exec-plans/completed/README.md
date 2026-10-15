@@ -655,3 +655,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 229. [**Milestone 229 — R2B-05: Exit Target and Dispersion-Free Exit**](229_r2b_05_exit_target.md)
     - m4 equals the companion injected beam; divergence 76 µrad (50 dispersive); a dispersion-free exit is feasible (115/120 starts, peaks < 60 m), widens μx to 188–214° and cuts predicted blade loss 65-fold at higher exit-angle jitter.
+
+230. [**Milestone 230 — R2B-06: Error-Level Sensitivity**](230_r2b_06_error_sensitivity.md)
+    - Roll level (0.1–0.5 mrad) has no effect on the horizontal blade loss and energy jitter (0.05–0.1 %) little; the ranking is unchanged; the loss is heavy-tailed over machines (top 5 of 200 carry 39 %).

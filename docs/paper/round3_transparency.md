@@ -1,5 +1,8 @@
 # Round 3: transparency observables, simultaneous construction errors and septum leakage (E9)
 
+> Status 2026-10-16: The E9 results remain recorded. Point/strength consistency (earlier S=0.85 versus adopted S=0.95) is a pending F7 issue; no uniform rescaling of all moment observables is assumed here.
+> See the [pending follow-up](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+
 ## Units of the aligned moment change
 
 The aligned-beam moment changes reported in section 6 are **fractional** single-pass changes of the centred projected

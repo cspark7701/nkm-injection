@@ -1,35 +1,42 @@
-# PRAB submission checklist
+# PRAB submission checklist — current status
 
-Updated 2026-10-12 for D15. Target: **Physical Review Accelerators and Beams**, Research Article. The author requested a one-column main draft and a separate two-column preview. Submission remains a separate author action.
+Updated 2026-10-16. Target: Physical Review Accelerators and Beams, Research Article.
+Latest assessments: [Reviewer 1 round 4](reviews/reviewer1_round4_20261016_report.md) and
+[Reviewer 2 round 4](reviews/reviewer2_report_round4.md). Both request major revision.
+[Current pending queue: F1–F9](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+No scientific revision tasks are executed by this status update; no submission or acceptance is recorded.
 
-## Format and package
+## Completed preparation
 
-- [x] REVTeX 4.2 with APS/PRAB options and native author/email/affiliation/abstract metadata.
-- [x] Primary one-column source/PDF: `paper.tex`, `paper.pdf`.
-- [x] Shared-source two-column preview: `paper_twocolumn.tex`, `paper_twocolumn.pdf`.
-- [x] APS `apsrev4-2` bibliography style; reference titles retained.
-- [x] PRAB-targeted draft cover letter; proposed PhySH headings documented.
-- [x] Separate isolated builds, source archives and layout-specific manifests.
-- [x] Scientific macros/figures and previous reviews unchanged by format conversion.
+- [x] D1–D15 round-2 execution and PRAB conversion; E1–E11 round-3 execution (milestones 211–222).
+- [x] REVTeX 4.2 one-column primary draft and shared-source two-column preview.
+- [x] Current installed PDFs: 30-page primary, 15-page preview and six-page supplement (page counts checked 2026-10-16).
+- [x] Round-3 response, campaign-04 manifest, evidence bundle and archived-source rebuild recorded in milestone 222.
+- [x] All 235 round-3 manifest artifact keys locally present and hash-matching in the 2026-10-16 review audit.
 
-Build commands and submission metadata: [prab_submission.md](prab_submission.md). Scientific evidence entry point: [round2_reproduction.md](round2_reproduction.md), `revision_manifest_round2.json` and current D rows in `claim_evidence.csv`. D15 builds installed assets and does not rerun simulations.
+These checks establish execution/access, not acceptance of all scientific interpretations. Historical D15 builds
+were 28/14 pages; those counts and its then-missing raw files do not describe current assets.
 
-## Scientific preparation and evidence
+## Pending scientific and consistency gates
 
-- [ ] Complete the [third-round Reviewer 1 tasks](reviews/reviewer1_round3_20261012_revision_tasks.md), especially the contribution relative to Sun et al., evidence access and robustness interpretation.
-- [ ] Supply the existing campaign-03 referee attachment and independently verify its selected evidence and rebuild. The historical D13/D14 checks are recorded in milestones 156–157; they are not checks repeated by D15.
-- [ ] Update the frozen source/evidence packaging after any further scientific revisions, preserving historical bundles.
-- [ ] Confirm that abstract, figures, claims, manuscript and final attachment agree.
+- [ ] F1–F3: paired protocol, causal ablation and tested operating-point decision.
+- [ ] F4–F6: signed associations, loss/coupling/domain diagnostics and dispersion/scaling-scope clarification.
+- [ ] F7: pulse/strength-specific transparency at the adopted point, with consistent allowance and provenance.
+- [ ] F8: evidence-supported abstract, synthesis, discussion, conclusions and editorial consistency.
+- [ ] F9: new responses, claims/manifest and point-aware verification, frozen-source rebuild and final layouts/checks.
 
-The current headline is nominal design-beam capture 97.0% at 500 turns and 96.1% at 4000 turns; joint-error mean 14.8% is conditional on ten corrected rings and assumed errors. These quantities are not operational efficiency predictions. Prior campaign-02 sensitivity studies remain explicitly separate from the final design-beam results.
+Current recorded headline values (not revised here): ideal-ring capture 98.4% at 500 turns, 97.8% at 4000;
+corrected-ring mean 78.0%; joint-error mean NKM/dipole 16.1/44.1%. The causal attribution in the current manuscript
+remains challenged. The seed-42 paired gap already exists at zero booster jitter. These are conditional simulations,
+not operational predictions. The pulse section still uses the older point and must be corrected in F7.
 
-## Author checks before submission
+## Author and delivery gates
 
-- [ ] Confirm final title, authorship, affiliation, email and funding statement.
-- [ ] Confirm exclusive submission and any relevant submission history.
-- [ ] Choose final PhySH headings in the APS submission portal.
-- [ ] Confirm the data/code availability statement and actual reviewer attachment access.
-- [ ] Verify AI-use disclosure and other applicable APS author requirements.
-- [ ] Submit the primary one-column draft and requested supporting files through the journal portal; the two-column version is an optional preview.
+- [ ] Approve final scientific interpretation, title, authorship/contact details, declarations and AI disclosure.
+- [ ] Confirm funding information and other journal declarations as applicable; do not infer unsupplied information.
+- [ ] Choose final PhySH headings and confirm exclusive submission/history in the submission portal.
+- [ ] Confirm data/code availability wording and actual access to the ignored evidence attachment.
+- [ ] Authorize and perform external submission/delivery separately. No DOI is required by this local checklist.
 
-No DOI is invented or required by this local checklist. No manuscript or letter has been sent, uploaded or published by D15.
+Build commands: [PRAB formats](prab_submission.md). Selected round-3 evidence and historical round-2 commands:
+[reproduction guide](round2_reproduction.md). Earlier reports and responses remain unchanged.

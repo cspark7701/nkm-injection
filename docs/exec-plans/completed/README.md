@@ -670,3 +670,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 234. [**Milestone 234 — BTS Round 3 on the Unchanged Lattice**](234_bts_unchanged_lattice_rerun.md)
     - Added correctors removed at the author's instruction; steering by trims of the existing dipoles; all round-3 stages rerun (steered loss 1.68 %, fresh-test loss-based 0.69 % vs 2.30 %); records reconciled; 743 tests pass.
+
+235. [**Milestone 235 — Reviewer 1 round 4 and current revision planning**](235_reviewer1_round4_and_revision_status.md)
+    - Records focused major revision, consolidates both round-4 reports into pending F1–F9 under the round-3 plan and refreshes stale status documents without executing scientific tasks.

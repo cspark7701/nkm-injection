@@ -11,12 +11,14 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
 | [Reviewer 1, round 3](reviewer1_round3_20261012_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](reviewer1_round3_20261012_revision_tasks.md) |
 | [Reviewer 2, round 3](reviewer2_report_round3.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
+| [Reviewer 1, round 4](reviewer1_round4_20261016_report.md), 2026-10-16 | Focused major revision; no acceptance in present form | [8 pending R1D tasks](reviewer1_round4_20261016_revision_tasks.md) |
 | [Reviewer 2, round 4](reviewer2_report_round4.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
 
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
 Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
 Round 3: [consolidated_revision_plan_round3.md](consolidated_revision_plan_round3.md) (tasks E1–E11, author inputs B1–B5).
 Round-3 response: [author_response_round3.md](author_response_round3.md) (E1–E11 complete; milestones 211–222).
+Current queue: [round-4 follow-up F1–F9 in the round-3 plan](consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript), all pending; no revision execution authorized by the 2026-10-16 review request.
 
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding
@@ -42,11 +44,11 @@ REVTeX 4.2 conversion, clean 28-page one-column and 14-page two-column builds,
 and 37 passing relevant tests. See [PRAB submission status](../prab_submission.md).
 The first-round response is preserved.
 
-The eight third-round scientific tasks remain pending. The
-[third-round audit](../../exec-plans/completed/159_reviewer1_round3_manuscript_report.md)
-recorded 48 hash-matching artifacts and 157 absent artifacts out of 205;
-D15 did not repeat the historical evidence-bundle verification. Round-2 completion
-does not establish submission readiness or scientific acceptance.
+The third-round scientific work was executed through E1–E11 and reconciled in milestone 222.
+The earlier report's 48-present/157-missing audit described its review-time checkout;
+it is superseded as a current access statement. On 2026-10-16, Reviewer 1 checked all
+235 selected round-3 artifact keys locally and found matching hashes. This does not
+replace actual evidence delivery or a final archived-source rebuild after new revisions.
 
 The third-round Reviewer 2 report verifies all 205 round-2 artifacts and the evidence-bundle hash
 locally, so R1C-01 can be closed by documenting access. Its new points concern the robustness section:
@@ -59,3 +61,7 @@ campaign-04 per-realization records, that booster jitter costs the NKM and the d
 ~28-point NKM-specific gap exists at zero jitter and is not "chiefly the booster angle jitter". It asks for a paired
 error-class ablation, a paired test of wider-window operating points, and a pulse section recomputed at the selected
 point (it still uses the round-2 point).
+
+Reviewer 1's round-4 assessment independently checks the paired zero/full-jitter arithmetic and the mixed pulse
+allowances, requests physical loss/domain diagnostics and scoped approximation-error claims, and retains the
+completed E tasks. Neither report grants acceptance. The new report and task register preserve all previous reports.

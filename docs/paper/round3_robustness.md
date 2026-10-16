@@ -1,5 +1,12 @@
 # Round 3: the single robustness rerun (E7)
 
+> Review-status annotation, 2026-10-16: these are the executed E7/E8 records. Their attribution of the
+> NKM-specific deficit chiefly to booster angle jitter is challenged by both round-4 reviews: the paired
+> NKM–dipole gap is already 28.33 points without jitter and 28.79 points with full jitter (seed 42).
+> No individual non-jitter cause is established by this annotation. The original numerical records and
+> interpretation below are retained pending [F2/F8](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript);
+> neither scientific revision has been executed.
+
 **Inputs.**
 - the selected operating point (E6; x_inj −19.48 mm, S 0.95);
 - the corrected ring population (E5);

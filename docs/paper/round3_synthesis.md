@@ -1,5 +1,12 @@
 # Round 3: physical synthesis of the robustness hierarchy (E8)
 
+> Review-status annotation, 2026-10-16: these are the executed E7/E8 records. Their attribution of the
+> NKM-specific deficit chiefly to booster angle jitter is challenged by both round-4 reviews: the paired
+> NKM–dipole gap is already 28.33 points without jitter and 28.79 points with full jitter (seed 42).
+> No individual non-jitter cause is established by this annotation. The original numerical records and
+> interpretation below are retained pending [F2/F8](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript);
+> neither scientific revision has been executed.
+
 **Hierarchy at the selected point** (manuscript Table V; rows use different samples and are not paired):
 
 | Condition | NKM | Dipole |

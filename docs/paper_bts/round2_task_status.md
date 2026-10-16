@@ -1,5 +1,10 @@
 # Reviewer1 main-branch round2 execution status
 
+Historical round-two register. Current status (2026-10-16): Reviewer 2 R2B-01–07 executed and the round-three
+study rerun without added lattice elements (milestone 234). Current article/supplement: 12/eight pages. See
+[the response](reviews/author_response_reviewer2_20261015.md). The table below records its original round-two
+evidence; it is not the full current review queue. Author-dependent submission gates remain open.
+
 The original report and task register are unchanged historical records. This table records execution against them.
 
 | Task | Execution state | Principal evidence |

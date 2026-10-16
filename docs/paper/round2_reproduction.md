@@ -1,5 +1,11 @@
 # Reproducing the round-2 manuscript evidence
 
+Current status, 2026-10-16: round-2 commands below are historical; the round-3 section in this guide identifies
+the current campaign-04 evidence. E1–E11 are executed; both round-4 reviews request the
+[pending F1–F9 follow-up](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+All 235 selected round-3 artifact keys are locally hash-matching. The mixed round-2 pulse input remains a known
+open issue, not corrected by this documentation update. Preserve the existing frozen bundles.
+
 The active round-2 selection is `revision_manifest_round2.json`, which retains
 the labelled sensitivity evidence and adds the final campaign-03 artifacts.
 `revision_manifest.json` is retained as the working compatibility manifest.

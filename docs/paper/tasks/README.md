@@ -1,6 +1,9 @@
 # Journal research-article revision tasks
 
-Prepared: 2026-10-09. All tasks below are **planned**, not executed.
+Prepared: 2026-10-09. This is the historical initial preparation sequence, not the current execution queue.
+Status updated 2026-10-16: later C/D/E revision plans supersede this starting inventory; E1–E11 are executed.
+Current work is the [pending F1–F9 follow-up](../reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+The original task specifications below are retained for provenance.
 
 The present manuscript describes a technical framework and mixes historical
 results with current models. This sequence builds a validated physical argument
@@ -9,8 +12,7 @@ not establish novelty or model validity.
 
 Read the [simulation strategy](../../023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md)
 first. It gives exact supported commands and separately identifies proposed CLIs
-that need implementation. The provisional venue is JINST; Task 001 establishes
-the final scientific scope and journal fit.
+that need implementation. JINST was the provisional venue at preparation; the author subsequently selected PRAB (D15).
 
 | Order | Task | Dependencies |
 | :--- | :--- | :--- |

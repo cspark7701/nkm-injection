@@ -1,13 +1,13 @@
 # PRAB manuscript formats and submission metadata
 
-D15 completed for **Physical Review Accelerators and Beams (PRAB)** at the author's request. The main draft is one column; the additional two-column PDF is a layout preview. Both use the same scientific text, bibliography, numerical macros and figures.
+Updated 2026-10-16. D15 completed for **Physical Review Accelerators and Beams (PRAB)** at the author's request; E1–E11 subsequently completed the round-3 revision. Both round-4 reviews now request focused further work; [F1–F9 remain pending](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript). The main draft is one column; the additional two-column PDF is a layout preview. Both use the same scientific text, bibliography, numerical macros and figures.
 
 ## Manuscript entry points
 
 - `paper.tex` → `paper.pdf`: REVTeX 4.2 with `aps,prab,preprint` (primary draft).
 - `paper_twocolumn.tex` → `paper_twocolumn.pdf`: a three-line wrapper selects `aps,prab,reprint` (two columns).
 
-The one-column draft uses APS preprint styling with double spacing and a separate title/abstract page (28 pages in this build). The two-column preview uses the journal reprint layout (14 pages). Wide multi-panel figures and tables use full-width floats in both layouts. Edit the scientific text only in `paper.tex`; the wrapper contains no duplicate manuscript. APS author, email, affiliation, abstract and acknowledgment structures are used, with `apsrev4-2` bibliography formatting and article titles.
+The one-column draft uses APS preprint styling with double spacing and a separate title/abstract page (30 pages in the installed round-3 build). The two-column preview uses the journal reprint layout (15 pages in the installed round-3 build). Wide multi-panel figures and tables use full-width floats in both layouts. Edit the scientific text only in `paper.tex`; the wrapper contains no duplicate manuscript. APS author, email, affiliation, abstract and acknowledgment structures are used, with `apsrev4-2` bibliography formatting and article titles.
 
 The [APS REVTeX documentation](https://journals.aps.org/revtex) identifies `prab` as the journal option. The [REVTeX FAQ](https://journals.aps.org/revtex/revtex-faq) explains reprint styling. The [PRAB author guidance](https://journals.aps.org/prab/authors) identifies the Research Article type and submission requirements. The rendering is a draft/preview, not the final publisher typesetting.
 
@@ -38,6 +38,9 @@ These are proposed subject headings, not legacy PACS codes. They are submission 
 
 ## Submission status
 
-PRAB is the confirmed target and the layout conversion is complete. Third-round review tasks remain separate and unexecuted by D15. The manuscript's missing campaign-03 evidence still needs to be supplied for independent verification; an installed-asset PDF build does not validate that numerical evidence. Review history is preserved, and no external submission, upload or push occurs here.
+PRAB is the confirmed target and the layout conversion is complete. E1–E11 subsequently executed the third-round revision, including evidence access and an archived-source rebuild (milestone 222). All 235 selected round-3 artifact keys matched local hashes in the 2026-10-16 review. Both round-4 assessments now require the pending F1–F9 follow-up; a new final reconciliation must follow that work. Review history is preserved. No external submission, upload or push is recorded here.
 
 The native apsrev4-2 author-control notice (`jnrlst (dependency: not reversed) set 1`) is permitted; all other BibTeX warnings remain build failures. Native REVTeX controls enable article titles via `longbibliography`.
+
+Current page counts are 30/15 plus a six-page supplement, checked 2026-10-16. D15's 28/14-page record remains
+historical. Compilation does not close the round-4 scientific issues; see the [current checklist](submission_checklist.md).

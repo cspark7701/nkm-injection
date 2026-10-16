@@ -6,9 +6,11 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 For further publication studies, read the [additional simulation strategy](docs/023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md) and [ordered journal-article revision tasks](docs/paper/tasks/README.md). The plan distinguishes supported commands from proposed drivers and prioritizes physical validation, fair controls and claim-to-evidence reconciliation.
 
-The manuscript is maintained in [`docs/paper/`](docs/paper/) for PRAB in REVTeX 4.2, with a one-column primary draft and a separate two-column preview ([build instructions](docs/paper/prab_submission.md)). The [round-2 reproduction guide](docs/paper/round2_reproduction.md) identifies the final evidence manifest and frozen referee attachment; ignored simulation outputs are supplied separately. Build a fresh source package and PDF with `python scripts/build_submission_package.py --output-dir results/<new> --install-pdf`.
+The manuscript is maintained in [`docs/paper/`](docs/paper/) for PRAB in REVTeX 4.2, with a one-column primary draft and a separate two-column preview ([build instructions](docs/paper/prab_submission.md)). The [reproduction guide](docs/paper/round2_reproduction.md) includes round-3 evidence and the frozen referee attachment; ignored simulation outputs are supplied separately. Build a fresh source package and PDF with `python scripts/build_submission_package.py --output-dir results/<new> --install-pdf`.
 
-The standalone BTS optics article has a [one-column LaTeX draft, outline and ordered preparation tasks](docs/paper_bts/README.md), targeting JKPS with matching, sensitivity, operating margin and tolerance studies. The first draft reports archived results and marks pending scientific analyses.
+The standalone BTS optics article has a [one-column LaTeX draft, outline and ordered preparation tasks](docs/paper_bts/README.md), targeting JKPS with matching, sensitivity, operating margin and tolerance studies. Its current round-three revision uses element-wise apertures, steering through existing dipole trims, and a fresh-machine loss comparison; see the [Reviewer 2 response](docs/paper_bts/reviews/author_response_reviewer2_20261015.md).
+
+Current NKM review status (2026-10-16): E1–E11 executed; Reviewer 1 and Reviewer 2 round 4 request focused major revision. The [consolidated F1–F9 follow-up](docs/paper/reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript) is pending and has not been executed. No journal acceptance or submission is recorded.
 
 ---
 

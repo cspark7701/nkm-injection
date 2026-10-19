@@ -688,3 +688,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 239. [**Milestone 239 — F5: Where the Beam Is Lost**](239_f5_loss_locations.md)
     - NKM zero-capture events are first-turn losses (1491/1500), mostly vertical, none in the magnet; ring 5501 loses vertically over many turns for both kickers, not because of the in-magnet chamber; chromaticity claim reduced.
+
+240. [**Milestone 240 — NRF Funding Acknowledgement**](240_nrf_acknowledgement.md)
+    - NRF grant RS-2022-00143178 acknowledged in both papers (NKM acknowledgments; BTS Funding and Acknowledgments); PDFs rebuilt.

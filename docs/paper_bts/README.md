@@ -28,7 +28,7 @@ The round-two article explained fixed-entrance saturation and compares reference
 
 Original R1 campaign and all prior reports are preserved, including the restored older BTS-branch reviews. New comparisons use200 independently drawn machines with three shots each and2000 particles per shot,totalling10.8 million particle transports across nine combinations. All restrictions, bounds and errors remain labelled assumptions. Invalid preliminary shared-aperture runs are retained and excluded.
 
-Funding and acknowledgments are author-deferred; competing interests are confirmed as none. Final scientific approval and actual referee delivery remain pending. R2-BTS-08 can only be fully closed after these author actions; local execution does not imply journal acceptance or submission.
+Funding and acknowledgments were supplied by the author on 2026-10-19 (NRF Grant No. RS-2022-00143178); competing interests are confirmed as none. Final scientific approval and actual referee delivery remain pending. R2-BTS-08 can only be fully closed after these author actions; local execution does not imply journal acceptance or submission.
 
 To prepare a fresh portable attachment after asset verification:
 

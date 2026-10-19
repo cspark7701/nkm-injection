@@ -679,3 +679,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 236. [**Milestone 236 — F1: Round-4 Protocol**](236_f1_round4_protocol.md)
     - Protocol, seven error classes and the F3 decision rule declared; E7 realization 0 reproduced bitwise; earlier and extremum-centred (x_inj −20.751 mm, S 0.95) candidates checked.
+
+237. [**Milestone 237 — F4: Signed and Physical Associations**](237_f4_associations.md)
+    - Post-kick centroid amplitude organises capture for both kickers; NKM-specific signed offset term; zero-capture 51 % vs 10 %; angle jitter costs the dipole as much as the NKM.

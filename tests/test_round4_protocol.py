@@ -72,3 +72,24 @@ def test_point_candidates_recorded():
 def pytest_approx(value, tol):
     import pytest
     return pytest.approx(value, abs=tol)
+
+
+def test_post_kick_amplitude_is_matched_for_an_error_free_shot():
+    """F4 predictor: with every error zero, the NKM centroid leaves the magnet with zero angle (matched root)."""
+    import copy
+    import analyze_round4_associations as f4
+    folder = ROOT / 'results/journal_campaign_04/e7_seed42'
+    if not (folder / 'checkpoint_inputs.json').exists():
+        return
+    job = copy.deepcopy(json.loads((folder / 'checkpoint_inputs.json').read_text())['jobs'][0])
+    job['sample'] = {k: ([0.0] * len(v) if isinstance(v, list) else 0.0) for k, v in job['sample'].items()}
+    realization = {'bts_exit': {'centroid_x_m': 0.0, 'centroid_xp_rad': 0.0, 'delta_mean': 0.0}, 'ring_error_seed': 5501}
+    out = f4.post_kick_amplitudes(job, realization, {5501: (16.27, -0.145)})
+    assert abs(out['fieldmap_3d']['xp_rad']) < 1e-9
+    assert abs(out['dipole']['xp_rad']) < 1e-6
+
+
+def test_holm_adjustment_is_monotone_and_bounded():
+    import analyze_round4_associations as f4
+    adj = f4.holm([0.01, 0.04, 0.03, 0.5])
+    assert np.allclose(adj, [0.04, 0.09, 0.09, 0.5])

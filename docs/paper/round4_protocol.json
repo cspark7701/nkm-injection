@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "declared 2026-10-19 before any round-4 (F2-F7) run",
+  "campaign": "results/journal_campaign_05",
+  "adopted_model": {
+    "description": "E7 configuration unchanged: native 6D tracking, exact filament NKM (640 slices), dipole control calibrated to the 3-D centroid response at each point, round-3 chamber with the flat in-magnet NKM chamber, ten E5 corrected rings drawn per realization, ideal static steering at the septum exit, scale timing model, 500 turns, 200 particles, 50 realizations, seed 42.",
+    "study_config_current": "results/journal_campaign_04/e6_operating_point/operating_point_selected_b2.json",
+    "optimization_summary": "backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json",
+    "chamber_config": "docs/paper/round3_chamber_config.json",
+    "corrected_ring_dir": "results/journal_campaign_04/e5_corrected_ring",
+    "kicker_models": ["fieldmap_3d", "dipole"],
+    "bts_lattice": "unchanged (no correctors added; companion BTS steering and dispersion-free alternatives are not imported)"
+  },
+  "current_point_decision": "The E6 point is retained until F3 is evaluated; any change is an explicit, recorded decision.",
+  "references": {
+    "full_zero_jitter": "results/journal_campaign_04/e7_jitter_0",
+    "full_budget": "results/journal_campaign_04/e7_seed42",
+    "identity": "Reused because no NKM-path source changed since E7 (only src/nkm_injection/bts_round3.py was added); verified by a bitwise reproduction of realization 0 of e7_jitter_0 (F1 stage 'reproduce')."
+  },
+  "budgets": {
+    "zero_jitter": "results/journal_campaign_04/e7_input_variants/jitter_0.json",
+    "full": "the E7 round-2 budget (e7_seed42 error_config)"
+  },
+  "error_classes": {
+    "bts_magnets": ["quad_k_rel_std", "dipole_b_rel_std", "quad_dx_std_m", "quad_dy_std_m", "quad_roll_std_rad"],
+    "beam_shape": ["beta_mismatch_rel_std", "emittance_rel_std", "espread_std"],
+    "mean_energy": ["energy_dp_p_std"],
+    "nkm_amplitude": ["nkm_scale_std", "nkm_timing_std_mrad"],
+    "nkm_orbit_alignment": ["nkm_dx_std_m", "ring_co_x_std_m"],
+    "septum": ["septum_x_std_m", "septum_strength_rel_std"],
+    "longitudinal_timing": ["rf_phase_std_rad", "arrival_time_std_s"],
+    "not_applied": ["ps_quantization_std", "quad_ds_std_m", "ring_beta_rel_std"],
+    "disabling_rule": "A disabled class has its standard deviations set to zero in the error configuration. Every draw is still taken from the same streams (normal(0, 0) consumes the same random number), so the other classes, the particle seeds and the ring identities are unchanged."
+  },
+  "f2_ablation": {
+    "jitter": "zero booster jitter in every ensemble",
+    "ensembles": ["all_off", "full (reference e7_jitter_0)", "each class alone (7)", "each class omitted (7)"],
+    "all_off": "every class disabled; corrected rings, chamber, steering and the nominal model retained",
+    "estimands": "per model mean capture; paired NKM-minus-dipole gap per ensemble; class effects alone (alone minus all-off) and omitted (full minus omitted) for NKM, dipole and the gap; non-additivity = (full minus all-off) minus the sum of alone effects",
+    "uncertainty": "paired realization bootstrap, 10000 resamples, seed 1729; pointwise 95 % percentile intervals; no multiplicity claim"
+  },
+  "f3_points": {
+    "current": "E6 point: x_inj -19.478 mm, S 0.95, inner matched 3-D root",
+    "earlier": "round-2 point: x_inj -19.5 mm, S 0.85 (centroid near the kick extremum)",
+    "extremum_centred": "S 0.95; x_inj chosen so that the matched 3-D centroid at the NKM centre (x_inj + 2.2625 m x') equals the straight-line kick-map extremum; inner matched root",
+    "checks": "matched root exists; septum clearance x_inj <= -18.478 mm (3 sigma_x of the design beam from the 2 mm blade); dipole control recalibrated at each point",
+    "ensembles": "zero-jitter and full budgets, seed 42, the same 50 realizations, particles and rings as E7",
+    "estimands": "per model mean capture and paired differences from the current point; NKM-minus-dipole gap per point",
+    "decision_rule": "The adopted point changes only if a candidate improves the full-budget NKM mean with a paired 95 % interval excluding zero and does not reduce the zero-jitter NKM mean by more than the 1-point declared margin; otherwise the current point is retained and the comparison is reported. These ensembles are evaluation, not a new optimisation; a change would be labelled as selected on the seed-42 population."
+  },
+  "f4_associations": {
+    "predictors": "signed sampled errors (booster x, x', energy, NKM dx minus ring closed orbit, NKM scale, septum x, septum strength, beta mismatch x) and the predicted exit-angle error of the centroid from the linearised kick slope",
+    "responses": "NKM capture, dipole capture and their paired difference, full-budget 150 realizations",
+    "method": "Spearman rank correlation, two-sided asymptotic p, Holm adjustment within each response; exploratory, not causal"
+  },
+  "seeds": {"realizations": 42, "beam_seed_rule": "42*100003 + sample_id + 1", "ring_rule": "rng([42, 5505, sample_id]) over the ten E5 rings", "bootstrap": 1729}
+}

@@ -17,7 +17,7 @@ Inputs:
 Consolidated 2026-10-16 from [Reviewer 1 round 4](reviewer1_round4_20261016_report.md),
 [R1D-01–08](reviewer1_round4_20261016_revision_tasks.md), and
 [Reviewer 2 round 4](reviewer2_report_round4.md), R2d-1–7.
-This is the current execution queue. **All F tasks are pending; do not execute yet.**
+This is the current execution queue. **Execution authorised 2026-10-19; the State column records progress.**
 The historical E1–E11 specification in the [round-3 plan](consolidated_revision_plan_round3.md) and its response remain the completed round-3 record.
 No fifth review round or completed revision response is implied.
 
@@ -31,7 +31,7 @@ Local access has been checked for all 235 artifact keys; no new access simulatio
 
 | ID | State | Work package and mapped requests | Dependencies | Required output / completion gate |
 | :--- | :--- | :--- | :--- | :--- |
-| F1 | Pending | Freeze adopted model, point candidates, physical error-class grouping, seeds/particles/ring identities and paired estimands. Supports R1D-01/02/03/05/08 and R2d-1/2/3/4. | Authorization | New protocol/source identity; current point retained until an explicit decision. All-off includes corrected rings and declared nominal model; disabled errors do not alter latent random draws. |
+| F1 | Done (milestone 236) | Freeze adopted model, point candidates, physical error-class grouping, seeds/particles/ring identities and paired estimands. Supports R1D-01/02/03/05/08 and R2d-1/2/3/4. | Authorization | New protocol/source identity; current point retained until an explicit decision. All-off includes corrected rings and declared nominal model; disabled errors do not alter latent random draws. |
 | F2 | Pending | Paired causal ablation at zero booster jitter: all-off, full zero-jitter budget, each class alone, each class omitted. R1D-01; R2d-1. | F1 | Per-model capture, paired NKM-minus-dipole effects and uncertainty; interactions acknowledged, no forced additive decomposition. Same 50 seed-42 draws, particles and rings; no inference from unpaired hierarchy-row subtraction. |
 | F3 | Pending | Paired current/earlier/extremum-centred point test at zero/full budget, feasible septum/root checks and recalibrated controls. R1D-02; R2d-2. | F1; F2 informs interpretation | Held-out comparisons and explicit adopted-point decision. If reselecting: declare error-inclusive objective, extend feasible binding bounds, separate training/validation and retain boundary fractions. Honest limited-scope retention is permitted. |
 | F4 | Pending | Signed/physical associations for both models and their paired difference; zero-capture/conditional summaries, jitter rows and interval definitions. R1D-05/07; R2d-4/7. | F1; F2/F3 for final narrative | Predictors/signs, multiplicity scope, denominators and bootstrap units recorded. Correlation cannot substitute for F2. A central 95% lower endpoint is labelled conservative if used for a one-sided test. |

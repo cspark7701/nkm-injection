@@ -676,3 +676,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 235. [**Milestone 235 — Round-4 Plan Split**](235_round4_plan_split.md)
     - F1–F9 moved from the round-3 plan into `consolidated_revision_plan_round4.md`; stub keeps old anchors; working links updated; review records untouched.
+
+236. [**Milestone 236 — F1: Round-4 Protocol**](236_f1_round4_protocol.md)
+    - Protocol, seven error classes and the F3 decision rule declared; E7 realization 0 reproduced bitwise; earlier and extremum-centred (x_inj −20.751 mm, S 0.95) candidates checked.

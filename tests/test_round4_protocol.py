@@ -93,3 +93,15 @@ def test_holm_adjustment_is_monotone_and_bounded():
     import analyze_round4_associations as f4
     adj = f4.holm([0.01, 0.04, 0.03, 0.5])
     assert np.allclose(adj, [0.04, 0.09, 0.09, 0.5])
+
+
+def test_dispersion_budget_and_production_accuracy():
+    """F6: septum dispersion terms and sliced-map accuracy on the production trajectory (current point)."""
+    import analyze_round4_dispersion_scope as f6
+    from nkm_injection.injection_study import InjectionStudyConfig
+    cfg = InjectionStudyConfig.load(ROOT / r4.PROTOCOL['adopted_model']['study_config_current'])
+    b = f6.dispersion_budget(cfg)
+    assert abs(b['dispersive_divergence_rad'] - 0.047472 * 0.00106) < 1e-12
+    assert abs(b['shot_angle_rad'] - 4.7472e-5) < 1e-12
+    acc = f6.accuracy(cfg)
+    assert abs(acc['sliced_minus_3d'][1]) < 1e-6 < abs(acc['thin_minus_3d'][1])

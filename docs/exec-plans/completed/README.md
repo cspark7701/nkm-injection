@@ -682,3 +682,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 237. [**Milestone 237 — F4: Signed and Physical Associations**](237_f4_associations.md)
     - Post-kick centroid amplitude organises capture for both kickers; NKM-specific signed offset term; zero-capture 51 % vs 10 %; angle jitter costs the dipole as much as the NKM.
+
+238. [**Milestone 238 — F6: Septum Dispersion and Accuracy Scope**](238_f6_dispersion_scope.md)
+    - Septum dispersion budget (50 of 76 µrad divergence dispersive); η fit labelled synthetic; production thin-map error 161 µrad at the current point (3.7× allowance), 35–47 µrad near the extremum; sliced map < 1e-7 rad.

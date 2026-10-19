@@ -691,3 +691,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 240. [**Milestone 240 — NRF Funding Acknowledgement**](240_nrf_acknowledgement.md)
     - NRF grant RS-2022-00143178 acknowledged in both papers (NKM acknowledgments; BTS Funding and Acknowledgments); PDFs rebuilt.
+
+241. [**Milestone 241 — F2: Error-Class Ablation**](241_f2_error_class_ablation.md)
+    - Paired zero-jitter ablation (15 ensembles): BTS magnet errors remove 39 points of NKM and 14.5 of dipole capture and explain most of the 28-point gap; all other classes ≤ 1.7 points; post hoc, the uncorrected vertical centroid (0.90 mm rms) tracks NKM capture.

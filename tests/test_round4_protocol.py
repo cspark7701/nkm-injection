@@ -126,3 +126,27 @@ def test_classifying_kicker_matches_production_kicker():
     assert np.array_equal(lost_a, lost_b) and lost_a.any()
     np.testing.assert_array_equal(np.nan_to_num(a, nan=9.0), np.nan_to_num(b, nan=9.0))
     assert sum(f5.RECORDS[-1]['magnet_reasons'].values()) == int(lost_a.sum())
+
+
+def test_ablation_estimands_and_pairing_guard():
+    """F2: alone/omitted effects and non-additivity on synthetic paired ensembles; unpaired ensembles are rejected."""
+    import pytest
+    import analyze_round4_ablation as f2
+
+    def ens(nkm, dip, seeds=(1, 2, 3)):
+        return {i: {'beam_seed': s, 'ring_error_seed': 5501, 'models': {'fieldmap_3d': {'capture_fraction': nkm},
+                                                                         'dipole': {'capture_fraction': dip}}}
+                for i, s in enumerate(seeds)}
+    cls = f2.classes()
+    ensembles = {'all_off': ens(.8, .85), 'full': ens(.4, .7)}
+    for c in cls:
+        ensembles[f'alone_{c}'] = ens(.4 if c == 'bts_magnets' else .8, .7 if c == 'bts_magnets' else .85)
+        ensembles[f'omit_{c}'] = ens(.8 if c == 'bts_magnets' else .4, .85 if c == 'bts_magnets' else .7)
+    out = f2.analyse(ensembles)
+    assert out['alone_effect']['bts_magnets']['fieldmap_3d']['mean'] == pytest.approx(-.4)
+    assert out['omitted_effect']['bts_magnets']['gap']['mean'] == pytest.approx(-.25)
+    assert out['omitted_effect']['septum']['dipole']['mean'] == pytest.approx(0.0)
+    assert out['non_additivity']['fieldmap_3d']['difference']['mean'] == pytest.approx(0.0)
+    ensembles['omit_septum'] = ens(.4, .7, seeds=(1, 2, 4))
+    with pytest.raises(ValueError):
+        f2.analyse(ensembles)

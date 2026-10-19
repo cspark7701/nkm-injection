@@ -3,7 +3,7 @@
 Updated 2026-10-16. Target: Physical Review Accelerators and Beams, Research Article.
 Latest assessments: [Reviewer 1 round 4](reviews/reviewer1_round4_20261016_report.md) and
 [Reviewer 2 round 4](reviews/reviewer2_report_round4.md). Both request major revision.
-[Current pending queue: F1–F9](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+[Current pending queue: F1–F9](reviews/consolidated_revision_plan_round4.md).
 No scientific revision tasks are executed by this status update; no submission or acceptance is recorded.
 
 ## Completed preparation

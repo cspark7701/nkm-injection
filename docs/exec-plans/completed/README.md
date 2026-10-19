@@ -673,3 +673,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 235. [**Milestone 235 — Reviewer 1 round 4 and current revision planning**](235_reviewer1_round4_and_revision_status.md)
     - Records focused major revision, consolidates both round-4 reports into pending F1–F9 under the round-3 plan and refreshes stale status documents without executing scientific tasks.
+
+235. [**Milestone 235 — Round-4 Plan Split**](235_round4_plan_split.md)
+    - F1–F9 moved from the round-3 plan into `consolidated_revision_plan_round4.md`; stub keeps old anchors; working links updated; review records untouched.

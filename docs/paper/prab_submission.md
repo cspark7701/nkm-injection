@@ -1,6 +1,6 @@
 # PRAB manuscript formats and submission metadata
 
-Updated 2026-10-16. D15 completed for **Physical Review Accelerators and Beams (PRAB)** at the author's request; E1–E11 subsequently completed the round-3 revision. Both round-4 reviews now request focused further work; [F1–F9 remain pending](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript). The main draft is one column; the additional two-column PDF is a layout preview. Both use the same scientific text, bibliography, numerical macros and figures.
+Updated 2026-10-16. D15 completed for **Physical Review Accelerators and Beams (PRAB)** at the author's request; E1–E11 subsequently completed the round-3 revision. Both round-4 reviews now request focused further work; [F1–F9 remain pending](reviews/consolidated_revision_plan_round4.md). The main draft is one column; the additional two-column PDF is a layout preview. Both use the same scientific text, bibliography, numerical macros and figures.
 
 ## Manuscript entry points
 

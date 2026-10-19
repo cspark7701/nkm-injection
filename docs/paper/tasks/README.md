@@ -2,7 +2,7 @@
 
 Prepared: 2026-10-09. This is the historical initial preparation sequence, not the current execution queue.
 Status updated 2026-10-16: later C/D/E revision plans supersede this starting inventory; E1–E11 are executed.
-Current work is the [pending F1–F9 follow-up](../reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+Current work is the [pending F1–F9 follow-up](../reviews/consolidated_revision_plan_round4.md).
 The original task specifications below are retained for provenance.
 
 The present manuscript describes a technical framework and mixes historical

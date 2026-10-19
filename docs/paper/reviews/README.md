@@ -18,7 +18,8 @@ Consolidated execution order: [consolidated_revision_plan.md](consolidated_revis
 Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
 Round 3: [consolidated_revision_plan_round3.md](consolidated_revision_plan_round3.md) (tasks E1–E11, author inputs B1–B5).
 Round-3 response: [author_response_round3.md](author_response_round3.md) (E1–E11 complete; milestones 211–222).
-Current queue: [round-4 follow-up F1–F9 in the round-3 plan](consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript), all pending; no revision execution authorized by the 2026-10-16 review request.
+Round 4: [consolidated_revision_plan_round4.md](consolidated_revision_plan_round4.md) (tasks F1–F9; split from the round-3 plan on 2026-10-19).
+Current queue: [round-4 plan, F1–F9](consolidated_revision_plan_round4.md), all pending; no revision execution authorized by the 2026-10-16 review request.
 
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding

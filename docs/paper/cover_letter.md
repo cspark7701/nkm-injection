@@ -1,7 +1,7 @@
 # Cover letter (draft for author review — not sent)
 
 > Status 2026-10-16: hold this round-3 draft. Its causal attribution is challenged by both round-4 reviews.
-> Update it after [F2–F8](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript),
+> Update it after [F2–F8](reviews/consolidated_revision_plan_round4.md),
 > reconcile it in F9 and obtain author approval before sending. The draft below is retained; it is not a
 > completed response to the new reviews and no letter has been sent.
 

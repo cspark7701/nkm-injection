@@ -2,7 +2,7 @@
 
 Current status, 2026-10-16: round-2 commands below are historical; the round-3 section in this guide identifies
 the current campaign-04 evidence. E1–E11 are executed; both round-4 reviews request the
-[pending F1–F9 follow-up](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+[pending F1–F9 follow-up](reviews/consolidated_revision_plan_round4.md).
 All 235 selected round-3 artifact keys are locally hash-matching. The mixed round-2 pulse input remains a known
 open issue, not corrected by this documentation update. Preserve the existing frozen bundles.
 

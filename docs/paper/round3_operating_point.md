@@ -1,7 +1,7 @@
 # Round 3: operating point re-selected for the design beam (E6)
 
 > Status 2026-10-16: Selection/validation is complete for the no-injection-error objective. Robust optimality and a preference for a wider-window point remain untested; F3 will address the paired comparison.
-> See the [pending follow-up](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript).
+> See the [pending follow-up](reviews/consolidated_revision_plan_round4.md).
 
 **Why.** The round-2 point (x_inj = −19.50 mm, S = 0.85, x′ = 4.853 mrad) had been selected on the ideal ring with
 the 100 nm rad sensitivity beam and was never re-selected (Reviewer 2, round 3, M1).

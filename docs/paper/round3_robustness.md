@@ -4,7 +4,7 @@
 > NKM-specific deficit chiefly to booster angle jitter is challenged by both round-4 reviews: the paired
 > NKM–dipole gap is already 28.33 points without jitter and 28.79 points with full jitter (seed 42).
 > No individual non-jitter cause is established by this annotation. The original numerical records and
-> interpretation below are retained pending [F2/F8](reviews/consolidated_revision_plan_round3.md#round-4-follow-up-to-the-round-3-manuscript);
+> interpretation below are retained pending [F2/F8](reviews/consolidated_revision_plan_round4.md);
 > neither scientific revision has been executed.
 
 **Inputs.**

@@ -105,3 +105,24 @@ def test_dispersion_budget_and_production_accuracy():
     assert abs(b['shot_angle_rad'] - 4.7472e-5) < 1e-12
     acc = f6.accuracy(cfg)
     assert abs(acc['sliced_minus_3d'][1]) < 1e-6 < abs(acc['thin_minus_3d'][1])
+
+
+def test_classifying_kicker_matches_production_kicker():
+    """F5: the loss-classifying copy of FilamentNKMKicker.apply is physically identical to the production one."""
+    import run_round4_loss_locations as f5
+    from nkm_injection.injection_study import InjectionStudyConfig
+    from nkm_injection.wire_field import FilamentNKMKicker
+    cfg = InjectionStudyConfig.load(ROOT / r4.PROTOCOL['adopted_model']['study_config_current'])
+    rng = np.random.default_rng(3)
+    beam = np.zeros((6, 64))
+    beam[0] = cfg.injection_x_m + 2.2625 * cfg.injection_xp_rad + rng.normal(0, 3e-3, 64)
+    beam[1] = cfg.injection_xp_rad + rng.normal(0, 3e-4, 64)
+    beam[2] = rng.normal(0, 2.5e-3, 64)
+    kw = {'chamber_half_x_m': 0.016, 'chamber_half_y_m': 0.0038}
+    a, b = beam.copy(), beam.copy()
+    lost_a = FilamentNKMKicker(cfg, n_slices=160, **kw).apply(a, 0.0)
+    f5.RECORDS.clear()
+    lost_b = f5.ClassifyingKicker(cfg, n_slices=160, **kw).apply(b, 0.0)
+    assert np.array_equal(lost_a, lost_b) and lost_a.any()
+    np.testing.assert_array_equal(np.nan_to_num(a, nan=9.0), np.nan_to_num(b, nan=9.0))
+    assert sum(f5.RECORDS[-1]['magnet_reasons'].values()) == int(lost_a.sum())

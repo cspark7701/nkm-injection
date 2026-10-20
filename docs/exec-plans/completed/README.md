@@ -709,3 +709,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 246. [**Milestone 246 — F9: Round-4 Reconciliation**](246_f9_round4_reconciliation.md)
     - Round-4 response, claim rows F0–F9, point-identity check, all figures rebuilt with matplotlib 3.11.1, clean builds (33/17/7 pages), 757 tests pass, verified round-4 evidence bundle (SHA-256 dbe3a7a8…); author's scientific approval pending.
+
+247. [**Milestone 247 — BTS Availability Wording and Referee Attachment**](247_bts_availability_attachment.md)
+    - BTS paper cites the round-4 companion result (jitter once the vertical error is removed; vertical correction left to future work), final data-availability statement installed, verified 826-file referee attachment (SHA-256 92b1fb21…); author approval pending.

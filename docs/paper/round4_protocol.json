@@ -62,6 +62,13 @@
     "ensembles": {"f2v_xy_zero": "zero-jitter budget, paired with results/journal_campaign_04/e7_jitter_0", "f2v_xy_full": "full budget, paired with results/journal_campaign_04/e7_seed42"},
     "pairing": "same 50 seed-42 realizations, particles and corrected rings as the references",
     "estimands": "per model mean capture and zero-capture fraction; paired (xy minus x-only) changes for NKM, dipole and the NKM-minus-dipole gap; central 95 % realization bootstrap, 10000 resamples, seed 1729",
-    "role": "sensitivity only; the production x-only steering remains the headline model, and no capture gain is claimed for the line as built"
+    "role": "sensitivity only; the production x-only steering remains the headline model, and no capture gain is claimed for the line as built",
+    "jitter_components": {
+      "declared": "2026-10-20, after f2v_xy_zero/full and before these runs; author-approved",
+      "motivation": "with two-plane steering booster jitter costs the NKM 17.2 points more than the dipole; the position and angle components are not separated",
+      "ensembles": {"f2v_xy_x_only": "booster position jitter only (results/journal_campaign_04/e7_input_variants/jitter_x_only.json), paired with results/journal_campaign_04/e7_jitter_x_only",
+                    "f2v_xy_xp_only": "booster angle jitter only (results/journal_campaign_04/e7_input_variants/jitter_xp_only.json), paired with results/journal_campaign_04/e7_jitter_xp_only"},
+      "estimands": "paired component costs relative to f2v_xy_zero for NKM, dipole and the gap, and the same costs under x-only steering for comparison; same bootstrap"
+    }
   }
 }

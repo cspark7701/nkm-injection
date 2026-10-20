@@ -12,6 +12,7 @@ Stages:
   ablation    all-off, each class alone and each class omitted, zero booster jitter            (F2)
   points_test earlier and extremum-centred points at zero-jitter and full budgets              (F3)
   vertical    two-plane ideal static steering at the current point, zero-jitter and full budgets (sensitivity)
+  vertical_jitter  the same with booster position-only and angle-only jitter                       (sensitivity)
 
 Units: m, rad; capture fractions.
 """
@@ -178,14 +179,23 @@ def vertical(workers):
         run_ensemble(f'f2v_xy_{label}', current, cfg, workers, extra=('--static-steering-planes', 'xy'))
 
 
+def vertical_jitter(workers):
+    """Declared extension: two-plane steering with booster position-only and angle-only jitter (E7 variants)."""
+    current = ROOT / PROTOCOL['adopted_model']['study_config_current']
+    for label in ('x_only', 'xp_only'):
+        cfg = json.loads((ROOT / f'results/journal_campaign_04/e7_input_variants/jitter_{label}.json').read_text())
+        run_ensemble(f'f2v_xy_{label}', current, cfg, workers, extra=('--static-steering-planes', 'xy'))
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument('--stage', required=True, choices=['reproduce', 'points', 'ablation', 'points_test', 'vertical'])
+    p.add_argument('--stage', required=True, choices=['reproduce', 'points', 'ablation', 'points_test', 'vertical', 'vertical_jitter'])
     p.add_argument('--workers', type=int, default=8)
     a = p.parse_args()
     CAMPAIGN.mkdir(parents=True, exist_ok=True)
     {'reproduce': reproduce, 'points': points, 'ablation': lambda: ablation(a.workers),
-     'points_test': lambda: points_test(a.workers), 'vertical': lambda: vertical(a.workers)}[a.stage]()
+     'points_test': lambda: points_test(a.workers), 'vertical': lambda: vertical(a.workers),
+     'vertical_jitter': lambda: vertical_jitter(a.workers)}[a.stage]()
 
 
 if __name__ == '__main__':

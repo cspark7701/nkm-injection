@@ -697,3 +697,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 242. [**Milestone 242 — F3: Operating-Point Test**](242_f3_operating_point_test.md)
     - Paired earlier/extremum-centred versus current point at zero and full budget: no candidate meets the declared rule, so the current point is retained; NKM capture is flat across points while the dipole control loses 17–23 points, so the NKM-dipole gap is point-dependent.
+
+243. [**Milestone 243 — Two-Plane Steering Sensitivity**](243_vertical_steering_sensitivity.md)
+    - Declared sensitivity with ideal static steering in both planes: at zero jitter NKM capture rises 40.1 → 76.6 % (gap −28.3 → −6.1); at full budget booster jitter becomes NKM-specific (gap −17.2 points), so the vertical error and the jitter overlap.

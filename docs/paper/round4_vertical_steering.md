@@ -62,3 +62,25 @@ share their realizations, particles and rings, so the jitter costs are paired.
   The abstract must state both, with the steering model named (F8). These runs do not separate the position and
   angle components of the jitter. Under x-only steering, the F4 jitter rows give position-only jitter as the more
   NKM-specific term (NKM −8.9 against dipole −2.6 points).
+
+## Jitter components under two-plane steering (declared extension, 8e8f628)
+
+**Runs.** `f2v_xy_x_only` (booster position jitter 0.5 mm only) and `f2v_xy_xp_only` (angle jitter 0.2 mrad only).
+- They are paired with `e7_jitter_x_only` and `e7_jitter_xp_only` on the same realizations.
+- Costs are relative to `f2v_xy_zero`; under x-only steering they are relative to `e7_jitter_0`.
+
+| Jitter | Steering | NKM | Dipole | Gap |
+| :--- | :--- | :--- | :--- | :--- |
+| Position only | x and y | −17.4 [−23.9, −11.2] | −2.6 [−5.8, −0.0] | −14.7 [−21.8, −8.2] |
+| Angle only | x and y | −33.7 [−43.7, −24.3] | −20.5 [−29.4, −12.3] | −13.2 [−21.2, −5.8] |
+| Position only | x only (production) | −8.9 [−13.6, −4.6] | −2.6 [−5.4, −0.1] | −6.3 [−12.0, −0.7] |
+| Angle only | x only (production) | −16.8 [−24.0, −10.2] | −18.0 [−25.8, −11.0] | +1.2 [−5.7, +8.1] |
+
+**Reading.**
+- With the vertical error removed, both components are NKM-specific by similar amounts (gap −14.7 and −13.2 points).
+- Position jitter acts almost on the NKM alone. Its kick depends on where the centroid crosses the magnet (steep
+  inner flank at the current point), so a position error leaves the kicker as an angle error. The uniform kick has
+  no such dependence.
+- Angle jitter costs both kickers and the NKM more.
+- Under production steering the angle component shows no NKM-specific cost, because the static vertical error
+  already removes the affected NKM shots.

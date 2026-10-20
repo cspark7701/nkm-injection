@@ -40,6 +40,13 @@ the kicker with a large betatron amplitude (F4: the post-kick amplitude organise
 dynamic-aperture erosion. Horizontal amplitude couples into the vertical plane within the first turn through the
 sextupoles and the uncorrected skew errors; these data do not separate the two routes.
 
+**Update after F2 and the two-plane sensitivity (2026-10-20).** F2 traced the NKM zero-capture events to the BTS magnet
+errors, which leave a 0.90 mm rms static vertical centroid at the septum exit that the horizontal-only steering does not
+remove. With ideal steering in both planes they vanish at zero jitter
+([round4_vertical_steering.md](round4_vertical_steering.md)). The first-turn vertical losses above are therefore
+mainly a direct vertical injection error, not horizontal-to-vertical coupling. The coupling reading remains for the
+slow losses on ring 5501.
+
 ## Ring 5501 without injection errors
 
 - **Losses.** NKM 29.8 % and dipole 33.2 % capture. The losses are almost all vertical (333/351 and 327/334) and

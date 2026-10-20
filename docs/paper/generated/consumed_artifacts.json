@@ -280,6 +280,34 @@
     "round2_errors_777": {
       "path": "results/journal_campaign_04/e7_seed777/capture_robustness_raw.json",
       "sha256": "e3e7a020d311b72f6a3a56d388ade905692ccf74651311eb89141c89043b39db"
+    },
+    "round4_ablation": {
+      "path": "results/journal_campaign_05/f2_ablation.json",
+      "sha256": "593b9dc61bc6ed4541d771c76583a0bb28483b95c5d25259a95c445d486c1752"
+    },
+    "round4_points_test": {
+      "path": "results/journal_campaign_05/f3_points.json",
+      "sha256": "4faacca8020e313e03d8ab951a9a0014416fd88c743e45bac63af97a146d0c8b"
+    },
+    "round4_associations": {
+      "path": "results/journal_campaign_05/f4_associations.json",
+      "sha256": "91185292b5015d879969081ee3b060764e8bd68c140cdb0f3a83f49ad596f547"
+    },
+    "round4_loss_locations": {
+      "path": "results/journal_campaign_05/f5_loss_locations.json",
+      "sha256": "66133c382a7d46650cd8dbde510c6fd331433503f0f51d38c4c2dd414e12b51a"
+    },
+    "round4_ring5501_chamber": {
+      "path": "results/journal_campaign_05/f5_ring5501_chamber_check.json",
+      "sha256": "73996a64350ac64c7502a9d7c9707cf9635900d4a6a83e668b5eea0a256e017a"
+    },
+    "round4_dispersion_scope": {
+      "path": "results/journal_campaign_05/f6_dispersion_scope.json",
+      "sha256": "6c38c8dd969f2f845fd0f276b1b045856985f407026b9b5c8a43adcf806b854c"
+    },
+    "round4_vertical_steering": {
+      "path": "results/journal_campaign_05/f2v_vertical_sensitivity.json",
+      "sha256": "930032f394d0487fdde341b669681846f47623337bbd70e4cca5b14c5d94966e"
     }
   }
 }

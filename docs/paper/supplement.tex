@@ -15,7 +15,7 @@
 \title{Supplemental Material: Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light Source design lattice}
 \author{Chong Shik Park}
 \affiliation{Department of Accelerator Science and Center for Accelerator Research, Korea University, Sejong 30019, Republic of Korea}
-\date{October 13, 2026}
+\date{October 20, 2026}
 \maketitle
 
 This supplement collects detailed tables, a larger-emittance sensitivity case and procedural definitions that support
@@ -48,7 +48,8 @@ Case & $y$ & $y'$ & $\delta$ & $|\Delta x|$ & $|\Delta p_x|$ & $|\Delta y|$ & $|
 
 Tables~\ref{tab:s-wiretol} and \ref{tab:s-looptol} give the first-order on-axis dipole and quadrupole sensitivities of
 the ideal geometry to each wire coordinate and to each loop current, and the single-error limits for a stored-beam
-centroid amplitude of $0.1\sigma$ in each plane. The main article reports the simultaneous-error consequence.
+centroid amplitude of $0.1\sigma$ in each plane, at the selected field scale $S=\RThreeOpTwoScale$ (the derivatives
+scale linearly with $S$). The main article reports the simultaneous-error consequence.
 
 \begin{table}[!tbp]
 \centering\footnotesize
@@ -116,13 +117,22 @@ leave-one-ring-out means it shows how much the result depends on the finite ring
 particles and error draws; the paired difference is bootstrapped over realizations (10\,000 resamples, seed 1729).
 
 \emph{Acceptable-loss test.} Whether a jitter level costs less than one percentage point is a one-sided
-noninferiority question: the lower 95\,\% bootstrap endpoint of the paired difference must lie above $-1$ percentage
-point. The one-point value is the declared analysis margin of the robustness analysis; it is not a design
+noninferiority question: the lower endpoint of the central 95\,\% bootstrap interval of the paired difference must
+lie above $-1$ percentage point. That endpoint is a conservative 97.5\,\% one-sided bound. The one-point value is the declared analysis margin of the robustness analysis; it is not a design
 specification, and an interval that crosses it is reported as inconclusive rather than as equivalence.
 
-\emph{Associations.} Partial Spearman rank correlations control the other sampled error magnitudes and the ring
-identity; two-sided probabilities from the asymptotic $t$ statistic are Holm-adjusted over the sampled-error
-hypotheses. They describe associations within the sampled model, not causal error rankings.
+\emph{Associations.} The round-4 analysis enters signed errors with their signs (booster position, angle and energy,
+NKM-to-orbit offset, NKM scale, septum position and strength, $\beta$ mismatch) and a physically constructed predictor:
+the horizontal betatron amplitude of the centroid just after each kicker, computed from each realization's errors with
+the drawn ring's Twiss at the NKM. Spearman rank correlations with the NKM capture, the dipole capture and their paired
+difference over the 150 full-budget realizations carry two-sided asymptotic probabilities, Holm-adjusted within each
+response over the eleven predictors. They describe associations within the sampled model, not causal error rankings;
+the attribution uses the paired ablation of the main article.
+
+\emph{Ablation.} Each error class is disabled by setting its standard deviations to zero. Its draws are still taken
+from the same random streams, so every other error, the particle seeds and the ring identities are unchanged. Alone
+and omitted effects, and the non-additivity (full minus all-off, minus the sum of alone effects), are bootstrapped
+over the 50 paired realizations.
 
 \section{Procedures}
 \label{sec:s-procedures}

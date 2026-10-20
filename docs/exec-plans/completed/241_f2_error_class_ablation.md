@@ -15,7 +15,7 @@ checkpoint input/code signature. The worker count does not enter the results.
 
 **Results** (NKM / dipole, points):
 - All-off: 79.5 / 84.5. Full zero-jitter budget: 40.1 / 68.5.
-- BTS magnet errors alone: −39.2 / −14.5, gap −24.7; when omitted: −36.4 / −14.1. Every other class is ≤ 1.7 points
+- BTS magnet errors alone: −39.2 / −14.5, gap −24.7; when omitted: −36.4 / −14.1. Every other class is ≤ 1.6 points
   either way.
 - Non-additivity: +3.5 (NKM), +0.2 (dipole).
 - About 5 points of the 28-point gap are already present at all-off.

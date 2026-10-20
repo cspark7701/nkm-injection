@@ -19,15 +19,16 @@ import copy
 from dataclasses import replace
 import json
 from pathlib import Path
-import sys
 
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'scripts'))
-import run_capture_robustness as rc  # noqa: E402
-from nkm_injection import injection_study as inj  # noqa: E402
-from nkm_injection import wire_field  # noqa: E402
+try:  # run as scripts/run_round4_loss_locations.py
+    import run_capture_robustness as rc
+except ModuleNotFoundError:  # imported as scripts.run_round4_loss_locations
+    from scripts import run_capture_robustness as rc
+from nkm_injection import injection_study as inj
+from nkm_injection import wire_field
 
 E7 = ROOT / 'results/journal_campaign_04'
 RECORDS = []

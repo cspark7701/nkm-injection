@@ -37,6 +37,10 @@ _round2_spec = importlib.util.spec_from_file_location("round2_reporting", Path(_
 round2 = importlib.util.module_from_spec(_round2_spec)
 _round2_spec.loader.exec_module(round2)
 
+_round4_spec = importlib.util.spec_from_file_location("round4_reporting", Path(__file__).resolve().parent / "round4_reporting.py")
+round4 = importlib.util.module_from_spec(_round4_spec)
+_round4_spec.loader.exec_module(round4)
+
 from nkm_injection.injection_study import InjectionStudyConfig, KickModelEvaluator, wilson_interval  # noqa: E402
 from nkm_injection.kickmap import NKMKickMap2D  # noqa: E402
 from nkm_injection.wire_field import FilamentNKMField  # noqa: E402
@@ -67,6 +71,7 @@ class RevisionBuilder(bj.Builder):
     def final_window(self): round2.window(self)
     def final_validation(self): round2.validation(self)
     def final_robustness(self): round2.robustness(self)
+    def round4_results(self): round4.macros(self)
 
     def _json(self, key):
         return self.load(key)
@@ -1058,6 +1063,7 @@ STEPS["round3_synthesis"]="round3_synthesis"
 STEPS["round3_transparency"]="round3_transparency"
 STEPS.update({"final_parameters":"final_parameters", "final_window":"final_window",
               "final_validation":"final_validation", "final_robustness":"final_robustness"})
+STEPS["round4"]="round4_results"
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])

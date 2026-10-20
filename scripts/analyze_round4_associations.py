@@ -19,17 +19,15 @@ import argparse
 from dataclasses import replace
 import json
 from pathlib import Path
-import sys
 
 import numpy as np
 from scipy.stats import spearmanr
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'scripts'))
-from nkm_injection.chamber import ChamberProfile  # noqa: E402
-from nkm_injection.injection_study import InjectionStudyConfig  # noqa: E402
-from nkm_injection.injection_timing import apply_injection_shot_errors  # noqa: E402
-from nkm_injection.wire_field import CalibratedControl, FilamentNKMKicker  # noqa: E402
+from nkm_injection.chamber import ChamberProfile
+from nkm_injection.injection_study import InjectionStudyConfig
+from nkm_injection.injection_timing import apply_injection_shot_errors
+from nkm_injection.wire_field import CalibratedControl, FilamentNKMKicker
 
 E7 = ROOT / 'results/journal_campaign_04'
 LEVER = 2.0 + 0.2625

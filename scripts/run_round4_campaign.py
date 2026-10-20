@@ -29,7 +29,6 @@ import numpy as np
 from scipy.optimize import brentq, minimize_scalar
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'scripts'))
 PROTOCOL = json.loads((ROOT / 'docs/paper/round4_protocol.json').read_text())
 CAMPAIGN = ROOT / PROTOCOL['campaign']
 CLEARANCE_LIMIT_M = -0.018478063  # 3 sigma_x (E6) from the 2 mm blade's outer face
@@ -94,7 +93,10 @@ def run_ensemble(name, study_config, error_config, workers, extra=()):
 
 def reproduce():
     """Rerun realization 0 of e7_jitter_0 with the current code and compare it field by field."""
-    import run_capture_robustness as rc
+    try:
+        import run_capture_robustness as rc
+    except ModuleNotFoundError:  # imported as scripts.run_round4_campaign
+        from scripts import run_capture_robustness as rc
     ref_dir = ROOT / PROTOCOL['references']['full_zero_jitter']
     spec = json.loads((ref_dir / 'checkpoint_inputs.json').read_text())
     job = dict(next(j for j in spec['jobs'] if j['sample']['sample_id'] == 0))

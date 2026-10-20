@@ -175,5 +175,9 @@ sextupole correction.
 
 ## Round-4 frozen attachment
 
-`results/journal_campaign_05/round4_evidence_bundle.tar.gz`: built from the F9 source commit and verified (see
-milestone 246 for its SHA-256 and inventory). It is git-ignored; no DOI or upload.
+`results/journal_campaign_05/round4_evidence_bundle.tar.gz`: 20.1 MB, SHA-256
+`dbe3a7a82f138c9709a14950ca45cdd678033a71de03e55b1ca3dde02c9dab67`.
+- Built from commit `8215a48` with `uncommitted: false`; 250 artifacts and 258 inventoried files.
+- `--verify` rebuilt the macros from the archived source on the bundled evidence alone, byte-identical.
+- `sha256sum -c SHA256SUMS` passes for all 258 entries.
+- It is git-ignored; no DOI or upload.

@@ -149,3 +149,40 @@ The numerical round-3 studies are rerun with these drivers, in this order:
 
 Their method notes are `round3_*.md`. The round-3 bundle location, archive hash and verification outcome are
 recorded in milestone 222.
+
+## Round 4 (campaign 05)
+
+The active selection is `revision_manifest_round4.json`, written by `scripts/make_round4_manifest.py`. It carries:
+- the round-3 manifest;
+- the campaign-05 artifacts (`round4_*` keys);
+- the pulse and transparency builder keys re-pointed to the current-point (S = 0.95) recomputations, with the S = 0.85
+  originals kept as `historical_*`.
+
+The builder rechecks every hash and the operating-point identity of the re-pointed artifacts. Round-4 macros come
+from `scripts/round4_reporting.py` (builder step `round4`). All figures are built with matplotlib 3.11.1 in the conda
+environment used for campaign 05 (numpy 2.4.6, accelerator-toolbox 0.7.2.dev).
+
+```bash
+python scripts/make_round4_manifest.py --require-all --output docs/paper/revision_manifest_round4.json
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg python scripts/build_revision_figures.py \
+  --manifest docs/paper/revision_manifest_round4.json --output-dir results/<new> --install-dir docs/paper/generated
+python scripts/build_submission_package.py --output-dir results/<new> --install-pdf
+python scripts/build_submission_package.py --layout two-column --output-dir results/<new2> --install-pdf
+python scripts/build_evidence_bundle.py --manifest docs/paper/revision_manifest_round4.json --builder revision \
+  --verify --output-dir results/journal_campaign_05/round4_evidence_bundle
+```
+
+The round-4 studies follow `docs/paper/round4_protocol.json` and are rerun in this order:
+1. `run_round4_campaign.py --stage reproduce`, then `--stage points` (F1);
+2. `run_round4_campaign.py --stage ablation`, then `analyze_round4_ablation.py` (F2);
+3. `run_round4_campaign.py --stage points_test`, then `analyze_round4_points.py` (F3);
+4. `analyze_round4_associations.py` (F4), `run_round4_loss_locations.py` (F5) and
+   `analyze_round4_dispersion_scope.py` (F6);
+5. `run_round4_campaign.py --stage vertical` and `--stage vertical_jitter`, then `analyze_round4_vertical.py`
+   (two-plane sensitivity);
+6. the F7 recomputations at the current point (`analyze_round2_pulse.py`, `analyze_round2_transparency.py`,
+   `analyze_round3_transparency.py`, `analyze_transparency_3d.py`, `track_stored_beam_3d.py`; arguments in
+   `round4_pulse_transparency.md`).
+
+Their method notes are `round4_*.md`. The round-4 bundle location, archive hash and verification outcome are recorded
+in milestone 246.

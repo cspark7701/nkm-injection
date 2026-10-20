@@ -11,7 +11,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
 | [Reviewer 1, round 3](reviewer1_round3_20261012_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](reviewer1_round3_20261012_revision_tasks.md) |
 | [Reviewer 2, round 3](reviewer2_report_round3.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
-| [Reviewer 1, round 4](reviewer1_round4_20261016_report.md), 2026-10-16 | Focused major revision; no acceptance in present form | [8 pending R1D tasks](reviewer1_round4_20261016_revision_tasks.md) |
+| [Reviewer 1, round 4](reviewer1_round4_20261016_report.md), 2026-10-16 | Focused major revision; no acceptance in present form | [8 R1D tasks](reviewer1_round4_20261016_revision_tasks.md), addressed in the round-4 response |
 | [Reviewer 2, round 4](reviewer2_report_round4.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
 
 Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
@@ -19,7 +19,7 @@ Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round
 Round 3: [consolidated_revision_plan_round3.md](consolidated_revision_plan_round3.md) (tasks E1–E11, author inputs B1–B5).
 Round-3 response: [author_response_round3.md](author_response_round3.md) (E1–E11 complete; milestones 211–222).
 Round 4: [consolidated_revision_plan_round4.md](consolidated_revision_plan_round4.md) (tasks F1–F9; split from the round-3 plan on 2026-10-19).
-Current queue: [round-4 plan, F1–F9](consolidated_revision_plan_round4.md), all pending; no revision execution authorized by the 2026-10-16 review request.
+Round-4 response: [author_response_round4.md](author_response_round4.md) (F1–F9 complete; milestones 236–246; author's scientific approval pending).
 
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding

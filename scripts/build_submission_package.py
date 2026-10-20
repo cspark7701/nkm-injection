@@ -19,11 +19,11 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 PAPER = REPO / "docs" / "paper"
-SUPPLEMENT = ["revision_manifest_round3.json", "revision_manifest_round2.json", "revision_manifest.json", "claim_evidence.csv",
+SUPPLEMENT = ["revision_manifest_round4.json", "round4_protocol.json", "revision_manifest_round3.json", "revision_manifest_round2.json", "revision_manifest.json", "claim_evidence.csv",
               "round2_final_checks.md", "round2_reproduction.md", "round2_comparison_audit.md",
               "bibliography_audit.md", "cover_letter.md", "generated/figure_provenance.csv",
               "generated/consumed_artifacts.json", "prab_submission.md", "submission_checklist.md"]
-for _response in ("reviews/author_response_round2.md", "reviews/author_response_round3.md"):
+for _response in ("reviews/author_response_round2.md", "reviews/author_response_round3.md", "reviews/author_response_round4.md"):
     if (PAPER / _response).is_file():
         SUPPLEMENT.append(_response)
 
@@ -143,8 +143,8 @@ def main(argv=None):
         "supplement": {r: sha256(sup / r) for r in SUPPLEMENT},
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "packages": pkgs,
                         "tex": subprocess.run(["pdflatex", "--version"], capture_output=True, text=True).stdout.splitlines()[0]},
-        "commands": ["python scripts/make_round3_manifest.py --require-all --output docs/paper/revision_manifest_round3.json",
-                     "python scripts/build_revision_figures.py --manifest docs/paper/revision_manifest_round3.json "
+        "commands": ["python scripts/make_round4_manifest.py --require-all --output docs/paper/revision_manifest_round4.json",
+                     "python scripts/build_revision_figures.py --manifest docs/paper/revision_manifest_round4.json "
                      "--output-dir <new> --install-dir docs/paper/generated",
                      f"python scripts/build_submission_package.py --layout {a.layout} --output-dir <new>{' --install-pdf' if a.install_pdf else ''}"],
     }

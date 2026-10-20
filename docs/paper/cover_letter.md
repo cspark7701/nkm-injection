@@ -1,9 +1,7 @@
 # Cover letter (draft for author review — not sent)
 
-> Status 2026-10-16: hold this round-3 draft. Its causal attribution is challenged by both round-4 reviews.
-> Update it after [F2–F8](reviews/consolidated_revision_plan_round4.md),
-> reconcile it in F9 and obtain author approval before sending. The draft below is retained; it is not a
-> completed response to the new reviews and no letter has been sent.
+> Status 2026-10-20: updated to the round-4 results (F2–F8, reconciled in F9). The author's scientific approval of
+> the revised attribution is pending; no letter has been sent.
 
 Dear Editors of Physical Review Accelerators and Beams,
 
@@ -25,14 +23,17 @@ The capture studies use the design booster beam, a declared chamber with a flat
 vacuum chamber inside the magnet, ten orbit-, optics- and tune-corrected rings and an
 operating point selected on them. Nominal capture is 98.4 % on the ideal ring and
 78.0 % on average over the corrected rings. Under the assumed joint machine and shot
-errors it falls to 16.1 %, against 44.1 % for an equally strong uniform kick; the
-analysis attributes the difference to injection angle errors acting on the kicker's
-narrow angular window. Transparency is shown to require compensation of the static
+errors it falls to 16.1 %, against 44.1 % for an equally strong uniform kick. A paired
+error-class ablation attributes the NKM-specific loss without booster jitter to
+transfer-line magnet errors, which leave a static vertical injection error that the
+modelled horizontal-only steering does not remove. With ideal two-plane steering, a
+declared sensitivity, booster position and angle jitter become the NKM-specific loss.
+The size of the deficit also depends on the operating point. Transparency is shown to require compensation of the static
 residual of a realistically built magnet, and septum leakage must be held near
 0.07 G at the stored orbit. These are conditional simulation results, without a
 commissioned-efficiency or system-transparency claim.
 
-A point-by-point response to three rounds of pre-submission assessment documents
+A point-by-point response to four rounds of pre-submission assessment documents
 the changes, with a Supplemental Material for detailed tables and methods. The numerical
 claims are linked to hashed artifacts and a frozen local evidence bundle prepared
 as a referee attachment, including committed source and verified figure/macro
@@ -52,6 +53,6 @@ Korea University, Sejong 30019, Republic of Korea
 ---
 
 Author checks before sending: confirm exclusive submission, authorship,
-affiliation and funding; and supply the frozen round-3 evidence bundle. D15 targets PRAB using REVTeX
+affiliation and funding; and supply the frozen round-4 evidence bundle. D15 targets PRAB using REVTeX
 4.2, with a one-column primary draft and a separate two-column preview. No letter
 or submission has been sent by this workflow.

@@ -42,6 +42,20 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def point_identity(artifacts):
+    """Operating-point identity check: every current-point artifact must carry the selected point's injection
+    position and field scale (round3_operating_point), not only a matching hash. Returns the checked keys."""
+    ref = json.loads((REPO / artifacts["round3_operating_point"]).read_text())
+    checked = []
+    for key in OVERRIDES:
+        cfg = json.loads((REPO / artifacts[key]).read_text())["study_config"]
+        for name in ("injection_x_m", "field_scale"):
+            if abs(cfg[name] - ref[name]) > 1e-12:
+                raise SystemExit(f"point identity: {key} has {name}={cfg[name]}, selected point {ref[name]}")
+        checked.append(key)
+    return checked
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--output", type=Path, required=True)
@@ -65,12 +79,14 @@ def main(argv=None):
     for key, rel in artifacts.items():  # every recorded file must still match its recorded hash
         if sha256(REPO / rel) != digests[key]:
             raise SystemExit(f"hash mismatch: {key} -> {rel}")
+    checked = point_identity(artifacts)
     out = {"description": "Round-4 evidence: round-3 manifest plus campaign-05 artifacts (protocol, ablation, point "
                           "test, associations, loss locations, dispersion scope, two-plane steering sensitivity) and the "
                           "current-point pulse and transparency recomputations; S = 0.85 originals kept as historical_*",
            "artifacts": artifacts, "sha256": digests}
     a.output.write_text(json.dumps(out, indent=2) + "\n")
-    print(json.dumps({"recorded": len(artifacts), "round4": len(ROUND4), "overridden": len(OVERRIDES), "missing": missing}))
+    print(json.dumps({"recorded": len(artifacts), "round4": len(ROUND4), "overridden": len(OVERRIDES), "missing": missing,
+                      "point_identity_checked": checked}))
 
 
 if __name__ == "__main__":

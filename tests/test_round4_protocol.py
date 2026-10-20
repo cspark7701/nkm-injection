@@ -183,3 +183,16 @@ def test_round4_reporting_formats():
     assert r4r._sci(8.3e-8) == '$9\\times10^{-8}$'
     assert r4r._sci(9.6e-8) == '$1\\times10^{-7}$'
     assert r4r._interval({'mean': -0.172, 'ci95': [-0.254, -0.092]}) == '-17.2 [-25.4, -9.2]'
+
+
+def test_round4_manifest_point_identity_check():
+    """F9: the point-identity check accepts the selected point and rejects a historical (S = 0.85) artifact."""
+    import pytest
+    from scripts import make_round4_manifest as m4
+    path = ROOT / 'docs/paper/revision_manifest_round4.json'
+    if not path.exists():
+        return
+    art = json.loads(path.read_text())['artifacts']
+    assert set(m4.point_identity(art)) == set(m4.OVERRIDES)
+    with pytest.raises(SystemExit):
+        m4.point_identity({**art, 'round2_pulse': art['historical_round2_pulse']})

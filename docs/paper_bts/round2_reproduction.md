@@ -22,7 +22,7 @@ The inference command defaults to reconstruction of the selected archived campai
 
 `python scripts/export_bts_round2_assets.py` explicitly regenerates selected numerical tables and figures from installed summary exports and the selected spatial records. It does not overwrite source physics inputs. Exact stage source snapshots distinguish the original stage bytes from later CLI additions. `round2_identity.json` identifies the pre-review article and full original campaign; invalid shared-aperture outputs are retained separately and excluded from evidence claims.
 
-No public deposition or submission is implied by local reproduction. Funding and acknowledgments remain author inputs; competing interests are author-confirmed as none. Final scientific approval and referee delivery remain pending.
+No public deposition or submission is implied by local reproduction. Funding, acknowledgments and competing interests are supplied. The availability wording is final and the referee attachment is prepared (milestone 247); final scientific approval remains pending.
 
 ## Accelerator Toolbox figure rendering
 

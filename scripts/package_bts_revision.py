@@ -150,7 +150,7 @@ python -m pytest tests/test_bts_journal.py tests/test_bts_lattice.py tests/test_
 
 Never reuse an existing output directory. The historical 550000 observations are supplied, not regenerated from an unverified historical environment. Their distributions and intervals are numerically reconstructed. New stages can be rerun with source/environment identity recorded. Earlier exact stage driver/module/config snapshots are in `generating_source/`; current sources include the same numerical stages. All scientific inputs and raw outputs are in the attachment; no external personal result directory is needed.
 
-Manuscript publication hashes and selected artifact pointers are in docs/paper_bts/. Compare new results with the installed numerical summaries at the declared tolerances. Inspect the original report and point-by-point response there. Funding, competing interests, final author approval and actual reviewer delivery remain author actions. This local package is not a public deposition or journal acceptance.
+Manuscript publication hashes and selected artifact pointers are in docs/paper_bts/. Compare new results with the installed numerical summaries at the declared tolerances. Inspect the original report and point-by-point response there. This is the referee attachment named in the article's data-availability statement. Final author approval of the article is pending. This package is not a public deposition or journal acceptance.
 ''')
     files={str(path.relative_to(bundle)):sha256(path) for path in sorted(bundle.rglob('*')) if path.is_file()}
     (bundle/'SHA256.json').write_text(json.dumps(files,indent=2)+'\n')

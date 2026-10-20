@@ -462,9 +462,12 @@ injection. Removing the exit dispersion lowers the injected beam's divergence by
 quarter and lets the line put booster jitter where the septum blade does not see
 it, but the angle jitter, \BtsRThreeFreeBestJxpUrad\ microradians against
 \BtsRThreeRefJxpUrad\ for the reference, then arrives at the injection kicker. In the
-companion study the kicker's 80\% angular acceptance is 0.44 mrad, and booster angle
-jitter is the only significant driver of capture among the sampled errors; whether the trade favours the blade or the
-kicker must be decided with the ring, not within the line.
+companion study the kicker's 80\% angular acceptance is 0.44 mrad, and once the static
+vertical injection error left by transfer-line magnet errors is removed, booster position
+and angle jitter are the dominant kicker-specific capture losses. This line has no
+vertical correction; correcting that vertical error will be addressed in a future study.
+Whether the trade favours the blade or the kicker must be decided with the ring, not
+within the line.
 
 \subsection{Sensitivity to the assumed error levels}\label{sec:sensitivity}
 The 0.5 mrad rms quadrupole roll is large for a transfer line, and 0.1\% rms shot
@@ -539,10 +542,12 @@ interpretation and final article approval; final approval is pending.
 Anthropic Claude through Claude Code) was used for software, numerical execution,
 literature checking and manuscript drafting beyond copy editing, as in the companion
 NKM study. The author must validate and approve the final work.
-\paragraph{Data and code availability.} A local referee attachment supplies
-selected raw data, configurations, source snapshots, environment identities,
-hashes and reproduction commands. It has not been publicly deposited or sent
-to a journal; reviewer delivery and final availability wording remain author actions.
+\paragraph{Data and code availability.} The simulation code, configurations and
+analysis scripts are available at \url{https://github.com/cspark7701/nkm-injection}.
+The selected raw simulation data, exact generating-source snapshots, environment
+identities, SHA-256 hashes and reproduction commands are provided to the referees as a
+supplementary attachment and are available from the author on reasonable request.
+No public data deposit has been made.
 
 \appendix
 \section{Evidence and supplementary material}

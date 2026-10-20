@@ -20,10 +20,10 @@ No journal acceptance or submission is claimed. The round-two checklist items be
 
 ## Pending author actions
 
-- Funding/grants: author will supply later.
-- Acknowledgments: author will supply later.
-- Scientific interpretation, contribution/AI-assistance disclosure and final article approval.
-- Actual reviewer/journal delivery or explicitly authorized public deposit, with final availability wording matching access. Local preparation does not establish external access.
+- Funding/grants: supplied 2026-10-19 (NRF Grant No. RS-2022-00143178) and installed.
+- Acknowledgments: supplied 2026-10-19 and installed.
+- Scientific interpretation, contribution/AI-assistance disclosure and final article approval: pending.
+- Availability wording: final (2026-10-20). Referee attachment prepared and verified (milestone 247); upload it with the submission. No public deposit.
 - Confirm declarations in the journal's actual submission interface when submitting.
 
-Reviewer 1 R2-BTS-01–07 and Reviewer 2 R2B-01–07 are executed. R2-BTS-08 preparation is performed, but its author-input/approval/delivery acceptance conditions remain open. No push or journal submission performed. No acceptance probability or recommendation is inferred from these checks.
+Reviewer 1 R2-BTS-01–07 and Reviewer 2 R2B-01–07 are executed. R2-BTS-08 preparation is performed; its remaining condition is the author's scientific approval. No push or journal submission performed. No acceptance probability or recommendation is inferred from these checks.

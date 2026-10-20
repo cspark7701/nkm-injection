@@ -16,7 +16,7 @@ The original report and task register are unchanged historical records. This tab
 | R2-BTS-05 | Executed |Frozen settings and200 new machines,10.8 million particle transports |
 | R2-BTS-06 | Executed |Independent interval reconstruction and finite three-shot loss definition |
 | R2-BTS-07 | Executed |Ten-page article,three-page supplement,32-claim ledger and clean builds |
-| R2-BTS-08 | Prepared; author-dependent closure pending |No competing interests confirmed; funding/acknowledgments, scientific approval and referee delivery pending |
+| R2-BTS-08 | Prepared; closes with author approval | Competing interests, funding and acknowledgments supplied; final availability wording installed and referee attachment prepared (2026-10-20, milestone 247); scientific approval pending |
 
 The original campaign, all earlier reports and scientific source inputs are preserved. Invalid first hypothetical-aperture runs are retained and excluded; the targeted-aperture alias regression prevents their recurrence. Acceptance by a journal has not been established.
 

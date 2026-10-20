@@ -59,8 +59,8 @@ Seven tasks, R2B-01 to R2B-07, are included in the report.
 - a dispersion-free exit;
 - an error-level sensitivity study.
 
-The four-station study moved to the supplement. Funding, acknowledgments, final approval, the availability wording
-and referee delivery remain author actions. The Reviewer 2 report is preserved unchanged.
+The four-station study moved to the supplement. Funding and acknowledgments are installed (2026-10-19); the
+availability wording is final and the referee attachment prepared (2026-10-20). Final approval remains an author action. The Reviewer 2 report is preserved unchanged.
 
 At the author's instruction the BTS lattice is not changed: the round-3 study was rerun (milestone 234) without
 added corrector or monitor elements. Steering now uses horizontal trims of the existing dipoles, and the

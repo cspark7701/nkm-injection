@@ -1,5 +1,5 @@
 {
-  "manifest": "docs/paper/revision_manifest_round3.json",
+  "manifest": "docs/paper/revision_manifest_round4.json",
   "artifacts": {
     "backend_validation": {
       "path": "results/journal_campaign_01/backend_validation/backend_validation_summary.json",
@@ -58,12 +58,12 @@
       "sha256": "b21698d7a20cb281bc2b1fd03e25a830a4258359a09e1d6c38867c88b53589f6"
     },
     "c7_analytic": {
-      "path": "results/journal_campaign_02/c7_transparency/transparency_analytic.json",
-      "sha256": "b8a663ea40bfe6d1f06d617636848bb3e167b8b511eb8d6f671539438b188bb6"
+      "path": "results/journal_campaign_05/f7/f7_transparency_analytic.json",
+      "sha256": "5426a26e533ee3a873f96a3689184667f8aed6c7e5527a3f58a39e71e7a07109"
     },
     "round2_stored_tracked": {
-      "path": "results/journal_campaign_03/d9_stored_beam_end_turns.json",
-      "sha256": "d797790bdd66116902f3def56429bb473ae522f00382b692bbae0e35bb46f1f9"
+      "path": "results/journal_campaign_05/f7/f7_stored_beam_end_turns.json",
+      "sha256": "5658bc60a3a95c2d37a425f30f276be982943500f0872b6cc9a057b7a36ef559"
     },
     "c5_raw_42": {
       "path": "results/journal_campaign_02/c5_errors_seed42/capture_robustness_raw.json",
@@ -186,8 +186,8 @@
       "sha256": "a86b65e6e72010655f1488cd9ddc276e3038a04afda939d1407b201fca79ff13"
     },
     "round2_pulse": {
-      "path": "results/journal_campaign_03/d12_final_pulse.json",
-      "sha256": "a1f89a0865f34f668f48ca53a05b27e52180bac60e3ad707c4b509595182dc38"
+      "path": "results/journal_campaign_05/f7/f7_pulse.json",
+      "sha256": "d49c7ee99357203163795f62a58d35c0ef35fc4e1456f529aedd181a009a819a"
     },
     "round2_generality": {
       "path": "results/journal_campaign_03/d7_generality/generality_scaling.json",
@@ -206,8 +206,8 @@
       "sha256": "a5672bb85481124efafc834b4491de8bf34f64bcf5e25621fbea254b58a3e2a4"
     },
     "round2_transparency": {
-      "path": "results/journal_campaign_03/d9_transparency_resolved.json",
-      "sha256": "f393342005a823988935c6a22b69ce5a08db03f44e0c9c99601b4b7f4171f1b5"
+      "path": "results/journal_campaign_05/f7/f7_transparency_resolved.json",
+      "sha256": "fd841fca554c5ca4579f9690d7e1645b67c8ad67743554c70c445638f3939bd3"
     },
     "round2_chamber_ideal": {
       "path": "results/journal_campaign_04/e6_chamber_ideal/chamber_summary.json",
@@ -254,8 +254,8 @@
       "sha256": "6f16848f9b1438558bb4120ba8b17a79fac1b71c43dfa1e2bd5fdf3edd82586b"
     },
     "round3_transparency_mc": {
-      "path": "results/journal_campaign_04/e9_transparency_mc.json",
-      "sha256": "43c764ee9a923a1e00f532d7aacca4e3d62241fbc5ccbc3846081bc02ffee1f2"
+      "path": "results/journal_campaign_05/f7/f7_transparency_mc.json",
+      "sha256": "f6ba25a87ac8a2c94aa738581a99d28ee9e51a5a12fa442736e5b10511a6f6f3"
     },
     "round2_lattice_parameters": {
       "path": "results/journal_campaign_03/d12_lattice_parameters_final.json",

@@ -700,3 +700,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 243. [**Milestone 243 — Two-Plane Steering Sensitivity**](243_vertical_steering_sensitivity.md)
     - Declared sensitivity with ideal static steering in both planes: at zero jitter NKM capture rises 40.1 → 76.6 % (gap −28.3 → −6.1); at full budget booster jitter becomes NKM-specific (gap −17.2 points), so the vertical error and the jitter overlap.
+
+244. [**Milestone 244 — F7: Pulse and Transparency at the Current Point**](244_f7_pulse_transparency.md)
+    - Pulse and transparency recomputed at S = 0.95 with one allowance convention (0.044 mrad); pulse limits 5.76/5.33 µs keep the 5.3 µs example valid; a 0.2 mm offset now gives 0.11–0.12 σ; round-4 manifest re-points the pulse/transparency keys and keeps S = 0.85 as history.

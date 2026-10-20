@@ -150,3 +150,13 @@ def test_ablation_estimands_and_pairing_guard():
     ensembles['omit_septum'] = ens(.4, .7, seeds=(1, 2, 4))
     with pytest.raises(ValueError):
         f2.analyse(ensembles)
+
+
+def test_point_decision_rule():
+    """F3: a candidate replaces the current point only with a significant full-budget NKM gain and no zero-jitter loss
+    beyond the declared 1-point margin."""
+    import analyze_round4_points as f3
+    ci = lambda lo, hi: {'ci95': [lo, hi]}
+    assert f3.meets_rule(ci(0.01, 0.1), ci(-0.005, 0.02))
+    assert not f3.meets_rule(ci(-0.01, 0.1), ci(0.0, 0.02))
+    assert not f3.meets_rule(ci(0.01, 0.1), ci(-0.02, 0.02))

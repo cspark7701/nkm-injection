@@ -694,3 +694,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 241. [**Milestone 241 — F2: Error-Class Ablation**](241_f2_error_class_ablation.md)
     - Paired zero-jitter ablation (15 ensembles): BTS magnet errors remove 39 points of NKM and 14.5 of dipole capture and explain most of the 28-point gap; all other classes ≤ 1.7 points; post hoc, the uncorrected vertical centroid (0.90 mm rms) tracks NKM capture.
+
+242. [**Milestone 242 — F3: Operating-Point Test**](242_f3_operating_point_test.md)
+    - Paired earlier/extremum-centred versus current point at zero and full budget: no candidate meets the declared rule, so the current point is retained; NKM capture is flat across points while the dipole control loses 17–23 points, so the NKM-dipole gap is point-dependent.

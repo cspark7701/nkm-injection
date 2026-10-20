@@ -712,3 +712,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 247. [**Milestone 247 — BTS Availability Wording and Referee Attachment**](247_bts_availability_attachment.md)
     - BTS paper cites the round-4 companion result (jitter once the vertical error is removed; vertical correction left to future work), final data-availability statement installed, verified 826-file referee attachment (SHA-256 92b1fb21…); author approval pending.
+
+248. [**Milestone 248 — Clean-checkout round-four CI tests**](248_fix_clean_checkout_round4_ci.md)
+    - Reproduces seven remote failures caused by ignored campaign inputs and replaces those dependencies with temporary fixtures while preserving physics and manifest checks.

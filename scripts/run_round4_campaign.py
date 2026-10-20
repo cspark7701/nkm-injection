@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Round-4 (F1-F3) campaign driver: reproduction check, point candidates, error-class ablation and point test.
+"""Round-4 (F1-F3) campaign driver: reproduction check, point candidates, error-class ablation, point test and
+vertical-steering sensitivity.
 
 Everything follows ``docs/paper/round4_protocol.json``, declared before any run. Ensembles reuse the E7 command
 line (``run_capture_robustness.py``) with only the error configuration or the study configuration changed, so
@@ -10,6 +11,7 @@ Stages:
   points      earlier and extremum-centred point configurations with root and clearance checks (F1)
   ablation    all-off, each class alone and each class omitted, zero booster jitter            (F2)
   points_test earlier and extremum-centred points at zero-jitter and full budgets              (F3)
+  vertical    two-plane ideal static steering at the current point, zero-jitter and full budgets (sensitivity)
 
 Units: m, rad; capture fractions.
 """
@@ -70,7 +72,7 @@ def common_args(study_config):
             '--capture-threshold', '.8', '--resume']
 
 
-def run_ensemble(name, study_config, error_config, workers):
+def run_ensemble(name, study_config, error_config, workers, extra=()):
     out = CAMPAIGN / name
     if (out / 'capture_robustness_raw.json').exists():
         print('exists', name, flush=True)
@@ -83,7 +85,7 @@ def run_ensemble(name, study_config, error_config, workers):
     path.write_text(json.dumps(error_config, indent=2) + '\n')
     env = dict(os.environ, OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1', MPLBACKEND='Agg')
     args = [sys.executable, str(ROOT / 'scripts/run_capture_robustness.py'), *map(str, common_args(study_config)),
-            '--error-config', str(path), '--output-dir', str(out), '--workers', str(workers)]
+            '--error-config', str(path), '--output-dir', str(out), '--workers', str(workers), *extra]
     print('Running', name, flush=True)
     with (CAMPAIGN / f'{name}.log').open('a') as log:
         subprocess.run(args, env=env, stdout=log, stderr=subprocess.STDOUT, check=True, cwd=ROOT)
@@ -168,14 +170,22 @@ def points_test(workers):
             run_ensemble(f'f3_{point}_{label}', ROOT / pts[point]['config'], cfg, workers)
 
 
+def vertical(workers):
+    """Declared sensitivity: ideal static steering in both planes at the current point (round4_protocol.json)."""
+    zero, full = budgets()
+    current = ROOT / PROTOCOL['adopted_model']['study_config_current']
+    for label, cfg in (('zero', zero), ('full', full)):
+        run_ensemble(f'f2v_xy_{label}', current, cfg, workers, extra=('--static-steering-planes', 'xy'))
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument('--stage', required=True, choices=['reproduce', 'points', 'ablation', 'points_test'])
+    p.add_argument('--stage', required=True, choices=['reproduce', 'points', 'ablation', 'points_test', 'vertical'])
     p.add_argument('--workers', type=int, default=8)
     a = p.parse_args()
     CAMPAIGN.mkdir(parents=True, exist_ok=True)
     {'reproduce': reproduce, 'points': points, 'ablation': lambda: ablation(a.workers),
-     'points_test': lambda: points_test(a.workers)}[a.stage]()
+     'points_test': lambda: points_test(a.workers), 'vertical': lambda: vertical(a.workers)}[a.stage]()
 
 
 if __name__ == '__main__':

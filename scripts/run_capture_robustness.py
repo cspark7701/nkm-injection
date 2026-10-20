@@ -38,7 +38,7 @@ from nkm_injection.kickmap import NKMKickMap2D
 from nkm_injection.optimization_handoff import load_optimization_handoff
 from nkm_injection.bts_lattice import BTSConfig
 from nkm_injection.optics import compute_mismatch_metric
-from nkm_injection.steering import subtract_static_horizontal_reference
+from nkm_injection.steering import subtract_static_reference
 from nkm_injection.injection_timing import apply_injection_shot_errors
 from nkm_injection.chamber import ChamberProfile, apply_chamber
 from nkm_injection.ring_error_scenario import refresh_prepared_ring
@@ -75,6 +75,8 @@ def parse_args(argv=None):
     p.add_argument("--correct-static-orbit", action="store_true",
                    help="Ideal steering at the septum exit: remove the static trajectory of the perturbed BTS "
                         "(reference particle on the design orbit); booster centroid/energy jitter are kept")
+    p.add_argument("--static-steering-planes", choices=["x", "xy"], default="x",
+                   help="Planes removed by --correct-static-orbit: x (production) or x and y (round-4 sensitivity)")
     p.add_argument("--septum-angle-mrad", type=float, default=10.)
     p.add_argument("--rf-frequency-hz", type=float, default=499593472.8240743)
     p.add_argument("--pulse-duration-us", type=float, default=5.3)
@@ -139,7 +141,7 @@ def run_realization(job):
     static = None
     if job.get("correct_static_orbit"):
         ref = track_bts(lattice, np.zeros((6, 1)))  # static trajectory of the perturbed line (no jitter)
-        static = subtract_static_horizontal_reference(exit_beam, ref)
+        static = subtract_static_reference(exit_beam, ref, job.get("static_steering_planes", "x"))
     exit_mom = beam_moments(exit_beam)
     # timing error: additive dipole kick (legacy) or the field-scale change giving the same kick change for the
     # nominal injected centroid, whose kick magnitude equals the matched angle |x'_inj| (zero on the stored-beam axis)
@@ -256,6 +258,8 @@ def main(argv=None):
             "septum_angle_mrad": args.septum_angle_mrad, "rf_frequency_hz": args.rf_frequency_hz,
             "pulse_duration_us": args.pulse_duration_us}
     base["chamber"]=chamber
+    if args.static_steering_planes != "x":  # x-only jobs keep their earlier identity
+        base["static_steering_planes"]=args.static_steering_planes
     jobs = [{**base, "sample": s, "extra": e, "beam_seed": int(args.seed * 100003 + max(s["sample_id"], -1) + 1)}
             for s, e in zip(samples, extras)]
     if ring_seeds:
@@ -320,7 +324,9 @@ def main(argv=None):
             "error_config": err.to_dict(), "error_scale": args.error_scale, "optimization_source": sel.source,
             "input_sha256": input_hashes(root, (cfg.ring_source, cfg.kickmap_path)),
             "cli": {k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
-            "static_orbit_correction": "ideal steering at septum exit" if args.correct_static_orbit else None,
+            "static_orbit_correction": (f"ideal steering at septum exit, planes {args.static_steering_planes}"
+                                        if args.static_steering_planes != "x" else "ideal steering at septum exit")
+                                       if args.correct_static_orbit else None,
             "runtime_s": time.time() - t0, "out_of_scope_errors": ["quad_ds_std_m", "ps_quantization_std", "ring_beta_rel_std"],
             "resampling_unit": "error realization (cluster bootstrap); particle statistics within realizations"}
     meta["chamber"]=chamber

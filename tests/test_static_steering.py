@@ -19,3 +19,16 @@ def test_static_translation_preserves_jitter_spread_and_other_coordinates():
 def test_lost_reference_is_an_explicit_error():
     with pytest.raises(ValueError):
         subtract_static_horizontal_reference(np.zeros((6,2)),np.full((6,1),np.nan))
+
+
+def test_two_plane_steering_removes_vertical_static_only():
+    from nkm_injection.steering import subtract_static_reference
+    rng=np.random.default_rng(7)
+    shot=rng.normal(size=(6,20))*.001
+    static=np.array([.002,.0004,.0009,.00008,.0003,0.])[:,None]
+    beam=shot+static
+    assert subtract_static_reference(beam,static,'xy')==[.002,.0004,.0009,.00008]
+    assert np.allclose(beam[:4],shot[:4])
+    assert np.array_equal(beam[4:],(shot+static)[4:])
+    with pytest.raises(ValueError):
+        subtract_static_reference(beam,static,'y')

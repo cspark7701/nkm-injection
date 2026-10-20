@@ -53,5 +53,15 @@
     "responses": "NKM capture, dipole capture and their paired difference, full-budget 150 realizations",
     "method": "Spearman rank correlation, two-sided asymptotic p, Holm adjustment within each response; exploratory, not causal"
   },
-  "seeds": {"realizations": 42, "beam_seed_rule": "42*100003 + sample_id + 1", "ring_rule": "rng([42, 5505, sample_id]) over the ten E5 rings", "bootstrap": 1729}
+  "seeds": {"realizations": 42, "beam_seed_rule": "42*100003 + sample_id + 1", "ring_rule": "rng([42, 5505, sample_id]) over the ten E5 rings", "bootstrap": 1729},
+  "vertical_steering_sensitivity": {
+    "declared": "2026-10-20, after F2 and F3 and before any run of this sensitivity; author-approved",
+    "motivation": "post hoc: F2 found that BTS magnet errors leave a 0.90 mm / 77 urad rms vertical centroid at the septum exit, which the production horizontal-only ideal steering does not remove, and that NKM capture falls with |y| (Spearman -0.88)",
+    "change": "ideal static steering at the septum exit in both planes (x, p_x, y, p_y of the zero-input particle through the perturbed BTS; run_capture_robustness.py --static-steering-planes xy). No BTS lattice change: like the production horizontal steering it is an ideal downstream translation, not a magnet",
+    "point": "current (retained by F3)",
+    "ensembles": {"f2v_xy_zero": "zero-jitter budget, paired with results/journal_campaign_04/e7_jitter_0", "f2v_xy_full": "full budget, paired with results/journal_campaign_04/e7_seed42"},
+    "pairing": "same 50 seed-42 realizations, particles and corrected rings as the references",
+    "estimands": "per model mean capture and zero-capture fraction; paired (xy minus x-only) changes for NKM, dipole and the NKM-minus-dipole gap; central 95 % realization bootstrap, 10000 resamples, seed 1729",
+    "role": "sensitivity only; the production x-only steering remains the headline model, and no capture gain is claimed for the line as built"
+  }
 }

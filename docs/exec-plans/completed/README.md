@@ -742,3 +742,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 257. [**Milestone 257 — Make the BTS abstract qualitative, expand the review and add the layout**](257_bts_qualitative_abstract_literature_layout.md)
     - Remove abstract numbers, expand the primary-source literature comparison, add a shared-coordinate BTS magnet layout below Figure 3, and validate both builds, current assets and 14 relevant tests.
+
+258. [**Milestone 258 — Update the BTS manuscript keywords**](258_bts_manuscript_keywords.md)
+    - Set the requested beam dynamics, error analysis, Korea Light Source and transfer line keywords; rebuild the verified PDF without changing the scientific text.

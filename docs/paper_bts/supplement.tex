@@ -14,12 +14,12 @@
 \date{October 15, 2026}
 \begin{document}
 \maketitle
-This supplement preserves the original main-branch campaign and the earlier
-revision's four-station study (last section), which the article replaces by an
-element-wise aperture model. It distinguishes historical optical statistics from the
+This supplement presents the historical optical campaign and the
+four-station aperture study (last section), alongside the element-wise aperture
+model used in the article. It distinguishes historical optical statistics from the
 particle and loss comparisons of the article.
 Original reviewed assets and campaign records remain frozen; historical claims
-are interpreted with their original beam and modelling limitations.
+are interpreted with their original beam and modeling limitations.
 
 \section{Original matching and local response}
 The historical three-start replay reproduces one feasible success, one
@@ -126,7 +126,7 @@ station, verified by a regression test. No numerical failure record is silently
 counted as physical success.
 
 \section{Four-station model with hypothetical internal restrictions}
-This section preserves the earlier revision's study, in which apertures existed
+This section presents the four-station study, in which apertures are placed
 only at markers m1--m4. In that model the nominal minimum is fixed by the line's
 ends (Section 3.1 of the article), so positive results required the hypothetical
 internal restrictions below. The article replaces this model by element-wise
@@ -136,7 +136,7 @@ apertures; the numbers here are retained for traceability.
 All settings share entrance/target optics, quadrupole bounds and beam assumptions.
 Six exit residuals are scaled by $(\SI{0.05}{\metre},\SI{0.05}{\metre},0.01,0.01,
 \SI{0.002}{\metre},0.001)$. Nominal optimization imposes six residual equalities
-and horizontal peak beta $\le\SI{60}{\metre}$. Direct clearance uses a millimetre-scaled
+and horizontal peak beta $\le\SI{60}{\metre}$. Direct clearance uses a millimeter-scaled
 epigraph: maximize $t$ subject to $t\le c_u(s)$ at every station/plane.
 Two starts (reference and refined low beta) use 200-iteration budgets and
 $10^{-8}$ termination tolerance. All six searches converge; their iterations,
@@ -159,7 +159,7 @@ Settings are frozen before a new independently seeded test. Static errors are
 independent Gaussian quadrupole relative gradients \SI{0.1}{\percent}, x/y offsets \SI{100}{\micro\metre}, rolls \SI{0.5}{\milli\radian} and dipole relative fields \SI{0.05}{\percent}. Each of 200
 machines has three independent shots with \SI{5}{\percent} entrance beta fluctuations
 (alpha fixed), horizontal position RMS \SI{0.5}{\milli\metre}, angle RMS \SI{0.2}{\milli\radian} and centroid
-momentum RMS \SI{0.1}{\percent}. These error levels remain modelling assumptions. Static,
+momentum RMS \SI{0.1}{\percent}. These error levels remain modeling assumptions. Static,
 shot and particle seeds are 82002, 82003 and 82004, respectively. Each shot has
 2,000 untruncated Gaussian particles with the complete design-beam covariance;
 all nine regime/strategy combinations receive common errors and particle draws.
@@ -233,11 +233,11 @@ not a fitted gain in brightness or a new robustness estimate.
 \begin{figure}[htbp]\centering
 \includegraphics[width=\linewidth]{figures/phase_space.pdf}
 \caption{Nominal transverse phase-space distributions: $x$--$x'$ (top) and
-$y$--$y'$ (bottom), at the shared entrance (left), reference exit (centre)
+$y$--$y'$ (bottom), at the shared entrance (left), reference exit (center)
 and refined low-beta exit (right). Positions are in \si{\milli\metre} and geometric slopes
 in \si{\milli\radian}; axes share scales within each row. Blue points show all 20\,000
 tracked particles per panel. Black curves, drawn with Accelerator Toolbox's
-covariance plotting function, are sample-centred two-RMS covariance ellipses;
+covariance plotting function, are sample-centered two-RMS covariance ellipses;
 they are not aperture boundaries. Seed 83001; no machine errors or shot jitter.
 Both settings have zero sampled losses at the configured stations.}
 \label{fig:phase-space}\end{figure}

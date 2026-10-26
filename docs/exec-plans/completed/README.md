@@ -721,3 +721,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 250. [**Milestone 250 — Use siunitx for BTS quantities**](250_bts_si_unit_formatting.md)
     - Format explicit main/supplement quantities with siunitx, rebuild both PDFs through the layout gate and refresh verified asset hashes.
+
+251. [**Milestone 251 — Strengthen the BTS introduction and scientific presentation**](251_bts_introduction_editorial_revision.md)
+    - Develop the introduction and section roadmap, adopt American English, clarify dipole/lattice terminology, remove revision-oriented wording, and cite the companion manuscript as in preparation; rebuild both PDFs and verify asset hashes.

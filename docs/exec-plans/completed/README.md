@@ -727,3 +727,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 252. [**Milestone 252 — Clarify BTS methods, add accuracy tables and improve figures**](252_bts_methods_accuracy_and_figures.md)
     - Define quadrupole labels, use Courant–Snyder terminology, simplify numerical-method prose, add SLSQP and accuracy/convergence tables, and improve Figures 2–3 with validated regeneration; 26 relevant tests and both manuscript builds pass.
+
+253. [**Milestone 253 — Explain the BTS septum geometry and field treatment**](253_bts_septum_geometry_explanation.md)
+    - Distinguish the centroid-to-blade distance from thickness and reference-orbit offsets, state the dipole/aperture field model and inherited assumptions, and rebuild the verified main PDF.

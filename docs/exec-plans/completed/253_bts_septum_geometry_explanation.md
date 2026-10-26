@@ -1,0 +1,9 @@
+# Milestone 253 — Explain the BTS septum geometry and field treatment
+
+Completed: 2026-10-26 at the author's request to put the geometry explanation in the manuscript.
+
+Expanded the element-wise aperture subsection to distinguish the storage-ring reference coordinate X from the local BTS coordinate x. Specified the assumed stored-side blade face at -16 mm, 2 mm blade thickness, injected-side face at -18 mm, and nominal injected centroid at -19.478 mm. Added the explicit 1.478 mm centroid-to-blade distance equation and local-coordinate transformation. Distinguished this distance from blade thickness, reference-orbit offset and the five-sigma clearance; retained its approximate three-rms-plus-1-mm rationale.
+
+Explained that the injected beam traverses the main-field channel and is intentionally deflected. The simulation represents the septum bend with a dipole and the blade separately with an aperture; detailed spatial fringe and leakage distributions are not resolved. Clarified in the body, abstract, aperture-table caption and conclusions that the companion study provides inherited model assumptions, rather than independently verified hardware geometry. Numerical settings and simulation results are unchanged.
+
+Rebuilt the 14-page main PDF from final source in the new ignored `results/bts_septum_geometry_final_20261026/paper` directory. The existing layout/reference build gate passes. Checked blade-coordinate arithmetic with exact decimal values, equation references, whitespace, changed paths and the rendered geometry/table page. Installed the PDF and refreshed its source/PDF hashes; asset verification passes. Protected files, numerical exports, companion manuscript and supporting document remain unchanged. No simulation or unrelated pytest runs were needed. No push or external submission was performed.

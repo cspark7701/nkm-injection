@@ -43,7 +43,8 @@ fresh machines from \SI{2.30}{\percent} to \SI{0.69}{\percent} at \SI{13}{\perce
 vertical peak beta by \SI{45}{\percent} gives no resolved change, and the mean minimum clearance
 metric cannot resolve either result. A dispersion-free exit is feasible, widens the
 reachable interval and lowers the predicted loss a further 65-fold. Aperture
-dimensions other than the blade, and the error levels, are declared assumptions.
+dimensions, including the inherited blade geometry, and the error levels are
+declared modeling assumptions.
 \end{abstract}
 \noindent\textbf{Keywords:} transfer line; injection septum; beam loss; betatron phase
 advance; booster jitter; trajectory correction
@@ -199,13 +200,40 @@ Every element of the BTS line carries its own aperture
 (Table~\ref{tab:apertures}); no element is added, removed or subdivided, and AT
 checks each aperture at the element entrance. Interior envelopes are sampled for the
 nominal profile on an observation-only copy (four subdivisions per quadrupole, eight
-per bend or septum), which is never tracked. The only restriction with a source is the injection-septum
-blade. In the companion NKM study~\cite{ParkNKM2026}, the injected beam leaves the septum at
-$x=\SI{-19.478}{\milli\metre}$, with the stored-beam edge at $\SI{-16}{\milli\metre}$ and a \SI{2}{\milli\metre} blade, i.e.
-\SI{1.478}{\milli\metre} from the blade's outer face, chosen there as three rms sizes plus \SI{1}{\milli\metre}.
-We place the blade at $x=\SI{+1.478}{\milli\metre}$ in the injection septum and at the line end
-(marker m4), on the side facing the stored beam. All other dimensions are declared
-assumptions and are swept. Bend chambers are taken as curved: the sagitta of the
+per bend or septum), which is never tracked.
+
+The injection-septum blade separates the main-field channel traversed by the
+injected beam from the stored-beam region, where a small magnetic field is
+required. Its assumed geometry is inherited from the companion NKM
+study~\cite{ParkNKM2026}. Let $X$ denote the horizontal coordinate relative to the
+storage-ring reference orbit at the septum exit. The blade face toward the stored
+beam is at $X=\SI{-16}{\milli\metre}$ and its thickness is \SI{2}{\milli\metre},
+so the face toward the injected beam is at $X_b=\SI{-18}{\milli\metre}$.
+The nominal injected-beam centroid is at $X_{\rm inj}=\SI{-19.478}{\milli\metre}$,
+giving the centroid-to-blade distance
+\begin{equation}
+ d_b=X_b-X_{\rm inj}=\SI{1.478}{\milli\metre}.
+ \label{eq:blade-distance}
+\end{equation}
+For the configured beam, this distance is approximately three rms horizontal
+beam sizes plus \SI{1}{\milli\metre}. Thus $d_b$ is neither the blade thickness nor its distance from the storage-ring
+reference orbit. In the local BTS coordinate at the exit, $x=X-X_{\rm inj}$,
+the nominal injected beam is centered at $x=0$ and the blade face is at
+$x=+d_b$. This boundary is applied on the side facing the stored beam in the
+injection septum and at the line end (marker m4). The five-sigma clearance in
+Eq.~\ref{eq:clearance} additionally subtracts the projected beam envelope and
+includes any centroid displacement; it is distinct from $d_b$.
+
+The injected beam is intentionally deflected by the septum's main magnetic field
+while it travels through the injection channel. Proximity to the blade does not
+imply that the beam is in a field-free region. In the BTS model, the septum's
+bending field is represented by a dipole element, while the blade face is
+represented separately by the aperture boundary. Detailed spatial fringe-field
+and leakage-field distributions are not resolved. The inherited blade dimensions
+and offset are study assumptions rather than independently established hardware
+specifications; the remaining aperture dimensions are also assumed and swept.
+
+Bend chambers are taken as curved: the sagitta of the
 reference arc over its chord is \SI{\BtsRThreeSagittaBTwoMm}{\milli\metre} in b2 and
 \SI{\BtsRThreeSagittaBOneMm}{\milli\metre} in b1/b3, so a straight chamber would need that much
 extra width. Clearances (Eq.~\ref{eq:clearance}) are evaluated at every aperture,
@@ -213,9 +241,11 @@ with the projected halfwidth of a round aperture reduced by the other plane's
 centroid.
 
 \begin{table}[htbp]\centering
-\caption{Element-wise aperture model (halfwidths; for the injection septum, $a_x$ is
-the blade distance on the $+x$ side and the outer wall is at $\SI{-8.5}{\milli\metre}$). Only the
-blade position follows a source; all other values are assumptions.}\label{tab:apertures}
+\caption{Element-wise aperture model, reported as halfwidths. For the injection septum, $a_x$ is
+the nominal injected-centroid-to-blade distance on the $+x$ side, not the blade
+thickness or its offset from the storage-ring reference orbit. The outer wall is
+at $\SI{-8.5}{\milli\metre}$ in local BTS coordinates. The blade geometry is
+inherited from the companion NKM study; all dimensions are modeling assumptions.}\label{tab:apertures}
 \input{generated/round3_aperture_rows.tex}\end{table}
 
 \subsection{Errors, jitter and trajectory correction}\label{sec:steering}
@@ -575,7 +605,7 @@ within \SI{1}{\percent}, is smooth, and can be optimized directly. The phase-adv
 gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
 booster jitter lands, and compare with the restriction and the kicker acceptance.
 
-All aperture dimensions except the blade position, the choice of dipole trims and
+The aperture dimensions, including the inherited blade geometry, the choice of dipole trims and
 monitor points for steering, and the error levels are declared assumptions; sweeps and a
 sensitivity study bound their influence on these conclusions. The loss is heavy-tailed
 over machines and its population mean varies between independently seeded

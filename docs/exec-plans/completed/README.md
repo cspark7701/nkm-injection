@@ -733,3 +733,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 254. [**Milestone 254 — Simplify the BTS manuscript title**](254_bts_manuscript_title.md)
     - Retitle the article “Optical matching and beam loss in a booster-to-storage-ring transfer line,” update its README and rebuild the verified PDF without changing the scientific body.
+
+255. [**Milestone 255 — Identify Korea Light Source in the BTS title**](255_bts_korea_light_source_title.md)
+    - Add Korea Light Source to the manuscript title, synchronize its README and rebuild the verified PDF while preserving the scientific body.

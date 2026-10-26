@@ -12,8 +12,8 @@
   "status": "Round-3 (Reviewer 2) revision executed; author declarations and approval pending; no journal acceptance implied.",
   "final_source_checkpoint": "7eae106629f4fa9e7bc6f66ebd2b6b1db0fd2826",
   "final_assets_sha256": {
-    "paper.tex": "31bcb2682767850d6bce16d4fd48d8ff2ec164c3e52e02abe6d22c0198389112",
-    "paper.pdf": "de3d77b204ba030daeb8dca940a28a26077a20b6cf37bb926d48c5bcf4fbe28f",
+    "paper.tex": "022576e9b6e004bfdb354f845ee086c1e10ca81ddc582e73f4b3c435d10e7120",
+    "paper.pdf": "96e5879caed83f8db90ce73f70f1a3af6308723f0f3ecf9f93f8ae3643ab27a9",
     "paper.bib": "f2bfe5beb59526c81a9d628c97b22b9533a68892a1722bcaa2dce35991f55563",
     "supplement.tex": "a9826abfa913e111952ed097955e4421d7bb8f8c5fddffb3246820d7dc5b9892",
     "supplement.pdf": "691972dd24cc9dc0239fed36c3a47c02446125a20937648ae48c70965b5e8868",

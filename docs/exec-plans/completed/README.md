@@ -715,3 +715,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 248. [**Milestone 248 — Clean-checkout round-four CI tests**](248_fix_clean_checkout_round4_ci.md)
     - Reproduces seven remote failures caused by ignored campaign inputs and replaces those dependencies with temporary fixtures while preserving physics and manifest checks.
+
+249. [**Milestone 249 — Clarify the BTS abstract boundary conditions**](249_bts_abstract_boundary_wording.md)
+    - State the injection-optics requirement and qualify endpoint size invariance by fixed beam parameters and prescribed matching; rebuild the 12-page PDF and verify current asset hashes.

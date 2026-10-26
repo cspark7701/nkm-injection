@@ -88,10 +88,12 @@ The output includes `accuracy_checks.tex`, `spatial_resolution.tex` and their in
 
 The native AT figure renderer above adds grid lines to the reference/refined optics (Figure 2). If the ignored full campaign profiles are absent, it re-evaluates exact maps of the frozen strengths and checks their peaks against the tracked 64-subdivision summaries before comparing all native optics and plotted points. `at_plot_validation.json` identifies which path was used and records its sources.
 
-Render only the nominal clearance comparison (Figure 3), with separate line/marker styles and a difference panel:
+Render only the nominal clearance comparison (Figure 3), with separate line/marker styles, a difference panel and a native AT magnet layout aligned to the same path coordinate:
 
 ```bash
 python scripts/export_bts_round3_assets.py --clearance-figure-dir results/new_clearance_figure
 ```
 
 This command re-evaluates the frozen nominal settings and checks every aperture-family minimum against `generated/round3_apertures.json` at an absolute tolerance of 1e-10 m. It does not rerun optimization or error campaigns. Install `round3_clearance_profile.pdf` and `clearance_plot_validation.json` from that new directory into `docs/paper_bts/figures/`. All numerical seeds remain in the configurations and archived evidence, while the manuscript omits their displayed values. Rebuild in new directories and refresh current asset hashes after installation; the historical referee attachment remains a frozen earlier snapshot.
+
+The clearance-figure validation record also stores the layout length, element order and element entrance coordinates. Q1–Q3 in the layout identify the three quadrupole triplets; no magnet locations or numerical clearance results are changed by adding this panel.

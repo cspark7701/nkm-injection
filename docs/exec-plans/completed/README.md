@@ -739,3 +739,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 256. [**Milestone 256 — Use Booster-to-Storage in the BTS title**](256_bts_booster_to_storage_title.md)
     - Apply the requested Booster-to-Storage title wording, synchronize the current README and rebuild the verified PDF.
+
+257. [**Milestone 257 — Make the BTS abstract qualitative, expand the review and add the layout**](257_bts_qualitative_abstract_literature_layout.md)
+    - Remove abstract numbers, expand the primary-source literature comparison, add a shared-coordinate BTS magnet layout below Figure 3, and validate both builds, current assets and 14 relevant tests.

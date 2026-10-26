@@ -25,26 +25,25 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-A booster-to-storage-ring transfer line must transport the extracted booster beam
-while satisfying the optical requirements of storage-ring injection. For fixed beam
-parameters and prescribed entrance and exit optics, quadrupole rematching preserves
-the nominal beam sizes at both ends. We show for a
-\SI{21.8}{\metre}, \SI{4}{\giga\electronvolt} line of the Korea Light Source design that the limiting restriction is
-the injection-septum blade, \SI{1.48}{\milli\metre} from the injected beam in the geometry of a
-companion nonlinear-kicker study, and that its nominal clearance is independent of
-the quadrupole settings. What the optics do control is where booster shot jitter
-arrives: with matched ends the exit jitter depends only on the horizontal phase
-advance, which exchanges position jitter at the blade for angle jitter at the
-injection kicker. After trajectory correction, which reduces the loss from \SI{10}{\percent} to
-\SI{1.7}{\percent}, this jitter sets the remaining blade loss. A Gaussian loss model agrees with
-tracking within \SI{1}{\percent} and serves as a design objective. Matched solutions reach only a
-\SI{200}{\degree}--\SI{232}{\degree} phase-advance interval; a setting at its edge cuts the tracked loss on
-fresh machines from \SI{2.30}{\percent} to \SI{0.69}{\percent} at \SI{13}{\percent} more exit-angle jitter, whereas lowering the
-vertical peak beta by \SI{45}{\percent} gives no resolved change, and the mean minimum clearance
-metric cannot resolve either result. A dispersion-free exit is feasible, widens the
-reachable interval and lowers the predicted loss a further 65-fold. Aperture
-dimensions, including the inherited blade geometry, and the error levels are
-declared modeling assumptions.
+A booster-to-storage-ring transfer line must deliver the extracted booster beam
+while satisfying the optical requirements of storage-ring injection. This study
+examines the relation between optical matching, physical clearance, and beam loss
+in the Korea Light Source Booster-to-Storage line. For fixed beam parameters and
+prescribed endpoint optics, quadrupole rematching preserves nominal boundary
+beam sizes, and the injection-septum blade remains the limiting aperture in the
+assumed geometry. Static trajectory correction reduces loss, after which booster
+shot jitter governs the remaining blade interception. A Gaussian loss model,
+validated against particle tracking, identifies how the horizontal phase advance
+redistributes this jitter between exit position and angle. Reducing the interior
+vertical beta peak produces no resolved loss improvement, whereas a setting
+selected directly for loss reduction improves transmission on independent error
+realizations. A dispersion-free exit further reduces the predicted blade loss
+while increasing the angular jitter delivered to the injection kicker. These
+results distinguish nominal clearance from loss sensitivity and identify the exit
+optics and phase advance as coupled injection-design choices. The conclusions are
+conditional on the assumed aperture geometry and error budget; the
+dispersion-free result is analytical, and storage-ring capture is outside the
+scope of the study.
 \end{abstract}
 \noindent\textbf{Keywords:} transfer line; injection septum; beam loss; betatron phase
 advance; booster jitter; trajectory correction
@@ -63,19 +62,46 @@ design~\cite{Kim2025,Lee2024} provides the application considered here, with the
 injection geometry specified by a companion nonlinear-kicker magnet (NKM)
 study~\cite{ParkNKM2026}.
 
-Previous transfer line studies address optical matching, trajectory stability,
-and injection-region constraints through complementary approaches. The SLS 2.0
-study separates quadrupole-scan beam characterization from position and angle
-control and identifies septum restrictions~\cite{Kallestrup2025}. The ESRF--EBS
-transfer-line rematching includes injection-region fields and mechanical
-constraints~\cite{ESRF2018}, while the Sirius injection study distinguishes the
-injector stages and the effects of incoming beam size~\cite{Resende2022}.
-Pulsed-sextupole injection at MAX IV also connects the delivered beam distribution
-to storage-ring capture~\cite{Leemann2012}. These studies motivate treating the
-nominal optical match, clearance at a physical restriction, and sensitivity to
-incoming trajectory fluctuations as separate design criteria. In particular,
-a reduction in a beta function is useful for transmission only to the extent
-that it improves the beam distribution at a restriction that contributes to loss.
+Previous transfer line studies establish the importance of treating the
+accelerator interfaces and available geometry together. The HEPS high-energy
+transport-line design matches the injection-point lattice functions while
+accommodating the relative positions of the booster and storage ring, equipment
+clearances, and the selected injection scheme~\cite{Guo2017}. A subsequent HEPS
+study updates the transfer lines in response to the evolving accelerator layouts
+and optics~\cite{Guo2020}. For Diamond-II, the transfer lines are designed to
+preserve bunch properties with low loss while retaining diagnostic capability
+and flexibility for matching; the BTS modifications connect the new booster
+extraction geometry to the storage-ring septum~\cite{Martin2022}. The ESRF--EBS
+rematching similarly includes injection-region fields and mechanical
+constraints~\cite{ESRF2018}. These examples show why an optical target and the
+physical restrictions along the transport path must be specified together.
+
+Beam characterization and trajectory control address different parts of this
+matching problem. The SLS 2.0 transfer line includes a nondispersive section for
+quadrupole-scan measurements and a corrector configuration for separate control
+of injection position and angle~\cite{Kallestrup2025}. Its commissioning results
+connect beam characterization to downstream matching and trajectory
+stabilization. The Sirius injection study reports efficiencies separately for
+the injector stages and examines booster realignment, emittance exchange, and
+remaining reproducibility issues~\cite{Resende2022}. Separating these stages
+prevents a transfer-line improvement from being equated with the same change in
+storage-ring injection efficiency. It also motivates evaluating a nominally
+matched line under incoming beam fluctuations and residual trajectory errors,
+rather than relying on envelope plots alone.
+
+The requirements imposed by the injection device provide an additional design
+constraint. Pulsed-sextupole injection at MAX IV relates the incoming beam
+distribution to the nonlinear injection process~\cite{Leemann2012}. A recent TPS
+conference contribution proposes a new booster-to-storage-ring line for
+nonlinear-kicker injection and identifies existing-ring geometry, trajectory
+correction, and injected-beam characterization as design
+considerations~\cite{Luo2026}. This is a closely related transfer-line application;
+the link between transfer-line delivery and downstream nonlinear acceptance
+is therefore directly relevant to the present work. Together, these studies motivate distinguishing
+nominal optical matching, clearance at the limiting restriction, and sensitivity
+to the position and angle delivered to the injection system. The present study
+examines those distinctions within a fixed BTS model with explicit aperture
+and jitter assumptions.
 
 A common transfer-line design objective is to reduce the peak beta functions
 and thereby increase aperture margin. For fixed emittances, momentum spread,
@@ -425,10 +451,12 @@ vertical improvement also changes horizontal transport.}\label{fig:refined}\end{
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_clearance_profile.pdf}
 \caption{Nominal five-sigma clearance at every aperture of the element-wise line
-(logarithmic scale), horizontal (top) and vertical (middle). The reference uses
+(logarithmic scale), horizontal (top) and vertical (second panel). The reference uses
 solid blue lines with filled circles; refined low beta uses dashed orange lines
-with open squares. Lines connect sampled aperture observations. The bottom panel shows refined low beta minus reference in
-each plane. The settings coincide at both septa; their resolved differences
+with open squares. Lines connect sampled aperture observations. The third panel shows refined low beta minus reference in
+each plane, and the bottom panel shows the BTS magnet layout on the same path
+coordinate. Dipoles and septa are blue; quadrupoles are red. Q1--Q3 identify
+the quadrupole triplets. The settings coincide at both septa; their resolved differences
 occur where clearances exceed \SI{9}{\milli\metre}. Design beam, no errors.}\label{fig:profile}\end{figure}
 
 \subsection{Trajectory correction}\label{sec:steering-results}

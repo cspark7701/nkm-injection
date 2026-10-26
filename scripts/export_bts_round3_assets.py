@@ -40,8 +40,8 @@ def strip(data, keys):
 
 def render_clearance_profile(data, output):
     """Draw both settings visibly, including their difference [mm] at matched stations."""
-    fig, axes = plt.subplots(3, 1, figsize=(7, 6.1), sharex=True,
-                             gridspec_kw={'height_ratios': [1, 1, .8]})
+    fig, axes = plt.subplots(4, 1, figsize=(7, 7.1), sharex=True,
+                             gridspec_kw={'height_ratios': [1, 1, .8, .38]})
     profiles = {}
     styles = {'reference': dict(color='#2166ac', ls='-', marker='o', mfc='#2166ac', ms=3, lw=1.2),
               'low_beta': dict(color='#d66b00', ls='--', marker='s', mfc='none', ms=5, lw=1.3)}
@@ -72,13 +72,46 @@ def render_clearance_profile(data, output):
     axes[0].legend(fontsize=8, loc='upper left')
     axes[2].axhline(0, color='0.4', lw=.7)
     axes[2].set_ylabel('Low beta − reference [mm]')
-    axes[2].set_xlabel('Path coordinate s [m]')
+    axes[2].set_xlabel('')
     axes[2].grid(alpha=.3)
     axes[2].legend(fontsize=8, loc='upper left')
+    import at
+    from matplotlib.patches import Patch
+    from nkm_injection.bts_journal import lattice_for
+
+    lattice = lattice_for(data['designs']['reference']['strengths_m_minus2'])
+    layout_axis = axes[3]
+    synoptic = at.plot.plot_synopt(lattice, axes=layout_axis)
+    if isinstance(synoptic, tuple):
+        synoptic = synoptic[0]
+    synoptic.set_ylim(0, 3.2)
+    synoptic.set_title('')
+    layout_axis.set(ylim=(0, 1), yticks=[], ylabel='BTS layout', xlabel='Path coordinate s [m]')
+    positions = lattice.get_s_pos(range(len(lattice) + 1))
+    length = float(positions[-1])
+    layout_axis.set_xlim(-.12, length + .12)
+    layout_axis.spines[['left', 'right', 'top']].set_visible(False)
+    for i, elem in enumerate(lattice):
+        if elem.FamName in ('b1', 'b2', 'b3'):
+            layout_axis.text(positions[i] + elem.Length / 2, .8, elem.FamName,
+                             ha='center', va='center', fontsize=7)
+        elif elem.FamName in ('q12', 'q22', 'q32'):
+            layout_axis.text(positions[i] + elem.Length / 2, .8,
+                             'Q' + elem.FamName[1], ha='center', va='center', fontsize=7)
+    layout_axis.legend(handles=[Patch(facecolor=(.5, .5, 1), label='Dipoles / septa'),
+                               Patch(facecolor=(1, .5, .5), label='Quadrupoles')],
+                       loc='lower center', bbox_to_anchor=(.5, -.95), ncol=2, frameon=False, fontsize=7)
     fig.tight_layout()
+    layout_record = {'length_m': length, 'element_order': [e.FamName for e in lattice],
+                     's_in_m': positions[:-1].tolist(), 'label_note': 'Q1, Q2 and Q3 identify the three quadrupole triplets'}
+    for name in ('reference', 'low_beta'):
+        for stations, _ in profiles[name].values():
+            if any(r[2] < -1e-10 or r[2] > length + 1e-10 for r in stations):
+                raise ValueError('Clearance observations fall outside the shared layout coordinate')
     fig.savefig(output / 'round3_clearance_profile.pdf', metadata={'CreationDate': None, 'ModDate': None})
     fig.savefig(output / 'round3_clearance_profile.png', dpi=160)
     plt.close(fig)
+    return layout_record
 
 
 def installed_clearance_figure(output):
@@ -95,7 +128,7 @@ def installed_clearance_figure(output):
                   'pyat_version': at.__version__, 'absolute_tolerance_m': 1e-10, 'designs': {},
                   'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in
                                     [source, Path(__file__), ROOT / 'src/nkm_injection/bts_round3.py',
-                                     ROOT / 'src/nkm_injection/bts_journal.py']}}
+                                     ROOT / 'src/nkm_injection/bts_journal.py', ROOT / 'src/nkm_injection/bts_lattice.py']}}
     for name in ('reference', 'low_beta'):
         saved = data['designs'][name]
         line = observation_copy(aperture_lattice(saved['strengths_m_minus2'], model=data['model']), data['model'])
@@ -112,7 +145,7 @@ def installed_clearance_figure(output):
         saved['profile'] = record['rows']
         validation['designs'][name] = {'max_family_clearance_difference_m': error,
                                        'minimum_clearance_m': record['minimum_m'], 'profile_rows': len(record['rows'])}
-    render_clearance_profile(data, output)
+    validation['layout'] = render_clearance_profile(data, output)
     (output / 'clearance_plot_validation.json').write_text(json.dumps(validation, indent=2) + '\n')
     print('Rendered distinguishable nominal clearance profiles and checked all frozen family minima.')
 

@@ -22,3 +22,16 @@ Primary beam numbers were reverified against Lee et al., Table1:4 GeV,7.67 nm ra
 [ESRF's own EBS overview](https://www.esrf.fr/about/upgrade) identifies the linked technical report as2018. This establishes the bibliography year without inferring it from the2016 Orange Book mentioned in the PDF introduction. The selected report passages and limits remain as above.
 
 The exact-binomial reference is Clopper and Pearson,Biometrika26(4),404–413(1934),DOI10.1093/biomet/26.4.404. DOI-linked original-paper retrieval was unavailable through the browsing tool; the metadata is recorded with that limitation, while the intervals are independently reconstructed numerically. Wilson remains only the attribution for Wilson intervals in the historical supplement.
+
+## Expanded review checked 2026-10-26
+
+The introduction now compares interface matching and geometry, beam characterization/trajectory control, and requirements imposed by nonlinear injection. No cross-facility efficiency values are used as KLS predictions.
+
+| Added primary record | Material checked | Comparison used and evidence limit |
+| :--- | :--- | :--- |
+| [Guo et al., HEPS high-energy transport lines, IPAC17 TUPAB063](https://proceedings.jacow.org/ipac2017/papers/tupab063.pdf) | Full primary paper; layout constraints and injection matching; authors, title and pp. 1466–1468 | Relates ring interfaces, equipment geometry and injection scheme. Does not establish KLS targets or hardware. The DOI endpoint could not be verified and is omitted from the new entry. |
+| [Guo et al., The transfer line design for the HEPS project](https://rdtm.ihep.ac.cn/article/cstr/32043.14.s41605-020-00209-6) | Journal abstract, author list and citation metadata; Radiation Detection Technology and Methods 4(4), 440–447 (2020), DOI 10.1007/s41605-020-00209-6 | Supports the limited statement that line layouts/optics evolve with connected accelerator designs. Full text was not exposed by the journal page; no detailed performance claims are taken from it. |
+| [Martin et al., Diamond-II injector, IPAC22 THPOPT049](https://accelconf.web.cern.ch/ipac2022/papers/thpopt049.pdf) | Full primary paper, especially “Transfer Lines,” p. 2710; pp. 2708–2711, DOI 10.18429/JACoW-IPAC2022-THPOPT049 | Documents low-loss bunch transport, diagnostics, flexible matching and BTS geometry changes. Booster-capture results are not relabeled as BTS transmission. |
+| [Luo et al., TPS nonlinear-kicker transfer line, IPAC26 TUP2685](https://indico.jacow.org/event/95/contributions/14036/) | Author-supplied conference abstract and author list | Closely related proposal addresses existing-ring geometry, trajectory correction and beam characterization. Full manuscript download failed; cite explicitly as a conference abstract, with no unverified DOI, page range, numerical performance or publication-status claim. |
+
+Rechecked the SLS 2.0 and Sirius primary papers for the expanded commissioning/control discussion. The ESRF comparison retains the previously checked report passages above; re-download hit the browser size limit. MAX IV remains injection-method context rather than evidence for this BTS lattice. The new comparisons motivate the particular KLS design question without an unverified priority claim.

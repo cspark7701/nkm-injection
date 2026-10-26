@@ -1,0 +1,47 @@
+{
+  "scope": "Reformatted archived validation results; no new physics computation.",
+  "input_sha256": {
+    "generated/transport_validation.json": "6aa07d5da8b5f91a62ed5ab410fbd7b41c83d30384eeee240c48b08f22ca8a02",
+    "generated/round2_accuracy.json": "490e1fd29b3887293a9502bc382805926e9cc7d1984cbce48d393355ef3d564c",
+    "generated/round2_spatial.json": "43e39fd240806fb89d0cc48ca0098d92f888dd3d762333c2be37d37e52c1a776"
+  },
+  "exporter_sha256": "fac4b791dd3795b53f05855d1bfec32b00e6a238d4125990c13de7c5a511e530",
+  "spatial_rows": [
+    {
+      "subdivisions": 8,
+      "peak_beta_m": [
+        33.79137440812849,
+        28.43668900953128
+      ],
+      "max_change_m": null
+    },
+    {
+      "subdivisions": 16,
+      "peak_beta_m": [
+        33.79137440812861,
+        28.436689019506108
+      ],
+      "max_change_m": 9.974829850989408e-09
+    },
+    {
+      "subdivisions": 32,
+      "peak_beta_m": [
+        33.7945222040404,
+        28.4367125462828
+      ],
+      "max_change_m": 0.0031477959117864884
+    },
+    {
+      "subdivisions": 64,
+      "peak_beta_m": [
+        33.794522204042885,
+        28.43705384508607
+      ],
+      "max_change_m": 0.0003412988032707176
+    }
+  ],
+  "output_sha256": {
+    "accuracy_checks.tex": "68468e74340facca60d5db4db507f18ca4182e1fa24221fbe643217cc47eee49",
+    "spatial_resolution.tex": "9b3157c63ad235a2ee2d5f5986d854066d28c676fdfe5817f2163228775d68d8"
+  }
+}

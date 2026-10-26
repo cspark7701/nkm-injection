@@ -1,0 +1,23 @@
+{
+  "scope": "Nominal profiles of frozen strengths; no error campaign or optimization rerun.",
+  "pyat_version": "0.8.0",
+  "absolute_tolerance_m": 1e-10,
+  "designs": {
+    "reference": {
+      "max_family_clearance_difference_m": 0.0,
+      "minimum_clearance_m": 0.0006483714808245566,
+      "profile_rows": 204
+    },
+    "low_beta": {
+      "max_family_clearance_difference_m": 0.0,
+      "minimum_clearance_m": 0.0006483710393624429,
+      "profile_rows": 204
+    }
+  },
+  "source_sha256": {
+    "docs/paper_bts/generated/round3_apertures.json": "ebd7af53f86914b8df9c41a975d4f40acc98a8b0c49aa7d1af544782ef7a0629",
+    "scripts/export_bts_round3_assets.py": "aa9eed16f6747e4530a1b42b35c09d41aaa5891063d7ea89c616d5c5236a7d3f",
+    "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
+    "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3"
+  }
+}

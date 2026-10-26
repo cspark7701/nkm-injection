@@ -38,6 +38,85 @@ def strip(data, keys):
     return {k: v for k, v in data.items() if k not in keys}
 
 
+def render_clearance_profile(data, output):
+    """Draw both settings visibly, including their difference [mm] at matched stations."""
+    fig, axes = plt.subplots(3, 1, figsize=(7, 6.1), sharex=True,
+                             gridspec_kw={'height_ratios': [1, 1, .8]})
+    profiles = {}
+    styles = {'reference': dict(color='#2166ac', ls='-', marker='o', mfc='#2166ac', ms=3, lw=1.2),
+              'low_beta': dict(color='#d66b00', ls='--', marker='s', mfc='none', ms=5, lw=1.3)}
+    for name in ('reference', 'low_beta'):
+        profiles[name] = {}
+        for plane, ax in enumerate(axes[:2]):
+            rows = [r for r in data['designs'][name]['profile'] if r['plane'] == plane]
+            stations = [(r['index'], r['name'], r['s_m']) for r in rows]
+            values = np.array([r['clearance_m'] for r in rows])
+            profiles[name][plane] = (stations, values)
+            ax.plot([r['s_m'] for r in rows], 1e3 * values, **styles[name],
+                    markevery=5, label=LABELS[name])
+    for plane, ax in enumerate(axes[:2]):
+        ax.set_yscale('log')
+        ax.set_yticks([0.5, 1, 2, 5, 10, 20], ['0.5', '1', '2', '5', '10', '20'])
+        ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+        ax.set_ylabel(('Horizontal' if plane == 0 else 'Vertical') + ' clearance [mm]')
+        ax.grid(alpha=.3)
+        ref_stations, ref_values = profiles['reference'][plane]
+        low_stations, low_values = profiles['low_beta'][plane]
+        if ref_stations != low_stations:
+            raise ValueError('Clearance differences require identical observation stations')
+        axes[2].plot([r[2] for r in ref_stations], 1e3 * (low_values - ref_values),
+                     color='#2166ac' if plane == 0 else '#d66b00', ls='-' if plane == 0 else '--',
+                     label='Horizontal' if plane == 0 else 'Vertical')
+    axes[0].annotate('injection-septum blade', xy=(21.0, 0.66), xytext=(13.5, 1.5),
+                     arrowprops={'arrowstyle': '->', 'lw': .8}, fontsize=8)
+    axes[0].legend(fontsize=8, loc='upper left')
+    axes[2].axhline(0, color='0.4', lw=.7)
+    axes[2].set_ylabel('Low beta − reference [mm]')
+    axes[2].set_xlabel('Path coordinate s [m]')
+    axes[2].grid(alpha=.3)
+    axes[2].legend(fontsize=8, loc='upper left')
+    fig.tight_layout()
+    fig.savefig(output / 'round3_clearance_profile.pdf', metadata={'CreationDate': None, 'ModDate': None})
+    fig.savefig(output / 'round3_clearance_profile.png', dpi=160)
+    plt.close(fig)
+
+
+def installed_clearance_figure(output):
+    """Re-evaluate only deterministic nominal profiles when campaign rows are absent."""
+    import hashlib
+    import at
+    from nkm_injection.bts_journal import JournalBeam
+    from nkm_injection.bts_round3 import aperture_lattice, clearance_and_loss, observation_copy
+
+    output.mkdir(parents=True, exist_ok=False)
+    source = P / 'generated/round3_apertures.json'
+    data = json.loads(source.read_text())
+    validation = {'scope': 'Nominal profiles of frozen strengths; no error campaign or optimization rerun.',
+                  'pyat_version': at.__version__, 'absolute_tolerance_m': 1e-10, 'designs': {},
+                  'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in
+                                    [source, Path(__file__), ROOT / 'src/nkm_injection/bts_round3.py',
+                                     ROOT / 'src/nkm_injection/bts_journal.py']}}
+    for name in ('reference', 'low_beta'):
+        saved = data['designs'][name]
+        line = observation_copy(aperture_lattice(saved['strengths_m_minus2'], model=data['model']), data['model'])
+        record = clearance_and_loss(line, np.zeros(5), JournalBeam().covariance())
+        families = {}
+        for row in record['rows']:
+            key = row['name'] + ('_x' if row['plane'] == 0 else '_y')
+            families[key] = min(families.get(key, np.inf), row['clearance_m'])
+        if families.keys() != saved['family_minimum_m'].keys():
+            raise ValueError('Re-evaluated aperture families differ from the frozen summary')
+        error = max(abs(families[k] - saved['family_minimum_m'][k]) for k in families)
+        if error > validation['absolute_tolerance_m']:
+            raise ValueError('Nominal clearances differ from the frozen summary')
+        saved['profile'] = record['rows']
+        validation['designs'][name] = {'max_family_clearance_difference_m': error,
+                                       'minimum_clearance_m': record['minimum_m'], 'profile_rows': len(record['rows'])}
+    render_clearance_profile(data, output)
+    (output / 'clearance_plot_validation.json').write_text(json.dumps(validation, indent=2) + '\n')
+    print('Rendered distinguishable nominal clearance profiles and checked all frozen family minima.')
+
+
 def apertures():
     a = load('apertures', 'apertures.json')
     summary = {'environment': a['environment'], 'model': a['model'], 'sagitta_m': a['sagitta_m'], 'sweeps': a['sweeps'],
@@ -63,23 +142,7 @@ def apertures():
         'InteriorRefMm': f"{1e3 * ref['interior_minimum_m']:.2f}", 'InteriorLowMm': f"{1e3 * low['interior_minimum_m']:.2f}",
         'SagittaBTwoMm': f"{1e3 * a['sagitta_m']['b2']:.1f}", 'SagittaBOneMm': f"{1e3 * a['sagitta_m']['b1']:.1f}",
         'BladeOneMm': f"{1e3 * blade[0.001]:.2f}", 'BladeTwoMm': f"{1e3 * blade[0.002]:.2f}", 'BladeThreeMm': f"{1e3 * blade[0.003]:.2f}"})
-    fig, axes = plt.subplots(2, 1, figsize=(7, 4.2), sharex=True)
-    for name, d in a['designs'].items():
-        for plane, ax in enumerate(axes):
-            rows = [r for r in d['profile'] if r['plane'] == plane]
-            ax.plot([r['s_m'] for r in rows], [1e3 * r['clearance_m'] for r in rows], '.', ms=3, color=COLORS[name], label=LABELS[name])
-    for plane, ax in enumerate(axes):
-        ax.set_yscale('log')
-        ax.set_yticks([0.5, 1, 2, 5, 10, 20], ['0.5', '1', '2', '5', '10', '20'])
-        ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-        ax.set_ylabel(('Horizontal' if plane == 0 else 'Vertical') + ' clearance [mm]')
-        ax.grid(alpha=.3)
-    axes[0].annotate('injection-septum blade', xy=(21.0, 0.66), xytext=(13.5, 1.5), arrowprops={'arrowstyle': '->', 'lw': .8}, fontsize=8)
-    axes[0].legend(fontsize=7, loc='upper left')
-    axes[1].set_xlabel('Path coordinate s [m]')
-    fig.tight_layout()
-    fig.savefig(P / 'figures/round3_clearance_profile.pdf', metadata={'CreationDate': None, 'ModDate': None})
-    plt.close(fig)
+    render_clearance_profile(a, P / 'figures')
 
 
 def steering():
@@ -244,7 +307,12 @@ STEPS = {'apertures': apertures, 'steering': steering, 'design': design, 'exit':
 def main():
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument('--only', nargs='+', choices=list(STEPS), default=list(STEPS))
-    for name in p.parse_args().only:
+    p.add_argument('--clearance-figure-dir', type=Path, help='New directory for only the frozen nominal clearance figure')
+    args = p.parse_args()
+    if args.clearance_figure_dir:
+        installed_clearance_figure(args.clearance_figure_dir)
+        return
+    for name in args.only:
         STEPS[name]()
         print('Installed', name)
 

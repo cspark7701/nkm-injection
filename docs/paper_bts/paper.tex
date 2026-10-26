@@ -109,15 +109,18 @@ Section~\ref{sec:methods} presents the clearance and loss criteria, matched-end
 jitter transport, and numerical validation procedures. Section~\ref{sec:results}
 compares the aperture restrictions, corrected trajectories, loss-based setting,
 exit targets, and error sensitivities. Section~\ref{sec:discussion} discusses the
-design implications and limitations. The supplementary material provides the
-four-station aperture comparisons and historical optical statistics.
+design implications and limitations.
 
 \section{Parametric model and physical observables}\label{sec:model}
 \subsection{Lattice, coordinates, and boundary conditions}
 The Accelerator Toolbox (AT)/pyAT model~\cite{Terebilo2001,Rogers2017} contains
 36 elements over \SI{21.789}{\metre}, from marker m1 to marker m4 downstream of sept\_ex.
 It has nine \SI{0.2}{\metre} quadrupoles in three triplets, three main dipole bending magnets (\texttt{b1}, \texttt{b2}, and \texttt{b3}, in beam order), an extraction
-kicker and two model septa (Fig.~\ref{fig:layout}). Local coordinates are
+kicker and two model septa (Fig.~\ref{fig:layout}). Quadrupoles are labeled
+\texttt{qij}, where \(i\) identifies the triplet and \(j\) the magnet within
+that triplet, both in beam order. Thus \texttt{q11} is the first quadrupole in
+the first triplet and \texttt{q33} is the last quadrupole in the third triplet.
+Local coordinates are
 $(x,p_x,y,p_y,\delta,ct)$ with positions/path length in \si{\metre}, normalized canonical
 momenta approximately angles in \si{\radian}, and $\delta=\Delta p/p_0$ dimensionless.
 The six design bend angles are \SIlist{+7.5;+88.5;-111.701;+176;-111.701;+88.5}{\milli\radian};
@@ -153,8 +156,7 @@ element sequence.
 
 The four-station comparison model places square apertures at markers m1--m4 (\SI{19.35}{\milli\metre} at
 the line ends, \SI{30}{\milli\metre} at two interior markers) and none on the magnets. That
-four-station model and its hypothetical internal restrictions are documented
-in the Supplement; this article uses the
+four-station model provides a comparison with the
 element-wise restrictions of Section~\ref{sec:apertures}.
 
 \subsection{Beam covariance and clearance}
@@ -241,13 +243,13 @@ identical particles.
 \section{Physical criterion, validation and comparison protocol}\label{sec:methods}
 \subsection{Active restrictions and boundary-fixed clearances}
 The two end stations sit where the optics are fixed by boundary data: the entrance
-Twiss functions and dispersion are inputs, and every admissible setting matches the
+Courant--Snyder parameters and dispersion are inputs, and every admissible setting matches the
 exit to its target. For a centered nominal beam the clearance there is therefore
 $c_u=a-5\sqrt{\epsilon_u\beta_u+D_u^2\sigma_\delta^2}$ with the boundary values of
 Table~\ref{tab:boundary}, for every quadrupole setting $K$ that satisfies the match.
 With $a=\SI{19.35}{\milli\metre}$ this gives \SI{17.455}{\milli\metre}/\SI{18.865}{\milli\metre} at the entrance and \SI{18.555}{\milli\metre}/\SI{19.064}{\milli\metre}
 at the exit ($x$/$y$), exactly the values found numerically for both settings
-in the four-station model (Supplement). The two interior stations have \SI{30}{\milli\metre} halfwidths and could
+in the four-station model. The two interior stations have \SI{30}{\milli\metre} halfwidths and could
 limit only if a five-sigma size exceeded about \SI{12.5}{\milli\metre}, which no matched setting
 approaches. In this four-station model the nominal minimum clearance is thus
 analytically independent of $K$: the ``saturation'' of the minimum is a consequence
@@ -277,7 +279,7 @@ Because both ends are matched, the horizontal transfer matrix from m1 to m4 is
  \label{eq:transfer}
 \end{equation}
 with $R(\mu_x)$ a rotation by the horizontal phase advance and $B_{1,4}$ the
-boundary Twiss values of Table~\ref{tab:boundary}. A shot centroid at m1 with
+boundary Courant--Snyder parameters of Table~\ref{tab:boundary}. A shot centroid at m1 with
 covariance $J$ (position \SI{0.5}{\milli\metre}, angle \SI{0.2}{\milli\radian}) therefore reaches the exit with
 covariance $M_xJM_x^{\mathsf T}$ plus the momentum term $\sigma_{\delta,j}^2\mathbf d_4
 \mathbf d_4^{\mathsf T}$, which is the same for every matched setting. The
@@ -302,18 +304,18 @@ transported jitter, the shot-averaged lost fraction is Eq.~(\ref{eq:loss}) with 
 summed covariance of beam and jitter. This makes a smooth, loss-relevant objective.
 The loss-based setting minimizes the logarithm of the largest shot-averaged $P$ on
 the error-free line, subject to the six exit equalities, horizontal peak beta
-$\le\SI{60}{\metre}$ (16 subdivisions, checked at 64) and the strength bounds, with SLSQP
-(200 iterations, tolerance $10^{-10}$) from the reference, the refined low-beta
-setting and the best member of a bounded multistart pool. The setting is frozen
-before a fresh test on 200 steered machines (seeds 92001--92004), evaluated with
+$\le\SI{60}{\metre}$ and the strength bounds, using sequential least-squares programming
+(SLSQP)~\cite{Kraft1988} with a 200-iteration budget and termination tolerance
+$10^{-10}$. Three initial settings are evaluated in the bounded search. The setting is frozen
+before a fresh test on 200 steered machines, evaluated with
 tracked particles.
 
 \subsection{Accuracy and spatial observation resolution}
 Exact independent hard-edge maps are checked against AT tracking at every element
-boundary. The original ten-step integrator misses its $2\times10^{-6}$ nominal
-maximum-entry tolerance. Twenty/forty/eighty steps give discrepancies
-$2.53\times10^{-7}$, $1.58\times10^{-8}$ and $9.89\times10^{-10}$;
-new studies use forty. Transverse symplectic discrepancy is $1.22\times10^{-15}$,
+boundary. Tracking uses 40 integration steps per magnet, with an absolute
+nominal-map maximum-entry tolerance of $2\times10^{-6}$ in the stated SI
+coordinate convention. Table~\ref{tab:accuracy} summarizes the accuracy checks.
+Transverse symplectic discrepancy is $1.22\times10^{-15}$,
 without a longitudinal six-dimensional certificate. Translations, rolls and
 fixed-geometry dipole-field perturbations are exercised independently. Momentum
 errors enter particle $\delta$ without double rescaling magnet fields.
@@ -331,13 +333,13 @@ Representative simultaneous-error cases compare probe steps $10^{-6}$--$10^{-8}$
 and forty/eighty integration steps. Their clearance changes are below
 \SI{5e-6}{\micro\metre}. Product Gauss--Hermite quadrature at orders three,
 five and seven propagates the unrestricted Gaussian through nonlinear AT;
-five/seven convergence is negligible on the checked cases. Centred-linear versus
+five/seven convergence is negligible on the checked cases. Centered-linear versus
 nonlinear-moment discrepancy is at most \SI{0.606}{\micro\metre} on four original extreme
 or representative shots and \SI{\BtsNewMomentError}{\micro\metre} on two new machines
 for every regime/design. These finite-case checks are smaller than the reported
 effect intervals and illustrative \SI{0.1}{\milli\metre} decision scale; they are not universal
 error bounds or Gaussian loss-tail certificates. Intentional scraping verifies
-first-loss accounting. Detailed checks are supplied in the supplement/evidence.
+first-loss accounting.
 
 Spatial observation is refined independently of integration steps. Exact maps
 sample each finite element at 8, 16, 32 and 64 subdivisions, applying bend edges
@@ -345,8 +347,25 @@ only once. Original reference boundary peaks \SI{31.44}{\metre}/\SI{50.75}{\metr
 old low-beta peaks \SI{33.58}{\metre}/\SI{28.18}{\metre} become \SI{33.77}{\metre}/\SI{28.50}{\metre}. Reoptimizing vertical peak
 beta on sixteen subdivisions converges in 34 SLSQP iterations. The resulting
 64-subdivision peaks are \SI{33.79}{\metre}/\SI{28.44}{\metre}; changes from 32 subdivisions are below
-\SI{0.00035}{\metre}. These are spatially converged sampled maxima, not exact analytical
-extrema or a global optimum. q32 remains at its assumed lower bound $\SI{-3}{\per\square\metre}$.
+\SI{0.00035}{\metre}. Table~\ref{tab:spatial-resolution} reports the refined setting at each observation resolution.
+These are spatially converged sampled maxima, not exact analytical
+extrema or a global optimum. The second quadrupole in the third triplet, \texttt{q32}, remains at its assumed lower bound $\SI{-3}{\per\square\metre}$.
+
+\begin{table}[htbp]\centering
+\caption{Numerical accuracy checks for the nominal transport and selected error
+cases. Map-entry discrepancies use the stated SI coordinate convention.
+The final four rows are finite-case convergence diagnostics, not universal
+error bounds or Gaussian loss-tail tolerances.}\label{tab:accuracy}
+\input{generated/accuracy_checks.tex}
+\end{table}
+
+\begin{table}[htbp]\centering
+\caption{Spatial convergence of the refined low-beta setting. Integration remains
+at 40 steps per magnet while the observation mesh changes. The reported peaks
+are sampled maxima; the last column is the larger change in either plane
+relative to the preceding mesh.}\label{tab:spatial-resolution}
+\input{generated/spatial_resolution.tex}
+\end{table}
 
 \section{Results}\label{sec:results}
 \subsection{Active restrictions of the element-wise line}
@@ -370,19 +389,21 @@ and jitter.
 
 \begin{figure}[htbp]\centering\includegraphics[width=.85\linewidth]{figures/round2_optics.pdf}
 \caption{Reference and refined low-beta profiles drawn with Accelerator Toolbox
-linear-optics plotting, using the entrance Twiss parameters and
+linear-optics plotting, using the entrance Courant--Snyder parameters and
 64 spatial subdivisions per finite element. The exit match remains fixed; the
 vertical improvement also changes horizontal transport.}\label{fig:refined}\end{figure}
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_clearance_profile.pdf}
 \caption{Nominal five-sigma clearance at every aperture of the element-wise line
-(logarithmic scale), horizontal (top) and vertical (bottom), for the reference and
-refined low-beta settings. The two settings coincide at both septa; they differ
-only where clearances exceed \SI{9}{\milli\metre}. Design beam, no errors.}\label{fig:profile}\end{figure}
+(logarithmic scale), horizontal (top) and vertical (middle). The reference uses
+solid blue lines with filled circles; refined low beta uses dashed orange lines
+with open squares. Lines connect sampled aperture observations. The bottom panel shows refined low beta minus reference in
+each plane. The settings coincide at both septa; their resolved differences
+occur where clearances exceed \SI{9}{\milli\metre}. Design beam, no errors.}\label{fig:profile}\end{figure}
 
 \subsection{Trajectory correction}\label{sec:steering-results}
 Table~\ref{tab:steering} compares the uncorrected and corrected lines on 200
-machines with three shots of 2\,000 particles each (seeds 91001--91004); both
+machines with three shots of 2\,000 particles each; both
 settings and both variants see the same machines, shots and particles. Without
 correction the static errors displace the exit centroid by \SI{1.2}{\milli\metre} rms, and
 \SI{\BtsRThreeRefUncLostPct}{\percent} of the particles are lost, almost all on the blade. With
@@ -474,7 +495,7 @@ energy jitter adds a centroid angle of \SI{\BtsRThreeEJitAngUrad}{\micro\radian}
 position of \SI{\BtsRThreeEJitPosUm}{\micro\metre} rms. Both terms are fixed by the
 target, the same for every matched setting, and absent for a dispersion-free exit.
 
-Matching the same Twiss functions with $D_x=D'_x=0$ at m4 is feasible within the
+Matching the same Courant--Snyder parameters with $D_x=D'_x=0$ at m4 is feasible within the
 strength bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\
 bounded random starts keep both peak betas below \SI{60}{\metre} (smallest larger peak
 \SI{\BtsRThreeFreeMinPeak}{\metre}). The dispersion-free target also widens the reachable
@@ -521,7 +542,7 @@ loss, while its sign does not.
 \begin{table}[htbp]\centering
 \caption{Sensitivity of the steered line to the roll and energy-jitter levels: mean
 predicted loss and mean minimum five-sigma clearance on 200 machines with three shots
-each (seeds 93001--93004; analytic, not tracked).}\label{tab:sensitivity}
+each (analytic, not tracked).}\label{tab:sensitivity}
 {\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
 
 \section{Discussion and conclusions}\label{sec:discussion}
@@ -560,8 +581,7 @@ sensitivity study bound their influence on these conclusions. The loss is heavy-
 over machines and its population mean varies between independently seeded
 populations, while the ranking of settings does not. The dispersion-free results are
 analytic. This paper neither certifies real transmission nor derives construction
-tolerances, ring capture or kicker transparency; the four-station analysis and
-historical statistics are preserved in the supplement.
+tolerances, ring capture, or kicker transparency.
 
 \section*{Statements and Declarations}
 \paragraph{Funding.} National Research Foundation of Korea (NRF) grant funded by the Korean government (MSIT), NRF Grant No. RS-2022-00143178.
@@ -577,22 +597,22 @@ NKM study. The author must validate and approve the final work.
 analysis scripts are available at \url{https://github.com/cspark7701/nkm-injection}.
 The selected raw simulation data, exact generating-source snapshots, environment
 identities, SHA-256 hashes and reproduction commands are provided to the referees as a
-supplementary attachment and are available from the author on reasonable request.
+referee attachment and are available from the author on reasonable request.
 No public data deposit has been made.
 
 \appendix
-\section{Evidence and supplementary material}
+\section{Evidence and reproducibility}
 The element-wise aperture study (element-wise apertures, steering, phase-advance pools,
 loss-based setting, fresh test, exit target and sensitivity) is in
 \url{results/bts_journal_campaign_r3b_20261015}, one directory per stage, each with
 its configuration, source hashes and the protocol (round3\_protocol.json, which also
-records the superseded corrector layouts). The supplement
-preserves the four-station study, historical matching/optical statistics,
-block-loss inference and numerical limitations. Reviewed and original campaign
+records the evaluated corrector layouts). The archived evidence includes
+the four-station study, historical optical statistics, block-loss inference,
+and numerical limitations. Reviewed and original campaign
 identities, all previous reports, new frozen designs, station decompositions and
 point-by-point responses are included in the local attachment. The separate
 nominal phase-space diagnostic supplies initial and final particle coordinates,
-geometric slopes, seed and generating-source identity. Each numerical
+geometric slopes and generating-source identity. Each numerical
 stage records source hashes and uses a fresh result directory. The first invalid
 shared-aperture run is retained as a failure record, not selected evidence.
 Technical validation does not imply journal acceptance.

@@ -159,8 +159,7 @@ Settings are frozen before a new independently seeded test. Static errors are
 independent Gaussian quadrupole relative gradients \SI{0.1}{\percent}, x/y offsets \SI{100}{\micro\metre}, rolls \SI{0.5}{\milli\radian} and dipole relative fields \SI{0.05}{\percent}. Each of 200
 machines has three independent shots with \SI{5}{\percent} entrance beta fluctuations
 (alpha fixed), horizontal position RMS \SI{0.5}{\milli\metre}, angle RMS \SI{0.2}{\milli\radian} and centroid
-momentum RMS \SI{0.1}{\percent}. These error levels remain modeling assumptions. Static,
-shot and particle seeds are 82002, 82003 and 82004, respectively. Each shot has
+momentum RMS \SI{0.1}{\percent}. These error levels remain modeling assumptions. Each shot has
 2,000 untruncated Gaussian particles with the complete design-beam covariance;
 all nine regime/strategy combinations receive common errors and particle draws.
 No optical correction or per-shot retuning is used. The total is 10.8 million
@@ -168,7 +167,7 @@ particle transports, 1.2 million per combination, not 10.8 million machines.
 
 The primary contrast is alternative minus reference in machine-average minimum
 five-sigma clearance. Ten thousand paired machine-cluster bootstrap replicates
-(seed 82005) give pointwise descriptive \SI{95}{\percent} percentile intervals. No simultaneous
+give pointwise descriptive \SI{95}{\percent} percentile intervals. No simultaneous
 coverage claim is made across strategies/regimes. The predeclared useful-effect
 scale \SI{0.1}{\milli\metre} is illustrative, not a hardware requirement. First loss is nonfinite
 $x$ after an element; all six coordinates of survivors must be finite. Element
@@ -209,7 +208,7 @@ matching replay and local response diagnostics are retained in the supplement.
 Figure~\ref{fig:phase-space} provides a nominal particle-level view of the
 configured boundary match. A shared sample of 20\,000 particles from the full
 Gaussian entrance covariance is tracked once through each frozen baseline
-setting at \SI{4}{\giga\electronvolt}, with seed 83001 and 40 integration steps per magnet.
+setting at \SI{4}{\giga\electronvolt}, with 40 integration steps per magnet.
 No static machine errors or shot jitter are applied. Observations are made
 before the first element at m1 and after the last element at m4; all four
 configured aperture stations remain active. A particle is counted as lost if
@@ -238,7 +237,7 @@ and refined low-beta exit (right). Positions are in \si{\milli\metre} and geomet
 in \si{\milli\radian}; axes share scales within each row. Blue points show all 20\,000
 tracked particles per panel. Black curves, drawn with Accelerator Toolbox's
 covariance plotting function, are sample-centered two-RMS covariance ellipses;
-they are not aperture boundaries. Seed 83001; no machine errors or shot jitter.
+they are not aperture boundaries. No machine errors or shot jitter.
 Both settings have zero sampled losses at the configured stations.}
 \label{fig:phase-space}\end{figure}
 

@@ -736,3 +736,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 255. [**Milestone 255 — Identify Korea Light Source in the BTS title**](255_bts_korea_light_source_title.md)
     - Add Korea Light Source to the manuscript title, synchronize its README and rebuild the verified PDF while preserving the scientific body.
+
+256. [**Milestone 256 — Use Booster-to-Storage in the BTS title**](256_bts_booster_to_storage_title.md)
+    - Apply the requested Booster-to-Storage title wording, synchronize the current README and rebuild the verified PDF.

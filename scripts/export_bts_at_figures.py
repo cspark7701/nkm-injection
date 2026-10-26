@@ -12,13 +12,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import at
 
-from nkm_injection.bts_journal import lattice_for
-from nkm_injection.bts_round2 import spatial_profile
+from nkm_injection.bts_journal import lattice_for, TARGET, SCALES
+from nkm_injection.bts_lattice import BTSConfig
+from nkm_injection.bts_round2 import spatial_profile, nominal_observables
 from nkm_injection.optics import DEFAULT_BTS_ENTRANCE_TWISS
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / 'docs/paper_bts'
-PROFILE = ROOT / 'results/bts_journal_campaign_r2_20261013/spatial/spatial_profiles.json'
 
 
 def transfer_line_call(function, *args, **kwargs):
@@ -32,31 +32,23 @@ def transfer_line_call(function, *args, **kwargs):
 
 
 def export_figures(output):
-    """Validate and draw the frozen designs on their 64-subdivision mesh."""
+    """Validate and draw the original and optimized settings on the same observation mesh."""
     designs = json.loads((PAPER / 'generated/round2_designs.json').read_text())
-    if PROFILE.is_file():
-        profiles = json.loads(PROFILE.read_text())
-        profile_sources = [PROFILE]
-        profile_origin = 'Archived full independent-map profiles'
-    else:
-        # Frozen strengths and peak summaries are tracked; regenerate only the
-        # deterministic observation profiles when ignored campaign rows are absent.
-        summary = PAPER / 'generated/round2_spatial.json'
-        saved = json.loads(summary.read_text())
-        profiles = {'original': [], 'refined': []}
-        for name in ('reference', 'low_beta'):
-            k = designs['designs']['baseline']['nominal'][name]['strengths_m_minus2']
-            profile = spatial_profile(lattice_for(k), 64)
-            expected = (saved['original_profiles'][0]['64'] if name == 'reference'
-                        else saved['refined_low_beta']['profiles'][-1])
-            np.testing.assert_allclose(profile['peak_beta_m'], expected['peak_beta_m'], rtol=0, atol=1e-8)
-            if name == 'reference':
-                profiles['original'].append([profile])
-            else:
-                profiles['refined'].append(profile)
-        profile_sources = [summary, ROOT / 'src/nkm_injection/bts_round2.py',
-                           ROOT / 'src/nkm_injection/bts_journal.py']
-        profile_origin = 'Re-evaluated exact maps of frozen strengths; peaks checked against tracked summaries'
+    original = np.asarray(BTSConfig().quad_strengths_list)
+    initial_record = json.loads((PAPER / 'generated/matching.json').read_text())['initial_baseline']
+    np.testing.assert_array_equal(original, initial_record['strengths_m_minus2'])
+    settings = {'reference': original,
+                'low_beta': np.array(designs['designs']['baseline']['nominal']['low_beta']['strengths_m_minus2'])}
+    profiles = {name: spatial_profile(lattice_for(k), 64) for name, k in settings.items()}
+    saved = json.loads((PAPER / 'generated/round2_spatial.json').read_text())
+    np.testing.assert_allclose(profiles['low_beta']['peak_beta_m'],
+                               saved['refined_low_beta']['profiles'][-1]['peak_beta_m'], rtol=0, atol=1e-8)
+    np.testing.assert_allclose(spatial_profile(lattice_for(original), 1)['peak_beta_m'],
+                               initial_record['peak_beta_m'], rtol=0, atol=1e-5)
+    profile_sources = [PAPER / 'generated/matching.json', PAPER / 'generated/round2_spatial.json',
+                       ROOT / 'src/nkm_injection/bts_lattice.py', ROOT / 'src/nkm_injection/bts_round2.py',
+                       ROOT / 'src/nkm_injection/bts_journal.py']
+    profile_origin = 'Original BTSConfig settings versus the frozen optimized low-beta settings; exact-map profiles'
     tw = DEFAULT_BTS_ENTRANCE_TWISS
     twiss = dict(beta=[tw.beta_x, tw.beta_y], alpha=[tw.alpha_x, tw.alpha_y],
                  dispersion=[tw.disp_x, tw.disp_px, tw.disp_y, tw.disp_py])
@@ -66,9 +58,9 @@ def export_figures(output):
               'beta_absolute_tolerance_m': 1e-4, 'designs': {}, 'profile_origin': profile_origin,
               'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in profile_sources + [PAPER / 'generated/round2_designs.json', Path(__file__) ]}}
-    for name, label, profile in [('reference', 'Reference', profiles['original'][0][-1]),
-                                  ('low_beta', 'Refined low beta', profiles['refined'][-1])]:
-        lattice = lattice_for(designs['designs']['baseline']['nominal'][name]['strengths_m_minus2'])
+    for name, label in [('reference', 'Original setting (reference)'), ('low_beta', 'Optimized low beta')]:
+        profile = profiles[name]
+        lattice = lattice_for(settings[name])
         dense = lattice.slice_elements([i for i, e in enumerate(lattice) if e.Length], slices=64)
         _, _, optics = transfer_line_call(at.get_optics, dense, refpts=range(1, len(dense)+1),
                                     twiss_in=twiss, method=at.linopt2)
@@ -76,7 +68,10 @@ def export_figures(output):
         np.testing.assert_allclose(optics.s_pos, expected[:, 0], rtol=0, atol=1e-10)
         np.testing.assert_allclose(optics.beta, expected[:, 1:], rtol=0, atol=1e-4)
         report['designs'][name] = {'max_beta_difference_m': float(np.max(abs(optics.beta-expected[:, 1:]))),
-                                  'peak_beta_m': optics.beta.max(axis=0).tolist()}
+                                  'peak_beta_m': optics.beta.max(axis=0).tolist(),
+                                  'strengths_m_minus2': settings[name].tolist(), 'label': label,
+                                  'exit_lattice_functions': nominal_observables(lattice).tolist(),
+                                  'max_normalized_exit_residual': float(np.max(np.abs((nominal_observables(lattice) - TARGET) / SCALES)))}
         for plane, ax in enumerate(axes):
             transfer_line_call(at.plot.plot_linear, dense, ('beta', plane), axes=(ax, None),
                                 slices=1, twiss_in=twiss, method=at.linopt2, legend=False)
@@ -90,6 +85,7 @@ def export_figures(output):
                                        rtol=0, atol=1e-4)
             line.set_label(label)
             line.set_color('C0' if name == 'reference' else 'C1')
+            line.set_linestyle('-' if name == 'reference' else '--')
     axes[0].set_ylabel('Horizontal beta [m]')
     axes[1].set_ylabel('Vertical beta [m]')
     axes[1].set_xlabel('Path coordinate [m]')
@@ -102,7 +98,7 @@ def export_figures(output):
     fig.savefig(output / 'round2_optics.pdf', metadata={'CreationDate': None})
     plt.close(fig)
 
-    reference = lattice_for(designs['designs']['baseline']['nominal']['reference']['strengths_m_minus2'])
+    reference = lattice_for(original)
     fig, ax = plt.subplots(figsize=(7, 1.9))
     syn = at.plot.plot_synopt(reference, axes=ax)
     if isinstance(syn, tuple):  # pyAT 0.8 returns (synoptic_axes, parent_axes).
@@ -123,7 +119,7 @@ def export_figures(output):
     fig.savefig(output / 'layout.pdf', metadata={'CreationDate': None})
     plt.close(fig)
     (output / 'at_plot_validation.json').write_text(json.dumps(report, indent=2)+'\n')
-    print('Exported native pyAT optics and synoptic; validated against frozen exact-map profiles.')
+    print('Exported original/optimized native pyAT optics; validated against exact maps.')
 
 
 if __name__ == '__main__':

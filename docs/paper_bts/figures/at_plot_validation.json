@@ -4,26 +4,70 @@
   "beta_absolute_tolerance_m": 0.0001,
   "designs": {
     "reference": {
-      "max_beta_difference_m": 2.758326900220709e-11,
+      "max_beta_difference_m": 2.2922108655620832e-11,
       "peak_beta_m": [
-        31.6290160075606,
-        51.269938584027635
-      ]
+        52.2505550697001,
+        242.6069355391187
+      ],
+      "strengths_m_minus2": [
+        0.448572,
+        -1.026778,
+        0.88764,
+        -1.066465,
+        1.488384,
+        -0.669894,
+        0.589886,
+        -1.168702,
+        0.941655
+      ],
+      "label": "Original setting (reference)",
+      "exit_lattice_functions": [
+        44.98078585114263,
+        242.6069355391227,
+        0.6247840996201953,
+        -10.21455822553019,
+        0.08086811734401211,
+        0.04747223062667845
+      ],
+      "max_normalized_exit_residual": 4767.013890782454
     },
     "low_beta": {
       "max_beta_difference_m": 1.5916157281026244e-11,
       "peak_beta_m": [
         33.794522204039104,
         28.437053845070594
-      ]
+      ],
+      "strengths_m_minus2": [
+        0.08203213047289715,
+        -2.152572915585476,
+        1.8741256773834847,
+        0.8895814613948778,
+        -0.11643596874043823,
+        -1.2725960965003535,
+        2.8188453515755585,
+        -2.9999999999999476,
+        0.8994163748035585
+      ],
+      "label": "Optimized low beta",
+      "exit_lattice_functions": [
+        2.3364950000010265,
+        4.256240999991644,
+        -0.016335000002421583,
+        0.017771999997124286,
+        0.08086799999979336,
+        0.04747199999999627
+      ],
+      "max_normalized_exit_residual": 2.8757135561718883e-10
     }
   },
-  "profile_origin": "Re-evaluated exact maps of frozen strengths; peaks checked against tracked summaries",
+  "profile_origin": "Original BTSConfig settings versus the frozen optimized low-beta settings; exact-map profiles",
   "source_sha256": {
+    "docs/paper_bts/generated/matching.json": "e7a589cb62360657281508bcfc79435fe93a20d9e7ee2fa70465df552c54b617",
     "docs/paper_bts/generated/round2_spatial.json": "43e39fd240806fb89d0cc48ca0098d92f888dd3d762333c2be37d37e52c1a776",
+    "src/nkm_injection/bts_lattice.py": "e1a489e59ea089dd3b089435fd42eb6ec80c174abf401b6bde8405b26df0c3a3",
     "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
     "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
     "docs/paper_bts/generated/round2_designs.json": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
-    "scripts/export_bts_at_figures.py": "8f3066964c2ff4123e992222e8e3d90d71c2c39e6a77446d285284d6d591d520"
+    "scripts/export_bts_at_figures.py": "fa44a1c96374d4b040e75d657383443d4339bb357abf8872cb25ab60590eca60"
   }
 }

@@ -7,11 +7,13 @@ Round-three one-column article for prospective JKPS submission, *Optical matchin
 [round-3 reproduction guide](round3_reproduction.md).
 
 **Findings.**
-- With element-wise apertures, the injection-septum blade limits the line, with a nominal clearance independent of
-  the quadrupoles.
+- Figures 2–3 use the original `BTSConfig` quadrupole strengths as the reference. Optical matching and beta optimization restore the prescribed exit functions and positive nominal five-sigma blade clearance.
+- Within the matched solution set, the injection-septum blade limits the line and its nominal clearance is fixed by the exit optics.
 - With matched ends, booster jitter reaches the exit through the horizontal phase advance alone.
 - Steering, a Gaussian loss observable validated by tracking, a loss-based setting tested on fresh machines and a
   dispersion-free exit complete the study.
+
+The error-study tables compare a matched intermediate baseline, optimized low beta and the loss-based setting. Their existing ensembles do not represent the original unmatched configuration.
 
 The earlier round-two article (four-station model, hypothetical restrictions) is preserved in the supplement and the
 records below.

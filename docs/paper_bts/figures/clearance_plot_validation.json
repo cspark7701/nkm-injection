@@ -1,23 +1,96 @@
 {
-  "scope": "Nominal profiles of frozen strengths; no error campaign or optimization rerun.",
+  "scope": "Original BTSConfig setting versus optimized low beta; nominal profiles only. Existing error campaigns still use their matched baseline.",
+  "figure_reference": "original_setting",
   "pyat_version": "0.8.0",
   "absolute_tolerance_m": 1e-10,
   "designs": {
     "reference": {
-      "max_family_clearance_difference_m": 0.0,
-      "minimum_clearance_m": 0.0006483714808245566,
+      "label": "Original setting (reference)",
+      "strengths_m_minus2": [
+        0.448572,
+        -1.026778,
+        0.88764,
+        -1.066465,
+        1.488384,
+        -0.669894,
+        0.589886,
+        -1.168702,
+        0.941655
+      ],
+      "max_family_clearance_difference_m": null,
+      "minimum_clearance_m": -0.001517007947983435,
+      "active": [
+        "sept_ex",
+        0,
+        20.789000000000023
+      ],
+      "exit_clearance_m": [
+        -0.0014899562872385922,
+        0.002843153230069122
+      ],
+      "peak_beta_64_m": [
+        52.25055506970125,
+        242.606935539132
+      ],
+      "exit_lattice_functions": [
+        44.98078585114263,
+        242.6069355391227,
+        0.6247840996201953,
+        -10.21455822553019,
+        0.08086811734401211,
+        0.04747223062667845
+      ],
+      "max_normalized_exit_residual": 4767.013890782454,
+      "satisfies_exit_match": false,
       "profile_rows": 204
     },
     "low_beta": {
+      "label": "Optimized low beta",
+      "strengths_m_minus2": [
+        0.08203213047289715,
+        -2.152572915585476,
+        1.8741256773834847,
+        0.8895814613948778,
+        -0.11643596874043823,
+        -1.2725960965003535,
+        2.8188453515755585,
+        -2.9999999999999476,
+        0.8994163748035585
+      ],
       "max_family_clearance_difference_m": 0.0,
       "minimum_clearance_m": 0.0006483710393624429,
+      "active": [
+        "sept_ex",
+        0,
+        20.789000000000023
+      ],
+      "exit_clearance_m": [
+        0.0006831910801145958,
+        0.004714319372067866
+      ],
+      "peak_beta_64_m": [
+        33.79452220404006,
+        28.43705384508639
+      ],
+      "exit_lattice_functions": [
+        2.3364950000010265,
+        4.256240999991644,
+        -0.016335000002421583,
+        0.017771999997124286,
+        0.08086799999979336,
+        0.04747199999999627
+      ],
+      "max_normalized_exit_residual": 2.8757135561718883e-10,
+      "satisfies_exit_match": true,
       "profile_rows": 204
     }
   },
   "source_sha256": {
     "docs/paper_bts/generated/round3_apertures.json": "ebd7af53f86914b8df9c41a975d4f40acc98a8b0c49aa7d1af544782ef7a0629",
-    "scripts/export_bts_round3_assets.py": "654bc967a1d8109243bd3e4a7154d6353ee9d35a4f664658cc1ef9780e70b5ea",
+    "docs/paper_bts/generated/matching.json": "e7a589cb62360657281508bcfc79435fe93a20d9e7ee2fa70465df552c54b617",
+    "scripts/export_bts_round3_assets.py": "59e6cedc0283eab1b1247d7cdbdf9ac8da02a80df2390e56946f033619594f2c",
     "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
+    "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
     "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
     "src/nkm_injection/bts_lattice.py": "e1a489e59ea089dd3b089435fd42eb6ec80c174abf401b6bde8405b26df0c3a3"
   },

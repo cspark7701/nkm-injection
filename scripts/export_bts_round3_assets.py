@@ -19,8 +19,8 @@ P = ROOT / 'docs/paper_bts'
 CAMPAIGN = ROOT / 'results/bts_journal_campaign_r3b_20261015'
 plt.rcParams.update({'font.size': 9, 'pdf.fonttype': 42, 'svg.hashsalt': 'bts-r3', 'pdf.compression': 6})
 COLORS = {'reference': '#1f5fa8', 'low_beta': '#d1495b', 'robust': '#2a9d55'}
-LABELS = {'reference': 'Reference', 'low_beta': 'Refined low beta', 'robust': 'Loss-based'}
-SHORT = {'reference': 'Ref.', 'low_beta': 'Low beta', 'robust': 'Loss-based'}
+LABELS = {'reference': 'Matched baseline', 'low_beta': 'Refined low beta', 'robust': 'Loss-based'}
+SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based'}
 
 
 def load(stage, name):
@@ -53,10 +53,13 @@ def render_clearance_profile(data, output):
             values = np.array([r['clearance_m'] for r in rows])
             profiles[name][plane] = (stations, values)
             ax.plot([r['s_m'] for r in rows], 1e3 * values, **styles[name],
-                    markevery=5, label=LABELS[name])
+                    markevery=5, label=(('Original setting (reference)' if name == 'reference' else 'Optimized low beta')
+                                         if data.get('figure_reference') == 'original_setting' else LABELS[name]))
     for plane, ax in enumerate(axes[:2]):
-        ax.set_yscale('log')
-        ax.set_yticks([0.5, 1, 2, 5, 10, 20], ['0.5', '1', '2', '5', '10', '20'])
+        ax.set_yscale('symlog', linthresh=1, linscale=1)
+        ax.set_yticks([-2, -1, 0, 1, 2, 5, 10, 20], ['−2', '−1', '0', '1', '2', '5', '10', '20'])
+        ax.set_ylim(-2.2, 30)
+        ax.axhline(0, color='0.35', lw=.8)
         ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
         ax.set_ylabel(('Horizontal' if plane == 0 else 'Vertical') + ' clearance [mm]')
         ax.grid(alpha=.3)
@@ -71,7 +74,8 @@ def render_clearance_profile(data, output):
                      arrowprops={'arrowstyle': '->', 'lw': .8}, fontsize=8)
     axes[0].legend(fontsize=8, loc='upper left')
     axes[2].axhline(0, color='0.4', lw=.7)
-    axes[2].set_ylabel('Low beta − reference [mm]')
+    axes[2].set_ylabel('Optimized − original [mm]' if data.get('figure_reference') == 'original_setting'
+                       else 'Low beta − reference [mm]')
     axes[2].set_xlabel('')
     axes[2].grid(alpha=.3)
     axes[2].legend(fontsize=8, loc='upper left')
@@ -114,40 +118,90 @@ def render_clearance_profile(data, output):
     return layout_record
 
 
-def installed_clearance_figure(output):
-    """Re-evaluate only deterministic nominal profiles when campaign rows are absent."""
-    import hashlib
-    import at
-    from nkm_injection.bts_journal import JournalBeam
+def nominal_original_comparison(summary):
+    """Compare original BTSConfig strengths with the frozen optimized low-beta setting."""
+    import copy
+    from nkm_injection.bts_lattice import BTSConfig
+    from nkm_injection.bts_journal import JournalBeam, lattice_for, TARGET, SCALES
+    from nkm_injection.bts_round2 import spatial_profile, nominal_observables
     from nkm_injection.bts_round3 import aperture_lattice, clearance_and_loss, observation_copy
 
-    output.mkdir(parents=True, exist_ok=False)
-    source = P / 'generated/round3_apertures.json'
-    data = json.loads(source.read_text())
-    validation = {'scope': 'Nominal profiles of frozen strengths; no error campaign or optimization rerun.',
-                  'pyat_version': at.__version__, 'absolute_tolerance_m': 1e-10, 'designs': {},
-                  'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in
-                                    [source, Path(__file__), ROOT / 'src/nkm_injection/bts_round3.py',
-                                     ROOT / 'src/nkm_injection/bts_journal.py', ROOT / 'src/nkm_injection/bts_lattice.py']}}
+    data = copy.deepcopy(summary)
+    original = np.asarray(BTSConfig().quad_strengths_list)
+    initial = json.loads((P / 'generated/matching.json').read_text())['initial_baseline']
+    np.testing.assert_array_equal(original, initial['strengths_m_minus2'])
+    data['designs']['reference'] = {'strengths_m_minus2': original.tolist()}
+    data['figure_reference'] = 'original_setting'
+    diagnostics = {}
     for name in ('reference', 'low_beta'):
         saved = data['designs'][name]
-        line = observation_copy(aperture_lattice(saved['strengths_m_minus2'], model=data['model']), data['model'])
+        k = np.asarray(saved['strengths_m_minus2'])
+        line = observation_copy(aperture_lattice(k, model=data['model']), data['model'])
         record = clearance_and_loss(line, np.zeros(5), JournalBeam().covariance())
         families = {}
         for row in record['rows']:
             key = row['name'] + ('_x' if row['plane'] == 0 else '_y')
             families[key] = min(families.get(key, np.inf), row['clearance_m'])
-        if families.keys() != saved['family_minimum_m'].keys():
-            raise ValueError('Re-evaluated aperture families differ from the frozen summary')
-        error = max(abs(families[k] - saved['family_minimum_m'][k]) for k in families)
-        if error > validation['absolute_tolerance_m']:
-            raise ValueError('Nominal clearances differ from the frozen summary')
+        if name == 'low_beta':
+            if families.keys() != saved['family_minimum_m'].keys():
+                raise ValueError('Re-evaluated aperture families differ from the optimized summary')
+            error = max(abs(families[k_] - saved['family_minimum_m'][k_]) for k_ in families)
+            if error > 1e-10:
+                raise ValueError('Optimized nominal clearances differ from the frozen summary')
+        else:
+            # An independent retained initial-setting check at the exit; unlike
+            # the old matched baseline, the original setting misses the target.
+            np.testing.assert_allclose(np.sqrt(np.diag(record['exit_covariance'])[[0, 2]]),
+                                       initial['sigma_m'][-1], rtol=0, atol=1e-8)
+            error = None
+        nominal = lattice_for(k)
+        exit_functions = nominal_observables(nominal)
+        residual = float(np.max(np.abs((exit_functions - TARGET) / SCALES)))
         saved['profile'] = record['rows']
-        validation['designs'][name] = {'max_family_clearance_difference_m': error,
-                                       'minimum_clearance_m': record['minimum_m'], 'profile_rows': len(record['rows'])}
+        diagnostics[name] = {'label': 'Original setting (reference)' if name == 'reference' else 'Optimized low beta',
+                             'strengths_m_minus2': k.tolist(), 'max_family_clearance_difference_m': error,
+                             'minimum_clearance_m': record['minimum_m'], 'active': record['active'],
+                             'exit_clearance_m': [r['clearance_m'] for r in record['rows'] if r['name'] == 'm4'],
+                             'peak_beta_64_m': spatial_profile(nominal, 64)['peak_beta_m'],
+                             'exit_lattice_functions': exit_functions.tolist(),
+                             'max_normalized_exit_residual': residual, 'satisfies_exit_match': residual < 1e-3,
+                             'profile_rows': len(record['rows'])}
+    return data, diagnostics
+
+
+def installed_clearance_figure(output):
+    """Re-evaluate original/optimized nominal profiles; retain old campaign identities."""
+    import hashlib
+    import at
+
+    output.mkdir(parents=True, exist_ok=False)
+    source = P / 'generated/round3_apertures.json'
+    data, diagnostics = nominal_original_comparison(json.loads(source.read_text()))
+    validation = {'scope': 'Original BTSConfig setting versus optimized low beta; nominal profiles only. Existing error campaigns still use their matched baseline.',
+                  'figure_reference': 'original_setting', 'pyat_version': at.__version__,
+                  'absolute_tolerance_m': 1e-10, 'designs': diagnostics,
+                  'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in
+                                    [source, P / 'generated/matching.json', Path(__file__),
+                                     ROOT / 'src/nkm_injection/bts_round3.py', ROOT / 'src/nkm_injection/bts_round2.py',
+                                     ROOT / 'src/nkm_injection/bts_journal.py', ROOT / 'src/nkm_injection/bts_lattice.py']}}
     validation['layout'] = render_clearance_profile(data, output)
     (output / 'clearance_plot_validation.json').write_text(json.dumps(validation, indent=2) + '\n')
-    print('Rendered distinguishable nominal clearance profiles and checked all frozen family minima.')
+    # Values in the new nominal table belong to the figure comparison, not to
+    # a relabeling or recomputation of the historical error ensembles.
+    text = '% Original-setting figure comparison; exported by scripts/export_bts_round3_assets.py.\n'
+    text += r'\begin{tabular}{lrr}\toprule' + '\n'
+    text += r'Observable & Original setting (reference) & Optimized low beta\\\midrule' + '\n'
+    metrics = [('Exit $'+r'\beta_x$ [\si{\metre}]', lambda d:d['exit_lattice_functions'][0]),
+               ('Exit $'+r'\beta_y$ [\si{\metre}]', lambda d:d['exit_lattice_functions'][1]),
+               ('Peak $'+r'\beta_x$ [\si{\metre}]', lambda d:d['peak_beta_64_m'][0]),
+               ('Peak $'+r'\beta_y$ [\si{\metre}]', lambda d:d['peak_beta_64_m'][1]),
+               ('Minimum clearance ['+r'\si{\milli\metre}]', lambda d:1e3*d['minimum_clearance_m'])]
+    for label, value in metrics:
+        text += label + ' & ' + ' & '.join(f'{value(diagnostics[n]):.4f}' for n in ('reference', 'low_beta')) + r'\\' + '\n'
+    text += 'Max. normalized exit residual & ' + ' & '.join(r'\num{'+f"{diagnostics[n]['max_normalized_exit_residual']:.3g}"+'}' for n in ('reference', 'low_beta')) + r'\\' + '\n'
+    text += r'\bottomrule\end{tabular}' + '\n'
+    (output / 'original_setting_comparison.tex').write_text(text)
+    print('Rendered original-setting reference versus optimized low beta; verified original identity and optimized minima.')
 
 
 def apertures():
@@ -175,7 +229,8 @@ def apertures():
         'InteriorRefMm': f"{1e3 * ref['interior_minimum_m']:.2f}", 'InteriorLowMm': f"{1e3 * low['interior_minimum_m']:.2f}",
         'SagittaBTwoMm': f"{1e3 * a['sagitta_m']['b2']:.1f}", 'SagittaBOneMm': f"{1e3 * a['sagitta_m']['b1']:.1f}",
         'BladeOneMm': f"{1e3 * blade[0.001]:.2f}", 'BladeTwoMm': f"{1e3 * blade[0.002]:.2f}", 'BladeThreeMm': f"{1e3 * blade[0.003]:.2f}"})
-    render_clearance_profile(a, P / 'figures')
+    comparison, _ = nominal_original_comparison(a)
+    render_clearance_profile(comparison, P / 'figures')
 
 
 def steering():
@@ -316,7 +371,7 @@ def sensitivity():
                     ' & '.join(f"{1e3 * d[n]['mean_clearance_m']:.3f}" for n in ('reference', 'robust')) + ' \\\\')
     (P / 'generated/round3_sensitivity_rows.tex').write_text(
         '\\begin{tabular}{rrrrrrr}\\toprule\nRoll & $\\sigma_{\\delta,j}$ & \\multicolumn{3}{c}{Predicted loss [\\%]} & '
-        '\\multicolumn{2}{c}{$\\bar c_{\\min}$ [mm]}\\\\\n{}[mrad] & [\\%] & Ref. & Low beta & Loss-based & Ref. & Loss-based \\\\\\midrule\n'
+        '\\multicolumn{2}{c}{$\\bar c_{\\min}$ [mm]}\\\\\n{}[mrad] & [\\%] & Matched & Low beta & Loss-based & Matched & Loss-based \\\\\\midrule\n'
         + '\n'.join(rows) + '\n\\bottomrule\\end{tabular}\n')
     loss = {(r['roll_rad'], r['energy_jitter']): r['designs'] for r in se['rows']}
     roll_effect = max(abs(loss[(a, e)][n]['predicted_loss_max_mean'] - loss[(b, e)][n]['predicted_loss_max_mean'])

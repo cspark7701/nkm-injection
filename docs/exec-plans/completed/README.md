@@ -745,3 +745,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 258. [**Milestone 258 — Update the BTS manuscript keywords**](258_bts_manuscript_keywords.md)
     - Set the requested beam dynamics, error analysis, Korea Light Source and transfer line keywords; rebuild the verified PDF without changing the scientific text.
+
+259. [**Milestone 259 — Use the original BTS setting as the optimization reference**](259_bts_original_setting_reference.md)
+    - Replace the reference in Figures 2–3 with original BTSConfig strengths, expose negative original clearance, add a nominal optimization table and reframe the study; preserve matched-only ensemble identities, with 15 tests and both builds passing.

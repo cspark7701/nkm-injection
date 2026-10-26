@@ -33,15 +33,7 @@ and `at.plot.plot_synopt`. Render only these assets into a new directory:
 python scripts/export_bts_at_figures.py --output-dir results/new_at_figures
 ```
 
-The renderer builds the frozen reference/refined designs, supplies the documented
-entrance Courant–Snyder parameters to `linopt2`, and subdivides every finite element 64
-times. It checks both the native optics and plotted curves against the selected
-independent-map profiles (absolute beta tolerance 0.0001 m, coordinate tolerance
-1e-10 m). `at_plot_validation.json` records input hashes, pyAT version and measured
-errors. The selected run agrees within 3e-11 m in beta. Native periodic-stability
-and noninteractive-display warnings are filtered specifically for this open
-transfer-line rendering; other warnings remain visible. Statistical and clearance
-figures remain Matplotlib plots because their inputs are campaign estimates.
+The renderer builds the original `BTSConfig` quadrupole setting and the frozen optimized low-beta setting. It supplies the documented entrance Courant–Snyder parameters to `linopt2` and subdivides every finite element 64 times. Native optics and plotted curves are checked against independent maps at all observations (absolute beta tolerance 0.0001 m, coordinate tolerance 1e-10 m). The original strengths are checked against the retained initial-setting record, and the optimized peaks against the spatial-convergence summary. `at_plot_validation.json` records both strength vectors, peak and exit lattice functions, matching residuals, source hashes and the measured map differences. The original setting is deliberately unmatched; the plotted comparison includes the optimization needed to reach the exit target. Native periodic-stability and noninteractive-display warnings are filtered specifically for open-line rendering; other warnings remain visible. Statistical and clearance figures remain Matplotlib plots because their inputs are campaign estimates.
 The historical supplement figures and all numerical campaign inputs are retained.
 
 To install a validated rendering, copy its two PDFs and validation JSON into
@@ -86,7 +78,7 @@ python scripts/export_bts_accuracy_tables.py --output-dir results/new_accuracy_t
 
 The output includes `accuracy_checks.tex`, `spatial_resolution.tex` and their input/output hash provenance. Copy these three files to `docs/paper_bts/generated/` before rebuilding the manuscript. The exporter distinguishes the archived nominal-map and symplectic tolerances from finite-case convergence diagnostics.
 
-The native AT figure renderer above adds grid lines to the reference/refined optics (Figure 2). If the ignored full campaign profiles are absent, it re-evaluates exact maps of the frozen strengths and checks their peaks against the tracked 64-subdivision summaries before comparing all native optics and plotted points. `at_plot_validation.json` identifies which path was used and records its sources.
+The native AT figure renderer above adds grid lines to the reference/refined optics (Figure 2). It evaluates exact maps of the original and optimized strengths before comparing all native optics and plotted points. `at_plot_validation.json` identifies which path was used and records its sources.
 
 Render only the nominal clearance comparison (Figure 3), with separate line/marker styles, a difference panel and a native AT magnet layout aligned to the same path coordinate:
 
@@ -94,6 +86,6 @@ Render only the nominal clearance comparison (Figure 3), with separate line/mark
 python scripts/export_bts_round3_assets.py --clearance-figure-dir results/new_clearance_figure
 ```
 
-This command re-evaluates the frozen nominal settings and checks every aperture-family minimum against `generated/round3_apertures.json` at an absolute tolerance of 1e-10 m. It does not rerun optimization or error campaigns. Install `round3_clearance_profile.pdf` and `clearance_plot_validation.json` from that new directory into `docs/paper_bts/figures/`. All numerical seeds remain in the configurations and archived evidence, while the manuscript omits their displayed values. Rebuild in new directories and refresh current asset hashes after installation; the historical referee attachment remains a frozen earlier snapshot.
+This command uses the original `BTSConfig` setting as the Figure 3 reference and recomputes its nominal aperture profile. It checks the optimized setting against every aperture-family minimum in `generated/round3_apertures.json` at an absolute tolerance of 1e-10 m; the original strengths and exit RMS sizes are checked against `generated/matching.json`. The scale displays negative clearance rather than hiding it on a positive logarithmic axis. It does not rerun optimization or error campaigns. Install `round3_clearance_profile.pdf` and `clearance_plot_validation.json` from that new directory into `docs/paper_bts/figures/`, and `original_setting_comparison.tex` into `docs/paper_bts/generated/`. The report and table distinguish the unmatched original reference from the optimized setting; the pre-existing error campaigns retain their matched baseline and are not relabeled as original-setting ensembles. All numerical seeds remain in the configurations and archived evidence, while the manuscript omits their displayed values. Rebuild in new directories and refresh current asset hashes after installation; the historical referee attachment remains a frozen earlier snapshot.
 
-The clearance-figure validation record also stores the layout length, element order and element entrance coordinates. Q1–Q3 in the layout identify the three quadrupole triplets; no magnet locations or numerical clearance results are changed by adding this panel.
+The clearance-figure validation record also stores the layout length, element order and element entrance coordinates. Q1–Q3 in the layout identify the three quadrupole triplets; the magnet locations remain common to both settings. The clearances are recomputed for the original reference and optimized strengths.

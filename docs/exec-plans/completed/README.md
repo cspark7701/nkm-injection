@@ -718,3 +718,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 249. [**Milestone 249 — Clarify the BTS abstract boundary conditions**](249_bts_abstract_boundary_wording.md)
     - State the injection-optics requirement and qualify endpoint size invariance by fixed beam parameters and prescribed matching; rebuild the 12-page PDF and verify current asset hashes.
+
+250. [**Milestone 250 — Use siunitx for BTS quantities**](250_bts_si_unit_formatting.md)
+    - Format explicit main/supplement quantities with siunitx, rebuild both PDFs through the layout gate and refresh verified asset hashes.

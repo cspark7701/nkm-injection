@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[margin=25mm]{geometry}
 \usepackage{amsmath,amssymb,booktabs,graphicx}
+\usepackage{siunitx}
 \usepackage[nopatch=footnote]{microtype}
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
@@ -28,18 +29,18 @@ A booster-to-storage-ring transfer line must transport the extracted booster bea
 while satisfying the optical requirements of storage-ring injection. For fixed beam
 parameters and prescribed entrance and exit optics, quadrupole rematching preserves
 the nominal beam sizes at both ends. We show for a
-21.8 m, 4 GeV line of the Korea Light Source design that the limiting restriction is
-the injection-septum blade, 1.48 mm from the injected beam in the geometry of a
+\SI{21.8}{\metre}, \SI{4}{\giga\electronvolt} line of the Korea Light Source design that the limiting restriction is
+the injection-septum blade, \SI{1.48}{\milli\metre} from the injected beam in the geometry of a
 companion nonlinear-kicker study, and that its nominal clearance is independent of
 the quadrupole settings. What the optics do control is where booster shot jitter
 arrives: with matched ends the exit jitter depends only on the horizontal phase
 advance, which exchanges position jitter at the blade for angle jitter at the
-injection kicker. After trajectory correction, which reduces the loss from 10\% to
-1.7\%, this jitter sets the remaining blade loss. A Gaussian loss model agrees with
-tracking within 1\% and serves as a design objective. Matched solutions reach only a
-200--232 degree phase-advance interval; a setting at its edge cuts the tracked loss on
-fresh machines from 2.30 to 0.69\% at 13\% more exit-angle jitter, whereas lowering the
-vertical peak beta by 45\% gives no resolved change, and the mean minimum clearance
+injection kicker. After trajectory correction, which reduces the loss from \SI{10}{\percent} to
+\SI{1.7}{\percent}, this jitter sets the remaining blade loss. A Gaussian loss model agrees with
+tracking within \SI{1}{\percent} and serves as a design objective. Matched solutions reach only a
+\SI{200}{\degree}--\SI{232}{\degree} phase-advance interval; a setting at its edge cuts the tracked loss on
+fresh machines from 2.30 to \SI{0.69}{\percent} at \SI{13}{\percent} more exit-angle jitter, whereas lowering the
+vertical peak beta by \SI{45}{\percent} gives no resolved change, and the mean minimum clearance
 used earlier cannot see either result. A dispersion-free exit is feasible, widens the
 reachable interval and lowers the predicted loss a further 65-fold. Aperture
 dimensions other than the blade, and the error levels, are declared assumptions.
@@ -50,7 +51,7 @@ advance; booster jitter; trajectory correction
 \section{Introduction}
 Diffraction-limited storage rings require control of the distribution delivered
 to their injection region~\cite{Hettel2014}. The Korea Light Source (KLS) design
-provides a 4 GeV context~\cite{Kim2025,Lee2024}. A booster-to-storage-ring (BTS)
+provides a \SI{4}{\giga\electronvolt} context~\cite{Kim2025,Lee2024}. A booster-to-storage-ring (BTS)
 line must deliver the booster beam through the injection septum, whose blade sits
 millimetres from the injected beam, with stable position and angle at the injection
 point. Published transfer-line studies treat these as distinct tasks. SLS 2.0
@@ -78,12 +79,12 @@ optimisation is used without algorithmic novelty claims.
 \section{Parametric model and physical observables}
 \subsection{Boundaries, coordinates and source limitations}
 The Accelerator Toolbox (AT)/pyAT model~\cite{Terebilo2001,Rogers2017} contains
-36 elements over 21.789 m, from marker m1 to marker m4 downstream of sept\_ex.
-It has nine 0.2 m quadrupoles in three triplets, three main bends, an extraction
+36 elements over \SI{21.789}{\metre}, from marker m1 to marker m4 downstream of sept\_ex.
+It has nine \SI{0.2}{\metre} quadrupoles in three triplets, three main bends, an extraction
 kicker and two model septa (Fig.~\ref{fig:layout}). Local coordinates are
-$(x,p_x,y,p_y,\delta,ct)$ with positions/path length in m, normalized canonical
-momenta approximately angles in rad, and $\delta=\Delta p/p_0$ dimensionless.
-The six design bend angles are $+7.5,+88.5,-111.701,+176,-111.701,+88.5$ mrad;
+$(x,p_x,y,p_y,\delta,ct)$ with positions/path length in \si{\metre}, normalized canonical
+momenta approximately angles in \si{\radian}, and $\delta=\Delta p/p_0$ dimensionless.
+The six design bend angles are \SIlist{+7.5;+88.5;-111.701;+176;-111.701;+88.5}{\milli\radian};
 reference geometry is held fixed when fields or particle momenta change.
 
 \begin{figure}[htbp]
@@ -102,33 +103,33 @@ from the ring optics is not documented in the source. A dispersion-free exit is
 examined in Section~\ref{sec:exit}.}\label{tab:boundary}
 \begin{tabular}{lrr}\toprule
 Observable & m1 entrance & m4 target\\\midrule
-$\beta_x,\beta_y$ [m] & 7.560000, 12.269000 & 2.336495, 4.256241\\
+$\beta_x,\beta_y$ [\si{\metre}] & 7.560000, 12.269000 & 2.336495, 4.256241\\
 $\alpha_x,\alpha_y$ [1] & 1.523100, $-1.654700$ & $-0.016335$, 0.017772\\
-$D_x$ [m], $D'_x$ [1] & 0.276200, $-0.065700$ & 0.080868, 0.047472\\
+$D_x$ [\si{\metre}], $D'_x$ [1] & 0.276200, $-0.065700$ & 0.080868, 0.047472\\
 \bottomrule\end{tabular}\end{table}
 
 Entrance and target functions (Table~\ref{tab:boundary}) are inherited configured
 values. The exit m4 is the injection-septum exit: the companion NKM study uses
-exactly these values as its injected beam and transports it 2.26 m to the kicker.
-The nonzero exit dispersion (80.9 mm, 47.5 mrad) is inherited from the configuration,
-not derived from the ring, whose dispersion at the injection kicker is about 0.3 mm;
-we therefore also examine a dispersion-free exit. Quadrupole family bounds, bore radius, pole-field limit, the 60 m
+exactly these values as its injected beam and transports it \SI{2.26}{\metre} to the kicker.
+The nonzero exit dispersion (\SI{80.9}{\milli\metre}, \SI{47.5}{\milli\radian}) is inherited from the configuration,
+not derived from the ring, whose dispersion at the injection kicker is about \SI{0.3}{\milli\metre};
+we therefore also examine a dispersion-free exit. Quadrupole family bounds, bore radius, pole-field limit, the \SI{60}{\metre}
 beta screening ceiling and square aperture limits are modelling assumptions,
 not verified hardware specifications. The legacy MAD-X line has ten active
 quadrupoles, different drift/bend/edge definitions and an unused additional
 quadrupole definition. It is not an equivalent independent lattice; our
 independent validation implements the identical AT sequence analytically.
 
-The original model placed four square apertures at markers m1--m4 (19.35 mm at
-the line ends, 30 mm at two interior markers) and none on the magnets. That
+The original model placed four square apertures at markers m1--m4 (\SI{19.35}{\milli\metre} at
+the line ends, \SI{30}{\milli\metre} at two interior markers) and none on the magnets. That
 four-station model and its hypothetical internal restrictions, studied in the
 earlier revision, are documented in the Supplement; this article uses the
 element-wise restrictions of Section~\ref{sec:apertures}.
 
 \subsection{Beam covariance and clearance}
-The new study uses the booster horizontal design input $\epsilon_x=7.67$ nm rad
-and $\sigma_\delta=0.106\%$~\cite{Lee2024}. The vertical input
-$\epsilon_y=0.767$ nm rad is an assumed 10\% ratio. Betatron coordinates and
+The new study uses the booster horizontal design input $\epsilon_x=\SI{7.67}{\nano\metre\radian}$
+and $\sigma_\delta=\SI{0.106}{\percent}$~\cite{Lee2024}. The vertical input
+$\epsilon_y=\SI{0.767}{\nano\metre\radian}$ is an assumed \SI{10}{\percent} ratio. Betatron coordinates and
 momentum are independent untruncated Gaussians before dispersion is added;
 initial transverse coupling is zero and $ct=0$ for this RF-free single pass.
 The transverse blocks of the complete covariance are
@@ -149,15 +150,15 @@ For each aperture plane with lower/upper edges $a_-,a_+$, we define
  \label{eq:clearance}
 \end{equation}
 Five sigma is a declared projected coverage metric, not complete containment of
-an unbounded Gaussian. Beta reduction in m must not be called a clearance
-increase in m. Historical optics-only ensembles use a separate conservative
-100/10 nm rad, 0.11\% beam configuration and are not pooled with this study.
+an unbounded Gaussian. Beta reduction in \si{\metre} must not be called a clearance
+increase in \si{\metre}. Historical optics-only ensembles use a separate conservative
+\SI{100}{\nano\metre\radian}/\SI{10}{\nano\metre\radian}, \SI{0.11}{\percent} beam configuration and are not pooled with this study.
 
-At 4 GeV the rigidity is approximately 13.34256 T m. For $K$ in m$^{-2}$,
-$G=K(B\rho)$ in T/m and $B_{\mathrm{pole}}=|G|r$ in T. Assumed bounds are
+At \SI{4}{\giga\electronvolt} the rigidity is approximately \SI{13.34256}{\tesla\metre}. For $K$ in \si{\per\square\metre},
+$G=K(B\rho)$ in \si{\tesla\per\metre} and $B_{\mathrm{pole}}=|G|r$ in \si{\tesla}. Assumed bounds are
 $|K|\le2.5$ for q11/q33 and $|K|\le3$ for the other quadrupoles. With the
-assumed 19.35 mm bore, the respective maxima are 33.356/40.028 T/m and
-0.645/0.775 T, below the assumed 1.2 T screening limit. This calculation
+assumed \SI{19.35}{\milli\metre} bore, the respective maxima are \SI{33.356}{\tesla\per\metre}/\SI{40.028}{\tesla\per\metre} and
+\SI{0.645}{\tesla}/\SI{0.775}{\tesla}, below the assumed \SI{1.2}{\tesla} screening limit. This calculation
 checks model consistency, not magnet engineering feasibility.
 
 \subsection{Element-wise restrictions}\label{sec:apertures}
@@ -167,28 +168,28 @@ checks each aperture at the element entrance. Interior envelopes are sampled for
 nominal profile on an observation-only copy (four subdivisions per quadrupole, eight
 per bend or septum), which is never tracked. The only restriction with a source is the injection-septum
 blade. In the companion NKM study the injected beam leaves the septum at
-$x=-19.478$ mm, with the stored-beam edge at $-16$ mm and a 2 mm blade, i.e.
-1.478 mm from the blade's outer face, chosen there as three rms sizes plus 1 mm.
-We place the blade at $x=+1.478$ mm in the injection septum and at the line end
+$x=\SI{-19.478}{\milli\metre}$, with the stored-beam edge at $\SI{-16}{\milli\metre}$ and a \SI{2}{\milli\metre} blade, i.e.
+\SI{1.478}{\milli\metre} from the blade's outer face, chosen there as three rms sizes plus \SI{1}{\milli\metre}.
+We place the blade at $x=\SI{+1.478}{\milli\metre}$ in the injection septum and at the line end
 (marker m4), on the side facing the stored beam. All other dimensions are declared
 assumptions and are swept. Bend chambers are taken as curved: the sagitta of the
-reference arc over its chord is \BtsRThreeSagittaBTwoMm\ mm in b2 and
-\BtsRThreeSagittaBOneMm\ mm in b1/b3, so a straight chamber would need that much
+reference arc over its chord is \SI{\BtsRThreeSagittaBTwoMm}{\milli\metre} in b2 and
+\SI{\BtsRThreeSagittaBOneMm}{\milli\metre} in b1/b3, so a straight chamber would need that much
 extra width. Clearances (Eq.~\ref{eq:clearance}) are evaluated at every aperture,
 with the projected halfwidth of a round aperture reduced by the other plane's
 centroid.
 
 \begin{table}[htbp]\centering
 \caption{Element-wise aperture model (halfwidths; for the injection septum, $a_x$ is
-the blade distance on the $+x$ side and the outer wall is at $-8.5$ mm). Only the
+the blade distance on the $+x$ side and the outer wall is at $\SI{-8.5}{\milli\metre}$). Only the
 blade position follows a source; all other values are assumptions.}\label{tab:apertures}
 \input{generated/round3_aperture_rows.tex}\end{table}
 
 \subsection{Errors, jitter and trajectory correction}\label{sec:steering}
 Static machine errors are independent Gaussian quadrupole gradient errors
-(0.1\% rms), $x/y$ offsets (100 micrometres), rolls (0.5 mrad) and dipole field
-errors (0.05\%). Each shot adds booster jitter at m1: entrance beta factors
-(5\%), centroid position 0.5 mm, angle 0.2 mrad and momentum 0.1\%, the latter
+(\SI{0.1}{\percent} rms), $x/y$ offsets (\SI{100}{\micro\metre}), rolls (\SI{0.5}{\milli\radian}) and dipole field
+errors (\SI{0.05}{\percent}). Each shot adds booster jitter at m1: entrance beta factors
+(\SI{5}{\percent}), centroid position \SI{0.5}{\milli\metre}, angle \SI{0.2}{\milli\radian} and momentum \SI{0.1}{\percent}, the latter
 carried by the entrance dispersion. These levels are modelling assumptions,
 identical to the earlier revision and to the booster jitter of the companion NKM
 study; their sensitivity is examined in Section~\ref{sec:sensitivity}.
@@ -198,10 +199,10 @@ monitor element is added. The horizontal knobs are field trims of the six existi
 dipoles (kext, sept\_in, b1--b3 and sept\_ex), applied as additional fixed-geometry
 dipole fields like the dipole errors. Horizontal readings are taken at existing
 element boundaries, after each quadrupole, at the injection-septum entrance and at
-the line end, with a static 50 micrometre rms reading error (offset and calibration
+the line end, with a static \SI{50}{\micro\metre} rms reading error (offset and calibration
 residual). The trims minimise the weighted readings (septum entrance and end weighted
 3) with the response of the error-free model line, Tikhonov-regularised and limited
-to $\pm1$ mrad of kick, in two passes. The correction uses no knowledge of the actual
+to $\pm\SI{1}{\milli\radian}$ of kick, in two passes. The correction uses no knowledge of the actual
 errors and does not act on shot jitter. The line has no vertical knob, so the vertical
 plane is not corrected. Every machine is evaluated uncorrected and corrected on
 identical particles.
@@ -213,10 +214,10 @@ Twiss functions and dispersion are inputs, and every admissible setting matches 
 exit to its target. For a centred nominal beam the clearance there is therefore
 $c_u=a-5\sqrt{\epsilon_u\beta_u+D_u^2\sigma_\delta^2}$ with the boundary values of
 Table~\ref{tab:boundary}, for every quadrupole setting $K$ that satisfies the match.
-With $a=19.35$ mm this gives 17.455/18.865 mm at the entrance and 18.555/19.064 mm
+With $a=\SI{19.35}{\milli\metre}$ this gives \SI{17.455}{\milli\metre}/\SI{18.865}{\milli\metre} at the entrance and \SI{18.555}{\milli\metre}/\SI{19.064}{\milli\metre}
 at the exit ($x$/$y$), exactly the values found numerically for both settings
-in the four-station model (Supplement). The two interior stations have 30 mm halfwidths and could
-limit only if a five-sigma size exceeded about 12.5 mm, which no matched setting
+in the four-station model (Supplement). The two interior stations have \SI{30}{\milli\metre} halfwidths and could
+limit only if a five-sigma size exceeded about \SI{12.5}{\milli\metre}, which no matched setting
 approaches. In this four-station model the nominal minimum clearance is thus
 analytically independent of $K$: the ``saturation'' of the minimum is a consequence
 of placing restrictions only where the optics are fixed, not a finding about the
@@ -246,12 +247,12 @@ Because both ends are matched, the horizontal transfer matrix from m1 to m4 is
 \end{equation}
 with $R(\mu_x)$ a rotation by the horizontal phase advance and $B_{1,4}$ the
 boundary Twiss values of Table~\ref{tab:boundary}. A shot centroid at m1 with
-covariance $J$ (position 0.5 mm, angle 0.2 mrad) therefore reaches the exit with
+covariance $J$ (position \SI{0.5}{\milli\metre}, angle \SI{0.2}{\milli\radian}) therefore reaches the exit with
 covariance $M_xJM_x^{\mathsf T}$ plus the momentum term $\sigma_{\delta,j}^2\mathbf d_4
 \mathbf d_4^{\mathsf T}$, which is the same for every matched setting. The
 quadrupoles influence the exit jitter only through $\mu_x$. Over a full period the
-exit position spread ranges from 0.26 to 0.95 mm and the angle spread from 0.12 to
-0.41 mrad, in opposite phase (Fig.~\ref{fig:jitter}, left): a matched line can move
+exit position spread ranges from \SI{0.26}{\milli\metre} to \SI{0.95}{\milli\metre} and the angle spread from \SI{0.12}{\milli\radian} to
+\SI{0.41}{\milli\radian}, in opposite phase (Fig.~\ref{fig:jitter}, left): a matched line can move
 booster jitter between position, which the septum blade sees, and angle, which the
 injection kicker sees, but cannot remove it. Steered static errors add a small
 residual (Section~\ref{sec:steering-results}).
@@ -270,7 +271,7 @@ transported jitter, the shot-averaged lost fraction is Eq.~(\ref{eq:loss}) with 
 summed covariance of beam and jitter. This makes a smooth, loss-relevant objective.
 The loss-based setting minimises the logarithm of the largest shot-averaged $P$ on
 the error-free line, subject to the six exit equalities, horizontal peak beta
-$\le60$ m (16 subdivisions, checked at 64) and the strength bounds, with SLSQP
+$\le\SI{60}{\metre}$ (16 subdivisions, checked at 64) and the strength bounds, with SLSQP
 (200 iterations, tolerance $10^{-10}$) from the reference, the refined low-beta
 setting and the best member of a bounded multistart pool. The setting is frozen
 before a fresh test on 200 steered machines (seeds 92001--92004), evaluated with
@@ -288,52 +289,51 @@ errors enter particle $\delta$ without double rescaling magnet fields.
 
 The original affine error maps omit chromatic derivatives about displaced
 trajectories. Comparing all 600 original shots with AT Jacobians expanded about
-the actual centroid changes station clearances by up to 78.43 micrometres,
-but shifts the paired mean by only $-0.155$ micrometres. Eight reference and three
-alternative active-station classifications change. The original mean 14.61
-micrometres and interval $[-17.91,+48.32]$ become 14.45 and $[-17.88,+48.10]$;
+the actual centroid changes station clearances by up to \SI{78.43}{\micro\metre},
+but shifts the paired mean by only $\SI{-0.155}{\micro\metre}$. Eight reference and three
+alternative active-station classifications change. The original mean \SI{14.61}{\micro\metre} and interval $[-17.91,+48.32]$ become 14.45 and $[-17.88,+48.10]$;
 the unresolved-benefit conclusion persists. New comparisons use centred AT maps.
 Moment probes are uncensored by aperture limits, so propagated moments describe
 the incoming distribution rather than a survivor-biased subset.
 
 Representative simultaneous-error cases compare probe steps $10^{-6}$--$10^{-8}$
 and forty/eighty integration steps. Their clearance changes are below
-$5\times10^{-6}$ micrometres. Product Gauss--Hermite quadrature at orders three,
+\SI{5e-6}{\micro\metre}. Product Gauss--Hermite quadrature at orders three,
 five and seven propagates the unrestricted Gaussian through nonlinear AT;
 five/seven convergence is negligible on the checked cases. Centred-linear versus
-nonlinear-moment discrepancy is at most 0.606 micrometres on four original extreme
-or representative shots and \BtsNewMomentError\ micrometres on two new machines
+nonlinear-moment discrepancy is at most \SI{0.606}{\micro\metre} on four original extreme
+or representative shots and \SI{\BtsNewMomentError}{\micro\metre} on two new machines
 for every regime/design. These finite-case checks are smaller than the reported
-effect intervals and illustrative 0.1 mm decision scale; they are not universal
+effect intervals and illustrative \SI{0.1}{\milli\metre} decision scale; they are not universal
 error bounds or Gaussian loss-tail certificates. Intentional scraping verifies
 first-loss accounting. Detailed checks are supplied in the supplement/evidence.
 
 Spatial observation is refined independently of integration steps. Exact maps
 sample each finite element at 8, 16, 32 and 64 subdivisions, applying bend edges
-only once. Original reference boundary peaks 31.44/50.75 m become 31.63/51.27 m;
-old low-beta peaks 33.58/28.18 m become 33.77/28.50 m. Reoptimizing vertical peak
+only once. Original reference boundary peaks \SI{31.44}{\metre}/\SI{50.75}{\metre} become \SI{31.63}{\metre}/\SI{51.27}{\metre};
+old low-beta peaks \SI{33.58}{\metre}/\SI{28.18}{\metre} become \SI{33.77}{\metre}/\SI{28.50}{\metre}. Reoptimizing vertical peak
 beta on sixteen subdivisions converges in 34 SLSQP iterations. The resulting
-64-subdivision peaks are 33.79/28.44 m; changes from 32 subdivisions are below
-0.00035 m. These are spatially converged sampled maxima, not exact analytical
-extrema or a global optimum. q32 remains at its assumed lower bound $-3$ m$^{-2}$.
+64-subdivision peaks are \SI{33.79}{\metre}/\SI{28.44}{\metre}; changes from 32 subdivisions are below
+\SI{0.00035}{\metre}. These are spatially converged sampled maxima, not exact analytical
+extrema or a global optimum. q32 remains at its assumed lower bound $\SI{-3}{\per\square\metre}$.
 
 \section{Results}
 \subsection{Active restrictions of the element-wise line}
 Figure~\ref{fig:refined} shows the reference and refined low-beta optics, and
 Fig.~\ref{fig:profile} the nominal five-sigma clearance at every aperture. The
 active restriction is the injection-septum channel at the blade:
-\BtsRThreeMinMm\ mm at the septum entrance and \BtsRThreeBladeMm\ mm at its exit,
+\SI{\BtsRThreeMinMm}{\milli\metre} at the septum entrance and \SI{\BtsRThreeBladeMm}{\milli\metre} at its exit,
 identical for both settings because the septum lies downstream of q33. The next
-restrictions are the extraction septum (\BtsRThreeSeptInYMm\ mm vertically,
-\BtsRThreeSeptInXMm\ mm horizontally), again upstream of every quadrupole. The
-closest interior restriction is the vertical gap of b2, with \BtsRThreeInteriorRefMm\
-and \BtsRThreeInteriorLowMm\ mm for the reference and low-beta settings. Sweeping
-the bend half-gap (7.5--12.5 mm) or the extraction-septum halfwidth (5--10 mm)
+restrictions are the extraction septum (\SI{\BtsRThreeSeptInYMm}{\milli\metre} vertically,
+\SI{\BtsRThreeSeptInXMm}{\milli\metre} horizontally), again upstream of every quadrupole. The
+closest interior restriction is the vertical gap of b2, with \SI{\BtsRThreeInteriorRefMm}{\milli\metre}
+and \SI{\BtsRThreeInteriorLowMm}{\milli\metre} for the reference and low-beta settings. Sweeping
+the bend half-gap (\SI{7.5}{\milli\metre}--\SI{12.5}{\milli\metre}) or the extraction-septum halfwidth (\SI{5}{\milli\metre}--\SI{10}{\milli\metre})
 does not change the minimum; the blade distance sets it directly
-(\BtsRThreeBladeOneMm, \BtsRThreeMinMm, \BtsRThreeBladeTwoMm\ and
-\BtsRThreeBladeThreeMm\ mm for 1, 1.478, 2 and 3 mm). In nominal terms the
-interior optics, including the 45\% lower vertical beta peak, therefore change
-only clearances of order 9 mm or more; whatever the quadrupoles can do for the
+(\SI{\BtsRThreeBladeOneMm}{\milli\metre}, \SI{\BtsRThreeMinMm}{\milli\metre}, \SI{\BtsRThreeBladeTwoMm}{\milli\metre} and
+\SI{\BtsRThreeBladeThreeMm}{\milli\metre} for \SI{1}{\milli\metre}, \SI{1.478}{\milli\metre}, \SI{2}{\milli\metre} and \SI{3}{\milli\metre}). In nominal terms the
+interior optics, including the \SI{45}{\percent} lower vertical beta peak, therefore change
+only clearances of order \SI{9}{\milli\metre} or more; whatever the quadrupoles can do for the
 limiting restriction must act through the response of the trajectory to errors
 and jitter.
 
@@ -347,18 +347,17 @@ vertical improvement also changes horizontal transport.}\label{fig:refined}\end{
 \caption{Nominal five-sigma clearance at every aperture of the element-wise line
 (logarithmic scale), horizontal (top) and vertical (bottom), for the reference and
 refined low-beta settings. The two settings coincide at both septa; they differ
-only where clearances exceed 9 mm. Design beam, no errors.}\label{fig:profile}\end{figure}
+only where clearances exceed \SI{9}{\milli\metre}. Design beam, no errors.}\label{fig:profile}\end{figure}
 
 \subsection{Trajectory correction}\label{sec:steering-results}
 Table~\ref{tab:steering} compares the uncorrected and corrected lines on 200
 machines with three shots of 2\,000 particles each (seeds 91001--91004); both
 settings and both variants see the same machines, shots and particles. Without
-correction the static errors displace the exit centroid by 1.2 mm rms, and
-\BtsRThreeRefUncLostPct\% of the particles are lost, almost all on the blade. With
-the dipole trims the exit position spread falls to \BtsRThreeRefCorExitXUm\
-micrometres and the angle spread to \BtsRThreeRefCorExitXpUrad\ microradians, and
-the loss to \BtsRThreeRefCorLostPct\% (\BtsRThreeLowCorLostPct\% for the low-beta
-setting); the rms trim is \BtsRThreeRefCorKickUrad\ microradians. Two trims close
+correction the static errors displace the exit centroid by \SI{1.2}{\milli\metre} rms, and
+\SI{\BtsRThreeRefUncLostPct}{\percent} of the particles are lost, almost all on the blade. With
+the dipole trims the exit position spread falls to \SI{\BtsRThreeRefCorExitXUm}{\micro\metre} and the angle spread to \SI{\BtsRThreeRefCorExitXpUrad}{\micro\radian}, and
+the loss to \SI{\BtsRThreeRefCorLostPct}{\percent} (\SI{\BtsRThreeLowCorLostPct}{\percent} for the low-beta
+setting); the rms trim is \SI{\BtsRThreeRefCorKickUrad}{\micro\radian}. Two trims close
 to the exit, b3 and the injection septum, steer both position and angle at the
 septum. The uncorrected vertical orbit stays far inside the vertical restrictions.
 
@@ -371,34 +370,34 @@ $x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
 {\small\input{generated/round3_steering_rows.tex}}\end{table}
 
 Two observations matter for the design question. First, after correction the exit
-centroid spread, about 0.68 mm and 0.37 mrad, is mainly that of the booster jitter,
+centroid spread, about \SI{0.68}{\milli\metre} and \SI{0.37}{\milli\radian}, is mainly that of the booster jitter,
 and it sets the remaining blade loss. Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
-largest mean clearance (\BtsRThreeRefUncClear\ mm against \BtsRThreeRefCorClear\ mm)
+largest mean clearance (\SI{\BtsRThreeRefUncClear}{\milli\metre} against \SI{\BtsRThreeRefCorClear}{\milli\metre})
 and six times the loss, because a static offset away from the one-sided blade raises
 the mean while offsets towards it are lost. The Gaussian loss prediction, by
-contrast, agrees with the tracked loss within \BtsRThreePredAgreePct\% (relative) in
+contrast, agrees with the tracked loss within \SI{\BtsRThreePredAgreePct}{\percent} (relative) in
 every row. The reference and low-beta settings are indistinguishable in every
 column.
 
 \subsection{Reachable phase advance and the loss-based setting}\label{sec:design}
 Bounded least-squares matching from \BtsRThreePoolStarts\ random starts finds
 \BtsRThreePoolSolutions\ matched settings within the strength bounds. Their horizontal
-phase advance spans only \BtsRThreeMuMin--\BtsRThreeMuMax\ degrees: the exit match,
+phase advance spans only \SI{\BtsRThreeMuMin}{\degree}--\SI{\BtsRThreeMuMax}{\degree}: the exit match,
 with its dispersion targets and the bend layout, pins $\mu_x$ to an interval in
 which booster jitter falls largely on the exit position. The reference
-(\BtsRThreeRefMu\ degrees) and low-beta (\BtsRThreeLowMu\ degrees) settings lie near
+(\SI{\BtsRThreeRefMu}{\degree}) and low-beta (\SI{\BtsRThreeLowMu}{\degree}) settings lie near
 its middle. Within the interval the predicted shot-averaged blade loss varies by more
 than a factor of ten (Fig.~\ref{fig:jitter}, right) and decreases monotonically
 towards the lower edge.
 
-The loss-based search ends at that edge, $\mu_x=\BtsRThreeRobustMu$ degrees. All three
+The loss-based search ends at that edge, $\mu_x=\SI{\BtsRThreeRobustMu}{\degree}$. All three
 SLSQP starts reach the 200-iteration limit; only the start from the best pool member
-is feasible, and it improves that member by \BtsRThreePoolBestGainPct\%. The setting
+is feasible, and it improves that member by \SI{\BtsRThreePoolBestGainPct}{\percent}. The setting
 is therefore a feasible point at the boundary of the reachable interval, not a
-certified optimum. Its predicted shot-averaged loss is \BtsRThreeRobustShotPct\%
-against \BtsRThreeRefShotPct\% for the reference, because its exit position jitter is
-\BtsRThreeRobustJxUm\ instead of \BtsRThreeRefJxUm\ micrometres (Table~\ref{tab:design}).
+certified optimum. Its predicted shot-averaged loss is \SI{\BtsRThreeRobustShotPct}{\percent}
+against \SI{\BtsRThreeRefShotPct}{\percent} for the reference, because its exit position jitter is
+\BtsRThreeRobustJxUm\ instead of \SI{\BtsRThreeRefJxUm}{\micro\metre} (Table~\ref{tab:design}).
 
 \begin{table}[htbp]\centering
 \caption{Frozen settings and their fresh test (200 steered machines, 3 shots,
@@ -408,27 +407,27 @@ $\bar P$: shot-averaged loss on the error-free line; Lost and Pred.: tracked and
 predicted loss on the test machines; Blocks: machines with any loss.}\label{tab:design}
 {\small\input{generated/round3_design_rows.tex}}\end{table}
 
-On the fresh machines the tracked loss is \BtsRThreeTestRefPct\%, \BtsRThreeTestLowPct\%
-and \BtsRThreeTestRobustPct\% for the reference, low-beta and loss-based settings,
-each within 1\% of its prediction. The loss-based setting changes the loss by
-\BtsRThreeTestRobustDiff\ percentage points against the reference (pointwise 95\%
+On the fresh machines the tracked loss is \SI{\BtsRThreeTestRefPct}{\percent}, \SI{\BtsRThreeTestLowPct}{\percent}
+and \SI{\BtsRThreeTestRobustPct}{\percent} for the reference, low-beta and loss-based settings,
+each within \SI{1}{\percent} of its prediction. The loss-based setting changes the loss by
+\BtsRThreeTestRobustDiff\ percentage points against the reference (pointwise \SI{95}{\percent}
 machine-cluster interval [\BtsRThreeTestRobustDiffLo, \BtsRThreeTestRobustDiffHi]),
 a factor of \BtsRThreeLossRatio; low beta changes it by \BtsRThreeTestLowDiff\
 [\BtsRThreeTestLowDiffLo, \BtsRThreeTestLowDiffHi], unresolved. Its mean minimum
-clearance changes by only \BtsRThreeTestRobustClear\ mm
+clearance changes by only \SI{\BtsRThreeTestRobustClear}{\milli\metre}
 [\BtsRThreeTestRobustClearLo, \BtsRThreeTestRobustClearHi], also unresolved: the
 quantity used in the earlier revision cannot see this loss reduction. The price is
-an exit angle jitter larger by \BtsRThreeAnglePenaltyPct\%
-(\BtsRThreeRobustJxpUrad\ against \BtsRThreeRefJxpUrad\ microradians), which the
+an exit angle jitter larger by \SI{\BtsRThreeAnglePenaltyPct}{\percent}
+(\BtsRThreeRobustJxpUrad\ against \SI{\BtsRThreeRefJxpUrad}{\micro\radian}), which the
 injection kicker must accept. The loss is concentrated in shots whose entrance jitter
 is two to three standard deviations: the five worst of the 200 reference test machines
-contribute \BtsRThreeTopFiveSharePct\% of its loss, the worst losing
-\BtsRThreeWorstMachinePct\% per shot on average. The machine-cluster intervals
+contribute \SI{\BtsRThreeTopFiveSharePct}{\percent} of its loss, the worst losing
+\SI{\BtsRThreeWorstMachinePct}{\percent} per shot on average. The machine-cluster intervals
 account for this heavy tail, and the population mean differs between independently
 seeded populations (Section~\ref{sec:sensitivity}).
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
-\caption{Left: rms exit position (solid, mm) and angle (dashed, mrad) jitter from
+\caption{Left: rms exit position (solid, \si{\milli\metre}) and angle (dashed, \si{\milli\radian}) jitter from
 Eq.~(\ref{eq:transfer}) versus horizontal phase advance, with the reachable intervals
 for the configured exit (blue) and a dispersion-free exit (orange; its momentum term
 differs slightly). Right: predicted shot-averaged blade loss of
@@ -438,33 +437,33 @@ loss on steered test machines (crosses), which also include static residuals.}
 
 \subsection{Exit target and dispersion}\label{sec:exit}
 At m4 the configured target gives the injected beam an rms divergence of
-\BtsRThreeTotDivUrad\ microradians: \BtsRThreeBetDivUrad\ from the betatron
-emittance and \BtsRThreeDispDivUrad\ from $D'_x\sigma_\delta$. The 0.1\% shot
-energy jitter adds a centroid angle of \BtsRThreeEJitAngUrad\ microradians and a
-position of \BtsRThreeEJitPosUm\ micrometres rms. Both terms are fixed by the
+\SI{\BtsRThreeTotDivUrad}{\micro\radian}: \BtsRThreeBetDivUrad\ from the betatron
+emittance and \BtsRThreeDispDivUrad\ from $D'_x\sigma_\delta$. The \SI{0.1}{\percent} shot
+energy jitter adds a centroid angle of \SI{\BtsRThreeEJitAngUrad}{\micro\radian} and a
+position of \SI{\BtsRThreeEJitPosUm}{\micro\metre} rms. Both terms are fixed by the
 target, the same for every matched setting, and absent for a dispersion-free exit.
 
 Matching the same Twiss functions with $D_x=D'_x=0$ at m4 is feasible within the
 strength bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\
-bounded random starts keep both peak betas below 60 m (smallest larger peak
-\BtsRThreeFreeMinPeak\ m). The dispersion-free target also widens the reachable
-phase advance to \BtsRThreeFreeMuMin--\BtsRThreeFreeMuMax\ degrees
+bounded random starts keep both peak betas below \SI{60}{\metre} (smallest larger peak
+\SI{\BtsRThreeFreeMinPeak}{\metre}). The dispersion-free target also widens the reachable
+phase advance to \SI{\BtsRThreeFreeMuMin}{\degree}--\SI{\BtsRThreeFreeMuMax}{\degree}
 (Fig.~\ref{fig:jitter}), which includes phases where booster jitter falls mainly on
-the exit angle. The best of these solutions ($\mu_x=\BtsRThreeFreeBestMu$ degrees,
-peak betas \BtsRThreeFreeBestPeakX/\BtsRThreeFreeBestPeakY\ m) has a shot-averaged
+the exit angle. The best of these solutions ($\mu_x=\SI{\BtsRThreeFreeBestMu}{\degree}$,
+peak betas \SI{\BtsRThreeFreeBestPeakX}{\metre}/\SI{\BtsRThreeFreeBestPeakY}{\metre}) has a shot-averaged
 blade loss of $\BtsRThreeFreeBestLoss$, \BtsRThreeFreeGainFactor\ times below the
 loss-based setting with the configured target. Its exit jitter is
-\BtsRThreeFreeBestJxUm\ micrometres and \BtsRThreeFreeBestJxpUrad\ microradians,
-and the beam divergence falls to \BtsRThreeBetDivUrad\ microradians. These numbers
+\SI{\BtsRThreeFreeBestJxUm}{\micro\metre} and \SI{\BtsRThreeFreeBestJxpUrad}{\micro\radian},
+and the beam divergence falls to \SI{\BtsRThreeBetDivUrad}{\micro\radian}. These numbers
 are analytic, from the same Gaussian model whose predictions agreed with tracking
-within 1\% above; the dispersion-free settings were not tracked on test machines.
+within \SI{1}{\percent} above; the dispersion-free settings were not tracked on test machines.
 
 The exit target is thus the BTS design quantity with the largest leverage on
 injection. Removing the exit dispersion lowers the injected beam's divergence by a
 quarter and lets the line put booster jitter where the septum blade does not see
-it, but the angle jitter, \BtsRThreeFreeBestJxpUrad\ microradians against
+it, but the angle jitter, \SI{\BtsRThreeFreeBestJxpUrad}{\micro\radian} against
 \BtsRThreeRefJxpUrad\ for the reference, then arrives at the injection kicker. In the
-companion study the kicker's 80\% angular acceptance is 0.44 mrad, and once the static
+companion study the kicker's \SI{80}{\percent} angular acceptance is \SI{0.44}{\milli\radian}, and once the static
 vertical injection error left by transfer-line magnet errors is removed, booster position
 and angle jitter are the dominant kicker-specific capture losses. This line has no
 vertical correction; correcting that vertical error will be addressed in a future study.
@@ -472,16 +471,16 @@ Whether the trade favours the blade or the kicker must be decided with the ring,
 within the line.
 
 \subsection{Sensitivity to the assumed error levels}\label{sec:sensitivity}
-The 0.5 mrad rms quadrupole roll is large for a transfer line, and 0.1\% rms shot
+The \SI{0.5}{\milli\radian} rms quadrupole roll is large for a transfer line, and \SI{0.1}{\percent} rms shot
 energy jitter is at the high end of booster performance. Table~\ref{tab:sensitivity}
-repeats the steered evaluation with rolls of 0.1, 0.2 and 0.5 mrad and energy jitter
-of 0.05 and 0.1\% on another 200 independently seeded machines (analytic loss and
+repeats the steered evaluation with rolls of \SI{0.1}{\milli\radian}, \SI{0.2}{\milli\radian} and \SI{0.5}{\milli\radian} and energy jitter
+of 0.05 and \SI{0.1}{\percent} on another 200 independently seeded machines (analytic loss and
 clearance, no particle tracking). The roll level changes the predicted loss by at most
 \BtsRThreeRollEffectPct\ percentage points: rolls couple a small part of the
 horizontal motion into the vertical plane, whose restrictions keep several
 millimetres of clearance, and leave the horizontal blade loss unchanged. Halving the
-energy jitter lowers the reference loss from \BtsRThreeEnergyRefFull\% to
-\BtsRThreeEnergyRefHalf\%, because its 81 micrometre exit contribution is small
+energy jitter lowers the reference loss from \SI{\BtsRThreeEnergyRefFull}{\percent} to
+\SI{\BtsRThreeEnergyRefHalf}{\percent}, because its \SI{81}{\micro\metre} exit contribution is small
 compared with the betatron jitter. The ranking of the settings is the same at every
 level. On this population the loss-based setting is \BtsRThreeSensRatio\ times below
 the reference, against \BtsRThreeLossRatio\ on the tracked test population: the
@@ -508,20 +507,19 @@ trims nearest the exit steer both position and angle at the septum. What remains
 is booster shot jitter, and for matched ends its arrival at the exit depends only on
 the horizontal phase advance. The line chooses whether the jitter appears as
 position at the blade or as angle at the injection kicker, but it cannot remove it.
-For the configured exit, matched solutions reach only a 32 degree interval of phase
-advance, and the best setting in it reduces the blade loss 3.3-fold at 13\% more
+For the configured exit, matched solutions reach only a \SI{32}{\degree} interval of phase
+advance, and the best setting in it reduces the blade loss 3.3-fold at \SI{13}{\percent} more
 angle jitter. A dispersion-free exit widens the interval and lowers the predicted loss
 much further, again at the cost of angle jitter. The choice between blade loss and
 injection-angle jitter belongs to the injection design as a whole: for the companion
-kicker, whose 80\% angular acceptance is 0.44 mrad, exit-angle jitter of 0.33--0.39
-mrad is of the same order, so the trade must be evaluated with ring capture, and the
+kicker, whose \SI{80}{\percent} angular acceptance is \SI{0.44}{\milli\radian}, exit-angle jitter of \SI{0.33}{\milli\radian}--\SI{0.39}{\milli\radian} is of the same order, so the trade must be evaluated with ring capture, and the
 booster's angle stability bounds what either choice can achieve.
 
 Two methodological points carry over. The mean minimum five-sigma clearance used in
 the earlier revision does not rank settings by loss: it rewards static offsets away
 from a one-sided restriction and is blind to the jitter tail. A Gaussian loss
 probability from the propagated centroid and covariance agrees with tracked losses
-within 1\%, is smooth, and can be optimised directly. The phase-advance view also
+within \SI{1}{\percent}, is smooth, and can be optimised directly. The phase-advance view also
 gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
 booster jitter lands, and compare with the restriction and the kicker acceptance.
 

@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[margin=25mm]{geometry}
 \usepackage{amsmath,amssymb,booktabs,graphicx}
+\usepackage{siunitx}
 \usepackage[nopatch=footnote]{microtype}
 \usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
@@ -31,7 +32,7 @@ do not establish optimizer reliability, search topology or feasible volume.
 \caption{Historical replay outcomes. The initial start is nominal, not random.
 J is the scaled residual sum of squares. Feasibility is assessed after search.}\label{tab:starts}
 \begin{tabular}{lrrrr}\toprule
-Start & J & peak $\beta_x$ [m] & peak $\beta_y$ [m] & outcome\\\midrule
+Start & J & peak $\beta_x$ [\si{\metre}] & peak $\beta_y$ [\si{\metre}] & outcome\\\midrule
 Nominal & $1.29\times10^{-13}$ & 31.437 & 50.746 & feasible success\\
 Random 1 & $1.21\times10^{-12}$ & 25.329 & 62.556 & infeasible success\\
 Random 2 & 1284.86 & 69.921 & 65.043 & budget failure\\
@@ -44,8 +45,8 @@ dispersion and projected RMS sizes appear in Fig.~\ref{fig:optics}. Beta peaks
 reported here are element-boundary samples rather than continuous maxima.
 
 \begin{table}[htbp]\centering
-\caption{Reference and alternative settings [m$^{-2}$], with reference gradient
-[T/m] and assumed-bore pole field [T]. Negative K indicates defocusing in x.}\label{tab:strengths}
+\caption{Reference and alternative settings [\si{\per\square\metre}], with reference gradient
+[\si{\tesla\per\metre}] and assumed-bore pole field [\si{\tesla}]. Negative K indicates defocusing in x.}\label{tab:strengths}
 \begin{tabular}{lrrrr}\toprule
 Quad & Reference K & Alternative K & Reference G & $|B_{\mathrm{pole}}|$\\\midrule
 q11 & -0.367525 & 0.060274 & -4.904 & 0.095 \\
@@ -65,12 +66,12 @@ RMS sizes for the design beam. The dotted beta line is the assumed optical
 screening ceiling, not a vacuum-chamber edge.}\label{fig:optics}\end{figure}
 
 For local sensitivity diagnostics we normalize rows by the optical scales and
-columns by an assumed common $0.01$ m$^{-2}$ tuning increment:
+columns by an assumed common $\SI{0.01}{\per\square\metre}$ tuning increment:
 $A_{ij}=(\partial O_i/\partial K_j)\Delta K_j/\sigma_i$.
-Central steps $10^{-4},10^{-5},10^{-6}$ m$^{-2}$ converge; the six active modes
+Central steps \SIlist{1e-4;1e-5;1e-6}{\per\square\metre} converge; the six active modes
 and three-dimensional local null space have condition number
 \BtsResponseCondition. Six finite small-mode perturbations remain inside bounds
-and agree with linear predictions within 1\%. This differs from the archived
+and agree with linear predictions within \SI{1}{\percent}. This differs from the archived
 mixed-unit condition number 1421.636. Neither Euclidean singular-vector
 orthogonality nor a local null space guarantees finite optical decoupling.
 Achieved commissioning correction claims are withdrawn: measurements, actuator
@@ -79,14 +80,14 @@ calibration and estimation uncertainty have not been established.
 \section{Historical optical statistics}
 Reconstruction of all 550,000 historical observations confirms five optical-rule
 exceedances, no invalid evaluations, and compatible model/target/error inputs
-across four runs. The rule is $\beta_{x,\max}$ or $\beta_{y,\max}>60.01$ m,
+across four runs. The rule is $\beta_{x,\max}$ or $\beta_{y,\max}>\SI{60.01}{\metre}$,
 or $\mathcal M_x+\mathcal M_y>2.05$, where
 $\mathcal M_u=\tfrac12\mathrm{Tr}(\Sigma_{u,t}^{-1}\Sigma_{u,o})-1$
 uses unit-emittance transverse matrices. All five failures exceed vertical beta
-only (60.23--61.64 m); they are not physical losses.
+only (\SI{60.23}{\metre}--\SI{61.64}{\metre}); they are not physical losses.
 
 The descriptive optical-failure estimate is $5/550000=9.09\times10^{-6}$ with
-exact asymmetric 95\% limits $[2.95\times10^{-6},2.12\times10^{-5}]$; Wilson
+exact asymmetric \SI{95}{\percent} limits $[2.95\times10^{-6},2.12\times10^{-5}]$; Wilson
 limits are $[3.8831\times10^{-6},2.1283\times10^{-5}]$~\cite{Wilson1927,Clopper1934}.
 The pooled horizontal median \BtsMedianX\ has the order-statistic interval
 [\BtsMedianXLo, \BtsMedianXHi], not a pooled-bootstrap interval. Reconstructed
@@ -105,7 +106,7 @@ alignment/coupling tolerances. Historical and new-model data remain separate.
 \section{Finite loss events and numerical validation}
 The new inference export contains exact block binomial intervals and independent
 reconstruction of all nine paired clearance intervals. Zero losses among 200
-independent three-shot blocks gives one-sided 95\% upper event probability
+independent three-shot blocks gives one-sided \SI{95}{\percent} upper event probability
 $1-0.05^{1/200}=0.014867$. A two-sided descriptive binomial calculation for zero
 losses among 1.2 million particles gives upper probability $3.0741\times10^{-6}$;
 this requires an independence assumption not justified as unconditional machine
@@ -133,9 +134,9 @@ apertures; the numbers here are retained for traceability.
 
 \subsection{Frozen strategies and hypothetical restrictions}
 All settings share entrance/target optics, quadrupole bounds and beam assumptions.
-Six exit residuals are scaled by $(0.05\,\mathrm m,0.05\,\mathrm m,0.01,0.01,
-0.002\,\mathrm m,0.001)$. Nominal optimization imposes six residual equalities
-and horizontal peak beta $\le60$ m. Direct clearance uses a millimetre-scaled
+Six exit residuals are scaled by $(\SI{0.05}{\metre},\SI{0.05}{\metre},0.01,0.01,
+\SI{0.002}{\metre},0.001)$. Nominal optimization imposes six residual equalities
+and horizontal peak beta $\le\SI{60}{\metre}$. Direct clearance uses a millimetre-scaled
 epigraph: maximize $t$ subject to $t\le c_u(s)$ at every station/plane.
 Two starts (reference and refined low beta) use 200-iteration budgets and
 $10^{-8}$ termination tolerance. All six searches converge; their iterations,
@@ -145,21 +146,20 @@ Exit residuals satisfy declared scales and horizontal screening is checked at
 change; their tiny numerical effects are not interpreted as physical gains.
 
 Three predeclared regimes keep entrance/exit limits unchanged: baseline;
-a horizontal 3 mm halfwidth only at m2 ($s=6.833$ m); and a vertical 1.5 mm
-halfwidth only at m3 ($s=11.761$ m). Other limits remain unchanged. These narrow
+a horizontal \SI{3}{\milli\metre} halfwidth only at m2 ($s=\SI{6.833}{\metre}$); and a vertical \SI{1.5}{\milli\metre}
+halfwidth only at m3 ($s=\SI{11.761}{\metre}$). Other limits remain unchanged. These narrow
 internal restrictions are deliberate hypothetical stress cases, not surveyed
-hardware. A nominal halfwidth sweep of 1.5, 2, 3, 5 and 30 mm displays changes
+hardware. A nominal halfwidth sweep of \SI{1.5}{\milli\metre}, \SI{2}{\milli\metre}, \SI{3}{\milli\metre}, \SI{5}{\milli\metre} and \SI{30}{\milli\metre} displays changes
 in the active restriction without using test outcomes for design selection.
 The legacy lattice shares an aperture object at its internal stations; the new
 driver detaches the selected station before editing its limit. An invalid initial
 run that inadvertently narrowed both stations is retained separately and excluded.
 
 Settings are frozen before a new independently seeded test. Static errors are
-independent Gaussian quadrupole relative gradients 0.1\%, x/y offsets 100
-micrometres, rolls 0.5 mrad and dipole relative fields 0.05\%. Each of 200
-machines has three independent shots with 5\% entrance beta fluctuations
-(alpha fixed), horizontal position RMS 0.5 mm, angle RMS 0.2 mrad and centroid
-momentum RMS 0.1\%. These error levels remain modelling assumptions. Static,
+independent Gaussian quadrupole relative gradients \SI{0.1}{\percent}, x/y offsets \SI{100}{\micro\metre}, rolls \SI{0.5}{\milli\radian} and dipole relative fields \SI{0.05}{\percent}. Each of 200
+machines has three independent shots with \SI{5}{\percent} entrance beta fluctuations
+(alpha fixed), horizontal position RMS \SI{0.5}{\milli\metre}, angle RMS \SI{0.2}{\milli\radian} and centroid
+momentum RMS \SI{0.1}{\percent}. These error levels remain modelling assumptions. Static,
 shot and particle seeds are 82002, 82003 and 82004, respectively. Each shot has
 2,000 untruncated Gaussian particles with the complete design-beam covariance;
 all nine regime/strategy combinations receive common errors and particle draws.
@@ -168,25 +168,25 @@ particle transports, 1.2 million per combination, not 10.8 million machines.
 
 The primary contrast is alternative minus reference in machine-average minimum
 five-sigma clearance. Ten thousand paired machine-cluster bootstrap replicates
-(seed 82005) give pointwise descriptive 95\% percentile intervals. No simultaneous
+(seed 82005) give pointwise descriptive \SI{95}{\percent} percentile intervals. No simultaneous
 coverage claim is made across strategies/regimes. The predeclared useful-effect
-scale 0.1 mm is illustrative, not a hardware requirement. First loss is nonfinite
+scale \SI{0.1}{\milli\metre} is illustrative, not a hardware requirement. First loss is nonfinite
 $x$ after an element; all six coordinates of survivors must be finite. Element
 exit observations and first-loss indices are retained. Transmission is a separate
 observable. No additional samples were added after inspecting outcomes.
 
 \subsection{Saturation and heterogeneous original outcomes}
-At zero error, both original settings have minimum clearance 17.455 mm at the
+At zero error, both original settings have minimum clearance \SI{17.455}{\milli\metre} at the
 entrance (Table~\ref{tab:stations}), the analytic boundary value of
 Section 3.1 of the article. The full station audit reconstructs all
-600 saved paired minima within $10^{-12}$ m. Every one of the 406 exact shot
+600 saved paired minima within \SI{1e-12}{\metre}. Every one of the 406 exact shot
 ties has the horizontal entrance active in both designs. The reference has
 449 entrance-x, 103 exit-x and 48 exit-y limiting shots; the old low-beta setting
 has 467, 113 and 20 (Fig.~\ref{fig:station}). Neither internal station limits
 that original ensemble.
 
 \begin{table}[htbp]\centering
-\caption{Original nominal station clearances [mm], before spatial reoptimization.
+\caption{Original nominal station clearances [\si{\milli\metre}], before spatial reoptimization.
 R denotes reference and L the old low-beta setting. The entrance caps the full minimum.}
 \label{tab:stations}
 \input{generated/round2_station_rows.tex}\end{table}
@@ -198,10 +198,10 @@ entrance saturation and exit switches. These retrospective data are separate
 from the new test and refined setting.}\label{fig:station}\end{figure}
 
 The 200 original machine averages include 54 gains, 53 losses and 93 exact ties.
-Difference standard deviation is 0.236 mm, with 5th/median/95th percentiles
-$-0.322/0/+0.403$ mm and range $-0.923$ to $+1.401$ mm. Its near-zero mean
+Difference standard deviation is \SI{0.236}{\milli\metre}, with 5th/median/95th percentiles
+\SI{-0.322}{\milli\metre}/\SI{0}{\milli\metre}/\SI{+0.403}{\milli\metre} and range \SI{-0.923}{\milli\metre} to \SI{+1.401}{\milli\metre}. Its near-zero mean
 therefore conceals offsetting responses. Excluding the entrance gives a
-secondary downstream-only mean difference $+0.056$ mm; this diagnostic does
+secondary downstream-only mean difference $\SI{+0.056}{\milli\metre}$; this diagnostic does
 not replace the original full-minimum estimand. Historical optical-rule failures,
 matching replay and local response diagnostics are retained in the supplement.
 
@@ -209,7 +209,7 @@ matching replay and local response diagnostics are retained in the supplement.
 Figure~\ref{fig:phase-space} provides a nominal particle-level view of the
 configured boundary match. A shared sample of 20\,000 particles from the full
 Gaussian entrance covariance is tracked once through each frozen baseline
-setting at 4 GeV, with seed 83001 and 40 integration steps per magnet.
+setting at \SI{4}{\giga\electronvolt}, with seed 83001 and 40 integration steps per magnet.
 No static machine errors or shot jitter are applied. Observations are made
 before the first element at m1 and after the last element at m4; all four
 configured aperture stations remain active. A particle is counted as lost if
@@ -226,7 +226,7 @@ change their projected sizes during transport. The reference and refined
 low-beta exit clouds are nearly coincident, consistently with their common
 boundary match; reducing an interior vertical beta peak does not imply a
 smaller vertical beam at the fixed exit. Tracked transverse RMS values agree
-with independent linear transport of the same sample to within 0.009\% in
+with independent linear transport of the same sample to within \SI{0.009}{\percent} in
 this nominal case. The clouds illustrate transport and boundary matching,
 not a fitted gain in brightness or a new robustness estimate.
 
@@ -234,8 +234,8 @@ not a fitted gain in brightness or a new robustness estimate.
 \includegraphics[width=\linewidth]{figures/phase_space.pdf}
 \caption{Nominal transverse phase-space distributions: $x$--$x'$ (top) and
 $y$--$y'$ (bottom), at the shared entrance (left), reference exit (centre)
-and refined low-beta exit (right). Positions are in mm and geometric slopes
-in mrad; axes share scales within each row. Blue points show all 20\,000
+and refined low-beta exit (right). Positions are in \si{\milli\metre} and geometric slopes
+in \si{\milli\radian}; axes share scales within each row. Blue points show all 20\,000
 tracked particles per panel. Black curves, drawn with Accelerator Toolbox's
 covariance plotting function, are sample-centred two-RMS covariance ellipses;
 they are not aperture boundaries. Seed 83001; no machine errors or shot jitter.
@@ -244,40 +244,40 @@ Both settings have zero sampled losses at the configured stations.}
 
 \subsection{Aperture-dependent strategy outcomes on new machines}
 The spatially refined beta profiles are shown in the main article.
-The fresh baseline low-beta change is \BtsNewBaselineMean\ mm with interval
-[\BtsNewBaselineLo, \BtsNewBaselineHi] mm, again unresolved. This does not prove
+The fresh baseline low-beta change is \SI{\BtsNewBaselineMean}{\milli\metre} with interval
+[\SI{\BtsNewBaselineLo}{\milli\metre}, \SI{\BtsNewBaselineHi}{\milli\metre}], again unresolved. This does not prove
 exact equivalence or universal inferiority of low-beta design.
 
 
 
 \begin{table}[htbp]\centering
 \caption{Frozen-strategy comparisons. Nominal minimum and new paired mean change
-are in mm; brackets give pointwise 95\% machine-cluster intervals. Restricted
+are in \si{\milli\metre}; brackets give pointwise \SI{95}{\percent} machine-cluster intervals. Restricted
 cases are hypothetical. The baseline clearance-setting change is numerical.}
 \label{tab:strategies}
 \input{generated/round2_strategy_rows.tex}\end{table}
 
-At the horizontal restriction, low beta worsens the mean by 0.152 mm, while
-direct nominal clearance gains 0.881 mm (Table~\ref{tab:strategies}). Nominal
-horizontal betatron RMS changes from 0.220 to 0.230 mm in the direct design,
-but dispersive RMS decreases from 0.445 to 0.292 mm. On the held-out shots,
-mean absolute horizontal centroid decreases from 1.218 to 0.960 mm and mean
-five-RMS size decreases from 2.485 to 1.862 mm. Their combined changes explain
+At the horizontal restriction, low beta worsens the mean by \SI{0.152}{\milli\metre}, while
+direct nominal clearance gains \SI{0.881}{\milli\metre} (Table~\ref{tab:strategies}). Nominal
+horizontal betatron RMS changes from \SI{0.220}{\milli\metre} to \SI{0.230}{\milli\metre} in the direct design,
+but dispersive RMS decreases from \SI{0.445}{\milli\metre} to \SI{0.292}{\milli\metre}. On the held-out shots,
+mean absolute horizontal centroid decreases from \SI{1.218}{\milli\metre} to \SI{0.960}{\milli\metre} and mean
+five-RMS size decreases from \SI{2.485}{\milli\metre} to \SI{1.862}{\milli\metre}. Their combined changes explain
 the gain; minimizing vertical beta alone does not control either term.
 
-At the vertical restriction, low beta gains 0.073 mm and direct clearance gains
-0.212 mm. Low beta reduces mean five-RMS size from 0.885 to 0.681 mm, but
-increases mean absolute centroid from 0.230 to 0.360 mm; much of its nominal
+At the vertical restriction, low beta gains \SI{0.073}{\milli\metre} and direct clearance gains
+\SI{0.212}{\milli\metre}. Low beta reduces mean five-RMS size from \SI{0.885}{\milli\metre} to \SI{0.681}{\milli\metre}, but
+increases mean absolute centroid from \SI{0.230}{\milli\metre} to \SI{0.360}{\milli\metre}; much of its nominal
 size benefit is offset by trajectory sensitivity. Direct clearance gives
-0.586 and 0.316 mm for these terms. The low-beta interval excludes zero but
-lies below the illustrative 0.1 mm useful-effect scale; direct gains exceed
+\SI{0.586}{\milli\metre} and \SI{0.316}{\milli\metre} for these terms. The low-beta interval excludes zero but
+lies below the illustrative \SI{0.1}{\milli\metre} useful-effect scale; direct gains exceed
 that scale in both restricted cases. These are outcomes for the selected finite
 searches and assumptions, not universal strategy dominance.
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round2_strategies.pdf}
-\caption{New paired mean clearance changes with pointwise 95\% intervals for the
+\caption{New paired mean clearance changes with pointwise \SI{95}{\percent} intervals for the
 200 independent machines. Dotted vertical lines indicate the declared illustrative
-$\pm0.1$ mm scale. Every regime includes the entrance and exit in its minimum.}
+$\pm\SI{0.1}{\milli\metre}$ scale. Every regime includes the entrance and exit in its minimum.}
 \label{fig:strategies}\end{figure}
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round2_sweep.pdf}
@@ -295,7 +295,7 @@ is lost. Counts refer to model stations, not continuous-chamber or ring losses.}
 \input{generated/round2_loss_rows.tex}\end{table}
 
 No baseline losses occur. For zero of 200 independent blocks, the one-sided
-95\% upper probability of an observed-loss block is 1.4867\%~\cite{Clopper1934}.
+\SI{95}{\percent} upper probability of an observed-loss block is \SI{1.4867}{\percent}~\cite{Clopper1934}.
 The event consists of three sampled shots with 2,000 particles per shot; it
 is not the probability of any loss during indefinite operation. Shared machine
 and shot randomness prevents interpreting all particles as independent machine

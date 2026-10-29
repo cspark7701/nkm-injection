@@ -748,3 +748,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 259. [**Milestone 259 — Use the original BTS setting as the optimization reference**](259_bts_original_setting_reference.md)
     - Replace the reference in Figures 2–3 with original BTSConfig strengths, expose negative original clearance, add a nominal optimization table and reframe the study; preserve matched-only ensemble identities, with 15 tests and both builds passing.
+
+260. [**Milestone 260 — Rewrite setup.sh as a sourced environment loader**](260_setup_environment_loader.md)
+    - Model setup.sh on mobo-linac: sourcing guard, PROJECT_ROOT, conda activation of pyat-dev with override and warnings, and a check that nkm_injection is the editable install from this checkout.

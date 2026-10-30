@@ -1,6 +1,8 @@
 # BTS manuscript referee reviews
 
-This internal pre-submission review assesses the eight-page manuscript present on main at `bee78914caa16945ef63dba8bf5205c434d0415c`; it does not evaluate the later manuscript on the BTS branch.
+This index preserves the main-branch review history and separate restored BTS-branch records. The original
+main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
+its conclusions are historical. The current Reviewer 1 round-3 assessment is linked below.
 
 | Review | Recommendation | Revision register |
 | :--- | :--- | :--- |
@@ -86,3 +88,14 @@ the phase-advance mechanism. Its remaining objections:
 There are ten tasks, R2C-01 to R2C-10, in the
 [round-3 task register](reviewer2_bts_20261030_main_round3_revision_tasks.md). Earlier reports and responses are
 unchanged.
+
+## Reviewer 1 — round-3 assessment of the current main-branch article
+
+[Reviewer 1 report, 2026-10-30](reviewer1_bts_20261030_main_round3_report.md) evaluates the current 15-page
+*Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line* and eight-page
+supplement at `603c3ab`, based on all three main-branch author responses. Recommendation: **focused major revision;
+no acceptance in present form**. The loss-based held-out comparison is credited, while the nominal-versus-error
+boundary theorem, round-aperture probability bounds, mean-clearance interpretation and sampled-search scope
+require correction or qualification. The [eight R3-BTS tasks](reviewer1_bts_20261030_main_round3_revision_tasks.md)
+are all pending. Existing reports/responses and the restored historical round 3 are unchanged; the new report is
+a pre-submission assessment, not a journal decision. No scientific revision was executed by this review.

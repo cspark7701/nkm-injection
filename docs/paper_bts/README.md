@@ -1,5 +1,10 @@
 # BTS optics manuscript
 
+Current assessment (2026-10-30): [Reviewer 1, main-branch round 3](reviews/reviewer1_bts_20261030_main_round3_report.md)
+recommends focused major revision. [Eight new revision tasks](reviews/reviewer1_bts_20261030_main_round3_revision_tasks.md)
+are pending; the review credits the loss-based comparison but requests corrections to analytical scope and
+probability bounds. Earlier response/completion records below retain their historical status.
+
 Round-three one-column article for prospective JKPS submission, *Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line*: [paper.tex](paper.tex), [paper.pdf](paper.pdf),
 [supplement.tex](supplement.tex) and [supplement.pdf](supplement.pdf). It responds to the
 [Reviewer 2 report](reviews/reviewer2_bts_20261015_main_report.md); see the

@@ -757,3 +757,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 262. [**Milestone 262 — Reviewer 2 round-3 report on the BTS manuscript**](262_reviewer2_bts_round3_report.md)
     - Major revision: the 0.5 mm / 0.2 mrad booster jitter (about five beam sizes) drives every loss number and is not varied, and the baseline-versus-optimized headline is circular. Ten tasks, R2C-01 to R2C-10.
+
+263. [**Milestone 263 — Reviewer 1 BTS round-3 report**](263_bts_reviewer1_round3_report.md)
+    - Assesses all three main-branch author responses, credits the held-out loss result and records focused major revision with eight pending tasks; previous reviews and scientific assets are preserved.

@@ -48,7 +48,7 @@ def export_figures(output):
     profile_sources = [PAPER / 'generated/matching.json', PAPER / 'generated/round2_spatial.json',
                        ROOT / 'src/nkm_injection/bts_lattice.py', ROOT / 'src/nkm_injection/bts_round2.py',
                        ROOT / 'src/nkm_injection/bts_journal.py']
-    profile_origin = 'Original BTSConfig settings versus the frozen optimized low-beta settings; exact-map profiles'
+    profile_origin = 'Baseline BTSConfig settings versus the frozen optimized low-beta settings; exact-map profiles'
     tw = DEFAULT_BTS_ENTRANCE_TWISS
     twiss = dict(beta=[tw.beta_x, tw.beta_y], alpha=[tw.alpha_x, tw.alpha_y],
                  dispersion=[tw.disp_x, tw.disp_px, tw.disp_y, tw.disp_py])
@@ -58,7 +58,7 @@ def export_figures(output):
               'beta_absolute_tolerance_m': 1e-4, 'designs': {}, 'profile_origin': profile_origin,
               'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in profile_sources + [PAPER / 'generated/round2_designs.json', Path(__file__) ]}}
-    for name, label in [('reference', 'Original setting (reference)'), ('low_beta', 'Optimized low beta')]:
+    for name, label in [('reference', 'Baseline setting (reference)'), ('low_beta', 'Optimized low beta')]:
         profile = profiles[name]
         lattice = lattice_for(settings[name])
         dense = lattice.slice_elements([i for i, e in enumerate(lattice) if e.Length], slices=64)
@@ -99,22 +99,40 @@ def export_figures(output):
     plt.close(fig)
 
     reference = lattice_for(original)
-    fig, ax = plt.subplots(figsize=(7, 1.9))
+    fig, ax = plt.subplots(figsize=(7, 2.6))
     syn = at.plot.plot_synopt(reference, axes=ax)
     if isinstance(syn, tuple):  # pyAT 0.8 returns (synoptic_axes, parent_axes).
         syn = syn[0]
-    syn.set_ylim(0, 2.5)
+    syn.set_ylim(0, 4.0)
     ax.set_facecolor('none')
-    ax.set(xlim=(0, reference.get_s_pos(len(reference))[0]), ylim=(0, 1),
+    ax.set(xlim=(-0.3, reference.get_s_pos(len(reference))[0] + 0.3), ylim=(0, 1),
            xlabel='Path coordinate [m]', yticks=[])
     ax.spines[['left', 'right', 'top']].set_visible(False)
+    s_pos = reference.get_s_pos(range(len(reference) + 1))
     for i, e in enumerate(reference):
         if hasattr(e, 'Limits'):
-            ax.axvline(reference.get_s_pos(i)[0], color='0.4', linestyle=':', linewidth=1)
+            ax.axvline(s_pos[i], color='0.4', linestyle=':', linewidth=1)
+        centre = s_pos[i] + e.Length / 2
+        if isinstance(e, at.Quadrupole):
+            ax.text(centre, .43, e.FamName, rotation=90, ha='center', va='bottom', fontsize=7)
+        elif e.FamName in ('b1', 'b2', 'b3'):
+            ax.text(centre, .30, e.FamName, ha='center', va='bottom', fontsize=7)
+        elif isinstance(e, at.Marker):
+            last = s_pos[i] >= s_pos[-1] - 1e-9
+            ax.text(s_pos[i] + (-.15 if last else .15), .97, e.FamName, ha='right' if last else 'left',
+                    va='top', fontsize=7, color='0.3')
+    # Injection-system dipole elements, named in the same order as the beam.
+    names = {'kext': ('extraction kicker (kext)', .80, 0.4), 'sept_in': ('extraction septum (sept_in)', .62, 2.0),
+             'sept_ex': ('injection septum (sept_ex)', .62, 17.0)}
+    for i, e in enumerate(reference):
+        if e.FamName in names:
+            label, y, x_text = names[e.FamName]
+            ax.annotate(label, xy=(s_pos[i] + e.Length / 2, .30), xytext=(x_text, y), fontsize=7,
+                        ha='left', va='center', arrowprops={'arrowstyle': '->', 'lw': .7, 'color': '0.3'})
     from matplotlib.patches import Patch
-    ax.legend(handles=[Patch(facecolor=(1, .5, .5), label='Quadrupoles'),
-                       Patch(facecolor=(.5, .5, 1), label='Dipoles')],
-              loc='upper center', ncol=2, frameon=False)
+    ax.legend(handles=[Patch(facecolor=(1, .5, .5), label='Quadrupoles q11–q33'),
+                       Patch(facecolor=(.5, .5, 1), label='Dipole elements (bends b1–b3, kicker, septa)')],
+              loc='upper center', bbox_to_anchor=(.5, 1.12), ncol=2, frameon=False, fontsize=8)
     fig.tight_layout()
     fig.savefig(output / 'layout.pdf', metadata={'CreationDate': None})
     plt.close(fig)

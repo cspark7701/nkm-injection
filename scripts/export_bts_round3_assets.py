@@ -19,7 +19,7 @@ P = ROOT / 'docs/paper_bts'
 CAMPAIGN = ROOT / 'results/bts_journal_campaign_r3b_20261015'
 plt.rcParams.update({'font.size': 9, 'pdf.fonttype': 42, 'svg.hashsalt': 'bts-r3', 'pdf.compression': 6})
 COLORS = {'reference': '#1f5fa8', 'low_beta': '#d1495b', 'robust': '#2a9d55'}
-LABELS = {'reference': 'Matched baseline', 'low_beta': 'Refined low beta', 'robust': 'Loss-based'}
+LABELS = {'reference': 'Matched reference', 'low_beta': 'Refined low beta', 'robust': 'Loss-based'}
 SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based'}
 
 
@@ -53,7 +53,7 @@ def render_clearance_profile(data, output):
             values = np.array([r['clearance_m'] for r in rows])
             profiles[name][plane] = (stations, values)
             ax.plot([r['s_m'] for r in rows], 1e3 * values, **styles[name],
-                    markevery=5, label=(('Original setting (reference)' if name == 'reference' else 'Optimized low beta')
+                    markevery=5, label=(('Baseline setting (reference)' if name == 'reference' else 'Optimized low beta')
                                          if data.get('figure_reference') == 'original_setting' else LABELS[name]))
     for plane, ax in enumerate(axes[:2]):
         ax.set_yscale('symlog', linthresh=1, linscale=1)
@@ -74,7 +74,7 @@ def render_clearance_profile(data, output):
                      arrowprops={'arrowstyle': '->', 'lw': .8}, fontsize=8)
     axes[0].legend(fontsize=8, loc='upper left')
     axes[2].axhline(0, color='0.4', lw=.7)
-    axes[2].set_ylabel('Optimized − original [mm]' if data.get('figure_reference') == 'original_setting'
+    axes[2].set_ylabel('Optimized − baseline [mm]' if data.get('figure_reference') == 'original_setting'
                        else 'Low beta − reference [mm]')
     axes[2].set_xlabel('')
     axes[2].grid(alpha=.3)
@@ -158,7 +158,7 @@ def nominal_original_comparison(summary):
         exit_functions = nominal_observables(nominal)
         residual = float(np.max(np.abs((exit_functions - TARGET) / SCALES)))
         saved['profile'] = record['rows']
-        diagnostics[name] = {'label': 'Original setting (reference)' if name == 'reference' else 'Optimized low beta',
+        diagnostics[name] = {'label': 'Baseline setting (reference)' if name == 'reference' else 'Optimized low beta',
                              'strengths_m_minus2': k.tolist(), 'max_family_clearance_difference_m': error,
                              'minimum_clearance_m': record['minimum_m'], 'active': record['active'],
                              'exit_clearance_m': [r['clearance_m'] for r in record['rows'] if r['name'] == 'm4'],
@@ -190,7 +190,7 @@ def installed_clearance_figure(output):
     # a relabeling or recomputation of the historical error ensembles.
     text = '% Original-setting figure comparison; exported by scripts/export_bts_round3_assets.py.\n'
     text += r'\begin{tabular}{lrr}\toprule' + '\n'
-    text += r'Observable & Original setting (reference) & Optimized low beta\\\midrule' + '\n'
+    text += r'Observable & Baseline setting (reference) & Optimized low beta\\\midrule' + '\n'
     metrics = [('Exit $'+r'\beta_x$ [\si{\metre}]', lambda d:d['exit_lattice_functions'][0]),
                ('Exit $'+r'\beta_y$ [\si{\metre}]', lambda d:d['exit_lattice_functions'][1]),
                ('Peak $'+r'\beta_x$ [\si{\metre}]', lambda d:d['peak_beta_64_m'][0]),
@@ -210,15 +210,15 @@ def apertures():
                'designs': {n: strip(d, ['profile', 'apertures']) for n, d in a['designs'].items()}}
     (P / 'generated/round3_apertures.json').write_text(json.dumps(summary, indent=2) + '\n')
     m = a['model']
-    rows = [('Drifts', 'round', m['pipe_radius'], m['pipe_radius'], 'assumed, equal to bore'),
-            ('Quadrupoles q11--q33', 'round', m['quad_bore_radius'], m['quad_bore_radius'], 'assumed bore'),
-            ('Extraction kicker', 'rect.', m['kicker_half'][0], m['kicker_half'][1], 'assumed'),
-            ('Extraction septum', 'rect.', m['septum_in_half'][0], m['septum_in_half'][1], 'assumed; swept'),
-            ('Bends b1--b3 (curved)', 'rect.', m['dipole_half'][0], m['dipole_half'][1], 'assumed; gap swept'),
-            ('Injection septum', 'one-sided', m['septum_ex_blade'], m['septum_ex_half_y'], 'blade from companion')]
-    body = '\n'.join(f"{r[0]} & {r[1]} & {1e3 * r[2]:.3f} & {1e3 * r[3]:.2f} & {r[4]} \\\\" for r in rows)
+    rows = [('Drifts', 'round', m['pipe_radius'], m['pipe_radius']),
+            ('Quadrupoles q11--q33', 'round', m['quad_bore_radius'], m['quad_bore_radius']),
+            ('Extraction kicker', 'rect.', m['kicker_half'][0], m['kicker_half'][1]),
+            ('Extraction septum', 'rect.', m['septum_in_half'][0], m['septum_in_half'][1]),
+            ('Bends b1--b3 (curved)', 'rect.', m['dipole_half'][0], m['dipole_half'][1]),
+            ('Injection septum', 'one-sided', m['septum_ex_blade'], m['septum_ex_half_y'])]
+    body = '\n'.join(f"{r[0]} & {r[1]} & {1e3 * r[2]:.3f} & {1e3 * r[3]:.2f} \\\\" for r in rows)
     (P / 'generated/round3_aperture_rows.tex').write_text(
-        '\\begin{tabular}{llrrl}\\toprule\nRegion & Shape & $a_x$ [mm] & $a_y$ [mm] & Basis \\\\\\midrule\n' + body +
+        '\\begin{tabular}{llrr}\\toprule\nRegion & Shape & $a_x$ [mm] & $a_y$ [mm] \\\\\\midrule\n' + body +
         '\n\\bottomrule\\end{tabular}\n')
     ref, low = a['designs']['reference'], a['designs']['low_beta']
     fam = ref['family_minimum_m']
@@ -328,7 +328,7 @@ def design():
     for name in ('reference', 'low_beta', 'robust'):
         ax[1].semilogy(d[name]['mu_x_deg'], 100 * d[name]['loss_max'], 'o', color=COLORS[name], label=LABELS[name])
         ax[1].semilogy(d[name]['mu_x_deg'], 100 * t[name]['observed_loss_fraction'], 'x', color=COLORS[name], ms=7)
-    ax[1].plot([], [], 'x', color='0.3', label='tracked, steered test machines')
+    ax[1].plot([], [], 'x', color='0.3', label='tracked, steered test realizations')
     ax[1].set(xlabel='Horizontal phase advance m1$\\to$m4 [deg]', ylabel='Blade loss per shot [%]')
     ax[1].set_yticks([0.3, 1, 3], ['0.3', '1', '3'])
     ax[1].yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())

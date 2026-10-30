@@ -751,3 +751,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 260. [**Milestone 260 — Rewrite setup.sh as a sourced environment loader**](260_setup_environment_loader.md)
     - Model setup.sh on mobo-linac: sourcing guard, PROJECT_ROOT, conda activation of pyat-dev with override and warnings, and a check that nkm_injection is the editable install from this checkout.
+
+261. [**Milestone 261 — BTS author wording revision, KLS TDR citation and split affiliations**](261_bts_author_wording_revision.md)
+    - Apply the author's BTS wording list (baseline/matched reference, error realizations, units, Tikhonov, Eq. 2), cite the Korea-4GSR TDR, label Figure 1, revise Tables 1–2, remove the AI, availability and appendix sections, and split affiliations in both papers.

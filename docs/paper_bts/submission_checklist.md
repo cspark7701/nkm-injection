@@ -23,7 +23,7 @@ No journal acceptance or submission is claimed. The round-two checklist items be
 - Funding/grants: supplied 2026-10-19 (NRF Grant No. RS-2022-00143178) and installed.
 - Acknowledgments: supplied 2026-10-19 and installed.
 - Scientific interpretation, contribution/AI-assistance disclosure and final article approval: pending.
-- Availability wording: final (2026-10-20). Referee attachment prepared and verified (milestone 247); upload it with the submission. No public deposit.
+- Availability wording: final (2026-10-20). Referee attachment prepared and verified (milestone 247); upload it with the submission. No public deposit. On 2026-10-30, at the author's request, the article's generative-assistance and data-availability statements and Appendix A (evidence and reproducibility) were removed; the referee attachment and the repository are unchanged. Most journals require a data-availability statement in the submission form or article; supply it there if requested.
 - Confirm declarations in the journal's actual submission interface when submitting.
 
 Reviewer 1 R2-BTS-01–07 and Reviewer 2 R2B-01–07 are executed. R2-BTS-08 preparation is performed; its remaining condition is the author's scientific approval. No push or journal submission performed. No acceptance probability or recommendation is inferred from these checks.

@@ -156,8 +156,6 @@ def _pct_interval(e, key='paired_tracked_vs_reference'):
 
 def _edge_row(edge):
     """Phase-advance, peak beta, exit jitter and error-free loss of an edge solution (recomputed, analytic)."""
-    import sys
-    sys.path.insert(0, str(ROOT / 'src'))
     from nkm_injection.bts_journal import independent_maps, lattice_for
     from nkm_injection import bts_round3 as r3
     k = np.array(edge['strengths_m_minus2'])

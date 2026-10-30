@@ -110,3 +110,18 @@ C). It maps each task to its source items and records how differences between th
 - the dispersion-free tracking is optional.
 
 All tasks are open. Both source registers are unchanged.
+
+## Execution of the round-4 revision
+
+The [joint response](author_response_round4_20261031.md), 2026-10-31, records the execution of R4-BTS-01 to 14
+(milestones 265–278) against both round-3 reports.
+
+**What changed in the conclusions.**
+- **Booster jitter.** The loss reduction is a property of the large assumed booster jitter.
+- **Static residual.** It is small: earlier statements attributing the spread between populations to it were
+  corrected.
+- **Phase advance.** The loss depends on μ_x alone.
+- **Baseline.** It is a starting point, not a result.
+
+The joint response also answers Reviewer 2's questions. All reports, task registers and earlier responses are
+unchanged. No reassessment or journal decision is implied.

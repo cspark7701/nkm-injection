@@ -802,3 +802,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 277. [**Milestone 277 — R4-BTS-07: framing, baseline provenance and title**](277_r4_bts_07_framing.md)
     - New title. The abstract is rewritten around boundary-fixed clearance, the μ_x-only loss and the jitter regime. The baseline is stated as an unmatched starting point of recorded provenance, and its blade overlap as a consequence of d_b. "Baseline setting (reference)" becomes "Baseline setting" in the regenerated figures.
+
+278. [**Milestone 278 — R4-BTS-09: reconciliation, joint response and referee increment**](278_r4_bts_09_reconciliation.md)
+    - 14 new claims (63 verified), 75 final asset hashes with `--verify` passing, and final 19/9-page PDFs installed. Adds the joint round-4 response, the reproduction guide and a verified referee increment over the round-3 attachment.

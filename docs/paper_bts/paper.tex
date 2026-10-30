@@ -559,24 +559,6 @@ septum. The uncorrected vertical exit centroid is \SI{\BtsRFourVertExitYUm}{\mic
 \SI{5}{\milli\metre} vertical restrictions but is the static vertical injection error passed to the
 injection calculation.
 
-Table~\ref{tab:layouts} repeats the steering on the same realizations with fewer readings
-and with b1--b3 trimmed as one series-powered knob, the kick of each bend
-proportional to its bending angle. The full layout reproduces the tracked losses
-above exactly. Reading only the exits of the three triplets, the septum entrance and
-the line end leaves the losses unchanged to within 0.01 percentage point. Series-powered
-bends leave one knob fewer near the exit: the exit angle spread grows from
-\SI{0.37}{\milli\radian} to \SI{0.44}{\milli\radian} for the matched reference, and the loss of the loss-based
-setting rises from \SI{\BtsRFourLayoutFullRobustPct}{\percent} to \SI{\BtsRFourLayoutBothRobustPct}{\percent}, still well below that of the
-matched reference.
-
-\begin{table}[htbp]\centering
-\caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering} (tracked, 3 shots of
-2\,000 particles). Readings: quadrupole exits (all nine or the three triplet exits),
-septum entrance and line end. Knobs: six independent dipole trims, or four with
-b1--b3 in series. Exit centroids are rms over shots; the vertical plane is not
-corrected.}\label{tab:layouts}
-{\footnotesize\setlength{\tabcolsep}{4pt}\input{generated/round4_layout_rows.tex}}\end{table}
-
 \begin{table}[htbp]\centering
 \caption{Steering of the matched reference (Matched) and optimized low beta on 200 error realizations (3 shots, 2\,000 particles each). $\bar c_{\min}$
 is the mean minimum five-sigma clearance, Lost the tracked particle-loss fraction,
@@ -611,6 +593,24 @@ loses \num{0.21} percentage points less than the matched reference on these real
 change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. On the fresh
 test of Section~\ref{sec:design} its loss change is unresolved. The small difference
 follows its phase advance (Section~\ref{sec:design}), not its lower peak beta.
+
+Table~\ref{tab:layouts} repeats the steering on the same realizations with fewer readings
+and with b1--b3 trimmed as one series-powered knob, the kick of each bend
+proportional to its bending angle. The full layout reproduces the tracked losses
+above exactly. Reading only the exits of the three triplets, the septum entrance and
+the line end leaves the losses unchanged to within 0.01 percentage point. Series-powered
+bends leave one knob fewer near the exit: the exit angle spread grows from
+\SI{0.37}{\milli\radian} to \SI{0.44}{\milli\radian} for the matched reference, and the loss of the loss-based
+setting rises from \SI{\BtsRFourLayoutFullRobustPct}{\percent} to \SI{\BtsRFourLayoutBothRobustPct}{\percent}, still well below that of the
+matched reference.
+
+\begin{table}[htbp]\centering
+\caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering} (tracked, 3 shots of
+2\,000 particles). Readings: quadrupole exits (all nine or the three triplet exits),
+septum entrance and line end. Knobs: six independent dipole trims, or four with
+b1--b3 in series. Exit centroids are rms over shots; the vertical plane is not
+corrected.}\label{tab:layouts}
+{\footnotesize\setlength{\tabcolsep}{4pt}\input{generated/round4_layout_rows.tex}}\end{table}
 
 \subsection{Phase advance of the matched settings and the loss-based setting}\label{sec:design}
 Bounded least-squares matching from \BtsRThreePoolStarts\ random starts finds
@@ -695,14 +695,6 @@ settings are optically identical; Disp.-free is the best dispersion-free scan
 setting.}\label{tab:test4}
 {\footnotesize\setlength{\tabcolsep}{3.5pt}\input{generated/round4_test_rows.tex}}\end{table}
 
-\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round4_phase_scan.pdf}
-\caption{Phase-advance scan. Left: predicted blade loss of the error-free line for the
-lowest-peak-beta matched setting at each scanned $\mu_x$, for the configured exit
-(blue) and a dispersion-free exit (orange); open symbols exceed the \SI{60}{\metre}
-peak-beta limit. Dotted lines mark the edges found by constrained searches. Right:
-the same settings against the exit angle jitter. Black symbols mark the matched
-reference, low-beta and loss-based settings.}\label{fig:scan}\end{figure}
-
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
 \caption{Left: rms exit position (solid, \si{\milli\metre}) and angle (dashed, \si{\milli\radian}) jitter from
 Eq.~(\ref{eq:transfer}) versus horizontal phase advance, with the phase-advance ranges found
@@ -713,6 +705,14 @@ loss on steered test realizations (crosses), which also include static residuals
 The matched reference in this comparison is the intermediate matched setting; the
 baseline setting appears in Figures~\ref{fig:refined} and \ref{fig:profile}.}
 \label{fig:jitter}\end{figure}
+
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round4_phase_scan.pdf}
+\caption{Phase-advance scan. Left: predicted blade loss of the error-free line for the
+lowest-peak-beta matched setting at each scanned $\mu_x$, for the configured exit
+(blue) and a dispersion-free exit (orange); open symbols exceed the \SI{60}{\metre}
+peak-beta limit. Dotted lines mark the edges found by constrained searches. Right:
+the same settings against the exit angle jitter. Black symbols mark the matched
+reference, low-beta and loss-based settings.}\label{fig:scan}\end{figure}
 
 \subsection{Exit target and dispersion}\label{sec:exit}
 At m4 the configured target gives the injected beam an rms divergence of
@@ -730,7 +730,10 @@ Courant--Snyder parameters with $D_x=D'_x=0$ at m4 is feasible within the streng
 bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\ bounded random starts keep both peak
 betas below \SI{60}{\metre} (smallest larger peak \SI{\BtsRThreeFreeMinPeak}{\metre}). The constrained searches
 place the dispersion-free range between \SI{\BtsRFourEdgeDispersionFreeMin}{\degree} and \SI{\BtsRFourEdgeDispersionFreeMax}{\degree}
-(Fig.~\ref{fig:scan}); its upper edge is set by q22 at its strength bound. The range
+(Fig.~\ref{fig:scan}); its upper edge is set by q22 at its strength bound. At the lower
+edge the searches that reach \SI{\BtsRFourEdgeDispersionFreeMin}{\degree} stopped at their iteration limit
+with no constraint active, and the one converged search ends at \SI{187.6}{\degree} on the
+vertical \SI{60}{\metre} limit. The range
 includes phases where booster jitter falls mainly on the exit angle. The best scanned
 setting ($\mu_x=\SI{\BtsRFourFreeBestMu}{\degree}$, larger peak beta \SI{\BtsRFourFreeBestPeak}{\metre}) has a
 predicted error-free blade loss of \BtsRFourFreeBestLossPct\,\si{\percent} and an exit angle jitter of

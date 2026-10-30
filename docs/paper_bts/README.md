@@ -1,24 +1,35 @@
 # BTS optics manuscript
 
-Current assessment (2026-10-30): [Reviewer 1, main-branch round 3](reviews/reviewer1_bts_20261030_main_round3_report.md)
-recommends focused major revision. [Eight new revision tasks](reviews/reviewer1_bts_20261030_main_round3_revision_tasks.md)
-are pending; the review credits the loss-based comparison but requests corrections to analytical scope and
-probability bounds. Earlier response/completion records below retain their historical status.
+Current state (2026-10-31): the round-4 revision is executed. It answers both round-3 reports, from Reviewer 1
+(focused major revision) and Reviewer 2 (major revision), through the
+[consolidated tasks](reviews/round4_consolidated_revision_tasks.md) R4-BTS-01 to 14 (milestones 265–278). See the
+[joint response](reviews/author_response_round4_20261031.md), the [round-4 protocol](round4_protocol.json) and the
+[round-4 reproduction guide](round4_reproduction.md). No reviewer has reassessed it yet, and the author's scientific
+approval is pending.
 
-Round-three one-column article for prospective JKPS submission, *Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line*: [paper.tex](paper.tex), [paper.pdf](paper.pdf),
-[supplement.tex](supplement.tex) and [supplement.pdf](supplement.pdf). It responds to the
-[Reviewer 2 report](reviews/reviewer2_bts_20261015_main_report.md); see the
-[response](reviews/author_response_reviewer2_20261015.md), the [round-3 protocol](round3_protocol.json) and the
-[round-3 reproduction guide](round3_reproduction.md).
+Round-four one-column article (19 pages, with a 9-page supplement), *Optical matching and beam loss in a
+booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:
+[paper.tex](paper.tex), [paper.pdf](paper.pdf), [supplement.tex](supplement.tex) and
+[supplement.pdf](supplement.pdf).
 
 **Findings.**
-- Figures 2–3 use the original `BTSConfig` quadrupole strengths as the reference. Optical matching and beta optimization restore the prescribed exit functions and positive nominal five-sigma blade clearance.
-- Within the matched solution set, the injection-septum blade limits the line and its nominal clearance is fixed by the exit optics.
-- With matched ends, booster jitter reaches the exit through the horizontal phase advance alone.
-- Steering, a Gaussian loss observable validated by tracking, a loss-based setting tested on fresh machines and a
-  dispersion-free exit complete the study.
+- **Nominal blade clearance.** Once the line is matched, the injection-septum blade is the active restriction, and
+  its nominal clearance is the same for every matched setting.
+- **Loss and phase advance.** The blade loss of a matched setting depends on the horizontal phase advance alone. It
+  is smallest at the lower edge of the matched range (200.17°), which no strength bound or peak-beta limit sets.
+- **Best-found setting.** It reduces the tracked loss 3- to more than 10-fold on independent error realizations, at
+  13 % more exit-angle jitter.
+- **Jitter regime.** These loss numbers hold at the assumed booster jitter, a stress level of 1.3 / 2.2 beam sizes.
+  At 0.1–0.2 of it, every setting loses at most 3 × 10⁻¹¹.
+- **Supporting results.**
+  - The steered static residual adds only 2–5 %.
+  - The round-aperture loss is exact.
+  - Reduced monitors change nothing; series-powered bends raise the angle spread.
+  - The dispersion-free exit is tracked.
+- **Baseline.** The unmatched starting point (Figures 2–3) is not a competing design.
 
-The error-study tables compare a matched intermediate baseline, optimized low beta and the loss-based setting. Their existing ensembles do not represent the original unmatched configuration.
+**Open author decisions:** the target journal (JKPS or NIM A), the data-availability wording, a source for the
+booster jitter, and final approval (see the [submission checklist](submission_checklist.md)).
 
 The earlier round-two article (four-station model, hypothetical restrictions) is preserved in the supplement and the
 records below.

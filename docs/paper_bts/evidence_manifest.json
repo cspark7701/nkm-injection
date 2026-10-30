@@ -273,6 +273,48 @@
       "bytes": 11564,
       "generating_commit": null,
       "provenance_note": "Round-3 stage output (unchanged lattice); configuration.json in the same directory records source hashes and protocol."
+    },
+    {
+      "path": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "sha256": "0d0b3d579418a92cdc112de0e6181c0308aaf6571e53c583cb7c139c9db95a65",
+      "bytes": 23810,
+      "generating_commit": null,
+      "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round4_campaign_20261030/blade_b/blade.json",
+      "sha256": "2121cba35ce7fb6442780636923749c8cc15dd7a7a2a5453481ae48633a7759b",
+      "bytes": 13919,
+      "generating_commit": null,
+      "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round4_campaign_20261030/phase_scan_b/phase_scan.json",
+      "sha256": "4431a57b9c4a6bf845559971bd589425a97f5a1d0041f91e85460633373c4a32",
+      "bytes": 40660,
+      "generating_commit": null,
+      "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round4_campaign_20261030/final_test_b/final_test.json",
+      "sha256": "ac4a24726e90986e95a2e01f246d8ea60fa48008ba97c26c2eab3eaff7a57d09",
+      "bytes": 9364,
+      "generating_commit": null,
+      "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round4_campaign_20261030/layouts_b/layouts.json",
+      "sha256": "e3ca78bcf5e82b2bf1b0ebfc16dabea06627add69b00dea3d4e8595a52e06c67",
+      "bytes": 12578,
+      "generating_commit": null,
+      "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round4_r403_exact_20261030/comparison.json",
+      "sha256": "cff9add1bae8f91ad00f3b181b2cde2d257d860a78a3c7a835bcb13739f91688",
+      "bytes": 14536,
+      "generating_commit": null,
+      "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
     }
   ],
   "claims": [
@@ -1176,6 +1218,118 @@
       "artifact": "results/bts_journal_campaign_r3b_20261015/sensitivity/sensitivity.json",
       "pointer": "/rows/5/designs/reference/predicted_loss_max_mean",
       "expected": 0.013367607460627358
+    },
+    {
+      "id": "BR4-01",
+      "artifact": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "pointer": "/beam_units/centroid_action_over_emittance",
+      "expected": 53.73961635900196,
+      "interpretation": "Assumed jitter: mean centroid action 54 times the emittance.",
+      "manuscript_location": "Section 2.4, Table 9"
+    },
+    {
+      "id": "BR4-02",
+      "artifact": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "pointer": "/rows/5/designs/reference/jitter_integrated_loss_mean",
+      "expected": 0.013072827255296763,
+      "interpretation": "Assumed jitter: matched-reference jitter-integrated steered loss 1.31 %.",
+      "manuscript_location": "Section 4.5, Table 9"
+    },
+    {
+      "id": "BR4-03",
+      "artifact": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "pointer": "/rows/5/designs/reference/error_free_loss",
+      "expected": 0.01279315732669233,
+      "interpretation": "Matched-reference error-free loss 1.28 % (static residual adds 2 %).",
+      "manuscript_location": "Section 4.5, Table 9"
+    },
+    {
+      "id": "BR4-04",
+      "artifact": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "pointer": "/rows/3/designs/reference/jitter_integrated_loss_mean",
+      "expected": 2.6277574826352977e-11,
+      "interpretation": "At 0.2 of the assumed jitter the matched-reference loss is below 3e-11.",
+      "manuscript_location": "Section 4.5, Table 9"
+    },
+    {
+      "id": "BR4-05",
+      "artifact": "results/bts_round4_campaign_20261030/blade_b/blade.json",
+      "pointer": "/distance_for_tolerance_m/1.0/reference/distance_m",
+      "expected": 0.002049563413039653,
+      "interpretation": "Loss below 0.1 % needs d_b >= 2.05 mm (matched reference, assumed jitter).",
+      "manuscript_location": "Section 4.5, Figure 6"
+    },
+    {
+      "id": "BR4-06",
+      "artifact": "results/bts_round4_campaign_20261030/blade_b/blade.json",
+      "pointer": "/distance_for_tolerance_m/1.0/robust/distance_m",
+      "expected": 0.0016433246581174824,
+      "interpretation": "Loss below 0.1 % needs d_b >= 1.64 mm (loss-based setting).",
+      "manuscript_location": "Section 4.5, Figure 6"
+    },
+    {
+      "id": "BR4-07",
+      "artifact": "results/bts_round4_campaign_20261030/phase_scan_b/phase_scan.json",
+      "pointer": "/edges/1/mu_x_deg",
+      "expected": 200.1690565874404,
+      "interpretation": "Configured lower edge 200.17 deg, converged, no active bound.",
+      "manuscript_location": "Section 4.3, Figure 5"
+    },
+    {
+      "id": "BR4-08",
+      "artifact": "results/bts_round4_campaign_20261030/phase_scan_b/phase_scan.json",
+      "pointer": "/edges/15/active_bounds/0/0",
+      "expected": "q22",
+      "interpretation": "Dispersion-free upper edge set by q22 at its upper bound.",
+      "manuscript_location": "Section 4.4"
+    },
+    {
+      "id": "BR4-09",
+      "artifact": "results/bts_round4_campaign_20261030/final_test_b/final_test.json",
+      "pointer": "/summary/reference/observed_loss_fraction",
+      "expected": 0.009727499999999998,
+      "interpretation": "Second test: matched-reference tracked loss 0.97 %.",
+      "manuscript_location": "Section 4.3, Table 7"
+    },
+    {
+      "id": "BR4-10",
+      "artifact": "results/bts_round4_campaign_20261030/final_test_b/final_test.json",
+      "pointer": "/summary/edge_best/observed_loss_fraction",
+      "expected": 0.0013033333333333332,
+      "interpretation": "Second test: edge setting tracked loss 0.13 %.",
+      "manuscript_location": "Section 4.3, Table 7"
+    },
+    {
+      "id": "BR4-11",
+      "artifact": "results/bts_round4_campaign_20261030/final_test_b/final_test.json",
+      "pointer": "/summary/free_best/lost_particles",
+      "expected": 1,
+      "interpretation": "Dispersion-free setting loses 1 of 1.2 million tracked particles.",
+      "manuscript_location": "Section 4.4, Table 7"
+    },
+    {
+      "id": "BR4-12",
+      "artifact": "results/bts_round4_campaign_20261030/layouts_b/layouts.json",
+      "pointer": "/reproduction_check/full_lost_particles",
+      "expected": 20100,
+      "interpretation": "Full layout reproduces round-3 steering: 20100 lost particles.",
+      "manuscript_location": "Section 4.2, Table 5"
+    },
+    {
+      "id": "BR4-13",
+      "artifact": "results/bts_round4_campaign_20261030/layouts_b/layouts.json",
+      "pointer": "/summary/full/reference/exit_centroid_rms_m_rad/2",
+      "expected": 0.0011157993497241984,
+      "interpretation": "Uncorrected vertical exit centroid 1.12 mm rms (matched reference).",
+      "manuscript_location": "Section 4.2, Table 5"
+    },
+    {
+      "id": "BR4-14",
+      "artifact": "results/bts_round4_r403_exact_20261030/comparison.json",
+      "pointer": "/identical",
+      "expected": 66,
+      "interpretation": "Exact round-aperture loss reproduces all 66 selected round-3 numbers.",
+      "manuscript_location": "Section 3.3 (R4-BTS-03)"
     }
   ]
 }

@@ -17,6 +17,7 @@
 \input{generated/round3_exit.tex}
 \input{generated/round3_sensitivity.tex}
 \input{generated/round4_jitter.tex}
+\input{generated/round4_blade.tex}
 \title{Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line}
 \author{Chong Shik Park$^{1,2}$\\[3pt]
 \small $^{1}$Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea\\
@@ -748,6 +749,27 @@ at \SI{0.1}{\percent}. Losses are the jitter-integrated predictions averaged ove
 error realizations, and the last column is the error-free line (analytic, not
 tracked).}\label{tab:jitter}
 {\small\input{generated/round4_jitter_rows.tex}}\end{table}
+
+The centroid-to-blade distance $d_b=\SI{1.478}{\milli\metre}$ is taken from the NKM injection
+geometry, and the blade loss depends on it roughly exponentially.
+Figure~\ref{fig:blade} repeats the jitter-integrated evaluation on the same 200 steered
+realizations for $d_b$ from \SI{1}{\milli\metre} to \SI{3}{\milli\metre}. At the assumed jitter, a loss below
+\SI{0.1}{\percent} requires $d_b\ge\SI{\BtsRFourTolRefMm}{\milli\metre}$ for the matched reference,
+\SI{\BtsRFourTolLowMm}{\milli\metre} for low beta and \SI{\BtsRFourTolRobustMm}{\milli\metre} for the loss-based setting; at
+$d_b=\SI{1}{\milli\metre}$ the losses are \SI{\BtsRFourOneMmFullRefPct}{\percent} and \SI{\BtsRFourOneMmFullRobustPct}{\percent}. With a tenfold smaller jitter the
+loss stays below \num{\BtsRFourOneMmTenthMax} even at \SI{1}{\milli\metre}. A larger $d_b$ places the injected beam
+farther from the stored beam and so demands more of the ring's dynamic acceptance at
+injection, which must be evaluated with the injection calculation~\cite{ParkNKM2026}.
+A thinner blade, such as the \SI{1}{\milli\metre} septum of the TDR design~\cite{KLSTDR2025},
+would either add \SI{1}{\milli\metre} to $d_b$ at the same injection offset or allow the same $d_b$
+with the injected beam \SI{1}{\milli\metre} closer to the stored beam.
+
+\begin{figure}[htbp]\centering\includegraphics[width=.9\linewidth]{figures/round4_blade_distance.pdf}
+\caption{Jitter-integrated blade loss against the centroid-to-blade distance $d_b$ for the
+three matched settings at the assumed booster jitter (solid, filled) and a tenfold
+smaller jitter (dashed, open), averaged over 200 steered error realizations
+(analytic). Values below $10^{-12}$ are omitted. The vertical line marks the model
+value \SI{1.478}{\milli\metre} and the dotted line a \SI{0.1}{\percent} loss.}\label{fig:blade}\end{figure}
 
 \section{Discussion and conclusions}\label{sec:discussion}
 Optimization of the baseline BTS line restores the prescribed exit lattice

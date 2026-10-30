@@ -1,0 +1,371 @@
+{
+  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/blade_b/blade.json",
+  "distance_for_tolerance_m": {
+    "0.1": {
+      "reference": {
+        "distance_m": 0.001,
+        "bound": "at or below the smallest swept distance"
+      },
+      "low_beta": {
+        "distance_m": 0.001,
+        "bound": "at or below the smallest swept distance"
+      },
+      "robust": {
+        "distance_m": 0.001,
+        "bound": "at or below the smallest swept distance"
+      }
+    },
+    "1.0": {
+      "reference": {
+        "distance_m": 0.002049563413039653,
+        "bound": "interpolated"
+      },
+      "low_beta": {
+        "distance_m": 0.0020122035163419477,
+        "bound": "interpolated"
+      },
+      "robust": {
+        "distance_m": 0.0016433246581174824,
+        "bound": "interpolated"
+      }
+    }
+  },
+  "rows": [
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.001,
+      "designs": {
+        "reference": {
+          "steered_loss": 1.1677447219589548e-07,
+          "jitter_integrated_loss": 2.255227270476112e-07,
+          "error_free_loss": 6.468334151487941e-08,
+          "mean_clearance_m": 0.00015869362442732423
+        },
+        "low_beta": {
+          "steered_loss": 1.615848932313315e-07,
+          "jitter_integrated_loss": 2.3473059884759195e-07,
+          "error_free_loss": 6.102873040844425e-08,
+          "mean_clearance_m": 0.00015224229755233853
+        },
+        "robust": {
+          "steered_loss": 4.999299223311634e-07,
+          "jitter_integrated_loss": 1.5015762643255485e-06,
+          "error_free_loss": 3.3474698677998156e-08,
+          "mean_clearance_m": 0.0001478472407212644
+        }
+      }
+    },
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.00125,
+      "designs": {
+        "reference": {
+          "steered_loss": 2.7547592968259782e-11,
+          "jitter_integrated_loss": 1.1541865414786378e-10,
+          "error_free_loss": 2.0602846255509396e-11,
+          "mean_clearance_m": 0.00040869362442732426
+        },
+        "low_beta": {
+          "steered_loss": 3.938844001108837e-11,
+          "jitter_integrated_loss": 1.1683745009766503e-10,
+          "error_free_loss": 1.883240635977247e-11,
+          "mean_clearance_m": 0.00040224229755233854
+        },
+        "robust": {
+          "steered_loss": 3.8646329952637266e-10,
+          "jitter_integrated_loss": 3.6008713915620536e-09,
+          "error_free_loss": 7.445214994499171e-12,
+          "mean_clearance_m": 0.0003978472407212644
+        }
+      }
+    },
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.001478,
+      "designs": {
+        "reference": {
+          "steered_loss": 2.4100958924553057e-15,
+          "jitter_integrated_loss": 2.7618974844100437e-14,
+          "error_free_loss": 3.0116951590425687e-15,
+          "mean_clearance_m": 0.0006366936244273241
+        },
+        "low_beta": {
+          "steered_loss": 2.9922027133199766e-15,
+          "jitter_integrated_loss": 2.6739659186823845e-14,
+          "error_free_loss": 2.658157259684891e-15,
+          "mean_clearance_m": 0.0006302422975523384
+        },
+        "robust": {
+          "steered_loss": 1.1365232614198163e-13,
+          "jitter_integrated_loss": 3.8029860776715735e-12,
+          "error_free_loss": 7.318129151783876e-16,
+          "mean_clearance_m": 0.0006258472407212643
+        }
+      }
+    },
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.00175,
+      "designs": {
+        "reference": {
+          "steered_loss": 3.934492326101503e-21,
+          "jitter_integrated_loss": 2.1906176418240934e-19,
+          "error_free_loss": 1.2377197335840235e-20,
+          "mean_clearance_m": 0.0009086936244273243
+        },
+        "low_beta": {
+          "steered_loss": 3.7391805017907375e-21,
+          "jitter_integrated_loss": 1.9613507059797775e-19,
+          "error_free_loss": 1.0397495844454925e-20,
+          "mean_clearance_m": 0.0009022422975523385
+        },
+        "robust": {
+          "steered_loss": 8.33115081992579e-19,
+          "jitter_integrated_loss": 1.780232758479922e-16,
+          "error_free_loss": 1.7177850827703578e-21,
+          "mean_clearance_m": 0.0008978472407212645
+        }
+      }
+    },
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.002,
+      "designs": {
+        "reference": {
+          "steered_loss": 2.3800391664794548e-27,
+          "jitter_integrated_loss": 7.887000667916577e-25,
+          "error_free_loss": 2.2959479558502907e-26,
+          "mean_clearance_m": 0.0011586936244273242
+        },
+        "low_beta": {
+          "steered_loss": 1.9558223389845886e-27,
+          "jitter_integrated_loss": 6.421364537770604e-25,
+          "error_free_loss": 1.8295931537181496e-26,
+          "mean_clearance_m": 0.0011522422975523386
+        },
+        "robust": {
+          "steered_loss": 1.973428494453217e-24,
+          "jitter_integrated_loss": 3.23974829365321e-21,
+          "error_free_loss": 1.7523604579636084e-27,
+          "mean_clearance_m": 0.0011478472407212643
+        }
+      }
+    },
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.0025,
+      "designs": {
+        "reference": {
+          "steered_loss": 2.893621544237291e-42,
+          "jitter_integrated_loss": 6.539312288117406e-38,
+          "error_free_loss": 4.4246336832361435e-40,
+          "mean_clearance_m": 0.0016568615396965992
+        },
+        "low_beta": {
+          "steered_loss": 2.6122457619780293e-42,
+          "jitter_integrated_loss": 4.15060425633082e-38,
+          "error_free_loss": 3.1065725817532797e-40,
+          "mean_clearance_m": 0.0016522422975523384
+        },
+        "robust": {
+          "steered_loss": 2.535012152576514e-38,
+          "jitter_integrated_loss": 6.712600474318492e-33,
+          "error_free_loss": 8.041758212220713e-42,
+          "mean_clearance_m": 0.0016478472407212643
+        }
+      }
+    },
+    {
+      "jitter_scale": 0.1,
+      "blade_distance_m": 0.003,
+      "designs": {
+        "reference": {
+          "steered_loss": 1.7091602842620812e-60,
+          "jitter_integrated_loss": 5.991052970679264e-54,
+          "error_free_loss": 8.343535513860914e-57,
+          "mean_clearance_m": 0.0021474212165699
+        },
+        "low_beta": {
+          "steered_loss": 1.763322923485122e-60,
+          "jitter_integrated_loss": 2.7799998596523305e-54,
+          "error_free_loss": 5.0182220906659217e-57,
+          "mean_clearance_m": 0.0021522422975523386
+        },
+        "robust": {
+          "steered_loss": 8.995398405263911e-56,
+          "jitter_integrated_loss": 1.5509307640872404e-47,
+          "error_free_loss": 2.625355392486991e-59,
+          "mean_clearance_m": 0.0021478472407212646
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.001,
+      "designs": {
+        "reference": {
+          "steered_loss": 0.05743332173820548,
+          "jitter_integrated_loss": 0.06621108532415576,
+          "error_free_loss": 0.06546530537138855,
+          "mean_clearance_m": 6.547598329679023e-05
+        },
+        "low_beta": {
+          "steered_loss": 0.05333892192374229,
+          "jitter_integrated_loss": 0.06176850494462489,
+          "error_free_loss": 0.06227792109345265,
+          "mean_clearance_m": 6.0217778237705707e-05
+        },
+        "robust": {
+          "steered_loss": 0.02740136021893147,
+          "jitter_integrated_loss": 0.03036338889899776,
+          "error_free_loss": 0.02969994841242472,
+          "mean_clearance_m": 3.8394025959300646e-05
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.00125,
+      "designs": {
+        "reference": {
+          "steered_loss": 0.02725883625447721,
+          "jitter_integrated_loss": 0.029988461420219107,
+          "error_free_loss": 0.02950942909052808,
+          "mean_clearance_m": 0.00031547598329679025
+        },
+        "low_beta": {
+          "steered_loss": 0.025068537045718965,
+          "jitter_integrated_loss": 0.0272532808066458,
+          "error_free_loss": 0.02743457061118781,
+          "mean_clearance_m": 0.00031021777823770567
+        },
+        "robust": {
+          "steered_loss": 0.009187975560554148,
+          "jitter_integrated_loss": 0.009527565353115507,
+          "error_free_loss": 0.009223356630162386,
+          "mean_clearance_m": 0.0002883940259593006
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.001478,
+      "designs": {
+        "reference": {
+          "steered_loss": 0.012416696600816643,
+          "jitter_integrated_loss": 0.013072827255296763,
+          "error_free_loss": 0.01279315732669233,
+          "mean_clearance_m": 0.0005434342879640016
+        },
+        "low_beta": {
+          "steered_loss": 0.012252633352684597,
+          "jitter_integrated_loss": 0.011553704543926444,
+          "error_free_loss": 0.011600673977655811,
+          "mean_clearance_m": 0.0005382177782377056
+        },
+        "robust": {
+          "steered_loss": 0.002234877724956,
+          "jitter_integrated_loss": 0.0027863604790374997,
+          "error_free_loss": 0.002665199624304892,
+          "mean_clearance_m": 0.0005163940259593006
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.00175,
+      "designs": {
+        "reference": {
+          "steered_loss": 0.005627689191004298,
+          "jitter_integrated_loss": 0.004230444133952067,
+          "error_free_loss": 0.004105428409196962,
+          "mean_clearance_m": 0.0008149809546306683
+        },
+        "low_beta": {
+          "steered_loss": 0.005480764257732104,
+          "jitter_integrated_loss": 0.003598224470612724,
+          "error_free_loss": 0.0035954110470735453,
+          "mean_clearance_m": 0.0008102177782377057
+        },
+        "robust": {
+          "steered_loss": 0.00011063248024123837,
+          "jitter_integrated_loss": 0.0005162270304500096,
+          "error_free_loss": 0.00048491080760124984,
+          "mean_clearance_m": 0.0007883940259593007
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.002,
+      "designs": {
+        "reference": {
+          "steered_loss": 0.0014300380404926843,
+          "jitter_integrated_loss": 0.0013113135897824654,
+          "error_free_loss": 0.00126018727275693,
+          "mean_clearance_m": 0.0010642871709831295
+        },
+        "low_beta": {
+          "steered_loss": 0.0015613233415004868,
+          "jitter_integrated_loss": 0.0010714748142040367,
+          "error_free_loss": 0.0010636558704688818,
+          "mean_clearance_m": 0.0010602177782377056
+        },
+        "robust": {
+          "steered_loss": 8.098965127622178e-07,
+          "jitter_integrated_loss": 8.857883579906519e-05,
+          "error_free_loss": 8.147880480989448e-05,
+          "mean_clearance_m": 0.0010383940259593007
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.0025,
+      "designs": {
+        "reference": {
+          "steered_loss": 3.0742078213257094e-07,
+          "jitter_integrated_loss": 8.516724086530798e-05,
+          "error_free_loss": 7.964971761723587e-05,
+          "mean_clearance_m": 0.0015600201009177816
+        },
+        "low_beta": {
+          "steered_loss": 4.411800783147946e-07,
+          "jitter_integrated_loss": 6.332378762604734e-05,
+          "error_free_loss": 6.156176936888696e-05,
+          "mean_clearance_m": 0.0015602177782377059
+        },
+        "robust": {
+          "steered_loss": 1.4196399260808122e-14,
+          "jitter_integrated_loss": 1.4047372622264578e-06,
+          "error_free_loss": 1.2201542583035665e-06,
+          "mean_clearance_m": 0.0015383940259593007
+        }
+      }
+    },
+    {
+      "jitter_scale": 1.0,
+      "blade_distance_m": 0.003,
+      "designs": {
+        "reference": {
+          "steered_loss": 3.776514899263299e-15,
+          "jitter_integrated_loss": 3.263844016394917e-06,
+          "error_free_loss": 2.9307191619202544e-06,
+          "mean_clearance_m": 0.0020505992824769036
+        },
+        "low_beta": {
+          "steered_loss": 4.965518231630167e-15,
+          "jitter_integrated_loss": 2.1670566956051162e-06,
+          "error_free_loss": 2.034891913029528e-06,
+          "mean_clearance_m": 0.002058544656620525
+        },
+        "robust": {
+          "steered_loss": 2.837719863680758e-27,
+          "jitter_integrated_loss": 9.722211136752967e-09,
+          "error_free_loss": 7.762180292045499e-09,
+          "mean_clearance_m": 0.0020383913321351684
+        }
+      }
+    }
+  ]
+}

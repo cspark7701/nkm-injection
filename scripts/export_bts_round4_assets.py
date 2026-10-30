@@ -81,7 +81,46 @@ def jitter():
                                                                                                      for n, e in r['designs'].items()}} for r in rows]}, indent=2) + '\n')
 
 
-PARTS = {'jitter': jitter}
+def blade():
+    """R4-BTS-02: loss against blade distance at the assumed and a tenfold smaller jitter."""
+    data = load('blade_b', 'blade.json')
+    fig, ax = plt.subplots(figsize=(6.3, 3.4))
+    floor = 1e-12
+    for scale, ls, marker in ((1.0, '-', 'o'), (0.1, '--', 's')):
+        for name in ('reference', 'low_beta', 'robust'):
+            rows = sorted((r for r in data['rows'] if r['jitter_scale'] == scale), key=lambda r: r['blade_distance_m'])
+            # Points below the axis floor are omitted rather than drawn on it.
+            pts = [(1e3 * r['blade_distance_m'], r['designs'][name]['jitter_integrated_loss']) for r in rows
+                   if r['designs'][name]['jitter_integrated_loss'] >= floor]
+            ax.plot(*zip(*pts), ls=ls, marker=marker, ms=4, mfc='none' if scale < 1 else COLORS[name], color=COLORS[name], lw=1.2,
+                    label=f"{SHORT[name]}, jitter ×{scale:g}")
+    ax.axhline(data['protocol']['tolerance_loss'], color='0.4', lw=.8, ls=':')
+    ax.text(3.0, data['protocol']['tolerance_loss'] * 1.6, '0.1 %', ha='right', va='bottom', fontsize=8, color='0.3')
+    ax.axvline(1.478, color='0.6', lw=.8)
+    ax.text(1.5, 1e-7, 'model value', rotation=90, va='center', ha='left', fontsize=8, color='0.4')
+    ax.set(yscale='log', ylim=(floor, 0.2), xlim=(0.95, 3.05), xlabel='Centroid-to-blade distance $d_b$ [mm]',
+           ylabel='Jitter-integrated loss fraction')
+    ax.grid(True, which='major', color='0.85', lw=.6)
+    ax.legend(fontsize=7, ncol=2, loc='lower right', frameon=True, framealpha=.9, edgecolor='none')
+    fig.tight_layout()
+    fig.savefig(P / 'figures/round4_blade_distance.pdf', metadata={'CreationDate': None})
+    plt.close(fig)
+    tol = data['distance_for_tolerance_m']
+    get = lambda s, d_b, n: next(r for r in data['rows'] if r['jitter_scale'] == s and abs(r['blade_distance_m'] - d_b) < 1e-9)['designs'][n]['jitter_integrated_loss']
+    tenth_one_mm = max(get(0.1, 0.001, n) for n in ('reference', 'low_beta', 'robust'))
+    macros('blade', {
+        'TolRefMm': f"{1e3 * tol['1.0']['reference']['distance_m']:.2f}",
+        'TolLowMm': f"{1e3 * tol['1.0']['low_beta']['distance_m']:.2f}",
+        'TolRobustMm': f"{1e3 * tol['1.0']['robust']['distance_m']:.2f}",
+        'OneMmFullRefPct': f"{100 * get(1.0, 0.001, 'reference'):.1f}",
+        'OneMmFullRobustPct': f"{100 * get(1.0, 0.001, 'robust'):.1f}",
+        'OneMmTenthMax': f'{tenth_one_mm:.0e}',
+    })
+    (P / 'generated/round4_blade.json').write_text(json.dumps({'source': str(CAMPAIGN / 'blade_b/blade.json'),
+                                                                'distance_for_tolerance_m': tol, 'rows': data['rows']}, indent=2) + '\n')
+
+
+PARTS = {'jitter': jitter, 'blade': blade}
 
 
 def main():

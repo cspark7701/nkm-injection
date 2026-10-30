@@ -772,3 +772,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 267. [**Milestone 267 — R4-BTS-01: booster jitter level and sweep**](267_r4_bts_01_jitter_level.md)
     - Round-4 protocol, runner and module. The jitter is stated in beam-size units (1.3/2.2σ at m1) and swept with a jitter-integrated loss: at ×0.1–0.2, every setting loses ≤3×10⁻¹¹. The static residual adds only 2–5 %, which corrects R4-BTS-04.
+
+268. [**Milestone 268 — R4-BTS-02: blade-distance sweep**](268_r4_bts_02_blade_distance.md)
+    - Jitter-integrated loss against the blade distance (1–3 mm) at ×1 and ×0.1 jitter. A loss below 0.1 % needs d_b ≥ 2.05 mm (matched) or 1.64 mm (loss-based) at the assumed jitter; at ×0.1 jitter, ≤2×10⁻⁶ even at 1 mm. Adds Figure 5 and the TDR and ring-acceptance notes.

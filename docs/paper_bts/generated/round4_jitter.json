@@ -1,0 +1,191 @@
+{
+  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+  "beam_units": {
+    "m1_beam_size_m": 0.0003790786778282313,
+    "m1_beam_divergence_rad": 9.065399181110757e-05,
+    "m4_beam_size_m": 0.00015896178397717612,
+    "centroid_action_over_emittance": 53.73961635900196
+  },
+  "rows": [
+    {
+      "scale": 0.0,
+      "reference": {
+        "jitter_integrated_loss_mean": 2.7094367908412668e-15,
+        "predicted_loss_max_mean": 2.9262410717707484e-15,
+        "error_free_loss": 3.4236197783244546e-16,
+        "exit_jitter_m_rad": [
+          8.0868e-05,
+          4.7471999999999995e-05
+        ]
+      },
+      "low_beta": {
+        "jitter_integrated_loss_mean": 3.802231687013068e-15,
+        "predicted_loss_max_mean": 1.8615976093825753e-15,
+        "error_free_loss": 3.4237363876275787e-16,
+        "exit_jitter_m_rad": [
+          8.0868e-05,
+          4.7471999999999995e-05
+        ]
+      },
+      "robust": {
+        "jitter_integrated_loss_mean": 2.4865129784236628e-12,
+        "predicted_loss_max_mean": 1.5181215733697272e-13,
+        "error_free_loss": 3.4237362947851854e-16,
+        "exit_jitter_m_rad": [
+          8.0868e-05,
+          4.7471999999999995e-05
+        ]
+      }
+    },
+    {
+      "scale": 0.05,
+      "reference": {
+        "jitter_integrated_loss_mean": 4.4080422277570035e-15,
+        "predicted_loss_max_mean": 2.065214496968613e-15,
+        "error_free_loss": 4.925485586227518e-16,
+        "exit_jitter_m_rad": [
+          8.692475937489616e-05,
+          5.014685354202027e-05
+        ]
+      },
+      "low_beta": {
+        "jitter_integrated_loss_mean": 5.732138571853648e-15,
+        "predicted_loss_max_mean": 1.7281143197889347e-15,
+        "error_free_loss": 4.8191859108943e-16,
+        "exit_jitter_m_rad": [
+          8.671706053146323e-05,
+          5.021223433374535e-05
+        ]
+      },
+      "robust": {
+        "jitter_integrated_loss_mean": 2.769217201766326e-12,
+        "predicted_loss_max_mean": 1.2878230740889506e-13,
+        "error_free_loss": 4.1395192068378276e-16,
+        "exit_jitter_m_rad": [
+          8.46376561829362e-05,
+          5.0849005343614617e-05
+        ]
+      }
+    },
+    {
+      "scale": 0.1,
+      "reference": {
+        "jitter_integrated_loss_mean": 2.7618974844100437e-14,
+        "predicted_loss_max_mean": 2.4100958924553057e-15,
+        "error_free_loss": 3.0116951590425687e-15,
+        "exit_jitter_m_rad": [
+          0.00010297939064460613,
+          5.74286977795886e-05
+        ]
+      },
+      "low_beta": {
+        "jitter_integrated_loss_mean": 2.6739659186823845e-14,
+        "predicted_loss_max_mean": 2.9922027133199766e-15,
+        "error_free_loss": 2.658157259684891e-15,
+        "exit_jitter_m_rad": [
+          0.00010227655682936256,
+          5.765675637033201e-05
+        ]
+      },
+      "robust": {
+        "jitter_integrated_loss_mean": 3.8029860776715735e-12,
+        "predicted_loss_max_mean": 1.1365232614198163e-13,
+        "error_free_loss": 7.318129151783876e-16,
+        "exit_jitter_m_rad": [
+          9.505383266635634e-05,
+          5.9847414528447204e-05
+        ]
+      }
+    },
+    {
+      "scale": 0.2,
+      "reference": {
+        "jitter_integrated_loss_mean": 2.6277574826352977e-11,
+        "predicted_loss_max_mean": 4.35335863022959e-14,
+        "error_free_loss": 7.850054955595522e-12,
+        "exit_jitter_m_rad": [
+          0.0001509970838067331,
+          8.019631514376018e-05
+        ]
+      },
+      "low_beta": {
+        "jitter_integrated_loss_mean": 1.8549902718375422e-11,
+        "predicted_loss_max_mean": 1.0530648799578117e-13,
+        "error_free_loss": 5.921841712714192e-12,
+        "exit_jitter_m_rad": [
+          0.00014907406224920323,
+          8.084821499941285e-05
+        ]
+      },
+      "robust": {
+        "jitter_integrated_loss_mean": 1.3463511915633336e-11,
+        "predicted_loss_max_mean": 1.0370873975700483e-13,
+        "error_free_loss": 2.416327623148371e-13,
+        "exit_jitter_m_rad": [
+          0.00012853802607109966,
+          8.698321534042746e-05
+        ]
+      }
+    },
+    {
+      "scale": 0.5,
+      "reference": {
+        "jitter_integrated_loss_mean": 3.161419844361247e-05,
+        "predicted_loss_max_mean": 1.2943830304895305e-06,
+        "error_free_loss": 2.6038415500190156e-05,
+        "exit_jitter_m_rad": [
+          0.0003288885377485203,
+          0.00016841972687450576
+        ]
+      },
+      "low_beta": {
+        "jitter_integrated_loss_mean": 2.343196167090285e-05,
+        "predicted_loss_max_mean": 3.129309874906172e-06,
+        "error_free_loss": 2.048702940057917e-05,
+        "exit_jitter_m_rad": [
+          0.00032335916524160215,
+          0.0001703565674187395
+        ]
+      },
+      "robust": {
+        "jitter_integrated_loss_mean": 1.0240489320358385e-06,
+        "predicted_loss_max_mean": 2.5126942912112896e-09,
+        "error_free_loss": 7.337011531918299e-07,
+        "exit_jitter_m_rad": [
+          0.00026254442564657856,
+          0.00018829935429388715
+        ]
+      }
+    },
+    {
+      "scale": 1.0,
+      "reference": {
+        "jitter_integrated_loss_mean": 0.013072827255296763,
+        "predicted_loss_max_mean": 0.012416696600816643,
+        "error_free_loss": 0.01279315732669233,
+        "exit_jitter_m_rad": [
+          0.0006426910461313736,
+          0.0003266497286849209
+        ]
+      },
+      "low_beta": {
+        "jitter_integrated_loss_mean": 0.011553704543926444,
+        "predicted_loss_max_mean": 0.012252633352684597,
+        "error_free_loss": 0.011600673977655811,
+        "exit_jitter_m_rad": [
+          0.0006313681166411423,
+          0.00033064281014227745
+        ]
+      },
+      "robust": {
+        "jitter_integrated_loss_mean": 0.0027863604790374997,
+        "predicted_loss_max_mean": 0.002234877724956,
+        "error_free_loss": 0.002665199624304892,
+        "exit_jitter_m_rad": [
+          0.0005060626458061959,
+          0.0003675130133178679
+        ]
+      }
+    }
+  ]
+}

@@ -16,6 +16,7 @@
 \input{generated/round3_design.tex}
 \input{generated/round3_exit.tex}
 \input{generated/round3_sensitivity.tex}
+\input{generated/round4_jitter.tex}
 \title{Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line}
 \author{Chong Shik Park$^{1,2}$\\[3pt]
 \small $^{1}$Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea\\
@@ -328,7 +329,13 @@ elements (\SI{0.05}{\percent} rms). Each independent draw of these static errors
 defines one error realization of the line. Each shot adds booster jitter at m1: entrance beta factors
 (\SI{5}{\percent}), centroid position \SI{0.5}{\milli\metre}, angle \SI{0.2}{\milli\radian} and momentum \SI{0.1}{\percent}, the latter
 carried by the entrance dispersion. These levels are model inputs; the booster jitter is the same as in the NKM
-injection study~\cite{ParkNKM2026}. Their sensitivity is examined in Section~\ref{sec:sensitivity}.
+injection study~\cite{ParkNKM2026}. In beam-size units the betatron jitter is large: at m1
+the rms beam is \SI{\BtsRFourBeamSizeMOneMm}{\milli\metre} and \SI{\BtsRFourBeamDivMOneUrad}{\micro\radian}, so the position and angle jitter are
+\BtsRFourJitPosSigma\ and \BtsRFourJitAngSigma\ beam sizes, and the mean centroid action is \BtsRFourJitActionRatio\ times the
+emittance. Booster extraction stability is commonly specified as a fraction of the
+beam size; no KLS specification is available to us, so we treat these values as a
+stress level and report the dependence of the results on it. The sensitivity to all
+error levels is examined in Section~\ref{sec:sensitivity}.
 
 Static trajectory errors are corrected without changing the line: no corrector or
 monitor element is added. The horizontal knobs are field trims of the six existing
@@ -409,9 +416,10 @@ booster jitter between position, which the septum blade sees, and angle, which t
 injection kicker sees, but cannot remove it. On error realizations, the residual
 trajectory after steering, the optics errors and roll coupling add to this jitter;
 the test losses are computed with the full transport of each realization
-(Sections~\ref{sec:steering-results} and \ref{sec:design}), and these static
-contributions raise the blade loss of the error-free line by a factor of 1.8--2.6
-(Table~\ref{tab:design}).
+(Sections~\ref{sec:steering-results} and \ref{sec:design}). Averaged exactly over the
+jitter, these static contributions raise the blade loss of the error-free line by only
+a few percent (Section~\ref{sec:sensitivity}); the larger tracked losses of
+Table~\ref{tab:design} reflect the jitter tail sampled by the 600 test shots.
 
 \subsection{Loss-based observable and design}\label{sec:loss}
 For a Gaussian projection with centroid $\bar u$ and rms size $\sigma$ at an
@@ -584,9 +592,8 @@ $x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
 Two observations arise from these results. First, after correction the exit
 centroid spread, about \SI{0.68}{\milli\metre} and \SI{0.37}{\milli\radian}, is mainly that of the booster jitter
 (\SI{0.64}{\milli\metre} and \SI{0.33}{\milli\radian} for the error-free matched reference,
-Table~\ref{tab:design}). The static residual adds only about \SI{0.2}{\milli\metre} in
-quadrature, but because the blade loss depends steeply on the spread, it nearly
-doubles the loss. Second, the mean
+Table~\ref{tab:design}); averaged exactly over the jitter, the static residual raises
+the loss by only a few percent (Section~\ref{sec:sensitivity}). Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
 largest mean clearance (\SI{\BtsRThreeRefUncClear}{\milli\metre} against \SI{\BtsRThreeRefCorClear}{\milli\metre})
 and six times the loss, because a static offset away from the one-sided blade raises
@@ -707,16 +714,40 @@ millimeters of clearance, and leave the horizontal blade loss unchanged. Halving
 energy jitter lowers the matched-reference loss from \SI{\BtsRThreeEnergyRefFull}{\percent} to
 \SI{\BtsRThreeEnergyRefHalf}{\percent}, because its \SI{81}{\micro\metre} exit contribution is small
 compared with the betatron jitter. The ranking of the settings is the same at every
-level. On this population the loss-based setting is \BtsRThreeSensRatio\ times below
-the matched reference, against \BtsRThreeLossRatio\ on the tracked test population: the
-size of the gain depends on the sampled error realizations, as expected for a heavy-tailed
-loss, while its sign does not.
+roll and energy-jitter level. On this population the loss-based setting is \BtsRThreeSensRatio\ times below
+the matched reference, against \BtsRThreeLossRatio\ on the tracked test population: with
+three shots per realization, the size of the gain depends on the sampled jitter tail.
+
+For each steered realization we therefore also evaluate the jitter-integrated loss:
+Eq.~(\ref{eq:loss}) averaged exactly over the Gaussian entrance jitter on that
+realization's steered line, which resolves losses far below the reach of sampled
+shots. Table~\ref{tab:jitter} scales the position and angle jitter together on a further
+200 independently seeded realizations. At the assumed level the jitter-integrated
+losses are \SI{\BtsRFourFullRefPct}{\percent} and \SI{\BtsRFourFullRobustPct}{\percent} for the matched reference and loss-based
+settings, close to the error-free \SI{\BtsRFourFullRefFreePct}{\percent} and \SI{\BtsRFourFullRobustFreePct}{\percent}: the steered static residual
+adds only \SI{\BtsRFourStaticRefPct}{\percent} and \SI{\BtsRFourStaticRobustPct}{\percent}, and the loss-based gain is \BtsRFourGainFull. Halving the jitter
+lowers the losses by more than two orders of magnitude, with a gain of \BtsRFourGainHalf. At
+0.1--0.2 of the assumed level, i.e.\ 13--44\,\% of the beam size at m1, every
+setting loses a fraction of at most \num{\BtsRFourRealisticMaxLoss}, and the loss-based setting is no better
+than the others; for it, the static residual then contributes more than the jitter. The loss
+reduction reported above is therefore a property of large booster jitter. The
+partition of the jitter between exit position and angle (Section~\ref{sec:jitter})
+holds at every level, because it scales linearly with the jitter.
 
 \begin{table}[htbp]\centering
 \caption{Sensitivity of the steered matched line (Matched denotes the matched reference) to the roll and energy-jitter levels: mean
 predicted loss and mean minimum five-sigma clearance on 200 error realizations with three shots
 each (analytic, not tracked).}\label{tab:sensitivity}
 {\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
+
+\begin{table}[htbp]\centering
+\caption{Dependence on the booster betatron jitter. Position and angle jitter at m1 are
+scaled together from the assumed \SI{0.5}{\milli\metre} and \SI{0.2}{\milli\radian} (scale 1) and are
+given in units of the rms beam size and divergence at m1; the momentum jitter stays
+at \SI{0.1}{\percent}. Losses are the jitter-integrated predictions averaged over 200 steered
+error realizations, and the last column is the error-free line (analytic, not
+tracked).}\label{tab:jitter}
+{\small\input{generated/round4_jitter_rows.tex}}\end{table}
 
 \section{Discussion and conclusions}\label{sec:discussion}
 Optimization of the baseline BTS line restores the prescribed exit lattice
@@ -757,9 +788,12 @@ losses within \SI{1}{\percent} relative, is smooth, and can be optimized directl
 gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
 booster jitter lands, and compare with the restriction and the kicker acceptance.
 
-The loss is heavy-tailed
-over error realizations and its population mean varies between independently seeded
-populations, while the ranking of settings does not. The dispersion-free results are
+The booster jitter assumed here is 1.3 and 2.2 beam sizes at m1, and the blade loss
+and the benefit of the loss-based setting depend on it steeply: at 0.1--0.2 of that
+level every matched setting loses less than $10^{-10}$, so the design choice that
+remains is where the jitter appears at the exit, not how much is lost at the blade.
+With sampled shots the loss is heavy-tailed and its population mean varies between
+independently seeded populations. The dispersion-free results are
 analytic. This paper neither certifies real transmission nor derives construction
 tolerances, ring capture, or kicker transparency.
 

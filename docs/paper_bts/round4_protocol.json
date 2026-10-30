@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "declared 2026-10-30 before the round-4 campaigns (consolidated R4-BTS tasks); the BTS lattice is not changed",
+  "campaign": "results/bts_round4_campaign_20261030",
+  "inherits": "round3_protocol.json: aperture model, error model, steering algorithm, exit targets; exact round-aperture loss (R4-BTS-03)",
+  "frozen_settings": "reference and low_beta from round 2; robust from results/bts_journal_campaign_r3b_20261015/robust/robust.json",
+  "beam_units_note": "At m1 the rms beam is 0.379 mm / 91 urad (with dispersion); at m4 sigma_x = 0.159 mm. Jitter scale 1 is 0.5 mm / 0.2 mrad (1.3 / 2.2 beam sizes at m1); scale 0.1 is 13 % / 22 %.",
+  "jitter": {
+    "task": "R4-BTS-01",
+    "scales": [0.0, 0.05, 0.1, 0.2, 0.5, 1.0],
+    "scaled": "position and angle jitter together; centroid momentum jitter 0.1 % unchanged",
+    "designs": ["reference", "low_beta", "robust"],
+    "machines": 200, "shots_per_machine": 3, "static_seed": 94001, "shot_seed": 94002, "bpm_seed": 94004,
+    "bootstrap_seed": 94005,
+    "observable": "analytic Gaussian loss on steered realizations (mean over the sampled shots), the jitter-integrated loss of each steered realization (exact Gaussian average over entrance jitter, no shot sampling), and the error-free shot-averaged loss (no particle tracking)",
+    "amendment": "2026-10-30: the jitter-integrated observable was added after the first jitter/blade runs (directories jitter/ and blade/, retained) showed that the sampled 600-shot mean cannot resolve small losses; the reruns are jitter_b/ and blade_b/"
+  },
+  "blade": {
+    "task": "R4-BTS-02",
+    "blade_distance_m": [0.001, 0.00125, 0.001478, 0.00175, 0.002, 0.0025, 0.003],
+    "jitter_scales": [0.1, 1.0],
+    "designs": ["reference", "low_beta", "robust"],
+    "realizations": "same seeds as the jitter stage (paired)",
+    "tolerance_loss": 0.001,
+    "observable": "analytic Gaussian loss, steered realizations and error-free line; tolerance distance from the jitter-integrated loss by log-linear interpolation"
+  },
+  "phase_scan": {
+    "task": "R4-BTS-05",
+    "grid_deg": {"configured": [186, 240, 2], "dispersion_free": [176, 226, 2]},
+    "starts": "6 pool solutions nearest in mu_x (round-3 phase pools) plus 10 uniform random starts per grid point",
+    "random_seed": 95001,
+    "solver": "bounded least squares on the six scaled exit residuals plus (mu_x - target)/0.01 rad; accepted if every scaled residual < 1e-4",
+    "selection": "per grid point the matched solution with the smallest larger peak beta (16 subdivisions); feasible if both peaks <= 60 m",
+    "edges": "SLSQP minimising and maximising mu_x subject to the six exit equalities, K bounds and both peak betas <= 60 m, from the five pool solutions nearest each edge; active constraints reported",
+    "chosen": "feasible configured-target scan solution with the smallest error-free shot-averaged loss (scan_best), and likewise for the dispersion-free target (free_best)",
+    "scope": "sampled search with explicit edge optimisation; not a proof of global reachability"
+  },
+  "steering_layouts": {
+    "task": "R4-BTS-10",
+    "layouts": ["full", "reduced_monitors", "series_bends", "reduced_series"],
+    "definitions": "src/nkm_injection/bts_round4.py LAYOUTS; reduced monitors read the exits of q13, q23 and q33 plus the septum entrance and line end; series bends trim b1-b3 as one knob with kicks proportional to bending angle",
+    "designs": ["reference", "robust"],
+    "machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
+    "static_seed": 91001, "shot_seed": 91002, "particle_seed": 91003, "bpm_seed": 91004, "bootstrap_seed": 91005,
+    "bpm_noise": "one static reading error per candidate monitor point, seeded by [bpm_seed, machine, design_index] as in round 3; layouts use the subset they read",
+    "reproduction_check": "full layout, reference design must reproduce the round-3 steering row"
+  },
+  "final_test": {
+    "task": "R4-BTS-05, R4-BTS-12",
+    "designs": ["reference", "low_beta", "robust", "scan_best", "free_best"],
+    "variant": "full steering layout",
+    "machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
+    "static_seed": 96001, "shot_seed": 96002, "particle_seed": 96003, "bpm_seed": 96004, "bootstrap_seed": 96005,
+    "frozen_before_test": "scan_best and free_best are frozen in phase_scan.json before this stage runs"
+  }
+}

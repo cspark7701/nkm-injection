@@ -769,3 +769,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 266. [**Milestone 266 — R4-BTS-04: scope of the boundary theorems**](266_r4_bts_04_theorem_scope.md)
     - Restrict the fixed-end clearance and phase-only jitter statements to the nominal matched line, define J, and replace "small residual" by the recorded 1.8–2.6-fold static contribution.
+
+267. [**Milestone 267 — R4-BTS-01: booster jitter level and sweep**](267_r4_bts_01_jitter_level.md)
+    - Round-4 protocol, runner and module. The jitter is stated in beam-size units (1.3/2.2σ at m1) and swept with a jitter-integrated loss: at ×0.1–0.2, every setting loses ≤3×10⁻¹¹. The static residual adds only 2–5 %, which corrects R4-BTS-04.

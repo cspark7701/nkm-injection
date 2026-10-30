@@ -20,7 +20,7 @@
         -1.168702,
         0.941655
       ],
-      "label": "Baseline setting (reference)",
+      "label": "Baseline setting",
       "exit_lattice_functions": [
         44.98078585114268,
         242.60693553912284,
@@ -68,6 +68,6 @@
     "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
     "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
     "docs/paper_bts/generated/round2_designs.json": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
-    "scripts/export_bts_at_figures.py": "dbf9bff10abba3b74320dcdcea4d866c0d4e03143644e7e44b2a10c83086ec8b"
+    "scripts/export_bts_at_figures.py": "52e5c329b7052f42d4eb6fbe5243ab2f571cf2e4fd84eb441241581ee929bff9"
   }
 }

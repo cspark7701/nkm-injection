@@ -799,3 +799,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 276. [**Milestone 276 — R4-BTS-10: steering assumptions, layouts and vertical exit centroid**](276_r4_bts_10_steering_layouts.md)
     - State the assumed readings, powering and per-setting reading errors. Reduced monitors leave the loss unchanged; series bends raise the exit-angle spread to 0.44 mrad. The uncorrected vertical exit centroid is 1.1 mm / 0.10 mrad; the full layout reproduces round 3 exactly.
+
+277. [**Milestone 277 — R4-BTS-07: framing, baseline provenance and title**](277_r4_bts_07_framing.md)
+    - New title. The abstract is rewritten around boundary-fixed clearance, the μ_x-only loss and the jitter regime. The baseline is stated as an unmatched starting point of recorded provenance, and its blade overlap as a consequence of d_b. "Baseline setting (reference)" becomes "Baseline setting" in the regenerated figures.

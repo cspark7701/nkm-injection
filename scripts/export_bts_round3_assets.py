@@ -53,7 +53,7 @@ def render_clearance_profile(data, output):
             values = np.array([r['clearance_m'] for r in rows])
             profiles[name][plane] = (stations, values)
             ax.plot([r['s_m'] for r in rows], 1e3 * values, **styles[name],
-                    markevery=5, label=(('Baseline setting (reference)' if name == 'reference' else 'Optimized low beta')
+                    markevery=5, label=(('Baseline setting' if name == 'reference' else 'Optimized low beta')
                                          if data.get('figure_reference') == 'original_setting' else LABELS[name]))
     for plane, ax in enumerate(axes[:2]):
         ax.set_yscale('symlog', linthresh=1, linscale=1)
@@ -158,7 +158,7 @@ def nominal_original_comparison(summary):
         exit_functions = nominal_observables(nominal)
         residual = float(np.max(np.abs((exit_functions - TARGET) / SCALES)))
         saved['profile'] = record['rows']
-        diagnostics[name] = {'label': 'Baseline setting (reference)' if name == 'reference' else 'Optimized low beta',
+        diagnostics[name] = {'label': 'Baseline setting' if name == 'reference' else 'Optimized low beta',
                              'strengths_m_minus2': k.tolist(), 'max_family_clearance_difference_m': error,
                              'minimum_clearance_m': record['minimum_m'], 'active': record['active'],
                              'exit_clearance_m': [r['clearance_m'] for r in record['rows'] if r['name'] == 'm4'],
@@ -190,7 +190,7 @@ def installed_clearance_figure(output):
     # a relabeling or recomputation of the historical error ensembles.
     text = '% Original-setting figure comparison; exported by scripts/export_bts_round3_assets.py.\n'
     text += r'\begin{tabular}{lrr}\toprule' + '\n'
-    text += r'Observable & Baseline setting (reference) & Optimized low beta\\\midrule' + '\n'
+    text += r'Observable & Baseline setting & Optimized low beta\\\midrule' + '\n'
     metrics = [('Exit $'+r'\beta_x$ [\si{\metre}]', lambda d:d['exit_lattice_functions'][0]),
                ('Exit $'+r'\beta_y$ [\si{\metre}]', lambda d:d['exit_lattice_functions'][1]),
                ('Peak $'+r'\beta_x$ [\si{\metre}]', lambda d:d['peak_beta_64_m'][0]),

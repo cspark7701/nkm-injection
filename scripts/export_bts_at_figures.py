@@ -58,7 +58,7 @@ def export_figures(output):
               'beta_absolute_tolerance_m': 1e-4, 'designs': {}, 'profile_origin': profile_origin,
               'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in profile_sources + [PAPER / 'generated/round2_designs.json', Path(__file__) ]}}
-    for name, label in [('reference', 'Baseline setting (reference)'), ('low_beta', 'Optimized low beta')]:
+    for name, label in [('reference', 'Baseline setting'), ('low_beta', 'Optimized low beta')]:
         profile = profiles[name]
         lattice = lattice_for(settings[name])
         dense = lattice.slice_elements([i for i, e in enumerate(lattice) if e.Length], slices=64)

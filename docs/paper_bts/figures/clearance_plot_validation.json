@@ -5,7 +5,7 @@
   "absolute_tolerance_m": 1e-10,
   "designs": {
     "reference": {
-      "label": "Baseline setting (reference)",
+      "label": "Baseline setting",
       "strengths_m_minus2": [
         0.448572,
         -1.026778,
@@ -88,8 +88,8 @@
   "source_sha256": {
     "docs/paper_bts/generated/round3_apertures.json": "ebd7af53f86914b8df9c41a975d4f40acc98a8b0c49aa7d1af544782ef7a0629",
     "docs/paper_bts/generated/matching.json": "e7a589cb62360657281508bcfc79435fe93a20d9e7ee2fa70465df552c54b617",
-    "scripts/export_bts_round3_assets.py": "23d422357cbf617758d04eec32d8507205347ed957b6760003683558dc54f17b",
-    "src/nkm_injection/bts_round3.py": "cbc707f52e2e6333c80d38560e95b80d8184b90b3c46ed350da15dcec77fe275",
+    "scripts/export_bts_round3_assets.py": "44a95944652d58548c3979bfceb51675793849676458ed4ab857d2ea19641e65",
+    "src/nkm_injection/bts_round3.py": "0cea27b54a4fd25360650a653d91021567b8c580513afce79b266b5555a638c3",
     "src/nkm_injection/bts_round2.py": "bb32d50a02809e5dca82536f1c3f9d99038293c0bdcb4edb79e697c6b27332b7",
     "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
     "src/nkm_injection/bts_lattice.py": "e1a489e59ea089dd3b089435fd42eb6ec80c174abf401b6bde8405b26df0c3a3"

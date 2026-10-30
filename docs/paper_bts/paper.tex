@@ -20,35 +20,36 @@
 \input{generated/round4_blade.tex}
 \input{generated/round4_phase.tex}
 \input{generated/round4_layouts.tex}
-\title{Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line}
+\title{Optical matching and beam loss in a booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source}
 \author{Chong Shik Park$^{1,2}$\\[3pt]
 \small $^{1}$Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea\\
 \small $^{2}$Center for Accelerator Research, Korea University, Sejong, 30019, Republic of Korea\\
 \small Corresponding author: \texttt{kuphy@korea.ac.kr}}
-\date{October 30, 2026}
+\date{October 31, 2026}
 \begin{document}
 \maketitle
 \begin{abstract}
-A booster-to-storage-ring transfer line must deliver the extracted booster beam
-while satisfying the optical requirements of storage-ring injection. This study
-optimizes the Korea Light Source Booster-to-Storage line, using its baseline
-quadrupole settings as the reference. The baseline setting does not satisfy the
-prescribed exit lattice functions and has insufficient nominal clearance at the
-injection-septum blade. Optical matching and vertical-beta optimization restore
-the required exit conditions and improve the beam envelope and aperture margin.
-The remaining design problem is then examined among matched settings, for which
-fixed boundary optics preserve the nominal endpoint beam sizes. Static trajectory
-correction reduces loss, after which booster shot jitter governs the remaining
-blade interception. A Gaussian loss model validated against particle tracking
-identifies how the horizontal phase advance redistributes this jitter between
-exit position and angle. A setting selected directly for loss reduction improves
-transmission on independent error realizations, while a dispersion-free exit
-further reduces predicted blade loss at the expense of increased angular jitter.
-The results distinguish the initial improvement obtained by matching the baseline BTS
-line from the subsequent optimization of loss sensitivity. The conclusions are
-conditional on the modeled aperture geometry and error budget; the
-dispersion-free result is analytical, and storage-ring capture is outside the
-scope of the study.
+A booster-to-storage-ring (BTS) transfer line must deliver the extracted booster
+beam within the optical and geometric constraints of storage-ring injection. We
+study a design version of the Korea Light Source BTS line with three bending
+magnets and nine quadrupoles, using the injection-septum geometry of a
+nonlinear-kicker injection study. Once the line is matched to the prescribed exit
+lattice functions, the nominal beam size at both ends is fixed, so the nominal
+clearance of the injection-septum blade, the active restriction, is the same for
+every matched setting, and lowering the interior peak beta changes only interior
+clearances. The quadrupoles act on the blade loss through the trajectory. After
+static correction with field trims of existing dipoles, booster shot jitter
+dominates, and for matched ends its partition between exit position and angle
+depends only on the horizontal phase advance. A Gaussian loss model validated
+against particle tracking shows that the loss of a matched setting depends on the
+phase advance alone and is smallest at the lower edge of the matched range. There,
+the best-found setting reduces the tracked loss by a factor of 3 to more than 10 on
+independent error realizations, at the cost of larger exit-angle jitter. This holds
+at a stress level of booster jitter, 1.3 and 2.2 beam sizes in position and angle;
+at 0.1--0.2 of that level the blade loss is negligible for every setting, and the
+design output of the line is the position--angle partition delivered to the
+injection kicker. A dispersion-free exit extends that partition. Storage-ring
+capture is outside the scope of the study.
 \end{abstract}
 \noindent\textbf{Keywords:} beam dynamics; error analysis; Korea Light Source; transfer line
 
@@ -124,14 +125,14 @@ Distinguishing these mechanisms is necessary to determine whether a proposed
 optics improvement addresses the limiting restriction or only redistributes
 margin elsewhere in the line.
 
-The goal of this study is to optimize the baseline KLS BTS setting to satisfy
-the prescribed exit lattice functions and improve beam clearance, and then to
-reduce loss sensitivity within the matched solution set. The baseline setting
-is the nine-quadrupole configuration before matching. Bounded optical matching
-followed by vertical-beta optimization produces the optimized setting shown in
-the nominal comparisons. A matched intermediate setting, referred to below as
-the matched reference, is used to isolate the effect of reducing beta while
-preserving the same exit target. The line is modeled with element-wise apertures
+The goal of this study is to identify which properties of a matched BTS setting
+control the beam loss at the active restriction, and what a designer can choose
+among matched settings. The baseline setting is the nine-quadrupole configuration
+supplied with the line before matching; it does not satisfy the prescribed exit and
+serves only as the starting point. Bounded optical matching followed by
+vertical-beta optimization gives the optimized low-beta setting (low beta). A
+matched intermediate setting, referred to below as the matched reference, is the
+comparison for all error studies. The line is modeled with element-wise apertures
 and the injection-septum blade geometry of the NKM injection
 study~\cite{ParkNKM2026}. The subsequent error study compares the matched reference,
 low-beta, and loss-based settings after
@@ -139,8 +140,8 @@ static trajectory correction using field trims of existing dipoles. A Gaussian
 loss probability derived from the transported beam and centroid covariance is
 validated against particle tracking and used to select a loss-based setting
 before evaluation on independently seeded error realizations. The analysis also
-examines the phase advance of the matched settings, a dispersion-free exit target, and sensitivity
-to the error levels. The study ends at the transfer-line exit; storage-ring
+examines the phase advance of the matched settings, a dispersion-free exit target,
+and the dependence on the error levels, in particular on the booster jitter. The study ends at the transfer-line exit; storage-ring
 capture and NKM transparency require the subsequent injection calculation.
 
 Section~\ref{sec:model} defines the model, Section~\ref{sec:methods} the criteria and
@@ -476,17 +477,21 @@ clearances by at most \SI{\BtsNewMomentError}{\micro\metre}, far below the repor
 sampled peak beta functions change by less than \SI{0.35}{\milli\metre} between 32 and 64
 subdivisions per element. These are finite-case checks, not universal error bounds or
 loss-tail certificates; their details, including the audit of the earlier
-four-station campaign, are given in the supplement. In the refined low-beta setting
+four-station campaign, are given in the supplement. In the low-beta setting
 the second quadrupole of the third triplet, \texttt{q32}, remains at its lower bound
 $\SI{-3}{\per\square\metre}$.
 
 \section{Results}\label{sec:results}
 \subsection{Active restrictions of the element-wise line}
-Figures~\ref{fig:refined} and \ref{fig:profile} compare the baseline BTS setting
-with the optimized low-beta setting. The reference uses the baseline quadrupole
-strengths from the BTS configuration, before optical matching. Its exit lattice
-functions miss the prescribed target, and its nominal five-sigma envelope
-extends across the injection-septum blade boundary. The optimized setting
+Figures~\ref{fig:refined} and \ref{fig:profile} compare the baseline setting with the
+optimized low-beta setting. The baseline strengths are the quadrupole settings
+supplied with the BTS configuration before this study; no record states the exit
+target for which they were designed, and they do not satisfy the present one
+(Table~\ref{tab:original-optimization}). They are therefore a starting point, not a
+competing design. Their nominal five-sigma envelope extends across the
+injection-septum blade boundary, but this is expected: the blade distance is
+defined from the matched exit beam (Section~\ref{sec:apertures}), so any setting with a much
+larger exit beta function overlaps it. The optimized setting
 satisfies the exit target, reduces the large vertical envelope, and restores
 positive nominal clearance. Table~\ref{tab:original-optimization} gives the
 corresponding exit lattice functions, peak beta values and minimum clearances.
@@ -519,7 +524,7 @@ error-study tables below retain this matched reference as a separate comparison
 setting; they do not report an error ensemble for the baseline setting.
 
 \begin{figure}[htbp]\centering\includegraphics[width=.85\linewidth]{figures/round2_optics.pdf}
-\caption{Baseline BTS setting (reference) and optimized low-beta lattice
+\caption{Baseline setting and optimized low-beta lattice
 functions, drawn with Accelerator Toolbox linear-optics plotting from the same
 entrance Courant--Snyder parameters and with the same observation resolution.
 The baseline setting uses the unmodified configuration strengths and does not
@@ -527,8 +532,8 @@ satisfy the exit target; the optimized setting is matched. Both curves use the
 same magnet positions and bend geometry.}\label{fig:refined}\end{figure}
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_clearance_profile.pdf}
-\caption{Nominal five-sigma clearance for the baseline BTS setting (reference,
-solid blue with filled circles) and optimized low beta (dashed orange with open
+\caption{Nominal five-sigma clearance for the baseline setting
+(solid blue with filled circles) and optimized low beta (dashed orange with open
 squares). A symmetric logarithmic scale, linear near zero, displays the baseline
 setting's negative horizontal clearance at the injection septum. Zero marks the
 five-sigma envelope touching an aperture. The third panel shows optimized minus
@@ -817,12 +822,11 @@ smaller jitter (dashed, open), averaged over 200 steered error realizations
 value \SI{1.478}{\milli\metre} and the dotted line a \SI{0.1}{\percent} loss.}\label{fig:blade}\end{figure}
 
 \section{Discussion and conclusions}\label{sec:discussion}
-Optimization of the baseline BTS line restores the prescribed exit lattice
-functions, reduces the large vertical beta peak, and changes the nominal blade
-clearance from negative to positive. These changes establish the benefit of
-matching and envelope control relative to the baseline configuration. The
-subsequent matched-only comparisons address a different question: how much
-additional improvement is possible once the endpoint optics are fixed.
+Matching the initial setting to the prescribed exit is a prerequisite rather than a
+result of this study: the blade distance is defined from the matched exit beam, so a
+setting whose exit beta function is far from the target necessarily overlaps the
+blade. The questions addressed here start from the matched settings and concern
+what still differs between them once the endpoint optics are fixed.
 
 In a BTS line matched at both ends, the nominal beam size at the ends is fixed and so is the
 nominal clearance of every restriction outside the quadrupole section. With the

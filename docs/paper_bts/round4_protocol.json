@@ -27,7 +27,9 @@
   "phase_scan": {
     "task": "R4-BTS-05",
     "grid_deg": {"configured": [186, 240, 2], "dispersion_free": [176, 226, 2]},
-    "starts": "6 pool solutions nearest in mu_x (round-3 phase pools) plus 10 uniform random starts per grid point",
+    "starts": "6 pool solutions nearest in mu_x (round-3 phase pools) plus 4 uniform random starts per grid point",
+    "max_nfev": 600,
+    "amendment": "2026-10-31: the first run (6 + 10 starts, 3000 evaluations each) was stopped after 26 min without output because unreachable grid points exhaust the budget on every start; it is retained as phase_scan/ (configuration only). The rerun phase_scan_b/ uses 6 + 4 starts and 600 evaluations; pool starts converge within about 200.",
     "random_seed": 95001,
     "solver": "bounded least squares on the six scaled exit residuals plus (mu_x - target)/0.01 rad; accepted if every scaled residual < 1e-4",
     "selection": "per grid point the matched solution with the smallest larger peak beta (16 subdivisions); feasible if both peaks <= 60 m",
@@ -43,12 +45,14 @@
     "machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
     "static_seed": 91001, "shot_seed": 91002, "particle_seed": 91003, "bpm_seed": 91004, "bootstrap_seed": 91005,
     "bpm_noise": "one static reading error per candidate monitor point, seeded by [bpm_seed, machine, design_index] as in round 3; layouts use the subset they read",
-    "reproduction_check": "full layout, reference design must reproduce the round-3 steering row"
+    "reproduction_check": "full layout, reference design must reproduce the round-3 steering row",
+    "amendment": "2026-10-31: a first layouts/ run was stopped together with the first phase scan before producing output (configuration only, retained); the stage is run as layouts_b/"
   },
   "final_test": {
     "task": "R4-BTS-05, R4-BTS-12",
-    "designs": ["reference", "low_beta", "robust", "scan_best", "free_best"],
+    "designs": ["reference", "low_beta", "robust", "scan_best", "edge_best", "free_best"],
     "variant": "full steering layout",
+    "amendment": "2026-10-31, before any test output: edge_best (the converged SLSQP solution of smallest mu_x for the configured exit, phase_scan_b edges) is added, because the loss decreases monotonically towards that edge and the grid point scan_best (202 deg) lies 1.8 deg inside it. A first final_test/ directory from the stopped run holds only its configuration; the test is run as final_test_b/.",
     "machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
     "static_seed": 96001, "shot_seed": 96002, "particle_seed": 96003, "bpm_seed": 96004, "bootstrap_seed": 96005,
     "frozen_before_test": "scan_best and free_best are frozen in phase_scan.json before this stage runs"

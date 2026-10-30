@@ -1,0 +1,286 @@
+{
+  "scan_source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/phase_scan_b/phase_scan.json",
+  "test_source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/final_test/final_test.json",
+  "edges": {
+    "configured_min": {
+      "mu_x_deg": 200.1690565874404,
+      "active_bounds": [],
+      "peak_beta_m": [
+        36.6379992498478,
+        48.13911554812075
+      ],
+      "peak_beta_active": [
+        false,
+        false
+      ],
+      "iterations": 279,
+      "termination": "Optimization terminated successfully",
+      "success": true
+    },
+    "configured_max": {
+      "mu_x_deg": 232.0264094201889,
+      "active_bounds": [],
+      "peak_beta_m": [
+        59.99999999999962,
+        59.99999999999987
+      ],
+      "peak_beta_active": [
+        true,
+        true
+      ],
+      "iterations": 71,
+      "termination": "Optimization terminated successfully",
+      "success": true
+    },
+    "dispersion_free_min": {
+      "mu_x_deg": 187.20613563771101,
+      "active_bounds": [],
+      "peak_beta_m": [
+        31.544388221778732,
+        57.87546154861601
+      ],
+      "peak_beta_active": [
+        false,
+        false
+      ],
+      "iterations": 300,
+      "termination": "Iteration limit reached",
+      "success": false
+    },
+    "dispersion_free_max": {
+      "mu_x_deg": 214.51817226489047,
+      "active_bounds": [
+        [
+          "q22",
+          "upper"
+        ]
+      ],
+      "peak_beta_m": [
+        57.983724484712766,
+        47.27145203326515
+      ],
+      "peak_beta_active": [
+        false,
+        false
+      ],
+      "iterations": 115,
+      "termination": "Positive directional derivative for linesearch",
+      "success": false
+    }
+  },
+  "settings": {
+    "reference": {
+      "mu_x_deg": 211.75313837352985,
+      "peak": 51.26983845946021,
+      "jx": 0.0006426910461313736,
+      "jxp": 0.0003266497286849209,
+      "loss": 0.01279315732669233
+    },
+    "low_beta": {
+      "mu_x_deg": 210.75226272822133,
+      "peak": 33.79137440812861,
+      "jx": 0.0006313681166411423,
+      "jxp": 0.00033064281014227745,
+      "loss": 0.011600673977655811
+    },
+    "robust": {
+      "mu_x_deg": 200.1690574207972,
+      "peak": 48.12117215587678,
+      "jx": 0.0005060626458061959,
+      "jxp": 0.0003675130133178679,
+      "loss": 0.002665199624304892
+    },
+    "scan_best": {
+      "mu_x_deg": 202.0,
+      "peak": 37.36997161123172,
+      "jx": 0.0005282189584279186,
+      "jxp": 0.00036187518722774156,
+      "loss": 0.003687899111883394
+    },
+    "edge_best": {
+      "mu_x_deg": 200.1690565874404,
+      "peak": 48.13911554812075,
+      "jx": 0.000506062635707061,
+      "jxp": 0.00036751301580958257,
+      "loss": 0.00266519923230767
+    },
+    "free_best": {
+      "mu_x_deg": 188.0,
+      "peak": 35.550254164245324,
+      "jx": 0.0003540668158089905,
+      "jxp": 0.00039344258404890736,
+      "loss": 4.719296830737656e-05
+    }
+  },
+  "first_losses": {
+    "reference": {
+      "sept_ex": 11673
+    },
+    "low_beta": {
+      "sept_ex": 10305
+    },
+    "robust": {
+      "sept_ex": 1022
+    },
+    "scan_best": {
+      "sept_ex": 2960
+    },
+    "edge_best": {
+      "sept_ex": 1564
+    },
+    "free_best": {
+      "sept_ex": 1
+    }
+  },
+  "chosen_strengths_m_minus2": {
+    "scan_best": [
+      -1.3576587519636139,
+      -2.201843862493599,
+      2.7236279579296534,
+      0.11014226295205817,
+      1.4193008978183297,
+      -2.999943325116226,
+      1.2804371055153525,
+      1.5087764646994504,
+      -1.7987996730721476
+    ],
+    "edge_best": [
+      -2.383628512735791,
+      -0.8124881906040295,
+      2.297295200517191,
+      1.5426865391587643,
+      -1.6671628319255614,
+      -1.382955881884014,
+      1.6586415308804896,
+      0.6850761695536696,
+      -1.2276987506172814
+    ],
+    "free_best": [
+      -2.1869417753309732,
+      -0.16450573374702562,
+      1.1952152412212775,
+      2.042234484079825,
+      -0.9203978103801126,
+      -2.111945656132985,
+      0.09088906425117282,
+      2.696568865913337,
+      -2.095753068070482
+    ]
+  },
+  "test": {
+    "reference": {
+      "observed_loss_fraction": 0.009727499999999998,
+      "predicted_loss_max_mean": 0.009754352250448095,
+      "jitter_integrated_loss_mean": 0.013225960666129024,
+      "paired_tracked_vs_reference": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "exit_centroid_rms_m_rad": [
+        0.0006314196787414444,
+        0.0003597273386109515,
+        0.0010692717396846973,
+        9.77976716499813e-05
+      ],
+      "loss_blocks": 36
+    },
+    "low_beta": {
+      "observed_loss_fraction": 0.0085875,
+      "predicted_loss_max_mean": 0.008582616854814111,
+      "jitter_integrated_loss_mean": 0.012026494123969021,
+      "paired_tracked_vs_reference": {
+        "mean": -0.0011399999999999997,
+        "ci95": [
+          -0.002443354166666667,
+          -9.412500000000034e-05
+        ]
+      },
+      "exit_centroid_rms_m_rad": [
+        0.0006258932513260195,
+        0.00037420144029646916,
+        0.0008470333537858662,
+        8.309615028361767e-05
+      ],
+      "loss_blocks": 38
+    },
+    "robust": {
+      "observed_loss_fraction": 0.0008516666666666667,
+      "predicted_loss_max_mean": 0.0008078776339371207,
+      "jitter_integrated_loss_mean": 0.0028450184145718247,
+      "paired_tracked_vs_reference": {
+        "mean": -0.008875833333333335,
+        "ci95": [
+          -0.014729875000000002,
+          -0.004213750000000006
+        ]
+      },
+      "exit_centroid_rms_m_rad": [
+        0.0004980874077986383,
+        0.0004027679190620333,
+        0.0008617732998861433,
+        0.00010835638993667848
+      ],
+      "loss_blocks": 17
+    },
+    "scan_best": {
+      "observed_loss_fraction": 0.002466666666666667,
+      "predicted_loss_max_mean": 0.002417773628311063,
+      "jitter_integrated_loss_mean": 0.0038303412795224756,
+      "paired_tracked_vs_reference": {
+        "mean": -0.007260833333333334,
+        "ci95": [
+          -0.011977125,
+          -0.0035116250000000004
+        ]
+      },
+      "exit_centroid_rms_m_rad": [
+        0.0005234647550531858,
+        0.0003932648004477167,
+        0.0009363144716251878,
+        0.00011708804443739668
+      ],
+      "loss_blocks": 19
+    },
+    "edge_best": {
+      "observed_loss_fraction": 0.0013033333333333332,
+      "predicted_loss_max_mean": 0.0012400190566515738,
+      "jitter_integrated_loss_mean": 0.002916013901465895,
+      "paired_tracked_vs_reference": {
+        "mean": -0.008424166666666668,
+        "ci95": [
+          -0.013925979166666668,
+          -0.004049979166666667
+        ]
+      },
+      "exit_centroid_rms_m_rad": [
+        0.000505812649095305,
+        0.00040736227586539957,
+        0.0008619361541874357,
+        0.0001083750213735835
+      ],
+      "loss_blocks": 15
+    },
+    "free_best": {
+      "observed_loss_fraction": 8.333333333333334e-07,
+      "predicted_loss_max_mean": 2.2530337834656452e-07,
+      "jitter_integrated_loss_mean": 6.154614270554916e-05,
+      "paired_tracked_vs_reference": {
+        "mean": -0.009726666666666666,
+        "ci95": [
+          -0.016395145833333333,
+          -0.004493229166666669
+        ]
+      },
+      "exit_centroid_rms_m_rad": [
+        0.0003463965366868516,
+        0.0004191000552679379,
+        0.0007795997037418939,
+        0.00010192873726067095
+      ],
+      "loss_blocks": 1
+    }
+  }
+}

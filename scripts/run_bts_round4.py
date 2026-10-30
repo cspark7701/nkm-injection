@@ -229,7 +229,7 @@ def _scan_point(job):
     mu, found = np.radians(mu_deg), []
     for start in starts:
         res = least_squares(r4.phase_residual, np.asarray(start), args=(target, SCALES, mu), bounds=(LOWER, UPPER),
-                            xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=3000)
+                            xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=PROTOCOL['phase_scan']['max_nfev'])
         if np.max(np.abs(r4.phase_residual(res.x, target, SCALES, mu))) < 1e-4:
             found.append(res.x)
     if not found:
@@ -273,7 +273,7 @@ def phase_scan(output, workers):
         pool = pools[label]['rows']
         for mu in np.arange(lo, hi + 0.5 * step, step):
             near = sorted(pool, key=lambda r: abs(r['mu_x_deg'] - mu))[:6]
-            starts = [np.array(r['strengths_m_minus2']) for r in near] + [rng.uniform(LOWER, UPPER) for _ in range(10)]
+            starts = [np.array(r['strengths_m_minus2']) for r in near] + [rng.uniform(LOWER, UPPER) for _ in range(4)]
             jobs.append((label, float(mu), starts, targets[label]))
         ordered = sorted(pool, key=lambda r: r['mu_x_deg'])
         edge_jobs += [(label, 1.0, np.array(r['strengths_m_minus2']), targets[label]) for r in ordered[:5]]
@@ -316,8 +316,11 @@ def layouts_stage(output, workers):
 # --------------------------------------------------------------------------- final test (R4-BTS-05/12)
 def final_test(output, workers, scan_file):
     config = PROTOCOL['final_test']
-    chosen = json.loads(scan_file.read_text())['chosen']
-    designs = frozen_designs(config['designs'], {k: np.array(v['strengths_m_minus2']) for k, v in chosen.items()})
+    scan = json.loads(scan_file.read_text())
+    chosen = {k: np.array(v['strengths_m_minus2']) for k, v in scan['chosen'].items()}
+    edges = [e for e in scan['edges'] if e['target'] == 'configured' and e['direction'] == 'min' and e['success'] and e['matched']]
+    chosen['edge_best'] = np.array(min(edges, key=lambda e: e['mu_x_deg'])['strengths_m_minus2'])
+    designs = frozen_designs(config['designs'], chosen)
     raw = campaign(designs, ['full'], config, True, workers)
     summary = summarise(raw, designs, ['full'], 'reference', config['bootstrap_seed'], config['particles_per_shot'])['full']
     save(output / 'raw_machines.json', raw)

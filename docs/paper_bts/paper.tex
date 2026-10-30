@@ -18,6 +18,7 @@
 \input{generated/round3_sensitivity.tex}
 \input{generated/round4_jitter.tex}
 \input{generated/round4_blade.tex}
+\input{generated/round4_phase.tex}
 \title{Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line}
 \author{Chong Shik Park$^{1,2}$\\[3pt]
 \small $^{1}$Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea\\
@@ -137,7 +138,7 @@ static trajectory correction using field trims of existing dipoles. A Gaussian
 loss probability derived from the transported beam and centroid covariance is
 validated against particle tracking and used to select a loss-based setting
 before evaluation on independently seeded error realizations. The analysis also
-examines the reachable phase advance, a dispersion-free exit target, and sensitivity
+examines the phase advance of the matched settings, a dispersion-free exit target, and sensitivity
 to the error levels. The study ends at the transfer-line exit; storage-ring
 capture and NKM transparency require the subsequent injection calculation.
 
@@ -574,22 +575,33 @@ change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metr
 test of Section~\ref{sec:design} its loss change is unresolved. The small difference
 follows its phase advance (Section~\ref{sec:design}), not its lower peak beta.
 
-\subsection{Reachable phase advance and the loss-based setting}\label{sec:design}
+\subsection{Phase advance of the matched settings and the loss-based setting}\label{sec:design}
 Bounded least-squares matching from \BtsRThreePoolStarts\ random starts finds
-\BtsRThreePoolSolutions\ matched quadrupole settings within the strength bounds. Their horizontal
-phase advance spans only \SI{\BtsRThreeMuMin}{\degree}--\SI{\BtsRThreeMuMax}{\degree}: the exit match,
-with its dispersion targets and the bend layout, pins $\mu_x$ to an interval in
-which booster jitter falls largely on the exit position. The matched reference
-(\SI{\BtsRThreeRefMu}{\degree}) and low-beta (\SI{\BtsRThreeLowMu}{\degree}) settings lie near
-its middle. Within the interval the predicted shot-averaged blade loss varies by more
-than a factor of ten (Fig.~\ref{fig:jitter}, right) and decreases monotonically
-towards the lower edge.
+\BtsRThreePoolSolutions\ matched quadrupole settings within the strength bounds, with horizontal
+phase advances between \SI{\BtsRThreeMuMin}{\degree} and \SI{\BtsRThreeMuMax}{\degree}. To test whether this range
+reflects the search or the matching problem, we scanned $\mu_x$ in \SI{2}{\degree} steps as a
+seventh matching condition, and searched for the smallest and largest $\mu_x$
+subject to the six exit equalities, the strength bounds and peak beta functions of
+at most \SI{60}{\metre} in both planes, from five starts per edge (Fig.~\ref{fig:scan}).
+Matched settings are found on the grid from \SI{\BtsRFourScanConfMin}{\degree} to \SI{\BtsRFourScanConfMax}{\degree}. The lower edge,
+\SI{\BtsRFourEdgeConfiguredMin}{\degree}, is reached by three converged searches with no strength bound and neither
+peak-beta limit active, so it is set by the matching conditions themselves within
+the bounds, as far as these local searches show; the upper edge,
+\SI{\BtsRFourEdgeConfiguredMax}{\degree}, is set by the \SI{60}{\metre} limit in both planes. These are ranges
+found by sampled and local searches, not a proof of global reachability. The
+matched reference (\SI{\BtsRThreeRefMu}{\degree}) and low-beta (\SI{\BtsRThreeLowMu}{\degree}) settings lie near the
+middle. As Eq.~(\ref{eq:transfer}) implies, the predicted blade loss of the error-free line
+depends on the setting through $\mu_x$ alone: it falls monotonically from
+\SI{4}{\percent} at the upper edge to \SI{0.27}{\percent} at the lower edge, while the peak beta
+functions vary independently between about \SI{23}{\metre} and \SI{60}{\metre}. Reducing the loss
+therefore means choosing the smallest matchable $\mu_x$.
 
-The loss-based search ends at that edge, $\mu_x=\SI{\BtsRThreeRobustMu}{\degree}$. All three
-SLSQP starts reach the 200-iteration limit; only the start from the best pool member
-is feasible, and it improves that member by \SI{\BtsRThreePoolBestGainPct}{\percent}. The setting
-is therefore a feasible point at the boundary of the reachable interval, not a
-certified optimum. Its predicted shot-averaged loss is \SI{\BtsRThreeRobustShotPct}{\percent}
+The loss-based search of the earlier study ended at that edge,
+$\mu_x=\SI{\BtsRThreeRobustMu}{\degree}$, although all three of its SLSQP starts reached the
+200-iteration limit and only one was feasible. The converged edge solution has the
+same phase advance to within \SI{\BtsRFourEdgeRobustMuDiffDeg}{\degree} and the same peak beta to within
+\SI{0.02}{\metre}; we therefore regard the loss-based setting as the best-found feasible setting at
+the lower edge of the matched range, not as a certified global optimum. Its predicted shot-averaged loss is \SI{\BtsRThreeRobustShotPct}{\percent}
 against \SI{\BtsRThreeRefShotPct}{\percent} for the matched reference, because its exit position jitter is
 \SI{\BtsRThreeRobustJxUm}{\micro\metre} instead of \SI{\BtsRThreeRefJxUm}{\micro\metre} (Table~\ref{tab:design}).
 
@@ -623,9 +635,40 @@ contribute \SI{\BtsRThreeTopFiveSharePct}{\percent} of its loss, the worst losin
 realization, account for this heavy tail, and the population mean differs between independently
 seeded populations (Section~\ref{sec:sensitivity}).
 
+On a further 200 independently seeded realizations (Table~\ref{tab:test4}), the
+tracked loss is \SI{\BtsRFourTestRefPct}{\percent} for the matched reference, \SI{\BtsRFourTestLowPct}{\percent} for low beta and
+\SI{\BtsRFourTestEdgePct}{\percent} for the converged edge solution, a change of \BtsRFourTestEdgeDiff\ percentage
+points (a factor of \BtsRFourTestEdgeRatio). The earlier loss-based setting loses \SI{\BtsRFourTestRobustPct}{\percent} on the same
+realizations although it is optically identical to the edge solution: their
+jitter-integrated losses, \SI{\BtsRFourTestRobustIntegratedPct}{\percent} and \SI{\BtsRFourTestEdgeIntegratedPct}{\percent}, agree, and the tracked
+difference comes from the monitor reading errors, which are drawn separately for
+each setting (Section~\ref{sec:steering}), and from the sampled jitter tail. On this
+population low beta also loses resolvably less than the matched reference
+(\BtsRFourTestLowDiff\ percentage points), again through its slightly smaller $\mu_x$.
+The loss-based gain thus ranges from a factor of 3 to more than 10 between
+populations, while its sign is the same in every population tested.
+
+\begin{table}[htbp]\centering
+\caption{Second fresh test (200 steered error realizations with new seeds, 3 shots,
+2\,000 particles each). $\bar P$: predicted loss of the error-free line; Integr.:
+jitter-integrated loss on the steered realizations; Lost: tracked loss; last
+column: paired difference from the matched reference with its pointwise
+\SI{95}{\percent} realization-cluster interval. The loss-based (R3) and phase-edge
+settings are optically identical; Disp.-free is the best dispersion-free scan
+setting.}\label{tab:test4}
+{\footnotesize\setlength{\tabcolsep}{3.5pt}\input{generated/round4_test_rows.tex}}\end{table}
+
+\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round4_phase_scan.pdf}
+\caption{Phase-advance scan. Left: predicted blade loss of the error-free line for the
+lowest-peak-beta matched setting at each scanned $\mu_x$, for the configured exit
+(blue) and a dispersion-free exit (orange); open symbols exceed the \SI{60}{\metre}
+peak-beta limit. Dotted lines mark the edges found by constrained searches. Right:
+the same settings against the exit angle jitter. Black symbols mark the matched
+reference, low-beta and loss-based settings.}\label{fig:scan}\end{figure}
+
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
 \caption{Left: rms exit position (solid, \si{\milli\metre}) and angle (dashed, \si{\milli\radian}) jitter from
-Eq.~(\ref{eq:transfer}) versus horizontal phase advance, with the reachable intervals
+Eq.~(\ref{eq:transfer}) versus horizontal phase advance, with the phase-advance ranges found
 for the configured exit (blue) and a dispersion-free exit (orange; its momentum term
 differs slightly). Right: predicted shot-averaged blade loss of
 every matched solution (grey) and of the three settings (circles), with the tracked
@@ -643,23 +686,24 @@ energy jitter adds a centroid angle of \SI{\BtsRThreeEJitAngUrad}{\micro\radian}
 position of \SI{\BtsRThreeEJitPosUm}{\micro\metre} rms. Both terms are fixed by the
 target, the same for every matched setting, and absent for a dispersion-free exit.
 
-Matching the same Courant--Snyder parameters with $D_x=D'_x=0$ at m4 is feasible within the
-strength bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\
-bounded random starts keep both peak betas below \SI{60}{\metre} (smallest larger peak
-\SI{\BtsRThreeFreeMinPeak}{\metre}). The dispersion-free target also widens the reachable
-phase advance to \SI{\BtsRThreeFreeMuMin}{\degree}--\SI{\BtsRThreeFreeMuMax}{\degree}
-(Fig.~\ref{fig:jitter}), which includes phases where booster jitter falls mainly on
-the exit angle. The best of these solutions ($\mu_x=\SI{\BtsRThreeFreeBestMu}{\degree}$,
-peak betas \SI{\BtsRThreeFreeBestPeakX}{\metre}/\SI{\BtsRThreeFreeBestPeakY}{\metre}) has a shot-averaged
-blade loss fraction of $\BtsRThreeFreeBestLoss$, \BtsRThreeFreeGainFactor\ times below the
-loss-based setting with the configured target. Its exit jitter is
-\SI{\BtsRThreeFreeBestJxUm}{\micro\metre} and \SI{\BtsRThreeFreeBestJxpUrad}{\micro\radian},
-and the beam divergence falls to \SI{\BtsRThreeBetDivUrad}{\micro\radian}. These numbers
-are analytic, from the same Gaussian model whose mean predictions agreed with tracking
-within \SI{1}{\percent} relative above; the dispersion-free settings were not tracked on test realizations.
+The configured exit dispersion is that of the injected beam in the configuration of
+the NKM injection study; we have found no derivation of it from the ring optics,
+whose dispersion at the injection kicker is nearly zero. Matching the same
+Courant--Snyder parameters with $D_x=D'_x=0$ at m4 is feasible within the strength
+bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\ bounded random starts keep both peak
+betas below \SI{60}{\metre} (smallest larger peak \SI{\BtsRThreeFreeMinPeak}{\metre}). The constrained searches
+place the dispersion-free range between \SI{\BtsRFourEdgeDispersionFreeMin}{\degree} and \SI{\BtsRFourEdgeDispersionFreeMax}{\degree}
+(Fig.~\ref{fig:scan}); its upper edge is set by q22 at its strength bound. The range
+includes phases where booster jitter falls mainly on the exit angle. The best scanned
+setting ($\mu_x=\SI{\BtsRFourFreeBestMu}{\degree}$, larger peak beta \SI{\BtsRFourFreeBestPeak}{\metre}) has a
+predicted error-free blade loss of \BtsRFourFreeBestLossPct\,\si{\percent} and an exit angle jitter of
+\SI{\BtsRFourFreeBestJxpUrad}{\micro\radian}; the beam divergence falls to \SI{\BtsRThreeBetDivUrad}{\micro\radian}. Tracked on the
+second test population, it loses \BtsRFourTestFreeLost\ of 1.2 million particles, consistent with
+its jitter-integrated prediction of \BtsRFourTestFreeIntegratedPct\,\si{\percent}; at such small losses
+non-Gaussian booster tails, not modeled here, would dominate.
 
-The exit target is thus the BTS design quantity with the largest leverage on
-injection. Removing the exit dispersion lowers the injected beam's divergence by a
+Among the alternatives tested here, the exit target therefore has the largest
+leverage on injection. Removing the exit dispersion lowers the injected beam's divergence by a
 quarter and lets the line put booster jitter where the septum blade does not see
 it, but the angle jitter, \SI{\BtsRThreeFreeBestJxpUrad}{\micro\radian} against
 \SI{\BtsRThreeRefJxpUrad}{\micro\radian} for the matched reference, then arrives at the
@@ -763,10 +807,13 @@ trajectory remain. The dominant remaining contribution is booster shot jitter, a
 the nominal matched line its arrival at the exit depends only on the horizontal phase
 advance. The line chooses whether the jitter appears as
 position at the blade or as angle at the injection kicker, but it cannot remove it.
-For the configured exit, matched solutions reach only a \SI{32}{\degree} interval of phase
-advance, and the best setting in it reduces the blade loss 3.3-fold at \SI{13}{\percent} more
-angle jitter. A dispersion-free exit widens the interval and lowers the predicted loss
-much further, again at the cost of angle jitter. The choice between blade loss and
+For the configured exit, the matched settings found span about \SI{32}{\degree} of phase
+advance; the error-free blade loss depends on $\mu_x$ alone and is smallest at the lower
+edge of that range, which no strength bound or peak-beta limit sets. The best-found
+setting there reduces the tracked loss by a factor of 3 to more than 10 on independently
+seeded test populations, at \SI{13}{\percent} more angle jitter. A dispersion-free exit extends
+the range to smaller $\mu_x$ and lowers the loss much further, again at the cost of
+angle jitter. The choice between blade loss and
 injection-angle jitter belongs to the injection design as a whole: for the NKM,
 whose \SI{80}{\percent} angular acceptance is \SI{0.44}{\milli\radian}, exit-angle jitter of \SI{0.33}{\milli\radian}--\SI{0.39}{\milli\radian} is of the same order, so the trade must be evaluated with ring capture, and the
 booster's angle stability bounds what either choice can achieve.

@@ -19,8 +19,8 @@ P = ROOT / 'docs/paper_bts'
 CAMPAIGN = ROOT / 'results/bts_round4_campaign_20261030'
 plt.rcParams.update({'font.size': 9, 'pdf.fonttype': 42, 'pdf.compression': 6})
 COLORS = {'reference': '#1f5fa8', 'low_beta': '#d1495b', 'robust': '#2a9d55', 'scan_best': '#7b3294', 'free_best': '#e08214'}
-SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based', 'scan_best': 'Scan best',
-         'free_best': 'Disp.-free'}
+SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based (R3)', 'scan_best': 'Scan grid best',
+         'edge_best': 'Phase edge', 'free_best': 'Disp.-free'}
 
 
 def load(stage, name):
@@ -144,7 +144,174 @@ def statistics():
     (P / 'generated/round4_statistics.json').write_text(json.dumps(out, indent=2) + '\n')
 
 
-PARTS = {'jitter': jitter, 'blade': blade, 'statistics': statistics}
+def pct(value):
+    """Fraction as a percent string: two decimals, or siunitx scientific notation below 0.01 %."""
+    return f'{100 * value:.2f}' if 100 * value >= 0.01 else sci(100 * value)
+
+
+def _pct_interval(e, key='paired_tracked_vs_reference'):
+    i = e[key]
+    return f"{100 * i['mean']:+.2f} [{100 * i['ci95'][0]:+.2f}, {100 * i['ci95'][1]:+.2f}]"
+
+
+def _edge_row(edge):
+    """Phase-advance, peak beta, exit jitter and error-free loss of an edge solution (recomputed, analytic)."""
+    import sys
+    sys.path.insert(0, str(ROOT / 'src'))
+    from nkm_injection.bts_journal import independent_maps, lattice_for
+    from nkm_injection import bts_round3 as r3
+    k = np.array(edge['strengths_m_minus2'])
+    m = independent_maps(lattice_for(k))[0][-1]
+    jit = m @ r3.entrance_jitter_covariance() @ m.T
+    return {'mu_x_deg': edge['mu_x_deg'], 'peak_beta_m': edge['peak_beta_m'], 'strengths_m_minus2': edge['strengths_m_minus2'],
+            'exit_jitter_x_m': float(np.sqrt(jit[0, 0])), 'exit_jitter_xp_rad': float(np.sqrt(jit[1, 1])),
+            'loss_max': r3.shot_averaged_loss(r3.aperture_lattice(k))['loss_lower']}
+
+
+def phase():
+    """R4-BTS-05/12: constrained phase-advance scan, edges, trade curve and the fresh tracked test."""
+    scan = load('phase_scan_b', 'phase_scan.json')
+    test = load('final_test_b', 'final_test.json')
+    frozen = json.loads((ROOT / 'results/bts_journal_campaign_r3b_20261015/robust/robust.json').read_text())['designs']
+    fig, axes = plt.subplots(1, 2, figsize=(7, 3.0))
+    styles = {'configured': ('#1f5fa8', 'Configured exit'), 'dispersion_free': ('#e08214', 'Dispersion-free exit')}
+    for target, (color, label) in styles.items():
+        rows = [r for r in scan['rows'] if r['target'] == target and r['matched']]
+        for feasible in (True, False):
+            sel = [r for r in rows if r['feasible'] == feasible]
+            if not sel:
+                continue
+            kw = dict(color=color, ms=4, ls='none', marker='o', mfc=color if feasible else 'none',
+                      label=label if feasible else f'{label}, peak beta > 60 m')
+            axes[0].plot([r['mu_x_deg'] for r in sel], [max(r['loss_max'], 1e-12) for r in sel], **kw)
+            axes[1].plot([1e3 * r['exit_jitter_xp_rad'] for r in sel], [max(r['loss_max'], 1e-12) for r in sel], **kw)
+        for e in scan['edges']:
+            if e['target'] == target and e['matched']:
+                axes[0].axvline(e['mu_x_deg'], color=color, lw=.6, ls=':')
+    for name, marker in (('reference', 's'), ('low_beta', '^'), ('robust', 'D')):
+        d = frozen[name]
+        axes[0].plot(d['mu_x_deg'], d['loss_max'], marker=marker, color='k', mfc='none', ms=6, ls='none', label=SHORT[name])
+        axes[1].plot(1e3 * d['exit_jitter_xp_rad'], d['loss_max'], marker=marker, color='k', mfc='none', ms=6, ls='none')
+    for ax in axes:
+        ax.set_yscale('log')
+        ax.grid(True, color='0.88', lw=.6)
+    axes[0].set(xlabel='Horizontal phase advance $\\mu_x$ [deg]', ylabel='Predicted blade loss (error-free)')
+    axes[1].set(xlabel="Exit angle jitter $\\sigma_{x',j}$ [mrad]")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, fontsize=7, ncol=3, loc='upper center', frameon=False)
+    fig.tight_layout(rect=(0, 0, 1, .84))
+    fig.savefig(P / 'figures/round4_phase_scan.pdf', metadata={'CreationDate': None})
+    plt.close(fig)
+    # Edges: smallest and largest matched mu found by the edge search, with active constraints.
+    edges = {}
+    for target in styles:
+        for direction in ('min', 'max'):
+            found = [e for e in scan['edges'] if e['target'] == target and e['direction'] == direction and e['matched']]
+            if found:
+                best = (min if direction == 'min' else max)(found, key=lambda e: e['mu_x_deg'])
+                edges[f'{target}_{direction}'] = {k: best[k] for k in ('mu_x_deg', 'active_bounds', 'peak_beta_m', 'peak_beta_active',
+                                                                        'iterations', 'termination', 'success')}
+    summary = test['summary']
+    names = ('reference', 'low_beta', 'robust', 'scan_best', 'edge_best', 'free_best')
+    chosen = dict(scan['chosen'])
+    edge = min((e for e in scan['edges'] if e['target'] == 'configured' and e['direction'] == 'min' and e['success'] and e['matched']),
+               key=lambda e: e['mu_x_deg'])
+    chosen['edge_best'] = _edge_row(edge)
+    info = {n: {'mu_x_deg': frozen[n]['mu_x_deg'], 'peak': max(frozen[n]['peak_beta_m']), 'jx': frozen[n]['exit_jitter_x_m'],
+                'jxp': frozen[n]['exit_jitter_xp_rad'], 'loss': frozen[n]['loss_max']} for n in names[:3]}
+    for n in names[3:]:
+        c = chosen[n]  # scan rows and the recomputed edge row share these keys
+        info[n] = {'mu_x_deg': c['mu_x_deg'], 'peak': max(c['peak_beta_m']), 'jx': c['exit_jitter_x_m'],
+                   'jxp': c['exit_jitter_xp_rad'], 'loss': c['loss_max']}
+    lines = ['\\begin{tabular}{lrrrrrrl}\\toprule',
+             "Setting & $\\mu_x$ [deg] & $\\hat\\beta$ [m] & $\\sigma_{x',j}$ [mrad] & $\\bar P$ [\\%] & Integr.\\ [\\%] & Lost [\\%] & "
+             "Lost $-$ Matched [pp]\\\\\\midrule"]
+    for n in names:
+        e, i = summary[n], info[n]
+        diff = '---' if n == 'reference' else _pct_interval(e)
+        lines.append(f"{SHORT[n]} & {i['mu_x_deg']:.1f} & {i['peak']:.1f} & {1e3 * i['jxp']:.3f} & {pct(i['loss'])} & "
+                     f"{pct(e['jitter_integrated_loss_mean'])} & {pct(e['observed_loss_fraction'])} & {diff}\\\\")
+    lines.append('\\bottomrule\\end{tabular}')
+    (P / 'generated/round4_test_rows.tex').write_text('\n'.join(lines) + '\n')
+    conf = [r['mu_x_deg'] for r in scan['rows'] if r['target'] == 'configured' and r['matched']]
+    free = [r['mu_x_deg'] for r in scan['rows'] if r['target'] == 'dispersion_free' and r['matched']]
+    first = {n: summary[n]['first_loss_families'] for n in names}
+    ratio = summary['reference']['observed_loss_fraction'] / summary['scan_best']['observed_loss_fraction']
+    values = {
+        'ScanConfMin': f'{min(conf):.0f}', 'ScanConfMax': f'{max(conf):.0f}', 'ScanFreeMin': f'{min(free):.0f}', 'ScanFreeMax': f'{max(free):.0f}',
+        'ScanBestMu': f"{info['scan_best']['mu_x_deg']:.0f}", 'ScanBestPeak': f"{info['scan_best']['peak']:.1f}",
+        'ScanBestLossPct': f"{100 * info['scan_best']['loss']:.2f}", 'ScanBestJxpUrad': f"{1e6 * info['scan_best']['jxp']:.0f}",
+        'FreeBestMu': f"{info['free_best']['mu_x_deg']:.0f}", 'FreeBestPeak': f"{info['free_best']['peak']:.1f}",
+        'FreeBestJxpUrad': f"{1e6 * info['free_best']['jxp']:.0f}",
+        'TestRefPct': f"{100 * summary['reference']['observed_loss_fraction']:.2f}",
+        'TestScanPct': f"{100 * summary['scan_best']['observed_loss_fraction']:.2f}",
+        'TestRobustPct': f"{100 * summary['robust']['observed_loss_fraction']:.2f}",
+        'TestFreeLost': str(summary['free_best']['lost_particles']),
+        'TestFreeIntegratedPct': pct(summary['free_best']['jitter_integrated_loss_mean']),
+        'TestRobustIntegratedPct': pct(summary['robust']['jitter_integrated_loss_mean']),
+        'TestEdgeIntegratedPct': pct(summary['edge_best']['jitter_integrated_loss_mean']),
+        'TestEdgePct': f"{100 * summary['edge_best']['observed_loss_fraction']:.2f}",
+        'TestEdgeDiff': _pct_interval(summary['edge_best']),
+        'TestLowPct': f"{100 * summary['low_beta']['observed_loss_fraction']:.2f}",
+        'TestEdgeRatio': f"{summary['reference']['observed_loss_fraction'] / summary['edge_best']['observed_loss_fraction']:.1f}",
+        'EdgeRobustMuDiffDeg': f"{abs(info['edge_best']['mu_x_deg'] - info['robust']['mu_x_deg']):.0e}",
+        'FreeBestLossPct': pct(info['free_best']['loss']),
+        'TestScanRatio': f'{ratio:.1f}',
+        'TestScanDiff': _pct_interval(summary['scan_best']), 'TestFreeDiff': _pct_interval(summary['free_best']),
+        'TestRobustDiff': _pct_interval(summary['robust']), 'TestLowDiff': _pct_interval(summary['low_beta']),
+    }
+    for key, e in edges.items():
+        tag = ''.join(w.capitalize() for w in key.split('_'))
+        values[f'Edge{tag}'] = f"{e['mu_x_deg']:.1f}"
+    macros('phase', values)
+    (P / 'generated/round4_phase.json').write_text(json.dumps({'scan_source': str(CAMPAIGN / 'phase_scan_b/phase_scan.json'),
+                                                                'test_source': str(CAMPAIGN / 'final_test/final_test.json'),
+                                                                'edges': edges, 'settings': info, 'first_losses': first,
+                                                                'chosen_strengths_m_minus2': {n: chosen[n]['strengths_m_minus2'] for n in names[3:]},
+                                                                'test': {n: {k: summary[n][k] for k in ('observed_loss_fraction', 'predicted_loss_max_mean',
+                                                                                                        'jitter_integrated_loss_mean', 'paired_tracked_vs_reference',
+                                                                                                        'exit_centroid_rms_m_rad', 'loss_blocks')}
+                                                                         for n in names}}, indent=2) + '\n')
+
+
+def layouts():
+    """R4-BTS-10: steering with reduced monitors and series-powered bends, with the vertical exit centroid."""
+    data = load('layouts_b', 'layouts.json')
+    labels = {'full': 'All 11 readings, 6 trims', 'reduced_monitors': '5 readings, 6 trims', 'series_bends': '11 readings, 4 knobs',
+              'reduced_series': '5 readings, 4 knobs'}
+    lines = ['\\begin{tabular}{llrrrrrr}\\toprule',
+             "Layout & Setting & Lost [\\%] & Pred. [\\%] & $x_{\\rm rms}$ [mm] & $x'_{\\rm rms}$ [mrad] & $y_{\\rm rms}$ [mm] & "
+             "$y'_{\\rm rms}$ [mrad]\\\\\\midrule"]
+    for layout, label in labels.items():
+        for n in ('reference', 'robust'):
+            e = data['summary'][layout][n]
+            r = e['exit_centroid_rms_m_rad']
+            lines.append(f"{label if n == 'reference' else ''} & {SHORT[n]} & {100 * e['observed_loss_fraction']:.2f} & "
+                         f"{100 * e['predicted_loss_max_mean']:.2f} & {1e3 * r[0]:.2f} & {1e3 * r[1]:.2f} & {1e3 * r[2]:.3f} & {1e3 * r[3]:.3f}\\\\")
+    lines.append('\\bottomrule\\end{tabular}')
+    (P / 'generated/round4_layout_rows.tex').write_text('\n'.join(lines) + '\n')
+    s = data['summary']
+    vy = s['full']['reference']['exit_centroid_rms_m_rad']
+    macros('layouts', {
+        'LayoutFullRefPct': f"{100 * s['full']['reference']['observed_loss_fraction']:.2f}",
+        'LayoutReducedRefPct': f"{100 * s['reduced_monitors']['reference']['observed_loss_fraction']:.2f}",
+        'LayoutSeriesRefPct': f"{100 * s['series_bends']['reference']['observed_loss_fraction']:.2f}",
+        'LayoutBothRefPct': f"{100 * s['reduced_series']['reference']['observed_loss_fraction']:.2f}",
+        'LayoutBothRobustPct': f"{100 * s['reduced_series']['robust']['observed_loss_fraction']:.2f}",
+        'LayoutFullRobustPct': f"{100 * s['full']['robust']['observed_loss_fraction']:.2f}",
+        'VertExitYUm': f'{1e6 * vy[2]:.0f}', 'VertExitYpUrad': f'{1e6 * vy[3]:.0f}',
+        'ReproLost': str(data['reproduction_check']['full_lost_particles']),
+        'ReproLostRThree': str(data['reproduction_check']['round3_lost_particles']),
+    })
+    (P / 'generated/round4_layouts.json').write_text(json.dumps({'source': str(CAMPAIGN / 'layouts_b/layouts.json'),
+                                                                  'reproduction_check': data['reproduction_check'],
+                                                                  'summary': {l: {n: {k: e[k] for k in ('observed_loss_fraction', 'predicted_loss_max_mean',
+                                                                                                         'exit_centroid_rms_m_rad', 'mean_exit_centroid_m_rad',
+                                                                                                         'kick_rms_rad', 'paired_tracked_vs_reference', 'loss_blocks')}
+                                                                                  for n, e in d.items()} for l, d in s.items()}}, indent=2) + '\n')
+
+
+PARTS = {'jitter': jitter, 'blade': blade, 'statistics': statistics, 'phase': phase, 'layouts': layouts}
 
 
 def main():

@@ -790,3 +790,9 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 273. [**Milestone 273 — R4-BTS-08: submission readiness (author decisions open)**](273_r4_bts_08_submission_readiness.md)
     - Align the supplement's date, introduction and nomenclature with the article, and remove the duplicated Acknowledgments. Target journal, data-availability wording, jitter source and final approval remain author decisions.
+
+274. [**Milestone 274 — R4-BTS-05: phase-advance scan, edges and fresh test**](274_r4_bts_05_phase_scan.md)
+    - Constrained μ_x scan and edge searches: the configured lower edge (200.17°) has no active bound, and the loss depends on μ_x alone. The round-3 loss-based setting equals the converged edge. A second fresh test gives 0.97 % (matched) against 0.13 % (edge), with sampled-search wording.
+
+275. [**Milestone 275 — R4-BTS-12: tracked dispersion-free exit**](275_r4_bts_12_dispersion_free.md)
+    - Track the best dispersion-free setting (1 of 1.2 million particles lost), state the origin of the inherited exit dispersion, and make the leverage claim conditional.

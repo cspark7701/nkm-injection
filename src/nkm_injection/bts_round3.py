@@ -197,8 +197,44 @@ def moments(lattice, centroid, covariance, step=1e-7):
     return out[:5, 0].T, maps @ cov @ maps.transpose(0, 2, 1)
 
 
+def ellipse_loss_probability(mean, covariance, halfwidths, angles=256):
+    """Exact probability [1] that a 2-D Gaussian (x, y) lies outside the ellipse x^2/a^2 + y^2/b^2 <= 1.
+
+    ``mean`` [m] and ``covariance`` [m^2] are the transverse (x, y) centroid and
+    covariance, ``halfwidths`` = (a, b) [m]. In scaled coordinates the ellipse
+    is the unit circle; along each polar direction the radial integral from 1
+    to infinity has a closed form, and the periodic angular integral converges
+    spectrally with the trapezoidal rule. Unlike 1 - P(inside), the result keeps
+    full relative accuracy in the far tail. Example: a centred isotropic beam
+    with rms sigma at a circle of radius 5 sigma gives exp(-12.5).
+    """
+    a, b = halfwidths
+    scale = np.diag([1.0 / a, 1.0 / b])
+    m = scale @ np.asarray(mean, dtype=float)
+    c = scale @ np.asarray(covariance, dtype=float) @ scale
+    if np.linalg.det(c) <= 0:
+        raise ValueError('Positive-definite (x, y) covariance required')
+    inv = np.linalg.inv(c)
+    theta = np.linspace(0.0, 2 * np.pi, angles, endpoint=False)
+    e = np.stack([np.cos(theta), np.sin(theta)])
+    big_a = np.einsum('in,ij,jn->n', e, inv, e)
+    big_b = e.T @ inv @ m
+    r0, s = big_b / big_a, 1.0 / np.sqrt(big_a)
+    # Exponent of the density at the radial maximum r0, relative to the centre value.
+    offset = 0.5 * (m @ inv @ m - big_b ** 2 / big_a)
+    radial = (s ** 2 * np.exp(-0.5 * ((1 - r0) / s) ** 2 - offset)
+              + r0 * s * np.sqrt(2 * np.pi) * np.exp(-offset) * norm.sf((1 - r0) / s))
+    value = radial.mean() / np.sqrt(np.linalg.det(c))
+    return float(min(1.0, max(0.0, value)))
+
+
 def _edges(row, means_i, plane):
-    """Lower/upper aperture edge [m] in one plane; ellipses use the other plane's centroid."""
+    """Lower/upper aperture edge [m] in one plane; ellipses use the other plane's centroid.
+
+    For a round or elliptical aperture this chord is a geometric construction
+    used for the five-sigma clearance only; its loss probability is evaluated
+    exactly in two dimensions by ``ellipse_loss_probability``.
+    """
     lim = row['limits_m']
     if row['kind'] == 'rect':
         return (lim[0], lim[1]) if plane == 0 else (lim[2], lim[3])
@@ -210,30 +246,44 @@ def _edges(row, means_i, plane):
     return -half, half
 
 
-def clearance_and_loss(lattice, centroid, covariance, coverage=5.0, table=None):
+def clearance_and_loss(lattice, centroid, covariance, coverage=5.0, table=None, round_aperture='exact'):
     """Five-sigma clearance [m] and Gaussian loss probability at every aperture.
 
     For each aperture and plane, with projected centroid mu and rms sigma,
-    clearance = min(a+ - mu, mu - a-) - n sigma and the projected loss
-    probability is Phi((a- - mu)/sigma) + Phi((mu - a+)/sigma). The line loss
-    is bracketed by the largest single-aperture probability (lower bound) and
-    the union bound (sum, upper bound). Returns a dict with per-aperture rows,
-    the minimum clearance, its location and both loss bounds.
+    clearance = min(a+ - mu, mu - a-) - n sigma. Loss events are exact for a
+    Gaussian beam: a rectangular or one-sided aperture contributes one
+    interval event per plane, Phi((a- - mu)/sigma) + Phi((mu - a+)/sigma), and a
+    round or elliptical aperture one two-dimensional event
+    (``ellipse_loss_probability``). The line loss is then bracketed by the
+    largest event probability (lower bound) and their sum (union upper bound).
+    ``round_aperture='chord'`` reproduces the round-3 projected-chord
+    probabilities, which are an approximation and give no valid bracket for
+    round apertures. Returns a dict with per-aperture rows, the minimum
+    clearance, its location and both loss bounds.
     """
+    if round_aperture not in ('exact', 'chord'):
+        raise ValueError("round_aperture must be 'exact' or 'chord'")
     table = table or aperture_table(lattice)
     means, covs = moments(lattice, centroid, covariance)
-    rows = []
+    rows, events = [], []
     for row in table:
         i = row['index']
+        exact_round = row['kind'] == 'ellipse' and round_aperture == 'exact'
+        if exact_round:
+            event = ellipse_loss_probability(means[i, [0, 2]], covs[i][np.ix_([0, 2], [0, 2])], row['limits_m'])
+            events.append(event)
         for plane, j in ((0, 0), (1, 2)):
             lo, hi = _edges(row, means[i], plane)
             mu, sigma = means[i, j], float(np.sqrt(max(covs[i, j, j], 0.0)))
             p = float(norm.cdf((lo - mu) / sigma) + norm.sf((hi - mu) / sigma)) if sigma > 0 else 0.0
+            if not exact_round:
+                events.append(p)
             rows.append({'index': i, 'name': row['name'], 's_m': row['s_m'], 'plane': plane, 'centroid_m': float(mu),
                          'sigma_m': sigma, 'clearance_m': float(min(hi - mu, mu - lo) - coverage * sigma),
-                         'loss_probability': p})
+                         'loss_probability': event if exact_round else p, 'projected_probability': p,
+                         'event': 'ellipse' if exact_round else 'interval'})
     active = min(rows, key=lambda r: r['clearance_m'])
-    probs = np.array([r['loss_probability'] for r in rows])
+    probs = np.array(events)
     return {'rows': rows, 'minimum_m': active['clearance_m'], 'active': [active['name'], active['plane'], active['s_m']],
             'loss_lower': float(probs.max()), 'loss_union': float(min(1.0, probs.sum())),
             'exit_centroid': means[-1].tolist(), 'exit_covariance': covs[-1].tolist()}

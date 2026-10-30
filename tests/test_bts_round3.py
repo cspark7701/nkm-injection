@@ -193,3 +193,46 @@ def test_roll_errors_do_not_change_horizontal_blade_loss():
     assert probs[0]['sigma_m'] == pytest.approx(probs[1]['sigma_m'], rel=1e-4)
     assert probs[0]['loss_probability'] > 1e-3
     assert probs[0]['loss_probability'] == pytest.approx(probs[1]['loss_probability'], rel=0.05)
+
+
+def test_round_aperture_loss_is_exact_in_the_isotropic_limit():
+    """Centred isotropic Gaussian at a 5-sigma circle loses exp(-12.5), not the projected 4 Phi(-5) (R4-BTS-03)."""
+    from scipy.stats import norm
+    from nkm_injection.bts_round3 import ellipse_loss_probability
+    sigma = 1e-3
+    exact = ellipse_loss_probability([0, 0], np.diag([sigma ** 2] * 2), (5 * sigma, 5 * sigma))
+    assert exact == pytest.approx(np.exp(-12.5), rel=1e-10)
+    assert exact > 4 * norm.sf(5)  # the projected-chord union is not an upper bound for a round aperture
+    # Radius r: exp(-r^2/2) for every r, deep into the tail.
+    for r in (1.0, 3.0, 8.0):
+        assert ellipse_loss_probability([0, 0], np.eye(2) * sigma ** 2, (r * sigma,) * 2) == pytest.approx(np.exp(-r * r / 2), rel=1e-9)
+
+
+def test_ellipse_loss_matches_monte_carlo_for_offset_correlated_beam():
+    """Offset, correlated beam at an elliptical aperture: exact probability against sampling."""
+    from nkm_injection.bts_round3 import ellipse_loss_probability
+    mean, cov, half = np.array([1.2e-3, -0.4e-3]), np.array([[1.0, 0.4], [0.4, 0.5]]) * 1e-6, (3e-3, 2e-3)
+    exact = ellipse_loss_probability(mean, cov, half)
+    sample = np.random.default_rng(11).multivariate_normal(mean, cov, 2_000_000)
+    observed = np.mean((sample[:, 0] / half[0]) ** 2 + (sample[:, 1] / half[1]) ** 2 > 1)
+    assert exact == pytest.approx(observed, abs=4 * np.sqrt(exact / 2_000_000))
+    # Converged in the number of angles.
+    assert ellipse_loss_probability(mean, cov, half, 64) == pytest.approx(exact, rel=1e-8)
+
+
+def test_round_aperture_bounds_bracket_tracked_loss():
+    """Exact events bracket the line loss of a beam scraping a round pipe; chord mode reproduces round 3."""
+    beam = JournalBeam()
+    line = aperture_lattice(REFERENCE, model={'pipe_radius': 6e-4, 'quad_bore_radius': 6e-4, 'septum_ex_blade': 0.05,
+                                              'septum_ex_outer': 0.05, 'septum_ex_half_y': 0.05})
+    record = clearance_and_loss(line, np.zeros(5), beam.covariance())
+    chord = clearance_and_loss(line, np.zeros(5), beam.covariance(), round_aperture='chord')
+    assert record['minimum_m'] == chord['minimum_m']
+    sample = np.random.default_rng(3).multivariate_normal(np.zeros(6), beam.covariance(), 20000).T
+    out = at.lattice_track(line, np.array(sample, order='F'), nturns=1)[0][:, :, 0, 0]
+    observed = np.mean(~np.isfinite(out[0]))
+    tol = 4 * np.sqrt(max(record['loss_union'], 1e-4) / 20000)
+    assert record['loss_lower'] <= observed + tol
+    assert observed <= record['loss_union'] + tol
+    with pytest.raises(ValueError):
+        clearance_and_loss(line, np.zeros(5), beam.covariance(), round_aperture='other')

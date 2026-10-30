@@ -763,3 +763,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 264. [**Milestone 264 — Consolidated round-4 BTS revision tasks**](264_bts_round4_consolidated_tasks.md)
     - Merge the Reviewer 1 (R3-BTS-01 to 08) and Reviewer 2 (R2C-01 to 10) round-3 registers into fourteen R4-BTS tasks, with source mapping, reviewer-difference resolutions and a computation summary.
+
+265. [**Milestone 265 — R4-BTS-03: exact round-aperture loss and valid bounds**](265_r4_bts_03_round_aperture_loss.md)
+    - Exact 2-D Gaussian loss outside round/elliptical apertures and a valid max/union bracket. The isotropic 5σ counterexample is tested. The rerun reproduces all 66 selected round-3 numbers bitwise.

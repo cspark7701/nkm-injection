@@ -409,9 +409,19 @@ aperture with edges $a_\pm$, the lost fraction is
  P=\Phi\!\left(\frac{a_--\bar u}{\sigma}\right)+\Phi\!\left(\frac{\bar u-a_+}{\sigma}\right),
  \label{eq:loss}
 \end{equation}
-with $\Phi$ the standard normal distribution function. Per shot, the line loss is
-bracketed by the largest single-aperture $P$ and the union bound; we report the
-former as the prediction. When the centroid is itself Gaussian, as for linearly
+with $\Phi$ the standard normal distribution function. Equation~(\ref{eq:loss}) is
+exact in each plane for the rectangular and one-sided apertures, including the
+septum blade. For the round apertures of the pipe and quadrupoles we evaluate
+instead the exact probability that the Gaussian $(x,y)$ distribution lies outside
+the circle, using a closed-form radial integral and periodic angular quadrature.
+Two projected tails would underestimate it: for a centered isotropic beam at a
+circle of radius $5\sigma$ the exact loss is $e^{-12.5}=\num{3.73e-6}$, whereas
+$4\Phi(-5)=\num{1.15e-6}$. Per shot, the line loss is bracketed by the largest of
+these exact event probabilities and, as an upper bound, by their sum; we report the
+former as the prediction and use it as the design surrogate. The blade at the
+injection-septum entrance and at the line end gives the largest event in every
+evaluated case, and every tracked first loss occurs in the injection septum.
+When the centroid is itself Gaussian, as for linearly
 transported jitter, the shot-averaged lost fraction is Eq.~(\ref{eq:loss}) with the
 summed covariance of beam and jitter. This makes a smooth, loss-relevant objective.
 The loss-based setting minimizes the logarithm of the largest shot-averaged $P$ on
@@ -566,9 +576,12 @@ and it sets the remaining blade loss. Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
 largest mean clearance (\SI{\BtsRThreeRefUncClear}{\milli\metre} against \SI{\BtsRThreeRefCorClear}{\milli\metre})
 and six times the loss, because a static offset away from the one-sided blade raises
-the mean while offsets towards it are lost. The Gaussian loss prediction, by
-contrast, agrees with the tracked loss within \SI{\BtsRThreePredAgreePct}{\percent} (relative) in
-every row. The matched reference and low-beta settings are indistinguishable in every
+the mean while offsets towards it are lost. The mean Gaussian loss prediction, by
+contrast, agrees with the tracked loss fraction of each row within
+\SI{\BtsRThreePredAgreePct}{\percent} relative. Because the tracked beam is
+itself Gaussian, this agreement checks the moment transport and loss accounting; it
+does not test non-Gaussian booster tails, which would raise the blade loss most
+where the blade is many beam sizes away. The matched reference and low-beta settings are indistinguishable in every
 column.
 
 \subsection{Reachable phase advance and the loss-based setting}\label{sec:design}
@@ -600,7 +613,7 @@ predicted loss on the test realizations; Blocks: error realizations with any los
 
 On the fresh error realizations the tracked loss is \SI{\BtsRThreeTestRefPct}{\percent}, \SI{\BtsRThreeTestLowPct}{\percent}
 and \SI{\BtsRThreeTestRobustPct}{\percent} for the matched reference, low-beta and loss-based settings,
-each within \SI{1}{\percent} of its prediction. The loss-based setting changes the loss by
+each within \SI{1}{\percent} relative of its mean prediction. The loss-based setting changes the loss by
 \BtsRThreeTestRobustDiff\ percentage points against the matched reference
 (pointwise \SI{95}{\percent} interval clustered by error realization,
 [\BtsRThreeTestRobustDiffLo, \BtsRThreeTestRobustDiffHi] percentage points), a factor
@@ -652,8 +665,8 @@ blade loss fraction of $\BtsRThreeFreeBestLoss$, \BtsRThreeFreeGainFactor\ times
 loss-based setting with the configured target. Its exit jitter is
 \SI{\BtsRThreeFreeBestJxUm}{\micro\metre} and \SI{\BtsRThreeFreeBestJxpUrad}{\micro\radian},
 and the beam divergence falls to \SI{\BtsRThreeBetDivUrad}{\micro\radian}. These numbers
-are analytic, from the same Gaussian model whose predictions agreed with tracking
-within \SI{1}{\percent} above; the dispersion-free settings were not tracked on test realizations.
+are analytic, from the same Gaussian model whose mean predictions agreed with tracking
+within \SI{1}{\percent} relative above; the dispersion-free settings were not tracked on test realizations.
 
 The exit target is thus the BTS design quantity with the largest leverage on
 injection. Removing the exit dispersion lowers the injected beam's divergence by a
@@ -723,8 +736,8 @@ booster's angle stability bounds what either choice can achieve.
 Two methodological points carry over. The mean minimum five-sigma clearance
 does not rank settings by loss: it rewards static offsets away
 from a one-sided restriction and is blind to the jitter tail. A Gaussian loss
-probability from the propagated centroid and covariance agrees with tracked losses
-within \SI{1}{\percent}, is smooth, and can be optimized directly. The phase-advance view also
+probability from the propagated centroid and covariance agrees with the mean tracked
+losses within \SI{1}{\percent} relative, is smooth, and can be optimized directly. The phase-advance view also
 gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
 booster jitter lands, and compare with the restriction and the kicker acceptance.
 

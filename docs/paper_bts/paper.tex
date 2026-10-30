@@ -103,9 +103,7 @@ distribution to the nonlinear injection process~\cite{Leemann2012}. A recent TPS
 study proposes a new booster-to-storage-ring line for
 nonlinear-kicker injection and identifies existing-ring geometry, trajectory
 correction, and injected-beam characterization as design
-considerations~\cite{Luo2026}. This is a closely related transfer-line application;
-the link between transfer-line delivery and downstream nonlinear acceptance
-is therefore directly relevant to the present work. Together, these studies motivate distinguishing
+considerations~\cite{Luo2026}. Together, these studies motivate distinguishing
 nominal optical matching, clearance at the limiting restriction, and sensitivity
 to the position and angle delivered to the injection system. The present study
 examines those distinctions within a fixed BTS model with explicit aperture
@@ -143,13 +141,9 @@ examines the reachable phase advance, a dispersion-free exit target, and sensiti
 to the error levels. The study ends at the transfer-line exit; storage-ring
 capture and NKM transparency require the subsequent injection calculation.
 
-The paper is organized as follows. Section~\ref{sec:model} defines the BTS lattice,
-beam covariance, apertures, and trajectory-correction model.
-Section~\ref{sec:methods} presents the clearance and loss criteria, matched-end
-jitter transport, and numerical validation procedures. Section~\ref{sec:results}
-compares the aperture restrictions, corrected trajectories, loss-based setting,
-exit targets, and error sensitivities. Section~\ref{sec:discussion} discusses the
-design implications and limitations.
+Section~\ref{sec:model} defines the model, Section~\ref{sec:methods} the criteria and
+their validation, Section~\ref{sec:results} the results, and
+Section~\ref{sec:discussion} the design implications and limitations.
 
 \section{Parametric model and physical observables}\label{sec:model}
 \subsection{Lattice, coordinates, and boundary conditions}
@@ -371,7 +365,7 @@ Courant--Snyder parameters and dispersion are inputs, and every admissible setti
 exit to its target. For a centered nominal beam the clearance there is therefore
 $c_u=a-5\sqrt{\epsilon_u\beta_u+D_u^2\sigma_\delta^2}$ with the boundary values of
 Table~\ref{tab:boundary}, for every quadrupole setting $K$ that satisfies the match.
-With $a=\SI{19.35}{\milli\metre}$ this gives \SI{17.455}{\milli\metre}/\SI{18.865}{\milli\metre} at the entrance and \SI{18.555}{\milli\metre}/\SI{19.064}{\milli\metre}
+With $a=\SI{19.35}{\milli\metre}$ this gives \SI{17.455}{\milli\metre}/\SI{18.865}{\milli\metre} at the line entrance (m1) and \SI{18.555}{\milli\metre}/\SI{19.064}{\milli\metre}
 at the exit ($x$/$y$), exactly the values found numerically for both settings
 in the four-station model. The two interior stations have \SI{30}{\milli\metre} halfwidths and could
 limit only if a five-sigma size exceeded about \SI{12.5}{\milli\metre}, which no matched setting
@@ -500,9 +494,9 @@ not that every particle is lost.}\label{tab:original-optimization}
 
 After matching, a separate comparison of the matched reference and optimized
 low-beta setting isolates the effect of interior beta reduction. In that matched
-comparison the injection-septum clearances are
-\SI{\BtsRThreeMinMm}{\milli\metre} at the entrance and
-\SI{\BtsRThreeBladeMm}{\milli\metre} at the exit, essentially equal for both
+comparison the blade clearances are
+\SI{\BtsRThreeMinMm}{\milli\metre} at the injection-septum entrance and
+\SI{\BtsRThreeBladeMm}{\milli\metre} at the line end (m4), essentially equal for both
 settings. The nearest interior restriction is the vertical gap of b2, with
 \SI{\BtsRThreeInteriorRefMm}{\milli\metre} for the matched reference and
 \SI{\BtsRThreeInteriorLowMm}{\milli\metre} for the optimized low-beta setting.

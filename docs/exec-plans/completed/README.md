@@ -784,3 +784,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 271. [**Milestone 271 — R4-BTS-13: length and structure**](271_r4_bts_13_structure.md)
     - Move Section 3.4 and Tables 3–4 to the supplement with a one-paragraph summary, give Eq. (5) its one-sided form, and collapse the identical roll rows of Table 8.
+
+272. [**Milestone 272 — R4-BTS-14: wording**](272_r4_bts_14_wording.md)
+    - Remove the redundant TPS sentence, cut the outline to one sentence, and disambiguate septum entrance, line end (m4) and line entrance (m1).

@@ -760,3 +760,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 263. [**Milestone 263 — Reviewer 1 BTS round-3 report**](263_bts_reviewer1_round3_report.md)
     - Assesses all three main-branch author responses, credits the held-out loss result and records focused major revision with eight pending tasks; previous reviews and scientific assets are preserved.
+
+264. [**Milestone 264 — Consolidated round-4 BTS revision tasks**](264_bts_round4_consolidated_tasks.md)
+    - Merge the Reviewer 1 (R3-BTS-01 to 08) and Reviewer 2 (R2C-01 to 10) round-3 registers into fourteen R4-BTS tasks, with source mapping, reviewer-difference resolutions and a computation summary.

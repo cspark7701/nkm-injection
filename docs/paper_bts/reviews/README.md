@@ -99,3 +99,14 @@ boundary theorem, round-aperture probability bounds, mean-clearance interpretati
 require correction or qualification. The [eight R3-BTS tasks](reviewer1_bts_20261030_main_round3_revision_tasks.md)
 are all pending. Existing reports/responses and the restored historical round 3 are unchanged; the new report is
 a pre-submission assessment, not a journal decision. No scientific revision was executed by this review.
+
+## Round-4 consolidated revision tasks
+
+The [round-4 consolidated register](round4_consolidated_revision_tasks.md), 2026-10-30, merges Reviewer 1's
+R3-BTS-01 to 08 and Reviewer 2's R2C-01 to 10 into fourteen tasks, R4-BTS-01 to R4-BTS-14 (nine A, three B, two
+C). It maps each task to its source items and records how differences between the reviewers are resolved:
+- the phase-advance scan is done, together with sampled-search wording;
+- the baseline comparison is kept but removed from the headline;
+- the dispersion-free tracking is optional.
+
+All tasks are open. Both source registers are unchanged.

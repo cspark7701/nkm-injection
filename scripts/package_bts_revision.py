@@ -36,6 +36,12 @@ def build_pdf(output, source='paper'):
         result=subprocess.run(command,cwd=output,text=True,capture_output=True)
         (output/f'build_{i}.txt').write_text(result.stdout+result.stderr)
         if result.returncode:raise RuntimeError(f'Build failed: {command}; see {output}')
+    # Float placement can move a label on the last pass; allow at most two settling passes.
+    for i in range(len(commands),len(commands)+2):
+        if 'Rerun to get cross-references right' not in (output/(source+'.log')).read_text():break
+        result=subprocess.run(commands[-1],cwd=output,text=True,capture_output=True)
+        (output/f'build_{i}.txt').write_text(result.stdout+result.stderr)
+        if result.returncode:raise RuntimeError(f'Build failed: {commands[-1]}; see {output}')
     log=(output/(source+'.log')).read_text()
     problems=[line for line in log.splitlines() if any(s in line for s in ['LaTeX Warning','Overfull','Underfull','undefined','Missing character'])]
     if problems:raise ValueError('Layout/reference warnings: '+repr(problems))

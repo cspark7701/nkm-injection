@@ -14,3 +14,8 @@ computation was needed.
 
 The source lattice is unchanged. The isolated build is clean; the installed PDF is rebuilt in R4-BTS-09.
 Protected files are unchanged.
+
+**Build follow-up.** The first isolated build after this change failed the clean-build gate with "Label(s) may
+have changed": a float moved on the third and last LaTeX pass. The labels settle on the next pass; there is no
+oscillation. `package_bts_revision.py` now runs at most two extra pdflatex passes while the log asks for a rerun,
+and the rebuilt article is clean (`results/bts_round4_build_r411b`).

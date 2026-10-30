@@ -754,3 +754,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 261. [**Milestone 261 — BTS author wording revision, KLS TDR citation and split affiliations**](261_bts_author_wording_revision.md)
     - Apply the author's BTS wording list (baseline/matched reference, error realizations, units, Tikhonov, Eq. 2), cite the Korea-4GSR TDR, label Figure 1, revise Tables 1–2, remove the AI, availability and appendix sections, and split affiliations in both papers.
+
+262. [**Milestone 262 — Reviewer 2 round-3 report on the BTS manuscript**](262_reviewer2_bts_round3_report.md)
+    - Major revision: the 0.5 mm / 0.2 mrad booster jitter (about five beam sizes) drives every loss number and is not varied, and the baseline-versus-optimized headline is circular. Ten tasks, R2C-01 to R2C-10.

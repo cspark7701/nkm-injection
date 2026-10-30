@@ -65,3 +65,24 @@ availability wording is final and the referee attachment prepared (2026-10-20). 
 At the author's instruction the BTS lattice is not changed: the round-3 study was rerun (milestone 234) without
 added corrector or monitor elements. Steering now uses horizontal trims of the existing dipoles, and the
 added-corrector campaign is superseded.
+
+## Reviewer 2 round-3 assessment
+
+[Reviewer 2 round-3 report](reviewer2_bts_20261030_main_round3_report.md), 2026-10-30, evaluates the 15-page
+*Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line* at `603c3ab`, after
+reading the three main-branch author responses. Recommendation: **major revision; not acceptable in present form,
+with a short route to acceptance**.
+
+The report accepts the Reviewer 2 round-2 resolutions: element-wise apertures, steering, the loss observable and
+the phase-advance mechanism. Its remaining objections:
+- **Booster jitter.** The 0.5 mm / 0.2 mrad jitter is about five beam sizes in normalised phase space, drives every
+  loss number, and is not varied.
+- **Baseline framing.** The baseline-versus-optimized headline is circular: the baseline exit is far from the
+  target, and the blade distance is defined from the matched beam.
+- **Phase advance.** The reachable μ_x edge and the loss-based setting rest on sampling and an iteration-limited
+  optimizer.
+- **Blade distance.** It is not swept.
+
+There are ten tasks, R2C-01 to R2C-10, in the
+[round-3 task register](reviewer2_bts_20261030_main_round3_revision_tasks.md). Earlier reports and responses are
+unchanged.

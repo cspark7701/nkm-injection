@@ -787,3 +787,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 272. [**Milestone 272 — R4-BTS-14: wording**](272_r4_bts_14_wording.md)
     - Remove the redundant TPS sentence, cut the outline to one sentence, and disambiguate septum entrance, line end (m4) and line entrance (m1).
+
+273. [**Milestone 273 — R4-BTS-08: submission readiness (author decisions open)**](273_r4_bts_08_submission_readiness.md)
+    - Align the supplement's date, introduction and nomenclature with the article, and remove the duplicated Acknowledgments. Target journal, data-availability wording, jitter source and final approval remain author decisions.

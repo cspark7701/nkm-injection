@@ -366,10 +366,14 @@ limit only if a five-sigma size exceeded about \SI{12.5}{\milli\metre}, which no
 approaches. In this four-station model the nominal minimum clearance is thus
 analytically independent of $K$: the ``saturation'' of the minimum is a consequence
 of placing restrictions only where the optics are fixed, not a finding about the
-optics. Under errors, the only $K$-dependent part of the end-station clearances is
-the response of the centroid at the exit to errors and jitter. The same holds for
-any restriction upstream of q11 or downstream of q33: there the optics are fixed by
-the boundary data, so only the trajectory response can depend on $K$.
+optics. This statement concerns the nominal, error-free, exactly matched line. Under
+errors the exit covariance $\Sigma_{\rm out}=M(K,e)\Sigma_{\rm in}(e)M(K,e)^{\mathsf T}$
+also depends on $K$, through gradient errors, rolls, chromatic transport of
+off-momentum particles and the sampled entrance beta factors; together with the
+centroid response, these make the exit clearance $K$-dependent. The same nominal
+statement holds for any restriction downstream of q33, whereas restrictions upstream
+of q11 are independent of $K$ even with errors. All error-study results below
+transport the full perturbed covariance and centroid of each error realization.
 
 At a single symmetric active station away from $\bar u=0$, the local sensitivity is
 \begin{equation}
@@ -384,23 +388,30 @@ one size contribution, not necessarily dispersion or orbit sensitivity. We expor
 these variances and centroids separately, adding variances rather than RMS sizes.
 
 \subsection{Jitter transfer between matched ends}\label{sec:jitter}
-Because both ends are matched, the horizontal transfer matrix from m1 to m4 is
+For the error-free, uncoupled line with both ends exactly matched, the horizontal
+transfer matrix from m1 to m4 is
 \begin{equation}
  M_x=B_4R(\mu_x)B_1^{-1},\qquad
  B=\begin{pmatrix}\sqrt\beta&0\\-\alpha/\sqrt\beta&1/\sqrt\beta\end{pmatrix},
  \label{eq:transfer}
 \end{equation}
 with $R(\mu_x)$ a rotation by the horizontal phase advance and $B_{1,4}$ the
-boundary Courant--Snyder parameters of Table~\ref{tab:boundary}. A shot centroid at m1 with
-covariance $J$ (position \SI{0.5}{\milli\metre}, angle \SI{0.2}{\milli\radian}) therefore reaches the exit with
+boundary Courant--Snyder parameters of Table~\ref{tab:boundary}. Let $J$ be the covariance of the
+non-dispersive part of the shot centroid at m1 (position \SI{0.5}{\milli\metre} and angle
+\SI{0.2}{\milli\radian} rms, uncorrelated); the momentum jitter $\sigma_{\delta,j}$ is added
+separately through the dispersion. The centroid therefore reaches the exit with
 covariance $M_xJM_x^{\mathsf T}$ plus the momentum term $\sigma_{\delta,j}^2\mathbf d_4
-\mathbf d_4^{\mathsf T}$, which is the same for every matched setting. The
-quadrupoles influence the exit jitter only through $\mu_x$. Over a full period the
+\mathbf d_4^{\mathsf T}$, which is the same for every matched setting. In this
+nominal model the quadrupoles influence the exit jitter only through $\mu_x$. Over a full period the
 exit position spread ranges from \SI{0.26}{\milli\metre} to \SI{0.95}{\milli\metre} and the angle spread from \SI{0.12}{\milli\radian} to
 \SI{0.41}{\milli\radian}, in opposite phase (Fig.~\ref{fig:jitter}, left): a matched line can move
 booster jitter between position, which the septum blade sees, and angle, which the
-injection kicker sees, but cannot remove it. Steered static errors add a small
-residual (Section~\ref{sec:steering-results}).
+injection kicker sees, but cannot remove it. On error realizations, the residual
+trajectory after steering, the optics errors and roll coupling add to this jitter;
+the test losses are computed with the full transport of each realization
+(Sections~\ref{sec:steering-results} and \ref{sec:design}), and these static
+contributions raise the blade loss of the error-free line by a factor of 1.8--2.6
+(Table~\ref{tab:design}).
 
 \subsection{Loss-based observable and design}\label{sec:loss}
 For a Gaussian projection with centroid $\bar u$ and rms size $\sigma$ at an
@@ -571,8 +582,11 @@ $x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
 {\small\input{generated/round3_steering_rows.tex}}\end{table}
 
 Two observations arise from these results. First, after correction the exit
-centroid spread, about \SI{0.68}{\milli\metre} and \SI{0.37}{\milli\radian}, is mainly that of the booster jitter,
-and it sets the remaining blade loss. Second, the mean
+centroid spread, about \SI{0.68}{\milli\metre} and \SI{0.37}{\milli\radian}, is mainly that of the booster jitter
+(\SI{0.64}{\milli\metre} and \SI{0.33}{\milli\radian} for the error-free matched reference,
+Table~\ref{tab:design}). The static residual adds only about \SI{0.2}{\milli\metre} in
+quadrature, but because the blade loss depends steeply on the spread, it nearly
+doubles the loss. Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
 largest mean clearance (\SI{\BtsRThreeRefUncClear}{\milli\metre} against \SI{\BtsRThreeRefCorClear}{\milli\metre})
 and six times the loss, because a static offset away from the one-sided blade raises
@@ -712,18 +726,20 @@ matching and envelope control relative to the baseline configuration. The
 subsequent matched-only comparisons address a different question: how much
 additional improvement is possible once the endpoint optics are fixed.
 
-In a BTS line matched at both ends, the beam size at the ends is fixed and so is the
+In a BTS line matched at both ends, the nominal beam size at the ends is fixed and so is the
 nominal clearance of every restriction outside the quadrupole section. With the
 blade geometry of the NKM injection study, the injection septum is that restriction, and it limits the
 line by an order of magnitude more than any interior aperture. Lowering the interior
 peak beta, the usual design heuristic, therefore changes only clearances of several
 millimeters and, on fresh steered error realizations, leaves the loss unchanged.
 
-The quadrupoles act on the loss through the trajectory. Static errors are removed by
-field trims of the existing dipoles, without adding any element to the line; the two
-trims nearest the exit steer both position and angle at the septum. What remains
-is booster shot jitter, and for matched ends its arrival at the exit depends only on
-the horizontal phase advance. The line chooses whether the jitter appears as
+The quadrupoles act on the loss mainly through the trajectory. Static trajectory
+errors are reduced by field trims of the existing dipoles, without adding any element
+to the line; the two trims nearest the exit steer both position and angle at the
+septum. A horizontal residual, the optics errors and the uncorrected vertical
+trajectory remain. The dominant remaining contribution is booster shot jitter, and in
+the nominal matched line its arrival at the exit depends only on the horizontal phase
+advance. The line chooses whether the jitter appears as
 position at the blade or as angle at the injection kicker, but it cannot remove it.
 For the configured exit, matched solutions reach only a \SI{32}{\degree} interval of phase
 advance, and the best setting in it reduces the blade loss 3.3-fold at \SI{13}{\percent} more

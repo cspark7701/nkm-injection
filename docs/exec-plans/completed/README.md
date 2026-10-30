@@ -766,3 +766,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 265. [**Milestone 265 — R4-BTS-03: exact round-aperture loss and valid bounds**](265_r4_bts_03_round_aperture_loss.md)
     - Exact 2-D Gaussian loss outside round/elliptical apertures and a valid max/union bracket. The isotropic 5σ counterexample is tested. The rerun reproduces all 66 selected round-3 numbers bitwise.
+
+266. [**Milestone 266 — R4-BTS-04: scope of the boundary theorems**](266_r4_bts_04_theorem_scope.md)
+    - Restrict the fixed-end clearance and phase-only jitter statements to the nominal matched line, define J, and replace "small residual" by the recorded 1.8–2.6-fold static contribution.

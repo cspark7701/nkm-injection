@@ -775,3 +775,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 268. [**Milestone 268 — R4-BTS-02: blade-distance sweep**](268_r4_bts_02_blade_distance.md)
     - Jitter-integrated loss against the blade distance (1–3 mm) at ×1 and ×0.1 jitter. A loss below 0.1 % needs d_b ≥ 2.05 mm (matched) or 1.64 mm (loss-based) at the assumed jitter; at ×0.1 jitter, ≤2×10⁻⁶ even at 1 mm. Adds Figure 5 and the TDR and ring-acceptance notes.
+
+269. [**Milestone 269 — R4-BTS-11: discrete aperture checking stated**](269_r4_bts_11_discrete_apertures.md)
+    - State that losses are counted at element entrances and the line end (the blade at both septum ends), not as continuous interception. Every recorded first loss is at the injection-septum blade.

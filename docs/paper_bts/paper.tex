@@ -271,9 +271,14 @@ design of the magnets.
 
 \subsection{Element-wise restrictions}\label{sec:apertures}
 Every element of the BTS line carries its own aperture
-(Table~\ref{tab:apertures}), and AT checks each aperture at the element entrance.
+(Table~\ref{tab:apertures}), and AT checks each aperture at the element entrance;
+the line end (m4) carries the injection-septum limits, so the blade is checked at
+both ends of the septum. Particle losses are therefore counted at these declared
+check points, not as continuous interception along a chamber or channel.
 Interior envelopes are sampled for the nominal profile on an observation-only copy of
-the line, with four subdivisions per quadrupole and eight per bend or septum.
+the line, with four subdivisions per quadrupole and eight per bend or septum; these
+nominal samples locate the interior minimum clearance but do not certify the beam
+tails under errors.
 
 The injection-septum blade separates the main-field channel traversed by the
 injected beam from the stored-beam region, where a small magnetic field is
@@ -575,7 +580,8 @@ Table~\ref{tab:steering} compares the uncorrected and corrected matched lines on
 error realizations with three shots of 2\,000 particles each; both
 settings and both variants see the same error realizations, shots and particles. Without
 correction the static errors displace the exit centroid by \SI{1.2}{\milli\metre} rms, and
-\SI{\BtsRThreeRefUncLostPct}{\percent} of the particles are lost, almost all on the blade. With
+\SI{\BtsRThreeRefUncLostPct}{\percent} of the particles are lost; every recorded first loss is at the
+injection-septum blade. With
 the dipole trims the exit position spread falls to \SI{\BtsRThreeRefCorExitXUm}{\micro\metre} and the angle spread to \SI{\BtsRThreeRefCorExitXpUrad}{\micro\radian}, and
 the loss to \SI{\BtsRThreeRefCorLostPct}{\percent} (\SI{\BtsRThreeLowCorLostPct}{\percent} for the low-beta
 setting); the rms trim is \SI{\BtsRThreeRefCorKickUrad}{\micro\radian}. Two trims close
@@ -816,7 +822,9 @@ level every matched setting loses less than $10^{-10}$, so the design choice tha
 remains is where the jitter appears at the exit, not how much is lost at the blade.
 With sampled shots the loss is heavy-tailed and its population mean varies between
 independently seeded populations. The dispersion-free results are
-analytic. This paper neither certifies real transmission nor derives construction
+analytic. Losses are counted at the declared aperture check points (element
+entrances and the line end), which bracket the septum channel but do not resolve
+continuous interception inside it. This paper neither certifies real transmission nor derives construction
 tolerances, ring capture, or kicker transparency.
 
 \section*{Statements and Declarations}

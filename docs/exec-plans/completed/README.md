@@ -778,3 +778,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 269. [**Milestone 269 — R4-BTS-11: discrete aperture checking stated**](269_r4_bts_11_discrete_apertures.md)
     - State that losses are counted at element entrances and the line end (the blade at both septum ends), not as continuous interception. Every recorded first loss is at the injection-septum blade.
+
+270. [**Milestone 270 — R4-BTS-06: mean clearance and statistics language**](270_r4_bts_06_statistics_language.md)
+    - Explain the mean-clearance counterexample without survivor censoring (uncensored −68.5 µm offset; E[c] independent of the spread). Replace "indistinguishable" by the paired intervals (low beta −0.21 [−0.39, −0.06] pp on steering, unresolved on the test) and state the bootstrap method.

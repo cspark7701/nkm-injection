@@ -455,7 +455,12 @@ $\le\SI{60}{\metre}$ and the strength bounds, using sequential least-squares pro
 (SLSQP)~\cite{Kraft1988} with a 200-iteration budget and termination tolerance
 $10^{-10}$. Three initial settings are evaluated in the bounded search. The setting is frozen
 before a fresh test on 200 steered error realizations, evaluated with
-tracked particles.
+tracked particles. Paired differences between settings are averaged per error
+realization; the pointwise \SI{95}{\percent} intervals are percentile intervals of
+10\,000 bootstrap resamples of the 200 realizations. This realization-cluster
+bootstrap accounts for the dependence between the shots of one realization, but it
+does not certify that the heavy loss tail is converged; it describes the sampled
+population of realizations and shots.
 
 \subsection{Accuracy and spatial observation resolution}
 Exact independent hard-edge maps are checked against AT tracking at every element
@@ -603,14 +608,25 @@ Table~\ref{tab:design}); averaged exactly over the jitter, the static residual r
 the loss by only a few percent (Section~\ref{sec:sensitivity}). Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
 largest mean clearance (\SI{\BtsRThreeRefUncClear}{\milli\metre} against \SI{\BtsRThreeRefCorClear}{\milli\metre})
-and six times the loss, because a static offset away from the one-sided blade raises
-the mean while offsets towards it are lost. The mean Gaussian loss prediction, by
+and six times the loss. All 600 shots enter both means, and the moments are
+uncensored by apertures, so this is not a survivor effect. Without correction the
+static errors leave a mean exit offset of \SI{-68.5}{\micro\metre}, away from the blade
+(\SI{+8.8}{\micro\metre} after correction), which raises the mean clearance, while the spread
+of the exit centroid grows from \SI{0.68}{\milli\metre} to \SI{1.20}{\milli\metre}. At a one-sided edge $a$ with
+fixed beam size $\sigma$ and centroid spread $\tau$, the mean clearance
+$a-E[\bar u]-5\sigma$ does not depend on $\tau$, whereas the mean loss,
+approximately $\Phi\bigl(-(a-E[\bar u])/\sqrt{\sigma^2+\tau^2}\bigr)$, grows with it; the same
+mean clearance can therefore hide very different tail losses. The mean Gaussian loss prediction, by
 contrast, agrees with the tracked loss fraction of each row within
 \SI{\BtsRThreePredAgreePct}{\percent} relative. Because the tracked beam is
 itself Gaussian, this agreement checks the moment transport and loss accounting; it
 does not test non-Gaussian booster tails, which would raise the blade loss most
-where the blade is many beam sizes away. The matched reference and low-beta settings are indistinguishable in every
-column.
+where the blade is many beam sizes away. After correction the low-beta setting
+loses \num{0.21} percentage points less than the matched reference on these realizations
+(paired interval [\num{-0.39}, \num{-0.06}] percentage points), whereas its mean clearance
+change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. On the fresh
+test of Section~\ref{sec:design} its loss change is unresolved. The small difference
+follows its phase advance (Section~\ref{sec:design}), not its lower peak beta.
 
 \subsection{Reachable phase advance and the loss-based setting}\label{sec:design}
 Bounded least-squares matching from \BtsRThreePoolStarts\ random starts finds

@@ -120,7 +120,31 @@ def blade():
                                                                 'distance_for_tolerance_m': tol, 'rows': data['rows']}, indent=2) + '\n')
 
 
-PARTS = {'jitter': jitter, 'blade': blade}
+def statistics():
+    """R4-BTS-06: uncensored mean exit offsets and paired low-beta intervals from the round-3 steering campaign."""
+    source = ROOT / 'results/bts_journal_campaign_r3b_20261015/steering/raw_machines.json'
+    raw = json.loads(source.read_text())
+
+    def interval(delta, seed=91005, count=10000):
+        rng = np.random.default_rng(seed)
+        delta = np.asarray(delta, dtype=float)
+        means = delta[rng.integers(0, len(delta), (count, len(delta)))].mean(1)
+        return {'mean': float(delta.mean()), 'ci95': np.quantile(means, [.025, .975]).tolist()}
+
+    per = lambda n, v, key: np.array([np.mean([s['results'][n][v][key] for s in m['shots']]) for m in raw])
+    out = {'source': str(source), 'shots': sum(len(m['shots']) for m in raw), 'variants': {}}
+    for v in ('uncorrected', 'corrected'):
+        entry = {}
+        for n in ('reference', 'low_beta'):
+            x = np.array([s['results'][n][v]['exit_centroid'][0] for m in raw for s in m['shots']])
+            entry[n] = {'mean_exit_x_m': float(x.mean()), 'exit_x_std_m': float(x.std())}
+        entry['low_minus_reference_lost_fraction'] = interval((per('low_beta', v, 'lost') - per('reference', v, 'lost')) / 2000)
+        entry['low_minus_reference_clearance_m'] = interval(per('low_beta', v, 'clearance_m') - per('reference', v, 'clearance_m'))
+        out['variants'][v] = entry
+    (P / 'generated/round4_statistics.json').write_text(json.dumps(out, indent=2) + '\n')
+
+
+PARTS = {'jitter': jitter, 'blade': blade, 'statistics': statistics}
 
 
 def main():

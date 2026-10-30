@@ -1,0 +1,54 @@
+{
+  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_journal_campaign_r3b_20261015/steering/raw_machines.json",
+  "shots": 600,
+  "variants": {
+    "uncorrected": {
+      "reference": {
+        "mean_exit_x_m": -6.849998204403935e-05,
+        "exit_x_std_m": 0.0011952840679533578
+      },
+      "low_beta": {
+        "mean_exit_x_m": -3.6826796975890396e-05,
+        "exit_x_std_m": 0.0012032167867741933
+      },
+      "low_minus_reference_lost_fraction": {
+        "mean": -0.0007191666666666669,
+        "ci95": [
+          -0.02316875,
+          0.02228199999999999
+        ]
+      },
+      "low_minus_reference_clearance_m": {
+        "mean": -2.8670807665640034e-05,
+        "ci95": [
+          -9.969526985875877e-05,
+          3.901698178407123e-05
+        ]
+      }
+    },
+    "corrected": {
+      "reference": {
+        "mean_exit_x_m": 8.767264658905877e-06,
+        "exit_x_std_m": 0.0006836827641214427
+      },
+      "low_beta": {
+        "mean_exit_x_m": 1.2048384306364342e-06,
+        "exit_x_std_m": 0.0006757043056894502
+      },
+      "low_minus_reference_lost_fraction": {
+        "mean": -0.0020933333333333333,
+        "ci95": [
+          -0.00390925,
+          -0.0006175
+        ]
+      },
+      "low_minus_reference_clearance_m": {
+        "mean": -1.2814470454295111e-06,
+        "ci95": [
+          -9.286508220946693e-06,
+          6.579148442706498e-06
+        ]
+      }
+    }
+  }
+}

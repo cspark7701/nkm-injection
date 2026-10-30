@@ -781,3 +781,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 270. [**Milestone 270 — R4-BTS-06: mean clearance and statistics language**](270_r4_bts_06_statistics_language.md)
     - Explain the mean-clearance counterexample without survivor censoring (uncensored −68.5 µm offset; E[c] independent of the spread). Replace "indistinguishable" by the paired intervals (low beta −0.21 [−0.39, −0.06] pp on steering, unresolved on the test) and state the bootstrap method.
+
+271. [**Milestone 271 — R4-BTS-13: length and structure**](271_r4_bts_13_structure.md)
+    - Move Section 3.4 and Tables 3–4 to the supplement with a one-paragraph summary, give Eq. (5) its one-sided form, and collapse the identical roll rows of Table 8.

@@ -363,12 +363,19 @@ def exit_target():
 def sensitivity():
     se = load('sensitivity', 'sensitivity.json')
     (P / 'generated/round3_sensitivity.json').write_text(json.dumps(se, indent=2) + '\n')
+    # Rows that differ only in the roll level are identical at the printed precision;
+    # they are collapsed into one row per energy jitter (R4-BTS-13), which is checked here.
     rows = []
-    for r in se['rows']:
-        d = r['designs']
-        rows.append(f"{1e3 * r['roll_rad']:.1f} & {100 * r['energy_jitter']:.2f} & " +
-                    ' & '.join(f"{100 * d[n]['predicted_loss_max_mean']:.2f}" for n in ('reference', 'low_beta', 'robust')) + ' & ' +
-                    ' & '.join(f"{1e3 * d[n]['mean_clearance_m']:.3f}" for n in ('reference', 'robust')) + ' \\\\')
+    for energy in se['protocol']['energy_jitter']:
+        cells = set()
+        for r in (r for r in se['rows'] if r['energy_jitter'] == energy):
+            d = r['designs']
+            cells.add(' & '.join(f"{100 * d[n]['predicted_loss_max_mean']:.2f}" for n in ('reference', 'low_beta', 'robust')) + ' & ' +
+                      ' & '.join(f"{1e3 * d[n]['mean_clearance_m']:.3f}" for n in ('reference', 'robust')))
+        if len(cells) != 1:
+            raise ValueError('Roll levels differ at the printed precision; the table cannot be collapsed')
+        rolls = ', '.join(f'{1e3 * r:.1f}' for r in se['protocol']['roll_rad'])
+        rows.append(f"{rolls} & {100 * energy:.2f} & " + cells.pop() + ' \\\\')
     (P / 'generated/round3_sensitivity_rows.tex').write_text(
         '\\begin{tabular}{rrrrrrr}\\toprule\nRoll & $\\sigma_{\\delta,j}$ & \\multicolumn{3}{c}{Predicted loss [\\%]} & '
         '\\multicolumn{2}{c}{$\\bar c_{\\min}$ [mm]}\\\\\n{}[mrad] & [\\%] & Matched & Low beta & Loss-based & Matched & Loss-based \\\\\\midrule\n'

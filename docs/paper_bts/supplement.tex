@@ -84,7 +84,9 @@ across four runs. The rule is $\beta_{x,\max}$ or $\beta_{y,\max}>\SI{60.01}{\me
 or $\mathcal M_x+\mathcal M_y>2.05$, where
 $\mathcal M_u=\tfrac12\mathrm{Tr}(\Sigma_{u,t}^{-1}\Sigma_{u,o})-1$
 uses unit-emittance transverse matrices. All five failures exceed vertical beta
-only (\SI{60.23}{\metre}--\SI{61.64}{\metre}); they are not physical losses.
+only (\SI{60.23}{\metre}--\SI{61.64}{\metre}); they are not physical losses. These historical optics-only ensembles use a separate conservative
+\SI{100}{\nano\metre\radian}/\SI{10}{\nano\metre\radian}, \SI{0.11}{\percent} beam configuration and are not pooled with
+the article's study.
 
 The descriptive optical-failure estimate is $5/550000=9.09\times10^{-6}$ with
 exact asymmetric \SI{95}{\percent} limits $[2.95\times10^{-6},2.12\times10^{-5}]$; Wilson
@@ -102,6 +104,67 @@ sensitivity is mean absolute change of $\mathcal M_x+\mathcal M_y$, not J.
 Seed42 ranks beta-only entrance errors (0.00890374), gradients (0.000861122)
 and energy (0.000106336). Near-zero alignment/roll mismatch does not certify
 alignment/coupling tolerances. Historical and new-model data remain separate.
+
+\section{Numerical accuracy and spatial observation resolution}\label{sec:accuracy}
+Exact independent hard-edge maps are checked against AT tracking at every element
+boundary. Tracking uses 40 integration steps per magnet, with an absolute
+nominal-map maximum-entry tolerance of $2\times10^{-6}$ in the stated SI
+coordinate convention. Table~\ref{tab:accuracy} summarizes the accuracy checks.
+Transverse symplectic discrepancy is $1.22\times10^{-15}$,
+without a longitudinal six-dimensional certificate. Translations, rolls and
+fixed-geometry dipole-field perturbations are exercised independently. Momentum
+errors enter particle $\delta$ without double rescaling magnet fields.
+
+The affine error maps of the earlier four-station campaign omit chromatic
+derivatives about displaced trajectories. Comparing all 600 shots of that campaign
+with AT Jacobians expanded about
+the actual centroid changes station clearances by up to \SI{78.43}{\micro\metre},
+but shifts the paired mean by only $\SI{-0.155}{\micro\metre}$. Eight
+matched-reference and three alternative active-station classifications change. The
+earlier paired mean of \SI{14.61}{\micro\metre} and its interval
+$[-17.91,+48.32]$\,\si{\micro\metre} become \SI{14.45}{\micro\metre} and
+$[-17.88,+48.10]$\,\si{\micro\metre};
+the unresolved-benefit conclusion persists. New comparisons use centered AT maps.
+Moment probes are uncensored by aperture limits, so propagated moments describe
+the incoming distribution rather than a survivor-biased subset.
+
+Representative simultaneous-error cases compare probe steps $10^{-6}$--$10^{-8}$
+and forty/eighty integration steps. Their clearance changes are below
+\SI{5e-6}{\micro\metre}. Product Gauss--Hermite quadrature at orders three,
+five and seven propagates the unrestricted Gaussian through nonlinear AT;
+five/seven convergence is negligible on the checked cases. Centered-linear versus
+nonlinear-moment discrepancy is at most \SI{0.606}{\micro\metre} on four extreme
+or representative shots of the earlier campaign and \SI{\BtsNewMomentError}{\micro\metre} on two new error realizations
+for every regime/design. These finite-case checks are smaller than the reported
+effect intervals and illustrative \SI{0.1}{\milli\metre} decision scale; they are not universal
+error bounds or Gaussian loss-tail certificates. Intentional scraping verifies
+first-loss accounting.
+
+Spatial observation is refined independently of integration steps. Exact maps
+sample each finite element at 8, 16, 32 and 64 subdivisions, applying bend edges
+only once. Matched-reference boundary peaks \SI{31.44}{\metre}/\SI{50.75}{\metre} become \SI{31.63}{\metre}/\SI{51.27}{\metre};
+old low-beta peaks \SI{33.58}{\metre}/\SI{28.18}{\metre} become \SI{33.77}{\metre}/\SI{28.50}{\metre}. Reoptimizing vertical peak
+beta on sixteen subdivisions converges in 34 SLSQP iterations. The resulting
+64-subdivision peaks are \SI{33.79}{\metre}/\SI{28.44}{\metre}; changes from 32 subdivisions are below
+\SI{0.35}{\milli\metre}. Table~\ref{tab:spatial-resolution} reports the refined setting at each observation resolution.
+These are spatially converged sampled maxima, not exact analytical
+extrema or a global optimum. 
+
+\begin{table}[htbp]\centering
+\caption{Numerical accuracy checks for the nominal transport and selected error
+cases. Map-entry discrepancies use the stated SI coordinate convention.
+The final four rows are finite-case convergence diagnostics, not universal
+error bounds or Gaussian loss-tail tolerances.}\label{tab:accuracy}
+\input{generated/accuracy_checks.tex}
+\end{table}
+
+\begin{table}[htbp]\centering
+\caption{Spatial convergence of the refined low-beta setting. Integration remains
+at 40 steps per magnet while the observation mesh changes. The reported peaks
+are sampled maxima; the last column is the larger change in either plane
+relative to the preceding mesh.}\label{tab:spatial-resolution}
+\input{generated/spatial_resolution.tex}
+\end{table}
 
 \section{Finite loss events and numerical validation}
 The new inference export contains exact block binomial intervals and independent

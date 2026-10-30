@@ -250,8 +250,7 @@ never completely contained. Because the beam size scales as $\sqrt{\beta_u}$, a
 reduction of the beta function by some metres does not increase the clearance by a
 comparable length: the clearance changes only by five times the change of the rms
 size at the limiting station, and not at all where the optics are fixed by the
-boundary conditions (Section~\ref{sec:methods}). Historical optics-only ensembles use a separate conservative
-\SI{100}{\nano\metre\radian}/\SI{10}{\nano\metre\radian}, \SI{0.11}{\percent} beam configuration and are not pooled with this study.
+boundary conditions (Section~\ref{sec:methods}).
 
 The quadrupole strengths are bounded so that every setting considered remains
 within the field range of conventional quadrupole magnets. At
@@ -388,13 +387,15 @@ statement holds for any restriction downstream of q33, whereas restrictions upst
 of q11 are independent of $K$ even with errors. All error-study results below
 transport the full perturbed covariance and centroid of each error realization.
 
-At a single symmetric active station away from $\bar u=0$, the local sensitivity is
+At a one-sided edge $a_+$, such as the septum blade, $c_u=a_+-\bar u-5\sigma_u$ with
+$\sigma_u=\sqrt{\Sigma_{uu}}$, and the local sensitivity to a quadrupole strength is
 \begin{equation}
  \frac{\partial c_u}{\partial K_j}=
- -\operatorname{sgn}(\bar u)\frac{\partial\bar u}{\partial K_j}
+ -\frac{\partial\bar u}{\partial K_j}
  -\frac{5}{2\sigma_u}\frac{\partial\Sigma_{uu}}{\partial K_j}.
 \end{equation}
-Switching restrictions or crossing zero centroid makes this expression piecewise.
+At a symmetric aperture the first term carries the sign of $\bar u$; switching
+restrictions or crossing zero centroid makes the expression piecewise.
 In an uncoupled plane $\Sigma_{uu}=\epsilon_u\beta_u+D_u^2\sigma_\delta^2$;
 our coupled calculation retains the complete covariance. Reducing beta controls
 one size contribution, not necessarily dispersion or orbit sensitivity. We export
@@ -463,65 +464,16 @@ does not certify that the heavy loss tail is converged; it describes the sampled
 population of realizations and shots.
 
 \subsection{Accuracy and spatial observation resolution}
-Exact independent hard-edge maps are checked against AT tracking at every element
-boundary. Tracking uses 40 integration steps per magnet, with an absolute
-nominal-map maximum-entry tolerance of $2\times10^{-6}$ in the stated SI
-coordinate convention. Table~\ref{tab:accuracy} summarizes the accuracy checks.
-Transverse symplectic discrepancy is $1.22\times10^{-15}$,
-without a longitudinal six-dimensional certificate. Translations, rolls and
-fixed-geometry dipole-field perturbations are exercised independently. Momentum
-errors enter particle $\delta$ without double rescaling magnet fields.
-
-The affine error maps of the earlier four-station campaign omit chromatic
-derivatives about displaced trajectories. Comparing all 600 shots of that campaign
-with AT Jacobians expanded about
-the actual centroid changes station clearances by up to \SI{78.43}{\micro\metre},
-but shifts the paired mean by only $\SI{-0.155}{\micro\metre}$. Eight
-matched-reference and three alternative active-station classifications change. The
-earlier paired mean of \SI{14.61}{\micro\metre} and its interval
-$[-17.91,+48.32]$\,\si{\micro\metre} become \SI{14.45}{\micro\metre} and
-$[-17.88,+48.10]$\,\si{\micro\metre};
-the unresolved-benefit conclusion persists. New comparisons use centered AT maps.
-Moment probes are uncensored by aperture limits, so propagated moments describe
-the incoming distribution rather than a survivor-biased subset.
-
-Representative simultaneous-error cases compare probe steps $10^{-6}$--$10^{-8}$
-and forty/eighty integration steps. Their clearance changes are below
-\SI{5e-6}{\micro\metre}. Product Gauss--Hermite quadrature at orders three,
-five and seven propagates the unrestricted Gaussian through nonlinear AT;
-five/seven convergence is negligible on the checked cases. Centered-linear versus
-nonlinear-moment discrepancy is at most \SI{0.606}{\micro\metre} on four extreme
-or representative shots of the earlier campaign and \SI{\BtsNewMomentError}{\micro\metre} on two new error realizations
-for every regime/design. These finite-case checks are smaller than the reported
-effect intervals and illustrative \SI{0.1}{\milli\metre} decision scale; they are not universal
-error bounds or Gaussian loss-tail certificates. Intentional scraping verifies
-first-loss accounting.
-
-Spatial observation is refined independently of integration steps. Exact maps
-sample each finite element at 8, 16, 32 and 64 subdivisions, applying bend edges
-only once. Matched-reference boundary peaks \SI{31.44}{\metre}/\SI{50.75}{\metre} become \SI{31.63}{\metre}/\SI{51.27}{\metre};
-old low-beta peaks \SI{33.58}{\metre}/\SI{28.18}{\metre} become \SI{33.77}{\metre}/\SI{28.50}{\metre}. Reoptimizing vertical peak
-beta on sixteen subdivisions converges in 34 SLSQP iterations. The resulting
-64-subdivision peaks are \SI{33.79}{\metre}/\SI{28.44}{\metre}; changes from 32 subdivisions are below
-\SI{0.35}{\milli\metre}. Table~\ref{tab:spatial-resolution} reports the refined setting at each observation resolution.
-These are spatially converged sampled maxima, not exact analytical
-extrema or a global optimum. The second quadrupole in the third triplet, \texttt{q32}, remains at its lower bound $\SI{-3}{\per\square\metre}$.
-
-\begin{table}[htbp]\centering
-\caption{Numerical accuracy checks for the nominal transport and selected error
-cases. Map-entry discrepancies use the stated SI coordinate convention.
-The final four rows are finite-case convergence diagnostics, not universal
-error bounds or Gaussian loss-tail tolerances.}\label{tab:accuracy}
-\input{generated/accuracy_checks.tex}
-\end{table}
-
-\begin{table}[htbp]\centering
-\caption{Spatial convergence of the refined low-beta setting. Integration remains
-at 40 steps per magnet while the observation mesh changes. The reported peaks
-are sampled maxima; the last column is the larger change in either plane
-relative to the preceding mesh.}\label{tab:spatial-resolution}
-\input{generated/spatial_resolution.tex}
-\end{table}
+Independent hard-edge maps reproduce AT tracking at every element boundary within
+\num{1.6e-8}, against a tolerance of \num{2e-6} in the stated SI convention. On the checked
+error cases, centered-map, integration-step, probe-step and quadrature checks change
+clearances by at most \SI{\BtsNewMomentError}{\micro\metre}, far below the reported effects, and the
+sampled peak beta functions change by less than \SI{0.35}{\milli\metre} between 32 and 64
+subdivisions per element. These are finite-case checks, not universal error bounds or
+loss-tail certificates; their details, including the audit of the earlier
+four-station campaign, are given in the supplement. In the refined low-beta setting
+the second quadrupole of the third triplet, \texttt{q32}, remains at its lower bound
+$\SI{-3}{\per\square\metre}$.
 
 \section{Results}\label{sec:results}
 \subsection{Active restrictions of the element-wise line}
@@ -760,7 +712,8 @@ holds at every level, because it scales linearly with the jitter.
 \begin{table}[htbp]\centering
 \caption{Sensitivity of the steered matched line (Matched denotes the matched reference) to the roll and energy-jitter levels: mean
 predicted loss and mean minimum five-sigma clearance on 200 error realizations with three shots
-each (analytic, not tracked).}\label{tab:sensitivity}
+each (analytic, not tracked). Each row holds for all three roll levels, whose results are
+identical at the printed precision.}\label{tab:sensitivity}
 {\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
 
 \begin{table}[htbp]\centering

@@ -277,10 +277,9 @@ def phase():
 def layouts():
     """R4-BTS-10: steering with reduced monitors and series-powered bends, with the vertical exit centroid."""
     data = load('layouts_b', 'layouts.json')
-    labels = {'full': 'All 11 readings, 6 trims', 'reduced_monitors': '5 readings, 6 trims', 'series_bends': '11 readings, 4 knobs',
-              'reduced_series': '5 readings, 4 knobs'}
+    labels = {'full': '11 / 6', 'reduced_monitors': '5 / 6', 'series_bends': '11 / 4', 'reduced_series': '5 / 4'}
     lines = ['\\begin{tabular}{llrrrrrr}\\toprule',
-             "Layout & Setting & Lost [\\%] & Pred. [\\%] & $x_{\\rm rms}$ [mm] & $x'_{\\rm rms}$ [mrad] & $y_{\\rm rms}$ [mm] & "
+             "Readings / knobs & Setting & Lost [\\%] & Pred. [\\%] & $x_{\\rm rms}$ [mm] & $x'_{\\rm rms}$ [mrad] & $y_{\\rm rms}$ [mm] & "
              "$y'_{\\rm rms}$ [mrad]\\\\\\midrule"]
     for layout, label in labels.items():
         for n in ('reference', 'robust'):

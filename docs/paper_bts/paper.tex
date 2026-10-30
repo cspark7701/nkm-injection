@@ -19,6 +19,7 @@
 \input{generated/round4_jitter.tex}
 \input{generated/round4_blade.tex}
 \input{generated/round4_phase.tex}
+\input{generated/round4_layouts.tex}
 \title{Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line}
 \author{Chong Shik Park$^{1,2}$\\[3pt]
 \small $^{1}$Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea\\
@@ -343,7 +344,10 @@ dipoles, applied as additional fixed-geometry
 dipole fields like the dipole errors. Horizontal readings are taken at existing
 element boundaries, after each quadrupole, at the injection-septum entrance and at
 the line end, with a static \SI{50}{\micro\metre} rms reading error (offset and calibration
-residual). The trims minimize the weighted readings (septum entrance and end weighted
+residual). The lattice model contains no monitor elements, so these eleven readings
+are assumed instrumentation, and the six trims are assumed to be independently
+powered; fewer readings and series-powered bends are examined in
+Section~\ref{sec:steering-results}. The trims minimize the weighted readings (septum entrance and end weighted
 3) with the response of the error-free model line. With $\mathbf r$ the vector of
 readings, $A$ the response matrix of the readings to the trims $\boldsymbol\theta$,
 and $W$ the diagonal weight matrix, the trims minimize
@@ -357,7 +361,10 @@ $WA$. The trims are limited to $\pm\SI{1}{\milli\radian}$ of kick, and the
 correction is applied in two passes. The correction uses no knowledge of the actual
 errors and does not act on shot jitter. The line has no vertical knob, so the vertical
 plane is not corrected. Every error realization is evaluated uncorrected and
-corrected on identical particles.
+corrected on identical particles. When settings are compared, the static magnet
+errors, shot jitter and particles are shared, whereas the reading errors are drawn
+separately for each setting; paired comparisons therefore include the effect of
+different reading errors.
 
 \section{Physical criterion, validation and comparison protocol}\label{sec:methods}
 \subsection{Active restrictions and boundary-fixed clearances}
@@ -449,7 +456,10 @@ The loss-based setting minimizes the logarithm of the largest shot-averaged $P$ 
 the error-free line, subject to the six exit equalities, horizontal peak beta
 $\le\SI{60}{\metre}$ and the strength bounds, using sequential least-squares programming
 (SLSQP)~\cite{Kraft1988} with a 200-iteration budget and termination tolerance
-$10^{-10}$. Three initial settings are evaluated in the bounded search. The setting is frozen
+$10^{-10}$. Three initial settings are evaluated in the bounded search. The objective
+uses the nominal entrance beta functions and the error-free line; the static
+residuals and the \SI{5}{\percent} beta-function fluctuations of the test are not part of it, so
+the error-free prediction and the tracked test describe different populations. The setting is frozen
 before a fresh test on 200 steered error realizations, evaluated with
 tracked particles. Paired differences between settings are averaged per error
 realization; the pointwise \SI{95}{\percent} intervals are percentile intervals of
@@ -530,15 +540,37 @@ no errors.}\label{fig:profile}\end{figure}
 \subsection{Trajectory correction}\label{sec:steering-results}
 Table~\ref{tab:steering} compares the uncorrected and corrected matched lines on 200
 error realizations with three shots of 2\,000 particles each; both
-settings and both variants see the same error realizations, shots and particles. Without
+settings and both variants see the same magnet errors, shots and particles. Without
 correction the static errors displace the exit centroid by \SI{1.2}{\milli\metre} rms, and
 \SI{\BtsRThreeRefUncLostPct}{\percent} of the particles are lost; every recorded first loss is at the
 injection-septum blade. With
-the dipole trims the exit position spread falls to \SI{\BtsRThreeRefCorExitXUm}{\micro\metre} and the angle spread to \SI{\BtsRThreeRefCorExitXpUrad}{\micro\radian}, and
-the loss to \SI{\BtsRThreeRefCorLostPct}{\percent} (\SI{\BtsRThreeLowCorLostPct}{\percent} for the low-beta
+the dipole trims the exit position spread falls to \SI{\BtsRThreeRefCorExitXUm}{\micro\metre}, the angle spread
+stays at \SI{\BtsRThreeRefCorExitXpUrad}{\micro\radian} (\SI{\BtsRThreeRefUncExitXpUrad}{\micro\radian} uncorrected), and
+the loss falls to \SI{\BtsRThreeRefCorLostPct}{\percent} (\SI{\BtsRThreeLowCorLostPct}{\percent} for the low-beta
 setting); the rms trim is \SI{\BtsRThreeRefCorKickUrad}{\micro\radian}. Two trims close
 to the exit, b3 and the injection septum, steer both position and angle at the
-septum. The uncorrected vertical orbit stays far inside the vertical restrictions.
+septum. The uncorrected vertical exit centroid is \SI{\BtsRFourVertExitYUm}{\micro\metre} and
+\SI{\BtsRFourVertExitYpUrad}{\micro\radian} rms for the matched reference (Table~\ref{tab:layouts}); it stays inside the
+\SI{5}{\milli\metre} vertical restrictions but is the static vertical injection error passed to the
+injection calculation.
+
+Table~\ref{tab:layouts} repeats the steering on the same realizations with fewer readings
+and with b1--b3 trimmed as one series-powered knob, the kick of each bend
+proportional to its bending angle. The full layout reproduces the tracked losses
+above exactly. Reading only the exits of the three triplets, the septum entrance and
+the line end leaves the losses unchanged to within 0.01 percentage point. Series-powered
+bends leave one knob fewer near the exit: the exit angle spread grows from
+\SI{0.37}{\milli\radian} to \SI{0.44}{\milli\radian} for the matched reference, and the loss of the loss-based
+setting rises from \SI{\BtsRFourLayoutFullRobustPct}{\percent} to \SI{\BtsRFourLayoutBothRobustPct}{\percent}, still well below that of the
+matched reference.
+
+\begin{table}[htbp]\centering
+\caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering} (tracked, 3 shots of
+2\,000 particles). Readings: quadrupole exits (all nine or the three triplet exits),
+septum entrance and line end. Knobs: six independent dipole trims, or four with
+b1--b3 in series. Exit centroids are rms over shots; the vertical plane is not
+corrected.}\label{tab:layouts}
+{\footnotesize\setlength{\tabcolsep}{4pt}\input{generated/round4_layout_rows.tex}}\end{table}
 
 \begin{table}[htbp]\centering
 \caption{Steering of the matched reference (Matched) and optimized low beta on 200 error realizations (3 shots, 2\,000 particles each). $\bar c_{\min}$

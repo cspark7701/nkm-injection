@@ -1,0 +1,219 @@
+{
+  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/layouts_b/layouts.json",
+  "reproduction_check": {
+    "round3_lost_particles": 20100,
+    "full_lost_particles": 20100,
+    "round3_predicted": 0.016782267430836714,
+    "full_predicted": 0.016782267430836714
+  },
+  "summary": {
+    "full": {
+      "reference": {
+        "observed_loss_fraction": 0.01675,
+        "predicted_loss_max_mean": 0.016782267430836714,
+        "exit_centroid_rms_m_rad": [
+          0.00068373897569638,
+          0.0003671014679601441,
+          0.0011157993497241984,
+          0.00010006841969021028
+        ],
+        "mean_exit_centroid_m_rad": [
+          8.76726465890587e-06,
+          1.0400857208576725e-05,
+          -1.0298589443030642e-05,
+          6.619602025821279e-07
+        ],
+        "kick_rms_rad": 0.00020435721662993543,
+        "paired_tracked_vs_reference": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "loss_blocks": 47
+      },
+      "robust": {
+        "observed_loss_fraction": 0.0023174999999999997,
+        "predicted_loss_max_mean": 0.002326939427663888,
+        "exit_centroid_rms_m_rad": [
+          0.000544310396372686,
+          0.0004210198206212126,
+          0.0007653960320027424,
+          9.445835289518212e-05
+        ],
+        "mean_exit_centroid_m_rad": [
+          1.3655993993339482e-06,
+          -1.2301476237766536e-05,
+          -4.630820672137334e-05,
+          -2.813290312730264e-06
+        ],
+        "kick_rms_rad": 0.0002475975914006251,
+        "paired_tracked_vs_reference": {
+          "mean": -0.0144325,
+          "ci95": [
+            -0.021570416666666665,
+            -0.008376583333333333
+          ]
+        },
+        "loss_blocks": 25
+      }
+    },
+    "reduced_monitors": {
+      "reference": {
+        "observed_loss_fraction": 0.016748333333333334,
+        "predicted_loss_max_mean": 0.016782138585688725,
+        "exit_centroid_rms_m_rad": [
+          0.0006837307252559419,
+          0.00036739289597549786,
+          0.0011158347343740757,
+          0.00010007271170367196
+        ],
+        "mean_exit_centroid_m_rad": [
+          8.923535118142345e-06,
+          1.2657003797624978e-05,
+          -1.0297541973663683e-05,
+          6.632807457960546e-07
+        ],
+        "kick_rms_rad": 0.00011123114083514553,
+        "paired_tracked_vs_reference": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "loss_blocks": 47
+      },
+      "robust": {
+        "observed_loss_fraction": 0.002316666666666667,
+        "predicted_loss_max_mean": 0.0023269377197152746,
+        "exit_centroid_rms_m_rad": [
+          0.0005446176292316989,
+          0.0004240238741565759,
+          0.0007654548526687431,
+          9.447541427818463e-05
+        ],
+        "mean_exit_centroid_m_rad": [
+          1.4382485229106151e-06,
+          -1.0792687150172052e-05,
+          -4.6140572342376626e-05,
+          -2.7916956106693964e-06
+        ],
+        "kick_rms_rad": 0.00012047195462628566,
+        "paired_tracked_vs_reference": {
+          "mean": -0.014431666666666667,
+          "ci95": [
+            -0.021569604166666666,
+            -0.008374895833333333
+          ]
+        },
+        "loss_blocks": 25
+      }
+    },
+    "series_bends": {
+      "reference": {
+        "observed_loss_fraction": 0.016485,
+        "predicted_loss_max_mean": 0.016518541527275932,
+        "exit_centroid_rms_m_rad": [
+          0.0006873332567677408,
+          0.00044108512672726754,
+          0.0011152123869620535,
+          0.00010001313842762112
+        ],
+        "mean_exit_centroid_m_rad": [
+          8.32651936899481e-06,
+          2.8685600433613234e-05,
+          -1.0178121077474884e-05,
+          6.813985111439681e-07
+        ],
+        "kick_rms_rad": 0.0003824226583804477,
+        "paired_tracked_vs_reference": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "loss_blocks": 47
+      },
+      "robust": {
+        "observed_loss_fraction": 0.0030883333333333336,
+        "predicted_loss_max_mean": 0.003074182737600798,
+        "exit_centroid_rms_m_rad": [
+          0.0005526208892041925,
+          0.0005149947964874733,
+          0.0007652879829312816,
+          9.450256989111872e-05
+        ],
+        "mean_exit_centroid_m_rad": [
+          2.278123328451946e-06,
+          1.4307615914855801e-05,
+          -4.6688436236697886e-05,
+          -2.8635790699461034e-06
+        ],
+        "kick_rms_rad": 0.0004108969696614134,
+        "paired_tracked_vs_reference": {
+          "mean": -0.013396666666666666,
+          "ci95": [
+            -0.01999670833333333,
+            -0.007576666666666667
+          ]
+        },
+        "loss_blocks": 27
+      }
+    },
+    "reduced_series": {
+      "reference": {
+        "observed_loss_fraction": 0.015843333333333334,
+        "predicted_loss_max_mean": 0.015891928488617636,
+        "exit_centroid_rms_m_rad": [
+          0.000686475392553498,
+          0.0004352187527843356,
+          0.0011153237962875475,
+          0.00010002120170165909
+        ],
+        "mean_exit_centroid_m_rad": [
+          6.311320876819485e-06,
+          2.7027282282210712e-05,
+          -1.0205108486523516e-05,
+          6.817506567947986e-07
+        ],
+        "kick_rms_rad": 0.00038807534454138076,
+        "paired_tracked_vs_reference": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "loss_blocks": 48
+      },
+      "robust": {
+        "observed_loss_fraction": 0.0031025000000000002,
+        "predicted_loss_max_mean": 0.0030969149040397446,
+        "exit_centroid_rms_m_rad": [
+          0.0005540274055852234,
+          0.0005066285723397207,
+          0.000765308436174429,
+          9.450570671431992e-05
+        ],
+        "mean_exit_centroid_m_rad": [
+          2.6211994355449024e-06,
+          1.352810374435082e-05,
+          -4.671061451775258e-05,
+          -2.865148614832596e-06
+        ],
+        "kick_rms_rad": 0.00041245962780835706,
+        "paired_tracked_vs_reference": {
+          "mean": -0.012740833333333335,
+          "ci95": [
+            -0.019257541666666666,
+            -0.007020500000000004
+          ]
+        },
+        "loss_blocks": 27
+      }
+    }
+  }
+}

@@ -796,3 +796,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 275. [**Milestone 275 — R4-BTS-12: tracked dispersion-free exit**](275_r4_bts_12_dispersion_free.md)
     - Track the best dispersion-free setting (1 of 1.2 million particles lost), state the origin of the inherited exit dispersion, and make the leverage claim conditional.
+
+276. [**Milestone 276 — R4-BTS-10: steering assumptions, layouts and vertical exit centroid**](276_r4_bts_10_steering_layouts.md)
+    - State the assumed readings, powering and per-setting reading errors. Reduced monitors leave the loss unchanged; series bends raise the exit-angle spread to 0.44 mrad. The uncorrected vertical exit centroid is 1.1 mm / 0.10 mrad; the full layout reproduces round 3 exactly.

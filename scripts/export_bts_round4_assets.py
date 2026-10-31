@@ -39,6 +39,11 @@ def macros(name, values):
     (P / 'generated' / f'round4_{name}.tex').write_text(text)
 
 
+def sci_all(value):
+    """Percent value in scientific notation with two significant figures, for a uniform column format."""
+    return '\\num[print-zero-exponent=true]{' + f'{value:.1e}' + '}'
+
+
 def sci(value, digits=2):
     """Percent value as siunitx \\num with ``digits`` significant figures."""
     return '\\num{' + f'{value:.{digits - 1}e}' + '}'
@@ -60,8 +65,8 @@ def jitter():
     for r in rows:
         d = r['designs']
         lines.append(f"{r['scale']:g} & {r['jitter']['x_m'] / u['m1_beam_size_m']:.2f} & {r['jitter']['xp_rad'] / u['m1_beam_divergence_rad']:.2f} & "
-                     + ' & '.join(sci(100 * d[n]['jitter_integrated_loss_mean']) for n in ('reference', 'low_beta', 'robust'))
-                     + f" & {sci(100 * d['reference']['error_free_loss'])}\\\\")
+                     + ' & '.join(sci_all(100 * d[n]['jitter_integrated_loss_mean']) for n in ('reference', 'low_beta', 'robust'))
+                     + f" & {sci_all(100 * d['reference']['error_free_loss'])}\\\\")
     lines.append('\\bottomrule\\end{tabular}')
     (P / 'generated/round4_jitter_rows.tex').write_text('\n'.join(lines) + '\n')
     get = lambda s, n, k='jitter_integrated_loss_mean': next(r for r in rows if r['scale'] == s)['designs'][n][k]

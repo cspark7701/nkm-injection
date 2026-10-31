@@ -829,3 +829,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 286. [**Milestone 286 — R5-BTS-03: two jitter regimes and residual delivery errors**](286_r5_bts_03_two_regimes.md)
     - New Table 10 (exit centroid against nominal jitter by scale). The abstract and Discussion state two regimes: stress-level jitter, where μ_x is the knob; and low jitter, where the 0.18 mrad steering residual and the ~1 mm uncorrected vertical centroid dominate. Phase-only statements are restricted to the nominal model.
+
+287. [**Milestone 287 — R5-BTS-04: conclusions, baseline remnant and number formats**](287_r5_bts_04_conclusions_formatting.md)
+    - Replace "unchanged loss" with the population-dependent low-beta differences tied to its phase advance, and correct the dispersion-free and baseline sentences. Use one dispersion-free angle value, proper minus signs and a uniform Table 9 format.

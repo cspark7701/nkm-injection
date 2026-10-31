@@ -535,9 +535,9 @@ settings. The nearest interior restriction is the vertical gap of b2, with
 \SI{\BtsRThreeInteriorRefMm}{\milli\metre} for the matched reference and
 \SI{\BtsRThreeInteriorLowMm}{\milli\metre} for the optimized low-beta setting.
 The bend-gap and extraction-septum aperture sweeps leave the blade as
-the limiting restriction for these matched settings. Thus optimization of the
-baseline BTS line improves nominal delivery, while further reductions of interior
-beta at a fixed exit target act mainly on clearance away from the blade. The
+the limiting restriction for these matched settings. Matching is required for nominal
+delivery, and further reductions of interior beta at a fixed exit target act mainly on
+clearance away from the blade. The
 error-study tables below retain this matched reference as a separate comparison
 setting; they do not report an error ensemble for the baseline setting.
 
@@ -610,8 +610,10 @@ where the blade is many beam sizes away. After correction the low-beta setting
 loses \num{0.21} percentage points less than the matched reference on these realizations
 (paired interval [\num{-0.39}, \num{-0.06}] percentage points), whereas its mean clearance
 change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. On the fresh
-test of Section~\ref{sec:design} its loss change is unresolved. The small difference
-follows its phase advance (Section~\ref{sec:design}), not its lower peak beta.
+test of Section~\ref{sec:design} its loss change is unresolved. Its horizontal phase
+advance is about \SI{1}{\degree} smaller than that of the matched reference, which lowers its
+error-free blade loss from \SI{1.28}{\percent} to \SI{1.16}{\percent} (Table~\ref{tab:design}); in the nominal
+model the lower vertical peak beta does not enter the horizontal blade loss.
 
 Table~\ref{tab:layouts} repeats the steering on the same realizations with shared
 readings, with fewer readings, and with b1--b3 trimmed as one series-powered knob whose
@@ -675,14 +677,14 @@ predicted loss on the test realizations; Blocks: error realizations with any los
 On the fresh error realizations the tracked loss is \SI{\BtsRThreeTestRefPct}{\percent}, \SI{\BtsRThreeTestLowPct}{\percent}
 and \SI{\BtsRThreeTestRobustPct}{\percent} for the matched reference, low-beta and loss-based settings,
 each within \SI{1}{\percent} relative of its mean prediction. The loss-based setting changes the loss by
-\BtsRThreeTestRobustDiff\ percentage points against the matched reference
+\num{\BtsRThreeTestRobustDiff} percentage points against the matched reference
 (pointwise \SI{95}{\percent} interval clustered by error realization,
-[\BtsRThreeTestRobustDiffLo, \BtsRThreeTestRobustDiffHi] percentage points), a factor
-of \BtsRThreeLossRatio; low beta changes it by \BtsRThreeTestLowDiff\ percentage
-points ([\BtsRThreeTestLowDiffLo, \BtsRThreeTestLowDiffHi] percentage points),
+[\num{\BtsRThreeTestRobustDiffLo}, \num{\BtsRThreeTestRobustDiffHi}] percentage points), a factor
+of \BtsRThreeLossRatio; low beta changes it by \num{\BtsRThreeTestLowDiff} percentage
+points ([\num{\BtsRThreeTestLowDiffLo}, \num{\BtsRThreeTestLowDiffHi}] percentage points),
 unresolved. Its mean minimum clearance changes by only
 \SI{\BtsRThreeTestRobustClear}{\milli\metre}
-([\BtsRThreeTestRobustClearLo, \BtsRThreeTestRobustClearHi]\,\si{\milli\metre}), also
+([\num{\BtsRThreeTestRobustClearLo}, \num{\BtsRThreeTestRobustClearHi}]\,\si{\milli\metre}), also
 unresolved: the
 mean-clearance metric cannot resolve this loss reduction. The price is
 an exit angle jitter larger by \SI{\BtsRThreeAnglePenaltyPct}{\percent}
@@ -781,7 +783,7 @@ present, could raise these small losses; they are not modeled.
 Among the alternatives tested here, the exit target therefore has the largest
 leverage on injection. Removing the exit dispersion lowers the injected beam's divergence by a
 quarter and lets the line put booster jitter where the septum blade does not see
-it, but the angle jitter, \SI{\BtsRThreeFreeBestJxpUrad}{\micro\radian} against
+it, but the angle jitter, \SI{\BtsRFourFreeBestJxpUrad}{\micro\radian} against
 \SI{\BtsRThreeRefJxpUrad}{\micro\radian} for the matched reference, then arrives at the
 injection kicker. In the NKM injection study~\cite{ParkNKM2026}, the kicker's \SI{80}{\percent} angular acceptance is \SI{0.44}{\milli\radian}, and once the static
 vertical injection error left by transfer-line magnet errors is removed, booster position
@@ -890,7 +892,11 @@ nominal clearance of every restriction outside the quadrupole section. With the
 blade geometry of the NKM injection study, the injection septum is that restriction, and it limits the
 line by an order of magnitude more than any interior aperture. Lowering the interior
 peak beta, the usual design heuristic, therefore changes only clearances of several
-millimeters and, on fresh steered error realizations, leaves the loss unchanged.
+millimeters. Its effect on the loss is small and depends on the population: low beta
+loses 0.21 and 0.13 percentage points less than the matched reference in the steering
+comparison and the second test, and an unresolved amount in the first test. These
+differences come with its horizontal phase advance, about \SI{1}{\degree} smaller, not with
+the vertical peak beta itself.
 
 The quadrupoles act on the loss mainly through the trajectory. Static trajectory
 errors are reduced by field trims of the existing dipoles, without adding any element
@@ -933,8 +939,8 @@ does not reduce the first, and the second is left uncorrected in every setting, 
 that regime correction and instrumentation, especially in the vertical plane, matter
 more for this line than the choice among matched optics.
 With sampled shots the loss is heavy-tailed and its population mean varies between
-independently seeded populations. The dispersion-free results are
-analytic. Losses are counted at the declared aperture check points (element
+independently seeded populations. The dispersion-free scan and its loss predictions
+are analytic, and its tracked test records a single lost particle. Losses are counted at the declared aperture check points (element
 entrances and the line end), which bracket the septum channel but do not resolve
 continuous interception inside it. This paper neither certifies real transmission nor derives construction
 tolerances, ring capture, or kicker transparency.

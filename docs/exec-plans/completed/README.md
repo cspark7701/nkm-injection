@@ -820,3 +820,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 283. [**Milestone 283 — R5-BTS-01: shared reading errors and targeted reruns**](283_r5_bts_01_shared_reading_errors.md)
     - Reading errors keyed by realization and monitor, shared by all settings. With them, the duplicate and the round-3/edge settings lose identical particles (942), so their round-4 difference was reading noise. Adds the rerun layouts, Tables 5 and 7, and the round-5 protocol, runner and exporter.
+
+284. [**Milestone 284 — R5-BTS-08: provenance pointer, citations and stability statement**](284_r5_bts_08_provenance_citations.md)
+    - Fix the round-4 `test_source` pointer and make the provenance paths relative. Remove the uncited booster-stability generalization. Cite the TPS IPAC'26 paper as JaCoW records it (unpublished).

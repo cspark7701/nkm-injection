@@ -1,5 +1,5 @@
 {
-  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/blade_b/blade.json",
+  "source": "results/bts_round4_campaign_20261030/blade_b/blade.json",
   "distance_for_tolerance_m": {
     "0.1": {
       "reference": {

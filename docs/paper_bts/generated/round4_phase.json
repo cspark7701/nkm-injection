@@ -1,6 +1,6 @@
 {
-  "scan_source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/phase_scan_b/phase_scan.json",
-  "test_source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/final_test/final_test.json",
+  "scan_source": "results/bts_round4_campaign_20261030/phase_scan_b/phase_scan.json",
+  "test_source": "results/bts_round4_campaign_20261030/final_test_b/final_test.json",
   "edges": {
     "configured_min": {
       "mu_x_deg": 200.1690565874404,

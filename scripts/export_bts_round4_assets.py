@@ -23,6 +23,11 @@ SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based (
          'edge_best': 'Phase edge', 'free_best': 'Disp.-free'}
 
 
+def rel(path):
+    """Repository-relative path string for provenance records."""
+    return str(Path(path).relative_to(ROOT))
+
+
 def load(stage, name):
     return json.loads((CAMPAIGN / stage / name).read_text())
 
@@ -76,7 +81,7 @@ def jitter():
         'GainHalf': f"{get(0.5, 'reference') / get(0.5, 'robust'):.0f}",
         'SampledRefPct': f"{100 * get(1.0, 'reference', 'predicted_loss_max_mean'):.2f}",
     })
-    (P / 'generated/round4_jitter.json').write_text(json.dumps({'source': str(CAMPAIGN / 'jitter_b/jitter.json'), 'beam_units': u,
+    (P / 'generated/round4_jitter.json').write_text(json.dumps({'source': rel(CAMPAIGN / 'jitter_b/jitter.json'), 'beam_units': u,
                                                                   'rows': [{'scale': r['scale'], **{n: {k: e[k] for k in ('jitter_integrated_loss_mean', 'predicted_loss_max_mean', 'error_free_loss', 'exit_jitter_m_rad')}
                                                                                                      for n, e in r['designs'].items()}} for r in rows]}, indent=2) + '\n')
 
@@ -116,7 +121,7 @@ def blade():
         'OneMmFullRobustPct': f"{100 * get(1.0, 0.001, 'robust'):.1f}",
         'OneMmTenthMax': f'{tenth_one_mm:.0e}',
     })
-    (P / 'generated/round4_blade.json').write_text(json.dumps({'source': str(CAMPAIGN / 'blade_b/blade.json'),
+    (P / 'generated/round4_blade.json').write_text(json.dumps({'source': rel(CAMPAIGN / 'blade_b/blade.json'),
                                                                 'distance_for_tolerance_m': tol, 'rows': data['rows']}, indent=2) + '\n')
 
 
@@ -132,7 +137,7 @@ def statistics():
         return {'mean': float(delta.mean()), 'ci95': np.quantile(means, [.025, .975]).tolist()}
 
     per = lambda n, v, key: np.array([np.mean([s['results'][n][v][key] for s in m['shots']]) for m in raw])
-    out = {'source': str(source), 'shots': sum(len(m['shots']) for m in raw), 'variants': {}}
+    out = {'source': rel(source), 'shots': sum(len(m['shots']) for m in raw), 'variants': {}}
     for v in ('uncorrected', 'corrected'):
         entry = {}
         for n in ('reference', 'low_beta'):
@@ -262,8 +267,8 @@ def phase():
         tag = ''.join(w.capitalize() for w in key.split('_'))
         values[f'Edge{tag}'] = f"{e['mu_x_deg']:.1f}"
     macros('phase', values)
-    (P / 'generated/round4_phase.json').write_text(json.dumps({'scan_source': str(CAMPAIGN / 'phase_scan_b/phase_scan.json'),
-                                                                'test_source': str(CAMPAIGN / 'final_test/final_test.json'),
+    (P / 'generated/round4_phase.json').write_text(json.dumps({'scan_source': rel(CAMPAIGN / 'phase_scan_b/phase_scan.json'),
+                                                                'test_source': rel(CAMPAIGN / 'final_test_b/final_test.json'),
                                                                 'edges': edges, 'settings': info, 'first_losses': first,
                                                                 'chosen_strengths_m_minus2': {n: chosen[n]['strengths_m_minus2'] for n in names[3:]},
                                                                 'test': {n: {k: summary[n][k] for k in ('observed_loss_fraction', 'predicted_loss_max_mean',
@@ -300,7 +305,7 @@ def layouts():
         'ReproLost': str(data['reproduction_check']['full_lost_particles']),
         'ReproLostRThree': str(data['reproduction_check']['round3_lost_particles']),
     })
-    (P / 'generated/round4_layouts.json').write_text(json.dumps({'source': str(CAMPAIGN / 'layouts_b/layouts.json'),
+    (P / 'generated/round4_layouts.json').write_text(json.dumps({'source': rel(CAMPAIGN / 'layouts_b/layouts.json'),
                                                                   'reproduction_check': data['reproduction_check'],
                                                                   'summary': {l: {n: {k: e[k] for k in ('observed_loss_fraction', 'predicted_loss_max_mean',
                                                                                                          'exit_centroid_rms_m_rad', 'mean_exit_centroid_m_rad',

@@ -1,5 +1,5 @@
 {
-  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_journal_campaign_r3b_20261015/steering/raw_machines.json",
+  "source": "results/bts_journal_campaign_r3b_20261015/steering/raw_machines.json",
   "shots": 600,
   "variants": {
     "uncorrected": {

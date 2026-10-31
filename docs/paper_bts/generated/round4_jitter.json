@@ -1,5 +1,5 @@
 {
-  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+  "source": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
   "beam_units": {
     "m1_beam_size_m": 0.0003790786778282313,
     "m1_beam_divergence_rad": 9.065399181110757e-05,

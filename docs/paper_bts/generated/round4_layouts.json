@@ -1,5 +1,5 @@
 {
-  "source": "/home/cspark/Work/projects/nkm-injection/results/bts_round4_campaign_20261030/layouts_b/layouts.json",
+  "source": "results/bts_round4_campaign_20261030/layouts_b/layouts.json",
   "reproduction_check": {
     "round3_lost_particles": 20100,
     "full_lost_particles": 20100,

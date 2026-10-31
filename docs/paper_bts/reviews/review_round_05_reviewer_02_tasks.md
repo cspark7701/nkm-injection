@@ -20,14 +20,15 @@ responses and campaigns are preserved.
         and any new shared-reading value, as evidence of the low-beta effect.
   - *Completion:* no low-beta statement relies on a per-setting-reading population without saying so.
   - **Done:** milestone [303](../../exec-plans/completed/303_r2f_bts_01_controlled_low_beta.md). Chose the wording alternative: the older 0.21-point contrast is confounded by per-setting reading errors; the low-beta interpretation uses the controlled primary result. No rerun.
-- [ ] **R2F-BTS-02 — Qualify the per-shot bracket and localize the loss-based excess (M2).**
-  - [ ] Qualify the Section 3.3 bracket sentence as holding within the linearized Gaussian model.
-  - [ ] From the saved per-shot output, state in Section 4.3 that the 942-particle count comes from 20 shots and
+- [x] **R2F-BTS-02 — Qualify the per-shot bracket and localize the loss-based excess (M2).**
+  - [x] Qualify the Section 3.3 bracket sentence as holding within the linearized Gaussian model.
+  - [x] From the saved per-shot output, state in Section 4.3 that the 942-particle count comes from 20 shots and
         that one near-blade shot (454 lost against 410.9 expected) carries most of the excess.
-  - [ ] Recommended: compare that shot's linear-moment prediction with a nonlinear moment calculation and report
+  - [x] Recommended: compare that shot's linear-moment prediction with a nonlinear moment calculation and report
         the outcome. If it is not done, keep the excess explicitly unresolved.
   - *Completion:* the text no longer states an unconditional bracket that the tracked count violates, and the
     excess is localized.
+  - **Done:** milestone [304](../../exec-plans/completed/304_r2f_bts_02_shot_losses.md). Raw records give **16**, not the review's 20, loss-bearing shots. The largest excess is 454 observed versus 410.9 expected (about 70% of the aggregate excess). The nonlinear-moment check was not performed; the cause stays unresolved. Probability bounds are distinguished from sampled counts.
 - [ ] **R2F-BTS-03 — Say what the headline interval covers (M3).**
   - [ ] In the abstract or Section 4.3, state that 4.48 (4.33–4.63) is a prediction of the linearized Gaussian model
         at the assumed jitter, and that the interval reflects only the sampling of error realizations.

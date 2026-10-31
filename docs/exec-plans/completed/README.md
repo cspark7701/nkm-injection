@@ -880,3 +880,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 303. [**Milestone 303: R2F-BTS-01 controlled low-beta interpretation**](303_r2f_bts_01_controlled_low_beta.md)
     - Qualifies the older per-setting-noise contrast and bases the low-beta interpretation on the controlled primary result. Humanizer prose pass; no simulation rerun.
+
+304. [**Milestone 304: R2F-BTS-02 model bounds and shot losses**](304_r2f_bts_02_shot_losses.md)
+    - Separates model probability bounds from particle counts and localizes the excess. Saved records show 16 loss-bearing shots, correcting the review's 20; one shot accounts for about 70% of the excess. No tracking rerun.

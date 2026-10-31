@@ -1,0 +1,42 @@
+{
+  "scope": "Saved-output post-processing; model probabilities do not bound sampled counts.",
+  "source_sha256": {
+    "results/bts_round5_campaign_20261031/final_test_b/raw_machines.json": "061dd231973c3e351265886db853c5fd7d83b5c9ae5a19e4a48264ab70fc5cd0",
+    "results/bts_round5_campaign_20261031/final_test_b/final_test.json": "9e55f2833702b6fe197ac722a99c7cb1dadd608967793fd6e044803d7729555f",
+    "scripts/audit_bts_round7_shot_losses.py": "d161cfcc7cd085f3a773063d32d1e283024ba6faac493b3595a42229e640df31"
+  },
+  "machines": 200,
+  "shots": 600,
+  "particles_per_shot": 2000,
+  "loss_bearing_shots": 16,
+  "observed_count": 942,
+  "conditional_expected_count": 880.4533242328345,
+  "model_union_expected_count": 880.4960690847957,
+  "aggregate_excess": 61.54667576716554,
+  "largest_excess_shot": {
+    "machine": 116,
+    "shot": 2,
+    "observed": 454,
+    "expected": 410.8914689577642,
+    "model_union_expected": 410.8914689579441,
+    "excess": 43.108531042235825,
+    "binomial_variance": 326.47556932662957,
+    "exit_centroid_m_rad": [
+      0.001354509745606853,
+      0.0008869976942502298,
+      0.00036069317026044565,
+      4.314881927213895e-05
+    ],
+    "active": [
+      "m4",
+      0,
+      21.78899999999999
+    ],
+    "first_losses": {
+      "sept_ex": 454
+    },
+    "diagnostic_binomial_z": 2.385821127997848,
+    "share_of_aggregate_excess_percent": 70.04201365044925
+  },
+  "nonlinear_moment_check": "Not performed; excess remains unresolved. Binomial z is diagnostic and omits model uncertainty."
+}

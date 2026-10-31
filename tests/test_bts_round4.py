@@ -59,3 +59,35 @@ def test_phase_residual_vanishes_for_a_matched_setting_at_its_own_phase():
     assert abs(residual[-1]) < 1e-12
     assert np.max(np.abs(residual[:-1])) < 1e-3
     assert r4.active_bounds(np.array(UPPER), LOWER, UPPER) == [(q, 'upper') for q in r4.QUADS]
+
+
+def test_shared_reading_errors_depend_only_on_realization_and_location():
+    """Round 5: the same physical monitor has the same reading error in every setting and layout."""
+    _, model = _machine()
+    points = r4.layout_monitors(model, r4.LAYOUTS['full'])
+    a = r4.shared_reading_errors(96004, 7, points, 5e-5)
+    b = r4.shared_reading_errors(96004, 7, list(reversed(points)), 5e-5)
+    assert a == b
+    reduced = r4.layout_monitors(model, r4.LAYOUTS['reduced_monitors'])
+    assert set(reduced) <= set(a)
+    assert r4.shared_reading_errors(96004, 8, points, 5e-5) != a
+
+
+def test_duplicate_configuration_gives_identical_steering_and_losses():
+    """Round 5: two copies of the same full configuration with shared readings give identical results."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('run_bts_round4', ROOT / 'scripts/run_bts_round4.py')
+    runner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    seeds = {'static': 1, 'shot': 2, 'particle': 3, 'bpm': 4}
+    job = (0, {'a': REFERENCE, 'b': REFERENCE.copy()}, ['full', 'angle_weighted'], seeds, 2, 200, True, dict(r3.JITTER),
+           None, 'shared')
+    out = runner._machine(job)
+    for shot in out['shots']:
+        assert shot['results']['a'] == shot['results']['b']
+    assert out['jitter_integrated_loss']['a'] == out['jitter_integrated_loss']['b']
+
+
+def test_angle_weighted_layout_uses_its_end_weight():
+    assert r4.LAYOUTS['angle_weighted']['end_weight'] == 10.0
+    assert r4.LAYOUTS['angle_weighted']['monitors_after'] == r4.LAYOUTS['full']['monitors_after']

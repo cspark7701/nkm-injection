@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "declared 2026-10-31 before the round-5 runs (plan reviews/revision_round_05_plan_for_review_round_04.md); the BTS lattice is not changed",
+  "campaign": "results/bts_round5_campaign_20261031",
+  "inherits": "round4_protocol.json: aperture model, error model, steering algorithm, exit targets, exact round-aperture loss; frozen settings from results/bts_round4_campaign_20261030/phase_scan_b and the round-3 robust setting",
+  "reading_noise": {
+    "task": "R5-BTS-01",
+    "definition": "one static reading error per realization and physical monitor location (element-boundary index), drawn by bts_round4.shared_reading_errors(bpm_seed, realization, sorted candidate locations, 50 um); identical for every setting and layout of the same realization",
+    "replaces": "rounds 3-4 per-setting draws keyed by [bpm_seed, realization, design_index]; those runs are retained as a sensitivity"
+  },
+  "estimator": {
+    "task": "R5-BTS-02",
+    "primary_population": "final_test (seeds 96001-96005, the round-4 second test realizations) rerun with shared reading noise",
+    "primary_estimand": "gain G = mean over realizations of the jitter-integrated loss of the matched reference divided by the same mean for the converged phase-edge setting (edge_best); a ratio of population means",
+    "uncertainty": "paired realization bootstrap: 10000 resamples of realization IDs with seed 97005, the same resampled IDs for numerator and denominator; percentile 95 % interval",
+    "zero_denominator": "a resample whose denominator mean is zero is reported and excluded; none is expected because the integrated loss is positive",
+    "secondary": "the same estimator on the layouts population (seeds 91001-91005, full layout); sampled-shot conditional predictions and tracked counts are validation, reported with expected counts and Poisson standard deviations",
+    "rule": "declared before the shared-noise outputs exist; no population is selected after inspection"
+  },
+  "final_test": {
+    "task": "R5-BTS-01/02",
+    "designs": ["reference", "low_beta", "robust", "robust_copy", "edge_best", "free_best"],
+    "duplicate_check": "robust_copy is the robust strength vector under another name; with shared reading noise its steered lines and losses must equal those of robust exactly",
+    "variant": "full steering layout",
+    "machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
+    "static_seed": 96001, "shot_seed": 96002, "particle_seed": 96003, "bpm_seed": 96004, "bootstrap_seed": 97005,
+    "reading_noise": "shared"
+  },
+  "steering_layouts": {
+    "task": "R5-BTS-01/06",
+    "layouts": ["full", "reduced_monitors", "series_bends", "reduced_series", "angle_weighted"],
+    "angle_weighted": "full readings and knobs; septum-entrance and line-end readings weighted 10 instead of 3; position readings only, no angle monitor",
+    "designs": ["reference", "edge_best"],
+    "machines": 200, "shots_per_machine": 3, "particles_per_shot": 2000,
+    "static_seed": 91001, "shot_seed": 91002, "particle_seed": 91003, "bpm_seed": 91004, "bootstrap_seed": 97005,
+    "reading_noise": "shared"
+  },
+  "execution_note": "2026-10-31: the first final_test/ and layouts/ runs failed before any output (the imported round-4 runner was not registered for worker pickling); they hold only a configuration and are retained. The stages were rerun unchanged as final_test_b/ and layouts_b/.",
+  "edge_study": {
+    "task": "R5-BTS-05",
+    "targets": "exit Courant-Snyder parameters as configured; (D [m], D' [1]) = (0.080868, 0.047472), (0.080868, 0.032), (0.080868, 0.016), (0.080868, 0.0), (0.0, 0.047472), (0.0, 0.0)",
+    "search": "SLSQP minimising mu_x subject to the six exit equalities, K bounds and both peak betas <= 60 m (16 subdivisions), maxiter 300, ftol 1e-12, from three starts: the configured edge solution, the dispersion-free best scan setting and the round-3 robust setting",
+    "report": "smallest matched mu_x per target, convergence flag, active strength bounds and peak-beta limits",
+    "scope": "local searches; a shift of the edge with D' is evidence for the dispersion conditions setting it, not a global proof"
+  }
+}

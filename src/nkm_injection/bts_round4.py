@@ -28,7 +28,21 @@ LAYOUTS = {
     'series_bends': {'monitors_after': list(QUADS), 'knobs': [['kext'], ['sept_in'], ['b1', 'b2', 'b3'], ['sept_ex']]},
     'reduced_series': {'monitors_after': ['q13', 'q23', 'q33'],
                        'knobs': [['kext'], ['sept_in'], ['b1', 'b2', 'b3'], ['sept_ex']]},
+    # Round 5: the same readings and knobs, with the septum-entrance and line-end readings
+    # weighted 10 instead of 3, so that the fit constrains the exit angle more strongly.
+    'angle_weighted': {'monitors_after': list(QUADS), 'knobs': [['kext'], ['sept_in'], ['b1'], ['b2'], ['b3'], ['sept_ex']],
+                       'end_weight': 10.0},
 }
+
+
+def shared_reading_errors(seed, realization, points, sigma):
+    """Static reading error [m] per monitor location (element-boundary index), shared by all settings.
+
+    The draw depends only on the seed, the error realization and the sorted monitor
+    locations, so the same physical monitor has the same error in every setting and layout.
+    """
+    points = sorted(points)
+    return dict(zip(points, np.random.default_rng([seed, realization]).normal(0, sigma, len(points))))
 
 
 def layout_monitors(lattice, layout):
@@ -78,7 +92,7 @@ def correct_with_layout(lattice, response, bpm_errors, settings=None):
     Returns the steered line and the kick of every trimmed magnet [rad].
     """
     settings = {**r3.STEERING, **(settings or {})}
-    matrix, monitors, knobs = response
+    matrix, monitors, knobs = response[:3]
     w = np.ones(len(monitors))
     w[-2:] = settings['end_weight']
     values = np.zeros(len(knobs))

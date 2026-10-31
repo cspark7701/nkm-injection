@@ -57,7 +57,7 @@ def frozen_designs(names, extra=None):
 # --------------------------------------------------------------------------- machines
 def _machine(job):
     """One static error realization and its shots for every design and steering layout."""
-    (machine, designs, layouts, seeds, shots, particles, track, jitter, model_override) = job
+    (machine, designs, layouts, seeds, shots, particles, track, jitter, model_override, noise) = job
     beam, model = JournalBeam(), model_from_protocol(model_override)
     tw = DEFAULT_BTS_ENTRANCE_TWISS
     static_rng = np.random.default_rng([seeds['static'], machine])
@@ -69,15 +69,21 @@ def _machine(job):
         machine_line = r3.aperture_lattice(k, errors, model)
         model_line = r3.aperture_lattice(k, None, model)
         candidates = r4.layout_monitors(model_line, r4.LAYOUTS['full'])
-        reading_error = dict(zip(candidates, np.random.default_rng([seeds['bpm'], machine, d_index]).normal(
-            0, R3_PROTOCOL['steering']['bpm_error_m'], len(candidates))))
+        sigma = R3_PROTOCOL['steering']['bpm_error_m']
+        if noise == 'shared':
+            reading_error = r4.shared_reading_errors(seeds['bpm'], machine, candidates, sigma)
+        else:  # rounds 3-4: one draw per setting, in design order
+            reading_error = dict(zip(candidates, np.random.default_rng([seeds['bpm'], machine, d_index]).normal(
+                0, sigma, len(candidates))))
         for layout in layouts:
             if layout == 'uncorrected':
                 lines[(name, layout)] = (machine_line, np.zeros(1))
                 continue
             response = r4.layout_response(model_line, r4.LAYOUTS[layout])
             bpm = np.array([reading_error[p] for p in response[1]])
-            lines[(name, layout)] = r4.correct_with_layout(machine_line, response, bpm, R3_PROTOCOL['steering'])
+            settings = {**R3_PROTOCOL['steering'], **({'end_weight': r4.LAYOUTS[layout]['end_weight']}
+                                                       if 'end_weight' in r4.LAYOUTS[layout] else {})}
+            lines[(name, layout)] = r4.correct_with_layout(machine_line, response, bpm, settings)
     table = {key: r3.aperture_table(line) for key, (line, _) in lines.items()}
     # Exact average over Gaussian entrance jitter on each steered line, without shot sampling.
     total = beam.covariance()[:5, :5] + r3.entrance_jitter_covariance(jitter)
@@ -118,7 +124,7 @@ def campaign(designs, layouts, config, track, workers, jitter=None, model_overri
              'bpm': config['bpm_seed']}
     jitter = {**r3.JITTER, **(jitter or {})}
     jobs = [(m, designs, layouts, seeds, config['shots_per_machine'], config.get('particles_per_shot', 0), track,
-             jitter, model_override) for m in range(config['machines'])]
+             jitter, model_override, config.get('reading_noise', 'per_setting')) for m in range(config['machines'])]
     with Pool(workers) as pool:
         return pool.map(_machine, jobs, chunksize=1)
 

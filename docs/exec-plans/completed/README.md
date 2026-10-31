@@ -817,3 +817,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 282. [**Milestone 282 — Clear manuscript review-document names**](282_clear_review_document_names.md)
     - Renames 49 review/task/response/plan documents by review round, reviewer and role; updates links and packaging paths, retains historical snapshot identities and supplies complete rename maps.
+
+283. [**Milestone 283 — R5-BTS-01: shared reading errors and targeted reruns**](283_r5_bts_01_shared_reading_errors.md)
+    - Reading errors keyed by realization and monitor, shared by all settings. With them, the duplicate and the round-3/edge settings lose identical particles (942), so their round-4 difference was reading noise. Adds the rerun layouts, Tables 5 and 7, and the round-5 protocol, runner and exporter.

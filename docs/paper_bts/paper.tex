@@ -20,6 +20,7 @@
 \input{generated/round4_blade.tex}
 \input{generated/round4_phase.tex}
 \input{generated/round4_layouts.tex}
+\input{generated/round5.tex}
 \title{Optical matching and beam loss in a booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source}
 \author{Chong Shik Park$^{1,2}$\\[3pt]
 \small $^{1}$Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea\\
@@ -362,10 +363,11 @@ $WA$. The trims are limited to $\pm\SI{1}{\milli\radian}$ of kick, and the
 correction is applied in two passes. The correction uses no knowledge of the actual
 errors and does not act on shot jitter. The line has no vertical knob, so the vertical
 plane is not corrected. Every error realization is evaluated uncorrected and
-corrected on identical particles. When settings are compared, the static magnet
-errors, shot jitter and particles are shared, whereas the reading errors are drawn
-separately for each setting; paired comparisons therefore include the effect of
-different reading errors.
+corrected on identical particles. Each monitor location has one static reading
+error per error realization, and every setting and steering layout of that
+realization uses it, so paired comparisons share the magnet errors, readings, shot
+jitter and particles. The comparisons of Table~\ref{tab:steering}, from the earlier
+study, still used reading errors drawn separately for each setting.
 
 \section{Physical criterion, validation and comparison protocol}\label{sec:methods}
 \subsection{Active restrictions and boundary-fixed clearances}
@@ -594,23 +596,26 @@ change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metr
 test of Section~\ref{sec:design} its loss change is unresolved. The small difference
 follows its phase advance (Section~\ref{sec:design}), not its lower peak beta.
 
-Table~\ref{tab:layouts} repeats the steering on the same realizations with fewer readings
-and with b1--b3 trimmed as one series-powered knob, the kick of each bend
-proportional to its bending angle. The full layout reproduces the tracked losses
-above exactly. Reading only the exits of the three triplets, the septum entrance and
-the line end leaves the losses unchanged to within 0.01 percentage point. Series-powered
-bends leave one knob fewer near the exit: the exit angle spread grows from
-\SI{0.37}{\milli\radian} to \SI{0.44}{\milli\radian} for the matched reference, and the loss of the loss-based
-setting rises from \SI{\BtsRFourLayoutFullRobustPct}{\percent} to \SI{\BtsRFourLayoutBothRobustPct}{\percent}, still well below that of the
-matched reference.
+Table~\ref{tab:layouts} repeats the steering on the same realizations with shared
+readings, with fewer readings, and with b1--b3 trimmed as one series-powered knob whose
+kick in each bend is proportional to its bending angle. The matched-reference rows of
+the full layout reproduce Table~\ref{tab:steering} exactly. The loss-based setting loses
+\SI{\BtsRFiveLayoutFullEdgePct}{\percent} here, against \SI{\BtsRFourLayoutFullRobustPct}{\percent} with its own reading errors in the earlier
+comparison, so the reading errors alone move its tracked loss by more than half.
+Reading only the exits of the three triplets, the septum entrance and the line end
+changes the losses by less than 0.01 percentage point. Series-powered bends leave
+one knob fewer near the exit, and the exit angle spread grows from
+\SI{0.37}{\milli\radian} to \SI{0.44}{\milli\radian} for the matched reference and from \SI{0.41}{\milli\radian} to \SI{0.50}{\milli\radian} for the
+loss-based setting.
 
 \begin{table}[htbp]\centering
-\caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering} (tracked, 3 shots of
-2\,000 particles). Readings: quadrupole exits (all nine or the three triplet exits),
-septum entrance and line end. Knobs: six independent dipole trims, or four with
-b1--b3 in series. Exit centroids are rms over shots; the vertical plane is not
-corrected.}\label{tab:layouts}
-{\footnotesize\setlength{\tabcolsep}{4pt}\input{generated/round4_layout_rows.tex}}\end{table}
+\caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering}, with reading
+errors shared by both settings (tracked, 3 shots of 2\,000 particles). Readings:
+quadrupole exits (all nine or the three triplet exits), septum entrance and line end;
+in the last layout the last two are weighted 10 instead of 3. Knobs: six independent
+dipole trims, or four with b1--b3 in series. Integr.: jitter-integrated loss. Exit
+centroids are rms over shots; the vertical plane is not corrected.}\label{tab:layouts}
+{\footnotesize\setlength{\tabcolsep}{3.5pt}\input{generated/round5_layout_rows.tex}}\end{table}
 
 \subsection{Phase advance of the matched settings and the loss-based setting}\label{sec:design}
 Bounded least-squares matching from \BtsRThreePoolStarts\ random starts finds
@@ -672,28 +677,28 @@ contribute \SI{\BtsRThreeTopFiveSharePct}{\percent} of its loss, the worst losin
 realization, account for this heavy tail, and the population mean differs between independently
 seeded populations (Section~\ref{sec:sensitivity}).
 
-On a further 200 independently seeded realizations (Table~\ref{tab:test4}), the
-tracked loss is \SI{\BtsRFourTestRefPct}{\percent} for the matched reference, \SI{\BtsRFourTestLowPct}{\percent} for low beta and
-\SI{\BtsRFourTestEdgePct}{\percent} for the converged edge solution, a change of \BtsRFourTestEdgeDiff\ percentage
-points (a factor of \BtsRFourTestEdgeRatio). The earlier loss-based setting loses \SI{\BtsRFourTestRobustPct}{\percent} on the same
-realizations although it is optically identical to the edge solution: their
-jitter-integrated losses, \SI{\BtsRFourTestRobustIntegratedPct}{\percent} and \SI{\BtsRFourTestEdgeIntegratedPct}{\percent}, agree, and the tracked
-difference comes from the monitor reading errors, which are drawn separately for
-each setting (Section~\ref{sec:steering}), and from the sampled jitter tail. On this
-population low beta also loses resolvably less than the matched reference
-(\BtsRFourTestLowDiff\ percentage points), again through its slightly smaller $\mu_x$.
-The loss-based gain thus ranges from a factor of 3 to more than 10 between
-populations, while its sign is the same in every population tested.
+Table~\ref{tab:test4} gives a second test on 200 independently seeded realizations,
+with the reading errors shared by all settings. Of \BtsRFiveParticles\ tracked particles the
+matched reference loses \BtsRFiveLostRef, low beta \BtsRFiveLostLow\ and the loss-based setting
+\BtsRFiveLostEdge; the loss-based change is \BtsRFiveDiffEdge\ percentage points. Here the
+loss-based setting is the converged edge solution. The earlier loss-based setting has
+the same nominal horizontal transfer to the reported precision and, with shared
+readings, loses exactly the same particles, as does a second copy of the same
+configuration. When each setting had its own reading errors, the same realizations gave
+1\,022 and 1\,564 lost particles for these two settings, so that difference came from the
+reading errors. Low beta loses less than the matched reference on this population,
+\BtsRFiveDiffLow\ percentage points.
 
 \begin{table}[htbp]\centering
-\caption{Second fresh test (200 steered error realizations with new seeds, 3 shots,
-2\,000 particles each). $\bar P$: predicted loss of the error-free line; Integr.:
-jitter-integrated loss on the steered realizations; Lost: tracked loss; last
-column: paired difference from the matched reference with its pointwise
-\SI{95}{\percent} realization-cluster interval. The loss-based (R3) and phase-edge
-settings are optically identical; Disp.-free is the best dispersion-free scan
-setting.}\label{tab:test4}
-{\footnotesize\setlength{\tabcolsep}{3.5pt}\input{generated/round4_test_rows.tex}}\end{table}
+\caption{Second fresh test: 200 steered error realizations with new seeds and shared
+reading errors, 3 shots of 2\,000 particles each. $\bar P$: predicted loss of the
+error-free line; Integr.: jitter-integrated loss on the steered realizations; expected
+lost particles: Gaussian prediction conditional on the sampled shots; observed: tracked
+count; last column: paired difference of the tracked loss from the matched reference
+with its pointwise \SI{95}{\percent} realization-cluster interval. Loss-based is the converged
+phase-edge setting; the earlier loss-based setting and a duplicate configuration give
+identical rows. Disp.-free is the best dispersion-free scan setting.}\label{tab:test4}
+{\footnotesize\setlength{\tabcolsep}{3pt}\input{generated/round5_test_rows.tex}}\end{table}
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
 \caption{Left: rms exit position (solid, \si{\milli\metre}) and angle (dashed, \si{\milli\radian}) jitter from

@@ -140,7 +140,9 @@ def main():
         'LostRef': str(val['reference']['observed_count']), 'ExpRef': f"{val['reference']['conditional_expected_count']:.0f}",
         'LostLow': str(val['low_beta']['observed_count']), 'ExpLow': f"{val['low_beta']['conditional_expected_count']:.0f}",
         'LostEdge': str(val['edge_best']['observed_count']), 'ExpEdge': f"{val['edge_best']['conditional_expected_count']:.0f}",
-        'EdgeExcessPct': f"{100 * val['edge_best']['relative_difference']:.1f}", 'EdgeZ': f"{val['edge_best']['poisson_z']:.1f}",
+        # The prediction shortfall is relative to the observed count, as in the archived run.
+        'EdgePredictionShortfallPct': f"{100 * (val['edge_best']['observed_count'] - val['edge_best']['conditional_expected_count']) / val['edge_best']['observed_count']:.1f}",
+        'EdgeZ': f"{val['edge_best']['poisson_z']:.1f}",
         'LostFree': str(val['free_best']['observed_count']), 'ExpFree': f"{val['free_best']['conditional_expected_count']:.2f}",
         'IntegrCountFree': f"{val['free_best']['integrated_expected_count']:.0f}",
         'LossFracFree': f"{val['free_best']['observed_count'] / n:.1e}".replace('e-0', 'e-'),
@@ -164,10 +166,19 @@ def main():
                     'edge_study': rel(CAMPAIGN / 'edge_study/edge_study.json'), 'jitter': rel(R4 / 'jitter_b/jitter.json'),
                     'scan': rel(R4 / 'phase_scan_b/phase_scan.json')},
         'duplicate_identical': test['duplicate_identical'], 'gain_vs_reference': g, 'layout_gain_vs_reference': lay['gain_vs_reference'],
-        'validation': val, 'edge_lowest': {k: (None if r is None else {x: r[x] for x in ('mu_x_deg', 'success', 'termination', 'active_bounds',
+        'validation': val,
+        'validation_reporting': {
+            'edge_prediction_shortfall': {
+                'formula': '100 * (observed_count - conditional_expected_count) / observed_count',
+                'denominator': 'observed_count', 'unit': 'percent',
+                'value': 100 * (val['edge_best']['observed_count'] - val['edge_best']['conditional_expected_count']) / val['edge_best']['observed_count'],
+            },
+            'poisson_z_scope': 'Diagnostic (observed - expected) / sqrt(expected); Poisson approximation without model-systematic uncertainty.',
+        },
+        'edge_lowest': {k: (None if r is None else {x: r[x] for x in ('mu_x_deg', 'success', 'termination', 'active_bounds',
                                                                                          'peak_beta_active')}) for k, r in lowest.items()},
         'macros': vals}, indent=2) + '\n')
-    print(json.dumps({k: vals[k] for k in ('Gain', 'GainLo', 'GainHi', 'LayoutGain', 'EdgeExcessPct', 'EdgeZ', 'EdgeDpZero', 'ResXpTenth', 'JitXpTenth')}))
+    print(json.dumps({k: vals[k] for k in ('Gain', 'GainLo', 'GainHi', 'LayoutGain', 'EdgePredictionShortfallPct', 'EdgeZ', 'EdgeDpZero', 'ResXpTenth', 'JitXpTenth')}))
 
 
 if __name__ == '__main__':

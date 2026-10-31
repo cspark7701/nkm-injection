@@ -853,3 +853,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 294. [**Milestone 294 — Consolidate BTS round-5 work and Reviewer 2 follow-up**](294_bts_round6_revision_consolidation.md)
     - Adds the round-6 execution register: nine completed source tasks, four pending corrections and one deferred author-decision item. Maps all fourteen source tasks, preserves both input lists and updates the BTS indexes. No revision tasks executed.
+
+295. [**Milestone 295: R6-BTS-01 validation percentage**](295_r6_bts_01_validation_percentage.md)
+    - Defines the observed-count denominator, corrects the manuscript to a 6.5% prediction shortfall, and qualifies the Poisson diagnostic. Exporter and isolated article build pass; original counts and gain are unchanged.

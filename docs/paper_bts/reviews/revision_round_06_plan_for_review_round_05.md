@@ -6,9 +6,9 @@ Prepared: 2026-10-31. This is the current execution register for the BTS manuscr
 It consolidates these two source lists without replacing their historical records:
 
 - [Round-5 plan answering both round-4 reviews](revision_round_05_plan_for_review_round_04.md): R5-BTS-01–10, with nine completed items and one deferred author-decision item.
-- [Reviewer 2 round-5 revision checklist](review_round_05_reviewer_02_tasks.md): R2E-BTS-01–04, all pending, following the [round-5 report](review_round_05_reviewer_02_report.md) on manuscript `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
+- [Reviewer 2 round-5 revision checklist](review_round_05_reviewer_02_tasks.md): R2E-BTS-01–04, all pending at review, following the [round-5 report](review_round_05_reviewer_02_report.md) on manuscript `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
 
-**Current state: nine completed source tasks, four pending follow-up tasks, one deferred source item.**
+**Current state: nine completed source tasks, one completed and three pending follow-up tasks, one deferred source item.**
 The active queue below uses **R6-BTS-01–04** to distinguish this revision cycle from the completed round-5 implementation. Each item retains its original reviewer ID. Review round 5 and revision round 6 are different identifiers.
 
 Reviewer 2 recommends minor revision and scientific acceptance in principle after bounded corrections. Reviewer 1's latest assessment remains round 4. Consolidation does not execute a revision, imply author approval or constitute journal acceptance. Both source lists, their completion evidence, all previous reports and author responses remain unchanged. The old plan's opening “all tasks pending” sentence describes its initial preparation; its checked entries and final completion summary record the later execution state.
@@ -33,14 +33,15 @@ Completion evidence includes the [joint response to round-4 reviews](review_roun
 
 ## Active revision checklist
 
-All four items are required by the new reviewer checklist and remain unchecked. Items 01–03 can be prepared independently; complete them before final reconciliation in 04. Reuse existing evidence wherever it supports a wording or reference correction. No broad simulation campaign, hardware change, global search or measured-jitter requirement is introduced.
+All four items are required by the new reviewer checklist; completion is recorded below. Items 01–03 can be prepared independently; complete them before final reconciliation in 04. Reuse existing evidence wherever it supports a wording or reference correction. No broad simulation campaign, hardware change, global search or measured-jitter requirement is introduced.
 
-- [ ] **R6-BTS-01 — Define and correct the count-discrepancy percentage.**
+- [x] **R6-BTS-01 — Define and correct the count-discrepancy percentage.**
   **Source:** R2E-BTS-01, report C1; follows completed R5-BTS-02.
   - Choose a named denominator. For 942 observed losses against 880.453324 expected, the prediction is 6.5% below observation, or observation is 7.0% above prediction. The phrase “6.5% more” does not describe the latter convention.
   - Make the generating calculation or label, macros, Results and Discussion agree. Preserve the recorded counts and integrated headline gain of 4.48 [4.33, 4.63].
   - Identify the reported 2.1 standard deviations as a diagnostic Poisson approximation. Retain the unresolved-discrepancy and sparse-tail limitations; do not restore a universal 1% accuracy claim.
   **Completion:** the chosen percentage reconstructs from unrounded counts and matches the rendered text. No new tracked particles are required for this correction.
+  **Done:** milestone [295](../../exec-plans/completed/295_r6_bts_01_validation_percentage.md); exporter names the observed-count denominator, the shortfall reconstructs as 6.533617385%, and the isolated article build passes without warnings. Counts and headline gain are unchanged.
 
 - [ ] **R6-BTS-02 — Qualify phase-edge, steering and residual claims.**
   **Source:** R2E-BTS-02, report C2; follows completed R5-BTS-03/05/06.
@@ -95,4 +96,4 @@ Every top-level task from both input lists is accounted for. Completed tasks are
 
 Preserve the 36-element BTS source lattice, protected scientific inputs, earlier campaigns and NKM manuscript. Any later numerical work must use a new results directory and record assumptions, units, seeds and validation. Do not silently change assumptions shared with the NKM paper. Optional article shortening must preserve unfavorable results and necessary qualifications.
 
-This document consolidates requirements only. **Active tasks completed by consolidation: 0 of 4.**
+This document consolidates requirements only. **Active tasks completed: 1 of 4.** Consolidation itself executed no revisions.

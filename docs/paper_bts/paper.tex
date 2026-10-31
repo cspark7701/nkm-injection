@@ -696,8 +696,12 @@ gains of 3.3 to more than 10, come from 600 sampled shots each and vary mainly w
 the sampled jitter tail. The tracked counts test the shot-conditional prediction. For
 the matched reference and low beta they lie within half a Poisson standard deviation
 of it (\BtsRFiveLostRef\ against \BtsRFiveExpRef, \BtsRFiveLostLow\ against \BtsRFiveExpLow). The loss-based setting loses
-\BtsRFiveLostEdge\ particles against \BtsRFiveExpEdge\ expected, \SI{\BtsRFiveEdgeExcessPct}{\percent} more and \BtsRFiveEdgeZ\ standard deviations
-above it; the cause of this excess is not resolved here.
+\BtsRFiveLostEdge\ particles against \BtsRFiveExpEdge\ expected: the prediction is
+\SI{\BtsRFiveEdgePredictionShortfallPct}{\percent} below the observed count. The difference is
+\BtsRFiveEdgeZ\ standard deviations under the diagnostic Poisson approximation
+$(N_{\rm obs}-N_{\rm exp})/\sqrt{N_{\rm exp}}$, which excludes model-systematic
+uncertainty. The cause of the excess is unresolved; this diagnostic does not
+establish a general accuracy tolerance.
 
 \begin{table}[htbp]\centering
 \caption{Second fresh test: 200 steered error realizations with new seeds and shared
@@ -890,8 +894,9 @@ from a one-sided restriction and is blind to the jitter tail. A Gaussian loss
 probability from the propagated centroid and covariance is smooth and can be optimized
 directly. Conditioned on the sampled shots, it matches the tracked counts within
 \SI{1}{\percent} relative in the steering and first test populations and within half a Poisson
-standard deviation for the matched reference and low beta in the second test, where the
-loss-based count exceeds it by \SI{\BtsRFiveEdgeExcessPct}{\percent}. The phase-advance view also
+standard deviation for the matched reference and low beta in the second test. For the
+loss-based setting, the prediction is \SI{\BtsRFiveEdgePredictionShortfallPct}{\percent} below the
+observed count, with the discrepancy still unresolved. The phase-advance view also
 gives a quick test for any matched transfer line: compute $\mu_x$, read off where the
 booster jitter lands, and compare with the restriction and the kicker acceptance.
 

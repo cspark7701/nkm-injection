@@ -154,6 +154,15 @@
       "poisson_z": 0.6877429341766333
     }
   },
+  "validation_reporting": {
+    "edge_prediction_shortfall": {
+      "formula": "100 * (observed_count - conditional_expected_count) / observed_count",
+      "denominator": "observed_count",
+      "unit": "percent",
+      "value": 6.533617385049457
+    },
+    "poisson_z_scope": "Diagnostic (observed - expected) / sqrt(expected); Poisson approximation without model-systematic uncertainty."
+  },
   "edge_lowest": {
     "0.080868_0.047472": {
       "mu_x_deg": 200.1690565874404,
@@ -234,7 +243,7 @@
     "ExpLow": "10154",
     "LostEdge": "942",
     "ExpEdge": "880",
-    "EdgeExcessPct": "6.5",
+    "EdgePredictionShortfallPct": "6.5",
     "EdgeZ": "2.1",
     "LostFree": "1",
     "ExpFree": "0.51",

@@ -826,3 +826,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 285. [**Milestone 285 — R5-BTS-02: headline estimator and rare-loss validation**](285_r5_bts_02_headline_estimator.md)
     - The primary gain is a ratio of mean jitter-integrated losses with a paired bootstrap: 4.48 [4.33, 4.63] (layouts 4.59). The four loss quantities are separated, the 1 % claim restricted, the 6.5 % loss-based excess stated, and the dispersion-free count reported against its conditional expectation.
+
+286. [**Milestone 286 — R5-BTS-03: two jitter regimes and residual delivery errors**](286_r5_bts_03_two_regimes.md)
+    - New Table 10 (exit centroid against nominal jitter by scale). The abstract and Discussion state two regimes: stress-level jitter, where μ_x is the knob; and low jitter, where the 0.18 mrad steering residual and the ~1 mm uncorrected vertical centroid dominate. Phase-only statements are restricted to the nominal model.

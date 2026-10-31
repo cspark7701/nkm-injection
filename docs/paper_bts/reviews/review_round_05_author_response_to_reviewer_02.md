@@ -1,9 +1,9 @@
 # Response to Reviewer 2: BTS review round 5
 
 Date: 2026-10-31. This response records revision round 6 against the
-[Reviewer 2 report](review_round_05_reviewer_02_report.md) and
-[R2E-BTS checklist](review_round_05_reviewer_02_tasks.md), through the
-[consolidated register](revision_round_06_plan_for_review_round_05.md).
+[Reviewer 2 report](review_round_04_reviewer_02_report.md) and
+[R2E-BTS checklist](review_round_04_reviewer_02_tasks.md), through the
+[consolidated register](revision_round_05_plan_for_review_round_05.md).
 Earlier reports, responses and source task lists are preserved.
 
 ## C1 and R2E-BTS-01: count-discrepancy denominator

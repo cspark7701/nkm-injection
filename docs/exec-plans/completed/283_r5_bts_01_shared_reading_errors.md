@@ -1,7 +1,7 @@
 # Milestone 283 — R5-BTS-01: shared reading errors and targeted reruns
 
 Completed: 2026-10-31. Round-5 task R5-BTS-01 (Reviewer 2 R2D-02; Reviewer 1 R1D-BTS-02, pairing and attribution),
-from `docs/paper_bts/reviews/revision_round_05_plan_for_review_round_04.md`.
+from `docs/paper_bts/reviews/revision_round_04_plan_for_review_round_04.md`.
 
 **Protocol.** `docs/paper_bts/round5_protocol.json` was declared before the runs, and covers:
 - **Reading errors:** keyed by realization and monitor location (element-boundary index) through

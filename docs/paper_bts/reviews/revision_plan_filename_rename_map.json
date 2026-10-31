@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "scope": "The first round number in each consolidated plan filename now equals its review-round number. Original revision-cycle IDs and task contents are retained.",
+  "entries": [
+    {
+      "old": "docs/paper_bts/reviews/revision_round_04_plan_for_review_round_03.md",
+      "new": "docs/paper_bts/reviews/revision_round_03_plan_for_review_round_03.md",
+      "sha256_before": "3e57288e345ded31dd820ea8b3cfed2319750e1ddc4977e164f46e6ecb8eff56",
+      "sha256_after": "3e57288e345ded31dd820ea8b3cfed2319750e1ddc4977e164f46e6ecb8eff56"
+    },
+    {
+      "old": "docs/paper_bts/reviews/revision_round_05_plan_for_review_round_04.md",
+      "new": "docs/paper_bts/reviews/revision_round_04_plan_for_review_round_04.md",
+      "sha256_before": "15e0435eab2c33b9a78e8064e3169bbf1fd1c2a38c4857e8d904030d8c321ed3",
+      "sha256_after": "5e546c1aae72d7a29c2928c1e24a37dda8779e8a1e1d605ce104a159a192155a"
+    },
+    {
+      "old": "docs/paper_bts/reviews/revision_round_06_plan_for_review_round_05.md",
+      "new": "docs/paper_bts/reviews/revision_round_05_plan_for_review_round_05.md",
+      "sha256_before": "0425a587b1c1b72ff3d927887732a4900e03726d64c75254825aa0b4a1d6d855",
+      "sha256_after": "cd6edb9d831663d622b7174d425482798ff01fd0775d9150e247ef817d49f10e"
+    }
+  ]
+}

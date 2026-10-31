@@ -5,8 +5,8 @@ written as Reviewer 2 after reading all main-branch author responses (Reviewer 1
 the joint round-4 response), the earlier reports and the round-4 stage outputs.
 
 **Output.**
-- `docs/paper_bts/reviews/review_round_04_reviewer_02_report.md` (new);
-- `docs/paper_bts/reviews/review_round_04_reviewer_02_tasks.md` (new; checkbox task list);
+- `docs/paper_bts/reviews/review_round_03_reviewer_02_report.md` (new);
+- `docs/paper_bts/reviews/review_round_03_reviewer_02_tasks.md` (new; checkbox task list);
 - a reviews index entry.
 
 No earlier review or response was changed.

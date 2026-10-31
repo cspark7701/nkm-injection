@@ -3,10 +3,10 @@
 This joint response addresses:
 - the [Reviewer 1 round-4 report](review_round_04_reviewer_01_report.md) (minor revision) and its tasks R1D-BTS-01
   to 07;
-- the [Reviewer 2 round-4 report](review_round_04_reviewer_02_report.md) (major revision of limited scope) and its
+- the [Reviewer 2 round-4 report](review_round_03_reviewer_02_report.md) (major revision of limited scope) and its
   tasks R2D-01 to 12.
 
-Both were executed through the [round-5 plan](revision_round_05_plan_for_review_round_04.md), R5-BTS-01 to 10,
+Both were executed through the [round-5 plan](revision_round_04_plan_for_review_round_04.md), R5-BTS-01 to 10,
 milestones 283–292. The reports, task registers and all earlier responses are unchanged. This is a pre-submission
 revision record. It is not a journal decision and not author approval.
 

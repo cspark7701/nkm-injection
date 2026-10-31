@@ -1,40 +1,88 @@
-# Reviewer 2 round-3 revision tasks — BTS main-branch manuscript
+# Reviewer 2 round-4 revision tasks — BTS main-branch manuscript
 
-Tasks from the [Reviewer 2 round-3 report](review_round_03_reviewer_02_report.md) (2026-10-30) on the
-manuscript at `603c3ab`. All tasks are open at review.
+Tasks from the [Reviewer 2 round-4 report](review_round_03_reviewer_02_report.md) (2026-10-31) on the
+manuscript at `6a968f8`. All tasks are open; tick each box when its completion criterion is met.
 
-Priority: **A** = required for acceptance, **B** = strongly recommended, **C** = editorial. "Sim" = new
-calculation. "Analytic" means the existing Gaussian loss model is enough; no particle tracking is needed.
+- **Priority:** A = required for acceptance, B = strongly recommended, C = editorial.
+- **Constraints:** the BTS lattice is not changed. New outputs go in new `results/` directories, and earlier
+  reports, responses and campaigns are preserved.
 
-| ID | Priority | Task | Sim | Acceptance criterion | Est. effort |
-| :--- | :---: | :--- | :---: | :--- | :--- |
-| R2C-01 | A | **Booster jitter level (M1).** Source the 0.5 mm / 0.2 mrad jitter at m1, or label it a stress level. Sweep position and angle jitter together (×0.1, 0.2, 0.5, 1) for the matched reference, low-beta and loss-based settings. Report the loss, the loss-based gain and the level at which static residuals dominate. | analytic | Jitter stated in beam-size units; sensitivity table with betatron-jitter rows; abstract and conclusions state the regime the results apply to | 1 d |
-| R2C-02 | A | **Baseline framing (M2).** State the provenance of the baseline `BTSConfig` strengths and the exit target they were designed for. Present the baseline as a starting point only, not a result. Rewrite the abstract and the first Discussion paragraph around boundary-fixed clearance, the phase-advance jitter partition, the loss observable and the jitter dependence. Use one name per setting; the recommended (loss-based) setting must appear in the headline figures or tables. | no | Abstract no longer leads with matching the unmatched baseline; no circular blade-clearance claim; consistent setting names | 0.5–1 d |
-| R2C-03 | A | **Constrained phase-advance scan (M4).** Add μ_x as an equality and minimise peak beta over a μ_x grid, for the configured and dispersion-free exits. Report feasibility, the active bound at each interval edge, the predicted loss and the exit angle jitter. Replace the iteration-limited SLSQP point by the scan optimum; keep the fresh tracked test for the chosen point. | yes (matching) | Loss versus angle-jitter trade curve; active constraint named at 200.2° and 187.7°; converged chosen point | 1–2 d |
-| R2C-04 | A | **Blade-distance sweep (M5).** Predicted loss against d_b for the three settings at the present and a realistic jitter level. State the d_b for a stated loss tolerance (e.g. 0.1 %) and note the ring-acceptance cost of a larger d_b. Relate it to the TDR 1 mm thin septum. | analytic | Figure or table of loss versus d_b; tolerance statement | 0.5 d |
-| R2C-05 | B | **Steering assumptions (M3).** State the assumed instrumentation (eleven horizontal readings) and the independent powering of the six trims. Repeat the correction with a reduced monitor set (one per triplet plus the septum) and, if b1–b3 share a supply, with four knobs. Report the vertical exit centroid rms (position and angle). Correct "angle spread falls", "small residual" and "indistinguishable in every column". | yes (small) | Assumptions stated; reduced-instrumentation row; vertical exit centroid in Table 6; wording consistent with Tables 6–7 | 1 d |
-| R2C-06 | B | **Dispersion-free point (minor 4).** Track the best dispersion-free setting on the fresh realizations, or quote its gain only as an order of magnitude with a non-Gaussian-tail caveat. Explain why the configured exit inherits 80.9 mm / 47.5 mrad. | yes (tracking) | Tracked loss or qualified analytic statement; dispersion origin stated | 0.5–1 d |
-| R2C-07 | C | **Length and structure (minors 2, 3, 7).** Move Section 3.4 and Tables 3–4 to the supplement, keeping a one-sentence summary. Move the last Section 2.2 sentence (historical ensembles) with them. Fix or drop Eq. (5) for the one-sided restriction. Collapse the roll rows of Table 8. | no | Main text shortened; no symmetric-station equation applied to a one-sided edge | 0.5 d |
-| R2C-08 | C | **Title and wording (minors 1, 5, 6, 10–12).** Title naming the studied design version; "Booster-to-Storage-Ring". "Within 1 % relative". Gaussian-validation caveat. Introduction redundancy. "Septum entrance" versus m1. The clustering method of the intervals. | no | Text | 0.5 d |
-| R2C-09 | C | **Supplement and declarations (minors 8, 9).** Align the supplement nomenclature ("error realizations", "baseline", "matched reference"). Deduplicate Funding and Acknowledgments. Remove "final approval is pending" before submission. Restore a data-availability statement, with the wording the author chooses. | no | Consistent nomenclature; declarations ready for submission | 0.5 d |
-| R2C-10 | C | **Response update.** Extend the Reviewer 2 response to record the changes made after it: the new title, the baseline framing, the matched-reference nomenclature and the removed sections. Answer questions 1–5 of the report. | no | Response matches the manuscript | 0.5 d |
+## A — required
+
+- [ ] **R2D-01 — Two-regime conclusion (M1).**
+  - [ ] Add the static-residual exit centroid at jitter scale 0, by plane (x, x′, y, y′), next to the jitter-only
+        values. Use Table 9 or a short companion table, from `jitter_b` (existing data).
+  - [ ] Rewrite the end of the abstract and the corresponding Discussion paragraph:
+        - **Stress-level jitter:** the jitter partition and the blade loss matter, and μ_x is the knob.
+        - **Realistic jitter:** the blade loss is negligible, and the delivered beam error is set by the steering
+          angle residual (about 0.18 mrad) and the uncorrected vertical trajectory (about 1.1 mm).
+  - [ ] Qualify the comparison of 0.33–0.39 mrad with the 0.44 mrad NKM acceptance as stress-level only.
+  - [ ] State in Section 4.2 that steering reads positions only, so the exit angle is constrained only indirectly.
+  - *Completion:* no sentence claims that the position–angle partition is the design output at realistic jitter,
+    and the static residuals are reported by plane.
+- [ ] **R2D-02 — Shared reading errors (M2).**
+  - [ ] Draw reading errors per realization and monitor, shared by all settings. Declare this as a protocol
+        amendment before the runs.
+  - [ ] Rerun the second fresh test and the steering-layout stage in new directories.
+  - [ ] Add a regression test: optically identical settings give identical steered lines and losses.
+  - [ ] Update Tables 5 and 7 and the text. Keep the per-setting runs as a recorded sensitivity.
+  - *Completion:* the identical-optics pair gives identical results, and the quoted intervals come from the shared-noise
+    runs.
+- [ ] **R2D-03 — Jitter-integrated headline estimate (M3).**
+  - [ ] Report the loss-based gain as the jitter-integrated loss averaged over steered realizations, with a
+        realization-cluster interval, for each population where it exists.
+  - [ ] Present tracked losses as validation of the per-shot model and an illustration of the tail.
+  - [ ] Replace "a factor of 3 to more than 10" in the abstract and Discussion with one estimate and its interval.
+  - *Completion:* the abstract, Section 4.3 and the Discussion quote the same estimator and interval.
+
+## B — strongly recommended
+
+- [ ] **R2D-04 — Physical origin of the lower μ_x edge (M4).**
+  - [ ] Show whether the edge moves with the D′ (and D) target at m4: an analytic dispersion-closure argument, or a
+        short edge search over a few D′ values.
+  - [ ] If the inherited exit dispersion sets the edge, state this as a design finding in Sections 4.3–4.4 and the
+        Discussion.
+  - *Completion:* the edge has a stated physical cause, or the text says explicitly that the cause is not
+    identified.
+- [ ] **R2D-05 — Consolidation and length (M4).**
+  - [ ] Move Table 6 (round-3 test) to the supplement, keeping one test table.
+  - [ ] Reduce Fig. 4 to its left panel, and remove "reachable" and "Refined low beta" from its labels.
+  - [ ] Replace Table 8 with jitter-integrated values, or merge it into Table 9.
+  - [ ] Remove the duplicate wording between Sections 4.2 and 4.3.
+  - *Completion:* about 12–14 pages; no superseded table or label remains in the article.
+- [ ] **R2D-06 — Angle-aware steering (question 1, optional within B).**
+  - [ ] Report the exit-angle residual for a layout that weights the septum-entrance and line-end readings for
+        angle, with the lattice unchanged.
+  - *Completion:* the angle residual is reported, or the omission is justified.
+
+## C — editorial
+
+- [ ] **R2D-07 — Wording remnants.** Delete or reword "Thus optimization of the baseline BTS line improves nominal
+  delivery" (Section 4.1). Use one dispersion-free angle jitter (393 or 394 µrad) consistently (Section 4.4).
+- [ ] **R2D-08 — Number formatting.** Use proper minus signs in all intervals, in the text, Table 7 and the macros. Use
+  a consistent format per column in Table 9. Write the dispersion-free tracked loss as "1 particle (8 × 10⁻⁷)" or as
+  an upper bound.
+- [ ] **R2D-09 — Citations.** Cite the booster-stability statement in Section 2.4. Update [13] if a full paper
+  exists, and note the availability of [5] to referees.
+- [ ] **R2D-10 — Declarations and journal (author decisions).**
+  - [ ] Target journal: JKPS or NIM A.
+  - [ ] A data-availability statement that matches actual access.
+  - [ ] Final approval, with the "pending" wording removed.
+- [ ] **R2D-11 — Supplement.** Shorten the four-station accuracy audit in supplement Section 3 to one table and a
+  paragraph.
+- [ ] **R2D-12 — Response.** Write a point-by-point response to this report, and preserve all earlier reports and
+  responses.
 
 ## Suggested order
 
-1. **Analytic sweeps, R2C-01 and R2C-04.** They may change the emphasis of the paper and are cheap.
-2. **Phase-advance scan, R2C-03.** It replaces the iteration-limited optimizer result.
-3. **Framing, R2C-02.** Rewrite the headline once the jitter-dependent results are known.
-4. **Model checks, R2C-05 and R2C-06.**
-5. **Editorial, R2C-07 to R2C-10.**
+1. **Shared reading errors (R2D-02),** because it changes the numbers.
+2. **The estimator and the conclusion (R2D-03, then R2D-01).**
+3. **The edge explanation (R2D-04).**
+4. **Consolidation (R2D-05).**
+5. **R2D-06 to R2D-12.**
 
 ## Coordination with the companion NKM manuscript
 
-- **R2C-01.** The booster jitter is shared with the NKM injection study, which uses the same 0.5 mm / 0.2 mrad at
-  m1. Any change of level or justification should be made in both papers.
-- **R2C-04 and R2C-06.** These touch the injected-beam geometry (blade distance) and the injected dispersion, which
-  the NKM paper also uses.
-- **R2C-05.** Its vertical exit centroid is the input to the static vertical injection error discussed in the NKM
-  paper.
-
-Per the author's instruction, the BTS lattice is not changed by any of these tasks. R2C-05 varies only which
-existing element boundaries carry readings and which existing dipoles are trimmed.
+- **R2D-01:** its vertical exit offset (about 1.1 mm / 0.1 mrad) and horizontal angle residual (about 0.18 mrad) are
+  the static injection errors the NKM study needs.
+- **Booster jitter:** the level is shared with the NKM study; any change of its source belongs in both papers.

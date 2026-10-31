@@ -4,7 +4,7 @@ Completed: 2026-10-15. Pre-submission review of `docs/paper_bts/` at `82598dc`, 
 the Reviewer 1 main-branch rounds 1–2, both author responses, the historical BTS-branch reports 01–03 and the
 supporting boundary/scope notes.
 
-**Output.** `docs/paper_bts/reviews/review_round_02_reviewer_02_report_and_tasks.md` (new; no earlier review changed) and a
+**Output.** `docs/paper_bts/reviews/review_round_01_reviewer_02_report_and_tasks.md` (new; no earlier review changed) and a
 reviews index entry.
 
 **Recommendation.** Major revision; no acceptance in present form.

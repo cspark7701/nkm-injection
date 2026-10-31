@@ -1,7 +1,7 @@
 # BTS optics manuscript
 
-Current state (2026-10-31): all four [round-6 follow-up tasks](reviews/revision_round_06_plan_for_review_round_05.md)
-are executed (milestones 295 to 298). They answer [Reviewer 2's round-5 assessment](reviews/review_round_05_reviewer_02_report.md),
+Current state (2026-10-31): all four [round-6 follow-up tasks](reviews/revision_round_05_plan_for_review_round_05.md)
+are executed (milestones 295 to 298). They answer [Reviewer 2's round-5 assessment](reviews/review_round_04_reviewer_02_report.md),
 which recommended minor revision and scientific acceptance in principle after corrections. See the
 [new response](reviews/review_round_05_author_response_to_reviewer_02.md) and
 [round-6 reproduction guide](round6_reproduction.md). The original reviewer checklist records the state at review;

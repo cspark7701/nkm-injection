@@ -1,36 +1,55 @@
-# Reviewer 2 — BTS review round 5: revision checklist
+# Reviewer 2 — BTS review round 6: revision checklist
 
-Prepared: 2026-10-31. Reviewed baseline: `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
+Tasks from the [round-6 report](review_round_05_reviewer_02_report.md) (2026-10-31) on the revision-round-6
+manuscript at `79dce19`. Recommendation: **minor revision; acceptable after these corrections, without another
+review round.** These are new R2F-BTS task IDs. All boxes are open at review; no task is executed here.
 
-Source: [round-5 report](review_round_05_reviewer_02_report.md). Recommendation: **minor revision; scientifically acceptable in principle after the bounded corrections below**. These are new **R2E-BTS** task IDs, distinct from the completed R5-BTS revision cycle. All checkboxes are open at review; no task is executed here.
+Not included: the R5-BTS-09 submission decisions, which stay deferred to the submission-ready stage.
 
-This checklist covers scientific reporting and review reconciliation only. It requires no new broad simulation campaign, hardware modification or global-optimum proof.
+Constraints: the BTS lattice is not changed. Any rerun uses a new `results/` directory, and earlier reports,
+responses and campaigns are preserved.
 
-- [ ] **R2E-BTS-01 — Correct and define the count-discrepancy percentage. Required; report C1.**
-  - Choose a named denominator for the edge-row discrepancy. With 942 observed and 880.453324 expected, the prediction is 6.5% below observation, or observation is 7.0% above prediction.
-  - Make the generating calculation/label, macros, article Results and Discussion agree. Preserve the count records and the headline integrated gain.
-  - Identify the reported 2.1 standard deviations as a Poisson approximation used diagnostically. Retain the unresolved-discrepancy and sparse-tail limitations; do not restore a universal 1% accuracy claim.
-  - **Completion evidence:** reconstruct the chosen percentage from unrounded source counts and show consistent rendered text. No new tracked particles are required.
+## Required
 
-- [ ] **R2E-BTS-02 — Qualify phase-edge, steering and residual claims. Required; report C2.**
-  - Correct the D′ = 0 start accounting: the `dispersion_free_best` start fails the declared match test; only two starts yield matched candidates there. Retain iteration-limit flags at the changed D′ targets.
-  - In Results and Discussion, describe the observed D′ dependence as evidence within local searches. Do not turn it into an exclusive binding-cause or globally certified edge claim.
-  - Restrict the endpoint-weighting conclusion to the tested 3-to-10 weighting and the assumed readings. Do not infer that position readings in general cannot improve angle or that a direct angle measurement is necessary.
-  - Scope the opening jitter-dominance claim to stress-level jitter; scope static-residual invariance to the tested settings and steering model. Preserve the useful two-regime conclusion.
-  - **Completion evidence:** each statement maps to its stored test/termination record, with the same qualification in the abstract, Results and Discussion where applicable. Wording corrections suffice; no new optimization is mandatory.
+- [ ] **R2F-BTS-01 — Base the low-beta effect on controlled evidence (M1).**
+  - [ ] Choose one:
+    - add low beta to the shared-reading layout stage on the Table 4 realizations, declared before the run, and quote
+      its paired difference; or
+    - label the Table 4 value (−0.21 percentage points) as confounded by per-setting reading errors.
+  - [ ] Make Section 4.2 and the Discussion cite only the controlled result, the primary-test −0.13 [−0.24, −0.04],
+        and any new shared-reading value, as evidence of the low-beta effect.
+  - *Completion:* no low-beta statement relies on a per-setting-reading population without saying so.
+- [ ] **R2F-BTS-02 — Qualify the per-shot bracket and localize the loss-based excess (M2).**
+  - [ ] Qualify the Section 3.3 bracket sentence as holding within the linearized Gaussian model.
+  - [ ] From the saved per-shot output, state in Section 4.3 that the 942-particle count comes from 20 shots and
+        that one near-blade shot (454 lost against 410.9 expected) carries most of the excess.
+  - [ ] Recommended: compare that shot's linear-moment prediction with a nonlinear moment calculation and report
+        the outcome. If it is not done, keep the excess explicitly unresolved.
+  - *Completion:* the text no longer states an unconditional bracket that the tracked count violates, and the
+    excess is localized.
+- [ ] **R2F-BTS-03 — Say what the headline interval covers (M3).**
+  - [ ] In the abstract or Section 4.3, state that 4.48 (4.33–4.63) is a prediction of the linearized Gaussian model
+        at the assumed jitter, and that the interval reflects only the sampling of error realizations.
+  - *Completion:* no reader can take the interval as a measured-transmission uncertainty.
 
-- [ ] **R2E-BTS-03 — Reconcile test populations and cross-references. Required; report C3.**
-  - Replace Section 4.2's stale unresolved-low-beta reference to Section 4.3 by an explicit reference to the earlier test in supplement Section 5.
-  - Retain the primary-test low-beta difference, −0.13 [−0.24, −0.04] percentage points, and the population-dependent interpretation.
-  - Identify retained earlier jitter/blade sensitivities by their setting and reading-noise convention so they cannot be mistaken for the new shared-reading primary test.
-  - Use current compiled labels in new response/status descriptions: primary comparison Table 6; residuals Table 8. Preserve earlier dated review records as history.
-  - **Completion evidence:** article, supplement, captions and new response distinguish earlier/primary populations and all new cross-references resolve.
+## Editorial
 
-- [ ] **R2E-BTS-04 — Record the response and verify the bounded revision. Required; review closure.**
-  - Create a new `review_round_05_author_response_to_reviewer_02.md`, answering C1–C3 and these task IDs. Preserve all earlier reports, tasks and responses.
-  - Rebuild article and supplement in a new results directory. Refresh only the current affected generated assets, claim/provenance entries and selected hashes; retain the reviewed snapshot and earlier evidence identities.
-  - Run the evidence audit, selected-asset verification and relevant existing tests for changed code. Check changed PDF passages and links; record actual results and numerical limitations.
-  - Update the review index/current status and archive execution milestones. Do not describe a pre-submission recommendation as a journal acceptance.
-  - **Completion evidence:** point-by-point response, consistent PDFs/evidence and checks recorded against the new revision. This task does not authorize external delivery or submission.
+- [ ] **R2F-BTS-04 — Wording and labels.**
+  - [ ] Attribute the uncorrected vertical residual to the absence of a vertical corrector in the modelled line, in
+        the abstract and the Discussion (minor 1).
+  - [ ] Remove the dangling "therefore" in Section 4.5 (minor 2).
+  - [ ] Write "different tracked losses" in Section 3.2 (minor 3).
+  - [ ] Use one setting name in the Figure 5 and 6 legends, with "Loss-based" for the equivalent round-3 and edge
+        settings, and regenerate those figures (minor 4).
+- [ ] **R2F-BTS-05 — Optional shortening (minor 5, advisory).**
+  - [ ] Consider moving Table 4 to the supplement once R2F-BTS-01 is settled.
+- [ ] **R2F-BTS-06 — Reconciliation and response.**
+  - [ ] Update any affected claims and generated assets, and refresh the selected hashes.
+  - [ ] Rebuild and visually check the article and supplement, and run the tests that the changes call for.
+  - [ ] Write a short response to this report, preserving all earlier reports, tasks and responses.
+  - *Completion:* PDFs, evidence and response agree; this register is updated with ticked boxes.
 
-Optional editorial shortening is described in the report; it is not an acceptance-blocking task.
+## Order
+
+R2F-BTS-01 and R2F-BTS-02 first, because they may need a short computation. R2F-BTS-03 and R2F-BTS-04 next, then
+R2F-BTS-06.

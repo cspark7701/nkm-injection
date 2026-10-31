@@ -1,7 +1,7 @@
 # BTS revision round 6: reproduction and verification
 
 Revision round 6 answers Reviewer 2's review round 5 through
-[R6-BTS-01 to 04](reviews/revision_round_06_plan_for_review_round_05.md).
+[R6-BTS-01 to 04](reviews/revision_round_05_plan_for_review_round_05.md).
 This is a reporting and prose revision using the frozen round-4/round-5 campaigns.
 No tracking or optimizer campaign was rerun.
 

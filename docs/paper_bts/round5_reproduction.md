@@ -1,6 +1,6 @@
 # Round-five BTS reproduction
 
-Round 5 executes the [round-5 plan](reviews/revision_round_05_plan_for_review_round_04.md) (milestones 283–292).
+Round 5 executes the [round-5 plan](reviews/revision_round_04_plan_for_review_round_04.md) (milestones 283–292).
 The environment is the same as in rounds 2–4: Python 3.11.9, pyAT 0.7.2.dev26, NumPy 2.4.6 and SciPy 1.17.1, with
 this package installed.
 

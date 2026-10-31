@@ -5,8 +5,8 @@ Prepared: 2026-10-31. This is the current execution register for the BTS manuscr
 
 It consolidates these two source lists without replacing their historical records:
 
-- [Round-5 plan answering both round-4 reviews](revision_round_05_plan_for_review_round_04.md): R5-BTS-01–10, with nine completed items and one deferred author-decision item.
-- [Reviewer 2 round-5 revision checklist](review_round_05_reviewer_02_tasks.md): R2E-BTS-01–04, all pending at review, following the [round-5 report](review_round_05_reviewer_02_report.md) on manuscript `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
+- [Round-5 plan answering both round-4 reviews](revision_round_04_plan_for_review_round_04.md): R5-BTS-01–10, with nine completed items and one deferred author-decision item.
+- [Reviewer 2 round-5 revision checklist](review_round_04_reviewer_02_tasks.md): R2E-BTS-01–04, all pending at review, following the [round-5 report](review_round_04_reviewer_02_report.md) on manuscript `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
 
 **Current state: nine completed source tasks, four completed follow-up tasks, one deferred source item.**
 The active queue below uses **R6-BTS-01–04** to distinguish this revision cycle from the completed round-5 implementation. Each item retains its original reviewer ID. Review round 5 and revision round 6 are different identifiers.

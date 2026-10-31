@@ -1,6 +1,6 @@
 # Response to Reviewer 2 — BTS main-branch manuscript
 
-This response addresses the [2026-10-15 report](review_round_02_reviewer_02_report_and_tasks.md) and its tasks R2B-01 to
+This response addresses the [2026-10-15 report](review_round_01_reviewer_02_report_and_tasks.md) and its tasks R2B-01 to
 R2B-07. The report and all earlier reviews and responses are unchanged. This is a pre-submission revision record,
 not a journal decision.
 

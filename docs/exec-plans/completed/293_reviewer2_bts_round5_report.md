@@ -4,8 +4,8 @@ Completed: 2026-10-31. Reviewed the 19-page BTS article and 10-page supplement a
 `50d46991ca91290a500c7c3b50ca85f297dec6c7`, all eight preserved author responses,
 the previous round-4 reports, protocols, selected stage records and generated assets.
 
-Created the new [Reviewer 2 round-5 report](../../paper_bts/reviews/review_round_05_reviewer_02_report.md)
-and [four-item checkbox register](../../paper_bts/reviews/review_round_05_reviewer_02_tasks.md).
+Created the new [Reviewer 2 round-5 report](../../paper_bts/reviews/review_round_04_reviewer_02_report.md)
+and [four-item checkbox register](../../paper_bts/reviews/review_round_04_reviewer_02_tasks.md).
 Recommendation: minor revision; scientifically acceptable in principle after bounded
 reporting/scope corrections. The round-4 major scientific objections are resolved.
 Remaining corrections concern the discrepancy denominator, local-search and steering

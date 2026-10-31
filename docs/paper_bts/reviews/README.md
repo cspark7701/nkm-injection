@@ -7,18 +7,30 @@ Filenames now state the round, reviewer and document role, with two-digit number
 - `review_round_04_reviewer_01_report.md`: Reviewer 1's round-4 report.
 - `review_round_04_reviewer_01_tasks.md`: the corresponding reviewer task list.
 - `review_round_03_author_response_to_reviewers_01_02.md`: response to the round-3 reviews.
-- `revision_round_04_plan_for_review_round_03.md`: the round-4 revision plan answering round-3 reviews.
+- `revision_round_03_plan_for_review_round_03.md`: the round-4 revision plan answering round-3 reviews.
 
-**Review round** is the review being written or answered; **revision round** identifies the implementation cycle.
-They can differ. Dates, task IDs, decisions and author statements remain in the documents. A
+The two numbers in a consolidated-plan filename now match its review-round suffix. The original implementation
+cycle and task IDs (R4-BTS, R5-BTS or R6-BTS) remain in the document body; the filename does not renumber those
+completed activities. The [plan transition map](revision_plan_filename_rename_map.json) records all three renames.
+Dates, task IDs, decisions and author statements remain in the documents. A
 `report_and_tasks` suffix means the original report contains its own task register; it was not split or discarded.
 The [rename map](document_rename_map.json) records every old/new path and before/after digest. Old snapshot paths
 and hashes identify the original Git/attachment contents; they are not rewritten to pretend those bytes are new.
 
 BTS records prefixed `historical_branch_` belong to the restored `bts` branch and remain distinct from the main-branch
 review sequence. Historical report numbers are retained without assigning a referee identity absent from the
-report itself. The main-branch Reviewer 2 assessment of 2026-10-15 follows the round-2 label used by the later joint
-response; no earlier main-branch Reviewer 2 report is invented. In particular, the October-31 joint response answers **review round 3**, while recording **revision round 4**.
+report itself. Reviewer 2's main-sequence report/task filenames now use consecutive numbers starting at 01,
+one lower than their previous names. Their original titles, round references, dates, decisions and task IDs
+remain historical records. Author-response filenames retain their existing numbering; consolidated-plan
+filenames use the matching-number convention above.
+Thus the first Reviewer 2 assessment, whose body calls it round 2, is now
+`review_round_01_reviewer_02_report_and_tasks.md`; it includes its own task register.
+The latest report/task pair is numbered 05 in filenames and retains review round 6 in its original text.
+The [Reviewer 2 transition map](reviewer_02_sequence_rename_map.json) records all nine renames and content hashes.
+The earlier `document_rename_map.json` is a frozen historical map; use this transition and its hashes to resolve
+paths reused by later reports. Frozen protocols also retain their original path strings and hashes; the maps
+provide their current document locations. In particular, the October-31 joint response answers **review round 3** in its
+original sequence, while recording **revision round 4**.
 
 
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
@@ -27,9 +39,9 @@ its conclusions are historical. [Reviewer 1's latest assessment is round 5](revi
 accept the scientific content within its stated scope, with no mandatory scientific revision.
 Its [follow-up checklist](review_round_05_reviewer_01_tasks.md) records optional editing and a conditional
 technical package check. Reviewer 2's independent assessments are recorded below; its
-[round-5 report](review_round_05_reviewer_02_report.md) recommended minor revision and scientific acceptance in
-principle after bounded corrections. The [round-5 checklist](review_round_05_reviewer_02_tasks.md) records four items open at review.
-The [round-6 consolidated register](revision_round_06_plan_for_review_round_05.md) records execution of all four follow-up corrections,
+[round-5 report](review_round_04_reviewer_02_report.md) recommended minor revision and scientific acceptance in
+principle after bounded corrections. The [round-5 checklist](review_round_04_reviewer_02_tasks.md) records four items open at review.
+The [round-6 consolidated register](revision_round_05_plan_for_review_round_05.md) records execution of all four follow-up corrections,
 preserving the completed round-5 work and the original reviewer checklist.
 Earlier assessments are retained below as history.
 
@@ -65,7 +77,7 @@ The original branch milestones are `6878ba7` (first review), `05a645f` (first-ro
 
 ## Reviewer 2 assessment of the revised main-branch article
 
-[Reviewer 2 main-branch report](review_round_02_reviewer_02_report_and_tasks.md), 2026-10-15, evaluates the twelve-page
+[Reviewer 2 main-branch report](review_round_01_reviewer_02_report_and_tasks.md), 2026-10-15, evaluates the twelve-page
 *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `82598dc`, after
 reading both Reviewer 1 rounds, the responses and the historical reports. Recommendation: **major revision; no
 acceptance in present form**. It accepts the numerical validation and inference. Its objections concern the physical
@@ -99,7 +111,7 @@ added-corrector campaign is superseded.
 
 ## Reviewer 2 round-3 assessment
 
-[Reviewer 2 round-3 report](review_round_03_reviewer_02_report.md), 2026-10-30, evaluates the 15-page
+[Reviewer 2 round-3 report](review_round_02_reviewer_02_report.md), 2026-10-30, evaluates the 15-page
 *Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line* at `603c3ab`, after
 reading the three main-branch author responses. Recommendation: **major revision; not acceptable in present form,
 with a short route to acceptance**.
@@ -115,7 +127,7 @@ the phase-advance mechanism. Its remaining objections:
 - **Blade distance.** It is not swept.
 
 There are ten tasks, R2C-01 to R2C-10, in the
-[round-3 task register](review_round_03_reviewer_02_tasks.md). Earlier reports and responses are
+[round-3 task register](review_round_02_reviewer_02_tasks.md). Earlier reports and responses are
 unchanged.
 
 ## Reviewer 1 — round-3 assessment of the current main-branch article
@@ -131,7 +143,7 @@ a pre-submission assessment, not a journal decision. No scientific revision was 
 
 ## Round-4 consolidated revision tasks
 
-The [round-4 consolidated register](revision_round_04_plan_for_review_round_03.md), 2026-10-30, merges Reviewer 1's
+The [round-4 consolidated register](revision_round_03_plan_for_review_round_03.md), 2026-10-30, merges Reviewer 1's
 R3-BTS-01 to 08 and Reviewer 2's R2C-01 to 10 into fourteen tasks, R4-BTS-01 to R4-BTS-14 (nine A, three B, two
 C). It maps each task to its source items and records how differences between the reviewers are resolved:
 - the phase-advance scan is done, together with sampled-search wording;
@@ -157,7 +169,7 @@ unchanged. No reassessment or journal decision is implied.
 
 ## Reviewer 2 round-4 assessment
 
-[Reviewer 2 round-4 report](review_round_04_reviewer_02_report.md), 2026-10-31, evaluates the 19-page round-4
+[Reviewer 2 round-4 report](review_round_03_reviewer_02_report.md), 2026-10-31, evaluates the 19-page round-4
 article at `6a968f8` after reading all main-branch author responses. Recommendation: **major revision of limited
 scope; not acceptable in present form; acceptance expected after R2D-01 to R2D-03**.
 
@@ -171,7 +183,7 @@ The report accepts the round-3 resolutions. Its remaining objections:
   consolidated.
 
 Twelve tasks with checkboxes, R2D-01 to R2D-12, are in the
-[round-4 task register](review_round_04_reviewer_02_tasks.md). Earlier reports and responses are
+[round-4 task register](review_round_03_reviewer_02_tasks.md). Earlier reports and responses are
 unchanged.
 
 ## Reviewer 1 round-4 assessment
@@ -188,7 +200,7 @@ unchanged; the separate Reviewer 2 assessment retains its own recommendation.
 
 ## Consolidated follow-up to both round-4 reviews
 
-Use the [round-5 consolidated checkbox register](revision_round_05_plan_for_review_round_04.md) as the single queue for
+Use the [round-5 consolidated checkbox register](revision_round_04_plan_for_review_round_04.md) as the single queue for
 revising the round-4 manuscript. It maps all 19 original top-level requests to ten pending tasks, R5-BTS-01–10,
 retains both reviewers' recommendations, and records the decisions on shared reading errors, headline estimators
 and editorial targets. The original Reviewer 1 and Reviewer 2 registers and the executed round-4 plan remain
@@ -197,18 +209,18 @@ unchanged. No revision task has been executed by the consolidation.
 ## Execution of the round-5 revision
 
 The [joint response](review_round_04_author_response_to_reviewers_01_02.md), 2026-10-31, records the execution of
-R5-BTS-01 to 10 (milestones 283–292) against both round-4 reports. The [round-5 plan](revision_round_05_plan_for_review_round_04.md)
+R5-BTS-01 to 10 (milestones 283–292) against both round-4 reports. The [round-5 plan](revision_round_04_plan_for_review_round_04.md)
 shows each task with its milestone and commit; R5-BTS-09 stays open for author decisions. All reports, task
 registers and earlier responses are unchanged. No reassessment or journal decision is implied.
 
 ## Reviewer 2 round-5 assessment
 
-[Reviewer 2 round-5 report](review_round_05_reviewer_02_report.md), 2026-10-31, assesses the 19-page article
+[Reviewer 2 round-5 report](review_round_04_reviewer_02_report.md), 2026-10-31, assesses the 19-page article
 and 10-page supplement at `50d4699`, considering all eight preserved author responses. Recommendation:
 **minor revision; scientifically acceptable in principle after bounded corrections**. The round-4 major
 requests on residual delivery errors, shared monitor noise and the headline estimator are resolved.
 
-The [four open-at-review R2E-BTS checkbox tasks](review_round_05_reviewer_02_tasks.md) cover the validation-percentage
+The [four open-at-review R2E-BTS checkbox tasks](review_round_04_reviewer_02_tasks.md) cover the validation-percentage
 denominator, qualifications to phase-edge/steering claims, population cross-references and response/evidence
 reconciliation. No new broad campaign is required. At the author's instruction, R5-BTS-09 decisions are
 deferred to the submission-ready stage and excluded from this checklist. No revision is executed by this
@@ -217,9 +229,9 @@ recommendation, not a journal acceptance.
 
 ## Consolidated round-6 execution register
 
-The [current consolidated register](revision_round_06_plan_for_review_round_05.md) combines the
-[round-5 implementation plan](revision_round_05_plan_for_review_round_04.md) and
-[Reviewer 2 round-5 checklist](review_round_05_reviewer_02_tasks.md). It carries nine completed tasks as
+The [current consolidated register](revision_round_05_plan_for_review_round_05.md) combines the
+[round-5 implementation plan](revision_round_04_plan_for_review_round_04.md) and
+[Reviewer 2 round-5 checklist](review_round_04_reviewer_02_tasks.md). It carries nine completed tasks as
 history, maps the four follow-up corrections to R6-BTS-01–04, and accounts for all fourteen source items.
 R5-BTS-09 remains deferred to submission readiness, outside the active checklist. Both input lists and
 all previous reports/responses remain unchanged. Consolidation executes none of the four new tasks.
@@ -250,7 +262,7 @@ are preserved, and no revision task is executed by this assessment.
 
 ## Reviewer 2 review round 6
 
-[Reviewer 2 round-6 report](review_round_06_reviewer_02_report.md), 2026-10-31, assesses the revision-round-6
+[Reviewer 2 round-6 report](review_round_05_reviewer_02_report.md), 2026-10-31, assesses the revision-round-6
 article at `79dce19` (20 pages, 10-page supplement) after reading all main-branch author responses, including the
 round-5 response to Reviewer 2. Recommendation: **minor revision; acceptable after small corrections, without
 another review round**.
@@ -261,5 +273,5 @@ The round-5 checklist (R2E-BTS-01 to 04) is resolved. Three points remain, and n
   from one near-blade shot.
 - **Headline interval.** Its scope should be stated.
 
-There are six checkbox tasks, R2F-BTS-01 to 06, in the [round-6 checklist](review_round_06_reviewer_02_tasks.md).
+There are six checkbox tasks, R2F-BTS-01 to 06, in the [round-6 checklist](review_round_05_reviewer_02_tasks.md).
 The R5-BTS-09 submission decisions stay deferred. Earlier reports and responses are unchanged.

@@ -8,12 +8,12 @@ This is the single execution register for the next revision. It consolidates:
 - [Reviewer 1 round-4 report](review_round_04_reviewer_01_report.md) and
   [seven tasks](review_round_04_reviewer_01_tasks.md), R1D-BTS-01–07:
   minor revision, scientifically acceptable in principle after corrections.
-- [Reviewer 2 round-4 report](review_round_04_reviewer_02_report.md) and
-  [twelve tasks](review_round_04_reviewer_02_tasks.md), R2D-01–12:
+- [Reviewer 2 round-4 report](review_round_03_reviewer_02_report.md) and
+  [twelve tasks](review_round_03_reviewer_02_tasks.md), R2D-01–12:
   major revision of limited scope, no acceptance in present form.
 
 Both reports and source registers remain unchanged. Their different recommendations are not averaged into an
-acceptance decision. The previously executed [round-4 consolidated plan](revision_round_04_plan_for_review_round_03.md)
+acceptance decision. The previously executed [round-4 consolidated plan](revision_round_03_plan_for_review_round_03.md)
 answered the round-3 reviews; it is preserved. Hence this follow-up uses **round 5** and new **R5-BTS** IDs.
 
 **All tasks below are pending.** Consolidation does not execute revisions, authorize simulation runs, constitute

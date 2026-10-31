@@ -4,7 +4,7 @@ Completed: 2026-10-30. Merges the Reviewer 1 round-3 register (R3-BTS-01 to 08) 
 register (R2C-01 to 10), both on the manuscript at `603c3ab`, into one round-4 list.
 
 **Output.**
-- `docs/paper_bts/reviews/revision_round_04_plan_for_review_round_03.md` (new);
+- `docs/paper_bts/reviews/revision_round_03_plan_for_review_round_03.md` (new);
 - a reviews index entry.
 
 Both source registers and all earlier reviews and responses are unchanged.

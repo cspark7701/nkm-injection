@@ -2,9 +2,9 @@
 
 This joint response addresses:
 - the [Reviewer 1 round-3 report](review_round_03_reviewer_01_report.md) and its tasks R3-BTS-01 to 08;
-- the [Reviewer 2 round-3 report](review_round_03_reviewer_02_report.md) and its tasks R2C-01 to 10.
+- the [Reviewer 2 round-3 report](review_round_02_reviewer_02_report.md) and its tasks R2C-01 to 10.
 
-Both were executed through the [consolidated register](revision_round_04_plan_for_review_round_03.md), R4-BTS-01 to 14
+Both were executed through the [consolidated register](revision_round_03_plan_for_review_round_03.md), R4-BTS-01 to 14
 (milestones 265–278). The reports, task registers and all earlier responses are unchanged. This is a pre-submission
 revision record, not a journal decision; the scientific interpretation awaits the author's approval.
 

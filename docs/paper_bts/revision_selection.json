@@ -72,7 +72,7 @@
     "figures/clearance_plot_validation.json": "eab00694220d20e9c4ce064ed196754d6d4d4ccd6cbfb7bfd9ea5bfdede60137",
     "generated/original_setting_comparison.tex": "9a9528ff1866d0667ae6bafd504ea24638a9467619e8f760a58657b50261b2f3",
     "round4_protocol.json": "1239ed461d72c24c7cb654e08e8133f23425e283fe2b1c69e63b29636c5fd4f5",
-    "round4_reproduction.md": "23944472d68c14a55417e99fe05822c84e73b2dbd6c6773cbd80cd0b696ddb9a",
+    "round4_reproduction.md": "4209a76595654975705c1cbdaa8b73180e150f67f404c8d2a03a9e031a81b449",
     "figures/round4_blade_distance.pdf": "9ec321487cb76c4fb05e668d9a5a1bbcd871634826bce7d8eda116856fc4486d",
     "figures/round4_phase_scan.pdf": "8c450b56514bae55e976db64976100e10d6a8a8d82d29a63a9a3066a34e668d3",
     "generated/round4_blade.json": "e7d641536272c01ed268dc84fe13f94fa4da21eadcc9c1b448a40ab88f5232c6",
@@ -88,7 +88,7 @@
     "generated/round4_statistics.json": "52ac883bfc241b8ce5491c28960974b955a758594c1be70cc3b0a81339a40e06",
     "generated/round4_test_rows.tex": "843a09a80f7fdc1bdcfd5f5182fe8999d09eec6f9f2a5871c3b89c54e127c845",
     "round5_protocol.json": "3f7bf9bcd2b492a4bd143b7f14e637a00e2b70e25950ba9b748aa103f5224ec0",
-    "round5_reproduction.md": "e2641ed599dad479c745596809757fb50dfa788f27e89f5fb1b974cf3a3da77f",
+    "round5_reproduction.md": "ca251150e65832da57605b28353f57b2289c22100c0d4b67ed365f0c6dba9ee0",
     "figures/round5_jitter_transfer.pdf": "1d5f0254e7550d2ffa8faa06cde023d8d2bf2e113575a0452f653f6e91f5041d",
     "generated/round5.json": "a6ff97d2879dddf369b12ff8f3a374a912b3edd43d9e1e0b83eca42c8d7d860a",
     "generated/round5.tex": "d479d004d3fc7ea6818f98417cba8598555610a34e3e064ed008668fbef83756",
@@ -96,8 +96,8 @@
     "generated/round5_residual_rows.tex": "03821a0ebae8863ae3b5e2af0a7aac9e2b761b174055bd9079cb5718bb3a34a2",
     "generated/round5_test_rows.tex": "d1df122c6f0df442a1294a916f5a618fa6c472fd7de95542f4bdefd712fd1f20",
     "generated/round6_checks.json": "708c5e7cd36ba14a68f70a6c6189c92bda420f9638e9433ecadf44e446168a37",
-    "round6_reproduction.md": "662d6e7d444d86e5bb112951a848ea6b410212edafe52b6a5663a4f551271da4",
-    "reviews/review_round_05_author_response_to_reviewer_02.md": "6343dd8ca5939288e00feff5b10930c68a550d43fadc66626d06fcccd6fa28c9"
+    "round6_reproduction.md": "0637460fb351a1dd58cf78a38fc4665ac2962591c43431b4374814a44d7b7f48",
+    "reviews/review_round_05_author_response_to_reviewer_02.md": "4852b172ad61e5c973d898e53d97fa8d7b4dd89aafbffa20beee1887f45f3b48"
   },
   "build": {
     "pages": 20,
@@ -189,7 +189,7 @@
     "generated/phase_space.json": "da270de09e40312681ca5d533737bfe203ebd2b043b27be7473032edeec85df6"
   },
   "round3": {
-    "review": "reviews/review_round_02_reviewer_02_report_and_tasks.md",
+    "review": "reviews/review_round_01_reviewer_02_report_and_tasks.md",
     "campaign": "results/bts_journal_campaign_r3b_20261015",
     "protocol": "round3_protocol.json",
     "reproduction": "round3_reproduction.md",
@@ -261,9 +261,9 @@
   "round4": {
     "reviews": [
       "reviews/review_round_03_reviewer_01_report.md",
-      "reviews/review_round_03_reviewer_02_report.md"
+      "reviews/review_round_02_reviewer_02_report.md"
     ],
-    "tasks": "reviews/revision_round_04_plan_for_review_round_03.md (R4-BTS-01 to 14), milestones 265-278",
+    "tasks": "reviews/revision_round_03_plan_for_review_round_03.md (R4-BTS-01 to 14), milestones 265-278",
     "response": "reviews/review_round_03_author_response_to_reviewers_01_02.md",
     "campaign": "results/bts_round4_campaign_20261030",
     "recheck": "results/bts_round4_r403_exact_20261030",
@@ -357,9 +357,9 @@
   "round5": {
     "reviews": [
       "reviews/review_round_04_reviewer_01_report.md",
-      "reviews/review_round_04_reviewer_02_report.md"
+      "reviews/review_round_03_reviewer_02_report.md"
     ],
-    "plan": "reviews/revision_round_05_plan_for_review_round_04.md (R5-BTS-01 to 10), milestones 283-292",
+    "plan": "reviews/revision_round_04_plan_for_review_round_04.md (R5-BTS-01 to 10), milestones 283-292",
     "response": "reviews/review_round_04_author_response_to_reviewers_01_02.md",
     "campaign": "results/bts_round5_campaign_20261031",
     "protocol": "round5_protocol.json",
@@ -461,8 +461,8 @@
     "engine": "pdfTeX 1.40.25 / TeX Live 2023"
   },
   "round6": {
-    "review": "reviews/review_round_05_reviewer_02_report.md",
-    "plan": "reviews/revision_round_06_plan_for_review_round_05.md",
+    "review": "reviews/review_round_04_reviewer_02_report.md",
+    "plan": "reviews/revision_round_05_plan_for_review_round_05.md",
     "response": "reviews/review_round_05_author_response_to_reviewer_02.md",
     "reproduction": "round6_reproduction.md",
     "checks": "generated/round6_checks.json",
@@ -471,5 +471,13 @@
     "deferred": "R5-BTS-09 until submission readiness",
     "tests": "46 relevant BTS tests passed",
     "source_checkpoint_before_final_reconciliation": "82eac0f59bd85f29e0ae7a022c15281dc3ac3f6b"
+  },
+  "reviewer_02_filename_sequence": {
+    "map": "reviews/reviewer_02_sequence_rename_map.json",
+    "scope": "Reviewer 2 report/task filenames decremented by one; original body round references and response filenames preserved."
+  },
+  "consolidated_plan_filenames": {
+    "map": "reviews/revision_plan_filename_rename_map.json",
+    "scope": "Both filename round numbers match the review-round suffix; historical implementation cycles, task IDs and frozen protocols unchanged."
   }
 }

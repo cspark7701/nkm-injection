@@ -6,8 +6,8 @@ Booster-to-Storage transfer line*, 15 pages, with an eight-page supplement.
 **Sources.** This register merges two round-3 task registers into one list for the round-4 revision:
 - [Reviewer 1 round-3 tasks](review_round_03_reviewer_01_tasks.md), R3-BTS-01 to R3-BTS-08, from
   the [Reviewer 1 report](review_round_03_reviewer_01_report.md): focused major revision;
-- [Reviewer 2 round-3 tasks](review_round_03_reviewer_02_tasks.md), R2C-01 to R2C-10, from the
-  [Reviewer 2 report](review_round_03_reviewer_02_report.md): major revision.
+- [Reviewer 2 round-3 tasks](review_round_02_reviewer_02_tasks.md), R2C-01 to R2C-10, from the
+  [Reviewer 2 report](review_round_02_reviewer_02_report.md): major revision.
 
 Both source registers stay unchanged and authoritative for their reviewers' wording. Every source task appears
 below, in some cases split between two consolidated tasks. All tasks are **open**.

@@ -2,7 +2,7 @@
 
 Completed: 2026-10-31. Consolidated `revision_round_05_plan_for_review_round_04.md`
 and `review_round_05_reviewer_02_tasks.md` into the new
-[current revision register](../../paper_bts/reviews/revision_round_06_plan_for_review_round_05.md).
+[current revision register](../../paper_bts/reviews/revision_round_05_plan_for_review_round_05.md).
 
 The register preserves nine completed R5-BTS tasks with milestone links, maps all
 four pending R2E-BTS tasks to the ordered R6-BTS-01–04 checklist, and accounts for

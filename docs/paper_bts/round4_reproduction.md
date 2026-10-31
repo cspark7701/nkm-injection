@@ -1,6 +1,6 @@
 # Round-four BTS numerical and article reproduction
 
-Round 4 executes the [consolidated tasks](reviews/revision_round_04_plan_for_review_round_03.md) R4-BTS-01 to R4-BTS-14
+Round 4 executes the [consolidated tasks](reviews/revision_round_03_plan_for_review_round_03.md) R4-BTS-01 to R4-BTS-14
 (milestones 265–278). The environment is the same as in rounds 2–3: Python 3.11.9, pyAT 0.7.2.dev26, NumPy 2.4.6
 and SciPy 1.17.1, with this package installed. Every stage writes a new directory, refuses an existing one, and
 records the protocol, the environment and the source SHA-256 in its `configuration.json`.

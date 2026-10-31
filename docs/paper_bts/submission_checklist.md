@@ -2,7 +2,7 @@
 
 ## Current round-6 status (2026-10-31)
 
-All four scientific follow-up tasks are executed; see the [register](reviews/revision_round_06_plan_for_review_round_05.md),
+All four scientific follow-up tasks are executed; see the [register](reviews/revision_round_05_plan_for_review_round_05.md),
 [new response](reviews/review_round_05_author_response_to_reviewer_02.md) and [reproduction guide](round6_reproduction.md).
 The installed article has 20 pages and the supplement 10, with warning-free isolated builds. The evidence audit
 verifies 76 claims; selected current asset hashes and 46 relevant tests pass. Earlier status blocks below are
@@ -22,7 +22,7 @@ No journal acceptance or submission is claimed. The round-two checklist items be
 ## Round-5 status (2026-10-31)
 
 Current assets: a 19-page article and a 10-page supplement, built clean in `results/bts_round5_final_build`; the
-evidence audit verifies 73 claims, and `--verify` checks 83 asset hashes. The round-5 revision ([plan](reviews/revision_round_05_plan_for_review_round_04.md); milestones 283 onwards) answers
+evidence audit verifies 73 claims, and `--verify` checks 83 asset hashes. The round-5 revision ([plan](reviews/revision_round_04_plan_for_review_round_04.md); milestones 283 onwards) answers
 both round-4 reviews. Numerical and editorial work is recorded per task. These submission gates are still open and
 are not inferred from the numerical work:
 - **Target journal.** JKPS (Reviewer 1's context) or NIM A (the earlier recommendation) is not chosen. JKPS requires
@@ -41,7 +41,7 @@ Supplied and kept unchanged: funding (NRF RS-2022-00143178) and competing intere
 
 ## Round-4 status (2026-10-31)
 
-The round-4 revision ([consolidated tasks](reviews/revision_round_04_plan_for_review_round_03.md)) is in progress; milestones
+The round-4 revision ([consolidated tasks](reviews/revision_round_03_plan_for_review_round_03.md)) is in progress; milestones
 from 265 onwards record each task. R4-BTS-08 completed the following:
 - **Supplement.** Its date, introduction and nomenclature now follow the article: "error realizations", "matched
   reference", the "unrestricted" regime of the four-station study, and "historical" sections.

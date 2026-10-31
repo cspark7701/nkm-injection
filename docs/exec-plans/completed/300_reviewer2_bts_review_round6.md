@@ -6,8 +6,8 @@ The request named "round 5". The existing round-5 report is preserved unchanged,
 manuscript revised in response to it uses the next review-round number.
 
 **Output.**
-- `docs/paper_bts/reviews/review_round_06_reviewer_02_report.md` (new);
-- `docs/paper_bts/reviews/review_round_06_reviewer_02_tasks.md` (new; six checkbox tasks, R2F-BTS-01 to 06);
+- `docs/paper_bts/reviews/review_round_05_reviewer_02_report.md` (new);
+- `docs/paper_bts/reviews/review_round_05_reviewer_02_tasks.md` (new; six checkbox tasks, R2F-BTS-01 to 06);
 - a reviews index entry.
 
 No earlier review or response was changed. The R5-BTS-09 submission decisions stay deferred.

@@ -1,101 +1,144 @@
-# Reviewer 2 — BTS manuscript, round 5
+# Reviewer 2 — BTS manuscript, review round 6
 
-**Date:** 2026-10-31. Internal pre-submission assessment; this recommendation is not a journal decision.
+**Manuscript:** *Optical matching and beam loss in a booster-to-storage-ring transfer line for nonlinear-kicker
+injection at the Korea Light Source* (C. S. Park).
+**Version reviewed:** the revision-round-6 article at `79dce19`: `docs/paper_bts/paper.tex`, `paper.pdf`
+(20 pages), `supplement.tex` and `supplement.pdf` (10 pages). This version answers my
+[round-5 report](review_round_04_reviewer_02_report.md) through the
+[round-6 register](revision_round_05_plan_for_review_round_05.md).
 
-**Manuscript:** *Optical matching and beam loss in a booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*, Chong Shik Park.
-
-**Reviewed version:** `main` at `50d46991ca91290a500c7c3b50ca85f297dec6c7`: the 19-page [article](../paper.pdf), its [TeX source](../paper.tex), the 10-page [supplement](../supplement.pdf), supplementary source and bibliography. The revision cycle is round 5; its latest joint response answers **review round 4**.
-
-| Reviewed asset | SHA-256 |
+| Asset | SHA-256 prefix |
 | :--- | :--- |
-| `paper.tex` | `6354005e0c5846c2513b3e019b25b94cf62604d61efcfeb4d5309cf4a03a575b` |
-| `paper.pdf` | `315add56394a78edef721e4a243f341bbe71f25f1ab66b736c6c20460f138064` |
-| `supplement.tex` | `9faa2a3bad9b4214d081e518f818c06082fe2d4a29664f009b3d12e55b3c0e20` |
-| `supplement.pdf` | `2ff3418e64744099a6a5a6f228e319486fa1779c0da1b87c9fb1a9dd4781ff10` |
-| `paper.bib` | `f70c675c47c1e0103a8f5b8bf333eab1fd8caf26b05ab499f1c15429ad753d55` |
+| `paper.tex` | `c185307080f62137` |
+| `paper.pdf` | `735366a50e508694` |
+| `supplement.tex` | `9faa2a3bad9b4214` |
+| `supplement.pdf` | `8817fb6a94fae353` |
+| `paper.bib` | `f70c675c47c1e010` |
 
-## Recommendation and acceptability
+**Read first:**
+- all main-branch author responses, including the
+  [round-5 response to Reviewer 2](review_round_05_author_response_to_reviewer_02.md);
+- my reports of rounds 2–5 and Reviewer 1's round-4 report;
+- the round-5 and round-6 stage outputs I cite below.
 
-**Minor revision. The scientific study is acceptable in principle, but I would request the bounded corrections below before recommending acceptance of the revised text.** My round-4 recommendation of major revision is no longer warranted. The three required scientific remedies in that report have been addressed: the two jitter regimes are distinguished, the primary comparisons share reading errors, and the headline statistic is a defined jitter-integrated gain with uncertainty.
+**Date:** 2026-10-31. Internal pre-submission assessment, not a journal decision.
 
-The paper now supports a coherent accelerator-physics result. With matched boundary optics, reducing interior peak beta does not improve the nominal clearance at the limiting blade. Horizontal phase advance changes how entrance jitter reaches that blade, at a cost in exit angle. At much smaller betatron jitter, blade loss becomes negligible within this model and residual trajectory correction becomes the more relevant limitation. This is a useful parametric simulation article, with a stated model, controlled comparisons and an identifiable physical mechanism. It does not establish operating transmission, ring-capture efficiency or hardware tolerances.
+**Naming.** The request was to review the BTS paper "round 5". The round-5 report already exists and is preserved
+unchanged. This assessment of the manuscript revised in response to it therefore uses the next review-round number.
 
-The remaining issues concern numerical wording, evidence scope and consistency. They do not require a new large campaign, measured KLS jitter, vertical correction, a new lattice, or a global optimization proof. Shortening remains desirable but is not a scientific acceptance condition.
+**Scope.** The R5-BTS-09 submission decisions remain deferred to the submission-ready stage and are not assessed
+here. They cover the journal, data-availability wording, companion access, the jitter source and final approval.
 
-**Deferred scope:** the user's “RS-BTS09” is interpreted as the existing **R5-BTS-09** author-decision item. Its journal/access/approval and associated submission-stage decisions remain deferred until the submission-ready stage. They are excluded from the [round-5 revision checklist](review_round_05_reviewer_02_tasks.md) and do not drive this scientific recommendation. No such decision is inferred or marked complete here.
+## Recommendation
 
-## Author responses and evidence considered
+**Minor revision: acceptable after the small corrections below. I do not need to see the paper again; the editor
+or the author can verify them.**
 
-I read all eight preserved author-response documents:
+The round-6 revision did what the round-5 checklist asked:
+- the count-discrepancy percentage has a named denominator, and the 2.1σ is labelled a Poisson diagnostic;
+- the phase-edge, angle-weighting and jitter-dominance claims are scoped to their local searches, tested weights
+  and stress level;
+- the test populations and cross-references are reconciled, and the retained sensitivities are labelled with
+  their reading-noise convention.
 
-- Historical BTS-branch responses [01](historical_branch_review_round_01_author_response_to_reviewer_01.md), [02](historical_branch_review_round_02_author_response_to_reviewer_02.md) and [03](historical_branch_review_round_03_author_response_to_reviewer_03.md).
-- Main-branch responses to Reviewer 1 [round 1](review_round_01_author_response_to_reviewer_01.md) and [round 2](review_round_02_author_response_to_reviewer_01.md), and to [Reviewer 2 round 2](review_round_02_author_response_to_reviewer_02.md).
-- Joint responses to [review round 3](review_round_03_author_response_to_reviewers_01_02.md) and [review round 4](review_round_04_author_response_to_reviewers_01_02.md).
+The scientific result is sound, conditional and clearly bounded:
+- matched ends fix the nominal blade clearance;
+- in the nominal model the blade loss depends on μ_x alone;
+- the optics-based loss reduction is a stress-level property;
+- at low jitter, the steering residual and the uncorrected vertical trajectory dominate the delivered beam.
 
-The historical branch's acceptance language and its older aperture, emittance and engineering claims do not establish acceptance or validity for the current model. The later main-branch revisions explicitly supersede several of those claims. I assessed the current article and evidence, rather than combining incompatible historical campaigns.
+Three substantive points from my own round-5 assessment were not in the committed round-5 checklist, so the
+revision did not address them. Each is a few sentences or a short post-processing step, and none changes the
+paper's conclusions. They make the text consistent with the paper's own controlled evidence.
 
-I also examined both round-4 referee reports, the [executed revision plan](revision_round_05_plan_for_review_round_04.md), [round-5 protocol](../round5_protocol.json), [reproduction guide](../round5_reproduction.md), generated tables and `generated/round5.json`, and the selected raw final-test and edge-study records. I read extracted text of both PDFs and inspected the rendered primary comparison table on article page 13.
+## Status of the round-5 checklist
 
-## Disposition of the previous requests
+| Task | Status | Comment |
+| :--- | :--- | :--- |
+| R2E-BTS-01 count-discrepancy denominator | Resolved | "The prediction is 6.5 % below the observed count", with the Poisson diagnostic labelled and model-systematic uncertainty excluded. |
+| R2E-BTS-02 claim scope | Resolved | The D′ = 0 start accounting is corrected (two matched starts), iteration limits are retained, angle weighting is restricted to weights 3 and 10, and jitter dominance is scoped to the stress level. |
+| R2E-BTS-03 populations and references | Resolved | The stale Section 4.3 reference is fixed, and the sensitivities are labelled with their setting and reading-noise convention. |
+| R2E-BTS-04 response and verification | Resolved | 76 claims verify. The reviewed snapshot is retained, and the round-5 hashes are preserved. |
 
-| Previous request | Round-5 assessment |
-| :--- | :--- |
-| R2D-01: low-jitter residuals and two regimes | Resolved in substance. Table 8 and the abstract report approximately 0.18 mrad horizontal residual and 1.07 mm uncorrected vertical centroid. A few absolute statements still need qualification, below. |
-| R2D-02: shared monitor errors | Resolved. The protocol keys static reading noise by realization and monitor. Shared readings replace per-setting noise in the main test and layout comparison; older comparisons are disclosed. |
-| R2D-03: defined headline estimator | Resolved. The gain is a ratio of mean jitter-integrated losses, with paired realization-bootstrap uncertainty, on a declared primary population. |
-| R2D-04: lower phase edge | Substantially resolved by a targeted dispersion study. This establishes sensitivity within the searched family; it does not prove a unique binding mechanism. |
-| R2D-05 and R2D-11: consolidation | Partly resolved. The earlier fresh test and sampled sensitivity table moved to the supplement, and the jitter figure was simplified. Nineteen pages remain, but the scientific evidence need not be enlarged or removed to satisfy an arbitrary page target. |
-| R2D-06: angle-aware weighting | Resolved as a sensitivity test. The reported 0.413 to 0.411 mrad change supports a limited conclusion about that weighting, not a general impossibility result. |
-| R2D-07 and R2D-08: consistency and formatting | Substantially resolved. Remaining denominator and cross-reference corrections are identified below. |
-| R2D-09: citations | The response records removal of the unsupported stability generalization and correction of the conference-record description. No new independent literature audit was performed in this review. |
-| R2D-10: submission decisions | Deferred as instructed; not a revision-checklist item. |
-| R2D-12: point-by-point response | Resolved by the new joint response. A response to this review should accompany the next revision. |
+## Remaining comments
 
-The latest response also addresses Reviewer 1's distinctions between conditional predictions, integrated predictions and observed counts. I agree with those distinctions and with restricting phase-only statements to the nominal matched model; this does not substitute for Reviewer 1's own reassessment.
+### M1. The low-beta effect is still quoted from a population with per-setting reading errors
 
-## Evidence checks and their limits
+The Discussion says "low beta loses 0.21 and 0.13 percentage points less than the matched reference in the
+steering comparison and the second test". Section 4.2 quotes the 0.21 [−0.39, −0.06] from Table 4 as a resolved
+result.
 
-The evidence audit passes all **73 claim pointers** and the selected manuscript/asset hash verification passes. The **25 round-3/round-4 tests** pass. These checks establish consistency of selected records, not universal physical validity, and I did not rerun the production simulations or the full repository suite.
+Section 2.4 states that Table 4 used reading errors drawn separately for each setting. The paper's own controlled
+experiment (Section 4.2) shows that per-setting reading errors alone change a tracked loss by more than half: the
+loss-based setting gives 0.23 % with its own readings and 0.38 % with shared readings. The 0.21 is therefore not a
+controlled low-beta effect. Only the 0.13 from the shared-reading primary test is.
 
-From the 200 raw primary-test records, I independently reconstructed:
+**Requested.** Choose one:
+- run low beta through the shared-reading layout stage on the Table 4 realizations, a few minutes, and quote that
+  paired difference; or
+- in Section 4.2 and the Discussion, label the 0.21 as confounded by per-setting reading errors, and base the
+  low-beta conclusion on the primary test.
 
-- Mean integrated losses of **0.0132259606661** and **0.00295197735933** as fractions for the matched reference and edge setting. Their ratio is **4.48037334**; the declared 10,000 paired resamples with seed 97005 reproduce **[4.32593473, 4.62891107]**. The abstract's **4.48 [4.33, 4.63]** is supported within the stated nominal-covariance, linearized Gaussian surrogate.
-- Observed counts of **11,673**, **10,104**, **942** and **1**, against shot-conditional expectations of **11,705.22**, **10,153.74**, **880.45** and **0.5092**. The integrated dispersion-free expected-count equivalent is about **75.73**, which is a differently conditioned quantity.
-- The same per-shot lost counts for the original loss-based setting, its duplicate and the edge setting. The stronger particle-identity statement is recorded by the response; aggregate raw counts alone do not independently prove individual particle identities or equivalence of every perturbed map.
+### M2. The per-shot "bracket" is contradicted by the tracked loss-based count; characterize the excess
 
-The roughly 2.1-Poisson-standard-deviation excess in the edge row remains disclosed. I do not require a fresh campaign merely to eliminate this fluctuation. It should remain an unresolved validation discrepancy, with the standard-deviation calculation identified as a diagnostic approximation rather than a model-accuracy certificate. The single dispersion-free loss likewise cannot validate the unconditional tail at stated relative precision.
+Section 3.3 states that "per shot, the line loss is bracketed by the largest of these exact event probabilities and,
+as an upper bound, by their sum". In the primary test, the loss-based setting loses 942 particles, while the sum
+bound gives 880.7. The tracked count lies above the stated upper bound. This is a statement about the Gaussian,
+linearized model, which the tracking does not obey for these shots, so the sentence needs that qualification.
 
-## Required minor corrections
+The saved per-shot output (`results/bts_round5_campaign_20261031/final_test_b/raw_machines.json`) also shows where
+the excess comes from:
+- all 942 losses occur in 20 of the 600 shots;
+- one shot contributes 454 lost particles against 410.9 expected, which is 43 of the 61.5-particle excess and
+  about 2.4σ under its own binomial variance.
 
-### C1. Define the denominator of the validation discrepancy
+A shot losing about a fifth of its particles has its centroid within about one beam size of the blade, which is
+where linearization about the centroid is weakest.
 
-On page 13, Section 4.3 says 942 losses against 880 expected is “6.5 % more”; the Discussion repeats the percentage. The exporter computes `(observed − expected) / observed`. Using the unrounded edge expectation:
+**Requested.**
+- Qualify the Section 3.3 sentence as holding within the linearized Gaussian model.
+- Add one sentence to Section 4.3 saying that the excess comes mainly from one near-blade shot.
+- A nonlinear-moment check of that shot, with the round-2 Gauss–Hermite propagation applied to existing data, would
+  let the paper say whether the cause is linearization or a fluctuation. I recommend it, but do not require it if
+  the excess is reported as unresolved and localized.
 
-\[
-100(942-880.453324)/942=6.5336\%,\qquad
-100(942-880.453324)/880.453324=6.9903\%.
-\]
+### M3. Say what the headline interval covers
 
-Thus the model prediction is **6.5% below the observed count**, or the observed count is **7.0% above the prediction**. Either convention is acceptable if named consistently. Correct the text and the generating convention or label; retain the actual counts and the unresolved-discrepancy caveat. This is a reporting correction, not a change to the headline gain. When retaining the 2.1 figure, call it the reported Poisson approximation; it does not include model-systematic uncertainty or constitute a general validation tolerance.
+The abstract reports a "mean jitter-integrated loss 4.48 times smaller … (95 % interval 4.33–4.63)". Section 3.3
+defines the estimator correctly, but the interval is narrow because only the static-error realizations are
+resampled. The jitter enters analytically, and the value is close to the error-free ratio of about 4.7. A reader
+of the abstract alone may take it as a measured gain with full uncertainty.
 
-### C2. Keep conclusions within what the tests establish
+**Requested.** In the abstract or Section 4.3, add a short clause: the gain is a prediction of the linearized
+Gaussian model at the assumed jitter, and the interval reflects the sampling of error realizations only.
 
-Three small qualifications are needed:
+## Minor comments
 
-1. **Dispersion and the phase edge (Sections 4.3, 4.4 and 5).** The D′ sweep strongly supports the inherited dispersion conditions as an important restriction on the phase range found. However, the selected 32, 16 and 0 mrad searches stop at their iteration limits. At D′ = 0, only two of the three starts meet the driver's matching test: the `dispersion_free_best` start is recorded as `matched=false`. Correct the statement that all three starts establish the same matched edge. Carry the existing local-search qualification into Section 4.4 and the Discussion; describe a best-found phase shifting with D′, rather than an established exclusive cause. A new global search or proof is unnecessary.
-2. **Steering (Section 4.2).** Changing one endpoint weight from 3 to 10 with negligible improvement establishes that this tested reweighting does not materially improve the exit-angle rms. It does not establish that every scheme using position readings is incapable of improving angle, or that a direct angle measurement is necessary. The paper itself uses two separated position readings to constrain angle indirectly. Restrict the remedy statement to this instrumentation/error model and this weighting test; other estimators or layouts were not exhausted.
-3. **Regime and residuals (abstract and Discussion).** Attach “at the assumed stress-level jitter” to the opening statement that jitter dominates. Replace “the choice of μ_x does not reduce” the residual by a statement about the tested settings and correction scheme. Changing strengths also changes error response; the nominal transfer theorem does not prove invariance of corrected static residuals. Keep the low-jitter practical conclusion, which is supported.
+1. **Vertical residual.** The abstract and Discussion state that the vertical plane is uncorrected. Add that this is
+   because the modelled line has no vertical corrector, so the 1.07 mm is not read as a property of the matched
+   optics. The Discussion's instrumentation conclusion is otherwise well put.
+2. **Section 4.5.** "For each steered realization we therefore also evaluate …": the "therefore" has no antecedent
+   since the sampled roll table moved to the supplement.
+3. **Section 3.2.** "The larger tracked losses of some test populations" is right for the earlier populations, but
+   in the primary test the tracked loss (0.97 %) is below the integrated one (1.32 %). Write "different".
+4. **Figures 5 and 6.** The legends still say "Loss-based (R3)", while the text and Table 6 use "Loss-based" for the
+   converged edge setting. The two are equivalent, so use one name (`SHORT['robust']` in
+   `export_bts_round4_assets.py`).
+5. **Length.** The article grew to 20 pages, about 10,100 tokens before the references. This is advisory and not a
+   condition of acceptance. Table 4 could move to the supplement once M1 is resolved through Table 5.
 
-### C3. Remove a stale primary-test statement and clarify retained populations
+## Assessment
 
-Section 4.2 states that the low-beta loss change is unresolved on the fresh test of Section 4.3. The current primary test there instead gives **−0.13 [−0.24, −0.04] percentage points**, resolving a decrease on that population. The unresolved result belongs to the earlier test now in supplement Section 5. Name the earlier test explicitly and link it correctly, preserving the population-dependent conclusion already stated in the Discussion.
+The paper is a careful parametric study with a correct mechanism, controlled comparisons and honestly stated
+limits. The items above are text corrections and at most one short rerun. They bring two remaining statements into
+line with the paper's own evidence, and say what the headline number is.
 
-Label the inherited jitter/blade-sweep predictions sufficiently clearly to distinguish their earlier loss-based setting and reading-noise convention from the new shared-reading primary comparison. Their source files are already retained; no rerun is required merely to keep them as labelled sensitivity results. Remove ambiguous table-generation numbers from current status/response descriptions when they no longer match the compiled article; the primary test is now Table 6 and the residual table is Table 8.
+**I recommend acceptance after these minor corrections**, subject to the deferred submission decisions.
 
-## Editorial advice and final assessment
+## Confidential comments to the editor
 
-The article remains longer than its central argument needs. A further edit could compress repeated descriptions of the baseline, Gaussian surrogate and historical campaigns. Keep the author-requested baseline plots and literature discussion if desired; do not omit adverse outcomes or necessary assumptions to hit a page target. I do not make shortening a condition of scientific acceptance.
+Across five rounds the author has repeatedly let new evidence overturn earlier statements. The round-5
+shared-reading control is a good example.
 
-The revised manuscript has moved beyond a technical campaign report: it explains a constrained design trade, tests it on paired held-out machines and states where that trade ceases to matter. Its scope remains a study of the specified design version and assumed errors. After C1–C3 and a consistent response/evidence update, **I would recommend acceptance on scientific grounds**. Formal submission readiness and the deferred author decisions are separate stages.
-
-The executable checklist for this review is [Reviewer 2 round-5 revision tasks](review_round_05_reviewer_02_tasks.md). No manuscript revision was executed by this review; earlier reports and responses are preserved.
+I checked M1 against Sections 2.4 and 4.2, and M2 against the saved per-shot output. Neither affects the main
+conclusions.

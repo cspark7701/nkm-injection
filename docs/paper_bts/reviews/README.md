@@ -23,7 +23,10 @@ response; no earlier main-branch Reviewer 2 report is invented. In particular, t
 
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
-its conclusions are historical. The latest Reviewer 1 assessment is round 4; round 3 is retained below as history.
+its conclusions are historical. The latest Reviewer 1 assessment is round 4; Reviewer 2's latest is
+[round 5](review_round_05_reviewer_02_report.md), recommending minor revision and scientific acceptance in
+principle after bounded corrections. The [round-5 checklist](review_round_05_reviewer_02_tasks.md) is pending.
+Earlier assessments are retained below as history.
 
 | Review | Recommendation | Revision register |
 | :--- | :--- | :--- |
@@ -192,3 +195,17 @@ The [joint response](review_round_04_author_response_to_reviewers_01_02.md), 202
 R5-BTS-01 to 10 (milestones 283–292) against both round-4 reports. The [round-5 plan](revision_round_05_plan_for_review_round_04.md)
 shows each task with its milestone and commit; R5-BTS-09 stays open for author decisions. All reports, task
 registers and earlier responses are unchanged. No reassessment or journal decision is implied.
+
+## Reviewer 2 round-5 assessment
+
+[Reviewer 2 round-5 report](review_round_05_reviewer_02_report.md), 2026-10-31, assesses the 19-page article
+and 10-page supplement at `50d4699`, considering all eight preserved author responses. Recommendation:
+**minor revision; scientifically acceptable in principle after bounded corrections**. The round-4 major
+requests on residual delivery errors, shared monitor noise and the headline estimator are resolved.
+
+The [four pending R2E-BTS checkbox tasks](review_round_05_reviewer_02_tasks.md) cover the validation-percentage
+denominator, qualifications to phase-edge/steering claims, population cross-references and response/evidence
+reconciliation. No new broad campaign is required. At the author's instruction, R5-BTS-09 decisions are
+deferred to the submission-ready stage and excluded from this checklist. No revision is executed by this
+review; all previous reports, task lists and responses remain unchanged. This is a pre-submission scientific
+recommendation, not a journal acceptance.

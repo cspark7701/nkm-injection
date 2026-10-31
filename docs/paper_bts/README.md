@@ -5,7 +5,11 @@ Current state (2026-10-31): the round-5 revision is executed. It answers both ro
 [round-5 plan](reviews/revision_round_05_plan_for_review_round_04.md) R5-BTS-01 to 10 (milestones 283–292). See the
 [joint response](reviews/review_round_04_author_response_to_reviewers_01_02.md), the
 [round-5 protocol](round5_protocol.json) and the [round-5 reproduction guide](round5_reproduction.md). The round-4
-records below are kept. No reviewer has reassessed the revision, and the author decisions (R5-BTS-09) are open.
+records below are kept. [Reviewer 2's round-5 assessment](reviews/review_round_05_reviewer_02_report.md)
+recommends minor revision, with scientific acceptance in principle after bounded corrections;
+the [four-item checklist](reviews/review_round_05_reviewer_02_tasks.md) is pending. Reviewer 1's latest
+assessment remains round 4. R5-BTS-09 author decisions are deferred to the submission-ready stage
+and excluded from the new checklist. No journal acceptance is recorded.
 
 Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:

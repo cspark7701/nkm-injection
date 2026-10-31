@@ -847,3 +847,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 292. [**Milestone 292 — R5-BTS-10: final reconciliation and joint response (round 5)**](292_r5_bts_10_reconciliation.md)
     - 73 claims verified, 83 asset hashes with `--verify` passing, a clean 19/10-page build, and 771 tests passing. Adds the joint response to both round-4 reviews, the reproduction guide, updated status documents, and a verified round-5 referee increment.
+
+293. [**Milestone 293 — Reviewer 2 BTS round-5 assessment**](293_reviewer2_bts_round5_report.md)
+    - Reviews all eight author responses and the current article/evidence. Recommends minor revision, scientifically acceptable in principle; adds four pending checkbox tasks and defers R5-BTS-09 to submission readiness. Verifies 73 claims, selected asset hashes, 25 tests and an independent reconstruction of the primary gain. No revision tasks executed.

@@ -23,8 +23,11 @@ response; no earlier main-branch Reviewer 2 report is invented. In particular, t
 
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
-its conclusions are historical. The latest Reviewer 1 assessment is round 4; Reviewer 2's latest is
-[round 5](review_round_05_reviewer_02_report.md), recommending minor revision and scientific acceptance in
+its conclusions are historical. [Reviewer 1's latest assessment is round 5](review_round_05_reviewer_01_report.md):
+accept the scientific content within its stated scope, with no mandatory scientific revision.
+Its [follow-up checklist](review_round_05_reviewer_01_tasks.md) records optional editing and a conditional
+technical package check. Reviewer 2's independent assessments are recorded below; its
+[round-5 report](review_round_05_reviewer_02_report.md) recommended minor revision and scientific acceptance in
 principle after bounded corrections. The [round-5 checklist](review_round_05_reviewer_02_tasks.md) records four items open at review.
 The [round-6 consolidated register](revision_round_06_plan_for_review_round_05.md) records execution of all four follow-up corrections,
 preserving the completed round-5 work and the original reviewer checklist.
@@ -230,3 +233,17 @@ correction, scoped phase-edge/steering conclusions and repaired population refer
 The [round-6 reproduction guide](../round6_reproduction.md) distinguishes post-processing from a simulation rerun.
 Original reviewer checklists remain open-at-review records; the consolidated register records completion.
 R5-BTS-09 remains deferred. No reassessment, author approval or journal acceptance is implied.
+
+## Reviewer 1 round-5 assessment
+
+[Reviewer 1's round-5 report](review_round_05_reviewer_01_report.md), 2026-10-31, assesses the current
+20-page article and 10-page supplement at `79dce19`, after the round-6 implementation, using all nine
+author responses. Recommendation: **accept the scientific content within its stated conditional-model scope;
+no mandatory scientific revision**. This updates Reviewer 1's round-4 recommendation; it does not revise
+Reviewer 2's independent round-5 report or constitute a journal decision.
+
+The [two-item follow-up checklist](review_round_05_reviewer_01_tasks.md) distinguishes optional shortening
+from a technical package update before evidence delivery. The existing incremental recipe lacks the new
+round-6 audit script referenced by the current reproduction guide; local numerical checks remain valid.
+R5-BTS-09 author decisions stay deferred and outside the checklist. All prior reports, task lists and responses
+are preserved, and no revision task is executed by this assessment.

@@ -6,7 +6,10 @@ which recommended minor revision and scientific acceptance in principle after co
 [new response](reviews/review_round_05_author_response_to_reviewer_02.md) and
 [round-6 reproduction guide](round6_reproduction.md). The original reviewer checklist records the state at review;
 the consolidated register records execution. No reassessment or journal acceptance is implied.
-Reviewer 1's latest assessment remains round 4. R5-BTS-09 decisions remain deferred to submission readiness.
+[Reviewer 1's round-5 assessment](reviews/review_round_05_reviewer_01_report.md) accepts the scientific content
+within the stated conditional-model scope, with no mandatory scientific revision. Its
+[follow-up checklist](reviews/review_round_05_reviewer_01_tasks.md) separates optional shortening from a
+conditional evidence-package check. R5-BTS-09 decisions remain deferred to submission readiness.
 The completed round-5 implementation and all earlier records are retained below.
 
 Current one-column article (20 pages, with a 10-page supplement), *Optical matching and beam loss in a

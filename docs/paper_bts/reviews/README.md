@@ -1,5 +1,7 @@
 # BTS manuscript referee reviews
 
+Format update, 2026-11-01: the author selected NIM A. The [conversion guide](../nima_submission.md) identifies the Elsevier-format sources and rebuilt PDFs. The main scientific body and selected numerical evidence are unchanged; dated review hashes below retain their pre-conversion identities. Only journal selection is resolved among the deferred author decisions.
+
 ## Review document filenames
 
 Filenames now state the round, reviewer and document role, with two-digit numbers:

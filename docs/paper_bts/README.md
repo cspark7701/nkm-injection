@@ -1,5 +1,7 @@
 # BTS optics manuscript
 
+NIM A is the selected target (2026-11-01). The [Elsevier-format manuscript and submission guide](nima_submission.md) describe the one-column preprint, numbered references, highlights and flat source archive. Final author approval and remaining access/declaration decisions are pending.
+
 Current state (2026-10-31): all six tasks in the [Reviewer 2 filename-round-5 checklist](reviews/review_round_05_reviewer_02_tasks.md)
 and both [Reviewer 1 follow-ups](reviews/review_round_05_reviewer_01_tasks.md) are addressed (milestones 303 to 308).
 This is implementation round 7; historical review-body and earlier implementation numbers are preserved.
@@ -9,8 +11,8 @@ The revision qualifies the confounded low-beta contrast, localizes the loss exce
 clarifies model uncertainty, updates legends and shortens repeated text. A fresh portable increment is
 verified from an extracted root. No tracking or optimization campaign was rerun.
 [Reviewer 1 round 6](reviews/review_round_06_reviewer_01_report.md) recommends scientific acceptance within the stated model scope, with [no open mandatory scientific revisions](reviews/review_round_06_reviewer_01_tasks.md). Both earlier follow-ups are verified closed. [Reviewer 2 round 6](reviews/review_round_06_reviewer_02_report.md) independently recommends acceptance with optional suggestions. These are pre-submission referee assessments, not journal acceptance.
-R5-BTS-09 author decisions stay deferred to submission readiness.
-The [journal recommendation](journal_recommendations.md) ranks NIM A, PRAB, JINST, NST and JKPS for the current article; it records advice without closing the author’s journal-selection decision.
+The journal-selection part of R5-BTS-09 is now resolved by the NIM A instruction; other author decisions remain pending.
+The [journal recommendation](journal_recommendations.md) ranks NIM A, PRAB, JINST, NST and JKPS for the current article; it preserves the advice preceding the subsequent NIM A selection.
 
 Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:
@@ -43,7 +45,7 @@ Round-4 state (2026-10-31, historical): the round-4 revision answered both round
   - The dispersion-free exit is tracked.
 - **Baseline.** The unmatched starting point (Figures 2–3) is not a competing design.
 
-**Open author decisions:** the target journal (JKPS or NIM A), the data-availability wording, a source for the
+**Open author decisions:** the data-availability wording, a source for the
 booster jitter, and final approval (see the [submission checklist](submission_checklist.md)).
 
 The earlier round-two article (four-station model, hypothetical restrictions) is preserved in the supplement and the

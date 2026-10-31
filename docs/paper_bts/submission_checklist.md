@@ -1,6 +1,16 @@
 # BTS submission preparation and historical records
 
-## Current filename-round-5 follow-up (2026-10-31)
+## NIM A format preparation (2026-11-01)
+
+- [x] NIM A selected by the author as the submission target.
+- [x] Convert the article to Elsevier `elsarticle` front matter and numbered references.
+- [x] Shorten the abstract, supply six keywords and four editable highlights.
+- [x] Build current 19-page article and 10-page supplement; prepare and independently rebuild a flat source archive.
+
+See the [NIM A guide](nima_submission.md) for exact commands, outputs and remaining author-dependent matters. The journal-selection decision supersedes the unchosen-target entries in the historical records below. Other deferred author decisions remain open; final approval is not inferred from a formatting request. No external submission occurred.
+
+
+## Pre-conversion filename-round-5 follow-up (2026-10-31)
 
 The six Reviewer 2 corrections and two Reviewer 1 follow-ups are addressed; see the
 [joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md) and [reproduction guide](round7_reproduction.md).

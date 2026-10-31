@@ -904,3 +904,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 311. [**Milestone 311 — BTS journal recommendation**](311_bts_journal_recommendations.md)
     - Saves the ranked top five and submission strategy, with NIM A first and PRAB as the specialist alternative. Links publisher scopes and preserves deferred author decisions.
+
+312. [**Milestone 312 — BTS manuscript in NIM A format**](312_bts_nima_format_submission.md)
+    - Converts the article to Elsevier format, shortens its abstract, adds highlights and a flat source builder, and verifies 19/10-page PDFs after archive extraction. Eighty claims, 92 hashes and 46 tests pass; prior scientific/review records are preserved.

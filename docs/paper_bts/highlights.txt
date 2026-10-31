@@ -1,0 +1,4 @@
+- Matched boundary optics fix the nominal injection-septum blade clearance.
+- Phase advance partitions incoming jitter between exit position and angle.
+- The best-found optics reduce modelled loss at the cost of exit-angle jitter.
+- At low jitter, steering residuals dominate the delivered beam error.

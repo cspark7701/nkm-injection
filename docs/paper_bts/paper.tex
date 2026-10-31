@@ -53,7 +53,8 @@ error realizations. These losses assume a
 stress level of booster jitter, 1.3 and 2.2 beam sizes in position and angle. At
 0.1--0.2 of that level the blade loss is negligible for every matched setting, and
 the exit centroid is set mainly by what steering leaves: about \SI{\BtsRFiveResXpTenth}{\milli\radian} rms in
-horizontal angle and \SI{\BtsRFiveResYZero}{\milli\metre} in the uncorrected vertical plane. A dispersion-free
+horizontal angle and \SI{\BtsRFiveResYZero}{\milli\metre} in the vertical plane, for which the
+modelled line has no corrector. A dispersion-free
 exit lowers the blade loss further. Storage-ring capture is outside the scope of the
 study.
 \end{abstract}
@@ -428,7 +429,7 @@ trajectory after steering, the optics errors and roll coupling add to this jitte
 the test losses are computed with the full transport of each realization
 (Sections~\ref{sec:steering-results} and \ref{sec:design}). Averaged over the Gaussian
 jitter in the linearized model, these static contributions raise the blade loss of the error-free line by only
-a few percent (Section~\ref{sec:sensitivity}); the larger tracked losses of some test
+a few percent (Section~\ref{sec:sensitivity}); the different tracked losses of some test
 populations reflect the jitter tail sampled by their 600 shots.
 
 \subsection{Loss-based observable and design}\label{sec:loss}
@@ -812,7 +813,7 @@ the primary comparison in Table~\ref{tab:test4} uses the converged edge setting 
 shared reading errors. The residual table uses the matched reference from the
 same earlier jitter sweep.
 
-For each steered realization we therefore also evaluate the jitter-integrated loss:
+For each steered realization we also evaluate the jitter-integrated loss:
 Eq.~(\ref{eq:loss}) averaged over the Gaussian entrance jitter on that realization's
 steered line, within the linearized transport and the nominal beam covariance. It
 resolves losses far below the reach of sampled shots. Table~\ref{tab:jitter} scales the position and angle jitter together on a further
@@ -941,7 +942,7 @@ horizontal angle left by steering, about \SI{\BtsRFiveResXpTenth}{\milli\radian}
 vertical trajectory, about \SI{\BtsRFiveResYZero}{\milli\metre} for the matched reference.
 For the tested settings and correction scheme, changing the matched optics leaves
 these residuals as the main delivery errors. The vertical trajectory is uncorrected
-in every setting. In this low-jitter regime, correction and instrumentation,
+in every setting because the modelled line has no vertical corrector. In this low-jitter regime, correction and instrumentation,
 especially in the vertical plane, therefore matter more for this line than the
 choice among the tested matched optics.
 With sampled shots the loss is heavy-tailed and its population mean varies between

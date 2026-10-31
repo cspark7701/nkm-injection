@@ -19,7 +19,7 @@ P = ROOT / 'docs/paper_bts'
 CAMPAIGN = ROOT / 'results/bts_round4_campaign_20261030'
 plt.rcParams.update({'font.size': 9, 'pdf.fonttype': 42, 'pdf.compression': 6})
 COLORS = {'reference': '#1f5fa8', 'low_beta': '#d1495b', 'robust': '#2a9d55', 'scan_best': '#7b3294', 'free_best': '#e08214'}
-SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based (R3)', 'scan_best': 'Scan grid best',
+SHORT = {'reference': 'Matched', 'low_beta': 'Low beta', 'robust': 'Loss-based', 'scan_best': 'Scan grid best',
          'edge_best': 'Phase edge', 'free_best': 'Disp.-free'}
 
 

@@ -38,13 +38,14 @@ responses and campaigns are preserved.
 
 ## Editorial
 
-- [ ] **R2F-BTS-04 — Wording and labels.**
-  - [ ] Attribute the uncorrected vertical residual to the absence of a vertical corrector in the modelled line, in
+- [x] **R2F-BTS-04 — Wording and labels.**
+  - [x] Attribute the uncorrected vertical residual to the absence of a vertical corrector in the modelled line, in
         the abstract and the Discussion (minor 1).
-  - [ ] Remove the dangling "therefore" in Section 4.5 (minor 2).
-  - [ ] Write "different tracked losses" in Section 3.2 (minor 3).
-  - [ ] Use one setting name in the Figure 5 and 6 legends, with "Loss-based" for the equivalent round-3 and edge
+  - [x] Remove the dangling "therefore" in Section 4.5 (minor 2).
+  - [x] Write "different tracked losses" in Section 3.2 (minor 3).
+  - [x] Use one setting name in the Figure 5 and 6 legends, with "Loss-based" for the equivalent round-3 and edge
         settings, and regenerate those figures (minor 4).
+  - **Done:** milestone [306](../../exec-plans/completed/306_r2f_bts_04_wording_figures.md). Vertical residual attributed to the absent vertical corrector; dangling wording fixed; both legends regenerated as Loss-based and their PDF text verified. Numerical figure data are unchanged.
 - [ ] **R2F-BTS-05 — Optional shortening (minor 5, advisory).**
   - [ ] Consider moving Table 4 to the supplement once R2F-BTS-01 is settled.
 - [ ] **R2F-BTS-06 — Reconciliation and response.**

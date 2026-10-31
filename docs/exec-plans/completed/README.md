@@ -886,3 +886,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 305. [**Milestone 305: R2F-BTS-03 headline interval scope**](305_r2f_bts_03_interval_scope.md)
     - Labels the headline as a linearized Gaussian prediction and limits its interval to sampling error realizations, excluding model/input uncertainty. Numerical values unchanged.
+
+306. [**Milestone 306: R2F-BTS-04 wording and figure labels**](306_r2f_bts_04_wording_figures.md)
+    - Attributes the vertical residual to the absent corrector, repairs wording and regenerates both figure legends with the Loss-based name. Numerical data unchanged.

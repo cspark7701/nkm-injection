@@ -646,8 +646,13 @@ subject to the six exit equalities, the strength bounds and peak beta functions 
 at most \SI{60}{\metre} in both planes, from five starts per edge (Fig.~\ref{fig:scan}).
 Matched settings are found on the grid from \SI{\BtsRFourScanConfMin}{\degree} to \SI{\BtsRFourScanConfMax}{\degree}. The lower edge,
 \SI{\BtsRFourEdgeConfiguredMin}{\degree}, is reached by three converged searches with no strength bound and neither
-peak-beta limit active, so it is set by the matching conditions themselves within
-the bounds, as far as these local searches show; the upper edge,
+peak-beta limit active. A small study that changes only the exit dispersion target
+moves it. With $D_x$ fixed, lowering $D'_x$ at m4 from \SI{47.5}{\milli\radian} to 32, 16 and
+\SI{0}{\milli\radian} lowers the edge to \SI{\BtsRFiveEdgeDpMid}{\degree}, \SI{\BtsRFiveEdgeDpLow}{\degree} and \SI{\BtsRFiveEdgeDpZero}{\degree}, again with no bound
+or peak limit active; all three starts reach the same values, although these searches
+stop at their iteration limit. Setting $D_x=0$ at the configured $D'_x$ raises the edge to
+\SI{\BtsRFiveEdgeDZeroConf}{\degree}, where the vertical \SI{60}{\metre} limit is active. Within these local searches,
+the lower edge is set by the exit dispersion slope $D'_x$. The upper edge,
 \SI{\BtsRFourEdgeConfiguredMax}{\degree}, is set by the \SI{60}{\metre} limit in both planes. These are ranges
 found by sampled and local searches, not a proof of global reachability. The
 matched reference (\SI{\BtsRThreeRefMu}{\degree}) and low-beta (\SI{\BtsRThreeLowMu}{\degree}) settings lie near the
@@ -760,7 +765,9 @@ target, the same for every matched setting, and absent for a dispersion-free exi
 
 The configured exit dispersion is that of the injected beam in the configuration of
 the NKM injection study; we have found no derivation of it from the ring optics,
-whose dispersion at the injection kicker is nearly zero. Matching the same
+whose dispersion at the injection kicker is nearly zero. Because this slope sets the
+lower phase-advance edge (Section~\ref{sec:design}), it also limits how far the
+loss-based setting can move jitter from the blade. Matching the same
 Courant--Snyder parameters with $D_x=D'_x=0$ at m4 is feasible within the strength
 bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\ bounded random starts keep both peak
 betas below \SI{60}{\metre} (smallest larger peak \SI{\BtsRThreeFreeMinPeak}{\metre}). The constrained searches
@@ -908,7 +915,8 @@ advance. The line chooses whether the jitter appears as
 position at the blade or as angle at the injection kicker, but it cannot remove it.
 For the configured exit, the matched settings found span about \SI{32}{\degree} of phase
 advance; the error-free blade loss depends on $\mu_x$ alone and is smallest at the lower
-edge of that range, which no strength bound or peak-beta limit sets. On the primary test
+edge of that range, which the exit dispersion slope inherited from the companion
+configuration sets. On the primary test
 population the best-found setting there has a mean jitter-integrated loss \BtsRFiveGain\ times
 smaller than the matched reference (\BtsRFiveGainLo--\BtsRFiveGainHi), at \SI{13}{\percent} more angle jitter. A dispersion-free exit extends
 the range to smaller $\mu_x$ and lowers the loss much further, again at the cost of

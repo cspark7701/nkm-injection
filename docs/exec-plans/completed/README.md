@@ -832,3 +832,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 287. [**Milestone 287 — R5-BTS-04: conclusions, baseline remnant and number formats**](287_r5_bts_04_conclusions_formatting.md)
     - Replace "unchanged loss" with the population-dependent low-beta differences tied to its phase advance, and correct the dispersion-free and baseline sentences. Use one dispersion-free angle value, proper minus signs and a uniform Table 9 format.
+
+288. [**Milestone 288 — R5-BTS-05: origin of the lower phase-advance edge**](288_r5_bts_05_phase_edge.md)
+    - A declared edge study shows the lower μ_x edge falls from 200.2° to 194.9°, 189.5° and 184.1° as the exit D′ goes from 47.5 to 32, 16 and 0 mrad, with no bound active. Within local searches, the inherited D′ sets the edge.

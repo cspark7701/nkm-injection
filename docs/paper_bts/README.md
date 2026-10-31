@@ -4,8 +4,10 @@ Current state (2026-10-31): the round-4 revision is executed. It answers both ro
 (focused major revision) and Reviewer 2 (major revision), through the
 [consolidated tasks](reviews/round4_consolidated_revision_tasks.md) R4-BTS-01 to 14 (milestones 265–278). See the
 [joint response](reviews/author_response_round4_20261031.md), the [round-4 protocol](round4_protocol.json) and the
-[round-4 reproduction guide](round4_reproduction.md). No reviewer has reassessed it yet, and the author's scientific
-approval is pending.
+[round-4 reproduction guide](round4_reproduction.md). [Reviewer 1's round-4 assessment](reviews/reviewer1_bts_20261031_main_round4_report.md)
+now recommends minor revision, with [seven pending checkbox items](reviews/reviewer1_bts_20261031_main_round4_revision_tasks.md).
+See the [review index](reviews/README.md) for separate assessments. The author's scientific approval remains pending;
+no journal acceptance or submission is implied.
 
 Round-four one-column article (19 pages, with a 9-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:

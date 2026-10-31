@@ -805,3 +805,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 278. [**Milestone 278 — R4-BTS-09: reconciliation, joint response and referee increment**](278_r4_bts_09_reconciliation.md)
     - 14 new claims (63 verified), 75 final asset hashes with `--verify` passing, and final 19/9-page PDFs installed. Adds the joint round-4 response, the reproduction guide and a verified referee increment over the round-3 attachment.
+
+280. [**Milestone 280 — Reviewer 1 BTS round-4 report**](280_bts_reviewer1_round4_report.md)
+    - Credits the prior major remedies and recommends minor revision, with seven pending checkbox tasks and verified scientific/evidence scope; preserves the separate Reviewer 2 assessment.

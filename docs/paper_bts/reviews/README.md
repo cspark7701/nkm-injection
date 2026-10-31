@@ -2,7 +2,7 @@
 
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
-its conclusions are historical. The current Reviewer 1 round-3 assessment is linked below.
+its conclusions are historical. The latest Reviewer 1 assessment is round 4; round 3 is retained below as history.
 
 | Review | Recommendation | Revision register |
 | :--- | :--- | :--- |
@@ -125,3 +125,15 @@ The [joint response](author_response_round4_20261031.md), 2026-10-31, records th
 
 The joint response also answers Reviewer 2's questions. All reports, task registers and earlier responses are
 unchanged. No reassessment or journal decision is implied.
+
+## Reviewer 1 round-4 assessment
+
+[Reviewer 1 round-4 report](reviewer1_bts_20261031_main_round4_report.md), 2026-10-31, assesses the 19-page article
+and nine-page supplement at `6a968f8`, considering all seven historical/current author responses. Recommendation:
+**minor revision; scientifically acceptable in principle after bounded corrections, not unconditional acceptance**.
+The prior major remedies are credited. Remaining items concern conditional versus jitter-integrated predictions,
+the accuracy claim for the new sparse-loss rows, nominal horizontal transfer equivalence and low-jitter residuals,
+contradictory conclusions, provenance/legend details and author-dependent submission gates.
+The [seven checkbox tasks](reviewer1_bts_20261031_main_round4_revision_tasks.md), R1D-BTS-01–07, are all pending.
+No new major campaign or executed revision is implied. Earlier reports, registers and author responses remain
+unchanged; the separate Reviewer 2 assessment retains its own recommendation.

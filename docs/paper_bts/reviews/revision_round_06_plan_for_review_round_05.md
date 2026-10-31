@@ -8,7 +8,7 @@ It consolidates these two source lists without replacing their historical record
 - [Round-5 plan answering both round-4 reviews](revision_round_05_plan_for_review_round_04.md): R5-BTS-01–10, with nine completed items and one deferred author-decision item.
 - [Reviewer 2 round-5 revision checklist](review_round_05_reviewer_02_tasks.md): R2E-BTS-01–04, all pending at review, following the [round-5 report](review_round_05_reviewer_02_report.md) on manuscript `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
 
-**Current state: nine completed source tasks, one completed and three pending follow-up tasks, one deferred source item.**
+**Current state: nine completed source tasks, two completed and two pending follow-up tasks, one deferred source item.**
 The active queue below uses **R6-BTS-01–04** to distinguish this revision cycle from the completed round-5 implementation. Each item retains its original reviewer ID. Review round 5 and revision round 6 are different identifiers.
 
 Reviewer 2 recommends minor revision and scientific acceptance in principle after bounded corrections. Reviewer 1's latest assessment remains round 4. Consolidation does not execute a revision, imply author approval or constitute journal acceptance. Both source lists, their completion evidence, all previous reports and author responses remain unchanged. The old plan's opening “all tasks pending” sentence describes its initial preparation; its checked entries and final completion summary record the later execution state.
@@ -43,13 +43,14 @@ All four items are required by the new reviewer checklist; completion is recorde
   **Completion:** the chosen percentage reconstructs from unrounded counts and matches the rendered text. No new tracked particles are required for this correction.
   **Done:** milestone [295](../../exec-plans/completed/295_r6_bts_01_validation_percentage.md); exporter names the observed-count denominator, the shortfall reconstructs as 6.533617385%, and the isolated article build passes without warnings. Counts and headline gain are unchanged.
 
-- [ ] **R6-BTS-02 — Qualify phase-edge, steering and residual claims.**
+- [x] **R6-BTS-02 — Qualify phase-edge, steering and residual claims.**
   **Source:** R2E-BTS-02, report C2; follows completed R5-BTS-03/05/06.
   - Correct D′ = 0 start accounting: `dispersion_free_best` fails the declared matching test, while two starts yield matched candidates. Retain iteration-limit flags for the changed-D′ searches.
   - Describe the phase shift with D′ as evidence within the local searches. Do not infer an exclusive binding cause or a globally certified edge. Carry that qualification through Results and Discussion.
   - Limit the endpoint-weighting conclusion to the tested change from 3 to 10 and the assumed readings/error model. Do not infer that position readings generally cannot improve angle or that a direct angle measurement is necessary.
   - Scope the opening jitter-dominance statement to the assumed stress-level jitter. Scope statements about static-residual invariance to the tested settings and correction scheme; preserve the supported two-regime conclusion.
   **Completion:** claims in the abstract, Results and Discussion agree with the stored match/termination and steering records. Wording corrections suffice; no new optimization is mandatory.
+  **Done:** milestone [296](../../exec-plans/completed/296_r6_bts_02_claim_scope.md); match counts verified against stored searches, causal/steering statements narrowed to tested cases, and isolated article build passes without warnings.
 
 - [ ] **R6-BTS-03 — Reconcile test populations, sensitivity labels and cross-references.**
   **Source:** R2E-BTS-03, report C3; follows completed R5-BTS-01/04/07/08.
@@ -96,4 +97,4 @@ Every top-level task from both input lists is accounted for. Completed tasks are
 
 Preserve the 36-element BTS source lattice, protected scientific inputs, earlier campaigns and NKM manuscript. Any later numerical work must use a new results directory and record assumptions, units, seeds and validation. Do not silently change assumptions shared with the NKM paper. Optional article shortening must preserve unfavorable results and necessary qualifications.
 
-This document consolidates requirements only. **Active tasks completed: 1 of 4.** Consolidation itself executed no revisions.
+This document consolidates requirements only. **Active tasks completed: 2 of 4.** Consolidation itself executed no revisions.

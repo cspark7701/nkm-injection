@@ -856,3 +856,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 295. [**Milestone 295: R6-BTS-01 validation percentage**](295_r6_bts_01_validation_percentage.md)
     - Defines the observed-count denominator, corrects the manuscript to a 6.5% prediction shortfall, and qualifies the Poisson diagnostic. Exporter and isolated article build pass; original counts and gain are unchanged.
+
+296. [**Milestone 296: R6-BTS-02 claim scope**](296_r6_bts_02_claim_scope.md)
+    - Corrects matching-start accounting and qualifies phase-edge, steering and residual claims. Stored flags verify and the isolated article builds without warnings. No new numerical campaign.

@@ -40,7 +40,7 @@ clearance of the injection-septum blade, the active restriction, is the same for
 every matched setting, and lowering the interior peak beta changes only interior
 clearances. The quadrupoles act on the blade loss through the trajectory. After
 static correction with field trims of existing dipoles, booster shot jitter
-dominates. In the nominal matched model its partition between exit position and
+dominates at the assumed stress level. In the nominal matched model its partition between exit position and
 angle depends only on the horizontal phase advance, and a Gaussian loss model checked
 against particle tracking shows that the blade loss of a matched setting depends on
 the phase advance alone and is smallest at the lower edge of the matched range. On 200
@@ -621,9 +621,9 @@ one knob fewer near the exit, and the exit angle spread grows from
 loss-based setting. Raising the weight of the septum-entrance and line-end readings from
 3 to 10, to constrain the exit angle more strongly, changes the exit angle of the
 loss-based setting from \SI{\BtsRFiveFullXpEdge}{\milli\radian} to \SI{\BtsRFiveAngleWeightedXp}{\milli\radian} and the losses by less than
-0.01 percentage point. With position readings only, reweighting does not reduce the
-angle residual; a smaller residual would need an angle measurement or more accurate
-readings, which this study does not model.
+0.01 percentage point. With the assumed \SI{50}{\micro\metre} reading errors, this
+reweighting gives little improvement in the exit-angle rms. Other estimators,
+monitor layouts and direct angle measurements were not tested.
 
 \begin{table}[htbp]\centering
 \caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering}, with reading
@@ -647,10 +647,15 @@ Matched settings are found on the grid from \SI{\BtsRFourScanConfMin}{\degree} t
 peak-beta limit active. A small study that changes only the exit dispersion target
 moves it. With $D_x$ fixed, lowering $D'_x$ at m4 from \SI{47.5}{\milli\radian} to 32, 16 and
 \SI{0}{\milli\radian} lowers the edge to \SI{\BtsRFiveEdgeDpMid}{\degree}, \SI{\BtsRFiveEdgeDpLow}{\degree} and \SI{\BtsRFiveEdgeDpZero}{\degree}, again with no bound
-or peak limit active; all three starts reach the same values, although these searches
-stop at their iteration limit. Setting $D_x=0$ at the configured $D'_x$ raises the edge to
-\SI{\BtsRFiveEdgeDZeroConf}{\degree}, where the vertical \SI{60}{\metre} limit is active. Within these local searches,
-the lower edge is set by the exit dispersion slope $D'_x$. The upper edge,
+or peak limit active. At \SI{32}{\milli\radian} and \SI{16}{\milli\radian}, all three starts give
+matched candidates near the reported phases. At $D'_x=0$, two starts give matched
+candidates; the start from the dispersion-free scan setting fails the declared
+matching test. The matched searches at these changed $D'_x$ targets all stop at
+their iteration limit, so these phases are best-found values. Setting $D_x=0$ at the configured $D'_x$ raises the edge to
+\SI{\BtsRFiveEdgeDZeroConf}{\degree}, where the vertical \SI{60}{\metre} limit is active. The shift of the best-found lower phase with $D'_x$ indicates
+that the inherited exit dispersion conditions restrict the phase range explored
+by these local searches. It does not identify a unique binding cause or certify
+an edge globally. The upper edge,
 \SI{\BtsRFourEdgeConfiguredMax}{\degree}, is set by the \SI{60}{\metre} limit in both planes. These are ranges
 found by sampled and local searches, not a proof of global reachability. The
 matched reference (\SI{\BtsRThreeRefMu}{\degree}) and low-beta (\SI{\BtsRThreeLowMu}{\degree}) settings lie near the
@@ -741,9 +746,9 @@ target, the same for every matched setting, and absent for a dispersion-free exi
 
 The configured exit dispersion is that of the injected beam in the configuration of
 the NKM injection study; we have found no derivation of it from the ring optics,
-whose dispersion at the injection kicker is nearly zero. Because this slope sets the
-lower phase-advance edge (Section~\ref{sec:design}), it also limits how far the
-loss-based setting can move jitter from the blade. Matching the same
+whose dispersion at the injection kicker is nearly zero. In the local study of
+Section~\ref{sec:design}, reducing the prescribed slope extends the matched settings
+found toward smaller phase advances, where less jitter reaches the blade. Matching the same
 Courant--Snyder parameters with $D_x=D'_x=0$ at m4 is feasible within the strength
 bounds: all \BtsRThreeFreeWithin\ solutions from \BtsRThreeFreeStarts\ bounded random starts keep both peak
 betas below \SI{60}{\metre} (smallest larger peak \SI{\BtsRThreeFreeMinPeak}{\metre}). The constrained searches
@@ -871,14 +876,16 @@ The quadrupoles act on the loss mainly through the trajectory. Static trajectory
 errors are reduced by field trims of the existing dipoles, without adding any element
 to the line; the two trims nearest the exit steer both position and angle at the
 septum. A horizontal residual, the optics errors and the uncorrected vertical
-trajectory remain. The dominant remaining contribution is booster shot jitter, and in
+trajectory remain. At the assumed stress level, the dominant remaining contribution
+is booster shot jitter, and in
 the nominal matched line its arrival at the exit depends only on the horizontal phase
 advance. The line chooses whether the jitter appears as
 position at the blade or as angle at the injection kicker, but it cannot remove it.
 For the configured exit, the matched settings found span about \SI{32}{\degree} of phase
 advance; the error-free blade loss depends on $\mu_x$ alone and is smallest at the lower
-edge of that range, which the exit dispersion slope inherited from the companion
-configuration sets. On the primary test
+edge found for that range. The local dispersion study shows that the best-found
+lower phase decreases with the exit dispersion slope inherited from the companion
+configuration; the iteration-limited searches do not establish a global edge. On the primary test
 population the best-found setting there has a mean jitter-integrated loss \BtsRFiveGain\ times
 smaller than the matched reference (\BtsRFiveGainLo--\BtsRFiveGainHi), at \SI{13}{\percent} more angle jitter. A dispersion-free exit extends
 the range to smaller $\mu_x$ and lowers the loss much further, again at the cost of
@@ -905,10 +912,12 @@ and the benefit of the loss-based setting depend on it steeply. At that stress l
 the phase advance is the design knob for blade loss. At 0.1--0.2 of the level every
 matched setting loses less than $10^{-10}$, and the delivered beam error is set by the
 horizontal angle left by steering, about \SI{\BtsRFiveResXpTenth}{\milli\radian}, and by the uncorrected
-vertical trajectory, about \SI{\BtsRFiveResYZero}{\milli\metre} for the matched reference. The choice of $\mu_x$
-does not reduce the first, and the second is left uncorrected in every setting, so in
-that regime correction and instrumentation, especially in the vertical plane, matter
-more for this line than the choice among matched optics.
+vertical trajectory, about \SI{\BtsRFiveResYZero}{\milli\metre} for the matched reference.
+For the tested settings and correction scheme, changing the matched optics leaves
+these residuals as the main delivery errors. The vertical trajectory is uncorrected
+in every setting. In this low-jitter regime, correction and instrumentation,
+especially in the vertical plane, therefore matter more for this line than the
+choice among the tested matched optics.
 With sampled shots the loss is heavy-tailed and its population mean varies between
 independently seeded populations. The dispersion-free scan and its loss predictions
 are analytic, and its tracked test records a single lost particle. Losses are counted at the declared aperture check points (element

@@ -11,14 +11,15 @@ responses and campaigns are preserved.
 
 ## Required
 
-- [ ] **R2F-BTS-01 — Base the low-beta effect on controlled evidence (M1).**
-  - [ ] Choose one:
+- [x] **R2F-BTS-01 — Base the low-beta effect on controlled evidence (M1).**
+  - [x] Choose one:
     - add low beta to the shared-reading layout stage on the Table 4 realizations, declared before the run, and quote
       its paired difference; or
     - label the Table 4 value (−0.21 percentage points) as confounded by per-setting reading errors.
-  - [ ] Make Section 4.2 and the Discussion cite only the controlled result, the primary-test −0.13 [−0.24, −0.04],
+  - [x] Make Section 4.2 and the Discussion cite only the controlled result, the primary-test −0.13 [−0.24, −0.04],
         and any new shared-reading value, as evidence of the low-beta effect.
   - *Completion:* no low-beta statement relies on a per-setting-reading population without saying so.
+  - **Done:** milestone [303](../../exec-plans/completed/303_r2f_bts_01_controlled_low_beta.md). Chose the wording alternative: the older 0.21-point contrast is confounded by per-setting reading errors; the low-beta interpretation uses the controlled primary result. No rerun.
 - [ ] **R2F-BTS-02 — Qualify the per-shot bracket and localize the loss-based excess (M2).**
   - [ ] Qualify the Section 3.3 bracket sentence as holding within the linearized Gaussian model.
   - [ ] From the saved per-shot output, state in Section 4.3 that the 942-particle count comes from 20 shots and

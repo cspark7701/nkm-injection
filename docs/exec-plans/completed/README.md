@@ -877,3 +877,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 302. [**Milestone 302: BTS review and consolidated-plan filenames**](302_bts_reviewer2_filename_sequence.md)
     - Shifts Reviewer 2 reports 02–06 to 01–05 and separate tasks 03–06 to 02–05; makes both round numbers match in three plan filenames. Updates links, records digest-backed transition maps and preserves original text, response filenames, task IDs and frozen identities. No scientific results changed.
+
+303. [**Milestone 303: R2F-BTS-01 controlled low-beta interpretation**](303_r2f_bts_01_controlled_low_beta.md)
+    - Qualifies the older per-setting-noise contrast and bases the low-beta interpretation on the controlled primary result. Humanizer prose pass; no simulation rerun.

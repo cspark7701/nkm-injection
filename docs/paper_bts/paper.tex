@@ -599,13 +599,15 @@ contrast, agrees with the tracked loss fraction of each row within
 \SI{\BtsRThreePredAgreePct}{\percent} relative. Because the tracked beam is
 itself Gaussian, this agreement checks the moment transport and loss accounting; it
 does not test non-Gaussian booster tails, which would raise the blade loss most
-where the blade is many beam sizes away. After correction the low-beta setting
-loses \num{0.21} percentage points less than the matched reference on these realizations
-(paired interval [\num{-0.39}, \num{-0.06}] percentage points), whereas its mean clearance
-change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. Its loss change is
-also unresolved in the earlier fresh test retained in supplement Section~5.
-The shared-reading primary test in Section~\ref{sec:design} instead gives a resolved
-change of \BtsRFiveDiffLow\ percentage points. Its horizontal phase
+where the blade is many beam sizes away. In this earlier steering comparison,
+the low-beta row loses \num{0.21} percentage points less than the matched reference
+(paired interval [\num{-0.39}, \num{-0.06}] percentage points). Reading errors were
+drawn separately for each setting, so this contrast does not isolate the low-beta
+effect. Its mean clearance change, \SI{-0.001}{\milli\metre}
+([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved, as is its loss change
+in the earlier fresh test retained in supplement Section~5. The controlled,
+shared-reading primary test in Section~\ref{sec:design} gives a resolved change of
+\BtsRFiveDiffLow\ percentage points. Its horizontal phase
 advance is about \SI{1}{\degree} smaller than that of the matched reference, which lowers its
 error-free blade loss from \SI{1.28}{\percent} to \SI{1.16}{\percent} (Table~\ref{tab:test4}); in the nominal
 model the lower vertical peak beta does not enter the horizontal blade loss.
@@ -877,11 +879,12 @@ nominal clearance of every restriction outside the quadrupole section. With the
 blade geometry of the NKM injection study, the injection septum is that restriction, and it limits the
 line by an order of magnitude more than any interior aperture. Lowering the interior
 peak beta, the usual design heuristic, therefore changes only clearances of several
-millimeters. Its effect on the loss is small and depends on the population: low beta
-loses 0.21 and 0.13 percentage points less than the matched reference in the steering
-comparison and the second test, and an unresolved amount in the first test. These
-differences come with its horizontal phase advance, about \SI{1}{\degree} smaller, not with
-the vertical peak beta itself.
+millimeters. In the controlled shared-reading primary test, low beta changes the
+loss by \BtsRFiveDiffLow\ percentage points relative to the matched reference.
+The earlier steering comparison gives a decrease of 0.21 percentage points with
+per-setting reading errors; it does not isolate the optics effect. The controlled
+benefit accompanies a horizontal phase advance about \SI{1}{\degree} smaller,
+rather than a direct dependence on the vertical peak beta.
 
 The quadrupoles act on the loss mainly through the trajectory. Static trajectory
 errors are reduced by field trims of the existing dipoles, without adding any element

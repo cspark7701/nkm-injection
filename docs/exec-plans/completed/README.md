@@ -883,3 +883,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 304. [**Milestone 304: R2F-BTS-02 model bounds and shot losses**](304_r2f_bts_02_shot_losses.md)
     - Separates model probability bounds from particle counts and localizes the excess. Saved records show 16 loss-bearing shots, correcting the review's 20; one shot accounts for about 70% of the excess. No tracking rerun.
+
+305. [**Milestone 305: R2F-BTS-03 headline interval scope**](305_r2f_bts_03_interval_scope.md)
+    - Labels the headline as a linearized Gaussian prediction and limits its interval to sampling error realizations, excluding model/input uncertainty. Numerical values unchanged.

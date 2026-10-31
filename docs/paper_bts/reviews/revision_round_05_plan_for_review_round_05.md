@@ -1,5 +1,11 @@
 # Consolidated BTS revision register — round-5 work and round-6 follow-up
 
+Current follow-up: the four R6-BTS tasks recorded here remain completed history. The later six R2F-BTS
+and two R1E-BTS filename-round-5 follow-ups are now addressed in implementation round 7; see the
+[joint response](review_round_05_author_response_to_reviewers_01_02.md). Original task IDs and evidence below
+are retained. No new reviewer verdict or closure of deferred author decisions is inferred.
+
+
 Prepared: 2026-10-31. This is the current execution register for the BTS manuscript,
 *Optical matching and beam loss in a booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*.
 

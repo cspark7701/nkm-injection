@@ -2,7 +2,7 @@
 
 Tasks from the [round-6 report](review_round_05_reviewer_02_report.md) (2026-10-31) on the revision-round-6
 manuscript at `79dce19`. Recommendation: **minor revision; acceptable after these corrections, without another
-review round.** These are new R2F-BTS task IDs. All boxes are open at review; no task is executed here.
+review round.** These are new R2F-BTS task IDs. All boxes were open at review; execution evidence is now recorded below.
 
 Not included: the R5-BTS-09 submission decisions, which stay deferred to the submission-ready stage.
 
@@ -22,7 +22,7 @@ responses and campaigns are preserved.
   - **Done:** milestone [303](../../exec-plans/completed/303_r2f_bts_01_controlled_low_beta.md). Chose the wording alternative: the older 0.21-point contrast is confounded by per-setting reading errors; the low-beta interpretation uses the controlled primary result. No rerun.
 - [x] **R2F-BTS-02 — Qualify the per-shot bracket and localize the loss-based excess (M2).**
   - [x] Qualify the Section 3.3 bracket sentence as holding within the linearized Gaussian model.
-  - [x] From the saved per-shot output, state in Section 4.3 that the 942-particle count comes from 20 shots and
+  - [x] From the saved per-shot output, state in Section 4.3 that the 942-particle count comes from 20 shots (review count; saved records correct this to 16) and
         that one near-blade shot (454 lost against 410.9 expected) carries most of the excess.
   - [x] Recommended: compare that shot's linear-moment prediction with a nonlinear moment calculation and report
         the outcome. If it is not done, keep the excess explicitly unresolved.
@@ -49,13 +49,15 @@ responses and campaigns are preserved.
 - [x] **R2F-BTS-05 — Optional shortening (minor 5, advisory).**
   - [x] Consider moving Table 4 to the supplement once R2F-BTS-01 is settled.
   - **Done:** milestone [307](../../exec-plans/completed/307_r2f_bts_05_shortening.md). Moved the older steering table to supplement Section 5, retained its per-setting-noise caveat and shortened repeated Discussion text. Both isolated PDFs build without warnings.
-- [ ] **R2F-BTS-06 — Reconciliation and response.**
-  - [ ] Update any affected claims and generated assets, and refresh the selected hashes.
-  - [ ] Rebuild and visually check the article and supplement, and run the tests that the changes call for.
-  - [ ] Write a short response to this report, preserving all earlier reports, tasks and responses.
+- [x] **R2F-BTS-06 — Reconciliation and response.**
+  - [x] Update any affected claims and generated assets, and refresh the selected hashes.
+  - [x] Rebuild and visually check the article and supplement, and run the tests that the changes call for.
+  - [x] Write a short response to this report, preserving all earlier reports, tasks and responses.
   - *Completion:* PDFs, evidence and response agree; this register is updated with ticked boxes.
 
 ## Order
 
 R2F-BTS-01 and R2F-BTS-02 first, because they may need a short computation. R2F-BTS-03 and R2F-BTS-04 next, then
 R2F-BTS-06.
+
+**Execution complete:** all six R2F-BTS tasks are addressed in implementation round 7; see [milestone 308](../../exec-plans/completed/308_r2f_bts_06_reconciliation.md) and the [joint response](review_round_05_author_response_to_reviewers_01_02.md). The nonlinear-moment check was explicitly declined with the cause unresolved; no new simulation campaign was run.

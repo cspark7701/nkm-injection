@@ -1,18 +1,17 @@
 # BTS optics manuscript
 
-Current state (2026-10-31): all four [round-6 follow-up tasks](reviews/revision_round_05_plan_for_review_round_05.md)
-are executed (milestones 295 to 298). They answer [Reviewer 2's round-5 assessment](reviews/review_round_04_reviewer_02_report.md),
-which recommended minor revision and scientific acceptance in principle after corrections. See the
-[new response](reviews/review_round_05_author_response_to_reviewer_02.md) and
-[round-6 reproduction guide](round6_reproduction.md). The original reviewer checklist records the state at review;
-the consolidated register records execution. No reassessment or journal acceptance is implied.
-[Reviewer 1's round-5 assessment](reviews/review_round_05_reviewer_01_report.md) accepts the scientific content
-within the stated conditional-model scope, with no mandatory scientific revision. Its
-[follow-up checklist](reviews/review_round_05_reviewer_01_tasks.md) separates optional shortening from a
-conditional evidence-package check. R5-BTS-09 decisions remain deferred to submission readiness.
-The completed round-5 implementation and all earlier records are retained below.
+Current state (2026-10-31): all six tasks in the [Reviewer 2 filename-round-5 checklist](reviews/review_round_05_reviewer_02_tasks.md)
+and both [Reviewer 1 follow-ups](reviews/review_round_05_reviewer_01_tasks.md) are addressed (milestones 303 to 308).
+This is implementation round 7; historical review-body and earlier implementation numbers are preserved.
+See the [joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md) and
+[reproduction guide](round7_reproduction.md). The older four-item consolidated register remains completed history.
+The revision qualifies the confounded low-beta contrast, localizes the loss excess to saved shot records,
+clarifies model uncertainty, updates legends and shortens repeated text. A fresh portable increment is
+verified from an extracted root. No tracking or optimization campaign was rerun.
+Reviewer recommendations remain pre-submission assessments; no new acceptance decision is implied.
+R5-BTS-09 author decisions stay deferred to submission readiness.
 
-Current one-column article (20 pages, with a 10-page supplement), *Optical matching and beam loss in a
+Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:
 [paper.tex](paper.tex), [paper.pdf](paper.pdf), [supplement.tex](supplement.tex) and
 [supplement.pdf](supplement.pdf).

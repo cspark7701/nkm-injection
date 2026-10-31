@@ -37,8 +37,7 @@ This index preserves the main-branch review history and separate restored BTS-br
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
 its conclusions are historical. [Reviewer 1's latest assessment is round 5](review_round_05_reviewer_01_report.md):
 accept the scientific content within its stated scope, with no mandatory scientific revision.
-Its [follow-up checklist](review_round_05_reviewer_01_tasks.md) records optional editing and a conditional
-technical package check. Reviewer 2's independent assessments are recorded below; its
+Its [follow-up checklist](review_round_05_reviewer_01_tasks.md) records the optional editing and technical package check, now executed below. Reviewer 2's independent assessments are recorded below; its
 [round-5 report](review_round_04_reviewer_02_report.md) recommended minor revision and scientific acceptance in
 principle after bounded corrections. The [round-5 checklist](review_round_04_reviewer_02_tasks.md) records four items open at review.
 The [round-6 consolidated register](revision_round_05_plan_for_review_round_05.md) records execution of all four follow-up corrections,
@@ -275,3 +274,15 @@ The round-5 checklist (R2E-BTS-01 to 04) is resolved. Three points remain, and n
 
 There are six checkbox tasks, R2F-BTS-01 to 06, in the [round-6 checklist](review_round_05_reviewer_02_tasks.md).
 The R5-BTS-09 submission decisions stay deferred. Earlier reports and responses are unchanged.
+
+## Execution of filename-round-5 tasks (implementation round 7)
+
+All six R2F-BTS items and both R1E-BTS follow-ups are addressed in milestones 303 to 308.
+The [new joint response](review_round_05_author_response_to_reviewers_01_02.md) records the controlled-low-beta
+wording alternative, 16 loss-bearing shots (correcting the review's 20), model interval scope, revised labels
+and bounded shortening. Current PDFs have 19 article pages and 10 supplement pages. The older steering table
+is in supplement Section 5; the primary comparison is now Table 5, layouts Table 4 and residuals Table 7.
+The [round-seven guide](../round7_reproduction.md) records 80 verified claims, current hashes, 46 passing tests
+and a new increment verified after extraction, including both post-processing audits. The cause of the excess
+remains unresolved; no new tracking is claimed. R5-BTS-09 stays deferred. Reports and earlier responses remain
+historical records; the source checklists now record execution rather than a new reviewer verdict.

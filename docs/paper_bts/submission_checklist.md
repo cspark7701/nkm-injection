@@ -1,6 +1,16 @@
 # BTS submission preparation and historical records
 
-## Current round-6 status (2026-10-31)
+## Current filename-round-5 follow-up (2026-10-31)
+
+The six Reviewer 2 corrections and two Reviewer 1 follow-ups are addressed; see the
+[joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md) and [reproduction guide](round7_reproduction.md).
+Current article/supplement lengths are 19/10 pages, with warning-free isolated builds. All 80 evidence claims,
+selected current hashes, 46 relevant tests and fresh extracted-package audits pass. The local increment includes
+the current round-six and round-seven audit scripts. No external delivery or journal submission occurred.
+R5-BTS-09 author decisions remain deferred to submission readiness; scientific execution does not close them.
+
+
+## Historical round-6 status (2026-10-31)
 
 All four scientific follow-up tasks are executed; see the [register](reviews/revision_round_05_plan_for_review_round_05.md),
 [new response](reviews/review_round_05_author_response_to_reviewer_02.md) and [reproduction guide](round6_reproduction.md).

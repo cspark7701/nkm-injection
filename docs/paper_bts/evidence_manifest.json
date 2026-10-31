@@ -343,6 +343,13 @@
       "bytes": 1802,
       "generating_commit": null,
       "provenance_note": "Round-six post-processing only; exact script/input hashes are in the checks record."
+    },
+    {
+      "path": "docs/paper_bts/generated/round7_shot_losses.json",
+      "sha256": "6b045104e4a4eb80779f68398877e68061b2bdc5a17f112a914e939e5432a24b",
+      "bytes": 1533,
+      "generating_commit": null,
+      "provenance_note": "Saved-output round-seven diagnostic; exact source hashes are recorded in the artifact. No tracking rerun."
     }
   ],
   "claims": [
@@ -1185,19 +1192,22 @@
       "id": "BR3-03",
       "artifact": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
       "pointer": "/summary/uncorrected/reference/observed_loss_fraction",
-      "expected": 0.10076166666666667
+      "expected": 0.10076166666666667,
+      "manuscript_location": "Supplement Section 5: earlier steering comparison"
     },
     {
       "id": "BR3-04",
       "artifact": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
       "pointer": "/summary/corrected/reference/observed_loss_fraction",
-      "expected": 0.01675
+      "expected": 0.01675,
+      "manuscript_location": "Supplement Section 5: earlier steering comparison"
     },
     {
       "id": "BR3-05",
       "artifact": "results/bts_journal_campaign_r3b_20261015/steering/steering.json",
       "pointer": "/summary/corrected/reference/exit_centroid_rms_m_rad/1",
-      "expected": 0.00036710146796014415
+      "expected": 0.00036710146796014415,
+      "manuscript_location": "Supplement Section 5: earlier steering comparison"
     },
     {
       "id": "BR3-06",
@@ -1215,25 +1225,29 @@
       "id": "BR3-08",
       "artifact": "results/bts_journal_campaign_r3b_20261015/robust/robust.json",
       "pointer": "/designs/robust/loss_max",
-      "expected": 0.002665199624304892
+      "expected": 0.002665199624304892,
+      "manuscript_location": "Section 4.3: nominal loss objective"
     },
     {
       "id": "BR3-09",
       "artifact": "results/bts_journal_campaign_r3b_20261015/test/test.json",
       "pointer": "/summary/corrected/robust/observed_loss_fraction",
-      "expected": 0.006904166666666667
+      "expected": 0.006904166666666667,
+      "manuscript_location": "Supplement Section 5: earlier per-setting-noise fresh test"
     },
     {
       "id": "BR3-10",
       "artifact": "results/bts_journal_campaign_r3b_20261015/test/test.json",
       "pointer": "/paired_loss_fraction_vs_reference/robust/mean",
-      "expected": -0.016098333333333333
+      "expected": -0.016098333333333333,
+      "manuscript_location": "Supplement Section 5: earlier per-setting-noise fresh test"
     },
     {
       "id": "BR3-11",
       "artifact": "results/bts_journal_campaign_r3b_20261015/exit/exit.json",
       "pointer": "/dispersion_free_best/loss_max",
-      "expected": 4.071961589125998e-05
+      "expected": 4.071961589125998e-05,
+      "manuscript_location": "Section 4.4: earlier dispersion-free candidate"
     },
     {
       "id": "BR3-12",
@@ -1245,7 +1259,8 @@
       "id": "BR3-13",
       "artifact": "results/bts_journal_campaign_r3b_20261015/sensitivity/sensitivity.json",
       "pointer": "/rows/5/designs/reference/predicted_loss_max_mean",
-      "expected": 0.013367607460627358
+      "expected": 0.013367607460627358,
+      "manuscript_location": "Supplement Section 5: sampled sensitivity"
     },
     {
       "id": "BR4-01",
@@ -1253,7 +1268,7 @@
       "pointer": "/beam_units/centroid_action_over_emittance",
       "expected": 53.73961635900196,
       "interpretation": "Assumed jitter: mean centroid action 54 times the emittance.",
-      "manuscript_location": "Section 2.4, Table 9"
+      "manuscript_location": "Section 4.5, Table 6: retained jitter sensitivity"
     },
     {
       "id": "BR4-02",
@@ -1261,7 +1276,7 @@
       "pointer": "/rows/5/designs/reference/jitter_integrated_loss_mean",
       "expected": 0.013072827255296763,
       "interpretation": "Assumed jitter: matched-reference jitter-integrated steered loss 1.31 %.",
-      "manuscript_location": "Section 4.5, Table 9"
+      "manuscript_location": "Section 4.5, Table 6: retained jitter sensitivity"
     },
     {
       "id": "BR4-03",
@@ -1269,7 +1284,7 @@
       "pointer": "/rows/5/designs/reference/error_free_loss",
       "expected": 0.01279315732669233,
       "interpretation": "Matched-reference error-free loss 1.28 % (static residual adds 2 %).",
-      "manuscript_location": "Section 4.5, Table 9"
+      "manuscript_location": "Section 4.5, Table 6: retained jitter sensitivity"
     },
     {
       "id": "BR4-04",
@@ -1277,7 +1292,7 @@
       "pointer": "/rows/3/designs/reference/jitter_integrated_loss_mean",
       "expected": 2.6277574826352977e-11,
       "interpretation": "At 0.2 of the assumed jitter the matched-reference loss is below 3e-11.",
-      "manuscript_location": "Section 4.5, Table 9"
+      "manuscript_location": "Section 4.5, Table 6: retained jitter sensitivity"
     },
     {
       "id": "BR4-05",
@@ -1317,7 +1332,7 @@
       "pointer": "/summary/reference/observed_loss_fraction",
       "expected": 0.009727499999999998,
       "interpretation": "Second test: matched-reference tracked loss 0.97 %.",
-      "manuscript_location": "Section 4.3, Table 7"
+      "manuscript_location": "Historical round-four per-setting-noise test (superseded)"
     },
     {
       "id": "BR4-10",
@@ -1325,7 +1340,7 @@
       "pointer": "/summary/edge_best/observed_loss_fraction",
       "expected": 0.0013033333333333332,
       "interpretation": "Second test: edge setting tracked loss 0.13 %.",
-      "manuscript_location": "Section 4.3, Table 7"
+      "manuscript_location": "Historical round-four per-setting-noise test (superseded)"
     },
     {
       "id": "BR4-11",
@@ -1333,7 +1348,7 @@
       "pointer": "/summary/free_best/lost_particles",
       "expected": 1,
       "interpretation": "Dispersion-free setting loses 1 of 1.2 million tracked particles.",
-      "manuscript_location": "Section 4.4, Table 7"
+      "manuscript_location": "Historical round-four per-setting-noise test (superseded)"
     },
     {
       "id": "BR4-12",
@@ -1341,7 +1356,7 @@
       "pointer": "/reproduction_check/full_lost_particles",
       "expected": 20100,
       "interpretation": "Full layout reproduces round-3 steering: 20100 lost particles.",
-      "manuscript_location": "Section 4.2, Table 5"
+      "manuscript_location": "Section 4.2, Table 4: matched reference"
     },
     {
       "id": "BR4-13",
@@ -1349,7 +1364,7 @@
       "pointer": "/summary/full/reference/exit_centroid_rms_m_rad/2",
       "expected": 0.0011157993497241984,
       "interpretation": "Uncorrected vertical exit centroid 1.12 mm rms (matched reference).",
-      "manuscript_location": "Section 4.2, Table 5"
+      "manuscript_location": "Section 4.2, Table 4: matched reference"
     },
     {
       "id": "BR4-14",
@@ -1365,7 +1380,7 @@
       "pointer": "/duplicate_identical",
       "expected": true,
       "interpretation": "Duplicate configuration with shared readings gives identical results.",
-      "manuscript_location": "Section 4.3, Table 6"
+      "manuscript_location": "Section 4.3, Table 5"
     },
     {
       "id": "BR5-02",
@@ -1381,7 +1396,7 @@
       "pointer": "/summary/edge_best/lost_particles",
       "expected": 942,
       "interpretation": "Loss-based setting loses 942 of 1.2 million tracked particles with shared readings.",
-      "manuscript_location": "Section 4.3, Table 6"
+      "manuscript_location": "Section 4.3, Table 5"
     },
     {
       "id": "BR5-04",
@@ -1389,7 +1404,7 @@
       "pointer": "/summary/robust/lost_particles",
       "expected": 942,
       "interpretation": "Round-3 loss-based setting loses the same 942 particles.",
-      "manuscript_location": "Section 4.3, Table 6"
+      "manuscript_location": "Section 4.3, Table 5"
     },
     {
       "id": "BR5-05",
@@ -1405,7 +1420,7 @@
       "pointer": "/validation/free_best/conditional_expected_count",
       "expected": 0.5092260951586082,
       "interpretation": "Dispersion-free setting: conditional expectation 0.51 particles.",
-      "manuscript_location": "Section 4.4, Table 6"
+      "manuscript_location": "Section 4.4, Table 5"
     },
     {
       "id": "BR5-07",
@@ -1421,7 +1436,7 @@
       "pointer": "/summary/angle_weighted/edge_best/exit_centroid_rms_m_rad/1",
       "expected": 0.0004111064043344545,
       "interpretation": "Angle-weighted layout: loss-based exit-angle rms 0.411 mrad.",
-      "manuscript_location": "Section 4.2, Table 5"
+      "manuscript_location": "Section 4.2, Table 4"
     },
     {
       "id": "BR5-09",
@@ -1437,7 +1452,7 @@
       "pointer": "/rows/2/designs/reference/exit_centroid_rms_m_rad/1",
       "expected": 0.00017906275310054142,
       "interpretation": "Scale 0.1: matched-reference steered exit-angle rms 0.179 mrad.",
-      "manuscript_location": "Section 4.5, Table 8"
+      "manuscript_location": "Section 4.5, Table 7"
     },
     {
       "id": "BR6-01",
@@ -1463,6 +1478,38 @@
         "dispersion_free_best"
       ],
       "interpretation": "The zero-slope dispersion-free scan start fails the declared matching test.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR7-01",
+      "artifact": "docs/paper_bts/generated/round7_shot_losses.json",
+      "pointer": "/loss_bearing_shots",
+      "expected": 16,
+      "interpretation": "Sixteen sampled shots carry all 942 observed edge-setting losses.",
+      "manuscript_location": "Section 4.3; Table 5"
+    },
+    {
+      "id": "BR7-02",
+      "artifact": "docs/paper_bts/generated/round7_shot_losses.json",
+      "pointer": "/largest_excess_shot/observed",
+      "expected": 454,
+      "interpretation": "The largest-excess shot loses 454 particles.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR7-03",
+      "artifact": "docs/paper_bts/generated/round7_shot_losses.json",
+      "pointer": "/largest_excess_shot/expected",
+      "expected": 410.8914689577642,
+      "interpretation": "Largest-excess shot conditional expectation is 410.9 particles.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR7-04",
+      "artifact": "docs/paper_bts/generated/round7_shot_losses.json",
+      "pointer": "/largest_excess_shot/share_of_aggregate_excess_percent",
+      "expected": 70.04201365044925,
+      "interpretation": "One shot accounts for about 70 percent of aggregate count excess.",
       "manuscript_location": "Section 4.3"
     }
   ]

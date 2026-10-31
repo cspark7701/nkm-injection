@@ -892,3 +892,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 307. [**Milestone 307: R2F-BTS-05 and R1E-BTS-01 bounded shortening**](307_r2f_bts_05_shortening.md)
     - Moves the older steering table to the supplement, preserves its noise caveat and shortens repeated Discussion text. Both builds pass without warnings; main table references are consistent.
+
+308. [**Milestone 308: R2F-BTS-06 reconciliation and portable evidence**](308_r2f_bts_06_reconciliation.md)
+    - Closes the six Reviewer 2 tasks and both Reviewer 1 follow-ups with a new response, 19/10-page PDFs, 80 claims, 90 selected hashes and 46 passing tests. A new increment verifies inventory and both audits after extraction; R5-BTS-09 stays deferred.

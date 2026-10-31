@@ -25,9 +25,9 @@ This index preserves the main-branch review history and separate restored BTS-br
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
 its conclusions are historical. The latest Reviewer 1 assessment is round 4; Reviewer 2's latest is
 [round 5](review_round_05_reviewer_02_report.md), recommending minor revision and scientific acceptance in
-principle after bounded corrections. The [round-5 checklist](review_round_05_reviewer_02_tasks.md) is pending.
-The [round-6 consolidated register](revision_round_06_plan_for_review_round_05.md) is the current execution queue,
-preserving completed round-5 work and mapping all four pending reviewer corrections.
+principle after bounded corrections. The [round-5 checklist](review_round_05_reviewer_02_tasks.md) records four items open at review.
+The [round-6 consolidated register](revision_round_06_plan_for_review_round_05.md) records execution of all four follow-up corrections,
+preserving the completed round-5 work and the original reviewer checklist.
 Earlier assessments are retained below as history.
 
 | Review | Recommendation | Revision register |
@@ -205,7 +205,7 @@ and 10-page supplement at `50d4699`, considering all eight preserved author resp
 **minor revision; scientifically acceptable in principle after bounded corrections**. The round-4 major
 requests on residual delivery errors, shared monitor noise and the headline estimator are resolved.
 
-The [four pending R2E-BTS checkbox tasks](review_round_05_reviewer_02_tasks.md) cover the validation-percentage
+The [four open-at-review R2E-BTS checkbox tasks](review_round_05_reviewer_02_tasks.md) cover the validation-percentage
 denominator, qualifications to phase-edge/steering claims, population cross-references and response/evidence
 reconciliation. No new broad campaign is required. At the author's instruction, R5-BTS-09 decisions are
 deferred to the submission-ready stage and excluded from this checklist. No revision is executed by this
@@ -217,6 +217,16 @@ recommendation, not a journal acceptance.
 The [current consolidated register](revision_round_06_plan_for_review_round_05.md) combines the
 [round-5 implementation plan](revision_round_05_plan_for_review_round_04.md) and
 [Reviewer 2 round-5 checklist](review_round_05_reviewer_02_tasks.md). It carries nine completed tasks as
-history, maps four pending corrections to R6-BTS-01–04, and accounts for all fourteen source items.
+history, maps the four follow-up corrections to R6-BTS-01–04, and accounts for all fourteen source items.
 R5-BTS-09 remains deferred to submission readiness, outside the active checklist. Both input lists and
 all previous reports/responses remain unchanged. Consolidation executes none of the four new tasks.
+
+## Execution of revision round 6
+
+All four R6-BTS tasks are executed (milestones 295 to 298). The
+[new response to Reviewer 2 round 5](review_round_05_author_response_to_reviewer_02.md) records the denominator
+correction, scoped phase-edge/steering conclusions and repaired population references. Current PDFs have
+20 article pages and 10 supplement pages; 76 claims, selected asset hashes and 46 relevant tests pass.
+The [round-6 reproduction guide](../round6_reproduction.md) distinguishes post-processing from a simulation rerun.
+Original reviewer checklists remain open-at-review records; the consolidated register records completion.
+R5-BTS-09 remains deferred. No reassessment, author approval or journal acceptance is implied.

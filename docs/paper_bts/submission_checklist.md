@@ -1,4 +1,16 @@
-# JKPS submission preparation — current BTS status
+# BTS submission preparation and historical records
+
+## Current round-6 status (2026-10-31)
+
+All four scientific follow-up tasks are executed; see the [register](reviews/revision_round_06_plan_for_review_round_05.md),
+[new response](reviews/review_round_05_author_response_to_reviewer_02.md) and [reproduction guide](round6_reproduction.md).
+The installed article has 20 pages and the supplement 10, with warning-free isolated builds. The evidence audit
+verifies 76 claims; selected current asset hashes and 46 relevant tests pass. Earlier status blocks below are
+historical preparation records, including their page counts and review state.
+R5-BTS-09 decisions remain deferred to the submission-ready stage. No author approval or submission is inferred.
+
+## Historical preparation records
+
 
 Updated 2026-10-16. Reviewer 2's R2B-01–07 were executed (milestones 225–231) and rerun on the unchanged lattice
 using existing-dipole trims (milestone 234). See the [current response](reviews/review_round_02_author_response_to_reviewer_02.md)

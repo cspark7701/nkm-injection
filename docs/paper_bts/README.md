@@ -1,19 +1,15 @@
 # BTS optics manuscript
 
-Current state (2026-10-31): the round-5 revision is executed. It answers both round-4 reports, from Reviewer 1
-(minor revision) and Reviewer 2 (major revision of limited scope), through the
-[round-5 plan](reviews/revision_round_05_plan_for_review_round_04.md) R5-BTS-01 to 10 (milestones 283–292). See the
-[joint response](reviews/review_round_04_author_response_to_reviewers_01_02.md), the
-[round-5 protocol](round5_protocol.json) and the [round-5 reproduction guide](round5_reproduction.md). The round-4
-records below are kept. [Reviewer 2's round-5 assessment](reviews/review_round_05_reviewer_02_report.md)
-recommends minor revision, with scientific acceptance in principle after bounded corrections;
-the [four-item reviewer checklist](reviews/review_round_05_reviewer_02_tasks.md) is pending. Use the
-[consolidated round-6 register](reviews/revision_round_06_plan_for_review_round_05.md) for execution;
-it retains the nine completed round-5 tasks and maps the four pending corrections. Reviewer 1's latest
-assessment remains round 4. R5-BTS-09 author decisions are deferred to the submission-ready stage
-and excluded from the new checklist. No journal acceptance is recorded.
+Current state (2026-10-31): all four [round-6 follow-up tasks](reviews/revision_round_06_plan_for_review_round_05.md)
+are executed (milestones 295 to 298). They answer [Reviewer 2's round-5 assessment](reviews/review_round_05_reviewer_02_report.md),
+which recommended minor revision and scientific acceptance in principle after corrections. See the
+[new response](reviews/review_round_05_author_response_to_reviewer_02.md) and
+[round-6 reproduction guide](round6_reproduction.md). The original reviewer checklist records the state at review;
+the consolidated register records execution. No reassessment or journal acceptance is implied.
+Reviewer 1's latest assessment remains round 4. R5-BTS-09 decisions remain deferred to submission readiness.
+The completed round-5 implementation and all earlier records are retained below.
 
-Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a
+Current one-column article (20 pages, with a 10-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:
 [paper.tex](paper.tex), [paper.pdf](paper.pdf), [supplement.tex](supplement.tex) and
 [supplement.pdf](supplement.pdf).

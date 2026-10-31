@@ -819,8 +819,8 @@ momentum jitter. At the assumed jitter the two columns agree, as Section~\ref{se
 predicts. At 0.1 of it the horizontal exit angle is \SI{\BtsRFiveResXpTenth}{\milli\radian} rms, whereas the
 nominal jitter gives only \SI{\BtsRFiveJitXpTenth}{\milli\radian}: the angle left by steering is three
 times the jitter part and hardly changes between scales 0 and 0.2. The vertical
-centroid, \SI{\BtsRFiveResYZero}{\milli\metre} and \SI{\BtsRFiveResYpZero}{\milli\radian} rms, does not depend on the jitter at
-all because the vertical plane is not corrected; among the three settings it ranges
+centroid remains at \SI{\BtsRFiveResYZero}{\milli\metre} and \SI{\BtsRFiveResYpZero}{\milli\radian} rms in this sweep.
+The vertical trajectory is uncorrected; among the three settings it ranges
 from \SI{0.78}{\milli\metre} to \SI{1.07}{\milli\metre} at scale 0. At low jitter, then, the phase advance
 still divides the jitter between position and angle, but the delivered centroid is
 dominated by the horizontal steering residual and the uncorrected vertical trajectory.
@@ -838,7 +838,7 @@ tracked).}\label{tab:jitter}
 \begin{table}[htbp]\centering
 \caption{Rms exit centroid of the matched reference on the 200 steered realizations of
 Table~\ref{tab:jitter} against the nominal exit jitter of the error-free line, by betatron
-jitter scale, from the retained earlier per-setting-reading sweep. The
+jitter scale, from the earlier sweep with reading errors drawn separately for each setting. The
 \SI{0.1}{\percent} momentum jitter is kept at every scale. Analytic
 centroids of three sampled shots per realization.}\label{tab:residual}
 {\small\input{generated/round5_residual_rows.tex}}\end{table}

@@ -862,3 +862,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 297. [**Milestone 297: R6-BTS-03 populations and cross-references**](297_r6_bts_03_populations.md)
     - Separates earlier unresolved and primary resolved low-beta results; labels retained sensitivity settings/noise. Numerical evidence is unchanged; article and supplement build without warnings and table labels verify.
+
+298. [**Milestone 298: R6-BTS-04 response and final verification**](298_r6_bts_04_reconciliation.md)
+    - Closes all four round-six tasks with a new response, 20/10-page PDFs, independent post-processing checks, 76 verified claims, 86 selected asset hashes and 46 passing relevant tests. R5-BTS-09 stays deferred; no simulation rerun or submission.

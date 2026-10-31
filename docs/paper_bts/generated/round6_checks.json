@@ -1,0 +1,46 @@
+{
+  "scope": "Post-processing of stored runs; no tracking or optimization rerun.",
+  "source_sha256": {
+    "results/bts_round5_campaign_20261031/final_test_b/raw_machines.json": "061dd231973c3e351265886db853c5fd7d83b5c9ae5a19e4a48264ab70fc5cd0",
+    "results/bts_round5_campaign_20261031/final_test_b/final_test.json": "9e55f2833702b6fe197ac722a99c7cb1dadd608967793fd6e044803d7729555f",
+    "results/bts_round5_campaign_20261031/edge_study/edge_study.json": "bb2bcf4ffdfc6b2d8efa9bdd1248730537159f222688e3a32c37024d6dbb7b6a",
+    "docs/paper_bts/round5_protocol.json": "3f7bf9bcd2b492a4bd143b7f14e637a00e2b70e25950ba9b748aa103f5224ec0",
+    "docs/paper_bts/generated/round5.json": "a6ff97d2879dddf369b12ff8f3a374a912b3edd43d9e1e0b83eca42c8d7d860a",
+    "scripts/audit_bts_round6_revision.py": "69bb3baf56797f4a02526b66bcba5236a2f56f3081b3c833aa2866658f79d098"
+  },
+  "counts": {
+    "reference": {
+      "observed_count": 11673,
+      "conditional_expected_count": 11705.222700537717
+    },
+    "low_beta": {
+      "observed_count": 10104,
+      "conditional_expected_count": 10153.737948112726
+    },
+    "edge_best": {
+      "observed_count": 942,
+      "conditional_expected_count": 880.4533242328345
+    },
+    "free_best": {
+      "observed_count": 1,
+      "conditional_expected_count": 0.5092260951586076
+    }
+  },
+  "prediction_shortfall_percent": 6.53361738504942,
+  "discrepancy_denominator": "observed_count",
+  "gain": 4.480373341724997,
+  "gain_ci95": [
+    4.325934729286094,
+    4.628911065230988
+  ],
+  "zero_denominator_resamples": 0,
+  "zero_slope_matched_count": 2,
+  "zero_slope_matched_starts": [
+    "configured_edge",
+    "robust"
+  ],
+  "zero_slope_failed_starts": [
+    "dispersion_free_best"
+  ],
+  "zero_slope_termination": "Iteration limit reached for all three starts"
+}

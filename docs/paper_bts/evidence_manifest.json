@@ -336,6 +336,13 @@
       "bytes": 19235,
       "generating_commit": null,
       "provenance_note": "Round-5 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "docs/paper_bts/generated/round6_checks.json",
+      "sha256": "708c5e7cd36ba14a68f70a6c6189c92bda420f9638e9433ecadf44e446168a37",
+      "bytes": 1802,
+      "generating_commit": null,
+      "provenance_note": "Round-six post-processing only; exact script/input hashes are in the checks record."
     }
   ],
   "claims": [
@@ -1421,7 +1428,7 @@
       "artifact": "results/bts_round5_campaign_20261031/edge_study/edge_study.json",
       "pointer": "/lowest/0.080868_0.0/mu_x_deg",
       "expected": 184.14264398879791,
-      "interpretation": "Lower mu_x edge 184.1 deg with D' = 0 at m4.",
+      "interpretation": "Best-found matched mu_x 184.1 deg with D' = 0 at m4; selected search is iteration-limited.",
       "manuscript_location": "Section 4.3"
     },
     {
@@ -1431,6 +1438,32 @@
       "expected": 0.00017906275310054142,
       "interpretation": "Scale 0.1: matched-reference steered exit-angle rms 0.179 mrad.",
       "manuscript_location": "Section 4.5, Table 8"
+    },
+    {
+      "id": "BR6-01",
+      "artifact": "docs/paper_bts/generated/round6_checks.json",
+      "pointer": "/prediction_shortfall_percent",
+      "expected": 6.53361738504942,
+      "interpretation": "Prediction shortfall relative to observed count: 6.533617385 percent.",
+      "manuscript_location": "Section 4.3; Discussion"
+    },
+    {
+      "id": "BR6-02",
+      "artifact": "docs/paper_bts/generated/round6_checks.json",
+      "pointer": "/zero_slope_matched_count",
+      "expected": 2,
+      "interpretation": "Two zero-slope starts pass the declared matching test.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR6-03",
+      "artifact": "docs/paper_bts/generated/round6_checks.json",
+      "pointer": "/zero_slope_failed_starts",
+      "expected": [
+        "dispersion_free_best"
+      ],
+      "interpretation": "The zero-slope dispersion-free scan start fails the declared matching test.",
+      "manuscript_location": "Section 4.3"
     }
   ]
 }

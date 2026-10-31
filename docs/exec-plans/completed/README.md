@@ -859,3 +859,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 296. [**Milestone 296: R6-BTS-02 claim scope**](296_r6_bts_02_claim_scope.md)
     - Corrects matching-start accounting and qualifies phase-edge, steering and residual claims. Stored flags verify and the isolated article builds without warnings. No new numerical campaign.
+
+297. [**Milestone 297: R6-BTS-03 populations and cross-references**](297_r6_bts_03_populations.md)
+    - Separates earlier unresolved and primary resolved low-beta results; labels retained sensitivity settings/noise. Numerical evidence is unchanged; article and supplement build without warnings and table labels verify.

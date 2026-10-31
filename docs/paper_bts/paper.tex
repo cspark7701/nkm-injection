@@ -602,8 +602,10 @@ does not test non-Gaussian booster tails, which would raise the blade loss most
 where the blade is many beam sizes away. After correction the low-beta setting
 loses \num{0.21} percentage points less than the matched reference on these realizations
 (paired interval [\num{-0.39}, \num{-0.06}] percentage points), whereas its mean clearance
-change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. On the fresh
-test of Section~\ref{sec:design} its loss change is unresolved. Its horizontal phase
+change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. Its loss change is
+also unresolved in the earlier fresh test retained in supplement Section~5.
+The shared-reading primary test in Section~\ref{sec:design} instead gives a resolved
+change of \BtsRFiveDiffLow\ percentage points. Its horizontal phase
 advance is about \SI{1}{\degree} smaller than that of the matched reference, which lowers its
 error-free blade loss from \SI{1.28}{\percent} to \SI{1.16}{\percent} (Table~\ref{tab:test4}); in the nominal
 model the lower vertical peak beta does not enter the horizontal blade loss.
@@ -790,6 +792,12 @@ of the horizontal motion into the vertical plane, whose restrictions keep severa
 millimeters of clearance, and the \SI{81}{\micro\metre} exit contribution of the energy jitter is small
 compared with the betatron jitter.
 
+The jitter and blade-distance sweeps below retain the earlier loss-based setting
+and reading errors drawn separately for each setting. They are sensitivity studies;
+the primary comparison in Table~\ref{tab:test4} uses the converged edge setting and
+shared reading errors. The residual table uses the matched reference from the
+same earlier jitter sweep.
+
 For each steered realization we therefore also evaluate the jitter-integrated loss:
 Eq.~(\ref{eq:loss}) averaged over the Gaussian entrance jitter on that realization's
 steered line, within the linearized transport and the nominal beam covariance. It
@@ -821,7 +829,8 @@ dominated by the horizontal steering residual and the uncorrected vertical traje
 \caption{Dependence on the booster betatron jitter. Position and angle jitter at m1 are
 scaled together from the assumed \SI{0.5}{\milli\metre} and \SI{0.2}{\milli\radian} (scale 1) and are
 given in units of the rms beam size and divergence at m1; the momentum jitter stays
-at \SI{0.1}{\percent}. Losses are the jitter-integrated predictions averaged over 200 steered
+at \SI{0.1}{\percent}. The earlier loss-based setting and per-setting reading errors
+are retained. Losses are the jitter-integrated predictions averaged over 200 steered
 error realizations, and the last column is the error-free line (analytic, not
 tracked).}\label{tab:jitter}
 {\small\input{generated/round4_jitter_rows.tex}}\end{table}
@@ -829,7 +838,8 @@ tracked).}\label{tab:jitter}
 \begin{table}[htbp]\centering
 \caption{Rms exit centroid of the matched reference on the 200 steered realizations of
 Table~\ref{tab:jitter} against the nominal exit jitter of the error-free line, by betatron
-jitter scale. The \SI{0.1}{\percent} momentum jitter is kept at every scale. Analytic
+jitter scale, from the retained earlier per-setting-reading sweep. The
+\SI{0.1}{\percent} momentum jitter is kept at every scale. Analytic
 centroids of three sampled shots per realization.}\label{tab:residual}
 {\small\input{generated/round5_residual_rows.tex}}\end{table}
 
@@ -849,7 +859,8 @@ with the injected beam \SI{1}{\milli\metre} closer to the stored beam.
 
 \begin{figure}[htbp]\centering\includegraphics[width=.9\linewidth]{figures/round4_blade_distance.pdf}
 \caption{Jitter-integrated blade loss against the centroid-to-blade distance $d_b$ for the
-three matched settings at the assumed booster jitter (solid, filled) and a tenfold
+three matched settings, including the earlier loss-based setting, with per-setting
+reading errors, at the assumed booster jitter (solid, filled) and a tenfold
 smaller jitter (dashed, open), averaged over 200 steered error realizations
 (analytic). Values below $10^{-12}$ are omitted. The vertical line marks the model
 value \SI{1.478}{\milli\metre} and the dotted line a \SI{0.1}{\percent} loss.}\label{fig:blade}\end{figure}

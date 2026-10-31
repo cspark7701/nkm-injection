@@ -110,6 +110,17 @@
       "zero_denominator_resamples": 0
     }
   },
+  "population_conventions": {
+    "primary_test_and_layouts": {
+      "loss_based_setting": "converged edge_best",
+      "reading_errors": "shared by realization and physical monitor"
+    },
+    "retained_jitter_and_blade_sweeps": {
+      "loss_based_setting": "earlier round-3 robust",
+      "reading_errors": "per setting",
+      "scope": "sensitivity; not a rerun of the shared-reading primary comparison"
+    }
+  },
   "validation": {
     "reference": {
       "observed_count": 11673,

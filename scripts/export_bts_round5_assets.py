@@ -166,6 +166,11 @@ def main():
                     'edge_study': rel(CAMPAIGN / 'edge_study/edge_study.json'), 'jitter': rel(R4 / 'jitter_b/jitter.json'),
                     'scan': rel(R4 / 'phase_scan_b/phase_scan.json')},
         'duplicate_identical': test['duplicate_identical'], 'gain_vs_reference': g, 'layout_gain_vs_reference': lay['gain_vs_reference'],
+        'population_conventions': {
+            'primary_test_and_layouts': {'loss_based_setting': 'converged edge_best', 'reading_errors': 'shared by realization and physical monitor'},
+            'retained_jitter_and_blade_sweeps': {'loss_based_setting': 'earlier round-3 robust', 'reading_errors': 'per setting',
+                                                'scope': 'sensitivity; not a rerun of the shared-reading primary comparison'},
+        },
         'validation': val,
         'validation_reporting': {
             'edge_prediction_shortfall': {

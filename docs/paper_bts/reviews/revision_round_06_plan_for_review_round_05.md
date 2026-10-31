@@ -8,7 +8,7 @@ It consolidates these two source lists without replacing their historical record
 - [Round-5 plan answering both round-4 reviews](revision_round_05_plan_for_review_round_04.md): R5-BTS-01–10, with nine completed items and one deferred author-decision item.
 - [Reviewer 2 round-5 revision checklist](review_round_05_reviewer_02_tasks.md): R2E-BTS-01–04, all pending at review, following the [round-5 report](review_round_05_reviewer_02_report.md) on manuscript `50d46991ca91290a500c7c3b50ca85f297dec6c7`.
 
-**Current state: nine completed source tasks, two completed and two pending follow-up tasks, one deferred source item.**
+**Current state: nine completed source tasks, three completed and one pending follow-up task, one deferred source item.**
 The active queue below uses **R6-BTS-01–04** to distinguish this revision cycle from the completed round-5 implementation. Each item retains its original reviewer ID. Review round 5 and revision round 6 are different identifiers.
 
 Reviewer 2 recommends minor revision and scientific acceptance in principle after bounded corrections. Reviewer 1's latest assessment remains round 4. Consolidation does not execute a revision, imply author approval or constitute journal acceptance. Both source lists, their completion evidence, all previous reports and author responses remain unchanged. The old plan's opening “all tasks pending” sentence describes its initial preparation; its checked entries and final completion summary record the later execution state.
@@ -52,13 +52,14 @@ All four items are required by the new reviewer checklist; completion is recorde
   **Completion:** claims in the abstract, Results and Discussion agree with the stored match/termination and steering records. Wording corrections suffice; no new optimization is mandatory.
   **Done:** milestone [296](../../exec-plans/completed/296_r6_bts_02_claim_scope.md); match counts verified against stored searches, causal/steering statements narrowed to tested cases, and isolated article build passes without warnings.
 
-- [ ] **R6-BTS-03 — Reconcile test populations, sensitivity labels and cross-references.**
+- [x] **R6-BTS-03 — Reconcile test populations, sensitivity labels and cross-references.**
   **Source:** R2E-BTS-03, report C3; follows completed R5-BTS-01/04/07/08.
   - Replace Section 4.2's stale unresolved-low-beta reference to Section 4.3 with an explicit reference to the earlier test in supplement Section 5.
   - Retain the current primary-test decrease of −0.13 [−0.24, −0.04] percentage points and the population-dependent interpretation.
   - Identify earlier retained jitter/blade sensitivities by setting and reading-noise convention. Keep them distinct from the new shared-reading primary comparison; do not relabel old runs or require reruns merely to preserve labelled sensitivity evidence.
   - Use the actual compiled labels in new response/status descriptions: the reviewed primary comparison is Table 6 and residuals are Table 8. Recheck labels after rebuilding; preserve earlier dated records.
   **Completion:** article, supplement, captions and new response distinguish earlier and primary populations, with valid cross-references.
+  **Done:** milestone [297](../../exec-plans/completed/297_r6_bts_03_populations.md); earlier unresolved and current resolved low-beta results are distinguished, inherited sweeps are labelled, and warning-free article/supplement builds retain primary Table 6 and residual Table 8.
 
 - [ ] **R6-BTS-04 — Respond to the review and verify the bounded revision.**
   **Source:** R2E-BTS-04; follows completed R5-BTS-08/10 and depends on R6-BTS-01–03.
@@ -97,4 +98,4 @@ Every top-level task from both input lists is accounted for. Completed tasks are
 
 Preserve the 36-element BTS source lattice, protected scientific inputs, earlier campaigns and NKM manuscript. Any later numerical work must use a new results directory and record assumptions, units, seeds and validation. Do not silently change assumptions shared with the NKM paper. Optional article shortening must preserve unfavorable results and necessary qualifications.
 
-This document consolidates requirements only. **Active tasks completed: 2 of 4.** Consolidation itself executed no revisions.
+This document consolidates requirements only. **Active tasks completed: 3 of 4.** Consolidation itself executed no revisions.

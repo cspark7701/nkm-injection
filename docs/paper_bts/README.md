@@ -7,7 +7,9 @@ Current state (2026-10-31): the round-5 revision is executed. It answers both ro
 [round-5 protocol](round5_protocol.json) and the [round-5 reproduction guide](round5_reproduction.md). The round-4
 records below are kept. [Reviewer 2's round-5 assessment](reviews/review_round_05_reviewer_02_report.md)
 recommends minor revision, with scientific acceptance in principle after bounded corrections;
-the [four-item checklist](reviews/review_round_05_reviewer_02_tasks.md) is pending. Reviewer 1's latest
+the [four-item reviewer checklist](reviews/review_round_05_reviewer_02_tasks.md) is pending. Use the
+[consolidated round-6 register](reviews/revision_round_06_plan_for_review_round_05.md) for execution;
+it retains the nine completed round-5 tasks and maps the four pending corrections. Reviewer 1's latest
 assessment remains round 4. R5-BTS-09 author decisions are deferred to the submission-ready stage
 and excluded from the new checklist. No journal acceptance is recorded.
 

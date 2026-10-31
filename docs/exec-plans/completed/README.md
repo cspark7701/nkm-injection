@@ -850,3 +850,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 293. [**Milestone 293 — Reviewer 2 BTS round-5 assessment**](293_reviewer2_bts_round5_report.md)
     - Reviews all eight author responses and the current article/evidence. Recommends minor revision, scientifically acceptable in principle; adds four pending checkbox tasks and defers R5-BTS-09 to submission readiness. Verifies 73 claims, selected asset hashes, 25 tests and an independent reconstruction of the primary gain. No revision tasks executed.
+
+294. [**Milestone 294 — Consolidate BTS round-5 work and Reviewer 2 follow-up**](294_bts_round6_revision_consolidation.md)
+    - Adds the round-6 execution register: nine completed source tasks, four pending corrections and one deferred author-decision item. Maps all fourteen source tasks, preserves both input lists and updates the BTS indexes. No revision tasks executed.

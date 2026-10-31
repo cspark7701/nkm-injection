@@ -26,6 +26,8 @@ main-branch assessment concerned the eight-page manuscript at `bee78914caa16945e
 its conclusions are historical. The latest Reviewer 1 assessment is round 4; Reviewer 2's latest is
 [round 5](review_round_05_reviewer_02_report.md), recommending minor revision and scientific acceptance in
 principle after bounded corrections. The [round-5 checklist](review_round_05_reviewer_02_tasks.md) is pending.
+The [round-6 consolidated register](revision_round_06_plan_for_review_round_05.md) is the current execution queue,
+preserving completed round-5 work and mapping all four pending reviewer corrections.
 Earlier assessments are retained below as history.
 
 | Review | Recommendation | Revision register |
@@ -209,3 +211,12 @@ reconciliation. No new broad campaign is required. At the author's instruction, 
 deferred to the submission-ready stage and excluded from this checklist. No revision is executed by this
 review; all previous reports, task lists and responses remain unchanged. This is a pre-submission scientific
 recommendation, not a journal acceptance.
+
+## Consolidated round-6 execution register
+
+The [current consolidated register](revision_round_06_plan_for_review_round_05.md) combines the
+[round-5 implementation plan](revision_round_05_plan_for_review_round_04.md) and
+[Reviewer 2 round-5 checklist](review_round_05_reviewer_02_tasks.md). It carries nine completed tasks as
+history, maps four pending corrections to R6-BTS-01–04, and accounts for all fourteen source items.
+R5-BTS-09 remains deferred to submission readiness, outside the active checklist. Both input lists and
+all previous reports/responses remain unchanged. Consolidation executes none of the four new tasks.

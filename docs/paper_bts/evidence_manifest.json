@@ -315,6 +315,27 @@
       "bytes": 14536,
       "generating_commit": null,
       "provenance_note": "Round-4 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "sha256": "9e55f2833702b6fe197ac722a99c7cb1dadd608967793fd6e044803d7729555f",
+      "bytes": 12967,
+      "generating_commit": null,
+      "provenance_note": "Round-5 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round5_campaign_20261031/layouts_b/layouts.json",
+      "sha256": "404b14aee4d3e5cc6edc4e3fab4bf9d787b7b5697f4b5cc18a1cf142ad78adc1",
+      "bytes": 16240,
+      "generating_commit": null,
+      "provenance_note": "Round-5 stage output; its configuration.json records the protocol, environment and source hashes."
+    },
+    {
+      "path": "results/bts_round5_campaign_20261031/edge_study/edge_study.json",
+      "sha256": "bb2bcf4ffdfc6b2d8efa9bdd1248730537159f222688e3a32c37024d6dbb7b6a",
+      "bytes": 19235,
+      "generating_commit": null,
+      "provenance_note": "Round-5 stage output; its configuration.json records the protocol, environment and source hashes."
     }
   ],
   "claims": [
@@ -1330,6 +1351,86 @@
       "expected": 66,
       "interpretation": "Exact round-aperture loss reproduces all 66 selected round-3 numbers.",
       "manuscript_location": "Section 3.3 (R4-BTS-03)"
+    },
+    {
+      "id": "BR5-01",
+      "artifact": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "pointer": "/duplicate_identical",
+      "expected": true,
+      "interpretation": "Duplicate configuration with shared readings gives identical results.",
+      "manuscript_location": "Section 4.3, Table 6"
+    },
+    {
+      "id": "BR5-02",
+      "artifact": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "pointer": "/gain_vs_reference/edge_best/estimate",
+      "expected": 4.480373341724997,
+      "interpretation": "Primary gain: ratio of mean jitter-integrated losses 4.48.",
+      "manuscript_location": "Abstract, Section 4.3"
+    },
+    {
+      "id": "BR5-03",
+      "artifact": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "pointer": "/summary/edge_best/lost_particles",
+      "expected": 942,
+      "interpretation": "Loss-based setting loses 942 of 1.2 million tracked particles with shared readings.",
+      "manuscript_location": "Section 4.3, Table 6"
+    },
+    {
+      "id": "BR5-04",
+      "artifact": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "pointer": "/summary/robust/lost_particles",
+      "expected": 942,
+      "interpretation": "Round-3 loss-based setting loses the same 942 particles.",
+      "manuscript_location": "Section 4.3, Table 6"
+    },
+    {
+      "id": "BR5-05",
+      "artifact": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "pointer": "/validation/edge_best/poisson_z",
+      "expected": 2.074203831752813,
+      "interpretation": "Loss-based count is 2.1 Poisson standard deviations above its conditional prediction.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR5-06",
+      "artifact": "results/bts_round5_campaign_20261031/final_test_b/final_test.json",
+      "pointer": "/validation/free_best/conditional_expected_count",
+      "expected": 0.5092260951586082,
+      "interpretation": "Dispersion-free setting: conditional expectation 0.51 particles.",
+      "manuscript_location": "Section 4.4, Table 6"
+    },
+    {
+      "id": "BR5-07",
+      "artifact": "results/bts_round5_campaign_20261031/layouts_b/layouts.json",
+      "pointer": "/gain_vs_reference/full/estimate",
+      "expected": 4.588706429918968,
+      "interpretation": "Layout-population gain 4.59.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR5-08",
+      "artifact": "results/bts_round5_campaign_20261031/layouts_b/layouts.json",
+      "pointer": "/summary/angle_weighted/edge_best/exit_centroid_rms_m_rad/1",
+      "expected": 0.0004111064043344545,
+      "interpretation": "Angle-weighted layout: loss-based exit-angle rms 0.411 mrad.",
+      "manuscript_location": "Section 4.2, Table 5"
+    },
+    {
+      "id": "BR5-09",
+      "artifact": "results/bts_round5_campaign_20261031/edge_study/edge_study.json",
+      "pointer": "/lowest/0.080868_0.0/mu_x_deg",
+      "expected": 184.14264398879791,
+      "interpretation": "Lower mu_x edge 184.1 deg with D' = 0 at m4.",
+      "manuscript_location": "Section 4.3"
+    },
+    {
+      "id": "BR5-10",
+      "artifact": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "pointer": "/rows/2/designs/reference/exit_centroid_rms_m_rad/1",
+      "expected": 0.00017906275310054142,
+      "interpretation": "Scale 0.1: matched-reference steered exit-angle rms 0.179 mrad.",
+      "manuscript_location": "Section 4.5, Table 8"
     }
   ]
 }

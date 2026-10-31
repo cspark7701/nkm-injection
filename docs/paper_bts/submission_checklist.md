@@ -9,7 +9,8 @@ No journal acceptance or submission is claimed. The round-two checklist items be
 
 ## Round-5 status (2026-10-31)
 
-The round-5 revision ([plan](reviews/revision_round_05_plan_for_review_round_04.md); milestones 283 onwards) answers
+Current assets: a 19-page article and a 10-page supplement, built clean in `results/bts_round5_final_build`; the
+evidence audit verifies 73 claims, and `--verify` checks 83 asset hashes. The round-5 revision ([plan](reviews/revision_round_05_plan_for_review_round_04.md); milestones 283 onwards) answers
 both round-4 reviews. Numerical and editorial work is recorded per task. These submission gates are still open and
 are not inferred from the numerical work:
 - **Target journal.** JKPS (Reviewer 1's context) or NIM A (the earlier recommendation) is not chosen. JKPS requires

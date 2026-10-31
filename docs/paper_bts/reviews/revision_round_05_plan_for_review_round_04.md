@@ -144,7 +144,7 @@ not be marked complete merely because numerical work passes.
   no acceptance decision is inferred from page count.
   **Done (milestone 290):** first-test table and sampled roll/energy table moved to supplement Section 5 with summaries; Figure 4 reduced to the jitter panel with "found range" labels; repeated four-station text and the supplement audit compressed. Article 19 pages (~9,900 tokens); the 12–14-page target was not reached, and further cuts (baseline figures, literature review) are left to the author.
 
-- [ ] **R5-BTS-08 — Repair provenance, citations and current status records. Priority A for provenance; editorial for formatting.**
+- [x] **R5-BTS-08 — Repair provenance, citations and current status records. Priority A for provenance; editorial for formatting.**
   **Sources:** R1D-BTS-04; R2D-09; labels/formatting from R2D-05 and R2D-08.
   - Correct the exporter and generated `test_source` pointer to the selected actual test file. Initially this is
     `final_test_b/final_test.json`; after R5-BTS-01 it must identify the newly selected shared-noise output. Refresh
@@ -158,6 +158,7 @@ not be marked complete merely because numerical work passes.
   **Completion:** selected paths exist and are hash-consistent, source claims are verified or qualified, and
   current status documents describe the actual revision rather than earlier page counts or an old execution queue.
   **In progress (milestone 284, `90ca9b8`):** `test_source` pointer fixed and provenance paths made relative; uncited stability statement removed; TPS reference checked against JaCoW (unpublished, TUP2685). Status documents and layout counts follow the final build in R5-BTS-10.
+  **Done (milestones 284 and 292):** status documents (README, reviews index, checklist) now describe the 19/10-page round-5 assets.
 
 - [ ] **R5-BTS-09 — Record the author-dependent submission choices. Priority A, author input.**
   **Sources:** R1D-BTS-05; R2D-10.
@@ -171,7 +172,7 @@ not be marked complete merely because numerical work passes.
   **Completion:** decisions and access are real and recorded. No external submission is authorized by this plan.
   **Open (milestone 291):** journal, data-availability wording, companion-manuscript access, jitter source and final approval are recorded as open in `submission_checklist.md`; funding and competing interests unchanged. Not ticked until the author decides.
 
-- [ ] **R5-BTS-10 — Final reconciliation and one response to both reviews. Priority A.**
+- [x] **R5-BTS-10 — Final reconciliation and one response to both reviews. Priority A.**
   **Sources:** R1D-BTS-06; R2D-12; final reconciliation of all source requests.
   - Write one new response mapping every original reviewer item through the crosswalk below to the actual change
     or justified limitation. Preserve all earlier reports, task registers, responses and attachments.
@@ -182,6 +183,7 @@ not be marked complete merely because numerical work passes.
     checks, author approval and actual journal delivery separately.
   **Completion:** sources, estimands, values, units, figures, response and evidence agree; all author-dependent
   conditions are either fulfilled or still visibly open. Completion is a basis for reassessment, not acceptance.
+  **Done (milestone 292):** joint response `review_round_04_author_response_to_reviewers_01_02.md`; claims BR5-01 to 10 (73 verified); 83 final asset hashes; clean builds checked visually; full test suite; verified referee increment `results/bts_referee_attachment_round5_20261031`. Author approval and delivery are recorded separately (R5-BTS-09).
 
 ## Complete source-request crosswalk
 
@@ -221,4 +223,4 @@ The mandatory additional tracking is the focused shared-reading-noise second tes
 other numerical work is post-processing or explicitly conditional. Do not silently replace the NKM paper's shared
 beam, jitter or correction assumptions; document any proposed change and its validation separately.
 
-**Current completion state (updated 2026-10-31): 7 of 10 consolidated tasks done (01–07); 08 in progress; 09 awaits author decisions; 10 pending.** All 19 original top-level requests are mapped.
+**Current completion state (updated 2026-10-31): 9 of 10 consolidated tasks done (01–08, 10); 09 awaits author decisions.** All 19 original top-level requests are mapped.

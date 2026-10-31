@@ -185,3 +185,10 @@ revising the round-4 manuscript. It maps all 19 original top-level requests to t
 retains both reviewers' recommendations, and records the decisions on shared reading errors, headline estimators
 and editorial targets. The original Reviewer 1 and Reviewer 2 registers and the executed round-4 plan remain
 unchanged. No revision task has been executed by the consolidation.
+
+## Execution of the round-5 revision
+
+The [joint response](review_round_04_author_response_to_reviewers_01_02.md), 2026-10-31, records the execution of
+R5-BTS-01 to 10 (milestones 283–292) against both round-4 reports. The [round-5 plan](revision_round_05_plan_for_review_round_04.md)
+shows each task with its milestone and commit; R5-BTS-09 stays open for author decisions. All reports, task
+registers and earlier responses are unchanged. No reassessment or journal decision is implied.

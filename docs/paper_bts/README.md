@@ -1,20 +1,26 @@
 # BTS optics manuscript
 
-Current state (2026-10-31): the round-4 revision is executed. It answers both round-3 reports, from Reviewer 1
-(focused major revision) and Reviewer 2 (major revision), through the
-[consolidated tasks](reviews/revision_round_04_plan_for_review_round_03.md) R4-BTS-01 to 14 (milestones 265–278). See the
-[joint response](reviews/review_round_03_author_response_to_reviewers_01_02.md), the [round-4 protocol](round4_protocol.json) and the
-[round-4 reproduction guide](round4_reproduction.md). [Reviewer 1's round-4 assessment](reviews/review_round_04_reviewer_01_report.md)
-now recommends minor revision, with [seven pending checkbox items](reviews/review_round_04_reviewer_01_tasks.md).
-Both round-4 reviews are now combined in the [round-5 consolidated checkbox list](reviews/revision_round_05_plan_for_review_round_04.md),
-with ten pending tasks and a complete source-request crosswalk. See the [review index](reviews/README.md) for the
-separate recommendations. The author's scientific approval remains pending;
-no journal acceptance or submission is implied.
+Current state (2026-10-31): the round-5 revision is executed. It answers both round-4 reports, from Reviewer 1
+(minor revision) and Reviewer 2 (major revision of limited scope), through the
+[round-5 plan](reviews/revision_round_05_plan_for_review_round_04.md) R5-BTS-01 to 10 (milestones 283–292). See the
+[joint response](reviews/review_round_04_author_response_to_reviewers_01_02.md), the
+[round-5 protocol](round5_protocol.json) and the [round-5 reproduction guide](round5_reproduction.md). The round-4
+records below are kept. No reviewer has reassessed the revision, and the author decisions (R5-BTS-09) are open.
 
-Round-four one-column article (19 pages, with a 9-page supplement), *Optical matching and beam loss in a
+Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:
 [paper.tex](paper.tex), [paper.pdf](paper.pdf), [supplement.tex](supplement.tex) and
 [supplement.pdf](supplement.pdf).
+
+**Round-5 findings.**
+- **Shared reading errors.** With them, the round-3 loss-based setting and the converged edge setting lose
+  identical particles.
+- **Headline gain.** 4.48 (4.33–4.63), as a ratio of mean jitter-integrated losses.
+- **Two regimes.** At low jitter the delivered beam is dominated by the 0.18 mrad steering residual and the
+  uncorrected vertical centroid.
+- **Edge.** The lower μ_x edge is set by the inherited exit D′.
+
+Round-4 state (2026-10-31, historical): the round-4 revision answered both round-3 reports.
 
 **Findings.**
 - **Nominal blade clearance.** Once the line is matched, the injection-septum blade is the active restriction, and

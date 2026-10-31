@@ -844,3 +844,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 291. [**Milestone 291 — R5-BTS-09: author-dependent submission gates recorded (open)**](291_r5_bts_09_author_gates.md)
     - Record the journal, data-availability wording, companion access, jitter source and final approval as open author decisions. Funding and competing interests are unchanged; nothing is invented.
+
+292. [**Milestone 292 — R5-BTS-10: final reconciliation and joint response (round 5)**](292_r5_bts_10_reconciliation.md)
+    - 73 claims verified, 83 asset hashes with `--verify` passing, a clean 19/10-page build, and 771 tests passing. Adds the joint response to both round-4 reviews, the reproduction guide, updated status documents, and a verified round-5 referee increment.

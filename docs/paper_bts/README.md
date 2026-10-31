@@ -10,6 +10,7 @@ clarifies model uncertainty, updates legends and shortens repeated text. A fresh
 verified from an extracted root. No tracking or optimization campaign was rerun.
 [Reviewer 1 round 6](reviews/review_round_06_reviewer_01_report.md) recommends scientific acceptance within the stated model scope, with [no open mandatory scientific revisions](reviews/review_round_06_reviewer_01_tasks.md). Both earlier follow-ups are verified closed. [Reviewer 2 round 6](reviews/review_round_06_reviewer_02_report.md) independently recommends acceptance with optional suggestions. These are pre-submission referee assessments, not journal acceptance.
 R5-BTS-09 author decisions stay deferred to submission readiness.
+The [journal recommendation](journal_recommendations.md) ranks NIM A, PRAB, JINST, NST and JKPS for the current article; it records advice without closing the author’s journal-selection decision.
 
 Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a
 booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source*:

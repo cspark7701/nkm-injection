@@ -901,3 +901,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 310. [**Milestone 310 — Reviewer 1 BTS manuscript review round 6**](310_reviewer1_bts_review_round6.md)
     - Recommends scientific acceptance with no mandatory revision; verifies closure of both previous follow-ups, all author responses and selected evidence checks. Adds a report and closure checklist while preserving prior records and deferred author decisions.
+
+311. [**Milestone 311 — BTS journal recommendation**](311_bts_journal_recommendations.md)
+    - Saves the ranked top five and submission strategy, with NIM A first and PRAB as the specialist alternative. Links publisher scopes and preserves deferred author decisions.

@@ -806,5 +806,11 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 278. [**Milestone 278 — R4-BTS-09: reconciliation, joint response and referee increment**](278_r4_bts_09_reconciliation.md)
     - 14 new claims (63 verified), 75 final asset hashes with `--verify` passing, and final 19/9-page PDFs installed. Adds the joint round-4 response, the reproduction guide and a verified referee increment over the round-3 attachment.
 
+279. [**Milestone 279 — Reviewer 2 round-4 report on the BTS manuscript**](279_reviewer2_bts_round4_report.md)
+    - Major revision of limited scope. At realistic jitter, the static steering angle residual (~0.18 mrad) and the uncorrected vertical offset (~1.1 mm) dominate the delivered beam, not the jitter partition. Twelve checkbox tasks, R2D-01 to R2D-12.
+
 280. [**Milestone 280 — Reviewer 1 BTS round-4 report**](280_bts_reviewer1_round4_report.md)
     - Credits the prior major remedies and recommends minor revision, with seven pending checkbox tasks and verified scientific/evidence scope; preserves the separate Reviewer 2 assessment.
+
+281. [**Milestone 281 — Consolidate both BTS round-4 task lists**](281_bts_round4_review_tasks_consolidation.md)
+    - Maps all 19 original requests into ten pending round-5 checkbox tasks, preserves both registers and records the stricter shared-noise reruns and the reviewers' differing scope requirements.

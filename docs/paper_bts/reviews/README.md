@@ -126,6 +126,25 @@ The [joint response](author_response_round4_20261031.md), 2026-10-31, records th
 The joint response also answers Reviewer 2's questions. All reports, task registers and earlier responses are
 unchanged. No reassessment or journal decision is implied.
 
+## Reviewer 2 round-4 assessment
+
+[Reviewer 2 round-4 report](reviewer2_bts_20261031_main_round4_report.md), 2026-10-31, evaluates the 19-page round-4
+article at `6a968f8` after reading all main-branch author responses. Recommendation: **major revision of limited
+scope; not acceptable in present form; acceptance expected after R2D-01 to R2D-03**.
+
+The report accepts the round-3 resolutions. Its remaining objections:
+- **Static residuals (M1).** At the realistic jitter the paper identifies, the delivered beam is dominated by
+  the static steering residual (about 0.18 mrad) and the uncorrected vertical trajectory (about 1.1 mm), not by the
+  jitter partition the new abstract names.
+- **Reading errors (M2).** They are drawn per setting and should be shared by all settings.
+- **Headline estimate (M3).** It should be the jitter-integrated loss.
+- **Lower edge and length (M4).** The lower μ_x edge needs a physical explanation, and the article should be
+  consolidated.
+
+Twelve tasks with checkboxes, R2D-01 to R2D-12, are in the
+[round-4 task register](reviewer2_bts_20261031_main_round4_revision_tasks.md). Earlier reports and responses are
+unchanged.
+
 ## Reviewer 1 round-4 assessment
 
 [Reviewer 1 round-4 report](reviewer1_bts_20261031_main_round4_report.md), 2026-10-31, assesses the 19-page article
@@ -137,3 +156,11 @@ contradictory conclusions, provenance/legend details and author-dependent submis
 The [seven checkbox tasks](reviewer1_bts_20261031_main_round4_revision_tasks.md), R1D-BTS-01–07, are all pending.
 No new major campaign or executed revision is implied. Earlier reports, registers and author responses remain
 unchanged; the separate Reviewer 2 assessment retains its own recommendation.
+
+## Consolidated follow-up to both round-4 reviews
+
+Use the [round-5 consolidated checkbox register](round5_consolidated_revision_tasks.md) as the single queue for
+revising the round-4 manuscript. It maps all 19 original top-level requests to ten pending tasks, R5-BTS-01–10,
+retains both reviewers' recommendations, and records the decisions on shared reading errors, headline estimators
+and editorial targets. The original Reviewer 1 and Reviewer 2 registers and the executed round-4 plan remain
+unchanged. No revision task has been executed by the consolidation.

@@ -895,3 +895,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 308. [**Milestone 308: R2F-BTS-06 reconciliation and portable evidence**](308_r2f_bts_06_reconciliation.md)
     - Closes the six Reviewer 2 tasks and both Reviewer 1 follow-ups with a new response, 19/10-page PDFs, 80 claims, 90 selected hashes and 46 passing tests. A new increment verifies inventory and both audits after extraction; R5-BTS-09 stays deferred.
+
+309. [**Milestone 309 — Reviewer 2 review round 6 on the BTS manuscript**](309_reviewer2_bts_review_round6.md)
+    - Accept. All round-5 Reviewer 2 tasks are resolved, and the reviewer's shot-count error (16, not 20) is acknowledged. Optional editorial checklist R2G-BTS-01 to 05: Section 4.2 opening, abstract length, optional nonlinear check, shortening.

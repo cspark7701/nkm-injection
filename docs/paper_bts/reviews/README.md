@@ -286,3 +286,21 @@ The [round-seven guide](../round7_reproduction.md) records 80 verified claims, c
 and a new increment verified after extraction, including both post-processing audits. The cause of the excess
 remains unresolved; no new tracking is claimed. R5-BTS-09 stays deferred. Reports and earlier responses remain
 historical records; the source checklists now record execution rather than a new reviewer verdict.
+
+## Reviewer 2 review round 6
+
+[Reviewer 2 round-6 report](review_round_06_reviewer_02_report.md), 2026-10-31, assesses the article at `fd16b2a`
+(19 pages, 10-page supplement) after reading all main-branch author responses, including the joint response to the
+round-5 reports. Recommendation: **accept**.
+
+All six round-5 Reviewer 2 tasks (R2F-BTS-01 to 06) are resolved. The report acknowledges the corrected shot count:
+16 loss-bearing shots, not 20.
+
+The [optional editorial checklist](review_round_06_reviewer_02_tasks.md), R2G-BTS-01 to 05, covers:
+- Section 4.2's opening;
+- the abstract length (about 300 words);
+- an optional nonlinear check;
+- final shortening.
+
+None is a condition of acceptance. The R5-BTS-09 submission decisions stay deferred. Earlier reports and responses
+are unchanged.

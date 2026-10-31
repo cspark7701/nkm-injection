@@ -247,3 +247,19 @@ from a technical package update before evidence delivery. The existing increment
 round-6 audit script referenced by the current reproduction guide; local numerical checks remain valid.
 R5-BTS-09 author decisions stay deferred and outside the checklist. All prior reports, task lists and responses
 are preserved, and no revision task is executed by this assessment.
+
+## Reviewer 2 review round 6
+
+[Reviewer 2 round-6 report](review_round_06_reviewer_02_report.md), 2026-10-31, assesses the revision-round-6
+article at `79dce19` (20 pages, 10-page supplement) after reading all main-branch author responses, including the
+round-5 response to Reviewer 2. Recommendation: **minor revision; acceptable after small corrections, without
+another review round**.
+
+The round-5 checklist (R2E-BTS-01 to 04) is resolved. Three points remain, and none changes the conclusions:
+- **Low beta.** The effect is still partly quoted from a per-setting-reading population.
+- **Loss bracket.** Section 3.3's per-shot bracket is violated by the tracked loss-based count; the excess comes
+  from one near-blade shot.
+- **Headline interval.** Its scope should be stated.
+
+There are six checkbox tasks, R2F-BTS-01 to 06, in the [round-6 checklist](review_round_06_reviewer_02_tasks.md).
+The R5-BTS-09 submission decisions stay deferred. Earlier reports and responses are unchanged.

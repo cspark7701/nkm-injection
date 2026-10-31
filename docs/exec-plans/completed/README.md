@@ -869,6 +869,8 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 299. [**Milestone 299: humanize and compile the NKM manuscript**](299_nkm_manuscript_humanizer.md)
     - Applies the humanizer skill to prose while preserving equations, values, citations, tables and figures. Installs the 34-page article, 17-page preview and 7-page supplement; package checks and nine tests pass. Scientific results and previous review records are unchanged.
 
+300. [**Milestone 300 — Reviewer 2 review round 6 on the BTS manuscript**](300_reviewer2_bts_review_round6.md)
+    - Minor revision; acceptable after small corrections, without another round. Covers the low-beta effect still partly quoted from a per-setting-reading population, the per-shot bracket violated by the single-shot loss-based excess, and the scope of the headline interval. Six checkbox tasks, R2F-BTS-01 to 06.
 
 301. [**Milestone 301: Reviewer 1 BTS round-5 assessment**](301_reviewer1_bts_round5_report.md)
     - Reviews the current 20/10-page article/supplement and all nine author responses. Recommends scientific acceptance within the stated scope, with no mandatory scientific revision; records optional shortening and a conditional evidence-package check. Verifies 76 claims, 49 artifact identities, 86 asset hashes and 46 tests; author decisions remain deferred.

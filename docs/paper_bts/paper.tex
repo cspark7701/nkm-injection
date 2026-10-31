@@ -370,8 +370,8 @@ plane is not corrected. Every error realization is evaluated uncorrected and
 corrected on identical particles. Each monitor location has one static reading
 error per error realization, and every setting and steering layout of that
 realization uses it, so paired comparisons share the magnet errors, readings, shot
-jitter and particles. The comparisons of Table~\ref{tab:steering}, from the earlier
-study, still used reading errors drawn separately for each setting.
+jitter and particles. The earlier steering study (supplement Section~5) used reading errors drawn
+separately for each setting.
 
 \section{Physical criterion, validation and comparison protocol}\label{sec:methods}
 \subsection{Active restrictions and boundary-fixed clearances}
@@ -560,7 +560,7 @@ the entrance conditions but have different exit lattice functions. Design beam,
 no errors.}\label{fig:profile}\end{figure}
 
 \subsection{Trajectory correction}\label{sec:steering-results}
-Table~\ref{tab:steering} compares the uncorrected and corrected matched lines on 200
+The earlier steering comparison (supplement Section~5) evaluates the uncorrected and corrected matched lines on 200
 error realizations with three shots of 2\,000 particles each; both
 settings and both variants see the same magnet errors, shots and particles. Without
 correction the static errors displace the exit centroid by \SI{1.2}{\milli\metre} rms, and
@@ -577,13 +577,7 @@ through them. The uncorrected vertical exit centroid is \SI{\BtsRFourVertExitYUm
 \SI{5}{\milli\metre} vertical restrictions but is the static vertical injection error passed to the
 injection calculation.
 
-\begin{table}[htbp]\centering
-\caption{Steering of the matched reference (Matched) and optimized low beta on 200 error realizations (3 shots, 2\,000 particles each). $\bar c_{\min}$
-is the mean minimum five-sigma clearance, Lost the tracked particle-loss fraction,
-Predicted the mean Gaussian loss probability of the most loss-prone aperture,
-Blocks the number of error realizations with any observed loss, and $x_{\rm rms}$,
-$x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
-{\small\input{generated/round3_steering_rows.tex}}\end{table}
+
 
 Two observations arise from these results. First, after correction the exit
 centroid spread, about \SI{0.68}{\milli\metre} and \SI{0.37}{\milli\radian}, is mainly that of the booster jitter
@@ -621,7 +615,7 @@ model the lower vertical peak beta does not enter the horizontal blade loss.
 Table~\ref{tab:layouts} repeats the steering on the same realizations with shared
 readings, with fewer readings, and with b1--b3 trimmed as one series-powered knob whose
 kick in each bend is proportional to its bending angle. The matched-reference rows of
-the full layout reproduce Table~\ref{tab:steering} exactly. The loss-based setting loses
+the full layout reproduce the earlier steering results exactly. The loss-based setting loses
 \SI{\BtsRFiveLayoutFullEdgePct}{\percent} here, against \SI{\BtsRFourLayoutFullRobustPct}{\percent} with its own reading errors in the earlier
 comparison, so the reading errors alone move its tracked loss by more than half.
 Reading only the exits of the three triplets, the septum entrance and the line end
@@ -636,7 +630,7 @@ reweighting gives little improvement in the exit-angle rms. Other estimators,
 monitor layouts and direct angle measurements were not tested.
 
 \begin{table}[htbp]\centering
-\caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering}, with reading
+\caption{Steering layouts on the 200 realizations of the earlier steering study (supplement Section~5), with reading
 errors shared by both settings (tracked, 3 shots of 2\,000 particles). Readings:
 quadrupole exits (all nine or the three triplet exits), septum entrance and line end;
 in the last layout the last two are weighted 10 instead of 3. Knobs: six independent
@@ -881,11 +875,10 @@ smaller jitter (dashed, open), averaged over 200 steered error realizations
 value \SI{1.478}{\milli\metre} and the dotted line a \SI{0.1}{\percent} loss.}\label{fig:blade}\end{figure}
 
 \section{Discussion and conclusions}\label{sec:discussion}
-Matching the initial setting to the prescribed exit is a prerequisite rather than a
-result of this study: the blade distance is defined from the matched exit beam, so a
-setting whose exit beta function is far from the target necessarily overlaps the
-blade. The questions addressed here start from the matched settings and concern
-what still differs between them once the endpoint optics are fixed.
+The baseline comparison illustrates the required boundary match. The blade
+distance is defined from the matched beam, and the unmatched baseline overlaps
+it. The design comparison concerns settings that already share the prescribed
+endpoint optics.
 
 In a BTS line matched at both ends, the nominal beam size at the ends is fixed and so is the
 nominal clearance of every restriction outside the quadrupole section. With the
@@ -945,12 +938,11 @@ these residuals as the main delivery errors. The vertical trajectory is uncorrec
 in every setting because the modelled line has no vertical corrector. In this low-jitter regime, correction and instrumentation,
 especially in the vertical plane, therefore matter more for this line than the
 choice among the tested matched optics.
-With sampled shots the loss is heavy-tailed and its population mean varies between
-independently seeded populations. The dispersion-free scan and its loss predictions
-are analytic, and its tracked test records a single lost particle. Losses are counted at the declared aperture check points (element
-entrances and the line end), which bracket the septum channel but do not resolve
-continuous interception inside it. This paper neither certifies real transmission nor derives construction
-tolerances, ring capture, or kicker transparency.
+Finite-shot losses are heavy-tailed, and their population means vary with the
+sample. The single-loss dispersion-free test does not certify its integrated tail.
+Aperture checks at element entrances and the line end bracket the septum channel
+without resolving continuous interception. The study does not certify real
+transmission or derive construction tolerances, ring capture or kicker transparency.
 
 \section*{Statements and Declarations}
 \paragraph{Funding.} National Research Foundation of Korea (NRF) grant funded by the Korean government (MSIT), NRF Grant No. RS-2022-00143178.

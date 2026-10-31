@@ -46,8 +46,9 @@ responses and campaigns are preserved.
   - [x] Use one setting name in the Figure 5 and 6 legends, with "Loss-based" for the equivalent round-3 and edge
         settings, and regenerate those figures (minor 4).
   - **Done:** milestone [306](../../exec-plans/completed/306_r2f_bts_04_wording_figures.md). Vertical residual attributed to the absent vertical corrector; dangling wording fixed; both legends regenerated as Loss-based and their PDF text verified. Numerical figure data are unchanged.
-- [ ] **R2F-BTS-05 — Optional shortening (minor 5, advisory).**
-  - [ ] Consider moving Table 4 to the supplement once R2F-BTS-01 is settled.
+- [x] **R2F-BTS-05 — Optional shortening (minor 5, advisory).**
+  - [x] Consider moving Table 4 to the supplement once R2F-BTS-01 is settled.
+  - **Done:** milestone [307](../../exec-plans/completed/307_r2f_bts_05_shortening.md). Moved the older steering table to supplement Section 5, retained its per-setting-noise caveat and shortened repeated Discussion text. Both isolated PDFs build without warnings.
 - [ ] **R2F-BTS-06 — Reconciliation and response.**
   - [ ] Update any affected claims and generated assets, and refresh the selected hashes.
   - [ ] Rebuild and visually check the article and supplement, and run the tests that the changes call for.

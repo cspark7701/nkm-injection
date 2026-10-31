@@ -19,7 +19,7 @@
 This supplement accompanies the article and contains: the historical matching
 and optical statistics of the earlier campaign (Sections~1--2); the numerical
 accuracy and spatial-resolution checks (Section~3); finite loss events
-(Section~4); the earlier fresh test and the sampled roll and energy-jitter
+(Section~4); the earlier steering comparison, fresh test and sampled roll and energy-jitter
 sensitivity (Section~5); and the earlier four-station aperture study with hypothetical
 restrictions (Section~6). The historical sections keep the beam and modeling
 assumptions of the earlier campaign and are not pooled with the article's results.
@@ -191,13 +191,21 @@ generating sources. The corrected driver independently detaches the selected
 station, verified by a regression test. No numerical failure record is silently
 counted as physical success.
 
-\section{Earlier fresh test and roll and energy-jitter sensitivity}\label{sec:earlier-test}
-This section keeps two results that the article now summarizes. The first is the
-earlier fresh test of the three settings on 200 realizations (seeds 92001--92005),
+\section{Earlier steering, fresh-test and sensitivity studies}\label{sec:earlier-test}
+This section retains the earlier steering comparison, with per-setting reading errors,
+and two further results summarized in the article. The first is the earlier fresh test of the three settings on 200 realizations (seeds 92001--92005),
 in which each setting had its own reading errors; the article's main comparison
 uses shared reading errors. The second is the sampled roll and energy-jitter
 sensitivity, whose predictions are means over three sampled shots per realization
 rather than the jitter-integrated loss used in the article.
+
+\begin{table}[htbp]\centering
+\caption{Earlier steering of the matched reference (Matched) and optimized low beta on 200 error realizations (3 shots, 2\,000 particles each). $\bar c_{\min}$
+is the mean minimum five-sigma clearance, Lost the tracked particle-loss fraction,
+Predicted the mean Gaussian loss probability of the most loss-prone aperture,
+Blocks the number of error realizations with any observed loss, and $x_{\rm rms}$,
+$x'_{\rm rms}$ the rms exit centroid over shots. Reading errors are drawn separately for each setting; magnet errors, shots and particles are shared.}\label{tab:steering}
+{\small\input{generated/round3_steering_rows.tex}}\end{table}
 
 \begin{table}[htbp]\centering
 \caption{Earlier fresh test of the matched reference (Matched), optimized low-beta and loss-based settings, with reading errors drawn per setting (200 steered error realizations, 3 shots,

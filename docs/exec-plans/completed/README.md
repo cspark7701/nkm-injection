@@ -889,3 +889,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 306. [**Milestone 306: R2F-BTS-04 wording and figure labels**](306_r2f_bts_04_wording_figures.md)
     - Attributes the vertical residual to the absent corrector, repairs wording and regenerates both figure legends with the Loss-based name. Numerical data unchanged.
+
+307. [**Milestone 307: R2F-BTS-05 and R1E-BTS-01 bounded shortening**](307_r2f_bts_05_shortening.md)
+    - Moves the older steering table to the supplement, preserves its noise caveat and shortens repeated Discussion text. Both builds pass without warnings; main table references are consistent.

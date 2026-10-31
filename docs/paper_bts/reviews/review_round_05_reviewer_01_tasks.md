@@ -6,11 +6,12 @@ Date: 2026-10-31. Basis: [round-5 report](review_round_05_reviewer_01_report.md)
 
 ## Optional editorial improvement
 
-- [ ] **R1E-BTS-01: shorten repeated explanation where useful. Optional; not a condition of scientific acceptance.**
+- [x] **R1E-BTS-01: shorten repeated explanation where useful. Optional; not a condition of scientific acceptance.**
   - Consolidate repeated baseline/history, scope and loss-definition passages while keeping the physical argument continuous.
   - Keep the author-requested literature context and baseline plots, the declared aperture/error assumptions, paired intervals, unresolved edge-row discrepancy, stress/low-jitter distinction and ring-capture limitation.
   - Use the humanizer skill for any manuscript-prose edits, preserving scientific meaning and notation. If adopted, rebuild the affected PDFs and refresh current identities; do not rewrite dated reviews or responses.
   - **Done when adopted:** a shorter text conveys the same supported claims, and the new PDF/source identities agree. No arbitrary page target or new simulation is required. Choosing not to shorten leaves the scientific recommendation unchanged.
+  - **Done:** milestone [307](../../exec-plans/completed/307_r2f_bts_05_shortening.md). Adopted the bounded shortening pass with the older steering table retained in the supplement; baseline plots, literature, assumptions and adverse results remain.
 
 ## Conditional technical preparation
 

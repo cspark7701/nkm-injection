@@ -201,10 +201,8 @@ beta screening ceiling and square aperture limits are model parameters.
 The BTS line is independently validated using analytical maps of the same AT
 element sequence.
 
-The four-station comparison model places square apertures at markers m1--m4 (\SI{19.35}{\milli\metre} at
-the line ends, \SI{30}{\milli\metre} at two interior markers) and none on the magnets. That
-four-station model provides a comparison with the
-element-wise restrictions of Section~\ref{sec:apertures}.
+An earlier four-station model, with square apertures only at markers m1--m4 and none
+on the magnets, is kept in the supplement for comparison.
 
 \subsection{Beam covariance and clearance}
 This study uses the booster horizontal design input $\epsilon_x=\SI{7.67}{\nano\metre\radian}$
@@ -379,13 +377,8 @@ exit to its target. For a centered nominal beam the clearance there is therefore
 $c_u=a-5\sqrt{\epsilon_u\beta_u+D_u^2\sigma_\delta^2}$ with the boundary values of
 Table~\ref{tab:boundary}, for every quadrupole setting $K$ that satisfies the match.
 With $a=\SI{19.35}{\milli\metre}$ this gives \SI{17.455}{\milli\metre}/\SI{18.865}{\milli\metre} at the line entrance (m1) and \SI{18.555}{\milli\metre}/\SI{19.064}{\milli\metre}
-at the exit ($x$/$y$), exactly the values found numerically for both settings
-in the four-station model. The two interior stations have \SI{30}{\milli\metre} halfwidths and could
-limit only if a five-sigma size exceeded about \SI{12.5}{\milli\metre}, which no matched setting
-approaches. In this four-station model the nominal minimum clearance is thus
-analytically independent of $K$: the ``saturation'' of the minimum is a consequence
-of placing restrictions only where the optics are fixed, not a finding about the
-optics. This statement concerns the nominal, error-free, exactly matched line. Under
+at the exit ($x$/$y$), the values found numerically in the four-station model, where
+these end stations limit every matched setting. This statement concerns the nominal, error-free, exactly matched line. Under
 errors the exit covariance $\Sigma_{\rm out}=M(K,e)\Sigma_{\rm in}(e)M(K,e)^{\mathsf T}$
 also depends on $K$, through gradient errors, rolls, chromatic transport of
 off-momentum particles and the sampled entrance beta factors; together with the
@@ -425,15 +418,15 @@ covariance $M_xJM_x^{\mathsf T}$ plus the momentum term $\sigma_{\delta,j}^2\mat
 \mathbf d_4^{\mathsf T}$, which is the same for every matched setting. In this
 nominal model the quadrupoles influence the exit jitter only through $\mu_x$. Over a full period the
 exit position spread ranges from \SI{0.26}{\milli\metre} to \SI{0.95}{\milli\metre} and the angle spread from \SI{0.12}{\milli\radian} to
-\SI{0.41}{\milli\radian}, in opposite phase (Fig.~\ref{fig:jitter}, left): a matched line can move
+\SI{0.41}{\milli\radian}, in opposite phase (Fig.~\ref{fig:jitter}): a matched line can move
 booster jitter between position, which the septum blade sees, and angle, which the
 injection kicker sees, but cannot remove it. On error realizations, the residual
 trajectory after steering, the optics errors and roll coupling add to this jitter;
 the test losses are computed with the full transport of each realization
 (Sections~\ref{sec:steering-results} and \ref{sec:design}). Averaged over the Gaussian
 jitter in the linearized model, these static contributions raise the blade loss of the error-free line by only
-a few percent (Section~\ref{sec:sensitivity}); the larger tracked losses of
-Table~\ref{tab:design} reflect the jitter tail sampled by the 600 test shots.
+a few percent (Section~\ref{sec:sensitivity}); the larger tracked losses of some test
+populations reflect the jitter tail sampled by their 600 shots.
 
 \subsection{Loss-based observable and design}\label{sec:loss}
 For a Gaussian projection with centroid $\bar u$ and rms size $\sigma$ at an
@@ -589,7 +582,7 @@ $x'_{\rm rms}$ the rms exit centroid over shots.}\label{tab:steering}
 Two observations arise from these results. First, after correction the exit
 centroid spread, about \SI{0.68}{\milli\metre} and \SI{0.37}{\milli\radian}, is mainly that of the booster jitter
 (\SI{0.64}{\milli\metre} and \SI{0.33}{\milli\radian} for the error-free matched reference,
-Table~\ref{tab:design}); averaged over the Gaussian jitter in the linearized model, the
+Table~\ref{tab:residual}); averaged over the Gaussian jitter in the linearized model, the
 static residual raises the loss by only a few percent (Section~\ref{sec:sensitivity}). Second, the mean
 minimum clearance does not rank the variants by loss: the uncorrected line has the
 largest mean clearance (\SI{\BtsRThreeRefUncClear}{\milli\metre} against \SI{\BtsRThreeRefCorClear}{\milli\metre})
@@ -612,7 +605,7 @@ loses \num{0.21} percentage points less than the matched reference on these real
 change, \SI{-0.001}{\milli\metre} ([\num{-0.009}, \num{+0.007}]\,\si{\milli\metre}), is unresolved. On the fresh
 test of Section~\ref{sec:design} its loss change is unresolved. Its horizontal phase
 advance is about \SI{1}{\degree} smaller than that of the matched reference, which lowers its
-error-free blade loss from \SI{1.28}{\percent} to \SI{1.16}{\percent} (Table~\ref{tab:design}); in the nominal
+error-free blade loss from \SI{1.28}{\percent} to \SI{1.16}{\percent} (Table~\ref{tab:test4}); in the nominal
 model the lower vertical peak beta does not enter the horizontal blade loss.
 
 Table~\ref{tab:layouts} repeats the steering on the same realizations with shared
@@ -674,37 +667,14 @@ same phase advance to within \SI{\BtsRFourEdgeRobustMuDiffDeg}{\degree} and the 
 \SI{0.02}{\metre}; we therefore regard the loss-based setting as the best-found feasible setting at
 the lower edge of the matched range, not as a certified global optimum. Its predicted shot-averaged loss is \SI{\BtsRThreeRobustShotPct}{\percent}
 against \SI{\BtsRThreeRefShotPct}{\percent} for the matched reference, because its exit position jitter is
-\SI{\BtsRThreeRobustJxUm}{\micro\metre} instead of \SI{\BtsRThreeRefJxUm}{\micro\metre} (Table~\ref{tab:design}).
+\SI{\BtsRThreeRobustJxUm}{\micro\metre} instead of \SI{\BtsRThreeRefJxUm}{\micro\metre}.
 
-\begin{table}[htbp]\centering
-\caption{Matched reference (Matched), optimized low-beta and loss-based settings and their fresh test (200 steered error realizations, 3 shots,
-2\,000 particles each). $\mu_x$: horizontal phase advance; $\hat\beta$: larger peak
-beta; $\sigma_{x,j}$, $\sigma_{x',j}$: exit jitter from Eq.~(\ref{eq:transfer});
-$\bar P$: shot-averaged loss on the error-free line; Lost and Pred.: tracked and
-predicted loss on the test realizations; Blocks: error realizations with any loss.}\label{tab:design}
-{\small\input{generated/round3_design_rows.tex}}\end{table}
-
-On the fresh error realizations the tracked loss is \SI{\BtsRThreeTestRefPct}{\percent}, \SI{\BtsRThreeTestLowPct}{\percent}
-and \SI{\BtsRThreeTestRobustPct}{\percent} for the matched reference, low-beta and loss-based settings,
-each within \SI{1}{\percent} relative of its mean prediction. The loss-based setting changes the loss by
-\num{\BtsRThreeTestRobustDiff} percentage points against the matched reference
-(pointwise \SI{95}{\percent} interval clustered by error realization,
-[\num{\BtsRThreeTestRobustDiffLo}, \num{\BtsRThreeTestRobustDiffHi}] percentage points), a factor
-of \BtsRThreeLossRatio; low beta changes it by \num{\BtsRThreeTestLowDiff} percentage
-points ([\num{\BtsRThreeTestLowDiffLo}, \num{\BtsRThreeTestLowDiffHi}] percentage points),
-unresolved. Its mean minimum clearance changes by only
-\SI{\BtsRThreeTestRobustClear}{\milli\metre}
-([\num{\BtsRThreeTestRobustClearLo}, \num{\BtsRThreeTestRobustClearHi}]\,\si{\milli\metre}), also
-unresolved: the
-mean-clearance metric cannot resolve this loss reduction. The price is
-an exit angle jitter larger by \SI{\BtsRThreeAnglePenaltyPct}{\percent}
-(\SI{\BtsRThreeRobustJxpUrad}{\micro\radian} against \SI{\BtsRThreeRefJxpUrad}{\micro\radian}), which the
-injection kicker must accept. The loss is concentrated in shots whose entrance jitter
-is two to three standard deviations: the five worst of the 200 test realizations of the matched reference
-contribute \SI{\BtsRThreeTopFiveSharePct}{\percent} of its loss, the worst losing
-\SI{\BtsRThreeWorstMachinePct}{\percent} per shot on average. The intervals, clustered by error
-realization, account for this heavy tail, and the population mean differs between independently
-seeded populations (Section~\ref{sec:sensitivity}).
+An earlier fresh test of the matched reference, low-beta and loss-based settings, on
+200 other realizations with reading errors drawn per setting, is given in the
+supplement. Its tracked gain was \BtsRThreeLossRatio, the low-beta change was unresolved, and the
+mean minimum clearance did not resolve the loss reduction. The price of the loss-based
+setting is an exit angle jitter larger by \SI{\BtsRThreeAnglePenaltyPct}{\percent} (\SI{\BtsRThreeRobustJxpUrad}{\micro\radian} against
+\SI{\BtsRThreeRefJxpUrad}{\micro\radian}), which the injection kicker must accept.
 
 Table~\ref{tab:test4} gives a second test on 200 independently seeded realizations,
 with the reading errors shared by all settings. Of \BtsRFiveParticles\ tracked particles the
@@ -740,15 +710,12 @@ phase-edge setting; the earlier loss-based setting and a duplicate configuration
 identical rows. Disp.-free is the best dispersion-free scan setting.}\label{tab:test4}
 {\footnotesize\setlength{\tabcolsep}{3pt}\input{generated/round5_test_rows.tex}}\end{table}
 
-\begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round3_jitter_transfer.pdf}
-\caption{Left: rms exit position (solid, \si{\milli\metre}) and angle (dashed, \si{\milli\radian}) jitter from
-Eq.~(\ref{eq:transfer}) versus horizontal phase advance, with the phase-advance ranges found
-for the configured exit (blue) and a dispersion-free exit (orange; its momentum term
-differs slightly). Right: predicted shot-averaged blade loss of
-every matched solution (grey) and of the three settings (circles), with the tracked
-loss on steered test realizations (crosses), which also include static residuals.
-The matched reference in this comparison is the intermediate matched setting; the
-baseline setting appears in Figures~\ref{fig:refined} and \ref{fig:profile}.}
+\begin{figure}[htbp]\centering\includegraphics[width=.65\linewidth]{figures/round5_jitter_transfer.pdf}
+\caption{Rms exit position (solid, \si{\milli\metre}) and angle (dashed, \si{\milli\radian}) jitter from
+Eq.~(\ref{eq:transfer}) versus horizontal phase advance for the assumed booster jitter,
+with the phase-advance ranges found by the constrained searches for the configured exit
+(blue) and a dispersion-free exit (orange; its momentum term differs slightly). The
+blade loss of the matched settings is shown in Fig.~\ref{fig:scan}.}
 \label{fig:jitter}\end{figure}
 
 \begin{figure}[htbp]\centering\includegraphics[width=\linewidth]{figures/round4_phase_scan.pdf}
@@ -806,20 +773,13 @@ within the line.
 
 \subsection{Sensitivity to the error levels}\label{sec:sensitivity}
 The \SI{0.5}{\milli\radian} rms quadrupole roll is large for a transfer line, and \SI{0.1}{\percent} rms shot
-energy jitter is at the high end of booster performance. Table~\ref{tab:sensitivity}
-repeats the steered evaluation with rolls of \SI{0.1}{\milli\radian}, \SI{0.2}{\milli\radian} and \SI{0.5}{\milli\radian} and energy jitter
-of \SI{0.05}{\percent} and \SI{0.1}{\percent} on another 200 independently seeded error realizations
-(analytic loss and clearance, no particle tracking). Changing the roll level changes
-the predicted loss by less than 0.001 percentage points, i.e.\ not at all at the
-precision reported in Table~\ref{tab:sensitivity}: quadrupole rolls couple a small part of the
-horizontal motion into the vertical plane, whose restrictions keep several
-millimeters of clearance, and leave the horizontal blade loss unchanged. Halving the
-energy jitter lowers the matched-reference loss from \SI{\BtsRThreeEnergyRefFull}{\percent} to
-\SI{\BtsRThreeEnergyRefHalf}{\percent}, because its \SI{81}{\micro\metre} exit contribution is small
-compared with the betatron jitter. The ranking of the settings is the same at every
-roll and energy-jitter level. On this population the loss-based setting is \BtsRThreeSensRatio\ times below
-the matched reference, against \BtsRThreeLossRatio\ on the tracked test population: with
-three shots per realization, the size of the gain depends on the sampled jitter tail.
+energy jitter is at the high end of booster performance. On another 200 independently
+seeded realizations, rolls of \SI{0.1}{\milli\radian} to \SI{0.5}{\milli\radian} change the predicted loss of every
+setting by less than 0.001 percentage point, and halving the energy jitter changes it by
+at most 0.04 percentage point; the supplement gives the table. Rolls couple a small part
+of the horizontal motion into the vertical plane, whose restrictions keep several
+millimeters of clearance, and the \SI{81}{\micro\metre} exit contribution of the energy jitter is small
+compared with the betatron jitter.
 
 For each steered realization we therefore also evaluate the jitter-integrated loss:
 Eq.~(\ref{eq:loss}) averaged over the Gaussian entrance jitter on that realization's
@@ -849,20 +809,6 @@ still divides the jitter between position and angle, but the delivered centroid 
 dominated by the horizontal steering residual and the uncorrected vertical trajectory.
 
 \begin{table}[htbp]\centering
-\caption{Rms exit centroid of the matched reference on the 200 steered realizations of
-Table~\ref{tab:jitter} against the nominal exit jitter of the error-free line, by betatron
-jitter scale. The \SI{0.1}{\percent} momentum jitter is kept at every scale. Analytic
-centroids of three sampled shots per realization.}\label{tab:residual}
-{\small\input{generated/round5_residual_rows.tex}}\end{table}
-
-\begin{table}[htbp]\centering
-\caption{Sensitivity of the steered matched line (Matched denotes the matched reference) to the roll and energy-jitter levels: mean
-predicted loss and mean minimum five-sigma clearance on 200 error realizations with three shots
-each (analytic, not tracked). Each row holds for all three roll levels, whose results are
-identical at the printed precision.}\label{tab:sensitivity}
-{\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
-
-\begin{table}[htbp]\centering
 \caption{Dependence on the booster betatron jitter. Position and angle jitter at m1 are
 scaled together from the assumed \SI{0.5}{\milli\metre} and \SI{0.2}{\milli\radian} (scale 1) and are
 given in units of the rms beam size and divergence at m1; the momentum jitter stays
@@ -870,6 +816,13 @@ at \SI{0.1}{\percent}. Losses are the jitter-integrated predictions averaged ove
 error realizations, and the last column is the error-free line (analytic, not
 tracked).}\label{tab:jitter}
 {\small\input{generated/round4_jitter_rows.tex}}\end{table}
+
+\begin{table}[htbp]\centering
+\caption{Rms exit centroid of the matched reference on the 200 steered realizations of
+Table~\ref{tab:jitter} against the nominal exit jitter of the error-free line, by betatron
+jitter scale. The \SI{0.1}{\percent} momentum jitter is kept at every scale. Analytic
+centroids of three sampled shots per realization.}\label{tab:residual}
+{\small\input{generated/round5_residual_rows.tex}}\end{table}
 
 The centroid-to-blade distance $d_b=\SI{1.478}{\milli\metre}$ is taken from the NKM injection
 geometry, and the blade loss depends on it roughly exponentially.

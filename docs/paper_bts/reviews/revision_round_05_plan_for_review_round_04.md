@@ -128,7 +128,7 @@ not be marked complete merely because numerical work passes.
   **Completion:** a documented sensitivity or a justified omission; no automatic requirement to improve capture.
   **Done (milestone 289, `c1da6d7`):** angle-weighted layout (end weight 10) leaves the exit-angle residual at 0.41 mrad and the losses unchanged; stated without an angle monitor.
 
-- [ ] **R5-BTS-07 — Consolidate the article and supplement. Priority B, editorial.**
+- [x] **R5-BTS-07 — Consolidate the article and supplement. Priority B, editorial.**
   **Sources:** R2D-05, R2D-11; R1D-BTS-07.
   - Move the older tracked-test table to the supplement if the revised shared-noise table carries the main argument;
     keep the earlier population/results accessible and clearly labelled rather than silently deleting them.
@@ -142,6 +142,7 @@ not be marked complete merely because numerical work passes.
     preserve assumptions, stress-level qualification, intervals and negative results. The page target is advisory.
   **Completion:** one clear main comparison, traceable historical material, and consistent figure/table references;
   no acceptance decision is inferred from page count.
+  **Done (milestone 290):** first-test table and sampled roll/energy table moved to supplement Section 5 with summaries; Figure 4 reduced to the jitter panel with "found range" labels; repeated four-station text and the supplement audit compressed. Article 19 pages (~9,900 tokens); the 12–14-page target was not reached, and further cuts (baseline figures, literature review) are left to the author.
 
 - [ ] **R5-BTS-08 — Repair provenance, citations and current status records. Priority A for provenance; editorial for formatting.**
   **Sources:** R1D-BTS-04; R2D-09; labels/formatting from R2D-05 and R2D-08.
@@ -219,4 +220,4 @@ The mandatory additional tracking is the focused shared-reading-noise second tes
 other numerical work is post-processing or explicitly conditional. Do not silently replace the NKM paper's shared
 beam, jitter or correction assumptions; document any proposed change and its validation separately.
 
-**Current completion state (updated 2026-10-31): 6 of 10 consolidated tasks done (01–06); 08 in progress; 07 in progress; 09 awaits author decisions; 10 pending.** All 19 original top-level requests are mapped.
+**Current completion state (updated 2026-10-31): 7 of 10 consolidated tasks done (01–07); 08 in progress; 09 awaits author decisions; 10 pending.** All 19 original top-level requests are mapped.

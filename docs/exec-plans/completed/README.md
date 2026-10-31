@@ -838,3 +838,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 289. [**Milestone 289 — R5-BTS-06: angle-weighted steering sensitivity**](289_r5_bts_06_angle_weighted_steering.md)
     - Weighting the exit readings 10 instead of 3 leaves the exit-angle residual at 0.41 mrad and the losses unchanged. Position readings alone cannot reduce it; this is stated without inventing an angle monitor.
+
+290. [**Milestone 290 — R5-BTS-07: consolidation of article and supplement**](290_r5_bts_07_consolidation.md)
+    - Move the first test table and the sampled roll/energy table to a new supplement section, reduce Figure 4 to its jitter panel, and compress the repeated four-station text and the supplement audit. The article is 19 pages (~9,900 tokens); further cuts are author choices.

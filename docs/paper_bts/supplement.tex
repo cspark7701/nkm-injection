@@ -9,6 +9,8 @@
 \input{generated/archived_results.tex}
 \input{generated/revision_results.tex}
 \input{generated/round2_results.tex}
+\input{generated/round3_design.tex}
+\input{generated/round3_sensitivity.tex}
 \title{Supplementary material: Optical matching and beam loss in a booster-to-storage-ring transfer line for nonlinear-kicker injection at the Korea Light Source}
 \author{Chong Shik Park}
 \date{October 31, 2026}
@@ -17,8 +19,9 @@
 This supplement accompanies the article and contains: the historical matching
 and optical statistics of the earlier campaign (Sections~1--2); the numerical
 accuracy and spatial-resolution checks (Section~3); finite loss events
-(Section~4); and the earlier four-station aperture study with hypothetical
-restrictions (Section~5). The historical sections keep the beam and modeling
+(Section~4); the earlier fresh test and the sampled roll and energy-jitter
+sensitivity (Section~5); and the earlier four-station aperture study with hypothetical
+restrictions (Section~6). The historical sections keep the beam and modeling
 assumptions of the earlier campaign and are not pooled with the article's results.
 Setting names follow the article: the baseline setting is the unmatched
 configuration, and the matched reference is the matched intermediate setting.
@@ -120,18 +123,13 @@ without a longitudinal six-dimensional certificate. Translations, rolls and
 fixed-geometry dipole-field perturbations are exercised independently. Momentum
 errors enter particle $\delta$ without double rescaling magnet fields.
 
-The affine error maps of the earlier four-station campaign omit chromatic
-derivatives about displaced trajectories. Comparing all 600 shots of that campaign
-with AT Jacobians expanded about
-the actual centroid changes station clearances by up to \SI{78.43}{\micro\metre},
-but shifts the paired mean by only $\SI{-0.155}{\micro\metre}$. Eight
-matched-reference and three alternative active-station classifications change. The
-earlier paired mean of \SI{14.61}{\micro\metre} and its interval
-$[-17.91,+48.32]$\,\si{\micro\metre} become \SI{14.45}{\micro\metre} and
-$[-17.88,+48.10]$\,\si{\micro\metre};
-the unresolved-benefit conclusion persists. New comparisons use centered AT maps.
-Moment probes are uncensored by aperture limits, so propagated moments describe
-the incoming distribution rather than a survivor-biased subset.
+The earlier four-station campaign used affine error maps without chromatic
+derivatives about displaced trajectories. Recomputing its 600 shots with AT Jacobians
+about the actual centroids changes single station clearances by up to
+\SI{78.43}{\micro\metre} but the paired mean by only \SI{-0.155}{\micro\metre} (\SI{14.61}{\micro\metre} becomes
+\SI{14.45}{\micro\metre}, interval $[-17.88,+48.10]$\,\si{\micro\metre}), so its unresolved-benefit
+conclusion stands. All later comparisons use centered AT maps, with moment probes
+uncensored by apertures.
 
 Representative simultaneous-error cases compare probe steps $10^{-6}$--$10^{-8}$
 and forty/eighty integration steps. Their clearance changes are below
@@ -192,6 +190,67 @@ The initial shared-aperture hypothetical run is excluded and retained with exact
 generating sources. The corrected driver independently detaches the selected
 station, verified by a regression test. No numerical failure record is silently
 counted as physical success.
+
+\section{Earlier fresh test and roll and energy-jitter sensitivity}\label{sec:earlier-test}
+This section keeps two results that the article now summarizes. The first is the
+earlier fresh test of the three settings on 200 realizations (seeds 92001--92005),
+in which each setting had its own reading errors; the article's main comparison
+uses shared reading errors. The second is the sampled roll and energy-jitter
+sensitivity, whose predictions are means over three sampled shots per realization
+rather than the jitter-integrated loss used in the article.
+
+\begin{table}[htbp]\centering
+\caption{Earlier fresh test of the matched reference (Matched), optimized low-beta and loss-based settings, with reading errors drawn per setting (200 steered error realizations, 3 shots,
+2\,000 particles each). $\mu_x$: horizontal phase advance; $\hat\beta$: larger peak
+beta; $\sigma_{x,j}$, $\sigma_{x',j}$: exit jitter from Eq.~(6) of the article;
+$\bar P$: shot-averaged loss on the error-free line; Lost and Pred.: tracked and
+predicted loss on the test realizations; Blocks: error realizations with any loss.}\label{tab:design}
+{\small\input{generated/round3_design_rows.tex}}\end{table}
+
+On the fresh error realizations the tracked loss is \SI{\BtsRThreeTestRefPct}{\percent}, \SI{\BtsRThreeTestLowPct}{\percent}
+and \SI{\BtsRThreeTestRobustPct}{\percent} for the matched reference, low-beta and loss-based settings,
+each within \SI{1}{\percent} relative of its mean prediction. The loss-based setting changes the loss by
+\num{\BtsRThreeTestRobustDiff} percentage points against the matched reference
+(pointwise \SI{95}{\percent} interval clustered by error realization,
+[\num{\BtsRThreeTestRobustDiffLo}, \num{\BtsRThreeTestRobustDiffHi}] percentage points), a factor
+of \BtsRThreeLossRatio; low beta changes it by \num{\BtsRThreeTestLowDiff} percentage
+points ([\num{\BtsRThreeTestLowDiffLo}, \num{\BtsRThreeTestLowDiffHi}] percentage points),
+unresolved. Its mean minimum clearance changes by only
+\SI{\BtsRThreeTestRobustClear}{\milli\metre}
+([\num{\BtsRThreeTestRobustClearLo}, \num{\BtsRThreeTestRobustClearHi}]\,\si{\milli\metre}), also
+unresolved: the
+mean-clearance metric cannot resolve this loss reduction. The price is
+an exit angle jitter larger by \SI{\BtsRThreeAnglePenaltyPct}{\percent}
+(\SI{\BtsRThreeRobustJxpUrad}{\micro\radian} against \SI{\BtsRThreeRefJxpUrad}{\micro\radian}), which the
+injection kicker must accept. The loss is concentrated in shots whose entrance jitter
+is two to three standard deviations: the five worst of the 200 test realizations of the matched reference
+contribute \SI{\BtsRThreeTopFiveSharePct}{\percent} of its loss, the worst losing
+\SI{\BtsRThreeWorstMachinePct}{\percent} per shot on average. The intervals, clustered by error
+realization, account for this heavy tail, and the population mean differs between independently
+seeded populations (Section~4.5 of the article).
+
+\begin{table}[htbp]\centering
+\caption{Sensitivity of the steered matched line (Matched denotes the matched reference) to the roll and energy-jitter levels: mean
+predicted loss and mean minimum five-sigma clearance on 200 error realizations with three shots
+each (analytic, not tracked). Each row holds for all three roll levels, whose results are
+identical at the printed precision.}\label{tab:sensitivity}
+{\small\input{generated/round3_sensitivity_rows.tex}}\end{table}
+
+The \SI{0.5}{\milli\radian} rms quadrupole roll is large for a transfer line, and \SI{0.1}{\percent} rms shot
+energy jitter is at the high end of booster performance. Table~\ref{tab:sensitivity}
+repeats the steered evaluation with rolls of \SI{0.1}{\milli\radian}, \SI{0.2}{\milli\radian} and \SI{0.5}{\milli\radian} and energy jitter
+of \SI{0.05}{\percent} and \SI{0.1}{\percent} on another 200 independently seeded error realizations
+(analytic loss and clearance, no particle tracking). Changing the roll level changes
+the predicted loss by less than 0.001 percentage points, i.e.\ not at all at the
+precision reported in Table~\ref{tab:sensitivity}: quadrupole rolls couple a small part of the
+horizontal motion into the vertical plane, whose restrictions keep several
+millimeters of clearance, and leave the horizontal blade loss unchanged. Halving the
+energy jitter lowers the matched-reference loss from \SI{\BtsRThreeEnergyRefFull}{\percent} to
+\SI{\BtsRThreeEnergyRefHalf}{\percent}, because its \SI{81}{\micro\metre} exit contribution is small
+compared with the betatron jitter. The ranking of the settings is the same at every
+roll and energy-jitter level. On this population the loss-based setting is \BtsRThreeSensRatio\ times below
+the matched reference, against \BtsRThreeLossRatio\ on the tracked test population: with
+three shots per realization, the size of the gain depends on the sampled jitter tail.
 
 \section{Four-station model with hypothetical internal restrictions}
 This section presents the four-station study, in which apertures are placed

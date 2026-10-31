@@ -823,3 +823,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 284. [**Milestone 284 — R5-BTS-08: provenance pointer, citations and stability statement**](284_r5_bts_08_provenance_citations.md)
     - Fix the round-4 `test_source` pointer and make the provenance paths relative. Remove the uncited booster-stability generalization. Cite the TPS IPAC'26 paper as JaCoW records it (unpublished).
+
+285. [**Milestone 285 — R5-BTS-02: headline estimator and rare-loss validation**](285_r5_bts_02_headline_estimator.md)
+    - The primary gain is a ratio of mean jitter-integrated losses with a paired bootstrap: 4.48 [4.33, 4.63] (layouts 4.59). The four loss quantities are separated, the 1 % claim restricted, the 6.5 % loss-based excess stated, and the dispersion-free count reported against its conditional expectation.

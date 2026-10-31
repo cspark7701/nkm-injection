@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "purpose": "Document identity and old-to-new path mapping; only filename references in the content were updated.",
+  "entries": [
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261013_main_report.md",
+      "new": "docs/paper_bts/reviews/review_round_01_reviewer_01_report.md",
+      "sha256_before": "0395b2330ba41ef29d88ad1d920450ca855a28aa3b91bb8be00f4171eef3d311",
+      "sha256_after": "f83520c06b46d345ba69d3a75f13cf335bed0a68a00da2b92788e6444df619ac"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261013_main_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/review_round_01_reviewer_01_tasks.md",
+      "sha256_before": "39d2c364d6c6f85b73dc60cf1bf4ae10f8414eb12fc956a47f32ce96d9247368",
+      "sha256_after": "05a185fbaf981faa7059d24e41d0a905634fd9e42686fbea73407119559470c6"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_main_20261013.md",
+      "new": "docs/paper_bts/reviews/review_round_01_author_response_to_reviewer_01.md",
+      "sha256_before": "6655be8cfbcaf347afd6fdc7ed97e434b33c7d81f83009601ce75c02145ba617",
+      "sha256_after": "a23c8ed5378c7a3e7a1426729a7edef44494e742f158107ee776c9fe06ca112e"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261013_main_round2_report.md",
+      "new": "docs/paper_bts/reviews/review_round_02_reviewer_01_report.md",
+      "sha256_before": "43e2d3b31084bb175fc77dac60a5e9709fbf179fa8e5342e97185db8e9a50318",
+      "sha256_after": "b34e21b5acb004c843f8e8e5d198045b51d96c41f0bf5b0f5edbebb19b858633"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261013_main_round2_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/review_round_02_reviewer_01_tasks.md",
+      "sha256_before": "5ddc4ef49ec67339cdfe4d35131810dee382ee0c0cf54a2fe435a1e06c9bc1bd",
+      "sha256_after": "a044d85806cf45be45593749c0c70093e035476c168b029d4ac201e67244fb7f"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_main_round2_20261013.md",
+      "new": "docs/paper_bts/reviews/review_round_02_author_response_to_reviewer_01.md",
+      "sha256_before": "f599cff49c3c2f320bea30cda19299bf30c00e111c74260b4350307f67421689",
+      "sha256_after": "f599cff49c3c2f320bea30cda19299bf30c00e111c74260b4350307f67421689"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer2_bts_20261015_main_report.md",
+      "new": "docs/paper_bts/reviews/review_round_02_reviewer_02_report_and_tasks.md",
+      "sha256_before": "20f530c48f93a0ae98502334656097ad391cf8b4f616974167509752ce99a678",
+      "sha256_after": "20f530c48f93a0ae98502334656097ad391cf8b4f616974167509752ce99a678"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_reviewer2_20261015.md",
+      "new": "docs/paper_bts/reviews/review_round_02_author_response_to_reviewer_02.md",
+      "sha256_before": "af82fbcc6377793004d17a53831f84fb86a9269675c114c8a05ccd448162a90b",
+      "sha256_after": "a722c5973f13a8d0eba1954bdc668b918313bdc65b07de1152b29ce2bd8a9372"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261030_main_round3_report.md",
+      "new": "docs/paper_bts/reviews/review_round_03_reviewer_01_report.md",
+      "sha256_before": "788018ac75fe096df9fc0ceef0ec5be058f1246ea983923ebe70010549d896fa",
+      "sha256_after": "89354470a9bfba30936085ea12819028a68d44d2331bb80b984ef47f6906712f"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261030_main_round3_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/review_round_03_reviewer_01_tasks.md",
+      "sha256_before": "2ca9a8fca8ae381098a5f17daa28fe829dc8c805578ac61cf9e953ba688ac596",
+      "sha256_after": "d4b11cc46ae4baf37cce8e1797d4eca1237ed1b2792bf526d186b60f29a065ae"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer2_bts_20261030_main_round3_report.md",
+      "new": "docs/paper_bts/reviews/review_round_03_reviewer_02_report.md",
+      "sha256_before": "cf7420d8f63f4e57dda55ea8072c7f87a142aa54f50b04c08b642131ed27bb9b",
+      "sha256_after": "3e827cf50a3d7053821e77cbe9aa5fe68f428accb76f680075f6ea0f243a0c33"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer2_bts_20261030_main_round3_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/review_round_03_reviewer_02_tasks.md",
+      "sha256_before": "378a54ef010e7c662040f0e401f45963702c987267fed92b2caeac71fa24fa6e",
+      "sha256_after": "c2e832e1b67f8650b049584010f95eba50be8c3586203ef9184940d31fd46a8b"
+    },
+    {
+      "old": "docs/paper_bts/reviews/round4_consolidated_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/revision_round_04_plan_for_review_round_03.md",
+      "sha256_before": "3733254553c0a27095890ad654f39b64285f78766f5db3777fcb53601b4ff56e",
+      "sha256_after": "e1125550f7fdce11033837ce7918e7c518b3c672d702ff4f6c8e06120fa7ac34"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_round4_20261031.md",
+      "new": "docs/paper_bts/reviews/review_round_03_author_response_to_reviewers_01_02.md",
+      "sha256_before": "1cc6fa294c3d0d3b7c11d195a4ee918efc698bfca79fa96d3f6ab730b63c1bf6",
+      "sha256_after": "3f4e4fb2ae471e29712ab635a4490b42753a0fec9e726a2ee361a67143c64cb6"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261031_main_round4_report.md",
+      "new": "docs/paper_bts/reviews/review_round_04_reviewer_01_report.md",
+      "sha256_before": "7b995ed2287204c8f1442e3e34aa81adcf4eb935c05538304d4e850db039e009",
+      "sha256_after": "123690559b1833a9ff2ee9bb8d7110c9ff38e49ed0afedb5ddfa1e7daa61537f"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer1_bts_20261031_main_round4_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/review_round_04_reviewer_01_tasks.md",
+      "sha256_before": "16085fd9d515254eea480de952824a8c718c26cd034b2b4d49f88d7ca8fc474d",
+      "sha256_after": "37fce2fc5e2104169d78a172aa8896c22934e78a6178b91befcef75bba366dc8"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer2_bts_20261031_main_round4_report.md",
+      "new": "docs/paper_bts/reviews/review_round_04_reviewer_02_report.md",
+      "sha256_before": "6e94b7fa430e6abb50d5d37f511fbe5a2deaf64b3980042acfa4b76e24258137",
+      "sha256_after": "2f62f8e4b250d631d9bfd71b39cb1510115a04e9bd749d378e7a1c13c355a10e"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer2_bts_20261031_main_round4_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/review_round_04_reviewer_02_tasks.md",
+      "sha256_before": "b5db1758c86e35f692d04fcb86acf5644d2b3fc2bbbba463aea9ef2dc0b7f3e1",
+      "sha256_after": "eff5204eec8ea04d56009c57bd169ea608e013c6649ca3e3ee944dc39e040c0e"
+    },
+    {
+      "old": "docs/paper_bts/reviews/round5_consolidated_revision_tasks.md",
+      "new": "docs/paper_bts/reviews/revision_round_05_plan_for_review_round_04.md",
+      "sha256_before": "bd4fea9b9f295f07e4fb53e8f18216ed110c8da4ea30dc98fd7861b661367eca",
+      "sha256_after": "bae01bd7a0df31bbea0f9f40809d0bd1beefad2694163a6ff4dd892236ec2765"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer_report_01.md",
+      "new": "docs/paper_bts/reviews/historical_branch_review_round_01_report.md",
+      "sha256_before": "ab969bb634e58f8abd66ef37bd25e1fc37ae9074a7b5094daa9aa90ebfdf6a37",
+      "sha256_after": "ab969bb634e58f8abd66ef37bd25e1fc37ae9074a7b5094daa9aa90ebfdf6a37"
+    },
+    {
+      "old": "docs/paper_bts/reviews/revision_tasks.md",
+      "new": "docs/paper_bts/reviews/historical_branch_revision_round_01_tasks.md",
+      "sha256_before": "a2b24af50fb22aa889afd53649ef525f4801a4c1425313d3b28c6dc4356c3f21",
+      "sha256_after": "b749a68907593d8b369de39ea6332318b47d4d4ef6947557417fe5f799f759e5"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_to_reviewer_01.md",
+      "new": "docs/paper_bts/reviews/historical_branch_review_round_01_author_response_to_reviewer_01.md",
+      "sha256_before": "9a9fc10018099b1aa0c55c93b3c0e9cc10759510d4f9e114dd960ee8519d7338",
+      "sha256_after": "9a9fc10018099b1aa0c55c93b3c0e9cc10759510d4f9e114dd960ee8519d7338"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer_report_02.md",
+      "new": "docs/paper_bts/reviews/historical_branch_review_round_02_report.md",
+      "sha256_before": "e2cf9ea6e166d4a9b18345fc17ab1adb8b86572946e008311eed598d5cf9b434",
+      "sha256_after": "e2cf9ea6e166d4a9b18345fc17ab1adb8b86572946e008311eed598d5cf9b434"
+    },
+    {
+      "old": "docs/paper_bts/reviews/revision_tasks_round2.md",
+      "new": "docs/paper_bts/reviews/historical_branch_revision_round_02_tasks.md",
+      "sha256_before": "5b602b6e67682d810f8a7b778129f34d19a1b52331a2639681f2a7fc72eec89d",
+      "sha256_after": "afd2cb398cfe1d56298dcafebe9bacd4fa462cd5f1f175d5832225739f03f566"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_to_reviewer_02.md",
+      "new": "docs/paper_bts/reviews/historical_branch_review_round_02_author_response_to_reviewer_02.md",
+      "sha256_before": "be1f6d0566596870c30cb21e17199f1e22b2f658e9e4da2555774d1ba516c16d",
+      "sha256_after": "be1f6d0566596870c30cb21e17199f1e22b2f658e9e4da2555774d1ba516c16d"
+    },
+    {
+      "old": "docs/paper_bts/reviews/reviewer_report_03.md",
+      "new": "docs/paper_bts/reviews/historical_branch_review_round_03_report.md",
+      "sha256_before": "70cbd875aeaef35155603b31cfa7fff88d339d8c7bfc38f0249fd1c9d9e62c7a",
+      "sha256_after": "91f00029eabb5e6c28aac914a97a3b8ef35fe4a49255f87c6213bed890708cbc"
+    },
+    {
+      "old": "docs/paper_bts/reviews/revision_tasks_round3.md",
+      "new": "docs/paper_bts/reviews/historical_branch_revision_round_03_tasks.md",
+      "sha256_before": "a2e368733f4a521e120a1c19f633526336ea5d6536850bb263add873cbab8aab",
+      "sha256_after": "88f2d5866aff2e653154f001f4cbba6955fe40a1dc9e2b3f980fbab72c70adf9"
+    },
+    {
+      "old": "docs/paper_bts/reviews/author_response_to_reviewer_03.md",
+      "new": "docs/paper_bts/reviews/historical_branch_review_round_03_author_response_to_reviewer_03.md",
+      "sha256_before": "e4c6a5fefc03057d08550cf27c351365787ca825b2f7e17b67d63a819c4bf105",
+      "sha256_after": "e4c6a5fefc03057d08550cf27c351365787ca825b2f7e17b67d63a819c4bf105"
+    }
+  ],
+  "frozen_identity_note": "Historical snapshot hashes/paths, including docs/paper_bts/round2_identity.json, describe original archived source. Resolve them in that source or use this map; they are intentionally not rewritten as current identities."
+}

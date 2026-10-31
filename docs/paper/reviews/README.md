@@ -1,25 +1,44 @@
 # Manuscript referee reviews
 
+## Review document filenames
+
+Filenames now state the round, reviewer and document role, with two-digit numbers:
+
+- `review_round_04_reviewer_01_report.md`: Reviewer 1's round-4 report.
+- `review_round_04_reviewer_01_tasks.md`: the corresponding reviewer task list.
+- `review_round_03_author_response_to_reviewers_01_02.md`: response to the round-3 reviews.
+- `revision_round_04_plan_for_review_round_04.md`: the round-4 revision plan answering round-4 reviews.
+
+**Review round** is the review being written or answered; **revision round** identifies the implementation cycle.
+They can differ. Dates, task IDs, decisions and author statements remain in the documents. A
+`report_and_tasks` suffix means the original report contains its own task register; it was not split or discarded.
+The [rename map](document_rename_map.json) records every old/new path and before/after digest. Old snapshot paths
+and hashes identify the original Git/attachment contents; they are not rewritten to pretend those bytes are new.
+
+The earlier Task-011 assessment is [pre_submission_assessment_2026_10_09.md](../pre_submission_assessment_2026_10_09.md);
+it is a preliminary scientific assessment, rather than a numbered referee round.
+
+
 These are pre-submission assessments, not journal editorial decisions. Review
 recommendations and scientific tasks remain distinct from software checks.
 
 | Review | Recommendation | Revision register |
 | :--- | :--- | :--- |
-| [Reviewer 1](reviewer1_report.md), 2026-10-10 | Major revision; no acceptance in present form | [12 ordered tasks](reviewer1_revision_tasks.md) |
-| [Reviewer 2](reviewer2_report.md), 2026-10-10 | Major revision | Included in the report |
-| [Reviewer 1, round 2](reviewer1_round2_20261011_report.md), 2026-10-11 | Focused major revision; do not accept the present version | [10 ordered tasks](reviewer1_round2_20261011_revision_tasks.md) |
-| [Reviewer 2, round 2](reviewer2_report_round2.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
-| [Reviewer 1, round 3](reviewer1_round3_20261012_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](reviewer1_round3_20261012_revision_tasks.md) |
-| [Reviewer 2, round 3](reviewer2_report_round3.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
-| [Reviewer 1, round 4](reviewer1_round4_20261016_report.md), 2026-10-16 | Focused major revision; no acceptance in present form | [8 R1D tasks](reviewer1_round4_20261016_revision_tasks.md), addressed in the round-4 response |
-| [Reviewer 2, round 4](reviewer2_report_round4.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
+| [Reviewer 1](review_round_01_reviewer_01_report.md), 2026-10-10 | Major revision; no acceptance in present form | [12 ordered tasks](review_round_01_reviewer_01_tasks.md) |
+| [Reviewer 2](review_round_01_reviewer_02_report_and_tasks.md), 2026-10-10 | Major revision | Included in the report |
+| [Reviewer 1, round 2](review_round_02_reviewer_01_report.md), 2026-10-11 | Focused major revision; do not accept the present version | [10 ordered tasks](review_round_02_reviewer_01_tasks.md) |
+| [Reviewer 2, round 2](review_round_02_reviewer_02_report_and_tasks.md), 2026-10-11 | Major revision; no acceptance in present form | 15 tasks R2b-1 to R2b-15, included in the report |
+| [Reviewer 1, round 3](review_round_03_reviewer_01_report.md), 2026-10-12 | Focused major revision | [8 ordered tasks](review_round_03_reviewer_01_tasks.md) |
+| [Reviewer 2, round 3](review_round_03_reviewer_02_report_and_tasks.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
+| [Reviewer 1, round 4](review_round_04_reviewer_01_report.md), 2026-10-16 | Focused major revision; no acceptance in present form | [8 R1D tasks](review_round_04_reviewer_01_tasks.md), addressed in the round-4 response |
+| [Reviewer 2, round 4](review_round_04_reviewer_02_report_and_tasks.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
 
-Consolidated execution order: [consolidated_revision_plan.md](consolidated_revision_plan.md) (tasks C1–C12).
-Round 2: [consolidated_revision_plan_round2.md](consolidated_revision_plan_round2.md) (tasks D1–D15, author inputs A1–A6).
-Round 3: [consolidated_revision_plan_round3.md](consolidated_revision_plan_round3.md) (tasks E1–E11, author inputs B1–B5).
-Round-3 response: [author_response_round3.md](author_response_round3.md) (E1–E11 complete; milestones 211–222).
-Round 4: [consolidated_revision_plan_round4.md](consolidated_revision_plan_round4.md) (tasks F1–F9; split from the round-3 plan on 2026-10-19).
-Round-4 response: [author_response_round4.md](author_response_round4.md) (F1–F9 complete; milestones 236–246; author's scientific approval pending).
+Consolidated execution order: [revision_round_01_plan_for_review_round_01.md](revision_round_01_plan_for_review_round_01.md) (tasks C1–C12).
+Round 2: [revision_round_02_plan_for_review_round_02.md](revision_round_02_plan_for_review_round_02.md) (tasks D1–D15, author inputs A1–A6).
+Round 3: [revision_round_03_plan_for_review_round_03.md](revision_round_03_plan_for_review_round_03.md) (tasks E1–E11, author inputs B1–B5).
+Round-3 response: [review_round_03_author_response_to_reviewers_01_02.md](review_round_03_author_response_to_reviewers_01_02.md) (E1–E11 complete; milestones 211–222).
+Round 4: [revision_round_04_plan_for_review_round_04.md](revision_round_04_plan_for_review_round_04.md) (tasks F1–F9; split from the round-3 plan on 2026-10-19).
+Round-4 response: [review_round_04_author_response_to_reviewers_01_02.md](review_round_04_author_response_to_reviewers_01_02.md) (F1–F9 complete; milestones 236–246; author's scientific approval pending).
 
 Reviewer 1 records the manuscript/source hashes and qualifies several proposals
 in Reviewer 2: canonical momentum must be distinguished from slope before adding
@@ -37,7 +56,7 @@ author response. It records the status of every first-round task. Its new major 
 - lattice identity;
 - generality.
 
-Round-2 revision response: [author_response_round2.md](author_response_round2.md).
+Round-2 revision response: [review_round_02_author_response_to_reviewers_01_02.md](review_round_02_author_response_to_reviewers_01_02.md).
 It maps all R1B and R2b tasks to the final evidence and explicit scope restrictions;
 D1–D15 are complete as of 2026-10-12. The author selected PRAB, and
 [D15](../../exec-plans/completed/160_prab_manuscript_formats.md) records the

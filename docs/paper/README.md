@@ -5,9 +5,9 @@ Updated 2026-10-16. Target: Physical Review Accelerators and Beams (PRAB).
 - [One-column article](paper.pdf), [two-column preview](paper_twocolumn.pdf) and [supplement](supplement.pdf):
   current installed lengths 30, 15 and six pages respectively.
 - [Review history](reviews/README.md): Reviewer 1 round 4 and Reviewer 2 round 4 both request focused major revision.
-- [Consolidated round-3 plan](reviews/consolidated_revision_plan_round3.md): E1–E11 executed; the appended
+- [Consolidated round-3 plan](reviews/revision_round_03_plan_for_review_round_03.md): E1–E11 executed; the appended
   F1–F9 follow-up combines both round-4 assessments of that revised manuscript. **Every F task remains pending.**
-- [Round-3 response](reviews/author_response_round3.md) records completed execution; no new revision response or
+- [Round-3 response](reviews/review_round_03_author_response_to_reviewers_01_02.md) records completed execution; no new revision response or
   scientific work is implied by the fourth-round review.
 - [Current submission checklist](submission_checklist.md), [PRAB layouts](prab_submission.md) and
   [reproduction/evidence guide](round2_reproduction.md).

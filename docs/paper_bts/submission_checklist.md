@@ -1,7 +1,7 @@
 # JKPS submission preparation — current BTS status
 
 Updated 2026-10-16. Reviewer 2's R2B-01–07 were executed (milestones 225–231) and rerun on the unchanged lattice
-using existing-dipole trims (milestone 234). See the [current response](reviews/author_response_reviewer2_20261015.md)
+using existing-dipole trims (milestone 234). See the [current response](reviews/review_round_02_author_response_to_reviewer_02.md)
 and [round-3 reproduction guide](round3_reproduction.md). A subsequent fresh assessment has not been recorded.
 No journal acceptance or submission is claimed. The round-two checklist items below are historical preparation evidence.
 
@@ -9,7 +9,7 @@ No journal acceptance or submission is claimed. The round-two checklist items be
 
 ## Round-4 status (2026-10-31)
 
-The round-4 revision ([consolidated tasks](reviews/round4_consolidated_revision_tasks.md)) is in progress; milestones
+The round-4 revision ([consolidated tasks](reviews/revision_round_04_plan_for_review_round_03.md)) is in progress; milestones
 from 265 onwards record each task. R4-BTS-08 completed the following:
 - **Supplement.** Its date, introduction and nomenclature now follow the article: "error realizations", "matched
   reference", the "unrestricted" regime of the four-station study, and "historical" sections.

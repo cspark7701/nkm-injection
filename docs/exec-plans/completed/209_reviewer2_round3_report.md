@@ -4,7 +4,7 @@ Completed: 2026-10-13. User request: review `docs/paper/` again as Reviewer 2, d
 with revision tasks without overwriting previous reviews.
 
 **Output.**
-- `docs/paper/reviews/reviewer2_report_round3.md`: new file.
+- `docs/paper/reviews/review_round_03_reviewer_02_report_and_tasks.md`: new file.
 - The reviews `README.md` gains a new row and a summary.
 - Earlier reports and responses are unchanged.
 

@@ -1,7 +1,7 @@
 # Milestone 241 — F2: paired error-class ablation at zero booster jitter
 
 Completed: 2026-10-20. Round-4 task F2 (R1D-01, R2d-1) of the
-[round-4 plan](../../paper/reviews/consolidated_revision_plan_round4.md); note:
+[round-4 plan](../../paper/reviews/revision_round_04_plan_for_review_round_04.md); note:
 [round4_ablation.md](../../paper/round4_ablation.md).
 
 **Runs.** 15 ensembles (`results/journal_campaign_05/f2_*`; not committed):

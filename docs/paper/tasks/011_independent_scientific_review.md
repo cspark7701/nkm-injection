@@ -18,7 +18,7 @@ A resolved review record, reproducible claim/figure audit, successful local soft
 
 ## Files and evidence
 
-Proposed `scientific_review.md`, claim/figure audit records, explicit campaign artifacts and fresh PDF build.
+Proposed `pre_submission_assessment_2026_10_09.md`, claim/figure audit records, explicit campaign artifacts and fresh PDF build.
 
 ## Execution safeguards
 

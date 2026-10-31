@@ -7,7 +7,7 @@ Completed: 2026-10-13. User request: create a consolidated revision plan for rou
 - Reviewer 2, round 3 (R2c-1 to R2c-9).
 
 **Output.**
-- `docs/paper/reviews/consolidated_revision_plan_round3.md`, containing:
+- `docs/paper/reviews/revision_round_03_plan_for_review_round_03.md`, containing:
   - how the two reviews relate;
   - an adopted-resolution table;
   - author inputs B1–B5 with defaults;

@@ -6,15 +6,15 @@ Recover reviewer reports and revision tasks developed on the local `bts` branch 
 
 ## Restored records
 
-- `docs/paper_bts/reviews/author_response_to_reviewer_01.md`
-- `docs/paper_bts/reviews/author_response_to_reviewer_02.md`
-- `docs/paper_bts/reviews/author_response_to_reviewer_03.md`
-- `docs/paper_bts/reviews/reviewer_report_01.md`
-- `docs/paper_bts/reviews/reviewer_report_02.md`
-- `docs/paper_bts/reviews/reviewer_report_03.md`
-- `docs/paper_bts/reviews/revision_tasks.md`
-- `docs/paper_bts/reviews/revision_tasks_round2.md`
-- `docs/paper_bts/reviews/revision_tasks_round3.md`
+- `docs/paper_bts/reviews/historical_branch_review_round_01_author_response_to_reviewer_01.md`
+- `docs/paper_bts/reviews/historical_branch_review_round_02_author_response_to_reviewer_02.md`
+- `docs/paper_bts/reviews/historical_branch_review_round_03_author_response_to_reviewer_03.md`
+- `docs/paper_bts/reviews/historical_branch_review_round_01_report.md`
+- `docs/paper_bts/reviews/historical_branch_review_round_02_report.md`
+- `docs/paper_bts/reviews/historical_branch_review_round_03_report.md`
+- `docs/paper_bts/reviews/historical_branch_revision_round_01_tasks.md`
+- `docs/paper_bts/reviews/historical_branch_revision_round_02_tasks.md`
+- `docs/paper_bts/reviews/historical_branch_revision_round_03_tasks.md`
 
 ## Index and scope
 

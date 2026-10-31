@@ -1,11 +1,11 @@
 # Milestone 235 — Round-4 consolidated plan split into its own file
 
-Completed: 2026-10-19. User request: split `consolidated_revision_plan_round4.md` from
-`consolidated_revision_plan_round3.md`.
+Completed: 2026-10-19. User request: split `revision_round_04_plan_for_review_round_04.md` from
+`revision_round_03_plan_for_review_round_03.md`.
 
 **Change.**
 - The "Round-4 follow-up to the round-3 manuscript" section (F1–F9, appended on 2026-10-16) moved verbatim to
-  `docs/paper/reviews/consolidated_revision_plan_round4.md`, with a new header naming its inputs (Reviewer 1 round 4,
+  `docs/paper/reviews/revision_round_04_plan_for_review_round_04.md`, with a new header naming its inputs (Reviewer 1 round 4,
   R1D-01–08; Reviewer 2 round 4, R2d-1–7). One cross-reference ("above") was re-pointed to the round-3 plan.
 - The round-3 plan keeps a stub under the same heading, so existing anchors still resolve, and its status paragraph
   now links to the new file.

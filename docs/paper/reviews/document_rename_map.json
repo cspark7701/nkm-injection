@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-31",
+  "purpose": "Document identity and old-to-new path mapping; only filename references in the content were updated.",
+  "entries": [
+    {
+      "old": "docs/paper/reviews/reviewer1_report.md",
+      "new": "docs/paper/reviews/review_round_01_reviewer_01_report.md",
+      "sha256_before": "5bb58277fa4d58272119616e02e1de96d4e9cc9d2b13e8ccfaf930993d95fefd",
+      "sha256_after": "da1892aee6fb207df8459f73c27136678421cf083a0b0ad4098bb5a611a280d8"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_revision_tasks.md",
+      "new": "docs/paper/reviews/review_round_01_reviewer_01_tasks.md",
+      "sha256_before": "d339ee8e35f0aa23ec5518ea1ab8ebb88a67ba6c51289ea966e5a3ef904a8127",
+      "sha256_after": "51560d899c779602f33db0e3dd9e58322102993ef1d554b920f2227ce71eaa2a"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer2_report.md",
+      "new": "docs/paper/reviews/review_round_01_reviewer_02_report_and_tasks.md",
+      "sha256_before": "75db58de29f187cd0efbda8e9fe571cf1d06baef1db21e6ca6251f065b0463a6",
+      "sha256_after": "75db58de29f187cd0efbda8e9fe571cf1d06baef1db21e6ca6251f065b0463a6"
+    },
+    {
+      "old": "docs/paper/reviews/consolidated_revision_plan.md",
+      "new": "docs/paper/reviews/revision_round_01_plan_for_review_round_01.md",
+      "sha256_before": "2553920461de357b0cc5488d198e2b8bae940279cb83470312a13fb73ae56c74",
+      "sha256_after": "55466c8dfd3baf07a20253a12891a9d06a70ab68b2e0b22460c34ff5b85ea58f"
+    },
+    {
+      "old": "docs/paper/reviews/author_response.md",
+      "new": "docs/paper/reviews/review_round_01_author_response_to_reviewers_01_02.md",
+      "sha256_before": "cd3a4ca46321d73a069c3665a0a67202bb6472d6b45d448c96b01385f2d26dbf",
+      "sha256_after": "209f511c33b3fa175654333f7c142e583cd292f93bc4ed0e428cafba519c1f90"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_round2_20261011_report.md",
+      "new": "docs/paper/reviews/review_round_02_reviewer_01_report.md",
+      "sha256_before": "f3d0495efbc2ff1bcee8231d8ad4bddbea2783555ff50b936ed7f15632afba7a",
+      "sha256_after": "7c06b0fb45171a5b505396828dec42fe01272bd2578c6a5e74fb9b7f8fa9956e"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_round2_20261011_revision_tasks.md",
+      "new": "docs/paper/reviews/review_round_02_reviewer_01_tasks.md",
+      "sha256_before": "86efd05035c9735261e677e757537cea809c85f0fd36eb59c530d3396c3d78ab",
+      "sha256_after": "cc4f5676e0b3edf7aebacc91b16c08b66eb9782c084edd6d123044e9b78a64d7"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer2_report_round2.md",
+      "new": "docs/paper/reviews/review_round_02_reviewer_02_report_and_tasks.md",
+      "sha256_before": "802f9a04685f1b5cd963b6e8f23893393fa5d2a4c7b865c18784967076262576",
+      "sha256_after": "5ad88ca58e2216ee7d0840d7cc22ef3934c38dacaed6b9449fe4c297ffdc1b55"
+    },
+    {
+      "old": "docs/paper/reviews/consolidated_revision_plan_round2.md",
+      "new": "docs/paper/reviews/revision_round_02_plan_for_review_round_02.md",
+      "sha256_before": "d3708cfe6573ac4ed088e0bca572e67dd8736e62dc50ac9f553bd8f332ba4d35",
+      "sha256_after": "a954ce8925e9d3afe28bd8608d11231e4fc78652b1d5c9af99a705c8f9a51dfd"
+    },
+    {
+      "old": "docs/paper/reviews/author_response_round2.md",
+      "new": "docs/paper/reviews/review_round_02_author_response_to_reviewers_01_02.md",
+      "sha256_before": "054ef01aaf9e6f0907a7e8bbd8db5edff1c4493aca11bdcc4dee837623f4266e",
+      "sha256_after": "054ef01aaf9e6f0907a7e8bbd8db5edff1c4493aca11bdcc4dee837623f4266e"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_round3_20261012_report.md",
+      "new": "docs/paper/reviews/review_round_03_reviewer_01_report.md",
+      "sha256_before": "9895b3af04d2139ace78190d2bd6029a40a183b1f180f7b43d5aa19b91af0b9e",
+      "sha256_after": "c2eadef267226fd8bf00344e17c0bb26a12d0abf5524edbec7e72162bafad43b"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_round3_20261012_revision_tasks.md",
+      "new": "docs/paper/reviews/review_round_03_reviewer_01_tasks.md",
+      "sha256_before": "0df2d1717254ca09f45754c0df24b7850206b3b1e368326e9a9243d20672a2c0",
+      "sha256_after": "06aa3eebc21ac93aaefbc6ad3c06633832c221d43f18ecf9f3afe10aebf4c5d9"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer2_report_round3.md",
+      "new": "docs/paper/reviews/review_round_03_reviewer_02_report_and_tasks.md",
+      "sha256_before": "efdb886b35150dad5832c58c33bcfdf4181e56338bdd2acfccddb4d58fc2abb2",
+      "sha256_after": "bfc0a3d9d778e4688dabfd4b8d062ea8671b289240713b7716f8bddf048e89e0"
+    },
+    {
+      "old": "docs/paper/reviews/consolidated_revision_plan_round3.md",
+      "new": "docs/paper/reviews/revision_round_03_plan_for_review_round_03.md",
+      "sha256_before": "fa2fe713c9c6e61d16671446494b5d95082a42baaa23b83dbd827d1474861762",
+      "sha256_after": "a7d74f1e49833d40d634161342232d2c08a16e8015ea67d428441d5d8ba093da"
+    },
+    {
+      "old": "docs/paper/reviews/author_response_round3.md",
+      "new": "docs/paper/reviews/review_round_03_author_response_to_reviewers_01_02.md",
+      "sha256_before": "be476f90d7949bdfe58a9c6b807e1aef90e27a52e69f9ba8420a315838e620d5",
+      "sha256_after": "f9b0b61ba7b87e5d3ba02ef71ad76c05282e67db25c55b8d6f43fbad720f7148"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_round4_20261016_report.md",
+      "new": "docs/paper/reviews/review_round_04_reviewer_01_report.md",
+      "sha256_before": "f2cba382c52ae04a771ce9692e8ec5522b9dea950eb11a1c13bb83e123a64926",
+      "sha256_after": "c45b6e49bac59e86593e7af89c03b88f9c342f2b9bb10c2c2b6eb3cb40061c92"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer1_round4_20261016_revision_tasks.md",
+      "new": "docs/paper/reviews/review_round_04_reviewer_01_tasks.md",
+      "sha256_before": "a7a9c565d3877ba795e7b952a418b045e9e50672d0476031c177b2b53e05f399",
+      "sha256_after": "4a13336e0683345777f578152752d696e9f04ac5c6dbbb2dfaf76504d2e3cb63"
+    },
+    {
+      "old": "docs/paper/reviews/reviewer2_report_round4.md",
+      "new": "docs/paper/reviews/review_round_04_reviewer_02_report_and_tasks.md",
+      "sha256_before": "4ab907957c6db0df4f0c0b525dc17ae1443ab45a2b3bc4a6ce445b540aa48b22",
+      "sha256_after": "862ae84852789556a099edefd09637b76a343cb0f06a597a817b8cf46cec2500"
+    },
+    {
+      "old": "docs/paper/reviews/consolidated_revision_plan_round4.md",
+      "new": "docs/paper/reviews/revision_round_04_plan_for_review_round_04.md",
+      "sha256_before": "9848819029b46992f375ed806eaabe97e90617d8439502113607297eb3a7e22c",
+      "sha256_after": "0e865484c501923eebe119182677b4e42181fcbe6efb1586b7b5e036bea914c1"
+    },
+    {
+      "old": "docs/paper/reviews/author_response_round4.md",
+      "new": "docs/paper/reviews/review_round_04_author_response_to_reviewers_01_02.md",
+      "sha256_before": "80390fff79350c901decc7b7ada7cb143cfe2606e46edbc3217e470d769fdc30",
+      "sha256_after": "29a94818c399dff3b54e7a56f9c9916254771f6f120d3bbdc5a03689bbb07fbb"
+    },
+    {
+      "old": "docs/paper/scientific_review.md",
+      "new": "docs/paper/pre_submission_assessment_2026_10_09.md",
+      "sha256_before": "e2ad703a66658b85f3a1632e6b514122699afbb5540cf0d25f2ad05568430e7d",
+      "sha256_after": "e2ad703a66658b85f3a1632e6b514122699afbb5540cf0d25f2ad05568430e7d"
+    }
+  ],
+  "frozen_identity_note": "Historical snapshot hashes/paths, including docs/paper_bts/round2_identity.json, describe original archived source. Resolve them in that source or use this map; they are intentionally not rewritten as current identities."
+}

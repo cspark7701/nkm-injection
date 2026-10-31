@@ -5,8 +5,8 @@ Reviewer 2 after reading the three main-branch author responses (Reviewer 1 roun
 round-2 Reviewer 2 report and the generated tables.
 
 **Output.**
-- `docs/paper_bts/reviews/reviewer2_bts_20261030_main_round3_report.md` (new);
-- `docs/paper_bts/reviews/reviewer2_bts_20261030_main_round3_revision_tasks.md` (new);
+- `docs/paper_bts/reviews/review_round_03_reviewer_02_report.md` (new);
+- `docs/paper_bts/reviews/review_round_03_reviewer_02_tasks.md` (new);
 - a reviews index entry.
 
 No earlier review or response was changed.

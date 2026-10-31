@@ -72,7 +72,7 @@
     "figures/clearance_plot_validation.json": "eab00694220d20e9c4ce064ed196754d6d4d4ccd6cbfb7bfd9ea5bfdede60137",
     "generated/original_setting_comparison.tex": "9a9528ff1866d0667ae6bafd504ea24638a9467619e8f760a58657b50261b2f3",
     "round4_protocol.json": "1239ed461d72c24c7cb654e08e8133f23425e283fe2b1c69e63b29636c5fd4f5",
-    "round4_reproduction.md": "952aefc47535e6d2c83ad75dc9df8e28cb57234994c3ec4b4c1d93c924e2342a",
+    "round4_reproduction.md": "23944472d68c14a55417e99fe05822c84e73b2dbd6c6773cbd80cd0b696ddb9a",
     "figures/round4_blade_distance.pdf": "332bd474a6b4492bb4ccbb810a69855ff98af1f27a100bb011eafeac28d59b09",
     "figures/round4_phase_scan.pdf": "8c450b56514bae55e976db64976100e10d6a8a8d82d29a63a9a3066a34e668d3",
     "generated/round4_blade.json": "6f4e95c3120508e23369ff3ab846086969e8fe1968b53daa56028c1869ed426c",
@@ -177,7 +177,7 @@
     "generated/phase_space.json": "da270de09e40312681ca5d533737bfe203ebd2b043b27be7473032edeec85df6"
   },
   "round3": {
-    "review": "reviews/reviewer2_bts_20261015_main_report.md",
+    "review": "reviews/review_round_02_reviewer_02_report_and_tasks.md",
     "campaign": "results/bts_journal_campaign_r3b_20261015",
     "protocol": "round3_protocol.json",
     "reproduction": "round3_reproduction.md",
@@ -248,16 +248,21 @@
   },
   "round4": {
     "reviews": [
-      "reviews/reviewer1_bts_20261030_main_round3_report.md",
-      "reviews/reviewer2_bts_20261030_main_round3_report.md"
+      "reviews/review_round_03_reviewer_01_report.md",
+      "reviews/review_round_03_reviewer_02_report.md"
     ],
-    "tasks": "reviews/round4_consolidated_revision_tasks.md (R4-BTS-01 to 14), milestones 265-278",
-    "response": "reviews/author_response_round4_20261031.md",
+    "tasks": "reviews/revision_round_04_plan_for_review_round_03.md (R4-BTS-01 to 14), milestones 265-278",
+    "response": "reviews/review_round_03_author_response_to_reviewers_01_02.md",
     "campaign": "results/bts_round4_campaign_20261030",
     "recheck": "results/bts_round4_r403_exact_20261030",
     "protocol": "round4_protocol.json",
     "reproduction": "round4_reproduction.md",
     "build": "results/bts_round4_final_build (article 19 pages, supplement 9 pages)",
     "note": "final_assets_sha256 now records the round-4 article; the round-3 values are preserved in round3_final_assets_sha256."
+  },
+  "review_document_naming": {
+    "map": "reviews/document_rename_map.json",
+    "date": "2026-10-31",
+    "scope": "Review-document renames and filename-link maintenance only; no scientific claims, task status or numerical result changed."
   }
 }

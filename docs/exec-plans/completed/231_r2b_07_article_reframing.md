@@ -24,7 +24,7 @@ Completed: 2026-10-15. Reviewer 2 BTS task R2B-07; completes R2B-01 to R2B-07 (m
   verified).
 - `revision_selection.json`: `final_assets_sha256` now covers the round-3 article and assets (54 files), with the
   round-2 values kept as `round2_final_assets_sha256`.
-- New: `round3_reproduction.md` and `reviews/author_response_reviewer2_20261015.md`.
+- New: `round3_reproduction.md` and `reviews/review_round_02_author_response_to_reviewer_02.md`.
 - Updated: paper README and reviews README.
 
 **Checks.**

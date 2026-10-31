@@ -4,8 +4,8 @@ Completed: 2026-10-10. Scope: independent pre-submission scientific assessment.
 
 ## Outcome
 
-Prepared [Reviewer 1's report](../../paper/reviews/reviewer1_report.md)
-and [12 ordered revision tasks](../../paper/reviews/reviewer1_revision_tasks.md),
+Prepared [Reviewer 1's report](../../paper/reviews/review_round_01_reviewer_01_report.md)
+and [12 ordered revision tasks](../../paper/reviews/review_round_01_reviewer_01_tasks.md),
 with a [reviews index](../../paper/reviews/README.md). The recommendation is
 major revision and no acceptance in the present form. The existing Reviewer 2
 report was retained unchanged.

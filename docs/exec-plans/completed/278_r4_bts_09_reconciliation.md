@@ -21,7 +21,7 @@ Completed: 2026-10-31. Round-4 task R4-BTS-09 (Reviewer 1 R3-BTS-08; Reviewer 2 
 
 **Documents.**
 - `round4_reproduction.md`, with stage commands, measured run times and retained runs.
-- `reviews/author_response_round4_20261031.md`, a joint point-by-point response mapping every R3-BTS and R2C item.
+- `reviews/review_round_03_author_response_to_reviewers_01_02.md`, a joint point-by-point response mapping every R3-BTS and R2C item.
   It records the changes made after the earlier Reviewer 2 response and answers Reviewer 2's questions 1–5.
 - Updates to `docs/paper_bts/README.md` and `reviews/README.md`.
 

@@ -27,7 +27,7 @@ OMP_NUM_THREADS=1 python scripts/build_evidence_bundle.py --manifest docs/paper/
 - The regenerated `journal_macros.tex` is byte-identical to the committed manuscript macros
   (`rebuild_macros_identical: true`).
 - `sha256sum -c SHA256SUMS` passes.
-- `uncommitted: true` was recorded because the C12 response draft (`docs/paper/reviews/author_response.md`)
+- `uncommitted: true` was recorded because the C12 response draft (`docs/paper/reviews/review_round_01_author_response_to_reviewers_01_02.md`)
   was still untracked. No code file differed from the commit. The bundle is rebuilt at the C12 commit (milestone 132).
 
 **Scope.** Nothing is uploaded and no release or DOI is created. The bundle is for referees on request, and an

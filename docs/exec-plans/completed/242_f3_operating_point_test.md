@@ -1,7 +1,7 @@
 # Milestone 242 — F3: paired operating-point test; current point retained
 
 Completed: 2026-10-20. Round-4 task F3 (R1D-02, R2d-2) of the
-[round-4 plan](../../paper/reviews/consolidated_revision_plan_round4.md); note:
+[round-4 plan](../../paper/reviews/revision_round_04_plan_for_review_round_04.md); note:
 [round4_points.md](../../paper/round4_points.md).
 
 **Runs.** 4 ensembles (`results/journal_campaign_05/f3_*`; not committed):

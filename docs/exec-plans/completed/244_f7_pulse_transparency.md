@@ -1,7 +1,7 @@
 # Milestone 244 — F7: pulse and transparency at the current point
 
 Completed: 2026-10-20. Round-4 task F7 (R1D-03/07, R2d-3/7) of the
-[round-4 plan](../../paper/reviews/consolidated_revision_plan_round4.md); note:
+[round-4 plan](../../paper/reviews/revision_round_04_plan_for_review_round_04.md); note:
 [round4_pulse_transparency.md](../../paper/round4_pulse_transparency.md).
 
 **Recomputed** at the retained point (x_inj −19.478 mm, S = 0.95; outputs in `results/journal_campaign_05/f7/`):

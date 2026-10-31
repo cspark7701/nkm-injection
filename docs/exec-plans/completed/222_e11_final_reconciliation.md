@@ -3,7 +3,7 @@
 Completed: 2026-10-15. Round-3 task E11 (R1C-08). Completes the round-3 plan E1–E11 (milestones 211–222).
 
 **Documents** (commit `90dc8d3`):
-- `reviews/author_response_round3.md`: new; maps R1C-01–08 and R2c-1–9 to evidence or to an explicitly narrowed
+- `reviews/review_round_03_author_response_to_reviewers_01_02.md`: new; maps R1C-01–08 and R2c-1–9 to evidence or to an explicitly narrowed
   claim. Earlier responses are unchanged.
 - `claim_evidence.csv`: rows E0–E11.
 - `cover_letter.md`: round-3 results.

@@ -1,18 +1,39 @@
 # BTS manuscript referee reviews
 
+## Review document filenames
+
+Filenames now state the round, reviewer and document role, with two-digit numbers:
+
+- `review_round_04_reviewer_01_report.md`: Reviewer 1's round-4 report.
+- `review_round_04_reviewer_01_tasks.md`: the corresponding reviewer task list.
+- `review_round_03_author_response_to_reviewers_01_02.md`: response to the round-3 reviews.
+- `revision_round_04_plan_for_review_round_03.md`: the round-4 revision plan answering round-3 reviews.
+
+**Review round** is the review being written or answered; **revision round** identifies the implementation cycle.
+They can differ. Dates, task IDs, decisions and author statements remain in the documents. A
+`report_and_tasks` suffix means the original report contains its own task register; it was not split or discarded.
+The [rename map](document_rename_map.json) records every old/new path and before/after digest. Old snapshot paths
+and hashes identify the original Git/attachment contents; they are not rewritten to pretend those bytes are new.
+
+BTS records prefixed `historical_branch_` belong to the restored `bts` branch and remain distinct from the main-branch
+review sequence. Historical report numbers are retained without assigning a referee identity absent from the
+report itself. The main-branch Reviewer 2 assessment of 2026-10-15 follows the round-2 label used by the later joint
+response; no earlier main-branch Reviewer 2 report is invented. In particular, the October-31 joint response answers **review round 3**, while recording **revision round 4**.
+
+
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
 its conclusions are historical. The latest Reviewer 1 assessment is round 4; round 3 is retained below as history.
 
 | Review | Recommendation | Revision register |
 | :--- | :--- | :--- |
-| [Reviewer 1, BTS main-branch draft](reviewer1_bts_20261013_main_report.md), 2026-10-13 | Major revision; no acceptance in present form | [Ten ordered tasks R1-BTS-01–10](reviewer1_bts_20261013_main_revision_tasks.md) |
+| [Reviewer 1, BTS main-branch draft](review_round_01_reviewer_01_report.md), 2026-10-13 | Major revision; no acceptance in present form | [Ten ordered tasks R1-BTS-01–10](review_round_01_reviewer_01_tasks.md) |
 
 The report records exact TeX/PDF/bibliography hashes, checks the nine selected scientific-source digests and five infeasible observations, and identifies discrepancies in the supporting claim ledger, Jacobian normalization, OAT labels, restart interpretation and historical provenance.
 
 ## Execution of this review
 
-[Point-by-point main-branch response](author_response_main_20261013.md) records R1-BTS-01–09 and the prepared R1-BTS-10 article/evidence. See [selected asset identity](../revision_selection.json) and [submission checklist](../submission_checklist.md). Funding and remaining author declarations/approval/delivery are pending. The original report and open-at-review task register are preserved verbatim; their date-specific status is historical. No journal acceptance is claimed.
+[Point-by-point main-branch response](review_round_01_author_response_to_reviewer_01.md) records R1-BTS-01–09 and the prepared R1-BTS-10 article/evidence. See [selected asset identity](../revision_selection.json) and [submission checklist](../submission_checklist.md). Funding and remaining author declarations/approval/delivery are pending. The original report and open-at-review task register are preserved verbatim; their date-specific status is historical. No journal acceptance is claimed.
 
 ## Historical reviews restored from bts
 
@@ -20,23 +41,23 @@ The following three rounds were recovered verbatim from local `bts` commit `466f
 
 | Historical round | Report | Revision tasks | Author response |
 | :--- | :--- | :--- | :--- |
-| 1 | [Report 01](reviewer_report_01.md) | [Round 1 tasks](revision_tasks.md) | [Response 01](author_response_to_reviewer_01.md) |
-| 2 | [Report 02](reviewer_report_02.md) | [Round 2 tasks](revision_tasks_round2.md) | [Response 02](author_response_to_reviewer_02.md) |
-| 3 | [Report 03](reviewer_report_03.md) | [Round 3 tasks](revision_tasks_round3.md) | [Response 03](author_response_to_reviewer_03.md) |
+| 1 | [Report 01](historical_branch_review_round_01_report.md) | [Round 1 tasks](historical_branch_revision_round_01_tasks.md) | [Response 01](historical_branch_review_round_01_author_response_to_reviewer_01.md) |
+| 2 | [Report 02](historical_branch_review_round_02_report.md) | [Round 2 tasks](historical_branch_revision_round_02_tasks.md) | [Response 02](historical_branch_review_round_02_author_response_to_reviewer_02.md) |
+| 3 | [Report 03](historical_branch_review_round_03_report.md) | [Round 3 tasks](historical_branch_revision_round_03_tasks.md) | [Response 03](historical_branch_review_round_03_author_response_to_reviewer_03.md) |
 
 The original branch milestones are `6878ba7` (first review), `05a645f` (first-round execution), `814c0c4` (second round), and `aff4ef7` (third round). References inside these historical documents to manuscript sections, provenance, tests and generated submission packages refer to their original branch versions. Restoring these records does not regenerate or import those assets.
 
 ## Second assessment of the revised main-branch article
 
-[Reviewer 1 main-branch round-2 report](reviewer1_bts_20261013_main_round2_report.md), 2026-10-13, evaluates the revised eight-page *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `742b940`. Recommendation: **major revision; no acceptance in present form**. The [eight ordered R2-BTS tasks](reviewer1_bts_20261013_main_round2_revision_tasks.md) are open at review. This assessment credits the completed R1 revisions while requiring limiting-station analysis, clearance-scale validation, interior-extrema checks and a stronger physical design comparison. It is separate from the restored historical BTS-branch rounds.
+[Reviewer 1 main-branch round-2 report](review_round_02_reviewer_01_report.md), 2026-10-13, evaluates the revised eight-page *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `742b940`. Recommendation: **major revision; no acceptance in present form**. The [eight ordered R2-BTS tasks](review_round_02_reviewer_01_tasks.md) are open at review. This assessment credits the completed R1 revisions while requiring limiting-station analysis, clearance-scale validation, interior-extrema checks and a stronger physical design comparison. It is separate from the restored historical BTS-branch rounds.
 
 ## Execution of main-branch round2
 
-[Point-by-point round2 response](author_response_main_round2_20261013.md) records R2-BTS-01–07 scientific/manuscript execution and R2-BTS-08 submission preparation. The [new reproduction guide](../round2_reproduction.md) distinguishes original and new independently seeded campaigns and retained invalid runs. Author confirmed no competing interests; funding and acknowledgments remain deferred. Final scientific approval and actual reviewer delivery remain pending. The open-at-review task register and every earlier report are preserved unchanged; their historical recommendations do not constitute current journal acceptance.
+[Point-by-point round2 response](review_round_02_author_response_to_reviewer_01.md) records R2-BTS-01–07 scientific/manuscript execution and R2-BTS-08 submission preparation. The [new reproduction guide](../round2_reproduction.md) distinguishes original and new independently seeded campaigns and retained invalid runs. Author confirmed no competing interests; funding and acknowledgments remain deferred. Final scientific approval and actual reviewer delivery remain pending. The open-at-review task register and every earlier report are preserved unchanged; their historical recommendations do not constitute current journal acceptance.
 
 ## Reviewer 2 assessment of the revised main-branch article
 
-[Reviewer 2 main-branch report](reviewer2_bts_20261015_main_report.md), 2026-10-15, evaluates the twelve-page
+[Reviewer 2 main-branch report](review_round_02_reviewer_02_report_and_tasks.md), 2026-10-15, evaluates the twelve-page
 *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line* at `82598dc`, after
 reading both Reviewer 1 rounds, the responses and the historical reports. Recommendation: **major revision; no
 acceptance in present form**. It accepts the numerical validation and inference. Its objections concern the physical
@@ -51,7 +72,7 @@ Seven tasks, R2B-01 to R2B-07, are included in the report.
 
 ## Execution of the Reviewer 2 report
 
-[Point-by-point response to Reviewer 2](author_response_reviewer2_20261015.md) records R2B-01 to R2B-07 (milestones
+[Point-by-point response to Reviewer 2](review_round_02_author_response_to_reviewer_02.md) records R2B-01 to R2B-07 (milestones
 225–231). The article keeps its title, *Beta reduction and physical clearance in a parametric booster-to-storage-ring transfer line*, and is re-framed around:
 - element-wise apertures with the companion septum blade;
 - trajectory correction, with a recorded layout amendment;
@@ -70,7 +91,7 @@ added-corrector campaign is superseded.
 
 ## Reviewer 2 round-3 assessment
 
-[Reviewer 2 round-3 report](reviewer2_bts_20261030_main_round3_report.md), 2026-10-30, evaluates the 15-page
+[Reviewer 2 round-3 report](review_round_03_reviewer_02_report.md), 2026-10-30, evaluates the 15-page
 *Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line* at `603c3ab`, after
 reading the three main-branch author responses. Recommendation: **major revision; not acceptable in present form,
 with a short route to acceptance**.
@@ -86,23 +107,23 @@ the phase-advance mechanism. Its remaining objections:
 - **Blade distance.** It is not swept.
 
 There are ten tasks, R2C-01 to R2C-10, in the
-[round-3 task register](reviewer2_bts_20261030_main_round3_revision_tasks.md). Earlier reports and responses are
+[round-3 task register](review_round_03_reviewer_02_tasks.md). Earlier reports and responses are
 unchanged.
 
 ## Reviewer 1 — round-3 assessment of the current main-branch article
 
-[Reviewer 1 report, 2026-10-30](reviewer1_bts_20261030_main_round3_report.md) evaluates the current 15-page
+[Reviewer 1 report, 2026-10-30](review_round_03_reviewer_01_report.md) evaluates the current 15-page
 *Optical matching and beam loss in the Korea Light Source Booster-to-Storage transfer line* and eight-page
 supplement at `603c3ab`, based on all three main-branch author responses. Recommendation: **focused major revision;
 no acceptance in present form**. The loss-based held-out comparison is credited, while the nominal-versus-error
 boundary theorem, round-aperture probability bounds, mean-clearance interpretation and sampled-search scope
-require correction or qualification. The [eight R3-BTS tasks](reviewer1_bts_20261030_main_round3_revision_tasks.md)
+require correction or qualification. The [eight R3-BTS tasks](review_round_03_reviewer_01_tasks.md)
 are all pending. Existing reports/responses and the restored historical round 3 are unchanged; the new report is
 a pre-submission assessment, not a journal decision. No scientific revision was executed by this review.
 
 ## Round-4 consolidated revision tasks
 
-The [round-4 consolidated register](round4_consolidated_revision_tasks.md), 2026-10-30, merges Reviewer 1's
+The [round-4 consolidated register](revision_round_04_plan_for_review_round_03.md), 2026-10-30, merges Reviewer 1's
 R3-BTS-01 to 08 and Reviewer 2's R2C-01 to 10 into fourteen tasks, R4-BTS-01 to R4-BTS-14 (nine A, three B, two
 C). It maps each task to its source items and records how differences between the reviewers are resolved:
 - the phase-advance scan is done, together with sampled-search wording;
@@ -113,7 +134,7 @@ All tasks are open. Both source registers are unchanged.
 
 ## Execution of the round-4 revision
 
-The [joint response](author_response_round4_20261031.md), 2026-10-31, records the execution of R4-BTS-01 to 14
+The [joint response](review_round_03_author_response_to_reviewers_01_02.md), 2026-10-31, records the execution of R4-BTS-01 to 14
 (milestones 265–278) against both round-3 reports.
 
 **What changed in the conclusions.**
@@ -128,7 +149,7 @@ unchanged. No reassessment or journal decision is implied.
 
 ## Reviewer 2 round-4 assessment
 
-[Reviewer 2 round-4 report](reviewer2_bts_20261031_main_round4_report.md), 2026-10-31, evaluates the 19-page round-4
+[Reviewer 2 round-4 report](review_round_04_reviewer_02_report.md), 2026-10-31, evaluates the 19-page round-4
 article at `6a968f8` after reading all main-branch author responses. Recommendation: **major revision of limited
 scope; not acceptable in present form; acceptance expected after R2D-01 to R2D-03**.
 
@@ -142,24 +163,24 @@ The report accepts the round-3 resolutions. Its remaining objections:
   consolidated.
 
 Twelve tasks with checkboxes, R2D-01 to R2D-12, are in the
-[round-4 task register](reviewer2_bts_20261031_main_round4_revision_tasks.md). Earlier reports and responses are
+[round-4 task register](review_round_04_reviewer_02_tasks.md). Earlier reports and responses are
 unchanged.
 
 ## Reviewer 1 round-4 assessment
 
-[Reviewer 1 round-4 report](reviewer1_bts_20261031_main_round4_report.md), 2026-10-31, assesses the 19-page article
+[Reviewer 1 round-4 report](review_round_04_reviewer_01_report.md), 2026-10-31, assesses the 19-page article
 and nine-page supplement at `6a968f8`, considering all seven historical/current author responses. Recommendation:
 **minor revision; scientifically acceptable in principle after bounded corrections, not unconditional acceptance**.
 The prior major remedies are credited. Remaining items concern conditional versus jitter-integrated predictions,
 the accuracy claim for the new sparse-loss rows, nominal horizontal transfer equivalence and low-jitter residuals,
 contradictory conclusions, provenance/legend details and author-dependent submission gates.
-The [seven checkbox tasks](reviewer1_bts_20261031_main_round4_revision_tasks.md), R1D-BTS-01–07, are all pending.
+The [seven checkbox tasks](review_round_04_reviewer_01_tasks.md), R1D-BTS-01–07, are all pending.
 No new major campaign or executed revision is implied. Earlier reports, registers and author responses remain
 unchanged; the separate Reviewer 2 assessment retains its own recommendation.
 
 ## Consolidated follow-up to both round-4 reviews
 
-Use the [round-5 consolidated checkbox register](round5_consolidated_revision_tasks.md) as the single queue for
+Use the [round-5 consolidated checkbox register](revision_round_05_plan_for_review_round_04.md) as the single queue for
 revising the round-4 manuscript. It maps all 19 original top-level requests to ten pending tasks, R5-BTS-01–10,
 retains both reviewers' recommendations, and records the decisions on shared reading errors, headline estimators
 and editorial targets. The original Reviewer 1 and Reviewer 2 registers and the executed round-4 plan remain

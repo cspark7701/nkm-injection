@@ -2,7 +2,7 @@
 
 Completed 2026-10-13. Reviewed the full current TeX and eight-page PDF, bibliography, generated evidence, claim ledger, supporting notes, transport/comparison code and saved raw machine/shot results. Preserved every earlier report and task register.
 
-Created a new [Reviewer 1 report](../../paper_bts/reviews/reviewer1_bts_20261013_main_round2_report.md) recommending major revision and [eight ordered revision tasks](../../paper_bts/reviews/reviewer1_bts_20261013_main_round2_revision_tasks.md). Main findings concern the limiting entrance and tied clearance minima, design-strategy contribution, approximation accuracy in clearance units, spatial sampling of beta extrema, inference event definitions and pending submission declarations. Added the assessment to the BTS review index without changing earlier entries.
+Created a new [Reviewer 1 report](../../paper_bts/reviews/review_round_02_reviewer_01_report.md) recommending major revision and [eight ordered revision tasks](../../paper_bts/reviews/review_round_02_reviewer_01_tasks.md). Main findings concern the limiting entrance and tied clearance minima, design-strategy contribution, approximation accuracy in clearance units, spatial sampling of beta extrema, inference event definitions and pending submission declarations. Added the assessment to the BTS review index without changing earlier entries.
 
 ## Verification performed for this review
 

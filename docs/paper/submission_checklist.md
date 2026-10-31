@@ -1,9 +1,9 @@
 # PRAB submission checklist — current status
 
 Updated 2026-10-16. Target: Physical Review Accelerators and Beams, Research Article.
-Latest assessments: [Reviewer 1 round 4](reviews/reviewer1_round4_20261016_report.md) and
-[Reviewer 2 round 4](reviews/reviewer2_report_round4.md). Both request major revision.
-[Current pending queue: F1–F9](reviews/consolidated_revision_plan_round4.md).
+Latest assessments: [Reviewer 1 round 4](reviews/review_round_04_reviewer_01_report.md) and
+[Reviewer 2 round 4](reviews/review_round_04_reviewer_02_report_and_tasks.md). Both request major revision.
+[Current pending queue: F1–F9](reviews/revision_round_04_plan_for_review_round_04.md).
 No scientific revision tasks are executed by this status update; no submission or acceptance is recorded.
 
 ## Completed preparation

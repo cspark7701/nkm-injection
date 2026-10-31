@@ -378,7 +378,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Thick NKM raises combined-error capture to 47.4 % (magnet-model effect, confirmed by cross-runs); diagnostics confirmed on three seeds; 400k-sample tolerance run meets the prefix-stability target; manuscript updated.
 
 118. [**Milestone 118 — Reviewer 2 Referee Report**](118_reviewer2_report.md)
-    - Major-revision referee report with 8 major and 14 minor comments and 20 prioritised revision tasks and venue-specific guidance for an undecided target journal (docs/paper/reviews/reviewer2_report.md).
+    - Major-revision referee report with 8 major and 14 minor comments and 20 prioritised revision tasks and venue-specific guidance for an undecided target journal (docs/paper/reviews/review_round_01_reviewer_02_report_and_tasks.md).
 
 119. [**Milestone 119 — Reviewer 1 Manuscript Report and Revision Register**](119_reviewer1_manuscript_report.md)
     - Assessed the current scientific argument and selected evidence, recommended major revision, prepared twelve ordered tasks with acceptance criteria, and verified local evidence hashes, capture summaries and documentation without changing the manuscript.
@@ -675,7 +675,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Records focused major revision, consolidates both round-4 reports into pending F1–F9 under the round-3 plan and refreshes stale status documents without executing scientific tasks.
 
 235. [**Milestone 235 — Round-4 Plan Split**](235_round4_plan_split.md)
-    - F1–F9 moved from the round-3 plan into `consolidated_revision_plan_round4.md`; stub keeps old anchors; working links updated; review records untouched.
+    - F1–F9 moved from the round-3 plan into `revision_round_04_plan_for_review_round_04.md`; stub keeps old anchors; working links updated; review records untouched.
 
 236. [**Milestone 236 — F1: Round-4 Protocol**](236_f1_round4_protocol.md)
     - Protocol, seven error classes and the F3 decision rule declared; E7 realization 0 reproduced bitwise; earlier and extremum-centred (x_inj −20.751 mm, S 0.95) candidates checked.
@@ -814,3 +814,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 281. [**Milestone 281 — Consolidate both BTS round-4 task lists**](281_bts_round4_review_tasks_consolidation.md)
     - Maps all 19 original requests into ten pending round-5 checkbox tasks, preserves both registers and records the stricter shared-noise reruns and the reviewers' differing scope requirements.
+
+282. [**Milestone 282 — Clear manuscript review-document names**](282_clear_review_document_names.md)
+    - Renames 49 review/task/response/plan documents by review round, reviewer and role; updates links and packaging paths, retains historical snapshot identities and supplies complete rename maps.

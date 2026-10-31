@@ -1,7 +1,7 @@
 # Author inputs A1–A6 for the round-2 revision
 
 Answers to the author inputs requested in
-[consolidated_revision_plan_round2.md](reviews/consolidated_revision_plan_round2.md). The inputs are the KLS chamber,
+[revision_round_02_plan_for_review_round_02.md](reviews/revision_round_02_plan_for_review_round_02.md). The inputs are the KLS chamber,
 lattice version, kicker status, booster and septum, coupling target and journal. Compiled by the author; sources
 checked 2026-10-12.
 

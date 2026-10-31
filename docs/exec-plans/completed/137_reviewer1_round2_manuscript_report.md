@@ -6,8 +6,8 @@ Date: 2026-10-11
 
 Re-reviewed the revised manuscript in `docs/paper/` and wrote a new referee-style report and ordered revision register without overwriting previous reviews. Recommended focused major revision: the revised three-dimensional model and scientific mechanism are stronger, but trajectory validation, survival reporting, jitter inference, correction definitions and pulse/claim scope still need work.
 
-- [New Reviewer 1 report](../../paper/reviews/reviewer1_round2_20261011_report.md)
-- [Ten ordered second-round tasks](../../paper/reviews/reviewer1_round2_20261011_revision_tasks.md)
+- [New Reviewer 1 report](../../paper/reviews/review_round_02_reviewer_01_report.md)
+- [Ten ordered second-round tasks](../../paper/reviews/review_round_02_reviewer_01_tasks.md)
 
 ## Evidence and verification
 

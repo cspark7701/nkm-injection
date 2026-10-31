@@ -1,6 +1,6 @@
 # Milestone 225 — R2B-02: Boundary-fixed end-station clearances
 
-Completed: 2026-10-15. Reviewer 2 BTS task R2B-02 (M1 of `reviewer2_bts_20261015_main_report.md`).
+Completed: 2026-10-15. Reviewer 2 BTS task R2B-02 (M1 of `review_round_02_reviewer_02_report_and_tasks.md`).
 
 **Change.** `src/nkm_injection/bts_round3.py` (new) provides `boundary_clearances`. It gives the nominal five-sigma
 clearance at the entrance and exit stations from the boundary Twiss, dispersion, emittance and energy spread alone.

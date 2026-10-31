@@ -4,12 +4,12 @@ Completed: 2026-10-11. User request: read the round-2 reviewer reports and revis
 consolidated execution tasks and their order.
 
 **Inputs.**
-- Reviewer 1, round 2: `reviewer1_round2_20261011_report.md` and its register (R1B-01 to R1B-10). Recommendation:
+- Reviewer 1, round 2: `review_round_02_reviewer_01_report.md` and its register (R1B-01 to R1B-10). Recommendation:
   focused major revision.
-- Reviewer 2, round 2: `reviewer2_report_round2.md` (R2b-1 to R2b-15). Recommendation: major revision.
+- Reviewer 2, round 2: `review_round_02_reviewer_02_report_and_tasks.md` (R2b-1 to R2b-15). Recommendation: major revision.
 
 **Output.**
-- `docs/paper/reviews/consolidated_revision_plan_round2.md`, containing:
+- `docs/paper/reviews/revision_round_02_plan_for_review_round_02.md`, containing:
   - agreement and differences between the reviewers;
   - an adopted-resolution table;
   - author inputs A1–A6;

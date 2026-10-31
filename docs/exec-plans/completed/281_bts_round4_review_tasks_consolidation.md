@@ -2,9 +2,9 @@
 
 Date: 2026-10-31. Sources: Reviewer 1 R1D-BTS-01–07 and Reviewer 2 R2D-01–12.
 
-Created `round5_consolidated_revision_tasks.md`: a single checkbox queue of ten
+Created `revision_round_05_plan_for_review_round_04.md`: a single checkbox queue of ten
 pending R5-BTS tasks with a complete mapping of all 19 original requests.
-The executed `round4_consolidated_revision_tasks.md` answered the prior round's
+The executed `revision_round_04_plan_for_review_round_03.md` answered the prior round's
 reviews and is preserved, so the new revision cycle is explicitly round 5.
 
 The consolidation retains the stricter shared-reading-noise protocol/test/layout

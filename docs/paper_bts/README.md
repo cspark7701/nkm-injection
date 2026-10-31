@@ -2,11 +2,11 @@
 
 Current state (2026-10-31): the round-4 revision is executed. It answers both round-3 reports, from Reviewer 1
 (focused major revision) and Reviewer 2 (major revision), through the
-[consolidated tasks](reviews/round4_consolidated_revision_tasks.md) R4-BTS-01 to 14 (milestones 265–278). See the
-[joint response](reviews/author_response_round4_20261031.md), the [round-4 protocol](round4_protocol.json) and the
-[round-4 reproduction guide](round4_reproduction.md). [Reviewer 1's round-4 assessment](reviews/reviewer1_bts_20261031_main_round4_report.md)
-now recommends minor revision, with [seven pending checkbox items](reviews/reviewer1_bts_20261031_main_round4_revision_tasks.md).
-Both round-4 reviews are now combined in the [round-5 consolidated checkbox list](reviews/round5_consolidated_revision_tasks.md),
+[consolidated tasks](reviews/revision_round_04_plan_for_review_round_03.md) R4-BTS-01 to 14 (milestones 265–278). See the
+[joint response](reviews/review_round_03_author_response_to_reviewers_01_02.md), the [round-4 protocol](round4_protocol.json) and the
+[round-4 reproduction guide](round4_reproduction.md). [Reviewer 1's round-4 assessment](reviews/review_round_04_reviewer_01_report.md)
+now recommends minor revision, with [seven pending checkbox items](reviews/review_round_04_reviewer_01_tasks.md).
+Both round-4 reviews are now combined in the [round-5 consolidated checkbox list](reviews/revision_round_05_plan_for_review_round_04.md),
 with ten pending tasks and a complete source-request crosswalk. See the [review index](reviews/README.md) for the
 separate recommendations. The author's scientific approval remains pending;
 no journal acceptance or submission is implied.

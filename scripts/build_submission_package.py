@@ -22,8 +22,8 @@ PAPER = REPO / "docs" / "paper"
 SUPPLEMENT = ["revision_manifest_round4.json", "round4_protocol.json", "revision_manifest_round3.json", "revision_manifest_round2.json", "revision_manifest.json", "claim_evidence.csv",
               "round2_final_checks.md", "round2_reproduction.md", "round2_comparison_audit.md",
               "bibliography_audit.md", "cover_letter.md", "generated/figure_provenance.csv",
-              "generated/consumed_artifacts.json", "prab_submission.md", "submission_checklist.md"]
-for _response in ("reviews/author_response_round2.md", "reviews/author_response_round3.md", "reviews/author_response_round4.md"):
+              "generated/consumed_artifacts.json", "prab_submission.md", "submission_checklist.md", "reviews/document_rename_map.json"]
+for _response in ("reviews/review_round_02_author_response_to_reviewers_01_02.md", "reviews/review_round_03_author_response_to_reviewers_01_02.md", "reviews/review_round_04_author_response_to_reviewers_01_02.md"):
     if (PAPER / _response).is_file():
         SUPPLEMENT.append(_response)
 

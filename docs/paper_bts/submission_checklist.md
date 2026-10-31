@@ -7,6 +7,25 @@ No journal acceptance or submission is claimed. The round-two checklist items be
 
 [Official JKPS guidance](https://link.springer.com/journal/40042/submission-guidelines) checked2026-10-13: mathematical LaTeX is accepted and a Springer template is recommended. Research Article length/figure guidance is advisory rather than a strict page limit. The current one-column draft has 12 pages and the supplement eight (page counts checked 2026-10-16); the older six-figure/3828-word inventory describes the round-two article. No mandatory two-column conversion is inferred.
 
+## Round-5 status (2026-10-31)
+
+The round-5 revision ([plan](reviews/revision_round_05_plan_for_review_round_04.md); milestones 283 onwards) answers
+both round-4 reviews. Numerical and editorial work is recorded per task. These submission gates are still open and
+are not inferred from the numerical work:
+- **Target journal.** JKPS (Reviewer 1's context) or NIM A (the earlier recommendation) is not chosen. JKPS requires
+  a data-availability statement for original research (guidelines checked by Reviewer 1 on 2026-10-31); NIM A
+  requirements are to be checked once chosen.
+- **Data availability.** No statement is in the article. Wording that matches actual access must be supplied by the
+  author. No deposit, DOI or delivery is claimed.
+- **Companion manuscript.** Referees will need access to the NKM study (cited as in preparation); the access route
+  is an author decision.
+- **Booster jitter.** No KLS source has been supplied, so the stress-level scope stays. Any source belongs in both
+  papers.
+- **Final approval.** "Final approval is pending" stays in the Author contribution paragraph until the author
+  approves the text.
+
+Supplied and kept unchanged: funding (NRF RS-2022-00143178) and competing interests (none).
+
 ## Round-4 status (2026-10-31)
 
 The round-4 revision ([consolidated tasks](reviews/revision_round_04_plan_for_review_round_03.md)) is in progress; milestones

@@ -169,6 +169,7 @@ not be marked complete merely because numerical work passes.
   - If an actual KLS jitter source is supplied, coordinate the shared assumption with the NKM paper. Otherwise keep
     the specified stress-study scope; do not fabricate a source or require measured stability to retain that scope.
   **Completion:** decisions and access are real and recorded. No external submission is authorized by this plan.
+  **Open (milestone 291):** journal, data-availability wording, companion-manuscript access, jitter source and final approval are recorded as open in `submission_checklist.md`; funding and competing interests unchanged. Not ticked until the author decides.
 
 - [ ] **R5-BTS-10 — Final reconciliation and one response to both reviews. Priority A.**
   **Sources:** R1D-BTS-06; R2D-12; final reconciliation of all source requests.

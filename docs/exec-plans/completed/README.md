@@ -841,3 +841,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 290. [**Milestone 290 — R5-BTS-07: consolidation of article and supplement**](290_r5_bts_07_consolidation.md)
     - Move the first test table and the sampled roll/energy table to a new supplement section, reduce Figure 4 to its jitter panel, and compress the repeated four-station text and the supplement audit. The article is 19 pages (~9,900 tokens); further cuts are author choices.
+
+291. [**Milestone 291 — R5-BTS-09: author-dependent submission gates recorded (open)**](291_r5_bts_09_author_gates.md)
+    - Record the journal, data-availability wording, companion access, jitter source and final approval as open author decisions. Funding and competing interests are unchanged; nothing is invented.

@@ -898,3 +898,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 309. [**Milestone 309 — Reviewer 2 review round 6 on the BTS manuscript**](309_reviewer2_bts_review_round6.md)
     - Accept. All round-5 Reviewer 2 tasks are resolved, and the reviewer's shot-count error (16, not 20) is acknowledged. Optional editorial checklist R2G-BTS-01 to 05: Section 4.2 opening, abstract length, optional nonlinear check, shortening.
+
+310. [**Milestone 310 — Reviewer 1 BTS manuscript review round 6**](310_reviewer1_bts_review_round6.md)
+    - Recommends scientific acceptance with no mandatory revision; verifies closure of both previous follow-ups, all author responses and selected evidence checks. Adds a report and closure checklist while preserving prior records and deferred author decisions.

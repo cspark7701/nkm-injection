@@ -25,7 +25,8 @@ remain historical records. Author-response filenames retain their existing numbe
 filenames use the matching-number convention above.
 Thus the first Reviewer 2 assessment, whose body calls it round 2, is now
 `review_round_01_reviewer_02_report_and_tasks.md`; it includes its own task register.
-The latest report/task pair is numbered 05 in filenames and retains review round 6 in its original text.
+The pre-normalization report/task pair numbered 05 retains review round 6 in its original text.
+New Reviewer 2 assessments continue from filename round 06.
 The [Reviewer 2 transition map](reviewer_02_sequence_rename_map.json) records all nine renames and content hashes.
 The earlier `document_rename_map.json` is a frozen historical map; use this transition and its hashes to resolve
 paths reused by later reports. Frozen protocols also retain their original path strings and hashes; the maps
@@ -35,13 +36,13 @@ original sequence, while recording **revision round 4**.
 
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
-its conclusions are historical. [Reviewer 1's latest assessment is round 5](review_round_05_reviewer_01_report.md):
+its conclusions are historical. [Reviewer 1's latest assessment is round 6](review_round_06_reviewer_01_report.md):
 accept the scientific content within its stated scope, with no mandatory scientific revision.
-Its [follow-up checklist](review_round_05_reviewer_01_tasks.md) records the optional editing and technical package check, now executed below. Reviewer 2's independent assessments are recorded below; its
-[round-5 report](review_round_04_reviewer_02_report.md) recommended minor revision and scientific acceptance in
-principle after bounded corrections. The [round-5 checklist](review_round_04_reviewer_02_tasks.md) records four items open at review.
-The [round-6 consolidated register](revision_round_05_plan_for_review_round_05.md) records execution of all four follow-up corrections,
-preserving the completed round-5 work and the original reviewer checklist.
+Its [closure checklist](review_round_06_reviewer_01_tasks.md) verifies that both earlier R1E-BTS follow-ups are closed.
+[Reviewer 2's latest assessment](review_round_06_reviewer_02_report.md) independently recommends acceptance;
+its [editorial suggestions](review_round_06_reviewer_02_tasks.md) remain optional.
+The [latest joint author response](review_round_05_author_response_to_reviewers_01_02.md) records implementation round 7.
+R5-BTS-09 remains deferred to submission readiness. These are internal referee recommendations, not journal decisions.
 Earlier assessments are retained below as history.
 
 | Review | Recommendation | Revision register |
@@ -304,3 +305,7 @@ The [optional editorial checklist](review_round_06_reviewer_02_tasks.md), R2G-BT
 
 None is a condition of acceptance. The R5-BTS-09 submission decisions stay deferred. Earlier reports and responses
 are unchanged.
+
+## Reviewer 1 review round 6
+
+The [round-6 report](review_round_06_reviewer_01_report.md), dated 2026-10-31, assesses the scientific files selected at `fd16b2a` after considering all ten author responses. Recommendation: **accept the scientific content within its stated conditional-model scope**. No mandatory scientific revision remains. The [closure checklist](review_round_06_reviewer_01_tasks.md) closes both previous follow-ups and records the selected evidence checks: 80 claims, 90 hashes, 46 tests and matching post-processing records. The unresolved near-blade excess remains explicitly qualified. R5-BTS-09 stays deferred; earlier records are preserved.

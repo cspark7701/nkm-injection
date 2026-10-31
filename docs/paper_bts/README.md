@@ -8,7 +8,7 @@ See the [joint response](reviews/review_round_05_author_response_to_reviewers_01
 The revision qualifies the confounded low-beta contrast, localizes the loss excess to saved shot records,
 clarifies model uncertainty, updates legends and shortens repeated text. A fresh portable increment is
 verified from an extracted root. No tracking or optimization campaign was rerun.
-Reviewer recommendations remain pre-submission assessments; no new acceptance decision is implied.
+[Reviewer 1 round 6](reviews/review_round_06_reviewer_01_report.md) recommends scientific acceptance within the stated model scope, with [no open mandatory scientific revisions](reviews/review_round_06_reviewer_01_tasks.md). Both earlier follow-ups are verified closed. [Reviewer 2 round 6](reviews/review_round_06_reviewer_02_report.md) independently recommends acceptance with optional suggestions. These are pre-submission referee assessments, not journal acceptance.
 R5-BTS-09 author decisions stay deferred to submission readiness.
 
 Current one-column article (19 pages, with a 10-page supplement), *Optical matching and beam loss in a

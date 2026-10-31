@@ -865,3 +865,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 298. [**Milestone 298: R6-BTS-04 response and final verification**](298_r6_bts_04_reconciliation.md)
     - Closes all four round-six tasks with a new response, 20/10-page PDFs, independent post-processing checks, 76 verified claims, 86 selected asset hashes and 46 passing relevant tests. R5-BTS-09 stays deferred; no simulation rerun or submission.
+
+299. [**Milestone 299: humanize and compile the NKM manuscript**](299_nkm_manuscript_humanizer.md)
+    - Applies the humanizer skill to prose while preserving equations, values, citations, tables and figures. Installs the 34-page article, 17-page preview and 7-page supplement; package checks and nine tests pass. Scientific results and previous review records are unchanged.

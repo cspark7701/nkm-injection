@@ -1,9 +1,15 @@
 # NKM manuscript — current review and revision status
 
-Updated 2026-10-16. Target: Physical Review Accelerators and Beams (PRAB).
+Prose update: 2026-10-31. Applied the humanizer skill to `paper.tex`, preserving mathematical expressions,
+numerical literals, citations, generated macros, tables and figures. Both layouts and the supplement compile successfully under the existing package checks in `results/nkm_humanized_manuscript_20261031/`; see
+[milestone 299](../exec-plans/completed/299_nkm_manuscript_humanizer.md). This edit does not execute new scientific
+review tasks or imply journal acceptance. Target: Physical Review Accelerators and Beams (PRAB).
 
 - [One-column article](paper.pdf), [two-column preview](paper_twocolumn.pdf) and [supplement](supplement.pdf):
-  current installed lengths 30, 15 and six pages respectively.
+  current installed lengths 34, 17 and seven pages respectively.
+
+The scientific review-status entries below retain their 2026-10-16 snapshot; this prose update does not reassess them.
+
 - [Review history](reviews/README.md): Reviewer 1 round 4 and Reviewer 2 round 4 both request focused major revision.
 - [Consolidated round-3 plan](reviews/revision_round_03_plan_for_review_round_03.md): E1–E11 executed; the appended
   F1–F9 follow-up combines both round-4 assessments of that revised manuscript. **Every F task remains pending.**

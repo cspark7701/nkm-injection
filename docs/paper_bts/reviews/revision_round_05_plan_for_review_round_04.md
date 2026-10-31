@@ -35,7 +35,7 @@ not be marked complete merely because numerical work passes.
 
 ## Consolidated checkbox register
 
-- [ ] **R5-BTS-01 — Share reading errors and rerun the targeted comparisons. Priority A.**
+- [x] **R5-BTS-01 — Share reading errors and rerun the targeted comparisons. Priority A.**
   **Sources:** R2D-02; R1D-BTS-02 (pairing and attribution).
   - Declare a protocol amendment before running anything: reading errors are keyed by realization and physical
     monitor location, shared across all settings. Preserve the same error at a shared monitor across layouts;
@@ -49,8 +49,9 @@ not be marked complete merely because numerical work passes.
   - Update the corresponding steering-layout/test tables, paired intervals and attribution text.
   **Completion:** shared-noise protocol and generating identity recorded; duplicate-configuration regression
   passes; the revised comparisons use the new paired runs and preserve the original ones.
+  **Done (milestone 283, `af08ff1`):** shared reading errors declared in `round5_protocol.json`; the duplicate configuration and the round-3/edge settings lose identical particles (942); Tables 5 and 7 use the reruns; per-setting runs kept as a sensitivity.
 
-- [ ] **R5-BTS-02 — Use a defined headline estimator and repair the rare-loss validation. Priority A.**
+- [x] **R5-BTS-02 — Use a defined headline estimator and repair the rare-loss validation. Priority A.**
   **Sources:** R2D-03; R1D-BTS-01; R2D-08 (sparse-loss reporting).
   - Before interpreting the new test, identify the primary evaluation population. For each available population,
     report jitter-integrated losses averaged over steered realizations and their paired realization-bootstrap
@@ -73,8 +74,9 @@ not be marked complete merely because numerical work passes.
     and event surrogate. Non-Gaussian tails could matter if present; their dominance is not established here.
   **Completion:** estimator, population, units and conditioning agree across tables/text/evidence; uncertainty is
   attached to the claimed gain, and finite-shot validation is not misrepresented as tail certification.
+  **Done (milestone 285, `3157639`):** ratio of mean jitter-integrated losses with a paired bootstrap, 4.48 [4.33, 4.63] (layouts 4.59); four loss quantities separated; 1 % claim restricted; 6.5 % loss-based excess and the dispersion-free count (1 against 0.51 expected) stated.
 
-- [ ] **R5-BTS-03 — State both jitter regimes and the residual delivery errors. Priority A.**
+- [x] **R5-BTS-03 — State both jitter regimes and the residual delivery errors. Priority A.**
   **Sources:** R2D-01; R1D-BTS-02 (nominal scope and low-jitter residuals).
   - Add the scale-zero exit centroid RMS by plane (x, x′, y, y′), next to nominal jitter-only values, from the existing
     jitter sweep; distinguish any retained momentum jitter from a pure static-error calculation. Label scale-zero
@@ -89,8 +91,9 @@ not be marked complete merely because numerical work passes.
     differences solely to a jitter draw shared by the settings; use the controlled R5-BTS-01 evidence or qualify it.
   **Completion:** abstract, methods, test caption and discussion describe the same two regimes, include the
   residual delivered-beam limitations, and avoid an unsupported exclusive causal claim.
+  **Done (milestone 286, `a896d60`):** Table 10 (exit centroid against nominal jitter by scale); abstract and Discussion state both regimes and the 0.18 mrad / about 1 mm residuals; phase-only statements restricted to the nominal model.
 
-- [ ] **R5-BTS-04 — Reconcile conclusions, baseline framing and sparse-count wording. Priority A.**
+- [x] **R5-BTS-04 — Reconcile conclusions, baseline framing and sparse-count wording. Priority A.**
   **Sources:** R1D-BTS-03; R2D-07; R2D-08.
   - Replace “unchanged loss” for low beta by the observed small, population-dependent paired results. Distinguish
     vertical peak-beta reduction from its accompanying horizontal phase change; neither claim equivalence nor
@@ -103,8 +106,9 @@ not be marked complete merely because numerical work passes.
     signs in intervals, consistent numeric formats per column, and explicit fraction-versus-percent units. For
     example, one loss out of 1.2 million is 8.33e-7 as a fraction, not as a percentage.
   **Completion:** conclusions and generated macros/tables agree with the updated comparisons and their scope.
+  **Done (milestone 287, `72bff40`):** low-beta, dispersion-free and baseline sentences corrected; one angle-jitter value; minus signs; uniform Table 9 format.
 
-- [ ] **R5-BTS-05 — Explain, or explicitly leave open, the lower phase edge. Priority B.**
+- [x] **R5-BTS-05 — Explain, or explicitly leave open, the lower phase edge. Priority B.**
   **Sources:** R2D-04.
   - Examine dispersion closure analytically, or make a small declared edge study varying D′ and, if informative,
     D at m4. Keep the bounds, beta constraints and local-search termination records explicit.
@@ -112,8 +116,9 @@ not be marked complete merely because numerical work passes.
     origin is not identified; convergence at an edge is not a global causal explanation.
   **Completion:** a supported explanation or an explicit limitation appears in results and discussion. No new
   global optimizer or large campaign is required.
+  **Done (milestone 288, `53e54cf`):** declared edge study; the lower edge falls from 200.2° to 184.1° as D′ goes from 47.5 to 0 mrad with no bound active, so the inherited D′ sets it within local searches.
 
-- [ ] **R5-BTS-06 — Assess angle-aware steering, or justify its omission. Priority B, conditional.**
+- [x] **R5-BTS-06 — Assess angle-aware steering, or justify its omission. Priority B, conditional.**
   **Sources:** R2D-06.
   - Using the unchanged lattice, examine a position-reading layout/weighting that better constrains the exit angle
     through the septum-entrance and line-end readings. If run, declare the objective and report the position,
@@ -121,6 +126,7 @@ not be marked complete merely because numerical work passes.
   - Alternatively explain why this additional steering design is outside the present scope, using the residuals
     already reported in R5-BTS-03. Do not invent an angle monitor or a hardware capability.
   **Completion:** a documented sensitivity or a justified omission; no automatic requirement to improve capture.
+  **Done (milestone 289, `c1da6d7`):** angle-weighted layout (end weight 10) leaves the exit-angle residual at 0.41 mrad and the losses unchanged; stated without an angle monitor.
 
 - [ ] **R5-BTS-07 — Consolidate the article and supplement. Priority B, editorial.**
   **Sources:** R2D-05, R2D-11; R1D-BTS-07.
@@ -150,6 +156,7 @@ not be marked complete merely because numerical work passes.
     author-approved gates. Preserve dated reviews, source registers and responses verbatim.
   **Completion:** selected paths exist and are hash-consistent, source claims are verified or qualified, and
   current status documents describe the actual revision rather than earlier page counts or an old execution queue.
+  **In progress (milestone 284, `90ca9b8`):** `test_source` pointer fixed and provenance paths made relative; uncited stability statement removed; TPS reference checked against JaCoW (unpublished, TUP2685). Status documents and layout counts follow the final build in R5-BTS-10.
 
 - [ ] **R5-BTS-09 — Record the author-dependent submission choices. Priority A, author input.**
   **Sources:** R1D-BTS-05; R2D-10.
@@ -212,4 +219,4 @@ The mandatory additional tracking is the focused shared-reading-noise second tes
 other numerical work is post-processing or explicitly conditional. Do not silently replace the NKM paper's shared
 beam, jitter or correction assumptions; document any proposed change and its validation separately.
 
-**Current completion state: 0 of 10 consolidated tasks executed.** All 19 original top-level requests are mapped.
+**Current completion state (updated 2026-10-31): 6 of 10 consolidated tasks done (01–06); 08 in progress; 07 in progress; 09 awaits author decisions; 10 pending.** All 19 original top-level requests are mapped.

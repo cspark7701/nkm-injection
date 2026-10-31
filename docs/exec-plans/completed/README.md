@@ -835,3 +835,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 288. [**Milestone 288 — R5-BTS-05: origin of the lower phase-advance edge**](288_r5_bts_05_phase_edge.md)
     - A declared edge study shows the lower μ_x edge falls from 200.2° to 194.9°, 189.5° and 184.1° as the exit D′ goes from 47.5 to 32, 16 and 0 mrad, with no bound active. Within local searches, the inherited D′ sets the edge.
+
+289. [**Milestone 289 — R5-BTS-06: angle-weighted steering sensitivity**](289_r5_bts_06_angle_weighted_steering.md)
+    - Weighting the exit readings 10 instead of 3 leaves the exit-angle residual at 0.41 mrad and the losses unchanged. Position readings alone cannot reduce it; this is stated without inventing an angle monitor.

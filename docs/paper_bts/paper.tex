@@ -625,7 +625,12 @@ Reading only the exits of the three triplets, the septum entrance and the line e
 changes the losses by less than 0.01 percentage point. Series-powered bends leave
 one knob fewer near the exit, and the exit angle spread grows from
 \SI{0.37}{\milli\radian} to \SI{0.44}{\milli\radian} for the matched reference and from \SI{0.41}{\milli\radian} to \SI{0.50}{\milli\radian} for the
-loss-based setting.
+loss-based setting. Raising the weight of the septum-entrance and line-end readings from
+3 to 10, to constrain the exit angle more strongly, changes the exit angle of the
+loss-based setting from \SI{\BtsRFiveFullXpEdge}{\milli\radian} to \SI{\BtsRFiveAngleWeightedXp}{\milli\radian} and the losses by less than
+0.01 percentage point. With position readings only, reweighting does not reduce the
+angle residual; a smaller residual would need an angle measurement or more accurate
+readings, which this study does not model.
 
 \begin{table}[htbp]\centering
 \caption{Steering layouts on the 200 realizations of Table~\ref{tab:steering}, with reading

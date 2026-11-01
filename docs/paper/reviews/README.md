@@ -93,3 +93,5 @@ completed E tasks. Neither report grants acceptance. The new report and task reg
 ## Consolidated round-5 plan
 
 [The seven-package register](revision_round_05_plan_for_review_round_05.md) is the single execution queue and includes a complete crosswalk for R1E-01–03, R2e-1–9 and Reviewer 2's three questions. It keeps the one-point jitter-loss test separate from the NKM–dipole gap, preserves paired versus pooled population labels, and retains the chamber-interception correction. Older descriptions of separate queues record the state before consolidation. F1–F9 remain completed history.
+
+Round-5 execution response: [joint response to Reviewers 1 and 2](review_round_05_author_response_to_reviewers_01_02.md). G1–G6 are complete; original reviewer-time checklists remain unchanged and G7 is deferred.

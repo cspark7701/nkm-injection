@@ -9,7 +9,7 @@ This is the single execution register answering both fifth-round assessments:
 
 Both recommend minor revision. Their original reports/checklists remain unchanged and retain their review-time wording. This register merges overlapping work and states the adopted treatment where they differ. D, E and F work remains completed history; no old scientific task is reopened.
 
-**Status: execution authorized 2026-11-01. Completion notes below record progress; G1–G5 are complete; G6 reconciliation is in progress.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
+**Status: execution authorized 2026-11-01. Completion notes below record progress; G1–G6 are complete; all 150 new realizations, final builds and isolated evidence checks pass.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
 
 ## Consolidation decisions
 
@@ -98,14 +98,16 @@ G5 completed: historical/selected strength labels, date and recovery scope recon
 
 Maps to R1E-03, R2e-7 and R2e-8. Depends on G1–G5.
 
-- [ ] Add the new scan/configuration and analysis records to an appropriate new current manifest, preserving older selections and point-aware checks. Update generated macros, figures, claim locations and provenance only where affected.
-- [ ] Rebuild the one-column PRAB article, shared-source two-column version and supplement. Check log failures, citations, references, layout and the changed pages; refresh current source/PDF identities and page counts.
-- [ ] Run meaningful pairing, error-draw invariance, inference and manifest tests for the new scan/analysis, plus the relevant packaging/figure checks. Broaden testing if changes or failures justify it; no simulation rerun merely to regenerate prose.
-- [ ] Prepare a joint point-by-point response using the source reviewer IDs and the crosswalk below, including all three Reviewer 2 questions. Explain adopted qualifications rather than silently rewriting the reviewer requests.
-- [ ] Update current indexes, submission checklist and reproduction commands to the completed G status. Archive each executed revision/milestone sequentially and use the established formatted Git commit messages.
-- [ ] Prepare source/evidence packaging that contains the new scan and final wording; verify the selected identities and required isolated rebuild steps. An increment over an identified existing attachment is acceptable. Do not represent the old round-4 archive as containing new results.
+- [x] Add the new scan/configuration and analysis records to an appropriate new current manifest, preserving older selections and point-aware checks. Update generated macros, figures, claim locations and provenance only where affected.
+- [x] Rebuild the one-column PRAB article, shared-source two-column version and supplement. Check log failures, citations, references, layout and the changed pages; refresh current source/PDF identities and page counts.
+- [x] Run meaningful pairing, error-draw invariance, inference and manifest tests for the new scan/analysis, plus the relevant packaging/figure checks. Broaden testing if changes or failures justify it; no simulation rerun merely to regenerate prose.
+- [x] Prepare a joint point-by-point response using the source reviewer IDs and the crosswalk below, including all three Reviewer 2 questions. Explain adopted qualifications rather than silently rewriting the reviewer requests.
+- [x] Update current indexes, submission checklist and reproduction commands to the completed G status. Archive each executed revision/milestone sequentially and use the established formatted Git commit messages.
+- [x] Prepare source/evidence packaging that contains the new scan and final wording; verify the selected identities and required isolated rebuild steps. An increment over an identified existing attachment is acceptable. Do not represent the old round-4 archive as containing new results.
 
 Completion: final text, macros, figures, manifests, packaging, response and status records agree. Earlier reviews/responses remain unchanged; execution is not journal acceptance or delivery.
+
+G6 completed: 272 selected keys, 280 verified attachment inventory entries, byte-identical archived macros and portable analysis, clean 36/18/7-page builds, 775 full-suite tests and 30 targeted tests. See [the joint response](review_round_05_author_response_to_reviewers_01_02.md), [reproduction guide](../round5_reproduction.md) and [identity receipt](../round5_final_identity.json). Source checkpoint `3c981c2`; final verification is archived in milestone 327.
 
 ### G7 — Submission-stage author gate
 

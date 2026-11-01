@@ -1,6 +1,6 @@
 # PRAB manuscript formats and submission metadata
 
-Updated 2026-11-01. D15 completed for **Physical Review Accelerators and Beams (PRAB)** at the author's request; E1–E11 subsequently completed the round-3 revision. [F1–F9 are complete](reviews/revision_round_04_plan_for_review_round_04.md); the [round-5 G register](reviews/revision_round_05_plan_for_review_round_05.md) is being executed. The main draft is one column; the additional two-column PDF is a layout preview. Both use the same scientific text, bibliography, numerical macros and figures.
+Updated 2026-11-01. D15 completed for **Physical Review Accelerators and Beams (PRAB)** at the author's request; E1–E11 subsequently completed the round-3 revision. [F1–F9 are complete](reviews/revision_round_04_plan_for_review_round_04.md); the [round-5 G1–G6 register](reviews/revision_round_05_plan_for_review_round_05.md) is complete, with G7 deferred. The main draft is one column; the additional two-column PDF is a layout preview. Both use the same scientific text, bibliography, numerical macros and figures.
 
 ## Manuscript entry points
 
@@ -38,7 +38,7 @@ These are proposed subject headings, not legacy PACS codes. They are submission 
 
 ## Submission status
 
-PRAB is the confirmed target and the layout conversion is complete. E1–E11 subsequently executed the third-round revision, including evidence access and an archived-source rebuild (milestone 222). All 235 selected round-3 artifact keys matched local hashes in the 2026-10-16 review. F1–F9 subsequently completed the fourth revision. G1–G5 are complete; final G6 evidence verification is in progress. Review history is preserved. No external submission, upload or push is recorded here.
+PRAB is the confirmed target and the layout conversion is complete. E1–E11 subsequently executed the third-round revision, including evidence access and an archived-source rebuild (milestone 222). All 235 selected round-3 artifact keys matched local hashes in the 2026-10-16 review. F1–F9 subsequently completed the fourth revision. G1–G6 are complete, including the paired scan and archived-source verification. Review history is preserved. No external submission, upload or push is recorded here.
 
 The native apsrev4-2 author-control notice (`jnrlst (dependency: not reversed) set 1`) is permitted; all other BibTeX warnings remain build failures. Native REVTeX controls enable article titles via `longbibliography`.
 

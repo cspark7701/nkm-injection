@@ -1,6 +1,6 @@
 # Cover letter (draft for author review — not sent)
 
-> Status 2026-11-01: updated to round-5 results; local evidence verification is being completed. The author's scientific approval of
+> Status 2026-11-01: updated to round-5 results; local archived-source evidence verification is complete. The author's scientific approval of
 > the revised attribution is pending; no letter has been sent.
 
 Dear Editors of Physical Review Accelerators and Beams,

@@ -76,4 +76,14 @@ The output must not exist. Absolute original job paths are identity strings in t
 
 All 150 new realizations are complete. The five-level paired analysis verifies configuration/draw/particle/ring identities and reconciles loss counts. The new manifest selects 272 artifact keys. No nonzero tested level passes the declared one-point loss test; the [result note](round5_jitter.md) gives exact costs and model gaps. The installed article layouts and supplement are 36/18/7 pages; the extracted abstract contains 250 words. [Scientific source/PDF identities](round5_final_identity.json) identify these installed assets.
 
-The launch implementation identity preserves commit `65bf56d` and original script hashes. Subsequent portable CLI/reporting checks (`fd4b96b`) do not change the tracking physics or launched commands. Thirty relevant tests and the earlier 774-test full suite pass. Frozen-source attachment verification follows from a clean committed checkpoint; its digest and isolated reanalysis result will be recorded after that check. Earlier archives remain historical.
+The launch implementation identity preserves commit `65bf56d` and original script hashes. Subsequent portable CLI/reporting checks (`fd4b96b`) do not change the tracking physics or launched commands. Thirty relevant tests and the final 775-test full suite pass. Earlier archives remain historical.
+
+## Verified round-5 attachment
+
+The frozen attachment is `results/journal_campaign_06/round5_evidence_bundle.tar.gz`, built from clean source checkpoint `3c981c26128847f3d5c8f50e4b112d9825f283a1`.
+
+SHA-256: `098def595a17cf2ad33955cde2c466b8cc39d9e6f90db45fa1c11235c7463ab3`.
+
+All 280 inventory entries pass, including after fresh archive extraction. The archived full figure builder reproduces the installed numerical macros byte for byte. The archived saved-output analyzer, pointed at the extracted evidence, reproduces the complete selected analysis JSON byte for byte. The environment record identifies Python 3.11.9, Accelerator Toolbox 0.7.2.dev26+g4701d48c.d20260831, NumPy 2.4.6, SciPy 1.17.1 and Matplotlib 3.11.1.
+
+The frozen source checkpoint precedes the execution of its own verification checks; its support documents truthfully describe those checks as pending. This completion receipt and the current joint response follow that checkpoint. The scientific manuscript, macros and selected raw evidence are identical. Current source packages add the completion documents without representing them as already present in the earlier archive. The attachment remains local and ignored by Git; actual access/delivery and final author approval remain G7.

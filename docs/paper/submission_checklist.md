@@ -2,7 +2,7 @@
 
 Updated: 2026-11-01. Target: Physical Review Accelerators and Beams, Research Article.
 
-Both fifth-round reviewers recommend minor revision. The [consolidated G1–G7 register](reviews/revision_round_05_plan_for_review_round_05.md) is the current queue answering [Reviewer 1](reviews/review_round_05_reviewer_01_evidence_tasks.md) and [Reviewer 2](reviews/review_round_05_reviewer_02_report_and_tasks.md). G1–G6 are revision packages; G7 is deferred to submission readiness. G1–G5 are complete; G6 frozen-source verification is in progress. No submission is performed.
+Both fifth-round reviewers recommend minor revision. The [consolidated G1–G7 register](reviews/revision_round_05_plan_for_review_round_05.md) is the current queue answering [Reviewer 1](reviews/review_round_05_reviewer_01_evidence_tasks.md) and [Reviewer 2](reviews/review_round_05_reviewer_02_report_and_tasks.md). G1–G6 are revision packages; G7 is deferred to submission readiness. G1–G6 are complete; the verified evidence attachment and final response are recorded in the round-5 reproduction guide. No submission is performed.
 
 ## Completed preparation
 
@@ -21,7 +21,7 @@ These are execution and evidence checks. Their detailed limits are in the fifth-
 - [x] G3: reconcile headline populations, recovery budgets and abstract wording.
 - [x] G4: correct physical chamber-interception wording from existing F5 records.
 - [x] G5: reconcile selected-point labels, date, ideal-correction scope and tuning conditions.
-- [ ] G6: rebuild, verify evidence/packaging, update current status and respond to both reviewers.
+- [x] G6: rebuild, verify evidence/packaging, update current status and respond to both reviewers.
 
 The current simulated headline remains 98.4% ideal-ring capture at 500 turns, 97.8% at 4000, 78.0% corrected-ring mean and 16.1/44.1% NKM/dipole joint-error means. The seed-42 steering sensitivities use their own paired 50-draw population and budget labels. The current pulse uses the adopted point and a 0.044 mrad allowance; earlier pending-F and old-pulse statements are superseded.
 
@@ -34,3 +34,5 @@ The current simulated headline remains 98.4% ideal-ring capture at 500 turns, 97
 - [ ] Approve and perform external submission/delivery separately. No DOI is required by this local checklist.
 
 Build commands: [PRAB formats](prab_submission.md). Scientific snapshot and reproduction commands: [round-5 evidence guide](round5_reproduction.md). Earlier reports, responses and frozen packages are preserved and must remain identifiable as historical versions.
+
+Round-5 evidence: 272 selected keys and 280 verified attachment inventory entries. Archived macros and portable scan reanalysis reproduce byte for byte. See the [verification receipt](round5_final_identity.json).

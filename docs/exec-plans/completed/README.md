@@ -950,3 +950,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 326. [**Milestone 326 — NKM G6 reconciliation checkpoint**](326_nkm_g6_reconciliation_checkpoint.md)
     - Reconciles the joint response, current indexes, claim ledger and source/PDF identities; commits sources before isolated frozen-evidence verification.
+
+327. [**Milestone 327 — NKM G6 evidence verification**](327_nkm_g6_evidence_verification.md)
+    - Closes G1–G6 with 775 passing tests, clean builds, 280 verified inventory entries and byte-identical archived macros/portable analysis; G7 stays deferred.

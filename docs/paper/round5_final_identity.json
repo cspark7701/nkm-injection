@@ -19,5 +19,19 @@
     "docs/paper/generated/figure_provenance.csv": "ff3d3793669e3b3bf237ad38c3924c02799f6a15ca5f369e67255a0ac88b5499",
     "docs/paper/revision_manifest_round5.json": "9a6392fb71cc46d7eb62a390742fc17a67a2bc6142ec9f74ac2cc92bdfa53bd2"
   },
-  "scope": "Scientific manuscript/PDF/asset identities. Final support-document and frozen-code checkpoints are recorded separately in the execution archive."
+  "scope": "Scientific manuscript/PDF/asset identities. Final support-document and frozen-code checkpoints are recorded separately in the execution archive.",
+  "verification": {
+    "source_checkpoint": "3c981c26128847f3d5c8f50e4b112d9825f283a1",
+    "evidence_archive": "results/journal_campaign_06/round5_evidence_bundle.tar.gz",
+    "archive_sha256": "098def595a17cf2ad33955cde2c466b8cc39d9e6f90db45fa1c11235c7463ab3",
+    "inventory_entries": 280,
+    "inventory_verified_in_fresh_extraction": true,
+    "archived_macros_byte_identical": true,
+    "portable_analysis_byte_identical": true,
+    "analysis_sha256": "d3904afb4644fea24832e8ca782c9a338a66bad5c136cfeb69cdd7a48bea94ca",
+    "full_tests_passed": 775,
+    "full_tests_seconds": 189.12,
+    "targeted_tests_passed": 30,
+    "scope": "This completion receipt follows the identified clean frozen-source checkpoint. Its scientific manuscript/asset bytes match the final installed selection. The frozen checkpoint records verification as pending because it precedes execution of these checks; this receipt does not rewrite that history."
+  }
 }

@@ -926,3 +926,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 318. [**Milestone 318 — NKM G1 protocol and model audit**](318_nkm_g1_protocol_model_audit.md)
     - Freezes the paired jitter protocol and verifies shared nominal strengths while distinguishing dipole-error correlation and population conventions.
+
+319. [**Milestone 319 — NKM G4 chamber interception**](319_nkm_g4_chamber_interception.md)
+    - Corrects the physical interception statement using saved ring-5501 records and rebuilds the primary article.

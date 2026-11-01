@@ -68,12 +68,14 @@ Completion: abstract and conclusions distinguish production, ideal sensitivity, 
 
 Maps to R1E-02. Uses existing F5 evidence; may proceed independently of G2 after G1 identifies the unchanged model.
 
-- [ ] Correct Section V's statement that corrected-ring vertical losses do not occur at the NKM chamber.
-- [ ] Distinguish later physical ring-aperture interception at `NKM_H1/H2`, numerical injection-pass domain/conductor rejection, and the dynamics that generated the large amplitude.
-- [ ] Retain the ring-5501 evidence: 133 NKM and 154 dipole interceptions at the two magnet halves; opening the half-height to an infeasible 15 mm gives 29.8 → 33.2% NKM and 33.2 → 37.6% dipole capture. Widening alone does not remove the slow-loss limitation, although interceptions occur there.
-- [ ] Restrict “no loss inside the magnet” to the actual ideal-ring or selected zero-capture NKM cases supporting it.
+- [x] Correct Section V's statement that corrected-ring vertical losses do not occur at the NKM chamber.
+- [x] Distinguish later physical ring-aperture interception at `NKM_H1/H2`, numerical injection-pass domain/conductor rejection, and the dynamics that generated the large amplitude.
+- [x] Retain the ring-5501 evidence: 133 NKM and 154 dipole interceptions at the two magnet halves; opening the half-height to an infeasible 15 mm gives 29.8 → 33.2% NKM and 33.2 → 37.6% dipole capture. Widening alone does not remove the slow-loss limitation, although interceptions occur there.
+- [x] Restrict “no loss inside the magnet” to the actual ideal-ring or selected zero-capture NKM cases supporting it.
 
 Completion: text agrees with existing F5 records. No additional tracking, aperture redesign or compensation simulation is required for this correction.
+
+G4 completed: scoped chamber-interception wording and checked existing records; milestone 319.
 
 ### G5 — Reconcile selected-point labels, recovery conditions and metadata
 

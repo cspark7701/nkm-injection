@@ -935,3 +935,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 321. [**Milestone 321 — NKM G2 scan implementation**](321_nkm_g2_scan_implementation.md)
     - Adds paired tracking, analysis/reporting and selection support with tested invariance and estimand checks. The simulation task remains running until all scales finish.
+
+322. [**Milestone 322 — NKM G1 centroid-statistic precision**](322_nkm_g1_centroid_statistic_precision.md)
+    - Distinguishes population standard deviations from root-mean-square centroids and preserves the original protocol/audit snapshot.

@@ -29,10 +29,21 @@ def audit(root=ROOT):
     cov = JournalBeam().covariance()
     raw = read('results/journal_campaign_04/e7_seed42/capture_robustness_raw.json')
     fractions = read('docs/paper_bts/generated/round5.json')['macros']
+    post = read('results/journal_campaign_05/f2_ablation.json')['exit_state_post_hoc']['mean_std']
+    nkm_mean = np.array([post[k]['alone_bts_magnets'][0] for k in ('centroid_y_m','centroid_yp_rad')])
+    nkm_std = np.array([post[k]['alone_bts_magnets'][1] for k in ('centroid_y_m','centroid_yp_rad')])
+    nkm_rms = np.sqrt(nkm_mean**2+nkm_std**2)
+    bts_ref = next(r['designs']['reference'] for r in
+        read('results/bts_round4_campaign_20261030/jitter_b/jitter.json')['rows'] if r['scale']==0)
+    bts_mean = np.array(bts_ref['mean_exit_centroid_m_rad'][2:])
+    bts_rms = np.array(bts_ref['exit_centroid_rms_m_rad'][2:])
+    bts_std = np.sqrt(bts_rms**2-bts_mean**2)
     sources = ['src/nkm_injection/errors.py', 'src/nkm_injection/bts_journal.py',
                'scripts/run_capture_robustness.py', 'scripts/run_bts_round3.py',
                'docs/paper_bts/generated/round2_designs.json',
-               'results/journal_campaign_05/f2v_xy_zero/checkpoint_inputs.json']
+               'results/journal_campaign_05/f2v_xy_zero/checkpoint_inputs.json',
+               'results/journal_campaign_05/f2_ablation.json',
+               'results/bts_round4_campaign_20261030/jitter_b/jitter.json']
     return {
         'units': {'length': 'm', 'angle': 'rad', 'quadrupole_strength': 'm^-2'},
         'nominal_strengths_identical': True, 'element_sequence_and_bends_identical': True,
@@ -47,9 +58,10 @@ def audit(root=ROOT):
                            'centroid': 'finite-particle septum-exit beam moments; horizontal reference translation'},
         'bts_population': {'machines': 200, 'shots_per_machine': 3,
                            'centroid': 'analytic propagated centroid; fitted existing-dipole steering'},
-        'vertical_values': {'nkm_y_rms_m': .00090, 'nkm_yp_rms_rad': .000077,
-                            'bts_y_rms_m': float(fractions['ResYZero']) * .001,
-                            'bts_yp_rms_rad': float(fractions['ResYpZero']) * .001},
+        'vertical_values': {'nkm_mean_m_rad': nkm_mean.tolist(), 'nkm_population_std_m_rad': nkm_std.tolist(),
+                            'nkm_rms_m_rad': nkm_rms.tolist(), 'nkm_quoted_statistic': 'population standard deviation',
+                            'bts_mean_m_rad': bts_mean.tolist(), 'bts_population_std_m_rad': bts_std.tolist(),
+                            'bts_rms_m_rad': bts_rms.tolist(), 'bts_quoted_statistic': 'root mean square'},
         'error_difference': {'nkm_dipole': 'one common relative draw shared by all bending elements',
                              'bts_dipole': 'independent relative draw per bending element',
                              'shared_rms': raw['error_config']['dipole_b_rel_std'],

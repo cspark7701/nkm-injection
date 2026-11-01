@@ -1,0 +1,86 @@
+{
+  "units": {
+    "length": "m",
+    "angle": "rad",
+    "quadrupole_strength": "m^-2"
+  },
+  "nominal_strengths_identical": true,
+  "element_sequence_and_bends_identical": true,
+  "strengths_m_minus2": {
+    "q11": -0.367525457731048,
+    "q12": -1.216432883896892,
+    "q13": 1.5860719268485328,
+    "q21": -1.0683734603410724,
+    "q22": 2.8231083729755677,
+    "q23": -2.490967743682553,
+    "q31": 2.0426777186320093,
+    "q32": -1.4342712971007086,
+    "q33": 0.3511146520138777
+  },
+  "nkm_integration_steps": [
+    10
+  ],
+  "bts_integration_steps": [
+    40
+  ],
+  "entrance_twiss": {
+    "beta": [
+      7.56,
+      12.269
+    ],
+    "alpha": [
+      1.5231,
+      -1.6547
+    ],
+    "dispersion": [
+      0.2762,
+      -0.0657,
+      0.0,
+      0.0
+    ]
+  },
+  "nominal_entrance_sigma_x_m": 0.0003790786778282313,
+  "nominal_entrance_sigma_xp_rad": 9.065399181110757e-05,
+  "jitter_in_nominal_rms_sizes": [
+    1.318987400886105,
+    2.206190770029551
+  ],
+  "nkm_population": {
+    "realizations": 50,
+    "seed": 42,
+    "particles": 200,
+    "centroid": "finite-particle septum-exit beam moments; horizontal reference translation"
+  },
+  "bts_population": {
+    "machines": 200,
+    "shots_per_machine": 3,
+    "centroid": "analytic propagated centroid; fitted existing-dipole steering"
+  },
+  "vertical_values": {
+    "nkm_y_rms_m": 0.0009,
+    "nkm_yp_rms_rad": 7.7e-05,
+    "bts_y_rms_m": 0.00107,
+    "bts_yp_rms_rad": 0.0001
+  },
+  "error_difference": {
+    "nkm_dipole": "one common relative draw shared by all bending elements",
+    "bts_dipole": "independent relative draw per bending element",
+    "shared_rms": 0.0005,
+    "quadrupoles": "independent gradient, x/y offset and roll with common declared rms levels"
+  },
+  "other_differences": [
+    "aperture checks and steering implementation differ",
+    "NKM adds emittance/spread and other shot fluctuations; populations/streams are distinct",
+    "NKM finite-particle centroid versus BTS analytic centroid statistic"
+  ],
+  "vertical_hardware": "No vertical corrector in either modeled line; future hardware unspecified.",
+  "interpretation": "Same nominal setting and rms levels do not make these identical stochastic models; no sampling-only attribution.",
+  "source_sha256": {
+    "src/nkm_injection/errors.py": "989a43725acd55dd91e8457496beb311d8a29bfebccf1f9adafe9d8d857da09a",
+    "src/nkm_injection/bts_journal.py": "378628b0364cb704f6b57e02220de05f87ed25723dda045a9f4935e5babd1ac3",
+    "scripts/run_capture_robustness.py": "0a5ffca0ba0b19e671b1a361453a89f3bb6e54058456328f0b5b75342b83c501",
+    "scripts/run_bts_round3.py": "3fc5bf5780cda6d1eb72afc27eafeafc02703b7f9468ce62145df679e5f3b697",
+    "docs/paper_bts/generated/round2_designs.json": "e67bbce2889314ed8a4e8f6b59684bee99db71a952bc602a4e04da02dcee1f45",
+    "results/journal_campaign_05/f2v_xy_zero/checkpoint_inputs.json": "b5e55c316bdce563c4bf623610d4993459280bc6a88370646c24b7147e7e34e4"
+  }
+}

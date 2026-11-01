@@ -9,7 +9,7 @@ This is the single execution register answering both fifth-round assessments:
 
 Both recommend minor revision. Their original reports/checklists remain unchanged and retain their review-time wording. This register merges overlapping work and states the adopted treatment where they differ. D, E and F work remains completed history; no old scientific task is reopened.
 
-**Status: planning only. All G tasks are pending.** The request to consolidate does not execute manuscript edits or authorize starting the proposed simulations. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
+**Status: execution authorized 2026-11-01. G1 is completed; G2–G6 are pending/in progress as recorded below.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
 
 ## Consolidation decisions
 
@@ -26,14 +26,16 @@ Both recommend minor revision. Their original reports/checklists remain unchange
 
 Maps to R2e-2 (regime), R2e-3, questions 2–3; supports R1E-01 and R2e-1.
 
-- [ ] Record the current manuscript/configuration identity, adopted point, beam distribution, chamber, tracking settings, corrected-ring files, source versions and existing zero/full two-plane artifacts in a **new round-5 protocol** before any new run. Preserve the round-4 protocol.
-- [ ] Compare actual NKM/BTS quadrupole strengths, optics/dispersion, coordinate and observation conventions, vertical correction assumptions, and error-draw definitions. Identify whether the companion setting is identical or differs; do not assume equality from the shared line name.
-- [ ] Identify the populations/statistics behind NKM's 0.90 mm / 77 microradian vertical centroid (50 seed-42 realizations) and the companion's approximately 1.07 mm / 0.096 mrad (200 realizations). Verify rms versus standard-deviation definitions and avoid claiming a sampling-only explanation without support.
-- [ ] Express 0.5 mm / 0.2 mrad booster jitter in the appropriate extraction beam-size units, including the declared dispersion and energy spread. Verify the companion's approximate 1.3 / 2.2 ratios before quoting them; retain the stress/sensitivity label unless an actual specification is supplied.
-- [ ] Record whether vertical correction hardware is known to be planned. If no author input establishes it, state that it is unspecified; the sensitivity remains ideal. No hardware answer is required to run the declared sensitivity.
-- [ ] Freeze the G2 estimands, seed/sample pairing, resampling and reporting rules below.
+- [x] Record the current manuscript/configuration identity, adopted point, beam distribution, chamber, tracking settings, corrected-ring files, source versions and existing zero/full two-plane artifacts in a **new round-5 protocol** before any new run. Preserve the round-4 protocol.
+- [x] Compare actual NKM/BTS quadrupole strengths, optics/dispersion, coordinate and observation conventions, vertical correction assumptions, and error-draw definitions. Identify whether the companion setting is identical or differs; do not assume equality from the shared line name.
+- [x] Identify the populations/statistics behind NKM's 0.90 mm / 77 microradian vertical centroid (50 seed-42 realizations) and the companion's approximately 1.07 mm / 0.096 mrad (200 realizations). Verify rms versus standard-deviation definitions and avoid claiming a sampling-only explanation without support.
+- [x] Express 0.5 mm / 0.2 mrad booster jitter in the appropriate extraction beam-size units, including the declared dispersion and energy spread. Verify the companion's approximate 1.3 / 2.2 ratios before quoting them; retain the stress/sensitivity label unless an actual specification is supplied.
+- [x] Record whether vertical correction hardware is known to be planned. If no author input establishes it, state that it is unspecified; the sensitivity remains ideal. No hardware answer is required to run the declared sensitivity.
+- [x] Freeze the G2 estimands, seed/sample pairing, resampling and reporting rules below.
 
 Completion: a reproducible protocol and a concise companion-comparison record distinguish shared settings, differences and unknowns. No protected input or lattice is modified.
+
+G1 completed: [model audit](../round5_companion_comparison.md), [protocol](../round5_protocol.json), milestone 318.
 
 ### G2 — Run the targeted two-plane jitter scan
 

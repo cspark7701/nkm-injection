@@ -923,3 +923,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 317. [**Milestone 317 — Consolidated NKM round-5 revision plan**](317_nkm_round5_consolidated_plan.md)
     - Merges both reviewers' tasks/questions into G1–G6 and a deferred G7 author gate, with explicit scientific definitions, dependencies and a complete crosswalk. All tasks remain pending; original review records are unchanged.
+
+318. [**Milestone 318 — NKM G1 protocol and model audit**](318_nkm_g1_protocol_model_audit.md)
+    - Freezes the paired jitter protocol and verifies shared nominal strengths while distinguishing dipole-error correlation and population conventions.

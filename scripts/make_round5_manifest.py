@@ -19,10 +19,17 @@ def main():
         if hashlib.sha256((ROOT/rel).read_bytes()).hexdigest() != base['sha256'][key]:
             raise ValueError('Historical evidence changed: '+key)
     additions = {'round5_protocol':'docs/paper/round5_protocol.json',
-                 'round5_companion_audit':'docs/paper/round5_companion_audit.json',
+                 'round5_companion_audit':'docs/paper/round5_companion_audit_final.json',
+                 'round5_companion_audit_declared':'docs/paper/round5_companion_audit.json',
                  'round5_jitter':'results/journal_campaign_06/g2_jitter_analysis.json',
                  'round5_preparation':'results/journal_campaign_06/preparation.json',
-                 'round5_bts_jitter_reference':'results/bts_round4_campaign_20261030/jitter_b/jitter.json'}
+                 'round5_bts_jitter_reference':'results/bts_round4_campaign_20261030/jitter_b/jitter.json',
+                 'round5_bts_article':'docs/paper_bts/paper.pdf',
+                 'round5_bts_design_reference':'docs/paper_bts/generated/round2_designs.json',
+                 'round5_bts_summary':'docs/paper_bts/generated/round5.json',
+                 'round5_implementation':'results/journal_campaign_06/implementation_identity.json',
+                 'round5_field_sheet':'nkm_field.xlsx',
+                 'round5_expanded_field_sheet':'nkm_field_expanded.xlsx'}
     protocol = json.loads((ROOT/'docs/paper/round5_protocol.json').read_text())
     prep = json.loads((ROOT/protocol['campaign']/'preparation.json').read_text())
     folders = dict(protocol['endpoints'])

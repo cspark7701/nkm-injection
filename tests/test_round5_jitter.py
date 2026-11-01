@@ -49,15 +49,27 @@ def test_reporting_keeps_jitter_cost_separate_from_gap(tmp_path):
     class Builder:
         out = tmp_path
         values = {}
-        def has(self, key):return True
+        def has(self, key):return key == 'round5_jitter'
         def load(self, key):return {'rows':[{'scale':0., **summarize(zero,zero)},
                                            {'scale':.25, **summarize(reduced,zero)}],
                                    'largest_passing_nonzero_tested_scale':.25}
         def macro(self, name, value, fmt=None):self.values[name] = fmt.format(value) if fmt else value
+        def save(self, fig, name, keys, caption):
+            import matplotlib.pyplot as plt
+            self.provenance_keys = keys
+            fig.savefig(self.out/('figures/'+name+'.pdf'));plt.close(fig)
     (tmp_path/'figures').mkdir()
     b=Builder();round5_reporting.macros(b)
+    assert b.provenance_keys == ['round5_jitter']
     assert b.values['RFiveQuarterGap'] == '-15.0'
     assert b.values['RFiveQuarterCost'] == '-0.2'
     assert 'pass' in b.values['RFiveJitterRows']
     assert b.values['RFivePassingScale'] == '0.25'
     assert (tmp_path/'figures/fig12_two_plane_jitter.pdf').stat().st_size > 1000
+
+
+def test_exact_loss_margin_is_not_mistaken_for_noninferiority():
+    # 30 to 28 survivors out of 200 is exactly the one-point loss boundary.
+    baseline = {'fieldmap_3d':np.full(3,30/200), 'dipole':np.full(3,60/200)}
+    boundary = {'fieldmap_3d':np.full(3,28/200), 'dipole':np.full(3,58/200)}
+    assert not summarize(boundary, baseline)['nkm_noninferior_to_zero_jitter']

@@ -938,3 +938,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 322. [**Milestone 322 — NKM G1 centroid-statistic precision**](322_nkm_g1_centroid_statistic_precision.md)
     - Distinguishes population standard deviations from root-mean-square centroids and preserves the original protocol/audit snapshot.
+
+323. [**Milestone 323 — NKM round-5 reproduction checks**](323_nkm_round5_reproduction_checks.md)
+    - Adds portable analysis/fresh-output commands, strict margin-tie handling and provenance checks; 30 relevant tests pass while tracking continues.

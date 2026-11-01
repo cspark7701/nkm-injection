@@ -54,14 +54,15 @@ def summarize(vectors, baseline, count=10000, seed=1729, margin=.01):
     base_gap = np.asarray(baseline[MODELS[0]]) - baseline[MODELS[1]]
     output['gap'] = interval(gap, count, seed)
     output['gap_change'] = interval(gap - base_gap, count, seed)
-    output['nkm_noninferior_to_zero_jitter'] = bool(output[MODELS[0]]['jitter_cost']['ci95'][0] > -margin)
+    # Treat binary-floating-point representations of the exact margin as ties.
+    output['nkm_noninferior_to_zero_jitter'] = bool(output[MODELS[0]]['jitter_cost']['ci95'][0] > -margin + 1e-12)
     return output
 
 
-def analyze(root=ROOT):
+def analyze(root=ROOT, campaign_dir=None):
     protocol_path = root / 'docs/paper/round5_protocol.json'
     protocol = json.loads(protocol_path.read_text())
-    campaign = root / protocol['campaign']
+    campaign = Path(campaign_dir).resolve() if campaign_dir else root / protocol['campaign']
     preparation = json.loads((campaign / 'preparation.json').read_text())
     folders = {float(k): root / v for k, v in protocol['endpoints'].items()}
     folders.update({float(k): root / v['output'] for k, v in preparation['variants'].items()})
@@ -96,6 +97,7 @@ def analyze(root=ROOT):
     return {'protocol': str(protocol_path.relative_to(root)), 'n_realizations': protocol['samples'],
             'particles_per_realization': protocol['particles'], 'turns': protocol['turns'],
             'steering': protocol['steering'], 'interval_scope': protocol['test'], 'rows': rows,
+            'numerical_tie_tolerance_fraction': 1e-12,
             'largest_passing_nonzero_tested_scale': max(passing) if passing else None,
             'input_sha256': identities, 'pairing_verified': True,
             'interpretation': 'Pointwise realization intervals conditional on ten rings; no continuous threshold or hardware tolerance.'}
@@ -105,8 +107,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--repo-root', type=Path, default=ROOT, help='Evidence root for portable saved-output reanalysis')
+    parser.add_argument('--campaign-dir', type=Path, help='Separate reproduced campaign directory')
     args = parser.parse_args()
-    result = analyze(args.repo_root.resolve())
+    result = analyze(args.repo_root.resolve(), args.campaign_dir)
     with args.output.open('x') as stream:
         json.dump(result, stream, indent=2)
         stream.write('\n')

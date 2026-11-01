@@ -46,13 +46,15 @@ def prepare():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workers', type=int, default=8)
+    parser.add_argument('--output-dir', type=Path, help='Fresh campaign directory inside the repository for a separate reproduction')
     parser.add_argument('--prepare-only', action='store_true')
     parser.add_argument('--resume', action='store_true')
     args = parser.parse_args()
     if args.workers < 1:
         raise ValueError('Positive worker count required')
     protocol, checks = prepare()
-    campaign = ROOT / protocol['campaign']
+    campaign = args.output_dir.resolve() if args.output_dir else ROOT / protocol['campaign']
+    campaign.relative_to(ROOT)  # Exported job paths remain repository-relative.
     campaign.mkdir(parents=True, exist_ok=True)
     inputs = campaign / 'inputs'
     inputs.mkdir(exist_ok=True)

@@ -953,3 +953,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 327. [**Milestone 327 — NKM G6 evidence verification**](327_nkm_g6_evidence_verification.md)
     - Closes G1–G6 with 775 passing tests, clean builds, 280 verified inventory entries and byte-identical archived macros/portable analysis; G7 stays deferred.
+
+328. [**Milestone 328 — NKM completed-status source packages**](328_nkm_round5_completed_source_packages.md)
+    - Refreshes clean 36/18/7-page packages with completed responses and verification receipts; checks all source/support identities and records archive hashes.

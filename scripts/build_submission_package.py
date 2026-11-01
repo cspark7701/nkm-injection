@@ -27,6 +27,12 @@ for _response in ("reviews/review_round_02_author_response_to_reviewers_01_02.md
     if (PAPER / _response).is_file():
         SUPPLEMENT.append(_response)
 
+for _round5 in ("revision_manifest_round5.json", "round5_protocol.json", "round5_companion_audit.json",
+                "round5_companion_comparison.md", "round5_jitter.md", "round5_reproduction.md",
+                "reviews/review_round_05_author_response_to_reviewers_01_02.md"):
+    if (PAPER / _round5).is_file():
+        SUPPLEMENT.append(_round5)
+
 BAD_LOG = re.compile(r"^!|undefined|Overfull|Rerun to get|A float is stuck|Float too large", re.I | re.M)
 
 

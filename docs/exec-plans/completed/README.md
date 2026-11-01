@@ -932,3 +932,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 320. [**Milestone 320 — NKM G5 labels and recovery scope**](320_nkm_g5_labels_recovery_scope.md)
     - Reconciles historical/selected strength labels, dates, ideal steering scope and the tuning gain conditions; gated builds pass.
+
+321. [**Milestone 321 — NKM G2 scan implementation**](321_nkm_g2_scan_implementation.md)
+    - Adds paired tracking, analysis/reporting and selection support with tested invariance and estimand checks. The simulation task remains running until all scales finish.

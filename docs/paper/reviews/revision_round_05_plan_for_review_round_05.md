@@ -9,7 +9,7 @@ This is the single execution register answering both fifth-round assessments:
 
 Both recommend minor revision. Their original reports/checklists remain unchanged and retain their review-time wording. This register merges overlapping work and states the adopted treatment where they differ. D, E and F work remains completed history; no old scientific task is reopened.
 
-**Status: execution authorized 2026-11-01. Completion notes below record progress; G2 is running and G1/G4/G5 are complete.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
+**Status: execution authorized 2026-11-01. Completion notes below record progress; G1/G2/G4/G5 are complete; G3/G6 reconciliation is in progress.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
 
 ## Consolidation decisions
 
@@ -41,15 +41,17 @@ G1 completed: [model audit](../round5_companion_comparison.md), [protocol](../ro
 
 Maps to R2e-2 and question 1. Depends on G1. Required by the consolidated plan to address Reviewer 2; not a new requirement attributed to Reviewer 1.
 
-- [ ] Evaluate booster position/angle jitter scaled together at **0, 0.1, 0.25, 0.5 and 1**, using the same 50 seed-42 realizations, 200 Gaussian particles per realization, 500 native turns and corrected-ring identities as the existing two-plane sensitivity. Keep all other machine/shot draws fixed, both kicker calibrations consistent, and the adopted point unchanged.
-- [ ] Include both the NKM and dipole. Reuse existing zero/full endpoints only after verifying complete source/configuration and pairing identities; generate missing scales in new result directories. Extend the existing driver only as needed; do not present an unimplemented command as available.
-- [ ] Verify sample IDs, particle seeds, ring identities and unchanged latent errors across scales. Report configuration, particle distribution, energy spread, Twiss/dispersion, apertures, loss definition, observation points and counting denominators.
-- [ ] Report each model's mean, zero-capture fraction and paired NKM-minus-dipole gap, with pointwise paired realization-bootstrap 95% intervals (10,000 resamples, seed 1729, consistent with the existing analysis).
-- [ ] For the declared one-point acceptable-loss test, compute **NKM(scale) minus NKM(zero)** under two-plane steering on the same realizations. Passing means that the lower endpoint of the central 95% interval exceeds −1 percentage point; retain its conservative 97.5% one-sided interpretation. Report dipole jitter costs and the paired change of the model gap separately.
-- [ ] Do not relabel that test as NKM-versus-dipole noninferiority. Any additional formal model-to-model noninferiority test would need its own explicit estimand and justified margin declared before analysis; it is not required by this consolidated plan.
-- [ ] State the outcome at each sampled scale, including no demonstrated nonzero passing scale if applicable. A passing zero-jitter reference is not evidence of a usable nonzero tolerance. Describe a largest passing **tested** scale, not a continuous threshold or hardware specification; disclose pointwise intervals and avoid an unsupported monotonicity claim.
+- [x] Evaluate booster position/angle jitter scaled together at **0, 0.1, 0.25, 0.5 and 1**, using the same 50 seed-42 realizations, 200 Gaussian particles per realization, 500 native turns and corrected-ring identities as the existing two-plane sensitivity. Keep all other machine/shot draws fixed, both kicker calibrations consistent, and the adopted point unchanged.
+- [x] Include both the NKM and dipole. Reuse existing zero/full endpoints only after verifying complete source/configuration and pairing identities; generate missing scales in new result directories. Extend the existing driver only as needed; do not present an unimplemented command as available.
+- [x] Verify sample IDs, particle seeds, ring identities and unchanged latent errors across scales. Report configuration, particle distribution, energy spread, Twiss/dispersion, apertures, loss definition, observation points and counting denominators.
+- [x] Report each model's mean, zero-capture fraction and paired NKM-minus-dipole gap, with pointwise paired realization-bootstrap 95% intervals (10,000 resamples, seed 1729, consistent with the existing analysis).
+- [x] For the declared one-point acceptable-loss test, compute **NKM(scale) minus NKM(zero)** under two-plane steering on the same realizations. Passing means that the lower endpoint of the central 95% interval exceeds −1 percentage point; retain its conservative 97.5% one-sided interpretation. Report dipole jitter costs and the paired change of the model gap separately.
+- [x] Do not relabel that test as NKM-versus-dipole noninferiority. Any additional formal model-to-model noninferiority test would need its own explicit estimand and justified margin declared before analysis; it is not required by this consolidated plan.
+- [x] State the outcome at each sampled scale, including no demonstrated nonzero passing scale if applicable. A passing zero-jitter reference is not evidence of a usable nonzero tolerance. Describe a largest passing **tested** scale, not a continuous threshold or hardware specification; disclose pointwise intervals and avoid an unsupported monotonicity claim.
 
 Completion: selected raw records, pairing checks and an analysis table/figure answer the quarter-jitter gap question and quantify the assumed stabilization regime. Unfavorable outcomes are valid; no improved capture is required. An optional 0.2 scale may be declared before running if needed to compare directly with the companion's low-jitter discussion.
+
+G2 completed: all 150 new realizations finished; [paired results](../round5_jitter.md) and 272-key manifest selected. No nonzero tested scale passes the one-point test.
 
 ### G3 — Reframe the headline and shorten the abstract
 

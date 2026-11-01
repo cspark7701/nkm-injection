@@ -941,3 +941,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 323. [**Milestone 323 — NKM round-5 reproduction checks**](323_nkm_round5_reproduction_checks.md)
     - Adds portable analysis/fresh-output commands, strict margin-tie handling and provenance checks; 30 relevant tests pass while tracking continues.
+
+324. [**Milestone 324 — NKM G2 paired jitter results**](324_nkm_g2_paired_jitter_results.md)
+    - Completes all 150 new realizations and selects five-level paired results; no nonzero scale passes the declared one-point loss test.

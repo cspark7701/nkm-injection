@@ -1,5 +1,5 @@
 {
-  "manifest": "docs/paper/revision_manifest_round4.json",
+  "manifest": "docs/paper/revision_manifest_round5.json",
   "artifacts": {
     "backend_validation": {
       "path": "results/journal_campaign_01/backend_validation/backend_validation_summary.json",
@@ -308,6 +308,18 @@
     "round4_vertical_steering": {
       "path": "results/journal_campaign_05/f2v_vertical_sensitivity.json",
       "sha256": "930032f394d0487fdde341b669681846f47623337bbd70e4cca5b14c5d94966e"
+    },
+    "round5_jitter": {
+      "path": "results/journal_campaign_06/g2_jitter_analysis.json",
+      "sha256": "d3904afb4644fea24832e8ca782c9a338a66bad5c136cfeb69cdd7a48bea94ca"
+    },
+    "round5_companion_audit": {
+      "path": "docs/paper/round5_companion_audit_final.json",
+      "sha256": "305d2576bace49be8c462c1238a1bbfaf6fb032394fa8a4265a6f53ee80855d1"
+    },
+    "round5_bts_jitter_reference": {
+      "path": "results/bts_round4_campaign_20261030/jitter_b/jitter.json",
+      "sha256": "0d0b3d579418a92cdc112de0e6181c0308aaf6571e53c583cb7c139c9db95a65"
     }
   }
 }

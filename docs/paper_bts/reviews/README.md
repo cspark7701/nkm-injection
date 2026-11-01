@@ -38,7 +38,9 @@ original sequence, while recording **revision round 4**.
 
 This index preserves the main-branch review history and separate restored BTS-branch records. The original
 main-branch assessment concerned the eight-page manuscript at `bee78914caa16945ef63dba8bf5205c434d0415c`;
-its conclusions are historical. [Reviewer 1's latest assessment is round 6](review_round_06_reviewer_01_report.md):
+its conclusions are historical. [Reviewer 3's assessment is round 6](review_round_06_reviewer_03_report.md):
+**accept for publication in NIM A**, with an [optional editorial checklist](review_round_06_reviewer_03_tasks.md).
+[Reviewer 1's latest assessment is round 6](review_round_06_reviewer_01_report.md):
 accept the scientific content within its stated scope, with no mandatory scientific revision.
 Its [closure checklist](review_round_06_reviewer_01_tasks.md) verifies that both earlier R1E-BTS follow-ups are closed.
 [Reviewer 2's latest assessment](review_round_06_reviewer_02_report.md) independently recommends acceptance;
@@ -311,3 +313,7 @@ are unchanged.
 ## Reviewer 1 review round 6
 
 The [round-6 report](review_round_06_reviewer_01_report.md), dated 2026-10-31, assesses the scientific files selected at `fd16b2a` after considering all ten author responses. Recommendation: **accept the scientific content within its stated conditional-model scope**. No mandatory scientific revision remains. The [closure checklist](review_round_06_reviewer_01_tasks.md) closes both previous follow-ups and records the selected evidence checks: 80 claims, 90 hashes, 46 tests and matching post-processing records. The unresolved near-blade excess remains explicitly qualified. R5-BTS-09 stays deferred; earlier records are preserved.
+
+## Reviewer 3 review round 6
+
+The [round-6 report](review_round_06_reviewer_03_report.md), dated 2026-11-01, assesses the 19-page NIM A Elsevier manuscript and 10-page supplement at `fd16b2a` after auditing all historical and current author responses. Recommendation: **accept for publication in NIM A**. The paper's formulation of phase-advance jitter partitioning, blade clearance invariance, and two distinct operational regimes is commended. The [optional editorial checklist](review_round_06_reviewer_03_tasks.md) provides non-blocking suggestions for camera-ready submission formatting. R5-BTS-09 stays deferred to submission readiness.

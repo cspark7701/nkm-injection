@@ -956,3 +956,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 328. [**Milestone 328 — NKM completed-status source packages**](328_nkm_round5_completed_source_packages.md)
     - Refreshes clean 36/18/7-page packages with completed responses and verification receipts; checks all source/support identities and records archive hashes.
+
+329. [**Milestone 329 — Reviewer 2 round-6 report on the NKM manuscript**](329_reviewer2_nkm_round6_report.md)
+    - Accept. R2e-1 to 8 are resolved, including the paired two-plane jitter scan (no nonzero scale passes; at 0.1 jitter, 74.2 % against 82.9 %). Optional tasks R2f-1 to 5: small-jitter result in the abstract, its mechanism, the dipole-error correlation, trimming, and a record.

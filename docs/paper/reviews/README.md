@@ -36,6 +36,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2, round 4](review_round_04_reviewer_02_report_and_tasks.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
 | [Reviewer 1, round 5 evidence assessment](review_round_05_reviewer_01_evidence_report.md), 2026-11-01 | Minor revision; scientific content acceptable after bounded reporting corrections | [Three open R1E tasks](review_round_05_reviewer_01_evidence_tasks.md) |
 | [Reviewer 2, round 5](review_round_05_reviewer_02_report_and_tasks.md), 2026-11-01 | Minor revision; acceptable in principle after R2e-1 to R2e-3 (headline under both steering assumptions, two-plane jitter scan, companion consistency) | 9 tasks R2e-1 to R2e-9, included in the report |
+| [Reviewer 2, round 6](review_round_06_reviewer_02_report_and_tasks.md), 2026-11-01 | Accept; optional editorial suggestions only | 5 optional tasks R2f-1 to R2f-5, included in the report |
 
 Consolidated execution order: [revision_round_01_plan_for_review_round_01.md](revision_round_01_plan_for_review_round_01.md) (tasks C1–C12).
 Round 2: [revision_round_02_plan_for_review_round_02.md](revision_round_02_plan_for_review_round_02.md) (tasks D1–D15, author inputs A1–A6).

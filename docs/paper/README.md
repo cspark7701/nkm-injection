@@ -20,3 +20,5 @@ The October-31 Humanizer prose edit is recorded in [milestone 299](../exec-plans
 The consolidated plan adopts Reviewer 2's targeted scan while preserving Reviewer 1's narrower reporting corrections. Its crosswalk records all source tasks and questions; the reviewers' historical recommendations are not rewritten.
 
 Round-5 results: [five-level scan](round5_jitter.md), [272-key manifest](revision_manifest_round5.json), [companion audit](round5_companion_comparison.md) and [source/PDF identities](round5_final_identity.json). No nonzero tested jitter scale passes the declared one-point loss test.
+
+Journal selection: [ranked top-five recommendation](journal_recommendations.md), based on the author's journal clarification and checked publisher scopes. PRAB remains first; NIM A is the principal alternative. This advice does not change the selected target or perform submission.

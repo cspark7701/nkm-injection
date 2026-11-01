@@ -962,3 +962,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 330. [**Milestone 330 — NKM Reviewer 1 round-6 assessment**](330_nkm_reviewer1_round6_assessment.md)
     - Recommends scientific acceptance with two optional copyedits; freshly verifies hashes, paired inference, macros and 30 tests while preserving earlier reviews and the deferred author gate.
+
+331. [**Milestone 331 — NKM journal recommendations**](331_nkm_journal_recommendations.md)
+    - Saves a publisher-sourced top five: PRAB, NIM A, NST, JINST and PRResearch; explains the current-manuscript ranking and keeps submission decisions separate.

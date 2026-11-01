@@ -944,3 +944,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 324. [**Milestone 324 — NKM G2 paired jitter results**](324_nkm_g2_paired_jitter_results.md)
     - Completes all 150 new realizations and selects five-level paired results; no nonzero scale passes the declared one-point loss test.
+
+325. [**Milestone 325 — NKM G3 manuscript framing**](325_nkm_g3_manuscript_framing.md)
+    - Applies Humanizer prose edits, integrates the paired scan and clarifies populations/budgets; clean 36/18/7-page builds and changed-page inspection pass.

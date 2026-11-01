@@ -9,7 +9,7 @@ This is the single execution register answering both fifth-round assessments:
 
 Both recommend minor revision. Their original reports/checklists remain unchanged and retain their review-time wording. This register merges overlapping work and states the adopted treatment where they differ. D, E and F work remains completed history; no old scientific task is reopened.
 
-**Status: execution authorized 2026-11-01. Completion notes below record progress; G1/G2/G4/G5 are complete; G3/G6 reconciliation is in progress.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
+**Status: execution authorized 2026-11-01. Completion notes below record progress; G1–G5 are complete; G6 reconciliation is in progress.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
 
 ## Consolidation decisions
 
@@ -57,14 +57,16 @@ G2 completed: all 150 new realizations finished; [paired results](../round5_jitt
 
 Maps to R1E-01, R2e-1 and R2e-4. Depends on G1–G2.
 
-- [ ] Name the horizontal-only production steering and the absent vertical correction beside the joint-error headline. Present the full-budget ideal two-plane result as a sensitivity, with its population stated.
-- [ ] Keep the population identities visible: pooled horizontal-only NKM/dipole 16.1/44.1% uses 150 draws; the paired 50-draw full-budget comparison is 19.46/48.25% horizontal-only versus 33.91/57.22% two-plane. Do not calculate a paired gain from 16.1 to 33.9%.
-- [ ] Qualify any 76.6% recovery value locally as **without booster jitter**: its paired baseline is 40.13%, not the 16.1% pooled headline. The same distinction must hold in the conclusions.
-- [ ] Integrate G2's actual results into the stabilization discussion and retain the stress-level, ideal-steering and conditional-lattice qualifications. Do not equate the companion's low blade loss with ring capture.
-- [ ] Replace the awkward “3.7 times a tenth” phrasing with the explicit allowance: 161 microradians, 3.7 times 0.044 mrad, where the allowance is one tenth of the approximately 0.44 mrad window.
-- [ ] Aim for an abstract of about 250 words as an editorial target, retaining necessary budget/uncertainty qualifications and moving secondary detail to the Introduction. Do not describe that target as a newly verified hard journal limit.
+- [x] Name the horizontal-only production steering and the absent vertical correction beside the joint-error headline. Present the full-budget ideal two-plane result as a sensitivity, with its population stated.
+- [x] Keep the population identities visible: pooled horizontal-only NKM/dipole 16.1/44.1% uses 150 draws; the paired 50-draw full-budget comparison is 19.46/48.25% horizontal-only versus 33.91/57.22% two-plane. Do not calculate a paired gain from 16.1 to 33.9%.
+- [x] Qualify any 76.6% recovery value locally as **without booster jitter**: its paired baseline is 40.13%, not the 16.1% pooled headline. The same distinction must hold in the conclusions.
+- [x] Integrate G2's actual results into the stabilization discussion and retain the stress-level, ideal-steering and conditional-lattice qualifications. Do not equate the companion's low blade loss with ring capture.
+- [x] Replace the awkward “3.7 times a tenth” phrasing with the explicit allowance: 161 microradians, 3.7 times 0.044 mrad, where the allowance is one tenth of the approximately 0.44 mrad window.
+- [x] Aim for an abstract of about 250 words as an editorial target, retaining necessary budget/uncertainty qualifications and moving secondary detail to the Introduction. Do not describe that target as a newly verified hard journal limit.
 
 Completion: abstract and conclusions distinguish production, ideal sensitivity, zero/full jitter and sample populations without implying commissioned performance.
+
+G3 completed: Humanizer manuscript edits integrate the actual scan, preserve pooled/paired and zero/full-budget labels, and shorten the abstract to 250 extracted words. Clean-log builds are 36/18/7 pages; milestone 325.
 
 ### G4 — Correct physical chamber-interception wording
 

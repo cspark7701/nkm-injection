@@ -122,6 +122,19 @@ noninferiority question: the lower endpoint of the central 95\,\% bootstrap inte
 lie above $-1$ percentage point. That endpoint is a conservative 97.5\,\% one-sided bound. The one-point value is the declared analysis margin of the robustness analysis; it is not a design
 specification, and an interval that crosses it is reported as inconclusive rather than as equivalence.
 
+For the two-plane scan, the paired acceptable-loss comparison is specifically NKM(scale) minus NKM(zero), with all non-jitter draws fixed. It is distinct from NKM minus the uniform kick. The uniform-kick cost and the change of that model gap use the same pairing (table~\ref{tab:s-xy-jitter}). Intervals are pointwise across five sampled scales, without a simultaneous-band or continuous-threshold interpretation. The zero-jitter row is a reference and cannot demonstrate a nonzero tolerance.
+
+\begin{table*}
+\caption{Additional two-plane jitter summaries for the main article's paired scan: 50 realizations of 200 particles at 500 turns, 10\,000 realization-bootstrap resamples, seed 1729. Zero-capture fractions are percentages of realizations; changes are percentage points with paired central 95\,\% intervals. Gap denotes NKM minus uniform-kick capture.}
+\label{tab:s-xy-jitter}
+\begin{ruledtabular}
+\begin{tabular}{crrcc}
+Scale & NKM zero [\%] & Uniform zero [\%] & Uniform change from zero & Gap change from zero \\
+\RFiveJitterSupplementRows
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
 \emph{Associations.} The round-4 analysis enters signed errors with their signs (booster position, angle and energy,
 NKM-to-orbit offset, NKM scale, septum position and strength, $\beta$ mismatch) and a physically constructed predictor:
 the horizontal betatron amplitude of the centroid just after each kicker, computed from each realization's errors with

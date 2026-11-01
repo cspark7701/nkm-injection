@@ -1,9 +1,24 @@
 % Main-branch revision addressing Reviewer 1 (2026-10-13) and Reviewer 2 (2026-10-15).
+\ifdefined\BtsTwoColumn
+\documentclass[final,5p,twocolumn]{elsarticle}
+\else
 \documentclass[preprint,11pt,a4paper,nopreprintline]{elsarticle}
+\fi
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\ifdefined\BtsTwoColumn
+% Keep the class's 5p journal geometry; wide floats retain readable tables/plots.
+\renewenvironment{table}[1][tbp]{\begin{table*}[#1]}{\end{table*}}
+\renewenvironment{figure}[1][tbp]{\begin{figure*}[#1]}{\end{figure*}}
+\raggedbottom
+\else
 \usepackage[margin=25mm]{geometry}
+\fi
 \usepackage{amsmath,amssymb,booktabs,graphicx}
+% Stack paired expressions only when the column width requires it.
+\newcommand{\BtsEquationPair}[2]{%
+\ifdefined\BtsTwoColumn\begin{gathered}#1\\#2\end{gathered}%
+\else#1\qquad#2\fi}
 \usepackage{siunitx}
 \usepackage[nopatch=footnote]{microtype}
 \usepackage{xurl}
@@ -218,9 +233,9 @@ momentum are independent untruncated Gaussians before dispersion is added;
 initial transverse coupling is zero and $ct=0$ for this RF-free single pass.
 The transverse blocks of the complete covariance are
 \begin{equation}
- \Sigma_{u,\mathrm{bet}}=\epsilon_u
- \begin{pmatrix}\beta_u&-\alpha_u\\-\alpha_u&(1+\alpha_u^2)/\beta_u\end{pmatrix},
- \qquad \Sigma_0=\Sigma_{\mathrm{bet}}+\sigma_\delta^2\mathbf d\mathbf d^{\mathsf T},
+ \BtsEquationPair{\Sigma_{u,\mathrm{bet}}=\epsilon_u
+ \begin{pmatrix}\beta_u&-\alpha_u\\-\alpha_u&(1+\alpha_u^2)/\beta_u\end{pmatrix},}
+ {\Sigma_0=\Sigma_{\mathrm{bet}}+\sigma_\delta^2\mathbf d\mathbf d^{\mathsf T},}
 \end{equation}
 where $u\in\{x,y\}$ denotes the transverse plane, $\beta_u$ and $\alpha_u$ are the
 Courant--Snyder parameters and $\epsilon_u$ the emittance in that plane,
@@ -236,8 +251,8 @@ centroid $\bar{\mathbf z}_s=M_s\bar{\mathbf z}_0+\mathbf b_s$.
 For each aperture station $s$ and plane $u$, with lower and upper aperture edges
 $a_-$ and $a_+$, we define
 \begin{equation}
- c_u(s)=\min[a_+-\bar u(s),\bar u(s)-a_-]-5\sqrt{\Sigma_{uu}(s)},\qquad
- c_{\min}=\min_{s\in\mathrm{stations},u\in\{x,y\}}c_u(s).
+ \BtsEquationPair{c_u(s)=\min[a_+-\bar u(s),\bar u(s)-a_-]-5\sqrt{\Sigma_{uu}(s)},}
+ {c_{\min}=\min_{s\in\mathrm{stations},u\in\{x,y\}}c_u(s).}
  \label{eq:clearance}
 \end{equation}
 Here $\bar u(s)$ is the beam centroid and $\sqrt{\Sigma_{uu}(s)}$ the projected rms

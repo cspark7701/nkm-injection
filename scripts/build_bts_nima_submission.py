@@ -20,7 +20,7 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def build(output, install_pdfs=False):
+def build(output, install_pdfs=False, two_column=False):
     """Create a new output directory; retain logs and exact source identities."""
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -61,7 +61,8 @@ def build(output, install_pdfs=False):
             shutil.copy2(path, source / name)
         return name
 
-    for name in ("paper.tex", "supplement.tex", "paper.bib", "highlights.txt"):
+    documents = ("paper", "supplement", "paper_twocolumn") if two_column else ("paper", "supplement")
+    for name in (*[stem + ".tex" for stem in documents], "paper.bib", "highlights.txt"):
         copy(PAPER / name)
     # Include the numbered style used by both documents for EM processing.
     bst = Path(subprocess.check_output(
@@ -69,7 +70,7 @@ def build(output, install_pdfs=False):
     shutil.copy2(bst, source / bst.name)
     logs = output / "build"
     logs.mkdir()
-    for stem in ("paper", "supplement"):
+    for stem in documents:
         command = ["latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error",
                    f"-outdir={logs}", stem + ".tex"]
         result = subprocess.run(command, cwd=source, text=True, capture_output=True)
@@ -93,14 +94,14 @@ def build(output, install_pdfs=False):
         "source_sha256": identities,
         "builder_sha256": digest(Path(__file__)),
         "outputs_sha256": {p.name: digest(p) for p in
-                           (output / "paper.pdf", output / "supplement.pdf", archive)},
+                           (*[output / (stem + ".pdf") for stem in documents], archive)},
         "flat_source_sha256": {p.name: digest(p) for p in sorted(source.iterdir())},
         "scientific_campaign_rerun": False,
         "submission_performed": False,
     }
     (output / "build_manifest.json").write_text(json.dumps(record, indent=2) + "\n")
     if install_pdfs:
-        for stem in ("paper", "supplement"):
+        for stem in documents:
             shutil.copy2(output / f"{stem}.pdf", PAPER / f"{stem}.pdf")
     print(output)
 
@@ -109,5 +110,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--install-pdfs", action="store_true")
+    parser.add_argument("--two-column", action="store_true",
+                        help="Also build and package the shared-source two-column NIM A preview")
     args = parser.parse_args()
-    build(args.output_dir, args.install_pdfs)
+    build(args.output_dir, args.install_pdfs, args.two_column)

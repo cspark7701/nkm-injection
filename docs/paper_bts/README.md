@@ -1,6 +1,6 @@
 # BTS optics manuscript
 
-NIM A is the selected target (2026-11-01). The [Elsevier-format manuscript and submission guide](nima_submission.md) describe the one-column preprint, numbered references, highlights and flat source archive. Final author approval and remaining access/declaration decisions are pending.
+NIM A is the selected target (2026-11-01). The [Elsevier-format manuscript and submission guide](nima_submission.md) describe the one-column preprint, numbered references, highlights and flat source archive. An additional [15-page two-column NIM A version](paper_twocolumn.pdf) shares the same manuscript source. Final author approval and remaining access/declaration decisions are pending.
 
 Current state (2026-10-31): all six tasks in the [Reviewer 2 filename-round-5 checklist](reviews/review_round_05_reviewer_02_tasks.md)
 and both [Reviewer 1 follow-ups](reviews/review_round_05_reviewer_01_tasks.md) are addressed (milestones 303 to 308).

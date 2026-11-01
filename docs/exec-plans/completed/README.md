@@ -907,3 +907,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 312. [**Milestone 312 — BTS manuscript in NIM A format**](312_bts_nima_format_submission.md)
     - Converts the article to Elsevier format, shortens its abstract, adds highlights and a flat source builder, and verifies 19/10-page PDFs after archive extraction. Eighty claims, 92 hashes and 46 tests pass; prior scientific/review records are preserved.
+
+313. [**Milestone 313 — Two-column NIM A BTS manuscript**](313_bts_nima_two_column.md)
+    - Adds a 15-page shared-source Elsevier 5p version and optional three-document packaging. All PDFs rebuild from the flat archive; the one-column text is unchanged. Eighty claims and 94 hashes verify.

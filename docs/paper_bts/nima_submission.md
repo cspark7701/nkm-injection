@@ -36,6 +36,20 @@ The archive places all files at its root. References to `generated/` and `figure
 
 The verified conversion build is `results/bts_nima_submission_20261101_v4/`: 19 article pages and 10 supplement pages. Earlier unsuccessful formatting builds remain diagnostic outputs. They are not the selected package. The final archive was extracted into a fresh directory and both documents were rebuilt there, with layout and reference checks. No simulation outputs are bundled into this manuscript-source archive; the separately verified scientific referee attachment retains that role.
 
+## Two-column NIM A version
+
+The additional [two-column source](paper_twocolumn.tex) and [PDF](paper_twocolumn.pdf) use Elsevier's `5p,twocolumn` layout. The wrapper inputs `paper.tex`, so both layouts share the manuscript, numerical macros and references. The two-column layout uses the class's journal geometry, full-width tables/figures and stacked versions of two long paired equations. It has 15 pages. The one-column preprint remains the primary manuscript and has unchanged extracted PDF text.
+
+To build and package all three PDFs in a new directory:
+
+```bash
+python scripts/build_bts_nima_submission.py \
+  --output-dir results/bts_nima_with_twocolumn_new \
+  --two-column --install-pdfs
+```
+
+This adds `paper_twocolumn.pdf`, its wrapper and `.bbl` file to the existing build/package outputs. The default command without `--two-column` retains the earlier article-and-supplement behavior. The selected three-document build is `results/bts_nima_twocolumn_20261101_v2/`; all three documents were rebuilt successfully from a fresh extraction of its flat source archive. The earlier one-column conversion package remains a historical build.
+
 ## Submission status
 
 NIM A is now the selected target, as instructed by the author. This closes the journal-selection part of the earlier deferred author decisions. It does not constitute manuscript approval, journal submission or acceptance.

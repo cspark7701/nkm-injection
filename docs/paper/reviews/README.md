@@ -1,5 +1,7 @@
 # Manuscript referee reviews
 
+Two round-5 assessments were written concurrently (2026-11-01). The [Reviewer 2 round-5 report](review_round_05_reviewer_02_report_and_tasks.md) requests a targeted jitter scan in its nine-item checklist (R2e-1 to R2e-9, in the same file). The [evidence-checked report](review_round_05_reviewer_01_evidence_report.md) recommends minor revision with [three bounded reporting/reconciliation items](review_round_05_reviewer_01_evidence_tasks.md), without requiring that scan for the stated conditional scope. Both consider F1–F9 executed; neither queue is merged or withdrawn here. Reviewer 2's latest assessment is now its round-5 report.
+
 ## Review document filenames
 
 Filenames now state the round, reviewer and document role, with two-digit numbers:
@@ -32,6 +34,8 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2, round 3](review_round_03_reviewer_02_report_and_tasks.md), 2026-10-13 | Major revision focused on robustness; no acceptance in present form | 9 tasks R2c-1 to R2c-9, included in the report |
 | [Reviewer 1, round 4](review_round_04_reviewer_01_report.md), 2026-10-16 | Focused major revision; no acceptance in present form | [8 R1D tasks](review_round_04_reviewer_01_tasks.md), addressed in the round-4 response |
 | [Reviewer 2, round 4](review_round_04_reviewer_02_report_and_tasks.md), 2026-10-15 | Major revision of limited scope; no acceptance in present form, acceptance expected after R2d-1 to R2d-3 | 7 tasks R2d-1 to R2d-7, included in the report |
+| [Reviewer 1, round 5 evidence assessment](review_round_05_reviewer_01_evidence_report.md), 2026-11-01 | Minor revision; scientific content acceptable after bounded reporting corrections | [Three open R1E tasks](review_round_05_reviewer_01_evidence_tasks.md) |
+| [Reviewer 2, round 5](review_round_05_reviewer_02_report_and_tasks.md), 2026-11-01 | Minor revision; acceptable in principle after R2e-1 to R2e-3 (headline under both steering assumptions, two-plane jitter scan, companion consistency) | 9 tasks R2e-1 to R2e-9, included in the report |
 
 Consolidated execution order: [revision_round_01_plan_for_review_round_01.md](revision_round_01_plan_for_review_round_01.md) (tasks C1–C12).
 Round 2: [revision_round_02_plan_for_review_round_02.md](revision_round_02_plan_for_review_round_02.md) (tasks D1–D15, author inputs A1–A6).

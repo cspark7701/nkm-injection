@@ -10,7 +10,7 @@ The manuscript is maintained in [`docs/paper/`](docs/paper/) for PRAB in REVTeX 
 
 The standalone BTS optics article targets NIM A and uses Elsevier’s one-column `elsarticle` format with numbered references, with a separate [two-column NIM A version](docs/paper_bts/paper_twocolumn.pdf). See the [manuscript index](docs/paper_bts/README.md) and [NIM A build and submission guide](docs/paper_bts/nima_submission.md) for the article, supplement, highlights and flat source archive. Internal round-six reviews recommend scientific acceptance within the stated model scope; final author approval and actual submission remain pending.
 
-Current NKM review status (2026-10-16): E1–E11 executed; Reviewer 1 and Reviewer 2 round 4 request focused major revision. The [consolidated F1–F9 follow-up](docs/paper/reviews/revision_round_04_plan_for_review_round_04.md) is pending and has not been executed. No journal acceptance or submission is recorded.
+Current NKM review status (2026-11-01): D, E and F revision work is executed. [Reviewer 1 round 5](docs/paper/reviews/review_round_05_reviewer_01_evidence_report.md) recommends minor revision, with scientific content acceptable after [three bounded reporting/reconciliation tasks](docs/paper/reviews/review_round_05_reviewer_01_evidence_tasks.md), which remain open. Reviewer 2's separate round-5 assessment is recorded in the review index and has its own pending recommendations. No journal acceptance or submission is recorded.
 
 ---
 

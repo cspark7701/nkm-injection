@@ -910,3 +910,13 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 313. [**Milestone 313 — Two-column NIM A BTS manuscript**](313_bts_nima_two_column.md)
     - Adds a 15-page shared-source Elsevier 5p version and optional three-document packaging. All PDFs rebuild from the flat archive; the one-column text is unchanged. Eighty claims and 94 hashes verify.
+
+
+314. [**Milestone 314 — NKM round-5 review preparation**](314_nkm_round5_review_preparation.md)
+    - Establishes current manuscript identity and reads all author responses; Reviewer 1 assessment and verification follow in milestone 315. The separately written Reviewer 2 review is preserved in milestone 316.
+
+315. [**Milestone 315 — Reviewer 1 NKM round-5 evidence assessment**](315_reviewer1_nkm_round5_evidence_assessment.md)
+    - Recommends minor revision after checking all author responses and completed F work. Adds three bounded reporting/reconciliation tasks; verifies 250 artifact keys, 258 frozen inventory entries, exact saved-output/macro reproduction and 26 tests. Earlier records remain preserved.
+
+316. [**Milestone 316 — Reviewer 2 round-5 report on the NKM manuscript**](316_reviewer2_nkm_round5_report.md)
+    - Minor revision. The headline should give the two-plane-steering result beside the horizontal-only one, the jitter should be stated as a stress level with a paired two-plane jitter scan, and the vertical centroid reconciled with the BTS companion. Tasks R2e-1 to 9. It corrects an earlier misattribution to Reviewer 1.

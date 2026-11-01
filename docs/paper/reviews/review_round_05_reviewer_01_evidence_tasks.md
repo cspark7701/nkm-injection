@@ -1,0 +1,11 @@
+# Reviewer 1 — NKM round 5 evidence-check revision checklist
+
+Date: 2026-11-01. Basis: [evidence-checked report](review_round_05_reviewer_01_evidence_report.md) at `ccc5c86`.
+
+Recommendation: **minor revision; scientific content acceptable after bounded reporting corrections.** These three items belong to this assessment. The separate concurrent [nine-item checklist](review_round_05_reviewer_02_report_and_tasks.md), Reviewer 2's, is preserved and is not merged or withdrawn here. All boxes below are open; this review executes no revisions.
+
+- [ ] **R1E-01 — Qualify the recovery budget.** State beside the abstract's 76.6% value that this is the zero-booster-jitter ideal two-plane sensitivity, and check the conclusion. Preserve the distinction between the 150-draw 16.1% headline and paired 50-draw results: zero jitter 40.13 → 76.57%, full jitter 19.46 → 33.91%. Do not imply an unchanged-budget 16.1 → 76.6% recovery or a validated correction system. No new simulation is needed.
+- [ ] **R1E-02 — Reconcile chamber interception.** Correct Section V's denial of NKM-chamber losses on corrected rings. Distinguish the physical ring-aperture boundary from numerical injection-domain rejection and the cause of the motion. Retain the scope of the ring-5501 widening diagnostic: 29.8 → 33.2% NKM and 33.2 → 37.6% dipole; 133 and 154 respective interceptions at the two magnet halves are present in the original records. No additional tracking is needed.
+- [ ] **R1E-03 — Rebuild and respond.** After the two wording corrections, use the Humanizer skill for prose, rebuild both layouts and the supplement, check affected references, refresh current identities/claim locations and submission sources, and write a short response. Preserve dated reports, responses and frozen evidence; label the relationship of historical evidence snapshots to final sources. Archive completed work sequentially. No new raw-evidence campaign or DOI is required solely for these edits.
+
+Completed F1–F9 remain execution records. Final scientific approval, declarations, access and actual delivery are separate author actions. This checklist does not impose the separate report's proposed new jitter scan; the different recommendations are made explicit rather than silently combined.

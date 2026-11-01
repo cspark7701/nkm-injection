@@ -2,7 +2,7 @@
 
 Updated: 2026-11-01. Target: Physical Review Accelerators and Beams (PRAB).
 
-[Reviewer 1 round 5](reviews/review_round_05_reviewer_01_evidence_report.md) recommends **minor revision**: the scientific content is acceptable within its stated scope after two reporting corrections and final reconciliation. The [three R1E checkbox tasks](reviews/review_round_05_reviewer_01_evidence_tasks.md) are open; this review does not execute them. Reviewer 2's separate round-5 report has its own pending recommendations; the earlier round-4 assessment is answered by the preserved response.
+Both fifth-round reviewers recommend minor revision. The [consolidated round-5 plan](reviews/revision_round_05_plan_for_review_round_05.md) is now the single execution queue: G1–G6 cover model identity, a paired two-plane jitter scan, headline/budget wording, chamber interception, editorial scope and final reconciliation; G7 remains a submission-stage author gate. All are pending. The [Reviewer 1 report/checklist](reviews/review_round_05_reviewer_01_evidence_report.md) and [Reviewer 2 report/checklist](reviews/review_round_05_reviewer_02_report_and_tasks.md) remain preserved with their original requirements. No manuscript revision or new simulation is executed by consolidation.
 
 - [One-column article](paper.pdf), [two-column preview](paper_twocolumn.pdf) and [supplement](supplement.pdf): 34, 17 and seven pages.
 - [Review history](reviews/README.md) and all four preserved joint author responses.
@@ -15,4 +15,4 @@ The earlier attribution chiefly to booster angle jitter is superseded. Paired ev
 
 The October-31 Humanizer prose edit is recorded in [milestone 299](../exec-plans/completed/299_nkm_manuscript_humanizer.md). Earlier reports, responses, protocols and frozen campaigns retain their historical dates, numbers and recommendations. Current status here supersedes obsolete pending-F statements in older status snapshots. The [cover letter](cover_letter.md) remains an author-review draft. Final scientific approval and actual referee delivery/submission remain separate; no journal acceptance or external submission has occurred through this workflow.
 
-A concurrently written [Reviewer 2 round-5 report with its nine-item checklist](reviews/review_round_05_reviewer_02_report_and_tasks.md) is also preserved. Its proposed scan is not required by the evidence-checked assessment above; neither task register is silently merged or withdrawn.
+The consolidated plan adopts Reviewer 2's targeted scan while preserving Reviewer 1's narrower reporting corrections. Its crosswalk records all source tasks and questions; the reviewers' historical recommendations are not rewritten.

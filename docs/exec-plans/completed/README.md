@@ -920,3 +920,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 316. [**Milestone 316 — Reviewer 2 round-5 report on the NKM manuscript**](316_reviewer2_nkm_round5_report.md)
     - Minor revision. The headline should give the two-plane-steering result beside the horizontal-only one, the jitter should be stated as a stress level with a paired two-plane jitter scan, and the vertical centroid reconciled with the BTS companion. Tasks R2e-1 to 9. It corrects an earlier misattribution to Reviewer 1.
+
+317. [**Milestone 317 — Consolidated NKM round-5 revision plan**](317_nkm_round5_consolidated_plan.md)
+    - Merges both reviewers' tasks/questions into G1–G6 and a deferred G7 author gate, with explicit scientific definitions, dependencies and a complete crosswalk. All tasks remain pending; original review records are unchanged.

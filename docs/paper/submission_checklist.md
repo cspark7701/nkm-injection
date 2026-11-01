@@ -2,7 +2,7 @@
 
 Updated: 2026-11-01. Target: Physical Review Accelerators and Beams, Research Article.
 
-[Reviewer 1 round 5](reviews/review_round_05_reviewer_01_evidence_report.md) recommends minor revision, with scientific content acceptable after bounded reporting corrections. The [current pending queue is R1E-01–03](reviews/review_round_05_reviewer_01_evidence_tasks.md). Reviewer 2's separate round-5 report has its own pending recommendations; the earlier round-4 assessment is answered in the preserved response. This status update executes no manuscript revisions and records no journal acceptance or submission.
+Both fifth-round reviewers recommend minor revision. The [consolidated G1–G7 register](reviews/revision_round_05_plan_for_review_round_05.md) is the current queue answering [Reviewer 1](reviews/review_round_05_reviewer_01_evidence_tasks.md) and [Reviewer 2](reviews/review_round_05_reviewer_02_report_and_tasks.md). G1–G6 are revision packages; G7 is deferred to submission readiness. All are pending. Consolidation executes no manuscript changes, simulation or submission.
 
 ## Completed preparation
 
@@ -14,15 +14,18 @@ Updated: 2026-11-01. Target: Physical Review Accelerators and Beams, Research Ar
 
 These are execution and evidence checks. Their detailed limits are in the fifth-round report; they do not establish operational performance or replace author approval.
 
-## Pending scientific reporting and consistency corrections
+## Pending consolidated revision work
 
-- [ ] R1E-01: explicitly qualify the 76.6% steering recovery as the zero-booster-jitter sensitivity.
-- [ ] R1E-02: correct the chamber-location statement using the existing ring-5501 interception records.
-- [ ] R1E-03: rebuild the corrected layouts/supplement, reconcile current source/PDF identities and supporting records, and respond to the review.
+- [ ] G1: freeze the paired protocol and verify shared BTS settings, populations and jitter units.
+- [ ] G2: run the targeted two-plane jitter scan and report paired loss/gap estimands.
+- [ ] G3: reconcile headline populations, recovery budgets and abstract wording.
+- [ ] G4: correct physical chamber-interception wording from existing F5 records.
+- [ ] G5: reconcile selected-point labels, date, ideal-correction scope and tuning conditions.
+- [ ] G6: rebuild, verify evidence/packaging, update current status and respond to both reviewers.
 
 The current simulated headline remains 98.4% ideal-ring capture at 500 turns, 97.8% at 4000, 78.0% corrected-ring mean and 16.1/44.1% NKM/dipole joint-error means. The seed-42 steering sensitivities use their own paired 50-draw population and budget labels. The current pulse uses the adopted point and a 0.044 mrad allowance; earlier pending-F and old-pulse statements are superseded.
 
-## Author and delivery gates
+## Author and delivery gates (G7, deferred)
 
 - [ ] Approve final scientific interpretation, title, authorship/contact details, declarations and AI disclosure.
 - [ ] Confirm retained funding information and other declarations in the submission interface.

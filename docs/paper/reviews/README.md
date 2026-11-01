@@ -1,6 +1,6 @@
 # Manuscript referee reviews
 
-Two round-5 assessments were written concurrently (2026-11-01). The [Reviewer 2 round-5 report](review_round_05_reviewer_02_report_and_tasks.md) requests a targeted jitter scan in its nine-item checklist (R2e-1 to R2e-9, in the same file). The [evidence-checked report](review_round_05_reviewer_01_evidence_report.md) recommends minor revision with [three bounded reporting/reconciliation items](review_round_05_reviewer_01_evidence_tasks.md), without requiring that scan for the stated conditional scope. Both consider F1–F9 executed; neither queue is merged or withdrawn here. Reviewer 2's latest assessment is now its round-5 report.
+Current round-5 execution register (consolidated 2026-11-01): [G1–G7](revision_round_05_plan_for_review_round_05.md). It answers [Reviewer 1](review_round_05_reviewer_01_evidence_report.md) and [Reviewer 2](review_round_05_reviewer_02_report_and_tasks.md), both recommending minor revision. G1–G6 combine the paired jitter scan, companion identity, headline/budget wording, chamber interception, point labels and final reconciliation. G7 is deferred to submission readiness. All items are pending; no revision is executed by consolidation. Both source reports/checklists remain unchanged. The plan explicitly records their different views on the need for a scan and adopts Reviewer 2's request.
 
 ## Review document filenames
 
@@ -89,3 +89,7 @@ point (it still uses the round-2 point).
 Reviewer 1's round-4 assessment independently checks the paired zero/full-jitter arithmetic and the mixed pulse
 allowances, requests physical loss/domain diagnostics and scoped approximation-error claims, and retains the
 completed E tasks. Neither report grants acceptance. The new report and task register preserve all previous reports.
+
+## Consolidated round-5 plan
+
+[The seven-package register](revision_round_05_plan_for_review_round_05.md) is the single execution queue and includes a complete crosswalk for R1E-01–03, R2e-1–9 and Reviewer 2's three questions. It keeps the one-point jitter-loss test separate from the NKM–dipole gap, preserves paired versus pooled population labels, and retains the chamber-interception correction. Older descriptions of separate queues record the state before consolidation. F1–F9 remain completed history.

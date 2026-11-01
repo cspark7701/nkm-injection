@@ -968,3 +968,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 332. [**Milestone 332 — NKM PRAB two-layout verification**](332_nkm_prab_two_layout_verification.md)
     - Verifies the requested one-/two-column TeX entry points, clean 36/18/7-page builds, matching installed PDF text and nine packaging tests; documents both versions.
+
+333. [**Milestone 333 — Reviewer 3 round-6 report on the NKM manuscript**](333_reviewer3_nkm_round6_report.md)
+    - Recommends acceptance for publication in PRAB after comprehensive audit of author responses across rounds 1–5; evaluates 3D filament tracking, thin-map sagitta error, vertical kick slope coupling, 5-point paired jitter scan, and cross-paper consistency; adds optional camera-ready tasks R3-1 to R3-5 while preserving all prior reviews.

@@ -2,7 +2,7 @@
 
 Updated: 2026-11-01. Target: Physical Review Accelerators and Beams (PRAB).
 
-[Reviewer 1's round-6 report](reviews/review_round_06_reviewer_01_report.md) recommends **scientific acceptance within the stated model scope**, with [two optional copyedits](reviews/review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. The separately written [Reviewer 2 round-6 report](reviews/review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance. This internal recommendation is not a journal decision.
+[Reviewer 3's round-6 report](reviews/review_round_06_reviewer_03_report_and_tasks.md) recommends **acceptance for publication in PRAB**, noting that the five rounds of revisions have brought the study to full scientific maturity, with five optional camera-ready suggestions. [Reviewer 1's round-6 report](reviews/review_round_06_reviewer_01_report.md) recommends **scientific acceptance within the stated model scope**, with [two optional copyedits](reviews/review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. The separately written [Reviewer 2 round-6 report](reviews/review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance. These internal recommendations are not journal decisions.
 
 The [consolidated round-5 plan](reviews/revision_round_05_plan_for_review_round_05.md) records G1–G6 complete. Its [joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md) addresses both fifth-round assessments, including the paired scan, companion audit, headline budgets and chamber interception. G7 remains a submission-stage author gate. Earlier reports, responses and reviewer-time checklists are preserved.
 

@@ -1,6 +1,6 @@
 # Manuscript referee reviews
 
-Latest assessment: [Reviewer 1, round 6](review_round_06_reviewer_01_report.md), 2026-11-01, recommends **scientific acceptance within the stated model scope**, with [two optional copyedits](review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. This is a pre-submission recommendation, not a journal decision. The separately written [Reviewer 2 round-6 report](review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance with optional editorial suggestions. Its report and tasks remain separate.
+Latest assessment: [Reviewer 3, round 6](review_round_06_reviewer_03_report_and_tasks.md), 2026-11-01, recommends **acceptance for publication in PRAB**, noting that the five rounds of revisions have brought the study to full scientific maturity, with five optional camera-ready suggestions. [Reviewer 1, round 6](review_round_06_reviewer_01_report.md) also recommends **scientific acceptance within the stated model scope**, with [two optional copyedits](review_round_06_reviewer_01_tasks.md). The separately written [Reviewer 2 round-6 report](review_round_06_reviewer_02_report_and_tasks.md) likewise recommends acceptance with optional editorial suggestions. All reports and tasks remain separate.
 
 The [round-5 G register](revision_round_05_plan_for_review_round_05.md) and [joint response](review_round_05_author_response_to_reviewers_01_02.md) record G1–G6 complete, including the paired scan and frozen-source verification. G7 remains deferred to author approval, actual access/delivery and submission. Original reports and reviewer-time checklists remain unchanged. The consolidation records why Reviewer 2's scan was adopted alongside Reviewer 1's reporting corrections.
 
@@ -40,6 +40,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 2, round 5](review_round_05_reviewer_02_report_and_tasks.md), 2026-11-01 | Minor revision; acceptable in principle after R2e-1 to R2e-3 (headline under both steering assumptions, two-plane jitter scan, companion consistency) | 9 tasks R2e-1 to R2e-9, included in the report |
 | [Reviewer 2, round 6](review_round_06_reviewer_02_report_and_tasks.md), 2026-11-01 | Accept; optional editorial suggestions only | 5 optional tasks R2f-1 to R2f-5, included in the report |
 | [Reviewer 1, round 6](review_round_06_reviewer_01_report.md), 2026-11-01 | Accept scientifically within the stated scope; no mandatory scientific revision | [Two optional copyedits](review_round_06_reviewer_01_tasks.md); G7 remains deferred |
+| [Reviewer 3, round 6](review_round_06_reviewer_03_report_and_tasks.md), 2026-11-01 | Accept for publication; optional presentation items only | 5 optional tasks R3-1 to R3-5, included in the report |
 
 Consolidated execution order: [revision_round_01_plan_for_review_round_01.md](revision_round_01_plan_for_review_round_01.md) (tasks C1–C12).
 Round 2: [revision_round_02_plan_for_review_round_02.md](revision_round_02_plan_for_review_round_02.md) (tasks D1–D15, author inputs A1–A6).

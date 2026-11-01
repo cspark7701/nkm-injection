@@ -4,8 +4,12 @@ Updated 2026-11-01. D15 completed for **Physical Review Accelerators and Beams (
 
 ## Manuscript entry points
 
-- `paper.tex` → `paper.pdf`: REVTeX 4.2 with `aps,prab,preprint` (primary draft).
-- `paper_twocolumn.tex` → `paper_twocolumn.pdf`: a three-line wrapper selects `aps,prab,reprint` (two columns).
+| TeX entry point | Layout | REVTeX 4.2 options | Installed PDF |
+| :--- | :--- | :--- | :--- |
+| [paper.tex](paper.tex) | One column, primary review draft | `aps,prab,preprint` | [paper.pdf](paper.pdf), 36 pages |
+| [paper_twocolumn.tex](paper_twocolumn.tex) | Two columns, journal-style preview | `aps,prab,reprint` | [paper_twocolumn.pdf](paper_twocolumn.pdf), 18 pages |
+
+Both files are directly compilable entry points. `paper_twocolumn.tex` sets `\PRABTwoColumn` before including `paper.tex`, so both versions share the same scientific text, bibliography, numerical macros and figures. Edit the article in `paper.tex`; compile `paper_twocolumn.tex` to obtain the two-column version.
 
 The one-column draft uses APS preprint styling with double spacing and a separate title/abstract page (36 pages in the installed round-5 build). The two-column preview uses the journal reprint layout (18 pages in the installed round-5 build). Wide multi-panel figures and tables use full-width floats in both layouts. Edit the scientific text only in `paper.tex`; the wrapper contains no duplicate manuscript. APS author, email, affiliation, abstract and acknowledgment structures are used, with `apsrev4-2` bibliography formatting and article titles.
 
@@ -44,3 +48,16 @@ The native apsrev4-2 author-control notice (`jnrlst (dependency: not reversed) s
 
 Current page counts are 36/18 plus a seven-page supplement, checked 2026-11-01. D15's 28/14-page record remains
 historical. Compilation does not replace the current revision and author gates; see the [current checklist](submission_checklist.md).
+
+## Fresh verification of both requested layouts
+
+Verified again on 2026-11-01 using the existing package builder in fresh directories:
+
+```bash
+python scripts/build_submission_package.py --layout one-column --output-dir results/nkm_prab_formats_20261101_one
+python scripts/build_submission_package.py --layout two-column --output-dir results/nkm_prab_formats_20261101_two
+```
+
+These directories contain the compiled PDFs, flat manuscript source archives, accompanying support documents and package manifests. They were generated with the project scientific Python environment. Both layouts and the seven-page supplement pass the clean-log gate; all nine source-package tests pass. Rendered body pages were inspected for one-/two-column layout. The fresh PDFs' extracted layout text matches the installed PDFs exactly, and all staged scientific source hashes match the installed sources.
+
+The requested PRAB conversion was already present, so verification required no scientific text or class-option changes. Existing manuscript PDFs were retained to preserve their recorded evidence identities; fresh build PDFs may differ in creation-time metadata. The verification receipt is `results/nkm_prab_formats_20261101_verification.json`, archived in milestone 332. Historical reviews and frozen attachments remain unchanged.

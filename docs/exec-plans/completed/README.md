@@ -965,3 +965,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 331. [**Milestone 331 — NKM journal recommendations**](331_nkm_journal_recommendations.md)
     - Saves a publisher-sourced top five: PRAB, NIM A, NST, JINST and PRResearch; explains the current-manuscript ranking and keeps submission decisions separate.
+
+332. [**Milestone 332 — NKM PRAB two-layout verification**](332_nkm_prab_two_layout_verification.md)
+    - Verifies the requested one-/two-column TeX entry points, clean 36/18/7-page builds, matching installed PDF text and nine packaging tests; documents both versions.

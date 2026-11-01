@@ -2,7 +2,9 @@
 
 Updated: 2026-11-01. Target: Physical Review Accelerators and Beams (PRAB).
 
-Both fifth-round reviewers recommend minor revision. The [consolidated round-5 plan](reviews/revision_round_05_plan_for_review_round_05.md) is now the single execution queue: G1–G6 cover model identity, a paired two-plane jitter scan, headline/budget wording, chamber interception, editorial scope and final reconciliation; G7 remains a submission-stage author gate. G1–G6 are complete; the verified evidence attachment and final response are recorded in the round-5 reproduction guide. The [Reviewer 1 report/checklist](reviews/review_round_05_reviewer_01_evidence_report.md) and [Reviewer 2 report/checklist](reviews/review_round_05_reviewer_02_report_and_tasks.md) remain preserved with their original requirements. Execution was authorized after consolidation; milestones 318–327 record the completed audit, wording and implementation checks.
+[Reviewer 1's round-6 report](reviews/review_round_06_reviewer_01_report.md) recommends **scientific acceptance within the stated model scope**, with [two optional copyedits](reviews/review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. The separately written [Reviewer 2 round-6 report](reviews/review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance. This internal recommendation is not a journal decision.
+
+The [consolidated round-5 plan](reviews/revision_round_05_plan_for_review_round_05.md) records G1–G6 complete. Its [joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md) addresses both fifth-round assessments, including the paired scan, companion audit, headline budgets and chamber interception. G7 remains a submission-stage author gate. Earlier reports, responses and reviewer-time checklists are preserved.
 
 - [One-column article](paper.pdf), [two-column preview](paper_twocolumn.pdf) and [supplement](supplement.pdf): 36, 18 and seven pages.
 - [Review history](reviews/README.md) and [the round-5 joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md), alongside all four earlier responses.

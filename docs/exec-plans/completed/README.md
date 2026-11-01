@@ -959,3 +959,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 329. [**Milestone 329 — Reviewer 2 round-6 report on the NKM manuscript**](329_reviewer2_nkm_round6_report.md)
     - Accept. R2e-1 to 8 are resolved, including the paired two-plane jitter scan (no nonzero scale passes; at 0.1 jitter, 74.2 % against 82.9 %). Optional tasks R2f-1 to 5: small-jitter result in the abstract, its mechanism, the dipole-error correlation, trimming, and a record.
+
+330. [**Milestone 330 — NKM Reviewer 1 round-6 assessment**](330_nkm_reviewer1_round6_assessment.md)
+    - Recommends scientific acceptance with two optional copyedits; freshly verifies hashes, paired inference, macros and 30 tests while preserving earlier reviews and the deferred author gate.

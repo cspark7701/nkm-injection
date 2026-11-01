@@ -1,0 +1,9 @@
+# Milestone 330 — NKM Reviewer 1 round-6 assessment
+
+Completed: 2026-11-01. Reviewed scientific checkpoint: 2c813feb0a09d7c7ba2505c722acf9431659028c.
+
+Read the current manuscript/supplement, all five author responses and the prior review/evidence records. Added a new Reviewer 1 round-6 report and separate checkbox list without changing earlier reports, responses or plans. Recommendation: scientific acceptance within the declared scope; no mandatory scientific revision or new simulations. Two optional copyedits clarify the loss-test label and the standalone comparison-table population. They are not executed by this review. G7 remains deferred, and no decision is made on Reviewer 2's behalf.
+
+Fresh checks: all 272 selected artifact hashes and scientific source/PDF identities match; all 280 frozen-attachment inventory entries verify; direct captured/incident count calculations independently reproduce paired jitter costs, model gaps and bootstrap intervals. A fresh paired analyzer reproduces the selected JSON byte for byte, and a full figure/macro rebuild reproduces the installed macros byte for byte without installing assets. Thirty relevant tests pass in 2.48 seconds. The 36/18/7 installed page counts, 250-word abstract and two-column table/figure page were checked. Review outputs are ignored under results/nkm_reviewer1_round6_20261101/.
+
+The earlier 775-test full-suite run, TeX builds and archived-source execution were inspected as revision records, not claimed as rerun here. No new tracking, optimization, remote access, submission or exhaustive literature audit occurred. Updated current manuscript/review/root indexes and submission status to reflect Reviewer 1's recommendation, while retaining the separately written Reviewer 2 round-6 report and the author gate. Protected scientific sources and manuscript/figure assets are unchanged.

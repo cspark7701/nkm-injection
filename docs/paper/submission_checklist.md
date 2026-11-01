@@ -2,7 +2,7 @@
 
 Updated: 2026-11-01. Target: Physical Review Accelerators and Beams, Research Article.
 
-Both fifth-round reviewers recommend minor revision. The [consolidated G1–G7 register](reviews/revision_round_05_plan_for_review_round_05.md) is the current queue answering [Reviewer 1](reviews/review_round_05_reviewer_01_evidence_tasks.md) and [Reviewer 2](reviews/review_round_05_reviewer_02_report_and_tasks.md). G1–G6 are revision packages; G7 is deferred to submission readiness. G1–G6 are complete; the verified evidence attachment and final response are recorded in the round-5 reproduction guide. No submission is performed.
+[Reviewer 1's round-6 assessment](reviews/review_round_06_reviewer_01_report.md) recommends scientific acceptance with no mandatory scientific revision and [two optional copyedits](reviews/review_round_06_reviewer_01_tasks.md). The separately written [Reviewer 2 round-6 report](reviews/review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance. The [G1–G7 register](reviews/revision_round_05_plan_for_review_round_05.md) and [joint response](reviews/review_round_05_author_response_to_reviewers_01_02.md) record G1–G6 complete; G7 remains deferred. This internal review recommendation does not supply final author approval or perform submission.
 
 ## Completed preparation
 

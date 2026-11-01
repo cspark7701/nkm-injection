@@ -1,6 +1,8 @@
 # Manuscript referee reviews
 
-Current round-5 execution register (consolidated 2026-11-01): [G1–G7](revision_round_05_plan_for_review_round_05.md). It answers [Reviewer 1](review_round_05_reviewer_01_evidence_report.md) and [Reviewer 2](review_round_05_reviewer_02_report_and_tasks.md), both recommending minor revision. G1–G6 combine the paired jitter scan, companion identity, headline/budget wording, chamber interception, point labels and final reconciliation. G7 is deferred to submission readiness. G1, G4 and G5 are complete; G2 tracking and G3/G6 reconciliation are in progress following execution authorization. Both source reports/checklists remain unchanged. The plan explicitly records their different views on the need for a scan and adopts Reviewer 2's request.
+Latest assessment: [Reviewer 1, round 6](review_round_06_reviewer_01_report.md), 2026-11-01, recommends **scientific acceptance within the stated model scope**, with [two optional copyedits](review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. This is a pre-submission recommendation, not a journal decision. The separately written [Reviewer 2 round-6 report](review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance with optional editorial suggestions. Its report and tasks remain separate.
+
+The [round-5 G register](revision_round_05_plan_for_review_round_05.md) and [joint response](review_round_05_author_response_to_reviewers_01_02.md) record G1–G6 complete, including the paired scan and frozen-source verification. G7 remains deferred to author approval, actual access/delivery and submission. Original reports and reviewer-time checklists remain unchanged. The consolidation records why Reviewer 2's scan was adopted alongside Reviewer 1's reporting corrections.
 
 ## Review document filenames
 
@@ -37,6 +39,7 @@ recommendations and scientific tasks remain distinct from software checks.
 | [Reviewer 1, round 5 evidence assessment](review_round_05_reviewer_01_evidence_report.md), 2026-11-01 | Minor revision; scientific content acceptable after bounded reporting corrections | [Three open R1E tasks](review_round_05_reviewer_01_evidence_tasks.md) |
 | [Reviewer 2, round 5](review_round_05_reviewer_02_report_and_tasks.md), 2026-11-01 | Minor revision; acceptable in principle after R2e-1 to R2e-3 (headline under both steering assumptions, two-plane jitter scan, companion consistency) | 9 tasks R2e-1 to R2e-9, included in the report |
 | [Reviewer 2, round 6](review_round_06_reviewer_02_report_and_tasks.md), 2026-11-01 | Accept; optional editorial suggestions only | 5 optional tasks R2f-1 to R2f-5, included in the report |
+| [Reviewer 1, round 6](review_round_06_reviewer_01_report.md), 2026-11-01 | Accept scientifically within the stated scope; no mandatory scientific revision | [Two optional copyedits](review_round_06_reviewer_01_tasks.md); G7 remains deferred |
 
 Consolidated execution order: [revision_round_01_plan_for_review_round_01.md](revision_round_01_plan_for_review_round_01.md) (tasks C1–C12).
 Round 2: [revision_round_02_plan_for_review_round_02.md](revision_round_02_plan_for_review_round_02.md) (tasks D1–D15, author inputs A1–A6).

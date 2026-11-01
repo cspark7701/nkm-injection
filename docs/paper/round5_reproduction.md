@@ -72,6 +72,8 @@ Verify the attachment's hash inventory and use its `REBUILD.md` to regenerate th
 
 The output must not exist. Absolute original job paths are identity strings in the pairing audit; this reanalysis reads selected files through the explicit evidence root and does not execute tracking or need the original checkout. Earlier attachments remain historical and do not contain the new scan. No archive is uploaded by these commands.
 
-## Execution state
+## Selected execution
 
-Tracking and final reconciliation are in progress. Selected outcomes, final attachment digest and installed page counts will be recorded when G2/G6 finish; no incomplete scale is treated as a final result.
+All 150 new realizations are complete. The five-level paired analysis verifies configuration/draw/particle/ring identities and reconciles loss counts. The new manifest selects 272 artifact keys. No nonzero tested level passes the declared one-point loss test; the [result note](round5_jitter.md) gives exact costs and model gaps. The installed article layouts and supplement are 36/18/7 pages; the extracted abstract contains 250 words. [Scientific source/PDF identities](round5_final_identity.json) identify these installed assets.
+
+The launch implementation identity preserves commit `65bf56d` and original script hashes. Subsequent portable CLI/reporting checks (`fd4b96b`) do not change the tracking physics or launched commands. Thirty relevant tests and the earlier 774-test full suite pass. Frozen-source attachment verification follows from a clean committed checkpoint; its digest and isolated reanalysis result will be recorded after that check. Earlier archives remain historical.

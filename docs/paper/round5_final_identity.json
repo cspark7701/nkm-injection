@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-01",
+  "manuscript_commit": "7a99662",
+  "pages": {
+    "one_column": 36,
+    "two_column": 18,
+    "supplement": 7
+  },
+  "abstract_whitespace_words": 250,
+  "sha256": {
+    "docs/paper/paper.tex": "f9e8dc4603b56d5913e453299c98b26a0cad61f012a5820f4fac1d493cb6e5e7",
+    "docs/paper/paper.bib": "bb0e05b17ff52b8fe2e5c2dfeb3ee4f8855802496cc86d8dc4b1438da28ac25c",
+    "docs/paper/paper_twocolumn.tex": "2a4d6bc76219de420b1258db27fee4e1ab2d1786bddda3dc8f3c8fee4ece4504",
+    "docs/paper/supplement.tex": "936f36cd37432d9828e11fee64b1400103dc142e98d0e6be821fe279fc708ab3",
+    "docs/paper/paper.pdf": "91d0043489195330788de06c367efd68ba54d26d40553e6ba82a505c8b0bcb3f",
+    "docs/paper/paper_twocolumn.pdf": "caeed92a1611a36cf77bb51d1dcc9a0de67d5bedff1dc221cb992e4d56b44b85",
+    "docs/paper/supplement.pdf": "e6147e7dca6f78b255f48c19abb209ed3746d370baefc966eae64c416731cdbd",
+    "docs/paper/generated/journal_macros.tex": "1cc1427538c8b101b310a7c40ce0c2213269d0b4770dda5148c05bce92e4a4df",
+    "docs/paper/generated/figure_provenance.csv": "ff3d3793669e3b3bf237ad38c3924c02799f6a15ca5f369e67255a0ac88b5499",
+    "docs/paper/revision_manifest_round5.json": "9a6392fb71cc46d7eb62a390742fc17a67a2bc6142ec9f74ac2cc92bdfa53bd2"
+  },
+  "scope": "Scientific manuscript/PDF/asset identities. Final support-document and frozen-code checkpoints are recorded separately in the execution archive."
+}

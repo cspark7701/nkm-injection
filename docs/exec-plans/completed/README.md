@@ -947,3 +947,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 325. [**Milestone 325 — NKM G3 manuscript framing**](325_nkm_g3_manuscript_framing.md)
     - Applies Humanizer prose edits, integrates the paired scan and clarifies populations/budgets; clean 36/18/7-page builds and changed-page inspection pass.
+
+326. [**Milestone 326 — NKM G6 reconciliation checkpoint**](326_nkm_g6_reconciliation_checkpoint.md)
+    - Reconciles the joint response, current indexes, claim ledger and source/PDF identities; commits sources before isolated frozen-evidence verification.

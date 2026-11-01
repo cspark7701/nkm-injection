@@ -28,7 +28,7 @@ for _response in ("reviews/review_round_02_author_response_to_reviewers_01_02.md
         SUPPLEMENT.append(_response)
 
 for _round5 in ("revision_manifest_round5.json", "round5_protocol.json", "round5_companion_audit.json",
-                "round5_companion_comparison.md", "round5_jitter.md", "round5_reproduction.md",
+                "round5_companion_audit_final.json", "round5_final_identity.json", "round5_companion_comparison.md", "round5_jitter.md", "round5_reproduction.md",
                 "reviews/review_round_05_author_response_to_reviewers_01_02.md"):
     if (PAPER / _round5).is_file():
         SUPPLEMENT.append(_round5)
@@ -141,7 +141,12 @@ def main(argv=None):
             pkgs[name] = md.version(name)
         except md.PackageNotFoundError:
             pkgs[name] = None
+    round5 = (PAPER / "revision_manifest_round5.json").is_file()
+    manifest_name = "revision_manifest_round5.json" if round5 else "revision_manifest_round4.json"
+    selection_command = ("python scripts/make_round5_manifest.py --output <new-manifest.json>" if round5 else
+                         "python scripts/make_round4_manifest.py --require-all --output <new-manifest.json>")
     record = {
+        "selected_manifest": {"path": "docs/paper/" + manifest_name, "sha256": sha256(PAPER / manifest_name)},
         "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(git("status", "--porcelain", "--", "docs/paper", "scripts", "src")),
         "journal": "PRAB", "layout": a.layout, "entry_point": tex_name,
         "pages": pages, "supplement_pages": supplement_pages, "sources": {r: sha256(src / r) for r in files},
@@ -149,8 +154,8 @@ def main(argv=None):
         "supplement": {r: sha256(sup / r) for r in SUPPLEMENT},
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "packages": pkgs,
                         "tex": subprocess.run(["pdflatex", "--version"], capture_output=True, text=True).stdout.splitlines()[0]},
-        "commands": ["python scripts/make_round4_manifest.py --require-all --output docs/paper/revision_manifest_round4.json",
-                     "python scripts/build_revision_figures.py --manifest docs/paper/revision_manifest_round4.json "
+        "commands": [selection_command,
+                     f"python scripts/build_revision_figures.py --manifest docs/paper/{manifest_name} "
                      "--output-dir <new> --install-dir docs/paper/generated",
                      f"python scripts/build_submission_package.py --layout {a.layout} --output-dir <new>{' --install-pdf' if a.install_pdf else ''}"],
     }

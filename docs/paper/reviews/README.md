@@ -1,6 +1,6 @@
 # Manuscript referee reviews
 
-Current round-5 execution register (consolidated 2026-11-01): [G1–G7](revision_round_05_plan_for_review_round_05.md). It answers [Reviewer 1](review_round_05_reviewer_01_evidence_report.md) and [Reviewer 2](review_round_05_reviewer_02_report_and_tasks.md), both recommending minor revision. G1–G6 combine the paired jitter scan, companion identity, headline/budget wording, chamber interception, point labels and final reconciliation. G7 is deferred to submission readiness. All items are pending; no revision is executed by consolidation. Both source reports/checklists remain unchanged. The plan explicitly records their different views on the need for a scan and adopts Reviewer 2's request.
+Current round-5 execution register (consolidated 2026-11-01): [G1–G7](revision_round_05_plan_for_review_round_05.md). It answers [Reviewer 1](review_round_05_reviewer_01_evidence_report.md) and [Reviewer 2](review_round_05_reviewer_02_report_and_tasks.md), both recommending minor revision. G1–G6 combine the paired jitter scan, companion identity, headline/budget wording, chamber interception, point labels and final reconciliation. G7 is deferred to submission readiness. G1, G4 and G5 are complete; G2 tracking and G3/G6 reconciliation are in progress following execution authorization. Both source reports/checklists remain unchanged. The plan explicitly records their different views on the need for a scan and adopts Reviewer 2's request.
 
 ## Review document filenames
 

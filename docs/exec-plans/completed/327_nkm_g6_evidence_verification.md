@@ -2,7 +2,7 @@
 
 Completed: 2026-11-01. G1–G6 are complete; G7 remains deferred.
 
-All 775 tests pass in 189.12 seconds after final integration; the 30 targeted pairing, inference, protocol, figure and packaging checks also pass. Both PRAB source layouts and the supplement build under the clean-log gate to 36/18/7 pages. The extracted abstract contains 250 words. Source/PDF identities are preserved in docs/paper/round5_final_identity.json.
+All 775 tests pass in 189.12 seconds after final integration; the 30 targeted pairing, inference, protocol, figure and packaging checks also pass. Both PRAB source layouts and the supplement build under the clean-log gate to 36/18/7 pages. The extracted abstract contains 250 words. Source/PDF identities are preserved in docs/paper_nkm/round5_final_identity.json.
 
 The frozen attachment is results/journal_campaign_06/round5_evidence_bundle.tar.gz, from clean source checkpoint 3c981c26128847f3d5c8f50e4b112d9825f283a1. Its SHA-256 is 098def595a17cf2ad33955cde2c466b8cc39d9e6f90db45fa1c11235c7463ab3. All 272 selected artifact keys and all 280 attachment inventory entries verify, including after fresh archive extraction. The archived full builder reproduces installed numerical macros byte for byte. Portable analysis with archived code and extracted evidence reproduces the selected scan analysis JSON byte for byte.
 

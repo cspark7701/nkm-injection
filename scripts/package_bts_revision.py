@@ -108,8 +108,8 @@ def package(output,campaign,write_archive=True):
     for archive in (ROOT/'docs/exec-plans/completed').glob('*_r1_bts_*.md'):shutil.copy2(archive,archive_dir/archive.name)
     # The NKM manuscript remains separate; only the source-labelled author inputs
     # used by this study are included, without changing the original file.
-    answers=bundle/'docs/paper/dependent_answers.md';answers.parent.mkdir(parents=True)
-    shutil.copy2(ROOT/'docs/paper/dependent_answers.md',answers)
+    answers=bundle/'docs/paper_nkm/dependent_answers.md';answers.parent.mkdir(parents=True)
+    shutil.copy2(ROOT/'docs/paper_nkm/dependent_answers.md',answers)
     manifest=json.loads((PAPER/'evidence_manifest.json').read_text())
     for artifact in manifest['artifacts']:
         target=bundle/artifact['path'];target.parent.mkdir(parents=True,exist_ok=True)

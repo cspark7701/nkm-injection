@@ -1,6 +1,6 @@
 # Milestone 332 — NKM PRAB one- and two-column versions
 
-Completed: 2026-11-01. Requested entry points: docs/paper/paper.tex and docs/paper/paper_twocolumn.tex.
+Completed: 2026-11-01. Requested entry points: docs/paper_nkm/paper.tex and docs/paper_nkm/paper_twocolumn.tex.
 
 Inspected the existing sources and found the requested conversion already implemented in REVTeX 4.2: paper.tex selects aps,prab,preprint by default; paper_twocolumn.tex defines PRABTwoColumn and includes the same manuscript, selecting aps,prab,reprint. Both are compilable entry points sharing scientific text, bibliography, figures and numerical macros. No duplicate article or gratuitous scientific-source edit was introduced.
 

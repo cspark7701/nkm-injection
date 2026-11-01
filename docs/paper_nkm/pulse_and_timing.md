@@ -17,4 +17,4 @@ For a 5.3 µs pulse with its first bunch at peak, 100, 200 and 500 ns trains giv
 
 A hypothetical thin-shell estimate tau_eddy≈mu0*sigma*a*t/2 gives 9.4 ns for sigma=1e6 S/m, a=15 mm, t=1 µm, and 0.47 ms for sigma=5e7 S/m, a=15 mm, t=1 mm. These illustrative parameters do not specify the NKM chamber, whose material and geometry are unavailable. Chamber-specific eddy-current multipoles and post-pulse residuals remain necessary before operational claims.
 
-Reproduction: `.venv/bin/python scripts/analyze_round2_pulse.py --study-config results/journal_campaign_03/operating_point_design_beam.json --chamber-config docs/paper/round2_chamber_config.json --window-width-mrad 0.7583136327817179 --output results/journal_campaign_03/<new>.json`.
+Reproduction: `.venv/bin/python scripts/analyze_round2_pulse.py --study-config results/journal_campaign_03/operating_point_design_beam.json --chamber-config docs/paper_nkm/round2_chamber_config.json --window-width-mrad 0.7583136327817179 --output results/journal_campaign_03/<new>.json`.

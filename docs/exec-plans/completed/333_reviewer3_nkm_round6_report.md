@@ -3,8 +3,8 @@
 Completed: 2026-11-01. Reviewer 3 independent assessment of the NKM manuscript at commits `2c813fe` / `a6949f0` (36-page one-column article, 18-page two-column preview, 7-page supplement), after auditing all five rounds of author responses (Rounds 1–5), prior reviewer reports, and completed revision registers.
 
 **Output.**
-- `docs/paper/reviews/review_round_06_reviewer_03_report_and_tasks.md` (new; comprehensive evaluation report with optional tasks R3-1 to R3-5);
-- updated review index in `docs/paper/reviews/README.md` and current status in `docs/paper/README.md`.
+- `docs/paper_nkm/reviews/review_round_06_reviewer_03_report_and_tasks.md` (new; comprehensive evaluation report with optional tasks R3-1 to R3-5);
+- updated review index in `docs/paper_nkm/reviews/README.md` and current status in `docs/paper_nkm/README.md`.
 
 No earlier review, response, or historical register was modified or overwritten.
 

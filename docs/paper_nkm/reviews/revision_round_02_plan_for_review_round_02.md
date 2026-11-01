@@ -1,6 +1,6 @@
 # Consolidated revision plan — round 2 (Reviewers 1 and 2)
 
-Date: 2026-10-11. Manuscript: `docs/paper/paper.tex` at commit `03b8fe9`, as reviewed.
+Date: 2026-10-11. Manuscript: `docs/paper_nkm/paper.tex` at commit `03b8fe9`, as reviewed.
 
 Inputs:
 - [Reviewer 1, round 2](review_round_02_reviewer_01_report.md) and its [register](review_round_02_reviewer_01_tasks.md):

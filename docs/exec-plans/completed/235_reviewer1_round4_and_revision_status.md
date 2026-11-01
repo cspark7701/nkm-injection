@@ -3,7 +3,7 @@
 Date: 2026-10-16. Reviewed checkpoint: e2e7ff63019138e4c4db1e7712043248f2cadf3c.
 
 Created a new Reviewer 1 fourth-round report and eight-task revision register for
-`docs/paper/`. Recommendation: focused major revision; no acceptance in present form.
+`docs/paper_nkm/`. Recommendation: focused major revision; no acceptance in present form.
 Read the article/supplement and prior responses, inspected selected figures,
 verified all 235 round-3 artifact keys and recomputed the existing seed-42 paired
 zero/full-jitter means. NKM–dipole gaps: −28.33/−28.79 percentage points. Confirmed

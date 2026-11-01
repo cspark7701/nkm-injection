@@ -3,7 +3,7 @@
 **Manuscript Title:** *Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light Source design lattice*  
 **Author:** Chong Shik Park (Department of Accelerator Science and Center for Accelerator Research, Korea University)  
 **Target Journal:** *Physical Review Accelerators and Beams (PRAB)*  
-**Version Reviewed:** PRAB REVTeX draft at commits `2c813fe` / `a6949f0` (`docs/paper/paper.tex`, `paper.pdf` [36-page preprint], `paper_twocolumn.pdf` [18-page layout], `supplement.pdf` [7 pages], and `revision_manifest_round5.json`).  
+**Version Reviewed:** PRAB REVTeX draft at commits `2c813fe` / `a6949f0` (`docs/paper_nkm/paper.tex`, `paper.pdf` [36-page preprint], `paper_twocolumn.pdf` [18-page layout], `supplement.pdf` [7 pages], and `revision_manifest_round5.json`).  
 **Reviewer Role:** Reviewer 3 (Senior Accelerator Physicist, specialist in storage-ring injection systems, pulsed multipole magnets, non-linear tracking, and accelerator error/tolerance modeling).  
 **Date:** November 1, 2026.  
 

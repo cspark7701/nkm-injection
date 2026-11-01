@@ -11,12 +11,14 @@ import hashlib
 import json
 from pathlib import Path
 
+from nkm_injection.repository_paths import manuscript_path
+
 REPO = Path(__file__).resolve().parent.parent
-ROUND3 = REPO / "docs/paper/revision_manifest_round3.json"
+ROUND3 = REPO / "docs/paper_nkm/revision_manifest_round3.json"
 C5 = "results/journal_campaign_05"
 
 ROUND4 = {
-    "round4_protocol": "docs/paper/round4_protocol.json",
+    "round4_protocol": "docs/paper_nkm/round4_protocol.json",
     "round4_reproduction": f"{C5}/f1_reproduction.json",
     "round4_points": f"{C5}/points/points.json",
     "round4_ablation": f"{C5}/f2_ablation.json",
@@ -45,10 +47,10 @@ def sha256(path: Path) -> str:
 def point_identity(artifacts):
     """Operating-point identity check: every current-point artifact must carry the selected point's injection
     position and field scale (round3_operating_point), not only a matching hash. Returns the checked keys."""
-    ref = json.loads((REPO / artifacts["round3_operating_point"]).read_text())
+    ref = json.loads(manuscript_path(REPO, artifacts["round3_operating_point"]).read_text())
     checked = []
     for key in OVERRIDES:
-        cfg = json.loads((REPO / artifacts[key]).read_text())["study_config"]
+        cfg = json.loads(manuscript_path(REPO, artifacts[key]).read_text())["study_config"]
         for name in ("injection_x_m", "field_scale"):
             if abs(cfg[name] - ref[name]) > 1e-12:
                 raise SystemExit(f"point identity: {key} has {name}={cfg[name]}, selected point {ref[name]}")
@@ -65,7 +67,7 @@ def main(argv=None):
     artifacts, digests = dict(base["artifacts"]), dict(base["sha256"])
     missing = []
     for key, rel in {**ROUND4, **OVERRIDES}.items():
-        if not (REPO / rel).exists():
+        if not manuscript_path(REPO, rel).exists():
             missing.append(key)
     if a.require_all and missing:
         raise SystemExit(f"missing round-4 artifacts: {missing}")
@@ -75,9 +77,9 @@ def main(argv=None):
     for key, rel in {**ROUND4, **OVERRIDES}.items():
         if key not in missing:
             artifacts[key] = rel
-            digests[key] = sha256(REPO / rel)
+            digests[key] = sha256(manuscript_path(REPO, rel))
     for key, rel in artifacts.items():  # every recorded file must still match its recorded hash
-        if sha256(REPO / rel) != digests[key]:
+        if sha256(manuscript_path(REPO, rel)) != digests[key]:
             raise SystemExit(f"hash mismatch: {key} -> {rel}")
     checked = point_identity(artifacts)
     out = {"description": "Round-4 evidence: round-3 manifest plus campaign-05 artifacts (protocol, ablation, point "

@@ -1,8 +1,8 @@
 # Milestone 244 — F7: pulse and transparency at the current point
 
 Completed: 2026-10-20. Round-4 task F7 (R1D-03/07, R2d-3/7) of the
-[round-4 plan](../../paper/reviews/revision_round_04_plan_for_review_round_04.md); note:
-[round4_pulse_transparency.md](../../paper/round4_pulse_transparency.md).
+[round-4 plan](../../paper_nkm/reviews/revision_round_04_plan_for_review_round_04.md); note:
+[round4_pulse_transparency.md](../../paper_nkm/round4_pulse_transparency.md).
 
 **Recomputed** at the retained point (x_inj −19.478 mm, S = 0.95; outputs in `results/journal_campaign_05/f7/`):
 - the pulse: native turn 1–3 coordinates and kicks, allowance and pulse limits;
@@ -22,7 +22,7 @@ thin-map accuracy allowance; the round-2 pulse used 0.076 mrad.
 - Wire limits are 0.26–1.82 µm; the 10 µm wire Monte Carlo median is 2.9σ / 5.4σ.
 
 **Manifest.**
-- `scripts/make_round4_manifest.py` writes `docs/paper/revision_manifest_round4.json`: round 3, plus 10 round-4
+- `scripts/make_round4_manifest.py` writes `docs/paper_nkm/revision_manifest_round4.json`: round 3, plus 10 round-4
   artifacts, plus 5 builder keys re-pointed.
 - The S = 0.85 originals are kept as `historical_*`, and all hashes are rechecked.
 - The generated macros are installed from it. Only the intended macros changed.
@@ -32,9 +32,9 @@ thin-map accuracy allowance; the round-2 pulse used 0.076 mrad.
 
 **Files.**
 - `scripts/make_round4_manifest.py`;
-- `docs/paper/revision_manifest_round4.json`;
-- `docs/paper/generated/*` (macros, provenance, Fig. 7);
-- `docs/paper/paper.tex` (pulse point identity, allowance convention, transparency at the selected S);
-- `docs/paper/round4_pulse_transparency.md`;
+- `docs/paper_nkm/revision_manifest_round4.json`;
+- `docs/paper_nkm/generated/*` (macros, provenance, Fig. 7);
+- `docs/paper_nkm/paper.tex` (pulse point identity, allowance convention, transparency at the selected S);
+- `docs/paper_nkm/round4_pulse_transparency.md`;
 - `tests/test_round4_protocol.py` (manifest test; 14 tests pass with the steering tests);
 - the round-4 plan.

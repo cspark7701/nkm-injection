@@ -6,7 +6,7 @@ that revised manuscript identify new work. Their consolidated **F1–F9 follow-u
 all pending, is in [revision_round_04_plan_for_review_round_04.md](revision_round_04_plan_for_review_round_04.md).
 This does not relabel completed E tasks or imply execution of F tasks.
 
-Date: 2026-10-13. Manuscript: `docs/paper/paper.tex` (PRAB REVTeX 4.2) at commit `139c7c7`, as reviewed.
+Date: 2026-10-13. Manuscript: `docs/paper_nkm/paper.tex` (PRAB REVTeX 4.2) at commit `139c7c7`, as reviewed.
 
 Inputs:
 - [Reviewer 1, round 3](review_round_03_reviewer_01_report.md) and its [register](review_round_03_reviewer_01_tasks.md):

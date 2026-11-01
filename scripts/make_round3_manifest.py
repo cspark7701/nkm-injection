@@ -9,13 +9,15 @@ import hashlib
 import json
 from pathlib import Path
 
+from nkm_injection.repository_paths import manuscript_path
+
 REPO = Path(__file__).resolve().parent.parent
-ROUND2 = REPO / "docs/paper/revision_manifest_round2.json"
+ROUND2 = REPO / "docs/paper_nkm/revision_manifest_round2.json"
 C4 = "results/journal_campaign_04"
 
 ROUND3 = {
     # E4: in-magnet NKM chamber
-    "round3_chamber_config": "docs/paper/round3_chamber_config.json",
+    "round3_chamber_config": "docs/paper_nkm/round3_chamber_config.json",
     "round3_nkm_chamber_scan": f"{C4}/e4_nkm_chamber_scan/nkm_chamber_scan.json",
     "round3_aperture_normalisation": f"{C4}/e4_aperture_normalisation.json",
     # E9: simultaneous wire/current errors and septum leakage allowance
@@ -73,7 +75,7 @@ def main(argv=None):
         declared[key] = path
     missing = []
     for key, rel in declared.items():
-        path = REPO / rel
+        path = manuscript_path(REPO, rel)
         if not path.exists():
             missing.append(key)
             continue
@@ -81,7 +83,7 @@ def main(argv=None):
         digests[key] = sha256(path)
     overridden = []
     for key, rel in OVERRIDES.items():
-        path = REPO / rel
+        path = manuscript_path(REPO, rel)
         if path.exists():
             artifacts[key] = rel; digests[key] = sha256(path); overridden.append(key)
         else:

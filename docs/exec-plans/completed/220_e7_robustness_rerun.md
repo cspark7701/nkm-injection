@@ -28,4 +28,4 @@ the E6 point, on the E5 rings with the E4 chamber and the round-2 budget. Popula
 - Macros and Figure 8 are regenerated; the robustness text is rewritten in E8.
 - The one-column gated build is clean.
 
-**Checks.** The tuning, robustness and reporting tests pass (25). Method note: `docs/paper/round3_robustness.md`.
+**Checks.** The tuning, robustness and reporting tests pass (25). Method note: `docs/paper_nkm/round3_robustness.md`.

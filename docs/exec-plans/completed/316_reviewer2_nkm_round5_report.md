@@ -5,7 +5,7 @@ preview, 7-page supplement), after reading all four rounds of reports and author
 the companion BTS manuscript's treatment of the shared jitter and BTS error budget.
 
 **Output.**
-- `docs/paper/reviews/review_round_05_reviewer_02_report_and_tasks.md` (new; report with checkbox tasks R2e-1 to
+- `docs/paper_nkm/reviews/review_round_05_reviewer_02_report_and_tasks.md` (new; report with checkbox tasks R2e-1 to
   R2e-9).
 
 **Recommendation.** Minor revision; scientifically acceptable in principle after R2e-1 to R2e-3.

@@ -4,7 +4,7 @@ All dimensions and strengths below are model values frozen from the archived con
 
 ## Beam and constraints
 
-The 4 GeV and 7.67 nm rad horizontal design input / 0.106% spread follow the author-sourced booster study in [dependent answers](../paper/dependent_answers.md), TUPC12 Table1. Vertical 0.767 nm rad (10% ratio), zero initial transverse coupling and Gaussian independence are assumptions. The full covariance includes entrance dispersion and momentum correlations; ct is fixed for this single-pass, RF-free calculation. Gaussian particles are untruncated. Historical 100/10 nm rad, 0.11% spread ensembles are separate.
+The 4 GeV and 7.67 nm rad horizontal design input / 0.106% spread follow the author-sourced booster study in [dependent answers](../paper_nkm/dependent_answers.md), TUPC12 Table1. Vertical 0.767 nm rad (10% ratio), zero initial transverse coupling and Gaussian independence are assumptions. The full covariance includes entrance dispersion and momentum correlations; ct is fixed for this single-pass, RF-free calculation. Gaussian particles are untruncated. Historical 100/10 nm rad, 0.11% spread ensembles are separate.
 
 Five-sigma projected clearance is a chosen metric, not an absolute enclosure of a Gaussian. At each model aperture: c = half_width - |centroid| - 5 sqrt(Sigma_uu). Roll-induced coupling is included through full covariance transport. Four discrete square limits do not represent the unknown continuous vacuum chamber; these clearances and transmission are conditional on those stations.
 

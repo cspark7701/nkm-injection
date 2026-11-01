@@ -1,6 +1,6 @@
 # Milestone 184 — Review the BTS manuscript on main
 
-Completed 2026-10-13 at the author's request. Wrote a new referee-style report and ten ordered revision tasks under `docs/paper/reviews/`, with the BTS identity explicit in their names. The reviewed manuscript is the eight-page `docs/paper_bts/` draft at main commit `bee78914caa16945ef63dba8bf5205c434d0415c`.
+Completed 2026-10-13 at the author's request. Wrote a new referee-style report and ten ordered revision tasks under `docs/paper_nkm/reviews/`, with the BTS identity explicit in their names. The reviewed manuscript is the eight-page `docs/paper_bts/` draft at main commit `bee78914caa16945ef63dba8bf5205c434d0415c`.
 
 ## Decision and scope
 

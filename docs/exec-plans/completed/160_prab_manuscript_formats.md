@@ -5,7 +5,7 @@ Completed 2026-10-12 at the author’s explicit request to target Physical Revie
 ## Changes
 
 - Converted the shared manuscript to REVTeX 4.2 with native APS author, affiliation, email, abstract, acknowledgments and apsrev4-2 bibliography formatting.
-- Built the primary preprint draft, `docs/paper/paper.pdf` (28 pages), and the wrapper-selected reprint preview, `docs/paper/paper_twocolumn.pdf` (14 pages). Wide figures and tables span the available page width. A title-page break prevents front-matter clipping in the review draft.
+- Built the primary preprint draft, `docs/paper_nkm/paper.pdf` (28 pages), and the wrapper-selected reprint preview, `docs/paper_nkm/paper_twocolumn.pdf` (14 pages). Wide figures and tables span the available page width. A title-page break prevents front-matter clipping in the review draft.
 - Added layout selection and job-specific BibTeX/log/PDF handling to the isolated submission builder. Initial LaTeX failures and oversized/stuck floats now fail the build.
 - Documented build commands and proposed PhySH portal subjects; targeted the cover letter and submission checklist to PRAB. Preserved all existing reviews.
 

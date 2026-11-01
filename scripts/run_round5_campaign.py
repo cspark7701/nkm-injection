@@ -5,11 +5,13 @@ import hashlib
 import json
 import os
 from pathlib import Path
+
+from nkm_injection.repository_paths import manuscript_path
 import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = ROOT / 'docs/paper/round5_protocol.json'
+PROTOCOL = ROOT / 'docs/paper_nkm/round5_protocol.json'
 
 
 def sha(path):
@@ -22,7 +24,7 @@ def prepare():
         # These are version snapshots, not tracking inputs. Prose edits may proceed during tracking.
         if path in ('docs/paper/paper.tex', 'docs/paper/paper.pdf'):
             continue
-        if sha(ROOT / path) != digest:
+        if sha(manuscript_path(ROOT, path)) != digest:
             raise ValueError('Frozen input/source changed: ' + path)
     import run_capture_robustness as tracker
     if 'nkm_injection.bts_round3' in sys.modules:
@@ -90,7 +92,7 @@ def main():
         command = [sys.executable, str(ROOT / 'scripts/run_capture_robustness.py'),
                    '--study-config', str(ROOT / model['study_config_current']),
                    '--optimization-summary', str(ROOT / model['optimization_summary']),
-                   '--chamber-config', str(ROOT / model['chamber_config']),
+                   '--chamber-config', str(manuscript_path(ROOT, model['chamber_config'])),
                    '--corrected-ring-dir', str(ROOT / model['corrected_ring_dir']),
                    '--error-config', str(ROOT / variant['config']), '--output-dir', str(output),
                    '--kicker-models', 'fieldmap_3d', 'dipole', '--control-reference', '3d',

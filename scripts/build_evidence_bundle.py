@@ -24,9 +24,11 @@ import tarfile
 import tempfile
 from pathlib import Path
 
+from nkm_injection.repository_paths import manuscript_path
+
 REPO = Path(__file__).resolve().parent.parent
 INPUTS = ("By.txt", "kickmap_file.txt", "K4GSR_HBIv4-1.mat")
-CODE_PATHS = ("src", "scripts", "config", "tests", "docs/paper", "docs/exec-plans/completed", "pyproject.toml", "README.md", "environment.yml",
+CODE_PATHS = ("src", "scripts", "config", "tests", "docs/paper_nkm", "docs/exec-plans/completed", "pyproject.toml", "README.md", "environment.yml",
               "requirements-lock.txt")
 
 
@@ -36,7 +38,7 @@ def sha256(p: Path) -> str:
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--manifest", type=Path, default=REPO / "docs/paper/campaign_manifest.json")
+    p.add_argument("--manifest", type=Path, default=REPO / "docs/paper_nkm/campaign_manifest.json")
     p.add_argument("--output-dir", type=Path, required=True)
     p.add_argument("--builder", choices=("journal", "revision"), default="journal",
                    help="Figure builder used by REBUILD.md and --verify (revision: build_revision_figures.py)")
@@ -50,7 +52,7 @@ def main(argv=None):
     builder = f"build_{a.builder}_figures.py"
     copied = {}
     for key, rel in m["artifacts"].items():
-        src = Path(rel) if Path(rel).is_absolute() else REPO / rel
+        src = manuscript_path(REPO, rel)
         if Path(rel).is_absolute() or '..' in Path(rel).parts:
             raise SystemExit(f"manifest path for {key} is absolute; bundle requires repository-relative paths")
         digest = sha256(src)
@@ -90,7 +92,7 @@ python -m pip install -e "code[dev,moga]"
 sha256sum -c SHA256SUMS
 OMP_NUM_THREADS=1 MPLBACKEND=Agg python code/scripts/{builder} \\
     --manifest campaign_manifest.json --repo-root evidence --output-dir rebuilt
-diff rebuilt/tables/journal_macros.tex code/docs/paper/generated/journal_macros.tex
+diff rebuilt/tables/journal_macros.tex code/docs/paper_nkm/generated/journal_macros.tex
 ```
 
 The builder verifies the SHA-256 digest of every artifact it reads. Raw simulation drivers and their command lines are
@@ -116,7 +118,7 @@ recorded inside each artifact (`cli` fields) and in `code/docs/exec-plans/comple
             if r.returncode != 0:
                 raise SystemExit("rebuild failed:\n" + r.stderr[-3000:])
             new = (Path(tmp) / "rebuilt/tables/journal_macros.tex").read_text()
-            ref = (code / "docs/paper/generated/journal_macros.tex").read_text()
+            ref = (code / "docs/paper_nkm/generated/journal_macros.tex").read_text()
             result["rebuild_macros_identical"] = new == ref
             if new != ref:
                 raise SystemExit("Frozen evidence rebuild changed manuscript macros")

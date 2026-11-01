@@ -2,7 +2,7 @@
 
 **Manuscript:** "Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light Source design
 lattice" (C. S. Park), PRAB REVTeX version.
-**Version reviewed:** `docs/paper/paper.tex`, `paper.pdf` (34-page one-column preprint), `paper_twocolumn.pdf`
+**Version reviewed:** `docs/paper_nkm/paper.tex`, `paper.pdf` (34-page one-column preprint), `paper_twocolumn.pdf`
 (17 pages) and `supplement.pdf` (7 pages), at commit `ccc5c86`. The manuscript was last changed by the round-4
 rewrite (`207e4fc`) and the prose pass of milestone 299 (`79dce19`).
 
@@ -138,7 +138,7 @@ should be stated rather than left for the reader.
    finds about 0.18 mrad of horizontal residual for such a correction.
 5. **Tuning gain.** Attach "under horizontal-only steering and without booster jitter" to the +11.9-point tuning gain
    in the conclusions.
-6. **Status documents.** `docs/paper/README.md` and the review index should describe the executed round 4 and this
+6. **Status documents.** `docs/paper_nkm/README.md` and the review index should describe the executed round 4 and this
    round consistently, with page counts that match the installed files. Dated reports and responses stay unchanged.
 7. **Data availability.** Confirm at submission that the GitHub repository named in the statement is publicly
    accessible.

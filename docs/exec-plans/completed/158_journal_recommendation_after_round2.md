@@ -4,7 +4,7 @@ Date: 2026-10-12
 
 ## Request and assessment
 
-Read the updated `docs/paper/paper.tex` and the current 19-page `paper.pdf`, the generated numerical macros and author inputs in `dependent_answers.md`. The manuscript reviewed is at commit `acff07fc0a819c1c80dda5bcc971acdd973f2d90`, following completed D1–D14 revisions. This milestone recommends a venue; it does not select the journal on the author's behalf or execute D15 formatting/submission.
+Read the updated `docs/paper_nkm/paper.tex` and the current 19-page `paper.pdf`, the generated numerical macros and author inputs in `dependent_answers.md`. The manuscript reviewed is at commit `acff07fc0a819c1c80dda5bcc971acdd973f2d90`, following completed D1–D14 revisions. This milestone recommends a venue; it does not select the journal on the author's behalf or execute D15 formatting/submission.
 
 **First choice: Physical Review Accelerators and Beams (PRAB), as a regular research article.** The strongest contribution is a validated beam-dynamics comparison: finite-length self-deflection, flank-dependent vertical response, thin versus sliced vector maps, sagitta-to-kick-width scaling and an independent adaptive trajectory check. The KLS design lattice is the application and validation setting. The declared chamber, corrected-ring scenarios and transparency tolerances add practical significance.
 

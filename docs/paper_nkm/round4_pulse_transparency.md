@@ -3,7 +3,7 @@
 **Scope.** All quantities are recomputed at the point retained by F3: x_inj −19.478 mm, S = 0.95, with the round-3
 chamber. Outputs are in `results/journal_campaign_05/f7/`.
 
-**Manifest.** `scripts/make_round4_manifest.py` writes `docs/paper/revision_manifest_round4.json`:
+**Manifest.** `scripts/make_round4_manifest.py` writes `docs/paper_nkm/revision_manifest_round4.json`:
 - the round-3 manifest, plus the round-4 artifacts;
 - the builder keys `round2_pulse`, `round2_transparency`, `round2_stored_tracked`, `round3_transparency_mc` and
   `c7_analytic`, re-pointed to the recomputations below;

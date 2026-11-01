@@ -1,10 +1,10 @@
 # Milestone 136 — Reviewer 2, second-round report on the revised manuscript
 
-Completed: 2026-10-11. User request: review `docs/paper/` again as Reviewer 2, decide on acceptance, and write a report
+Completed: 2026-10-11. User request: review `docs/paper_nkm/` again as Reviewer 2, decide on acceptance, and write a report
 with revision tasks without overwriting previous reviews.
 
 **Output.**
-- `docs/paper/reviews/review_round_02_reviewer_02_report_and_tasks.md`: new file. The round-1 report is unchanged.
+- `docs/paper_nkm/reviews/review_round_02_reviewer_02_report_and_tasks.md`: new file. The round-1 report is unchanged.
 - The reviews `README.md` gains a new row and a summary.
 
 **Recommendation.** Major revision; no acceptance in the present form. The report records the status of all 20

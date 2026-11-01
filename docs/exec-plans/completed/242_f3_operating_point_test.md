@@ -1,8 +1,8 @@
 # Milestone 242 — F3: paired operating-point test; current point retained
 
 Completed: 2026-10-20. Round-4 task F3 (R1D-02, R2d-2) of the
-[round-4 plan](../../paper/reviews/revision_round_04_plan_for_review_round_04.md); note:
-[round4_points.md](../../paper/round4_points.md).
+[round-4 plan](../../paper_nkm/reviews/revision_round_04_plan_for_review_round_04.md); note:
+[round4_points.md](../../paper_nkm/round4_points.md).
 
 **Runs.** 4 ensembles (`results/journal_campaign_05/f3_*`; not committed):
 - the earlier point (S 0.85) and the extremum-centred point (S 0.95);
@@ -23,7 +23,7 @@ Completed: 2026-10-20. Round-4 task F3 (R1D-02, R2d-2) of the
 **Files.**
 - `scripts/analyze_round4_points.py` (decision rule as `meets_rule`);
 - `tests/test_round4_protocol.py`, new rule test (10 tests pass);
-- `docs/paper/round4_points.md`;
+- `docs/paper_nkm/round4_points.md`;
 - the round-4 plan, F3 marked Done.
 
 **Next.**

@@ -14,7 +14,7 @@ enclose the conductors. The round-2 kicker only removed particles within 1 mm of
   allowance, and 4.3 mm as an optimistic bound with a 1.0 mm allowance.
 - **Validation.** `ChamberProfile.validate_against_wires` rejects any chamber that reaches a wire; the round-2
   30 × 15 mm rectangle is rejected.
-- **Configuration.** `docs/paper/round3_chamber_config.json` (`nkm_magnet_half_x_m`, `nkm_magnet_half_y_m`).
+- **Configuration.** `docs/paper_nkm/round3_chamber_config.json` (`nkm_magnet_half_x_m`, `nkm_magnet_half_y_m`).
 
 **Where it acts.**
 - **Injection pass.** The sliced 3-D kicker (`FilamentNKMKicker`) checks the chamber at every slice inside the magnet.
@@ -64,7 +64,7 @@ Reproduction:
 ```bash
 python scripts/run_round3_nkm_chamber.py --study-config results/journal_campaign_03/operating_point_design_beam.json \
   --optimization-summary backups_20261009/production_statistical_01/optimization/bts_optimization_summary.json \
-  --chamber-config docs/paper/round3_chamber_config.json --output-dir results/journal_campaign_04/<new> --workers 8
+  --chamber-config docs/paper_nkm/round3_chamber_config.json --output-dir results/journal_campaign_04/<new> --workers 8
 python scripts/analyze_round3_chamber.py --study-config results/journal_campaign_03/operating_point_design_beam.json \
-  --chamber-config docs/paper/round3_chamber_config.json --work-dir <tmp> --output <new>.json
+  --chamber-config docs/paper_nkm/round3_chamber_config.json --work-dir <tmp> --output <new>.json
 ```

@@ -1,6 +1,6 @@
 # Milestone 239 — F5: Loss plane, location and turn
 
-Completed: 2026-10-19. Round-4 task F5 (R1D-04; R2d-5). Note: `docs/paper/round4_loss_locations.md`.
+Completed: 2026-10-19. Round-4 task F5 (R1D-04; R2d-5). Note: `docs/paper_nkm/round4_loss_locations.md`.
 
 **Work.**
 - `scripts/run_round4_loss_locations.py` reruns 8 NKM zero-capture realizations (first per ring, full budget, seed 42)

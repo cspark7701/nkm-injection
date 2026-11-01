@@ -12,7 +12,7 @@ Completed: 2026-10-13. Round-3 task E1 (R1C-01).
 - **Manifest.** All 205 artifacts of `revision_manifest_round2.json` are present in the checkout and match their
   hashes.
 
-**Documentation.** `docs/paper/round2_reproduction.md` gains a section with the referee entry point, the commands
+**Documentation.** `docs/paper_nkm/round2_reproduction.md` gains a section with the referee entry point, the commands
 used, the outcomes and the environment (Python 3.11.9, pyAT 0.7.2.dev26, NumPy 2.4.6, SciPy 1.17.1,
 Matplotlib 3.11.1).
 

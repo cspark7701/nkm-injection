@@ -3,7 +3,7 @@
 Completed: 2026-10-10.
 
 Wrote an independent referee report on the manuscript at commit `acd891c`:
-[`docs/paper/reviews/review_round_01_reviewer_02_report_and_tasks.md`](../../paper/reviews/review_round_01_reviewer_02_report_and_tasks.md).
+[`docs/paper_nkm/reviews/review_round_01_reviewer_02_report_and_tasks.md`](../../paper_nkm/reviews/review_round_01_reviewer_02_report_and_tasks.md).
 
 - **Recommendation:** major revision.
 - **Major comments (8):**

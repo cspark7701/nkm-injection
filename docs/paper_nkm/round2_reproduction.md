@@ -18,9 +18,9 @@ From a checkout with the manifest's local evidence paths present:
 ```bash
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg \
   python scripts/build_revision_figures.py \
-  --manifest docs/paper/revision_manifest_round2.json \
+  --manifest docs/paper_nkm/revision_manifest_round2.json \
   --output-dir results/round2_rebuild_new \
-  --install-dir docs/paper/generated
+  --install-dir docs/paper_nkm/generated
 python scripts/build_submission_package.py \
   --layout one-column --output-dir results/round2_submission_new --install-pdf
 python scripts/build_submission_package.py \
@@ -42,7 +42,7 @@ From committed source, create a new bundle and verify it:
 
 ```bash
 python scripts/build_evidence_bundle.py \
-  --manifest docs/paper/revision_manifest_round2.json \
+  --manifest docs/paper_nkm/revision_manifest_round2.json \
   --builder revision --verify \
   --output-dir results/journal_campaign_03/round2_evidence_bundle
 ```
@@ -102,14 +102,14 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg PYTHONPATH=check/code/sr
   python -B check/code/scripts/build_revision_figures.py \
   --manifest check/round2_evidence_bundle/campaign_manifest.json \
   --repo-root check/round2_evidence_bundle/evidence --output-dir check/rebuilt
-cmp check/rebuilt/tables/journal_macros.tex check/code/docs/paper/generated/journal_macros.tex
+cmp check/rebuilt/tables/journal_macros.tex check/code/docs/paper_nkm/generated/journal_macros.tex
 ```
 
 Outcomes:
 - **Archive.** The hash matches the D13 record.
 - **Inventory.** All 213 entries verify.
 - **Isolated rebuild.** Running the archived source on the bundled evidence alone produces `journal_macros.tex`
-  byte-identical to the archived manuscript macros, and to the macros installed in `docs/paper/generated` at
+  byte-identical to the archived manuscript macros, and to the macros installed in `docs/paper_nkm/generated` at
   commit `cdc71bf`.
 - **Manifest.** Independently, all 205 artifacts of `revision_manifest_round2.json` are present in this checkout and
   match their recorded hashes.
@@ -129,12 +129,12 @@ The active selection is `revision_manifest_round3.json`, written by
   ensembles) to the campaign-04 reruns.
 
 ```bash
-python scripts/make_round3_manifest.py --require-all --output docs/paper/revision_manifest_round3.json
+python scripts/make_round3_manifest.py --require-all --output docs/paper_nkm/revision_manifest_round3.json
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg python scripts/build_revision_figures.py \
-  --manifest docs/paper/revision_manifest_round3.json --output-dir results/<new> --install-dir docs/paper/generated
+  --manifest docs/paper_nkm/revision_manifest_round3.json --output-dir results/<new> --install-dir docs/paper_nkm/generated
 python scripts/build_submission_package.py --output-dir results/<new> --install-pdf
 python scripts/build_submission_package.py --layout two-column --output-dir results/<new2> --install-pdf
-python scripts/build_evidence_bundle.py --manifest docs/paper/revision_manifest_round3.json --builder revision \
+python scripts/build_evidence_bundle.py --manifest docs/paper_nkm/revision_manifest_round3.json --builder revision \
   --verify --output-dir results/journal_campaign_04/round3_evidence_bundle
 ```
 
@@ -163,16 +163,16 @@ from `scripts/round4_reporting.py` (builder step `round4`). All figures are buil
 environment used for campaign 05 (numpy 2.4.6, accelerator-toolbox 0.7.2.dev).
 
 ```bash
-python scripts/make_round4_manifest.py --require-all --output docs/paper/revision_manifest_round4.json
+python scripts/make_round4_manifest.py --require-all --output docs/paper_nkm/revision_manifest_round4.json
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg python scripts/build_revision_figures.py \
-  --manifest docs/paper/revision_manifest_round4.json --output-dir results/<new> --install-dir docs/paper/generated
+  --manifest docs/paper_nkm/revision_manifest_round4.json --output-dir results/<new> --install-dir docs/paper_nkm/generated
 python scripts/build_submission_package.py --output-dir results/<new> --install-pdf
 python scripts/build_submission_package.py --layout two-column --output-dir results/<new2> --install-pdf
-python scripts/build_evidence_bundle.py --manifest docs/paper/revision_manifest_round4.json --builder revision \
+python scripts/build_evidence_bundle.py --manifest docs/paper_nkm/revision_manifest_round4.json --builder revision \
   --verify --output-dir results/journal_campaign_05/round4_evidence_bundle
 ```
 
-The round-4 studies follow `docs/paper/round4_protocol.json` and are rerun in this order:
+The round-4 studies follow `docs/paper_nkm/round4_protocol.json` and are rerun in this order:
 1. `run_round4_campaign.py --stage reproduce`, then `--stage points` (F1);
 2. `run_round4_campaign.py --stage ablation`, then `analyze_round4_ablation.py` (F2);
 3. `run_round4_campaign.py --stage points_test`, then `analyze_round4_points.py` (F3);

@@ -4,6 +4,8 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+
+from nkm_injection.repository_paths import manuscript_path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,7 +62,7 @@ def summarize(vectors, baseline, count=10000, seed=1729, margin=.01):
 
 
 def analyze(root=ROOT, campaign_dir=None):
-    protocol_path = root / 'docs/paper/round5_protocol.json'
+    protocol_path = manuscript_path(root, 'docs/paper_nkm/round5_protocol.json')
     protocol = json.loads(protocol_path.read_text())
     campaign = Path(campaign_dir).resolve() if campaign_dir else root / protocol['campaign']
     preparation = json.loads((campaign / 'preparation.json').read_text())
@@ -94,7 +96,8 @@ def analyze(root=ROOT, campaign_dir=None):
     rows = [{'scale': float(s), **summarize(ensembles[float(s)], ensembles[0.],
              protocol['bootstrap_count'], protocol['bootstrap_seed'], protocol['margin_fraction'])} for s in protocol['scales']]
     passing = [r['scale'] for r in rows if r['scale'] > 0 and r['nkm_noninferior_to_zero_jitter']]
-    return {'protocol': str(protocol_path.relative_to(root)), 'n_realizations': protocol['samples'],
+    # Preserve the historical protocol identifier in the selected analysis.
+    return {'protocol': 'docs/paper/round5_protocol.json', 'n_realizations': protocol['samples'],
             'particles_per_realization': protocol['particles'], 'turns': protocol['turns'],
             'steering': protocol['steering'], 'interval_scope': protocol['test'], 'rows': rows,
             'numerical_tie_tolerance_fraction': 1e-12,

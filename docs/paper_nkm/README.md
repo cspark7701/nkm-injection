@@ -22,3 +22,5 @@ The consolidated plan adopts Reviewer 2's targeted scan while preserving Reviewe
 Round-5 results: [five-level scan](round5_jitter.md), [272-key manifest](revision_manifest_round5.json), [companion audit](round5_companion_comparison.md) and [source/PDF identities](round5_final_identity.json). No nonzero tested jitter scale passes the declared one-point loss test.
 
 Journal selection: [ranked top-five recommendation](journal_recommendations.md), based on the author's journal clarification and checked publisher scopes. PRAB remains first; NIM A is the principal alternative. This advice does not change the selected target or perform submission.
+
+Directory migration: [path and evidence compatibility](path_migration.md), with [before/after file identities](path_migration.json). The manuscript text and frozen scientific records retain their original bytes; current documentation and tools use this folder.

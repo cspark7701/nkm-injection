@@ -8,7 +8,7 @@ Task B01 of `docs/paper_bts/002_manuscript_tasks.md` was executed to establish t
 
 1. **Scientific Question and Overlap Disclosure (`docs/paper_bts/article_scope.md`)**:
    - Formulated the principal question focusing on 4 GeV 9-quadrupole matching under envelope ceilings ($\beta \le 60\text{ m}$) and error sensitivity.
-   - Disclosed relationship and shared assets with the companion NKM paper (`docs/paper/`).
+   - Disclosed relationship and shared assets with the companion NKM paper (`docs/paper_nkm/`).
    - Stated boundary distinctions: optical mismatch is not transmission; transmission is not storage-ring capture; beta ceilings are optics constraints, not measured apertures.
    - Defined 6 bounded candidate claims (BC01–BC06) and predeclared matching tolerances ($M_{x,y} < 10^{-4}$), envelope limits, prefix stability ($1.0 \times 10^{-5}$), and zero-invalid evaluation criteria.
    - Reconciled historical report inconsistencies ($21.789\text{ m}$ vs legacy $29.8\text{ m}$; constrained $\beta$ peaks $31.44/50.75\text{ m}$ vs older $30.23/44.52\text{ m}$; $100\text{ nm}\cdot\text{rad}$ conservative sensitivity case vs $7.67\text{ nm}\cdot\text{rad}$ design beam).

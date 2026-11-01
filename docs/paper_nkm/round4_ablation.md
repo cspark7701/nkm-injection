@@ -8,7 +8,7 @@ Script: `scripts/analyze_round4_ablation.py`; output: `results/journal_campaign_
 - each of the 7 classes alone;
 - each class omitted.
 
-The error classes are declared in `docs/paper/round4_protocol.json`.
+The error classes are declared in `docs/paper_nkm/round4_protocol.json`.
 
 **Pairing.** Every ensemble uses the same 50 seed-42 realizations, the same 200-particle bunches and the same
 corrected rings (verified per realization: beam seed and ring identity).

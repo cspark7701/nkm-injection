@@ -2,7 +2,7 @@
 
 **Manuscript:** "Finite-length and vertical effects in nonlinear-kicker injection into the Korea Light Source"
 (C. S. Park), revised version.
-**Version reviewed:** `docs/paper/paper.tex` and `paper.pdf` at commit `03b8fe9`. The PDF has 12 pages in the generic
+**Version reviewed:** `docs/paper_nkm/paper.tex` and `paper.pdf` at commit `03b8fe9`. The PDF has 12 pages in the generic
 `article` class and contains 8 figures, 2 tables and 22 cited references. SHA-256 prefixes: paper.tex
 `3fa584e90a15e27b`, paper.pdf `e5cc5b651961cb0d`.
 **Also read:** the author response (`reviews/review_round_01_author_response_to_reviewers_01_02.md`) and the journal-fit note (milestone 134), which

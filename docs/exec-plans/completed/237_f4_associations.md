@@ -1,6 +1,6 @@
 # Milestone 237 — F4: Signed and physical associations, zero-capture and jitter rows
 
-Completed: 2026-10-19. Round-4 task F4 (R1D-05/07; R2d-4/7). Note: `docs/paper/round4_associations.md`.
+Completed: 2026-10-19. Round-4 task F4 (R1D-05/07; R2d-4/7). Note: `docs/paper_nkm/round4_associations.md`.
 
 **Work.**
 - `scripts/analyze_round4_associations.py` reuses the E7 data (150 full-budget realizations, paired seed-42 jitter

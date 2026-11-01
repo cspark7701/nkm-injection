@@ -3,7 +3,7 @@
 
 Each point is evaluated at the zero-jitter and full budgets on the same 50 seed-42 realizations, particles and
 corrected rings; the dipole control is recalibrated at each point. The current point uses the bitwise-reproduced E7
-ensembles. The decision rule is the one declared in docs/paper/round4_protocol.json:
+ensembles. The decision rule is the one declared in docs/paper_nkm/round4_protocol.json:
   a candidate replaces the current point only if its full-budget NKM mean exceeds the current one with a paired
   central 95 % interval excluding zero, and its zero-jitter NKM mean is not lower by more than the 1-point declared
   margin (lower endpoint of the paired interval above -0.01; a conservative 97.5 % one-sided bound).
@@ -16,7 +16,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = json.loads((ROOT / 'docs/paper/round4_protocol.json').read_text())
+PROTOCOL = json.loads((ROOT / 'docs/paper_nkm/round4_protocol.json').read_text())
 C5 = ROOT / PROTOCOL['campaign']
 MARGIN = 0.01
 

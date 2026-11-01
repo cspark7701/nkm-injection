@@ -3,7 +3,7 @@
 Completed: 2026-10-19. Author instruction: add "This work was supported by the National Research Foundation of Korea
 (NRF) grant funded by the Korean government (MSIT). (NRF Grant No. RS-2022-00143178)" to both papers.
 
-**NKM paper** (`docs/paper/paper.tex`). The sentence is added verbatim to the acknowledgments, after the thanks to the
+**NKM paper** (`docs/paper_nkm/paper.tex`). The sentence is added verbatim to the acknowledgments, after the thanks to the
 Korea University group. Both PRAB layouts and the supplement were rebuilt under the gate (30/15 pages, supplement 6)
 and installed.
 

@@ -37,8 +37,8 @@ Completed: 2026-10-13. Round-3 task E4 (R2c-1).
 
 **Evidence.**
 - `results/journal_campaign_04/e4_nkm_chamber_scan/`, `e4_aperture_normalisation.json` and
-  `docs/paper/round3_chamber_config.json`.
-- `docs/paper/revision_manifest_round3.json`: the round-2 selection plus round-3 artifacts present so far.
+  `docs/paper_nkm/round3_chamber_config.json`.
+- `docs/paper_nkm/revision_manifest_round3.json`: the round-2 selection plus round-3 artifacts present so far.
 
 **Process note.** The first scan applied the chamber only on the injection pass; it was stopped and rerun with the
 ring apertures. A summary key error in an earlier run lost its in-memory rows, so the driver now writes each profile
@@ -47,4 +47,4 @@ before summarising.
 **Checks.**
 - Chamber, wire-field, robustness and window tests pass.
 - The one-column gated build is clean.
-- Method note: `docs/paper/round3_chamber.md`.
+- Method note: `docs/paper_nkm/round3_chamber.md`.

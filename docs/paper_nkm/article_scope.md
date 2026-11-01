@@ -50,7 +50,7 @@ lifetime, "zero perturbation", and Pareto-optimal BTS design as a main claim (de
 
 ## Journal and category
 
-The manuscript now uses the standard LaTeX `article` class in `docs/paper/`.
+The manuscript now uses the standard LaTeX `article` class in `docs/paper_nkm/`.
 The JINST choice and formatting notes below record the original provisional
 venue; apply the selected journal's template only after the final venue is chosen.
 

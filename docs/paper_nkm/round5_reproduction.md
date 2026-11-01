@@ -30,7 +30,7 @@ After all scales complete:
 "$NKM_PYTHON" scripts/analyze_round5_jitter.py \
   --output results/journal_campaign_06/g2_jitter_analysis.json
 "$NKM_PYTHON" scripts/make_round5_manifest.py \
-  --output docs/paper/revision_manifest_round5.json
+  --output docs/paper_nkm/revision_manifest_round5.json
 ```
 
 Both output files must be new. For repeated post-processing, choose a fresh result filename instead of replacing the selected record. The analyzer audits complete job fields, latent non-jitter errors, scaled jitter, particle/ring identities and particle/loss reconciliation before computing paired intervals. The common dipole-field error, adopted point, native ring tracking and all non-jitter inputs remain unchanged.
@@ -43,7 +43,7 @@ Once the round-5 selection exists:
 
 ```bash
 "$NKM_PYTHON" scripts/build_revision_figures.py \
-  --manifest docs/paper/revision_manifest_round5.json \
+  --manifest docs/paper_nkm/revision_manifest_round5.json \
   --output-dir results/nkm_round5_rebuild_new
 "$NKM_PYTHON" scripts/build_submission_package.py \
   --layout one-column --output-dir results/nkm_round5_source_one_new
@@ -59,7 +59,7 @@ The final attachment is built only from committed sources:
 
 ```bash
 "$NKM_PYTHON" scripts/build_evidence_bundle.py \
-  --manifest docs/paper/revision_manifest_round5.json \
+  --manifest docs/paper_nkm/revision_manifest_round5.json \
   --output-dir results/nkm_round5_evidence_new --builder revision --verify
 ```
 

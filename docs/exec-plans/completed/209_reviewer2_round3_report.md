@@ -1,10 +1,10 @@
 # Milestone 209 — Reviewer 2, third-round report on the PRAB manuscript
 
-Completed: 2026-10-13. User request: review `docs/paper/` again as Reviewer 2, decide on acceptance, and write a report
+Completed: 2026-10-13. User request: review `docs/paper_nkm/` again as Reviewer 2, decide on acceptance, and write a report
 with revision tasks without overwriting previous reviews.
 
 **Output.**
-- `docs/paper/reviews/review_round_03_reviewer_02_report_and_tasks.md`: new file.
+- `docs/paper_nkm/reviews/review_round_03_reviewer_02_report_and_tasks.md`: new file.
 - The reviews `README.md` gains a new row and a summary.
 - Earlier reports and responses are unchanged.
 

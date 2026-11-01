@@ -2,7 +2,7 @@
 
 Completed: 2026-10-15. Pre-submission review of the round-3 manuscript (commit `4b30e09`), written as Reviewer 2.
 
-**Output.** `docs/paper/reviews/review_round_04_reviewer_02_report_and_tasks.md` (new; earlier reports unchanged) and a reviews index entry.
+**Output.** `docs/paper_nkm/reviews/review_round_04_reviewer_02_report_and_tasks.md` (new; earlier reports unchanged) and a reviews index entry.
 
 **Recommendation.** Major revision of limited scope; no acceptance in the present form. Acceptance expected after
 R2d-1 to R2d-3. All round-3 tasks R2c-1 to R2c-9 are recorded as answered; R2c-3 met as specified but insufficient,

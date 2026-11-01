@@ -6,8 +6,8 @@ Date: 2026-10-12
 
 Reviewed the current 19-page manuscript after D1–D14 and the round-two author response. Wrote a new Reviewer 1 report and eight ordered tasks without altering previous reviews or the paper. Recommended focused major revision for literature significance, final evidence access and physical interpretation, while recognizing closure of most second-round concerns.
 
-- [New report](../../paper/reviews/review_round_03_reviewer_01_report.md)
-- [Ordered third-round tasks](../../paper/reviews/review_round_03_reviewer_01_tasks.md)
+- [New report](../../paper_nkm/reviews/review_round_03_reviewer_01_report.md)
+- [Ordered third-round tasks](../../paper_nkm/reviews/review_round_03_reviewer_01_tasks.md)
 
 ## Evidence and checks
 

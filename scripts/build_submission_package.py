@@ -18,7 +18,7 @@ import tarfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-PAPER = REPO / "docs" / "paper"
+PAPER = REPO / "docs" / "paper_nkm"
 SUPPLEMENT = ["revision_manifest_round4.json", "round4_protocol.json", "revision_manifest_round3.json", "revision_manifest_round2.json", "revision_manifest.json", "claim_evidence.csv",
               "round2_final_checks.md", "round2_reproduction.md", "round2_comparison_audit.md",
               "bibliography_audit.md", "cover_letter.md", "generated/figure_provenance.csv",
@@ -28,6 +28,7 @@ for _response in ("reviews/review_round_02_author_response_to_reviewers_01_02.md
         SUPPLEMENT.append(_response)
 
 for _round5 in ("revision_manifest_round5.json", "round5_protocol.json", "round5_companion_audit.json",
+                "path_migration.json", "path_migration.md",
                 "round5_companion_audit_final.json", "round5_final_identity.json", "round5_companion_comparison.md", "round5_jitter.md", "round5_reproduction.md",
                 "reviews/review_round_05_author_response_to_reviewers_01_02.md"):
     if (PAPER / _round5).is_file():
@@ -146,8 +147,8 @@ def main(argv=None):
     selection_command = ("python scripts/make_round5_manifest.py --output <new-manifest.json>" if round5 else
                          "python scripts/make_round4_manifest.py --require-all --output <new-manifest.json>")
     record = {
-        "selected_manifest": {"path": "docs/paper/" + manifest_name, "sha256": sha256(PAPER / manifest_name)},
-        "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(git("status", "--porcelain", "--", "docs/paper", "scripts", "src")),
+        "selected_manifest": {"path": "docs/paper_nkm/" + manifest_name, "sha256": sha256(PAPER / manifest_name)},
+        "git_commit": git("rev-parse", "HEAD"), "git_dirty": bool(git("status", "--porcelain", "--", "docs/paper_nkm", "scripts", "src")),
         "journal": "PRAB", "layout": a.layout, "entry_point": tex_name,
         "pages": pages, "supplement_pages": supplement_pages, "sources": {r: sha256(src / r) for r in files},
         "outputs": {f.name: sha256(f) for f in (archive, out / pdf_name, out / "supplement.pdf") if f.is_file()},
@@ -155,8 +156,8 @@ def main(argv=None):
         "environment": {"python": platform.python_version(), "platform": platform.platform(), "packages": pkgs,
                         "tex": subprocess.run(["pdflatex", "--version"], capture_output=True, text=True).stdout.splitlines()[0]},
         "commands": [selection_command,
-                     f"python scripts/build_revision_figures.py --manifest docs/paper/{manifest_name} "
-                     "--output-dir <new> --install-dir docs/paper/generated",
+                     f"python scripts/build_revision_figures.py --manifest docs/paper_nkm/{manifest_name} "
+                     "--output-dir <new> --install-dir docs/paper_nkm/generated",
                      f"python scripts/build_submission_package.py --layout {a.layout} --output-dir <new>{' --install-pdf' if a.install_pdf else ''}"],
     }
     (out / "package_manifest.json").write_text(json.dumps(record, indent=2) + "\n")

@@ -1,7 +1,7 @@
 # Milestone 245 — F8: abstract, attribution, discussion and conclusions rewritten from F2–F7
 
 Completed: 2026-10-20. Round-4 task F8 (R1D-01/06/07, R2d-1/2/5/6/7) of the
-[round-4 plan](../../paper/reviews/revision_round_04_plan_for_review_round_04.md).
+[round-4 plan](../../paper_nkm/reviews/revision_round_04_plan_for_review_round_04.md).
 
 **Jitter components** (declared extension, 8e8f628). Ensembles `f2v_xy_x_only` and `f2v_xy_xp_only`, with two-plane
 steering, paired with E7. Costs (NKM / dipole / gap, points):
@@ -9,7 +9,7 @@ steering, paired with E7. Costs (NKM / dipole / gap, points):
 - angle-only jitter: −33.7 / −20.5 / −13.2.
 
 Both components are NKM-specific once the vertical error is removed. Recorded in
-[round4_vertical_steering.md](../../paper/round4_vertical_steering.md).
+[round4_vertical_steering.md](../../paper_nkm/round4_vertical_steering.md).
 
 **Generated numbers.** `scripts/round4_reporting.py` (builder step `round4`) turns the F2–F6 and two-plane artifacts
 into macros and three tables: error-class ablation, operating points, two-model jitter. Every new number in the text

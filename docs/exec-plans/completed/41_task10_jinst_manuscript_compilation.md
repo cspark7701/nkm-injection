@@ -1,9 +1,9 @@
 # Task 10: Finalize and Compile JINST Journal Manuscript
 
 ## Summary
-- **Manuscript Integration**: Verified LaTeX source [`docs/paper/paper.tex`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.tex) and bibliography [`docs/paper/paper.bib`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.bib).
+- **Manuscript Integration**: Verified LaTeX source [`docs/paper_nkm/paper.tex`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_nkm/paper.tex) and bibliography [`docs/paper_nkm/paper.bib`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_nkm/paper.bib).
 - **PDF Compilation**: Executed clean multi-pass compilation (`pdflatex` + `bibtex` + `pdflatex` x2) with zero TeX errors.
-- **Output Artifact**: Generated publication-ready PDF [`docs/paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.pdf) (9 pages, 300,881 bytes).
+- **Output Artifact**: Generated publication-ready PDF [`docs/paper_nkm/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_nkm/paper.pdf) (9 pages, 300,881 bytes).
 - **Metadata**: Verified author Chong Shik Park and affiliation (Department of Accelerator Science, Korea University).
 
 ## Completed Work Checklist

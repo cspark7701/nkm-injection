@@ -2,7 +2,7 @@
 
 **Manuscript:** "Finite-length and vertical effects in nonlinear-kicker injection into a Korea Light Source design
 lattice" (C. S. Park), PRAB REVTeX version.
-**Version reviewed:** `docs/paper/paper.tex` and `paper.pdf` at commit `139c7c7`: 28-page one-column preprint
+**Version reviewed:** `docs/paper_nkm/paper.tex` and `paper.pdf` at commit `139c7c7`: 28-page one-column preprint
 (14 pages two-column), 11 figures and 7 tables. SHA-256 prefixes: paper.tex `94a9728f1c9c576a`, paper.pdf
 `5be00c58322e06c1`.
 **Also read:**

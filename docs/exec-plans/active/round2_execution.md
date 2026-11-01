@@ -1,6 +1,6 @@
 # Round 2 revision execution through D14
 
-Started: 2026-10-12. Authorized scope: D1–D14 of the consolidated round-2 plan, using `docs/paper/dependent_answers.md`; stage-by-stage local commits in the established format. Push is explicitly authorized only after D14 passes. D15 remains outside this task.
+Started: 2026-10-12. Authorized scope: D1–D14 of the consolidated round-2 plan, using `docs/paper_nkm/dependent_answers.md`; stage-by-stage local commits in the established format. Push is explicitly authorized only after D14 passes. D15 remains outside this task.
 
 Initial working tree: clean, HEAD `279a880`. Protected scientific inputs must retain their initial hashes. New results belong under `results/journal_campaign_03/`.
 

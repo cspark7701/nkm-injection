@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from nkm_injection.repository_paths import manuscript_path
+
 import numpy as np
 
 from nkm_injection.errors import ErrorBudgetConfig, sample_error_ensemble
@@ -18,7 +20,7 @@ def analyze(manifest, root):
     used = {}
 
     def load(key):
-        path = root / m['artifacts'][key]
+        path = manuscript_path(root, m['artifacts'][key])
         data = path.read_bytes()
         digest = hashlib.sha256(data).hexdigest()
         if digest != m['sha256'][key]:
@@ -75,7 +77,7 @@ def analyze(manifest, root):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--manifest', type=Path, default=Path('docs/paper/revision_manifest.json'))
+    p.add_argument('--manifest', type=Path, default=Path('docs/paper_nkm/revision_manifest.json'))
     p.add_argument('--repo-root', type=Path, default=Path.cwd())
     p.add_argument('--output', type=Path, required=True)
     a = p.parse_args()

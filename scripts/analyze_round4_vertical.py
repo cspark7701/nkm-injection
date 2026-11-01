@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Round-4 sensitivity — ideal static steering in both planes at the current point.
 
-Declared in ``docs/paper/round4_protocol.json`` (``vertical_steering_sensitivity``) before the runs. Each two-plane
+Declared in ``docs/paper_nkm/round4_protocol.json`` (``vertical_steering_sensitivity``) before the runs. Each two-plane
 ensemble is paired with its production (horizontal-only steering) reference on the same 50 seed-42 realizations,
 particles and corrected rings:
   f2v_xy_zero  vs  e7_jitter_0  (zero booster jitter)
@@ -26,7 +26,7 @@ try:  # run as scripts/analyze_round4_vertical.py
 except ModuleNotFoundError:  # imported as scripts.analyze_round4_vertical
     from scripts.analyze_round4_ablation import bootstrap, check_pairing, load, vector
 
-PROTOCOL = json.loads((ROOT / 'docs/paper/round4_protocol.json').read_text())
+PROTOCOL = json.loads((ROOT / 'docs/paper_nkm/round4_protocol.json').read_text())
 C5 = ROOT / PROTOCOL['campaign']
 PAIRS = {'zero': ('f2v_xy_zero', 'results/journal_campaign_04/e7_jitter_0'),
          'full': ('f2v_xy_full', 'results/journal_campaign_04/e7_seed42')}

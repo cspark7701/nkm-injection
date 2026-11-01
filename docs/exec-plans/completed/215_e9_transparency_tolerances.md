@@ -30,6 +30,6 @@ distance-resolved, so the result is stated as a requirement rather than a predic
 - New: `scripts/analyze_round3_transparency.py`.
 - `build_revision_figures.py`: step `round3_transparency` (macros `WireMC*`, `Septum*`).
 - Artifact: `results/journal_campaign_04/e9_transparency_mc.json` (manifest key `round3_transparency_mc`).
-- Method note: `docs/paper/round3_transparency.md`.
+- Method note: `docs/paper_nkm/round3_transparency.md`.
 
 **Checks.** The one-column gated build is clean.

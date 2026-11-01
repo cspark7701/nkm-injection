@@ -4,13 +4,13 @@ Repository for studying the Nonlinear Kicker Magnet (NKM), Booster-to-Storage Ri
 
 > **Comprehensive Guide**: See [`docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md`](docs/006_SIMULATION_PROCEDURE_AND_PUBLICATION_WORKFLOW.md) for the single-file complete specification of the simulation procedure and paper reproduction pipeline.
 
-For further publication studies, read the [additional simulation strategy](docs/023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md) and [ordered journal-article revision tasks](docs/paper/tasks/README.md). The plan distinguishes supported commands from proposed drivers and prioritizes physical validation, fair controls and claim-to-evidence reconciliation.
+For further publication studies, read the [additional simulation strategy](docs/023_ADDITIONAL_SIMULATION_AND_JOURNAL_STRATEGY.md) and [ordered journal-article revision tasks](docs/paper_nkm/tasks/README.md). The plan distinguishes supported commands from proposed drivers and prioritizes physical validation, fair controls and claim-to-evidence reconciliation.
 
-The manuscript is maintained in [`docs/paper/`](docs/paper/) for PRAB in REVTeX 4.2, with a one-column primary draft and a separate two-column preview ([build instructions](docs/paper/prab_submission.md)). The [current reproduction guide](docs/paper/round5_reproduction.md) identifies round-5 evidence and the frozen referee attachment; ignored simulation outputs are supplied separately. Build a fresh source package and PDF with `python scripts/build_submission_package.py --output-dir results/<new> --install-pdf`.
+The manuscript is maintained in [`docs/paper_nkm/`](docs/paper_nkm/) for PRAB in REVTeX 4.2, with a one-column primary draft and a separate two-column preview ([build instructions](docs/paper_nkm/prab_submission.md)). The [current reproduction guide](docs/paper_nkm/round5_reproduction.md) identifies round-5 evidence and the frozen referee attachment; ignored simulation outputs are supplied separately. Build a fresh source package and PDF with `python scripts/build_submission_package.py --output-dir results/<new> --install-pdf`.
 
 The standalone BTS optics article targets NIM A and uses Elsevier’s one-column `elsarticle` format with numbered references, with a separate [two-column NIM A version](docs/paper_bts/paper_twocolumn.pdf). See the [manuscript index](docs/paper_bts/README.md) and [NIM A build and submission guide](docs/paper_bts/nima_submission.md) for the article, supplement, highlights and flat source archive. Internal round-six reviews recommend scientific acceptance within the stated model scope; final author approval and actual submission remain pending.
 
-Current NKM review status (2026-11-01): [Reviewer 1's round-6 assessment](docs/paper/reviews/review_round_06_reviewer_01_report.md) recommends scientific acceptance within the stated scope, with [two optional copyedits](docs/paper/reviews/review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. The [round-5 register](docs/paper/reviews/revision_round_05_plan_for_review_round_05.md) records G1–G6 complete. The separate [Reviewer 2 round-6 report](docs/paper/reviews/review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance; G7 author/access/delivery decisions are deferred. No journal acceptance or external submission is recorded.
+Current NKM review status (2026-11-01): [Reviewer 1's round-6 assessment](docs/paper_nkm/reviews/review_round_06_reviewer_01_report.md) recommends scientific acceptance within the stated scope, with [two optional copyedits](docs/paper_nkm/reviews/review_round_06_reviewer_01_tasks.md) and no mandatory scientific revision. The [round-5 register](docs/paper_nkm/reviews/revision_round_05_plan_for_review_round_05.md) records G1–G6 complete. The separate [Reviewer 2 round-6 report](docs/paper_nkm/reviews/review_round_06_reviewer_02_report_and_tasks.md) also recommends acceptance; G7 author/access/delivery decisions are deferred. No journal acceptance or external submission is recorded.
 
 ---
 
@@ -83,7 +83,7 @@ The complete 8-step production pipeline was executed (`results/production_run_20
 | **Optics Optimization** | 2-stage deterministic SLSQP quadrupole matching | Exit mismatch $\mathcal{M}_{x,y} < 10^{-15}$; $\beta_{x,\max} = 30.23\text{ m}$, $\beta_{y,\max} = 44.52\text{ m}$ (satisfying $\le 60\text{ m}$ bounds). |
 | **Tolerance Budget** | 100-sample Monte Carlo error budget | **100.0% feasible fraction** (0% failure probability); median mismatches $\mathcal{M}_x = 0.0014$, $\mathcal{M}_y = 0.0028$. |
 | **MOGA Pareto Study** | 5 independent random seeds (NSGA-II) | 100.0% feasibility across all seeds; 27–40 Pareto front solutions per seed with consistent knee-point dispersion ($\sigma = 1.37\text{ m}^{-2}$). |
-| **Paper Pipeline** | Dynamic publication compilation | Verified cryptographic hashes, compiled figures/tables, and generated [`docs/paper/paper.pdf`](docs/paper/paper.pdf). |
+| **Paper Pipeline** | Dynamic publication compilation | Verified cryptographic hashes, compiled figures/tables, and generated [`docs/paper_nkm/paper.pdf`](docs/paper_nkm/paper.pdf). |
 
 ---
 

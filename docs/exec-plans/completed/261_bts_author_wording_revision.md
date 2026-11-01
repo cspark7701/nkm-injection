@@ -6,7 +6,7 @@ Completed: 2026-10-30 at the author's request (task list of 2026-10-30).
 
 Two separate affiliations: Department of Accelerator Science and Center for Accelerator Research, Korea University,
 Sejong, 30019, Republic of Korea. BTS: numbered affiliations in `docs/paper_bts/paper.tex`. NKM: two `\affiliation`
-entries in `docs/paper/paper.tex` and `supplement.tex`. The extra affiliation line overfilled the one-column NKM title
+entries in `docs/paper_nkm/paper.tex` and `supplement.tex`. The extra affiliation line overfilled the one-column NKM title
 page by 1 pt; the abstract was shortened by one line ("assumed" removed, one clause tightened, and the closing
 "not operational efficiency predictions" dropped from "These are conditional simulation results").
 

@@ -3,7 +3,7 @@
 
 Every figure/table is computed from the artifacts named in the manifest (no hard-coded results).
 Outputs go to a new --output-dir; with --install-dir the PDF figures, tables and macros are also
-copied there (e.g. docs/paper/generated) together with figure_provenance.csv, which records
+copied there (e.g. docs/paper_nkm/generated) together with figure_provenance.csv, which records
 for each manuscript asset the generator, the consumed artifacts and their SHA-256 digests.
 
 Units in figures: mm, mrad (explicitly converted from m, rad). Capture fractions in percent.
@@ -14,6 +14,8 @@ import hashlib
 import json
 import shutil
 from pathlib import Path
+
+from nkm_injection.repository_paths import manuscript_path
 
 import numpy as np
 import matplotlib
@@ -73,7 +75,7 @@ class Builder:
 
     def path(self, key):
         p = Path(self.m["artifacts"][key])
-        return p if p.is_absolute() else self.root / p
+        return manuscript_path(self.root, p)
 
     def load(self, key):
         p = self.path(key)

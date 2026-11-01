@@ -4,12 +4,12 @@ Completed: 2026-10-11.
 
 ## Changes
 
-Renamed `docs/jinst-paper/` to [docs/paper/](../../paper/) and updated maintained
+Renamed `docs/jinst-paper/` to [docs/paper_nkm/](../../paper_nkm/) and updated maintained
 script/package paths, publication-output guards, tests, README, manuscript metadata
 and documentation links. Historical task references now resolve to the relocated
 documents; their scientific findings and recorded hashes were retained.
 
-Converted [paper.tex](../../paper/paper.tex) to a standard A4, 11 pt LaTeX article
+Converted [paper.tex](../../paper_nkm/paper.tex) to a standard A4, 11 pt LaTeX article
 with 2.5 cm margins, standard author/affiliation and corresponding-author footnote,
 an abstract environment, a keywords paragraph, numbered sections, line numbers,
 hyperlinks, acknowledgments and the existing numbered bibliography. Removed the
@@ -18,7 +18,7 @@ body are preserved, apart from the manuscript path and acknowledgments command.
 
 Submission packaging now stages only standard article inputs and creates
 `nkm_article_submission_source.tar.gz` with the `nkm_article_submission/` prefix.
-Publication builds and source-directory protection now use `docs/paper/`; cleanup
+Publication builds and source-directory protection now use `docs/paper_nkm/`; cleanup
 and evidence-bundle paths were updated. Evidence bundles still archive committed
 code through `git archive`, so a fresh committed snapshot is required to include
 the directory migration; no evidence bundle was rebuilt during this task.
@@ -26,7 +26,7 @@ the directory migration; no evidence bundle was rebuilt during this task.
 ## Validation
 
 - Built the source package in the fresh `results/article_conversion_20261011/`
-  directory and installed the clean 12-page [paper.pdf](../../paper/paper.pdf).
+  directory and installed the clean 12-page [paper.pdf](../../paper_nkm/paper.pdf).
   BibTeX and LaTeX gates passed without undefined citations/references or overfull
   boxes. The staged build contains no JINST template.
 - Passed 90 focused tests across submission packaging, journal macros, publication

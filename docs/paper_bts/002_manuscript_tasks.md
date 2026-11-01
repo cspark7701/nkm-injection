@@ -131,7 +131,7 @@ Evaluate uncorrected and corrected designs on fresh static-error realizations, t
 
 **Dependencies:** B01–B10.
 
-Draft the outline sections using the verified claim ledger; rewrite the provisional abstract in past/present tense with completed results only. Generate all figures/tables from selected BTS artifacts. Use up to six main figures and concise captions; detailed matrices, bounds, candidate/seed tables and validation go in supplementary material. Create a one-column review draft and journal formatting only after checking current JKPS guidance. A BTS-specific build must not change `docs/paper/paper.tex` or its PDFs.
+Draft the outline sections using the verified claim ledger; rewrite the provisional abstract in past/present tense with completed results only. Generate all figures/tables from selected BTS artifacts. Use up to six main figures and concise captions; detailed matrices, bounds, candidate/seed tables and validation go in supplementary material. Create a one-column review draft and journal formatting only after checking current JKPS guidance. A BTS-specific build must not change `docs/paper_nkm/paper.tex` or its PDFs.
 
 **Deliverables:** `paper.tex`, bibliography, generated assets/provenance, `paper.pdf`, reproducible build instructions and declarations based on author inputs.
 

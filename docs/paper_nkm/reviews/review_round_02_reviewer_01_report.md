@@ -6,7 +6,7 @@ Author: Chong Shik Park
 Reviewed repository revision: `03b8fe998dea4059dcc952049ed663bfc6eaceb1`  
 Recommendation: **Major revision, focused in scope. Do not accept the present version.**
 
-This is a pre-submission referee-style assessment of the current manuscript, not an appointment by a journal or an editorial decision. It assesses the revised article in `docs/paper/`, rather than repeating the assessment of the earlier thin-kicker study. The [first-round report](review_round_01_reviewer_01_report.md), [original task register](review_round_01_reviewer_01_tasks.md), [author response](review_round_01_author_response_to_reviewers_01_02.md), and all other existing reviews are preserved. The new actionable register is [Second-round revision tasks](review_round_02_reviewer_01_tasks.md).
+This is a pre-submission referee-style assessment of the current manuscript, not an appointment by a journal or an editorial decision. It assesses the revised article in `docs/paper_nkm/`, rather than repeating the assessment of the earlier thin-kicker study. The [first-round report](review_round_01_reviewer_01_report.md), [original task register](review_round_01_reviewer_01_tasks.md), [author response](review_round_01_author_response_to_reviewers_01_02.md), and all other existing reviews are preserved. The new actionable register is [Second-round revision tasks](review_round_02_reviewer_01_tasks.md).
 
 ## 1. Recommendation and overall assessment
 

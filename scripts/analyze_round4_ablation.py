@@ -21,7 +21,7 @@ import numpy as np
 from scipy.stats import spearmanr
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = json.loads((ROOT / 'docs/paper/round4_protocol.json').read_text())
+PROTOCOL = json.loads((ROOT / 'docs/paper_nkm/round4_protocol.json').read_text())
 C5 = ROOT / PROTOCOL['campaign']
 MODELS = ('fieldmap_3d', 'dipole')
 

@@ -12,6 +12,6 @@ Read milestones 158–163 and reconciled the current review index and round-2 ve
 
 ## Changes and validation
 
-Updated `docs/paper/reviews/README.md` to include the third-round review and completed D15 status. Updated `docs/paper/round2_final_checks.md` to distinguish D14 scientific verification from D15 formatting checks and pending third-round work. Added this sequential archive and its index entry.
+Updated `docs/paper_nkm/reviews/README.md` to include the third-round review and completed D15 status. Updated `docs/paper_nkm/round2_final_checks.md` to distinguish D14 scientific verification from D15 formatting checks and pending third-round work. Added this sequential archive and its index entry.
 
 Checked added local Markdown links, whitespace, and working-tree paths. A full link scan also found the pre-existing broken `../../../05_refactor_tasks/README.md` link in the completed index; this historical link is outside the status update. Only documentation changed; protected inputs, manuscript assets and historical assessments remain unchanged. No simulations, manuscript builds or pytest runs were repeated for this status-only update. No external submission or git push was performed.

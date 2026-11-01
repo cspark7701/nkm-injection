@@ -5,7 +5,7 @@ two-column preview, 7-page supplement), after reading all five rounds of author 
 response to R2e-1 to R2e-9 and to Reviewer 1's evidence assessment.
 
 **Output.**
-- `docs/paper/reviews/review_round_06_reviewer_02_report_and_tasks.md` (new; report with optional tasks R2f-1 to
+- `docs/paper_nkm/reviews/review_round_06_reviewer_02_report_and_tasks.md` (new; report with optional tasks R2f-1 to
   R2f-5);
 - a reviews index row.
 

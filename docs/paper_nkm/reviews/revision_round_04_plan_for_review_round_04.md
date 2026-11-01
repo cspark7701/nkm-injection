@@ -4,7 +4,7 @@ Split on 2026-10-19 from the [round-3 plan](revision_round_03_plan_for_review_ro
 2026-10-16; its content is unchanged apart from cross-references. The round-3 plan (E1–E11, executed in milestones
 211–222) and its [response](review_round_03_author_response_to_reviewers_01_02.md) remain the completed round-3 record.
 
-Manuscript: `docs/paper/paper.tex` (PRAB REVTeX 4.2) as revised in round 3 (E1–E11).
+Manuscript: `docs/paper_nkm/paper.tex` (PRAB REVTeX 4.2) as revised in round 3 (E1–E11).
 
 Inputs:
 - [Reviewer 1, round 4](review_round_04_reviewer_01_report.md) and its [register](review_round_04_reviewer_01_tasks.md):

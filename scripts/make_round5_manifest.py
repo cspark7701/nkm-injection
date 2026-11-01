@@ -4,6 +4,8 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+
+from nkm_injection.repository_paths import manuscript_path
 from make_round4_manifest import point_identity
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,14 +15,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    base = json.loads((ROOT/'docs/paper/revision_manifest_round4.json').read_text())
+    base = json.loads((ROOT/'docs/paper_nkm/revision_manifest_round4.json').read_text())
     artifacts = dict(base['artifacts'])
     for key, rel in artifacts.items():
-        if hashlib.sha256((ROOT/rel).read_bytes()).hexdigest() != base['sha256'][key]:
+        if hashlib.sha256(manuscript_path(ROOT, rel).read_bytes()).hexdigest() != base['sha256'][key]:
             raise ValueError('Historical evidence changed: '+key)
-    additions = {'round5_protocol':'docs/paper/round5_protocol.json',
-                 'round5_companion_audit':'docs/paper/round5_companion_audit_final.json',
-                 'round5_companion_audit_declared':'docs/paper/round5_companion_audit.json',
+    additions = {'round5_protocol':'docs/paper_nkm/round5_protocol.json',
+                 'round5_companion_audit':'docs/paper_nkm/round5_companion_audit_final.json',
+                 'round5_companion_audit_declared':'docs/paper_nkm/round5_companion_audit.json',
                  'round5_jitter':'results/journal_campaign_06/g2_jitter_analysis.json',
                  'round5_preparation':'results/journal_campaign_06/preparation.json',
                  'round5_bts_jitter_reference':'results/bts_round4_campaign_20261030/jitter_b/jitter.json',
@@ -30,7 +32,7 @@ def main():
                  'round5_implementation':'results/journal_campaign_06/implementation_identity.json',
                  'round5_field_sheet':'nkm_field.xlsx',
                  'round5_expanded_field_sheet':'nkm_field_expanded.xlsx'}
-    protocol = json.loads((ROOT/'docs/paper/round5_protocol.json').read_text())
+    protocol = json.loads((ROOT/'docs/paper_nkm/round5_protocol.json').read_text())
     prep = json.loads((ROOT/protocol['campaign']/'preparation.json').read_text())
     folders = dict(protocol['endpoints'])
     folders.update({s:r['output'] for s,r in prep['variants'].items()})
@@ -44,12 +46,12 @@ def main():
     for key, rel in additions.items():
         if not key.startswith('round5_raw_'):
             continue
-        cfg = json.loads((ROOT/rel).read_text())['study_config']
+        cfg = json.loads(manuscript_path(ROOT, rel).read_text())['study_config']
         if any(abs(cfg[k]-selected[k]) > 1e-12 for k in ('field_scale','injection_x_m','injection_xp_rad')):
             raise ValueError('New scan point differs from adopted point')
     record = {'description':'Round-5 NKM evidence: unchanged round-4 selection plus the paired two-plane jitter scan.',
               'artifacts':artifacts,
-              'sha256':{k:hashlib.sha256((ROOT/rel).read_bytes()).hexdigest() for k,rel in artifacts.items()}}
+              'sha256':{k:hashlib.sha256(manuscript_path(ROOT, rel).read_bytes()).hexdigest() for k,rel in artifacts.items()}}
     with args.output.open('x') as stream:
         json.dump(record, stream, indent=2);stream.write('\n')
     print('Selected',len(artifacts),'artifact keys')

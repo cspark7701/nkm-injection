@@ -61,7 +61,7 @@ def round4_case(tmp_path, monkeypatch):
             width = .44342419894787183e-3  # rad; synthetic pulse metadata
             value.update(window_width_rad=width, residual_kick_allowance_rad=.1*width)
         write(relative, value)
-    base = write('docs/paper/revision_manifest_round3.json', {
+    base = write('docs/paper_nkm/revision_manifest_round3.json', {
         'artifacts': artifacts, 'sha256': {k: m4.sha256(tmp_path/v) for k, v in artifacts.items()}})
     monkeypatch.setattr(r4, 'ROOT', tmp_path)
     monkeypatch.setattr(r4, 'CAMPAIGN', tmp_path/r4.PROTOCOL['campaign'])
@@ -74,7 +74,7 @@ def round4_case(tmp_path, monkeypatch):
 def round4_manifest(round4_case):
     from scripts import make_round4_manifest as m4
     root, _ = round4_case
-    path = root/'docs/paper/revision_manifest_round4.json'
+    path = root/'docs/paper_nkm/revision_manifest_round4.json'
     m4.main(['--require-all', '--output', str(path)])
     return json.loads(path.read_text())
 
@@ -228,7 +228,7 @@ def test_round4_manifest_points_pulse_and_transparency_at_current_point(round4_c
     root, _ = round4_case
     from scripts import make_round4_manifest as m4
     art = round4_manifest['artifacts']
-    installed = json.loads((ROOT/'docs/paper/revision_manifest_round4.json').read_text())['artifacts']
+    installed = json.loads((ROOT/'docs/paper_nkm/revision_manifest_round4.json').read_text())['artifacts']
     for key in m4.OVERRIDES:
         assert installed[key] == art[key] == m4.OVERRIDES[key]
         data = json.loads((root / art[key]).read_text())

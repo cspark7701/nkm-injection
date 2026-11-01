@@ -9,7 +9,7 @@ consolidated execution tasks and their order.
 - Reviewer 2, round 2: `review_round_02_reviewer_02_report_and_tasks.md` (R2b-1 to R2b-15). Recommendation: major revision.
 
 **Output.**
-- `docs/paper/reviews/revision_round_02_plan_for_review_round_02.md`, containing:
+- `docs/paper_nkm/reviews/revision_round_02_plan_for_review_round_02.md`, containing:
   - agreement and differences between the reviewers;
   - an adopted-resolution table;
   - author inputs A1–A6;

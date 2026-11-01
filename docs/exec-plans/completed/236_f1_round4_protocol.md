@@ -2,7 +2,7 @@
 
 Completed: 2026-10-19. Round-4 task F1 (supports R1D-01/02/03/05/08 and R2d-1/2/3/4).
 
-**Protocol.** `docs/paper/round4_protocol.json`, declared before any F2–F7 run. It fixes:
+**Protocol.** `docs/paper_nkm/round4_protocol.json`, declared before any F2–F7 run. It fixes:
 - **Model:** the adopted E7 model (filament NKM 640 slices, recalibrated dipole control, round-3 chamber, E5
   corrected rings, ideal static steering, 500 turns, 200 particles, 50 realizations, seed 42). The BTS lattice is
   unchanged; the companion BTS alternatives are not imported.

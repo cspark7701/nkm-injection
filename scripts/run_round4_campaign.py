@@ -2,7 +2,7 @@
 """Round-4 (F1-F3) campaign driver: reproduction check, point candidates, error-class ablation, point test and
 vertical-steering sensitivity.
 
-Everything follows ``docs/paper/round4_protocol.json``, declared before any run. Ensembles reuse the E7 command
+Everything follows ``docs/paper_nkm/round4_protocol.json``, declared before any run. Ensembles reuse the E7 command
 line (``run_capture_robustness.py``) with only the error configuration or the study configuration changed, so
 particle seeds, ring identities and every non-disabled error draw stay paired with E7.
 
@@ -22,6 +22,8 @@ import hashlib
 import json
 import os
 from pathlib import Path
+
+from nkm_injection.repository_paths import manuscript_path
 import subprocess
 import sys
 
@@ -29,7 +31,7 @@ import numpy as np
 from scipy.optimize import brentq, minimize_scalar
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTOCOL = json.loads((ROOT / 'docs/paper/round4_protocol.json').read_text())
+PROTOCOL = json.loads((ROOT / 'docs/paper_nkm/round4_protocol.json').read_text())
 CAMPAIGN = ROOT / PROTOCOL['campaign']
 CLEARANCE_LIMIT_M = -0.018478063  # 3 sigma_x (E6) from the 2 mm blade's outer face
 
@@ -66,7 +68,7 @@ def ablation_configs():
 def common_args(study_config):
     p = PROTOCOL['adopted_model']
     return ['--study-config', study_config, '--optimization-summary', ROOT / p['optimization_summary'],
-            '--chamber-config', ROOT / p['chamber_config'], '--corrected-ring-dir', ROOT / p['corrected_ring_dir'],
+            '--chamber-config', manuscript_path(ROOT, p['chamber_config']), '--corrected-ring-dir', ROOT / p['corrected_ring_dir'],
             '--kicker-models', 'fieldmap_3d', 'dipole', '--control-reference', '3d', '--timing-model', 'scale',
             '--correct-static-orbit', '--samples', '50', '--particles', '200', '--turns', '500', '--seed', '42',
             '--capture-threshold', '.8', '--resume']

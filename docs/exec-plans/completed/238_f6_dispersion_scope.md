@@ -1,6 +1,6 @@
 # Milestone 238 — F6: Septum dispersion budget and thin-map accuracy scope
 
-Completed: 2026-10-19. Round-4 task F6 (R1D-06; R2d-6/7). Note: `docs/paper/round4_dispersion_scope.md`.
+Completed: 2026-10-19. Round-4 task F6 (R1D-06; R2d-6/7). Note: `docs/paper_nkm/round4_dispersion_scope.md`.
 
 **Dispersion budget at the septum** (D 80.868 mm, D′ 47.472 mrad, σ_δ 1.06e-3):
 - Betatron/dispersive size 134/86 µm and divergence 57/50 µrad (76 µrad total).

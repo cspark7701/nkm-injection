@@ -1,6 +1,6 @@
 # Round 4 sensitivity: ideal static steering in both planes
 
-**Declaration.** Declared in `docs/paper/round4_protocol.json` (`vertical_steering_sensitivity`) and committed before
+**Declaration.** Declared in `docs/paper_nkm/round4_protocol.json` (`vertical_steering_sensitivity`) and committed before
 the runs (0b2e6ed).
 
 **Files.** Script: `scripts/analyze_round4_vertical.py`; output:

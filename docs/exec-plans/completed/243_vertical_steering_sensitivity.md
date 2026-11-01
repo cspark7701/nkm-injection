@@ -1,7 +1,7 @@
 # Milestone 243 — Two-plane steering sensitivity
 
 Completed: 2026-10-20. Author-approved post hoc sensitivity following F2 (the round-4 plan, row F2v). Declared and
-committed before running (0b2e6ed); note: [round4_vertical_steering.md](../../paper/round4_vertical_steering.md).
+committed before running (0b2e6ed); note: [round4_vertical_steering.md](../../paper_nkm/round4_vertical_steering.md).
 
 **Code.**
 - `nkm_injection.steering.subtract_static_reference(beam, reference, planes)` with `'x'` (production) or `'xy'`.
@@ -25,5 +25,5 @@ committed before running (0b2e6ed); note: [round4_vertical_steering.md](../../pa
 
 **Files.**
 - `scripts/analyze_round4_vertical.py`;
-- `docs/paper/round4_vertical_steering.md`;
+- `docs/paper_nkm/round4_vertical_steering.md`;
 - the round-4 plan, new row F2v.

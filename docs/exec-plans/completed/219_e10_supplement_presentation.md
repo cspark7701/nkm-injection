@@ -3,7 +3,7 @@
 Completed: 2026-10-14. Round-3 task E10 (R1C-07, R2c-9). Done while the E7 rerun was computing. It is independent of
 E7's numbers.
 
-**Supplemental Material** (`docs/paper/supplement.tex`; REVTeX, same macros and figures; 6 pages):
+**Supplemental Material** (`docs/paper_nkm/supplement.tex`; REVTeX, same macros and figures; 6 pages):
 - **S1.** The independent trajectory check (table S1, moved from the main text).
 - **S2.** Wire-position and loop-current sensitivity tables (S2 and S3, moved from the main text).
 - **S3.** The larger-emittance (100/10 nm rad) sensitivity case: its survival, the vertical-kick diagnostic and

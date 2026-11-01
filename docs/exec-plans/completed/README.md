@@ -130,7 +130,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Integrated non-dominated sorting filtering on Pareto front solutions (`src/nkm/moga.py`), implemented multi-seed finalist re-evaluation via end-to-end tracking, added Pareto front visualization (`plot_moga_summary`), and updated publication script. Verified with 100% test pass rate across all 152 test cases in the test suite.
 
 41. [**Milestone 41 — Task 10: Finalize and Compile JINST Journal Manuscript**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/41_task10_jinst_manuscript_compilation.md)
-    - Compiled publication-grade Journal of Instrumentation (JINST) manuscript [`docs/paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.pdf) with author Chong Shik Park (Korea University) attribution, incorporating RADIA 2D field map validation, single-objective SLSQP matching, NSGA-II multi-objective optimization, and Monte Carlo 6D robust particle tracking.
+    - Compiled publication-grade Journal of Instrumentation (JINST) manuscript [`docs/paper_nkm/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_nkm/paper.pdf) with author Chong Shik Park (Korea University) attribution, incorporating RADIA 2D field map validation, single-objective SLSQP matching, NSGA-II multi-objective optimization, and Monte Carlo 6D robust particle tracking.
 
 42. [**Milestone 42 — Task 10: Build Validated Manifest-Driven Paper Pipeline**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/42_task10_validated_manifest_driven_paper_pipeline.md)
     - Implemented `PublicationManifest` dataclass and `validate_publication_manifest` in `src/nkm/results_schema.py`. Updated `run_paper_pipeline` (`src/nkm/paper.py`) and `scripts/reproduce_paper.py` `--manifest` CLI flag to fail fast if upstream run directories or cryptographic input data hashes mismatch. Verified with 100% test pass rate across all 157 test cases in the test suite.
@@ -187,7 +187,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Identified and fixed `ValueError: Energy needs to be defined` in PyAT element-resolved tracking on Python 3.11 GitHub Actions runners by passing `energy=config.energy_eV` into `elem.track()` in `src/nkm/storage_ring_injection.py`. Verified 100% test pass rate.
 
 60. [**Milestone 60 — Task: Update JINST Paper and Site with Production Simulation Results**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/60_update_jinst_paper_and_site_with_production_results.md)
-    - Synchronized `docs/paper/paper.tex`, `docs/paper/paper.pdf`, and `docs/index.html` with full production simulation results (`results/production_run_20260815_153100`). Updated multi-turn metrics ($430\times$ stored beam perturbation reduction to $4.76\,\mu\text{m}$), SLSQP converged optics ($\beta_{x,\max}=30.66\,\text{m}, \beta_{y,\max}=52.54\,\text{m}$, mismatch $< 10^{-6}$), OAT error sensitivity rankings, and verified 100% test pass rate across 174 tests.
+    - Synchronized `docs/paper_nkm/paper.tex`, `docs/paper_nkm/paper.pdf`, and `docs/index.html` with full production simulation results (`results/production_run_20260815_153100`). Updated multi-turn metrics ($430\times$ stored beam perturbation reduction to $4.76\,\mu\text{m}$), SLSQP converged optics ($\beta_{x,\max}=30.66\,\text{m}, \beta_{y,\max}=52.54\,\text{m}$, mismatch $< 10^{-6}$), OAT error sensitivity rankings, and verified 100% test pass rate across 174 tests.
 
 61. [**Milestone 61 — Task: Refactor Fix Quadrupole Roll Symplectic Rotation Matrix**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/61_refactor_fix_quadrupole_roll_symplectic_rotation.md)
     - Fixed a physics defect in quadrupole roll error coordinate transformations in `src/nkm/errors.py` by rotating both transverse spatial coordinates $(x, y)$ and momenta angles $(x', y')$ simultaneously in `R1` and `R2`. Added symplectic condition unit tests in `tests/test_errors.py` and verified 100% pass rate.
@@ -202,7 +202,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Replaced global `np.random.seed(...)` mutations in `generate_6d_beam` with isolated `np.random.default_rng(seed)` and direct Cholesky factorizations. Added RNG isolation tests in `tests/test_units.py` and verified 100% pass rate across 177 tests.
 
 65. [**Milestone 65 — Task: Update Documentation, JINST Paper, and Project Site for All Refactors**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/65_update_documentation_paper_and_site_for_all_refactors.md)
-    - Updated `README.md` and `docs/index.html` with the 177-test verification suite, updated `docs/paper/paper.tex` with symplectic roll rotation and isolated RNG notes, and recompiled `docs/paper/paper.pdf`. Verified 100% test pass rate.
+    - Updated `README.md` and `docs/index.html` with the 177-test verification suite, updated `docs/paper_nkm/paper.tex` with symplectic roll rotation and isolated RNG notes, and recompiled `docs/paper_nkm/paper.pdf`. Verified 100% test pass rate.
 
 66. [**Milestone 66 — Task: Bump Framework Version to v0.2.0**](file:///home/cspark/Work/projects/nkm-injection/docs/exec-plans/completed/66_bump_version_to_v0_2_0.md)
     - Incremented repository version from `0.1.0` to `0.2.0` across `pyproject.toml`, `src/nkm/__init__.py`, `CITATION.cff`, and `docs/index.html`. Reinstalled editable package and verified 100% test pass rate.
@@ -378,7 +378,7 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
     - Thick NKM raises combined-error capture to 47.4 % (magnet-model effect, confirmed by cross-runs); diagnostics confirmed on three seeds; 400k-sample tolerance run meets the prefix-stability target; manuscript updated.
 
 118. [**Milestone 118 — Reviewer 2 Referee Report**](118_reviewer2_report.md)
-    - Major-revision referee report with 8 major and 14 minor comments and 20 prioritised revision tasks and venue-specific guidance for an undecided target journal (docs/paper/reviews/review_round_01_reviewer_02_report_and_tasks.md).
+    - Major-revision referee report with 8 major and 14 minor comments and 20 prioritised revision tasks and venue-specific guidance for an undecided target journal (docs/paper_nkm/reviews/review_round_01_reviewer_02_report_and_tasks.md).
 
 119. [**Milestone 119 — Reviewer 1 Manuscript Report and Revision Register**](119_reviewer1_manuscript_report.md)
     - Assessed the current scientific argument and selected evidence, recommended major revision, prepared twelve ordered tasks with acceptance criteria, and verified local evidence hashes, capture summaries and documentation without changing the manuscript.
@@ -974,3 +974,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 334. [**Milestone 334 — Reviewer 3 round-6 report on the BTS manuscript**](334_reviewer3_bts_round6_report.md)
     - Recommends acceptance for publication in NIM A after auditing all historical and current author responses across rounds 1–6; evaluates horizontal phase-advance jitter partitioning, blade clearance invariance, active dispersion slope constraint, and controlled shared-reading benchmarks; adds optional editorial checklist R3-BTS-01 to 05.
+
+335. [**Milestone 335 — NKM manuscript directory rename**](335_nkm_manuscript_directory_rename.md)
+    - Moves the article to `docs/paper_nkm/`, updates references, preserves paper/evidence bytes and verifies 363 links, both PRAB packages, macro/analysis reproduction and 779 tests.

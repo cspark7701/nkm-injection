@@ -14,13 +14,13 @@ Prepare, write, refine, compile, and finalize a publication-quality manuscript f
 
 ## 2. Key Deliverables & Progress Tracker
 
-- [x] Create dedicated publication folder `docs/paper/`
+- [x] Create dedicated publication folder `docs/paper_nkm/`
 - [x] Acquire and configure official JINST LaTeX style `jinstpub.sty`
 - [x] Resolve TeX Live 2023 `amssymb` / `\Bbbk` package conflicts
-- [x] Move and expand draft manuscript `docs/paper/paper.tex`
-- [x] Build BibTeX reference database `docs/paper/paper.bib`
-- [x] Include high-resolution 300 DPI PNG & vector PDF figures in `docs/paper/figures/`
-- [x] Clean compile manuscript to PDF: [`docs/paper/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper/paper.pdf)
+- [x] Move and expand draft manuscript `docs/paper_nkm/paper.tex`
+- [x] Build BibTeX reference database `docs/paper_nkm/paper.bib`
+- [x] Include high-resolution 300 DPI PNG & vector PDF figures in `docs/paper_nkm/figures/`
+- [x] Clean compile manuscript to PDF: [`docs/paper_nkm/paper.pdf`](file:///home/cspark/Work/projects/nkm-injection/docs/paper_nkm/paper.pdf)
 - [ ] Author review, co-author feedback, and journal submission submission package packaging
 
 ---
@@ -29,7 +29,7 @@ Prepare, write, refine, compile, and finalize a publication-quality manuscript f
 
 ```bash
 # Compile JINST manuscript
-cd docs/paper
+cd docs/paper_nkm
 rm -f paper.aux paper.toc paper.out paper.log paper.bbl paper.blg
 pdflatex -interaction=nonstopmode paper.tex
 bibtex paper

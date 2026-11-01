@@ -1,7 +1,7 @@
 # 282 — Clear manuscript review-document names
 
 Date: 2026-10-31. Renamed 49 review, task, response and consolidated-plan documents
-in docs/paper and docs/paper_bts. Filenames now identify review round, reviewer
+in docs/paper_nkm and docs/paper_bts. Filenames now identify review round, reviewer
 and role; consolidated plans identify both the revision cycle and the review
 round they answer. Dates remain in the bodies. Restored BTS-branch records have
 an explicit historical_branch prefix. The preliminary Task-011 scientific

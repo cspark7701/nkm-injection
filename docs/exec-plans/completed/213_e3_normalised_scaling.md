@@ -19,7 +19,7 @@ Completed: 2026-10-13. Round-3 task E3 (R1C-03). Existing campaign-03 data only;
   `round2_window` artifact through `round2_reporting.window_bounds`.
 - **`paper.tex`.** The section-3 paragraph defines K, w, the reference path and the launch recipe; explains the
   |K|L/8 sagitta; and quotes the fit, the scatter, the sliced-map bound and η*. The Figure 9 caption is updated.
-- **Installed figures and macros.** `docs/paper/generated` gains the `Gen*` macros (additions only) and the new
+- **Installed figures and macros.** `docs/paper_nkm/generated` gains the `Gen*` macros (additions only) and the new
   `fig9_generality.pdf`; provenance now records `round2_window` for Figure 9. The other figures were restored to
   their committed bytes, because the local Matplotlib differs from the one that produced them; their data did not
   change.

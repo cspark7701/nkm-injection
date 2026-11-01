@@ -929,3 +929,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 319. [**Milestone 319 — NKM G4 chamber interception**](319_nkm_g4_chamber_interception.md)
     - Corrects the physical interception statement using saved ring-5501 records and rebuilds the primary article.
+
+320. [**Milestone 320 — NKM G5 labels and recovery scope**](320_nkm_g5_labels_recovery_scope.md)
+    - Reconciles historical/selected strength labels, dates, ideal steering scope and the tuning gain conditions; gated builds pass.

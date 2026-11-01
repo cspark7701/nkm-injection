@@ -9,7 +9,7 @@ This is the single execution register answering both fifth-round assessments:
 
 Both recommend minor revision. Their original reports/checklists remain unchanged and retain their review-time wording. This register merges overlapping work and states the adopted treatment where they differ. D, E and F work remains completed history; no old scientific task is reopened.
 
-**Status: execution authorized 2026-11-01. G1 is completed; G2–G6 are pending/in progress as recorded below.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
+**Status: execution authorized 2026-11-01. Completion notes below record progress; G2 is running and G1/G4/G5 are complete.** G7 remains a submission-stage author gate. Final approval and journal submission remain separate author actions. Completing the register does not guarantee acceptance.
 
 ## Consolidation decisions
 
@@ -81,12 +81,14 @@ G4 completed: scoped chamber-interception wording and checked existing records; 
 
 Maps to R2e-5 and R2e-6; supports R1E-03. Can proceed alongside G2; finalize with G3.
 
-- [ ] In Tables I–II, supply the selected S = 0.95 peak kick from the adopted model or explicitly distinguish historical S = 0.85 quantities from selected-point quantities. Do not mix their disturbance and kick values without labels.
-- [ ] Update the manuscript/supplement date consistently with the completed revision, preserving dates in historical reports and responses.
-- [ ] Qualify two-plane steering as ideal static centroid removal, not a fitted system with BPM/actuator errors. Address Reviewer 2's optimistic-bound concern using the precise scope above; do not claim an unproved universal capture upper bound or guaranteed reduction from any particular residual.
-- [ ] Attach “horizontal-only steering and without booster jitter” to the approximately +11.9-point tuning gain. Preserve the 28% outer-bound fraction, existing author decision not to widen the search, and held-out/ideal-observable limitations.
+- [x] In Tables I–II, supply the selected S = 0.95 peak kick from the adopted model or explicitly distinguish historical S = 0.85 quantities from selected-point quantities. Do not mix their disturbance and kick values without labels.
+- [x] Update the manuscript/supplement date consistently with the completed revision, preserving dates in historical reports and responses.
+- [x] Qualify two-plane steering as ideal static centroid removal, not a fitted system with BPM/actuator errors. Address Reviewer 2's optimistic-bound concern using the precise scope above; do not claim an unproved universal capture upper bound or guaranteed reduction from any particular residual.
+- [x] Attach “horizontal-only steering and without booster jitter” to the approximately +11.9-point tuning gain. Preserve the 28% outer-bound fraction, existing author decision not to widen the search, and held-out/ideal-observable limitations.
 
 Completion: every shortened recovery/strength statement retains its point, budget, steering and observable definition.
+
+G5 completed: historical/selected strength labels, date and recovery scope reconciled; milestone 320.
 
 ### G6 — Reconcile evidence, rebuild and respond to both reviewers
 

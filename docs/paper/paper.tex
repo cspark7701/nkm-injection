@@ -24,7 +24,7 @@
 \email{kuphy@korea.ac.kr}
 \affiliation{Department of Accelerator Science, Korea University, Sejong, 30019, Republic of Korea}
 \affiliation{Center for Accelerator Research, Korea University, Sejong, 30019, Republic of Korea}
-\date{October 20, 2026}
+\date{November 1, 2026}
 
 
 
@@ -59,7 +59,7 @@ ALS / NLK~\cite{Sun2020} & 0.280 & --- & $32\times11$ \\
 MAX IV / MIK~\cite{Alexandre2021} & --- & --- & --- \\
 SOLEIL / MIK~\cite{Ollier2023} & 0.304 & 2.2 nominal & $46.8\times7.8$ \\
 SIRIUS / NLK~\cite{Liu2016,Velloso2023} & --- & --- & --- \\
-This study / four-loop NKM & 0.525 & \PeakKickMrad\ peak ($S=\OpScale$) & $32\times7.6$ assumed \\\bottomrule
+This study / four-loop NKM & 0.525 & \PeakKickMrad\ peak (earlier $S=\OpScale$) & $32\times7.6$ assumed \\\bottomrule
 \end{tabular}
 
 \medskip
@@ -112,7 +112,7 @@ Transfer line (BTS) & 21.79\,m, matched optics (peak $\beta_{x,y}=31.4/50.7$\,m)
 Septum & stored-beam edge $-16$\,mm, blade 2\,mm, 2.26\,m upstream of NKM centre \\
 NKM & four loops, wires at $(\pm\WireInnerMm,\pm\WireInnerMm)$ and $(\pm\WireOuterMm,\pm\WireOuterMm)$\,mm, \\
  & length \NKMLengthMm\,mm, \NKMCurrentA\,A; \\
- & peak kick \PeakKickMrad\,mrad at $x=\PeakKickXmm$\,mm ($S=\OpScale$) \\
+ & historical peak kick \PeakKickMrad\,mrad at $x=\PeakKickXmm$\,mm ($S=\OpScale$); selected $S=\RThreeOpTwoScale$ \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -391,7 +391,7 @@ A train with its first bunch at the peak samples less field on later bunches: fo
 
 Finite-length accuracy depends on trajectory displacement relative to the kick-lobe width. Calling a model a kick map does not specify how it treats that displacement. This is consistent with the small finite-conductor effect reported for the ALS kicker~\cite{Sun2020}: different geometry and launch conditions place that design at a much smaller sagitta, and the result here does not imply that its model was inadequate. The tested sagitta ratio organizes deterministic comparisons over a scaled wire family; it does not establish a universal capture threshold. A sliced vector map retains both the physical vertical field and self-deflection. Local vertical focusing changes sign across the kick extremum. The first-turn vertical losses of the zero-capture realizations come mainly from the uncorrected vertical injection error (section~\ref{sec:attribution}); slower vertical losses on the corrected rings, as on ring 5501, are consistent with uncorrected coupling, without identifying a mechanism.
 
-Ring errors that are corrected in orbit, optics and tunes reduce capture almost equally for the NKM and a uniform kick. The NKM-specific loss arises from injection errors. The paired ablation shows that, under the modelled horizontal-only steering, transfer-line magnet errors leave a static vertical injection error that removes most NKM shots on the first turn, and booster jitter removes largely the same shots. Correcting the vertical injection error, by steering or by transfer-line alignment tight enough to make it negligible, and stabilizing the booster extraction are therefore required in this model. Their hardware implementation is not evaluated here, and the two-plane sensitivity gives an ideal bound. The size of the deficit also depends on the operating point. The selected point was chosen without injection errors and favours the uniform kick. Selection with injection errors in the objective, and sextupole optimization for injection acceptance, remain open.
+Ring errors that are corrected in orbit, optics and tunes reduce capture almost equally for the NKM and a uniform kick. The NKM-specific loss arises from injection errors. The paired ablation shows that, under the modelled horizontal-only steering, transfer-line magnet errors leave a static vertical injection error that removes most NKM shots on the first turn, and booster jitter removes largely the same shots. Correcting the vertical injection error, by steering or by transfer-line alignment tight enough to make it negligible, and stabilizing the booster extraction are therefore required in this model. Their hardware implementation is not evaluated here. The two-plane sensitivity is an optimistic benchmark for ideal static centroid removal, without BPM or actuator errors; it does not establish a global upper bound on capture. The size of the deficit also depends on the operating point. The selected point was chosen without injection errors and favours the uniform kick. Selection with injection errors in the objective, and sextupole optimization for injection acceptance, remain open.
 
 Nominal capture, a joint-error mean, the zero-capture fraction and the fraction of realizations above 80\,\% answer different questions. The ring-cluster interval shows how the mean and lower tail depend on the declared corrected-ring population. The 500-turn window is a conditional survival contour; its 4000-turn checks quantify later losses. The modelled steering is ideal and corrects two static coordinates (four in the sensitivity); the tuning search uses an ideal capture observable, and its declared range truncates the optimum for a quarter of the machines. Neither establishes a practical feedback tolerance or commissioned efficiency. Small BTS Twiss mismatch alone does not establish successful ring capture.
 
@@ -403,7 +403,9 @@ The modelled transfer line has no vertical correction, so its vertical injection
 
 For the supplied KLS design lattice, a single thin kick map does not describe the 0.525\,m four-loop NKM at the selected operating point: along its matched trajectory the thin-map error is \ThinProdRatio\ times a tenth of the \FinalAngleWidth\,mrad angular window, and for a diagnostic launch family the error is organized empirically by the sagitta-to-kick-width ratio, while a sliced vector map with the consistently signed vertical field agrees with the exact filament field.
 
-With the design booster beam, a feasible flat chamber inside the magnet and an operating point selected on corrected rings, capture is \ChamberNom\,\% (500 turns) and \FinalLong\,\% (4000 turns) on the ideal ring and \SynRingNkm\,\% on average over ten corrected rings. Under the assumed joint errors it falls to \FinalNkmMean\,\%, against \FinalDipMean\,\% for a uniform kick. Paired ablation attributes the NKM-specific loss without booster jitter to a static vertical injection error from transfer-line magnet errors that the modelled steering does not remove; with ideal two-plane steering that loss nearly disappears (\VsZeroNkm\,\%), and booster jitter, in position as well as in angle, becomes the NKM-specific term. The deficit relative to the uniform kick also depends on the operating point. Capture-based tuning recovers about \FinalTuneZeroGain\ points without booster jitter, with \FinalTuneBoundaryXinj\,\% of the machines at the declared range limit.
+With the design booster beam, a feasible flat chamber inside the magnet and an operating point selected on corrected rings, capture is \ChamberNom\,\% (500 turns) and \FinalLong\,\% (4000 turns) on the ideal ring and \SynRingNkm\,\% on average over ten corrected rings. Under the assumed joint errors it falls to \FinalNkmMean\,\%, against \FinalDipMean\,\% for a uniform kick. Paired ablation attributes the NKM-specific loss without booster jitter to a static vertical injection error from transfer-line magnet errors that the modelled steering does not remove; with ideal two-plane steering that loss nearly disappears (\VsZeroNkm\,\%), and booster jitter, in position as well as in angle, becomes the NKM-specific term. The deficit relative to the uniform kick also depends on the operating point. Under horizontal-only steering and without booster jitter, capture-based tuning recovers about \FinalTuneZeroGain\ points, with \FinalTuneBoundaryXinj\,\% of the machines at the declared range limit.
+
+The two-plane sensitivity is an ideal static-removal benchmark, with no correction hardware or monitor errors modeled. It does not establish a global capture bound.
 
 Transparency requires compensation of the static on-axis residual of a realistically built magnet, and septum leakage must be held near 0.07\,G at the stored orbit. The results are conditional on the design lattice, the declared chamber and error budget, and the ten corrected rings.
 

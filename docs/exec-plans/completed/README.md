@@ -977,3 +977,6 @@ This directory (`docs/exec-plans/completed/`) contains the complete, ordered rec
 
 335. [**Milestone 335 — NKM manuscript directory rename**](335_nkm_manuscript_directory_rename.md)
     - Moves the article to `docs/paper_nkm/`, updates references, preserves paper/evidence bytes and verifies 363 links, both PRAB packages, macro/analysis reproduction and 779 tests.
+
+336. [**Milestone 336 — SPDX license metadata in pyproject.toml**](336_pyproject_spdx_license.md)
+    - Replace the deprecated `project.license` table with `license = "MIT"` and `license-files`, and require setuptools 77 or later. A wheel builds without the warning.
